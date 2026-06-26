@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Questões - Endocrinologia | Cate DM</title>
+<style>
+:root {
+  --bg: #0f1419;
+  --bg-elevated: #1a2028;
+  --bg-card: #1e2530;
+  --text: #e4e6eb;
+  --text-muted: #9ca3af;
+  --accent: #5eead4;
+  --accent-soft: rgba(94, 234, 212, 0.12);
+  --correct: #34d399;
+  --correct-bg: rgba(52, 211, 153, 0.15);
+  --wrong: #f87171;
+  --wrong-bg: rgba(248, 113, 113, 0.15);
+  --warn: #fbbf24;
+  --border: #2d3748;
+  --link: #7dd3fc;
+}
+[data-theme="light"] {
+  --bg: #fafafa;
+  --bg-elevated: #fff;
+  --bg-card: #fff;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --accent: #0891b2;
+  --accent-soft: rgba(8, 145, 178, 0.1);
+  --correct: #059669;
+  --correct-bg: rgba(5, 150, 105, 0.12);
+  --wrong: #dc2626;
+  --wrong-bg: rgba(220, 38, 38, 0.12);
+  --warn: #d97706;
+  --border: #e5e7eb;
+  --link: #0369a1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 16px;
+}
+header {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+header h1 {
+  font-size: 1.3em;
+  color: var(--accent);
+}
+.modes { display: flex; gap: 8px; flex-wrap: wrap; }
+.mode-btn {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.mode-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+main { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+.intro { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 22px; margin-bottom: 24px; }
+.intro h2 { font-size: 1.2em; margin-bottom: 10px; color: var(--accent); }
+.intro ul { margin-left: 20px; margin-top: 8px; }
+.filters { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.filter-btn {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.filter-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.question {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.q-header { display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center; flex-wrap: wrap; gap: 8px; }
+.q-number { font-weight: 700; color: var(--accent); font-size: 0.95em; }
+.q-meta { font-size: 0.8em; color: var(--text-muted); display: flex; gap: 10px; flex-wrap: wrap; }
+.badge {
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.badge.facil { background: rgba(52, 211, 153, 0.18); color: #34d399; }
+.badge.medio { background: rgba(251, 191, 36, 0.18); color: #fbbf24; }
+.badge.dificil { background: rgba(248, 113, 113, 0.18); color: #f87171; }
+.badge.topic { background: var(--accent-soft); color: var(--accent); }
+.stem { margin: 12px 0 16px; line-height: 1.7; }
+.stem p { margin-bottom: 10px; }
+.alternatives { list-style: none; }
+.alternatives li {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  transition: background 0.15s, border 0.15s;
+}
+.alternatives li:hover { border-color: var(--accent); }
+.alternatives li.selected { background: var(--accent-soft); border-color: var(--accent); }
+.alternatives li.correct { background: var(--correct-bg); border-color: var(--correct); }
+.alternatives li.wrong { background: var(--wrong-bg); border-color: var(--wrong); }
+.alternatives li.disabled { cursor: default; }
+.letter { font-weight: 700; color: var(--accent); flex-shrink: 0; }
+.alternatives li.correct .letter { color: var(--correct); }
+.alternatives li.wrong .letter { color: var(--wrong); }
+.explanation {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--bg-elevated);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  font-size: 0.93em;
+  display: none;
+}
+.explanation.show { display: block; }
+.explanation h4 { color: var(--accent); font-size: 0.88em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.explanation ul { margin-left: 18px; margin-top: 6px; }
+.explanation li { margin-bottom: 4px; }
+.diss-area {
+  width: 100%;
+  min-height: 100px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  margin-top: 10px;
+  resize: vertical;
+}
+.toggle-btn {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+.result-panel {
+  background: var(--bg-card);
+  border: 2px solid var(--accent);
+  padding: 24px;
+  border-radius: 10px;
+  margin: 20px 0;
+  display: none;
+}
+.result-panel.show { display: block; }
+.result-score { font-size: 2em; color: var(--accent); font-weight: 700; text-align: center; margin-bottom: 14px; }
+.theme-toggle { background: var(--bg-card); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 18px; cursor: pointer; font-size: 13px; }
+.submit-btn {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 14px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
+  margin: 24px 0;
+  display: none;
+}
+.submit-btn.show { display: block; }
+h2.section { font-size: 1.4em; margin: 40px 0 16px; color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+@media (max-width: 640px) {
+  header { padding: 14px 16px; }
+  main { padding: 20px 14px 80px; }
+  .question { padding: 18px 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📝 Banco de Questões — Endocrinologia</h1>
+  <div class="modes">
+    <button class="mode-btn active" id="btn-estudo" onclick="setMode('estudo')">Modo Estudo</button>
+    <button class="mode-btn" id="btn-simulado" onclick="setMode('simulado')">Modo Simulado</button>
+    <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+  </div>
+</header>
+
+<main>
+
+<div class="intro">
+<h2>Como usar este banco</h2>
+<ul>
+<li><strong>Modo Estudo:</strong> clique em uma alternativa e veja o gabarito com explicação imediatamente.</li>
+<li><strong>Modo Simulado:</strong> responda todas antes de ver os resultados; no final, veja score e revisão.</li>
+<li>Questões marcadas com os temas: <strong>Acromegalia</strong>, <strong>DM2</strong>, <strong>DI</strong>, <strong>Hipopituitarismo</strong>.</li>
+<li>Dificuldade: 🟢 Fácil, 🟡 Médio, 🔴 Difícil.</li>
+<li>60 questões objetivas + 10 dissertativas.</li>
+</ul>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterTopic('all')">Todas</button>
+  <button class="filter-btn" onclick="filterTopic('acro')">Acromegalia</button>
+  <button class="filter-btn" onclick="filterTopic('dm2')">DM2</button>
+  <button class="filter-btn" onclick="filterTopic('di')">Diabetes Insípidus</button>
+  <button class="filter-btn" onclick="filterTopic('hp')">Hipopituitarismo</button>
+</div>
+
+<h2 class="section">Questões Objetivas</h2>
+<div id="objetivas"></div>
+
+<button class="submit-btn" id="submit-btn" onclick="finishSimulado()">Finalizar Simulado</button>
+
+<div class="result-panel" id="result-panel">
+  <div class="result-score" id="result-score"></div>
+  <div id="result-detail"></div>
+</div>
+
+<h2 class="section">Questões Dissertativas</h2>
+<div id="dissertativas"></div>
+
+</main>
+
+<script>
+const questoes = [
+  // ==================== ACROMEGALIA (15 questões) ====================
+  {
+    id: 1, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'facil',
+    enunciado: `<p>Homem de 44 anos procura atendimento com queixa de aumento progressivo do número do calçado (de 41 para 44 nos últimos 8 anos), sudorese excessiva, dores articulares difusas e diminuição do libido. Ao exame, apresenta mandíbula proeminente, espaçamento entre os dentes, mãos alargadas e pele oleosa. Refere ainda hipertensão arterial e diagnóstico recente de diabetes mellitus.</p><p>O exame mais adequado para a investigação inicial desse quadro é:</p>`,
+    alternativas: [
+      'Dosagem de GH sérico ao acaso, considerando que valores &gt; 5 μg/L confirmam diagnóstico.',
+      'Dosagem de IGF-1 sérico ajustado para idade e sexo, seguido de teste confirmatório se elevado.',
+      'Ressonância magnética de sela túrcica sem dosagens hormonais prévias.',
+      'Teste de tolerância oral à glicose com dosagem seriada de insulina e peptídeo C.',
+      'Dosagem de cortisol basal e ACTH para investigar síndrome de Cushing associada.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A dosagem de IGF-1 é o primeiro exame porque o IGF-1 tem meia-vida longa e reflete a secreção integrada de GH ao longo do dia, sendo o marcador mais sensível e específico para rastreamento de acromegalia. Se elevado (>1,3× limite superior para idade/sexo), o próximo passo é o teste de tolerância oral à glicose com GH.',
+      erradas: [
+        'A: GH isolado NÃO faz diagnóstico — é secretado em pulsos, tem meia-vida curta e pode pegar pico ou vale. Só tem valor no prognóstico e seguimento.',
+        'C: A imagem deve ser solicitada APÓS confirmação bioquímica, para evitar confusão com incidentalomas hipofisários.',
+        'D: O teste mais adequado de supressão é o GTTO com GH (não insulina/peptídeo C) — este último é útil em hipoglicemia/DM.',
+        'E: Investigar Cushing não é primeira linha; o quadro clínico é típico de acromegalia e cortisol deve ser avaliado em contexto diferente.'
+      ]
+    }
+  },
+  {
+    id: 2, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Em relação ao teste de tolerância oral à glicose (GTTO) com dosagem de GH para diagnóstico de acromegalia, qual das afirmações é correta?</p>`,
+    alternativas: [
+      'Em pessoa saudável, a sobrecarga de glicose estimula ainda mais a secreção de GH, elevando seus níveis.',
+      'No paciente com acromegalia, o GH suprime adequadamente após a ingestão de 75 g de glicose.',
+      'Em paciente com IMC normal, considera-se exclusão diagnóstica se o GH suprimir para valor &lt; 0,4 μg/L após a sobrecarga.',
+      'O exame deve ser sempre realizado antes da dosagem de IGF-1 na investigação inicial.',
+      'Valores de insulina no teste definem o diagnóstico independentemente do comportamento do GH.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Em indivíduos saudáveis, a hiperglicemia suprime o GH para valores muito baixos; o critério de exclusão diagnóstica é GH &lt; 0,4 μg/L em pacientes com IMC normal e &lt; 0,2 μg/L em sobrepeso/obesidade. Em acromegalia, o tumor é autônomo e o GH não suprime.',
+      erradas: [
+        'A: Ao contrário — a hiperglicemia SUPRIME o GH em pessoa normal (feedback negativo).',
+        'B: No paciente com acromegalia o tumor é autônomo e o GH NÃO suprime — essa é a base do teste.',
+        'D: A sequência correta é primeiro IGF-1, depois GTTO-GH se houver dúvida.',
+        'E: O comportamento da insulina não é o critério diagnóstico; o que importa é o comportamento do GH.'
+      ]
+    }
+  },
+  {
+    id: 3, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Mulher de 38 anos, com acromegalia ativa confirmada por IGF-1 elevado e RM mostrando macroadenoma hipofisário de 14 mm sem invasão do quiasma óptico. Apresenta diabetes mellitus e hipertensão como comorbidades relevantes. Qual a conduta terapêutica inicial mais adequada?</p>`,
+    alternativas: [
+      'Cirurgia transesfenoidal como tratamento de primeira linha, com análogo de somatostatina pós-operatório se necessário.',
+      'Radioterapia estereotáxica como monoterapia, evitando cirurgia devido às comorbidades.',
+      'Iniciar pegvisomanto e aguardar normalização do IGF-1 antes de qualquer abordagem cirúrgica.',
+      'Observação clínica com dosagens trimestrais de GH, reservando intervenção para progressão do quadro.',
+      'Cabergolina isoladamente, considerando o menor custo e ausência de injeções intramusculares.'
+    ],
+    correta: 0,
+    explicacao: {
+      correta: 'A cirurgia transesfenoidal é o tratamento padrão-ouro para macroadenomas ressecáveis, principalmente quando ainda não há comprometimento do quiasma óptico. A paciente tem comorbidades controláveis e a cirurgia oferece a melhor chance de cura bioquímica com preservação da função hipofisária.',
+      erradas: [
+        'B: A radioterapia tem início de ação lento (6-24 meses) e alto risco de hipopituitarismo (50% em 5 anos), não sendo primeira escolha.',
+        'C: Pegvisomanto é usado em geral quando outras opções falharam; não reduz tumor e não é primeira linha.',
+        'D: Acromegalia ativa tem mortalidade elevada — todos os pacientes devem ser tratados.',
+        'E: Cabergolina tem eficácia limitada em acromegalia e é reservada para casos selecionados (pouco responsivos aos análogos de somatostatina, ou pacientes em uso de anticoagulantes). Não é primeira escolha para macroadenoma comprometendo visão.'
+      ]
+    }
+  },
+  {
+    id: 4, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'facil',
+    enunciado: `<p>As manifestações clínicas da acromegalia listadas abaixo têm frequência variável. Qual delas aparece em PRATICAMENTE 100% dos pacientes?</p>`,
+    alternativas: [
+      'Hipertensão arterial sistêmica, reflexo do hiperaldosteronismo secundário.',
+      'Alterações visuais por compressão direta do quiasma óptico pelo tumor.',
+      'Aumento das extremidades (mãos, pés e face) pelo efeito somático do GH e IGF-1.',
+      'Diabetes mellitus secundário à ação anti-insulínica do GH nos tecidos periféricos.',
+      'Pólipos intestinais, consequência do efeito proliferativo do IGF-1 na mucosa colônica.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'O aumento das extremidades aparece em 100% dos pacientes — é o achado definidor da doença ("acro" = extremidades, "megalia" = aumento). Reflete a ação sustentada de GH/IGF-1 nos tecidos periféricos após fechamento das epífises.',
+      erradas: [
+        'A: HAS ocorre em cerca de 32% dos pacientes, não em todos.',
+        'B: Alterações visuais ocorrem em cerca de 32%, dependentes da extensão supraselar do tumor.',
+        'D: Diabetes/intolerância à glicose aparece em ~50% dos pacientes, não em todos.',
+        'E: Pólipos intestinais ocorrem em ~31%, embora sejam importante conduta de rastreamento (colonoscopia).'
+      ]
+    }
+  },
+  {
+    id: 5, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Em relação aos análogos da somatostatina no tratamento da acromegalia (octreotide LAR, pasireotide), assinale a alternativa correta:</p>`,
+    alternativas: [
+      'Atuam bloqueando o receptor de GH no fígado, impedindo a produção hepática de IGF-1.',
+      'São a primeira escolha medicamentosa, ligam-se a receptores de somatostatina e podem reduzir o tamanho tumoral em cerca de 42% dos casos.',
+      'Seu principal efeito adverso é a hepatotoxicidade, exigindo monitoramento mensal de transaminases.',
+      'Podem ser suspensos após 6 meses de tratamento, pois induzem remissão definitiva em 80% dos casos.',
+      'Estão contraindicados em pacientes com diabetes, pois pioram dramaticamente o controle glicêmico em todos os casos.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Os análogos da somatostatina são a primeira escolha medicamentosa. Ligam-se aos receptores de somatostatina da célula tumoral, reduzem a secreção de GH e, em cerca de 42% dos casos, provocam redução tumoral (a maioria com redução inferior a 50% do tamanho original).',
+      erradas: [
+        'A: Quem bloqueia o receptor de GH é o pegvisomanto, não os análogos de somatostatina.',
+        'C: Hepatotoxicidade é efeito do pegvisomanto. Análogos de somatostatina causam mais diarreia, cálculos biliares e piora glicêmica.',
+        'D: Aproximadamente 50% dos pacientes recidivam em 12-16 semanas após descontinuação, mesmo após 4 anos de tratamento — não há cura com a droga.',
+        'E: Há deterioração do controle glicêmico em alguns pacientes (especialmente com pasireotide), mas não em todos; não é contraindicação absoluta.'
+      ]
+    }
+  },
+  {
+    id: 6, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'dificil',
+    enunciado: `<p>Paciente submetido à cirurgia transesfenoidal para remoção de macroadenoma hipofisário secretor de GH. Três dias após a cirurgia, desenvolve poliúria (400 mL/h) com urina clara e sódio sérico de 152 mEq/L. Qual é o mecanismo mais provável desse quadro e qual a conduta imediata?</p>`,
+    alternativas: [
+      'SIADH por estímulo cirúrgico; restringir líquidos e aguardar resolução espontânea.',
+      'Diurese osmótica por hiperglicemia pós-operatória; intensificar controle glicêmico com insulina.',
+      'Diabetes insípidus central transitório por trauma cirúrgico; repor água livre e administrar DDAVP.',
+      'Hipopituitarismo agudo com deficiência de ACTH; iniciar hidrocortisona em dose alta.',
+      'Infecção do trato urinário pós-cirúrgica; colher urocultura e iniciar antibioticoterapia empírica.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Diabetes insípidus central transitório ocorre em cerca de 30% das cirurgias transesfenoidais, por lesão mecânica da haste hipofisária ou dos neurônios produtores de ADH. Deve-se suspeitar da resposta trifásica clássica (poliúria → antidiurese → DI definitivo ou recuperação). Conduta: reposição hídrica cuidadosa e DDAVP.',
+      erradas: [
+        'A: SIADH cursa com hiponatremia e oligúria, não com poliúria e hipernatremia.',
+        'B: Em diurese osmótica, a densidade urinária seria alta e a urina conteria glicose, não seria "clara".',
+        'D: Hipopituitarismo agudo por si só não causa poliúria hipotônica; poderia haver hipotensão e hipoglicemia, não esse quadro.',
+        'E: ITU não produz volume urinário de 400 mL/h nem explica hipernatremia.'
+      ]
+    }
+  },
+  {
+    id: 7, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Sobre o critério atual (Consenso 2023) para considerar a acromegalia como controlada após tratamento, é correto afirmar:</p>`,
+    alternativas: [
+      'GH basal &lt; 1 μg/L isoladamente, independentemente do IGF-1, por 12 meses consecutivos.',
+      'IGF-1 normalizado para idade e sexo após 3 meses de tratamento cirúrgico ou com análogo de somatostatina.',
+      'Ausência de tumor visível na ressonância magnética de controle, sem necessidade de dosagens hormonais.',
+      'Redução de pelo menos 50% do IGF-1 basal, mesmo que ainda esteja acima do limite superior.',
+      'Normalização exclusivamente da glicemia de jejum e pressão arterial, refletindo remissão clínica.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'O Consenso 2023 estabelece que a meta de controle é IGF-1 normal para idade e sexo, avaliado após 3 meses do tratamento (cirúrgico ou com análogo de somatostatina). Pacientes com IGF-1 normal retomam expectativa de vida similar à da população saudável.',
+      erradas: [
+        'A: O GH isolado não é suficiente; a normalização do IGF-1 é o desfecho crítico.',
+        'C: Ausência tumoral não garante controle bioquímico; dosagens são essenciais.',
+        'D: Redução de 50% não é critério de controle — a meta é normalização plena.',
+        'E: Controle clínico das comorbidades é importante, mas não é o critério de doença controlada.'
+      ]
+    }
+  },
+  {
+    id: 8, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'dificil',
+    enunciado: `<p>Paciente de 39 anos com quadro clínico e bioquímico compatível com acromegalia (IGF-1 elevado, GH não suprimindo no GTTO). A ressonância magnética de hipófise é normal. Qual a conduta mais apropriada nesse contexto?</p>`,
+    alternativas: [
+      'Repetir a ressonância magnética com contraste em 6 meses, assumindo microadenoma não visualizado.',
+      'Iniciar cabergolina empiricamente e monitorar a resposta do IGF-1.',
+      'Investigar fonte ectópica de GH ou GHRH com TC de tórax e abdome e dosagem sérica de GHRH.',
+      'Considerar o diagnóstico como falso-positivo e suspender a investigação.',
+      'Realizar cirurgia exploratória da hipófise por via transesfenoidal.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Quando a ressonância magnética é normal em paciente com bioquímica clara de acromegalia, deve-se investigar fonte ectópica — os tumores que causam acromegalia por GHRH ectópico são classicamente carcinoides brônquicos ou tumores pancreáticos. A TC de tórax/abdome e a dosagem sérica de GHRH são os próximos passos. Achado de hiperplasia hipofisária em vez de adenoma reforça a suspeita.',
+      erradas: [
+        'A: Não é razoável postergar a investigação — a etiologia deve ser esclarecida para tratamento específico.',
+        'B: Cabergolina empírica sem etiologia clara é conduta inadequada.',
+        'D: Bioquímica clara não permite "desconsiderar" o diagnóstico.',
+        'E: Cirurgia exploratória sem alvo identificado não é conduta aceitável em endocrinologia.'
+      ]
+    }
+  },
+  {
+    id: 9, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'facil',
+    enunciado: `<p>Qual das seguintes afirmações sobre o hormônio do crescimento (GH) e o IGF-1 é correta?</p>`,
+    alternativas: [
+      'O GH é produzido pelas células gonadotrópicas da neuro-hipófise e sua liberação é estimulada por dopamina.',
+      'O IGF-1, produzido principalmente no fígado sob estímulo do GH, tem ação antagonista à insulina.',
+      'A somatostatina, produzida exclusivamente pelas células beta pancreáticas, estimula a liberação de GH.',
+      'O GH reduz a concentração de glicose circulante ao aumentar a captação muscular de glicose.',
+      'O IGF-1 tem meia-vida curta e é pulsátil, tornando necessária dosagem seriada para avaliação.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'O GH estimula a produção hepática de IGF-1, que medeia muitos dos efeitos somáticos do GH e tem ação antagonista à da insulina (por isso a associação entre acromegalia e diabetes mellitus).',
+      erradas: [
+        'A: O GH é produzido pelas células somatotróficas da ADENO-hipófise; a dopamina inibe PRL, não estimula GH.',
+        'C: A somatostatina é produzida pelo hipotálamo e pelas células DELTA do pâncreas; ela INIBE a liberação de GH.',
+        'D: O GH AUMENTA a glicose circulante (é contra-regulador da insulina), levando secundariamente ao aumento de insulina.',
+        'E: O IGF-1 tem meia-vida LONGA e flutua pouco, por isso é o marcador ideal da secreção integrada de GH.'
+      ]
+    }
+  },
+  {
+    id: 10, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Sobre a cirurgia transesfenoidal no tratamento da acromegalia, é correto afirmar:</p>`,
+    alternativas: [
+      'É considerada obsoleta em microadenomas, sendo substituída pela radioterapia estereotáxica moderna.',
+      'A taxa de mortalidade para cirurgia de macroadenomas invasivos é superior a 20%.',
+      'É o tratamento padrão-ouro; em microadenomas, operados por cirurgiões experientes, os níveis de GH caem 80-90% com preservação da função hipofisária.',
+      'Produz diabetes insípidus permanente em cerca de 80% dos casos operados por via transesfenoidal.',
+      'Não há risco de recidiva após cirurgia bem-sucedida, pois o tumor é completamente extirpado.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'A cirurgia transesfenoidal é o padrão-ouro para acromegalia. Com cirurgiões experientes, os níveis de GH caem 80-90% nos microadenomas e a função hipofisária é preservada.',
+      erradas: [
+        'A: Cirurgia é primeira linha; radioterapia é reservada para casos selecionados por seus efeitos tardios.',
+        'B: A mortalidade em cirurgias para macroadenomas invasivos é &lt; 1%.',
+        'D: DI transitório ocorre em cerca de 30% e geralmente se resolve; permanente é minoria.',
+        'E: Recidivas ocorrem em 3-10% dos casos após seguimento prolongado.'
+      ]
+    }
+  },
+  {
+    id: 11, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Em relação à radioterapia na acromegalia, quais são os efeitos adversos mais importantes que limitam seu uso como primeira linha?</p>`,
+    alternativas: [
+      'Hiperprolactinemia refratária e necessidade de cabergolina em todos os pacientes tratados.',
+      'Indução de acromegalia contralateral por reflexo hipotalâmico compensatório.',
+      'Alto risco de hipopituitarismo (50% em 5 anos), distúrbios visuais, carcinogênese cerebral secundária e início de ação lento (6 a 24 meses).',
+      'Hiperfunção tireoidiana autônoma secundária à exposição à radiação ionizante difusa.',
+      'Fibrose retroperitoneal e síndrome nefrótica como efeito sistêmico da radiação.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'A radioterapia tem efeitos adversos importantes: hipopituitarismo em 50% em 5 anos (mais comum hipogonadismo), distúrbios visuais por lesão do II par, isquemia/necrose cerebral, atrofia cerebral, disfunção neurocognitiva, carcinogênese cerebral secundária (2% em 20 anos) e aumento de mortalidade cerebrovascular. Além disso, o início de ação é lento (6 a 24 meses).',
+      erradas: [
+        'A: Hiperprolactinemia não é o efeito adverso principal.',
+        'B: "Acromegalia contralateral" não existe como conceito fisiopatológico.',
+        'D: Hiperfunção tireoidiana não é efeito adverso da radioterapia hipofisária.',
+        'E: Fibrose retroperitoneal não está associada a radioterapia hipofisária.'
+      ]
+    }
+  },
+  {
+    id: 12, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'dificil',
+    enunciado: `<p>Paciente com acromegalia em uso de octreotide LAR há 18 meses com controle parcial: GH 2,1 μg/L e IGF-1 persistentemente 1,5× o limite superior da normalidade. O endocrinologista decide associar pegvisomanto. Qual o principal mecanismo de ação dessa droga e o parâmetro laboratorial que deve ser utilizado para monitoramento?</p>`,
+    alternativas: [
+      'Inibe a produção hipofisária de GH; monitorar pelo GH sérico basal mensal.',
+      'Estimula receptores de somatostatina tipo 5; monitorar pela cromogranina A plasmática.',
+      'Antagoniza o receptor de GH perifericamente, bloqueando a produção de IGF-1; monitorar pelo IGF-1 sérico.',
+      'Inibe a conversão de GH em IGF-1 no fígado; monitorar pelas transaminases hepáticas apenas.',
+      'Aumenta a depuração renal do GH; monitorar pelo clearance de creatinina.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'O pegvisomanto é um antagonista do receptor de GH, bloqueando a ação periférica do hormônio e reduzindo a produção de IGF-1. Segundo a aula, é o fármaco mais eficiente em normalizar o IGF-1 e pode ser combinado com análogos de somatostatina; hepatotoxicidade é o efeito colateral destacado. O monitoramento da eficácia deve ser feito pelo IGF-1 (o GH sérico não cai com a droga).',
+      erradas: [
+        'A: O pegvisomanto é antagonista do receptor de GH, não inibidor da produção hipofisária.',
+        'B: Não é agonista de somatostatina (esses são octreotide/lanreotide/pasireotide).',
+        'D: O parâmetro de eficácia é o IGF-1; as transaminases são monitoradas por segurança (hepatotoxicidade).',
+        'E: Mecanismo farmacologicamente incorreto.'
+      ]
+    }
+  },
+  {
+    id: 13, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'facil',
+    enunciado: `<p>Paciente com acromegalia tem 30 a 40% de chance de apresentar tumor misto (secreção de GH e outro hormônio). Qual é o segundo hormônio mais frequentemente cossecretado nesses tumores?</p>`,
+    alternativas: [
+      'ACTH, causando quadro associado de síndrome de Cushing secundária.',
+      'TSH, causando hipertireoidismo central concomitante.',
+      'Prolactina, podendo causar galactorreia e alterações menstruais em mulheres.',
+      'FSH, produzindo hipergonadismo clinicamente manifesto.',
+      'Vasopressina, causando síndrome da secreção inapropriada de ADH.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Cerca de 30 a 40% dos tumores somatotróficos cossecretam prolactina. Isso pode gerar manifestações adicionais como galactorreia, alterações menstruais e hipogonadismo — e também influencia na escolha terapêutica, já que esses tumores tendem a responder melhor a agonistas dopaminérgicos.',
+      erradas: [
+        'A: Cossecreção com ACTH é muito rara.',
+        'B: Cossecreção com TSH é muito rara.',
+        'D: Tumores gonadotróficos são quase sempre não funcionantes; cossecreção com GH é rara.',
+        'E: Vasopressina é produzida na neuro-hipófise, não no adenoma.'
+      ]
+    }
+  },
+  {
+    id: 14, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>Sobre a síndrome de túnel do carpo em pacientes com acromegalia, qual é a fisiopatologia correta?</p>`,
+    alternativas: [
+      'Compressão do nervo mediano por edema e espessamento do tecido sinovial e partes moles no túnel do carpo.',
+      'Polineuropatia diabética associada, afetando exclusivamente o nervo mediano.',
+      'Compressão direta do nervo ulnar pelo aumento ósseo do escafoide.',
+      'Lesão isquêmica do nervo por hipertensão arterial associada.',
+      'Desmielinização autoimune causada por anticorpos anti-gangliosídeos.'
+    ],
+    correta: 0,
+    explicacao: {
+      correta: 'A síndrome do túnel do carpo na acromegalia é causada pelo espessamento do tecido sinovial, edema e crescimento de partes moles que comprimem o nervo mediano no túnel do carpo — é uma das manifestações clínicas listadas na aula, decorrente do excesso crônico de GH/IGF-1 sobre os tecidos.',
+      erradas: [
+        'B: Ainda que o diabetes associado possa contribuir, o mecanismo principal é a compressão mecânica pelo crescimento de tecidos moles.',
+        'C: O nervo envolvido é o MEDIANO, não o ulnar.',
+        'D: A isquemia por HAS não é o mecanismo.',
+        'E: Não há associação com neuropatia autoimune.'
+      ]
+    }
+  },
+  {
+    id: 15, topic: 'acro', topicLabel: 'Acromegalia', nivel: 'medio',
+    enunciado: `<p>A acromegalia pode fazer parte da síndrome de Neoplasia Endócrina Múltipla tipo 1 (NEM 1). Essa síndrome caracteriza-se pela associação de adenoma hipofisário com:</p>`,
+    alternativas: [
+      'Carcinoma medular de tireoide e feocromocitoma bilateral.',
+      'Hiperparatireoidismo primário (adenomas de paratireoide) e tumor de pâncreas.',
+      'Insuficiência adrenal primária e vitiligo generalizado.',
+      'Diabetes mellitus tipo 1 autoimune e tireoidite de Hashimoto.',
+      'Carcinoma papilífero de tireoide e síndrome de Cushing por hiperplasia adrenal.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A NEM 1 (Síndrome de Wermer) associa: (1) adenomas de paratireoide com hiperparatireoidismo primário, (2) tumores de células das ilhotas pancreáticas (gastrinoma, insulinoma), (3) adenomas hipofisários.',
+      erradas: [
+        'A: Essa é a NEM 2A (carcinoma medular de tireoide, feocromocitoma, hiperparatireoidismo).',
+        'C: Descreve a síndrome poliglandular autoimune, não NEM.',
+        'D: Descreve síndrome poliglandular autoimune tipo 3.',
+        'E: Não corresponde a nenhuma síndrome endócrina definida.'
+      ]
+    }
+  },
+
+  // ==================== DM2 (25 questões) ====================
+  {
+    id: 16, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Mulher de 52 anos, obesa (IMC 33), hipertensa em uso de losartana, assintomática, realiza exames de rotina: glicemia de jejum 143 mg/dL. Em nova coleta uma semana depois: 138 mg/dL. HbA1c 7,1%. Qual a conduta diagnóstica e terapêutica inicial mais adequada?</p>`,
+    alternativas: [
+      'Solicitar peptídeo C e anticorpos anti-GAD para afastar LADA antes de iniciar tratamento.',
+      'Diagnosticar DM2 com base em duas glicemias alteradas e HbA1c; iniciar metformina e mudança de estilo de vida.',
+      'Solicitar teste de tolerância oral à glicose para confirmação, antes de qualquer intervenção terapêutica.',
+      'Iniciar insulina basal imediatamente pelo valor de HbA1c, associando à metformina.',
+      'Considerar pré-diabetes e orientar apenas mudança de estilo de vida sem medicamento.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Duas glicemias de jejum ≥ 126 mg/dL ou HbA1c ≥ 6,5% confirmam DM2 (qualquer um dos critérios é suficiente; a paciente preenche os dois). Conduta: metformina + mudança de estilo de vida como primeira linha em manifestações leves (HbA1c &lt; 7,5% e sem sintomas graves).',
+      erradas: [
+        'A: LADA é investigado em contextos específicos (jovem, magro, quadro abrupto), não aqui.',
+        'C: GTTO não é necessário porque o diagnóstico já está feito com dois critérios.',
+        'D: Insulina é reservada para manifestações graves (HbA1c &gt; 9%, sintomas importantes) — não é indicada aqui.',
+        'E: Os valores são diagnósticos de DM, não de pré-DM.'
+      ]
+    }
+  },
+  {
+    id: 17, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Quais são os critérios diagnósticos atuais para diabetes mellitus segundo a ADA/SBD (confirmando em segunda amostra, exceto glicemia casual com sintomas)?</p>`,
+    alternativas: [
+      'Glicemia de jejum ≥ 100 mg/dL, ou HbA1c ≥ 5,7%, ou glicemia casual ≥ 180 mg/dL.',
+      'Glicemia de jejum ≥ 126 mg/dL, ou GTTO 2h ≥ 200 mg/dL, ou HbA1c ≥ 6,5%, ou glicemia casual ≥ 200 mg/dL com sintomas.',
+      'Glicemia de jejum &gt; 140 mg/dL em duas amostras, ou glicemia pós-prandial &gt; 160 mg/dL em jejum de 6 horas.',
+      'HbA1c ≥ 7,0% em uma única amostra, associada a qualquer alteração da glicemia capilar.',
+      'Presença de dois dos 4Ps (poliúria, polidipsia, polifagia, perda de peso) associados a glicemia capilar &gt; 100 mg/dL.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Os critérios atuais são: glicemia de jejum ≥ 126 mg/dL (jejum de 8 h), GTTO de 2 horas ≥ 200 mg/dL, HbA1c ≥ 6,5%, ou glicemia casual ≥ 200 mg/dL em paciente com sintomas clássicos. Qualquer um desses estabelece o diagnóstico (deve ser confirmado em segunda amostra, exceto na presença de sintomas evidentes).',
+      erradas: [
+        'A: Esses são valores de pré-diabetes ou não configuram critério.',
+        'C: Valores e conceitos incorretos.',
+        'D: HbA1c ≥ 6,5% é o critério, precisando de confirmação.',
+        'E: Critério misto e impreciso.'
+      ]
+    }
+  },
+  {
+    id: 18, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Paciente com DM2 de 58 anos, HbA1c de 8,4% em uso de metformina 1000 mg 2×/dia. Apresenta insuficiência cardíaca com fração de ejeção reduzida (35%) e doença renal crônica com TFGe 55 mL/min. Qual a segunda droga de escolha, considerando o perfil de comorbidades?</p>`,
+    alternativas: [
+      'Glibenclamida, pelo custo acessível e ampla disponibilidade no SUS.',
+      'Pioglitazona, por ter ação hepática e melhorar esteatose associada ao quadro.',
+      'Empagliflozina, por reduzir hospitalização por insuficiência cardíaca e progressão renal.',
+      'Nateglinida, para controle da glicemia pós-prandial e menor risco de hipoglicemia.',
+      'Insulina NPH noturna, por ser o tratamento padrão para HbA1c acima de 8%.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Inibidores de SGLT2 (empagliflozina, dapagliflozina) têm benefício comprovado na redução de hospitalização por insuficiência cardíaca, na mortalidade cardiovascular e na progressão de doença renal. São a escolha preferencial em DM2 com ICFEr e/ou DRC, desde que a TFGe permita (a maioria funciona até TFG 30 mL/min, varia por bula).',
+      erradas: [
+        'A: Sulfonilureias têm risco de hipoglicemia e não têm benefício CV comprovado; em DRC, risco aumenta.',
+        'B: Pioglitazona causa retenção hídrica e PIORA insuficiência cardíaca (contraindicada em IC descompensada).',
+        'D: Glinidas não têm benefício CV nem renal.',
+        'E: Insulina não é a segunda escolha inicial; há drogas com benefício CV/renal antes.'
+      ]
+    }
+  },
+  {
+    id: 19, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Sobre a metformina no tratamento do DM2, qual afirmação é CORRETA?</p>`,
+    alternativas: [
+      'Atua estimulando a secreção de insulina pelas células beta pancreáticas, causando hipoglicemia como efeito adverso frequente.',
+      'Inibe a neoglicogênese hepática e melhora a sensibilidade periférica à insulina; não causa hipoglicemia em monoterapia.',
+      'É contraindicada em pacientes obesos porque pode causar ganho de peso significativo.',
+      'Sua principal contraindicação é gravidez, com uso absolutamente proibido durante a gestação.',
+      'Deve ser iniciada apenas quando a HbA1c estiver acima de 9% e o paciente for sintomático.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Metformina é uma biguanida que inibe a neoglicogênese hepática e melhora a sensibilidade periférica à insulina. É primeira escolha por ser eficaz, barata, não causar hipoglicemia em monoterapia e ter benefícios adicionais (redução de peso, eventos CV, prevenção de DM).',
+      erradas: [
+        'A: Esse é o mecanismo das sulfonilureias; metformina NÃO estimula secreção de insulina e NÃO causa hipoglicemia isolada.',
+        'C: Metformina é indicada em obesos, podendo promover leve perda de peso.',
+        'D: O uso na gravidez era proscrito, mas atualmente está LIBERADO.',
+        'E: É primeira linha em manifestações leves (HbA1c &lt; 7,5%) como monoterapia.'
+      ]
+    }
+  },
+  {
+    id: 20, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Em relação à hemoglobina glicada (HbA1c), qual das situações a seguir pode gerar resultado FALSAMENTE BAIXO, subestimando o controle glicêmico?</p>`,
+    alternativas: [
+      'Uremia grave em paciente com doença renal crônica terminal em diálise.',
+      'Anemia hemolítica aguda, por redução do tempo de vida útil das hemácias.',
+      'Hiperglicemia persistente nas últimas duas semanas antes da coleta.',
+      'Ingestão de grandes quantidades de glicose oral na véspera do exame.',
+      'Uso regular de corticoide sistêmico em dose alta.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A HbA1c reflete a média glicêmica dos últimos ~3 meses, diretamente dependente do tempo de vida da hemácia. Em anemia hemolítica, a vida útil das hemácias é reduzida, e elas "passam menos tempo expostas" à glicose — resultado: HbA1c falsamente baixa. O mesmo ocorre em hemorragias.',
+      erradas: [
+        'A: Uremia pode elevar FALSAMENTE a HbA1c.',
+        'C: Hiperglicemia persistente ELEVA a HbA1c, não diminui.',
+        'D: Glicose ingerida na véspera não interfere (HbA1c é cumulativa).',
+        'E: Corticoide causa hiperglicemia, elevando a HbA1c.'
+      ]
+    }
+  },
+  {
+    id: 21, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Mulher de 32 anos, IMC 22, magra, com história de DM tipo 2 diagnosticado há 6 meses e em uso de metformina. Tem forte história familiar: pai, avô paterno e bisavô paterno, todos diagnosticados com "diabetes" entre 20 e 30 anos de idade. Anticorpos anti-GAD e anti-IA2 negativos, peptídeo C normal. Qual a hipótese diagnóstica mais provável?</p>`,
+    alternativas: [
+      'Diabetes tipo 1 autoimune tardio (LADA).',
+      'Diabetes tipo 2 clássico.',
+      'MODY (Maturity Onset Diabetes of the Young), herança autossômica dominante.',
+      'Diabetes secundário a doença pancreática ainda não diagnosticada.',
+      'Diabetes neonatal de recidiva tardia.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'MODY é um tipo de diabetes familiar de aparecimento precoce (infância, adolescência, adulto jovem), com herança autossômica dominante (atravessa gerações). Representa 1-5% dos casos de DM. A paciente é magra, jovem, com múltiplas gerações afetadas em idade semelhante — padrão clássico. Anticorpos negativos e peptídeo C normal afastam DM1 e DM2.',
+      erradas: [
+        'A: LADA é DM1 de evolução insidiosa em adultos; tipicamente há anticorpos positivos.',
+        'B: DM2 clássico está mais associado a obesidade e início tardio; não explica o padrão familiar tão marcante.',
+        'D: Doença pancreática causa DM por destruição de células, com peptídeo C baixo.',
+        'E: Diabetes neonatal aparece nos primeiros 6 meses de vida.'
+      ]
+    }
+  },
+  {
+    id: 22, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Sobre os inibidores de SGLT2 (dapagliflozina, empagliflozina, canagliflozina), assinale a alternativa correta:</p>`,
+    alternativas: [
+      'Aumentam a secreção de insulina no estado de hiperglicemia e reduzem o esvaziamento gástrico.',
+      'Bloqueiam o cotransportador sódio-glicose tipo 2 no túbulo proximal renal, causando glicosúria terapêutica.',
+      'São primeira escolha em DM1 por reduzirem a necessidade de insulina em 80%.',
+      'Aumentam o peso corporal e o risco de infecções do trato urinário, limitando seu uso.',
+      'Contraindicados em doença cardiovascular estabelecida por aumentarem eventos isquêmicos.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Os inibidores de SGLT2 atuam bloqueando o cotransportador sódio-glicose tipo 2 no túbulo proximal, reduzindo a reabsorção de glicose e causando glicosúria. Essa ação é independente de insulina. Além do efeito glicêmico, reduzem mortalidade CV, hospitalização por IC e progressão de doença renal.',
+      erradas: [
+        'A: Esse é o mecanismo das gliptinas/agonistas de GLP-1.',
+        'C: Não são primeira escolha em DM1; há risco de cetoacidose euglicêmica.',
+        'D: Causam PERDA de peso, e o risco aumentado é de infecções genitais (cândida) — embora haja também risco de ITU.',
+        'E: Pelo contrário — são INDICADOS em DCV estabelecida por reduzirem eventos.'
+      ]
+    }
+  },
+  {
+    id: 23, topic: 'dm2', topicLabel: 'DM2', nivel: 'dificil',
+    enunciado: `<p>Homem de 65 anos, DM2 em uso de insulina NPH + regular, metformina e glibenclamida 5 mg/dia. Apresenta episódios de sudorese, confusão mental e tremores no fim da tarde, que melhoram com ingestão de açúcar. Glicemia capilar no episódio: 52 mg/dL. HbA1c: 6,2%. Qual a conduta mais apropriada?</p>`,
+    alternativas: [
+      'Aumentar a dose de insulina regular do almoço para reduzir hipoglicemia da tarde.',
+      'Suspender a metformina, que é a provável causa das hipoglicemias.',
+      'Suspender a glibenclamida e substituí-la por uma droga com menor risco de hipoglicemia (ex: iDPP4 ou agonista de GLP-1); relaxar a meta de HbA1c para &lt; 7,5% ou &lt; 8%.',
+      'Manter todas as drogas e orientar lanche no meio da tarde para prevenir os episódios.',
+      'Iniciar prednisona para reduzir a sensibilidade à insulina e evitar hipoglicemias.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'A sulfonilureia (glibenclamida) é a droga mais associada a hipoglicemia grave em DM2, especialmente em idosos. HbA1c 6,2% em paciente idoso polimedicado indica tratamento excessivamente agressivo (meta em idoso pode ser &lt; 7,5% ou mesmo &lt; 8%). A conduta correta é suspender a glibenclamida, substituir por droga sem risco de hipoglicemia e relaxar a meta.',
+      erradas: [
+        'A: Aumentar insulina só agravaria o quadro.',
+        'B: Metformina não causa hipoglicemia isolada.',
+        'D: Lanche não resolve a causa; o problema é medicamentoso.',
+        'E: Induzir resistência com corticoide é condução errada e danosa.'
+      ]
+    }
+  },
+  {
+    id: 24, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Qual das drogas a seguir NÃO faz parte do grupo dos agonistas do receptor de GLP-1/GIP?</p>`,
+    alternativas: [
+      'Liraglutida (Victoza).',
+      'Semaglutida (Ozempic).',
+      'Sitagliptina (Januvia).',
+      'Lixisenatida (Lyxumia).',
+      'Tirzepatida (Mounjaro), que é dual GLP-1/GIP.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Sitagliptina é um inibidor de DPP-4 (gliptina), não um agonista de GLP-1. Atua prolongando a ação do GLP-1 endógeno ao inibir sua degradação pela enzima DPP-4.',
+      erradas: [
+        'A, B, D, E: Todos são agonistas do receptor de GLP-1 (ou dual GLP-1/GIP no caso da tirzepatida).'
+      ]
+    }
+  },
+  {
+    id: 25, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Sobre as metas glicêmicas em pacientes idosos frágeis com DM2, a recomendação atual é:</p>`,
+    alternativas: [
+      'Manter HbA1c &lt; 6,0% para prevenção máxima de complicações microvasculares.',
+      'HbA1c &lt; 7,0% é obrigatória em todos os idosos, independentemente da fragilidade.',
+      'Considerar meta de HbA1c &lt; 8,0% se houver status funcional comprometido, fragilidade, comorbidades que limitem expectativa de vida ou alteração cognitiva.',
+      'Suspender todo tratamento antidiabético após os 75 anos, considerando futilidade.',
+      'Manter glicemia de jejum acima de 200 mg/dL para evitar hipoglicemia.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Em idosos frágeis ou com comorbidades graves, a meta é relaxada para HbA1c &lt; 8,0% para evitar hipoglicemia, que é mais prejudicial nessa população que a hiperglicemia leve. Essa flexibilização busca individualizar o tratamento conforme expectativa de vida e estado funcional.',
+      erradas: [
+        'A: Metas muito baixas aumentam risco de hipoglicemia sem benefício.',
+        'B: A regra &lt; 7% é para adultos sem complicações; idosos frágeis têm meta relaxada.',
+        'D: Suspender tratamento é conduta inadequada; controle razoável previne complicações agudas.',
+        'E: Esse valor expõe o paciente a riscos graves.'
+      ]
+    }
+  },
+  {
+    id: 26, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Qual é o valor de corte da glicemia de jejum que caracteriza pré-diabetes segundo a ADA/SBD?</p>`,
+    alternativas: [
+      'Entre 80 e 100 mg/dL.',
+      'Entre 100 e 125 mg/dL.',
+      'Entre 126 e 140 mg/dL.',
+      'Entre 140 e 199 mg/dL.',
+      'Acima de 200 mg/dL.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Pré-diabetes (glicemia de jejum alterada) é definida como glicemia de jejum entre 100 e 125 mg/dL. Valores ≥ 126 mg/dL já caracterizam diabetes.',
+      erradas: [
+        'A: Valores normais.',
+        'C: 126 mg/dL já caracteriza DM.',
+        'D: 140-199 mg/dL no tempo 2h do GTTO caracteriza intolerância à glicose, outra categoria de pré-DM.',
+        'E: Claramente diabético.'
+      ]
+    }
+  },
+  {
+    id: 27, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Sobre a secreção fisiológica de insulina, é correto afirmar:</p>`,
+    alternativas: [
+      'Ocorre em três fases distintas e independentes: basal, rápida e pulsátil lenta.',
+      'A primeira fase é hiperinsulinêmica, de curta duração, por liberação de insulina pré-formada dos grânulos da célula beta.',
+      'Glicemias entre 80 e 100 mg/dL estimulam intensamente a liberação de insulina para manter a homeostase.',
+      'O pâncreas humano secreta aproximadamente 300 unidades de insulina por dia em condições normais.',
+      'No DM2, a segunda fase é a primeira a ser perdida, enquanto a primeira fase permanece preservada.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A secreção pós-prandial normal ocorre em duas fases: primeira fase hiperinsulinêmica (liberação rápida dos grânulos pré-formados) e segunda fase sustentada (síntese de nova insulina). No DM2, a PRIMEIRA fase é justamente a primeira a ser perdida.',
+      erradas: [
+        'A: São duas fases (primeira e segunda), não três.',
+        'C: Glicemias 80-100 mg/dL NÃO estimulam liberação de insulina — há secreção basal mínima apenas.',
+        'D: O pâncreas secreta cerca de 30 U/dia, não 300.',
+        'E: O inverso: a PRIMEIRA fase é a primeira a ser perdida no DM2.'
+      ]
+    }
+  },
+  {
+    id: 28, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>A resistência à insulina é característica central do DM2. Sobre ela, é correto afirmar:</p>`,
+    alternativas: [
+      'Ocorre somente após o desenvolvimento de hiperglicemia franca, sendo consequência e não causa do DM2.',
+      'Precede o DM2 em 10 a 20 anos, período durante o qual há hiperinsulinismo compensatório e glicemia ainda normal.',
+      'É exclusivamente hereditária e não se modifica com dieta ou atividade física.',
+      'Afeta apenas o fígado, poupando músculo esquelético e tecido adiposo.',
+      'A perda de peso e a atividade física não têm impacto em sua reversão.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A resistência à insulina precede o DM2 em 10 a 20 anos. Durante esse período, a célula β compensa produzindo mais insulina, e a glicemia permanece normal (hiperinsulinismo compensatório). Quando a célula β "falha", a glicose começa a subir. Esse é o racional para intervenção precoce com MEV em pré-diabéticos.',
+      erradas: [
+        'A: A RI PRECEDE o DM2, é causa, não consequência.',
+        'C: É influenciada por fatores genéticos, mas também ambientais (obesidade visceral é o maior fator).',
+        'D: Afeta principalmente músculo esquelético, adipócito e fígado.',
+        'E: Perda de peso e atividade física são as medidas mais eficazes para melhorar a sensibilidade à insulina.'
+      ]
+    }
+  },
+  {
+    id: 29, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Em relação à síndrome de Cushing iatrogênica por uso crônico de glicocorticoides, qual efeito sobre o metabolismo da glicose é esperado e por quê?</p>`,
+    alternativas: [
+      'Hipoglicemia, pois o cortisol estimula a captação de glicose pelos músculos e adipócitos.',
+      'Hiperglicemia e eventual diabetes mellitus, porque o cortisol é um hormônio contra-regulador que estimula gliconeogênese hepática e aumenta resistência periférica à insulina.',
+      'Ausência de alterações, pois o cortisol não interfere no metabolismo glicídico.',
+      'Aumento da sensibilidade à insulina, exigindo redução das doses dos hipoglicemiantes.',
+      'Cetoacidose diabética por inibição completa da secreção de insulina.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'O cortisol é um hormônio contra-regulador. Estimula a gliconeogênese hepática, aumenta a resistência periférica à insulina (músculo, tecido adiposo) e pode desencadear DM em suscetíveis. Por isso o DM associado a endocrinopatias inclui síndrome de Cushing.',
+      erradas: [
+        'A: Cortisol eleva glicemia, não reduz.',
+        'C: Há claro efeito sobre a glicose.',
+        'D: Há REDUÇÃO da sensibilidade à insulina.',
+        'E: Não é cetoacidose típica de DM1.'
+      ]
+    }
+  },
+  {
+    id: 30, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>O conceito de "ominous octet" (octeto sinistro) no DM2, proposto por DeFronzo, inclui oito mecanismos fisiopatológicos. Qual das alternativas abaixo NÃO faz parte desses oito?</p>`,
+    alternativas: [
+      'Resistência à insulina no músculo esquelético.',
+      'Diminuição do efeito das incretinas (GLP-1, GIP).',
+      'Aumento da secreção de glucagon pela célula alfa.',
+      'Aumento da secreção de aldosterona pela camada glomerulosa adrenal.',
+      'Aumento da reabsorção renal de glicose pelos transportadores SGLT2.'
+    ],
+    correta: 3,
+    explicacao: {
+      correta: 'O octeto sinistro inclui: resistência muscular, déficit de célula β, hiperprodução hepática de glicose, aumento de glucagon, diminuição de incretinas, lipotoxicidade, aumento da reabsorção renal de glicose, disfunção hipotalâmica. A aldosterona NÃO faz parte do modelo.',
+      erradas: [
+        'A, B, C, E: Todos fazem parte do octeto sinistro.'
+      ]
+    }
+  },
+  {
+    id: 31, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Mulher de 29 anos, na 26ª semana de gestação, realiza teste de tolerância oral à glicose de rastreio de diabetes gestacional. Qual é a conduta recomendada após o parto em caso de confirmação do diagnóstico?</p>`,
+    alternativas: [
+      'Manter insulinoterapia indefinidamente após o parto, independentemente da glicemia.',
+      'Não há necessidade de reavaliação — o diabetes gestacional resolve automaticamente com o parto.',
+      'Realizar GTTO entre 4 e 6 semanas pós-parto para reclassificação; manter seguimento por risco de desenvolver DM2 no futuro.',
+      'Iniciar metformina profilática por 5 anos para prevenir DM2.',
+      'Contraindicar futuras gestações devido ao risco inaceitável de recidiva.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Após o parto, 10 a 63% das mulheres com DMG desenvolvem DM2 em 5 a 16 anos. Por isso, a recomendação é realizar GTTO entre 4 e 6 semanas pós-parto para reclassificar, e manter seguimento periódico.',
+      erradas: [
+        'A: A maioria das mulheres com DMG NÃO precisa de insulina após o parto.',
+        'B: Há altíssimo risco de DM2 no futuro — seguimento é obrigatório.',
+        'D: Metformina profilática não é padrão.',
+        'E: Gestações futuras são permitidas com acompanhamento próximo.'
+      ]
+    }
+  },
+  {
+    id: 32, topic: 'dm2', topicLabel: 'DM2', nivel: 'dificil',
+    enunciado: `<p>Paciente com hemoglobinopatia (talassemia beta) e DM2 em seguimento ambulatorial. A HbA1c mostra-se consistentemente discordante da glicemia capilar. Qual exame seria mais adequado para avaliação do controle glicêmico nesse contexto?</p>`,
+    alternativas: [
+      'Peptídeo C em jejum e estimulado.',
+      'Frutosamina, que reflete o controle glicêmico dos últimos 7 a 14 dias e não depende da vida útil das hemácias.',
+      'Anti-GAD e anti-IA2 para confirmar se o tipo de DM está correto.',
+      'Glicemia de jejum mensal, isoladamente.',
+      'Ácido lático sérico, mais preciso que a HbA1c.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A frutosamina é uma proteína glicada (principalmente albumina) que reflete o controle glicêmico dos últimos 7 a 14 dias. Como é independente do metabolismo das hemácias, é o exame indicado em pacientes com hemoglobinopatias, anemia hemolítica ou estados onde a HbA1c é pouco confiável.',
+      erradas: [
+        'A: Peptídeo C avalia reserva insulínica, não controle glicêmico.',
+        'C: Autoanticorpos não avaliam controle.',
+        'D: Glicemia isolada não reflete controle médio.',
+        'E: Ácido lático não avalia controle glicêmico.'
+      ]
+    }
+  },
+  {
+    id: 33, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Sobre as incretinas (GLP-1 e GIP) e sua aplicação terapêutica no DM2, é correto afirmar:</p>`,
+    alternativas: [
+      'As incretinas são hormônios hipofisários que inibem a secreção pancreática de insulina e glucagon.',
+      'O GLP-1 é degradado pela enzima DPP-4; inibidores de DPP-4 prolongam a ação do GLP-1 endógeno e estimulam a secreção de insulina somente no estado de hiperglicemia.',
+      'Os agonistas de GLP-1 causam hipoglicemia grave em monoterapia por estimulação contínua de insulina.',
+      'Agonistas de GLP-1 aumentam o esvaziamento gástrico e a fome, frequentemente associados a ganho de peso.',
+      'A tirzepatida é um inibidor isolado do GIP sem efeito sobre o GLP-1.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'As incretinas (hormônios intestinais) amplificam a secreção pós-prandial de insulina. O GLP-1 é degradado rapidamente pela DPP-4. Inibir a DPP-4 (com gliptinas) prolonga a ação do GLP-1 endógeno. Fundamental: essas drogas estimulam insulina SOMENTE em hiperglicemia, por isso não causam hipoglicemia em monoterapia.',
+      erradas: [
+        'A: Incretinas são intestinais, não hipofisárias, e ESTIMULAM a insulina.',
+        'C: Justamente porque só agem em hiperglicemia, NÃO causam hipoglicemia em monoterapia.',
+        'D: Agonistas de GLP-1 REDUZEM o esvaziamento gástrico, REDUZEM a fome e causam PERDA de peso.',
+        'E: Tirzepatida é agonista DUAL (GLP-1 + GIP), não inibidor.'
+      ]
+    }
+  },
+  {
+    id: 34, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Quais são os sintomas clássicos clínicos ("os 4 Ps") do diabetes descompensado?</p>`,
+    alternativas: [
+      'Poliúria, polidipsia, polifagia e perda de peso.',
+      'Polimiosite, polineuropatia, poliartrite e palidez.',
+      'Prurido, palpitações, pirose e púrpura.',
+      'Poliglobulia, proteinúria, piúria e palpitações.',
+      'Parestesia, polaciúria, priapismo e pigmentação.'
+    ],
+    correta: 0,
+    explicacao: {
+      correta: 'Os 4 Ps clássicos: poliúria (diurese osmótica pela glicose), polidipsia (sede pela perda hídrica), polifagia (fome apesar de comer, pois a glicose "não entra" nas células) e perda de peso (catabolismo).',
+      erradas: [
+        'Demais: nomes começam com "P" mas não são os clássicos do DM.'
+      ]
+    }
+  },
+  {
+    id: 35, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>A pioglitazona pertence à classe das glitazonas. Qual é o principal efeito adverso que limita seu uso em pacientes com insuficiência cardíaca?</p>`,
+    alternativas: [
+      'Hipoglicemia grave e recorrente, especialmente no período noturno.',
+      'Pancreatite aguda, por estímulo direto das células acinares.',
+      'Retenção hídrica e ganho de peso, podendo descompensar ICC.',
+      'Nefrotoxicidade com necrose tubular aguda.',
+      'Neuropatia periférica tóxica, dependente de dose.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'A pioglitazona causa retenção hídrica, edema e ganho de peso — por isso é CONTRAINDICADA em insuficiência cardíaca classe III/IV da NYHA. Outros efeitos adversos incluem hepatotoxicidade e maior risco de fraturas em mulheres. Por outro lado, tem benefícios (melhora esteatose, perfil lipídico, prevenção de DM).',
+      erradas: [
+        'A: Glitazonas não causam hipoglicemia isolada.',
+        'B: Não estão associadas a pancreatite.',
+        'D: Não são nefrotóxicas.',
+        'E: Não causam neuropatia.'
+      ]
+    }
+  },
+  {
+    id: 36, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Sobre a acarbose (Glucobay) no tratamento do DM2, qual alternativa é correta?</p>`,
+    alternativas: [
+      'Estimula a secreção de insulina e causa hipoglicemia como efeito adverso frequente.',
+      'Reduz a glicemia pós-prandial por inibir a enzima α-glicosidase intestinal, retardando a absorção de carboidratos.',
+      'É o tratamento de escolha em pacientes com doença inflamatória intestinal ou síndromes disabsortivas.',
+      'Tem ação sistêmica potente, reduzindo HbA1c em 2-3 pontos percentuais na maioria dos pacientes.',
+      'Não causa efeitos gastrointestinais por atuar exclusivamente no pâncreas.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Acarbose inibe a α-glicosidase, enzima da borda em escova intestinal responsável pela quebra de dissacarídeos em monossacarídeos. O resultado é retardo na absorção de carboidratos, reduzindo a glicemia pós-prandial. Efeitos colaterais típicos: flatulência, dor abdominal e diarreia (pela fermentação bacteriana dos carboidratos não absorvidos).',
+      erradas: [
+        'A: Não é secretagogo; não causa hipoglicemia isolada.',
+        'C: Ao contrário — é CONTRAINDICADA em distúrbios gastrointestinais.',
+        'D: Reduz HbA1c em ~0,5-0,8% apenas; efeito modesto.',
+        'E: Causa sim efeitos gastrointestinais proeminentes (flatulência, diarreia).'
+      ]
+    }
+  },
+  {
+    id: 37, topic: 'dm2', topicLabel: 'DM2', nivel: 'dificil',
+    enunciado: `<p>Homem de 48 anos, DM2 há 3 anos em uso de metformina 1500 mg, HbA1c 7,8%. IMC 34. Presença de esteatose hepática em ultrassonografia. Sem evento cardiovascular prévio. Qual seria uma boa escolha de segunda droga, considerando o perfil do paciente?</p>`,
+    alternativas: [
+      'Glimepirida, pelo custo acessível e eficácia estabelecida.',
+      'Agonista de GLP-1 (ex: semaglutida), que promove perda de peso significativa e reduz eventos cardiovasculares.',
+      'Insulina NPH noturna, para atingir rapidamente a meta glicêmica.',
+      'Acarbose, por sua ação modificadora da flora intestinal.',
+      'Sulfonilureia associada a glinida, pela sinergia no controle pós-prandial.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'O paciente tem obesidade (IMC 34), esteatose hepática e DM2 descontrolado. Os agonistas de GLP-1 (semaglutida/Ozempic, liraglutida, tirzepatida/Mounjaro) são a escolha ideal: promovem perda significativa de peso, reduzem esteatose hepática, reduzem eventos cardiovasculares e normalizam a HbA1c.',
+      erradas: [
+        'A: Glimepirida causa ganho de peso e risco de hipoglicemia, desfavorável no perfil.',
+        'C: Insulina também causa ganho de peso; deve ser reservada.',
+        'D: Acarbose tem eficácia modesta; não reduz peso de forma relevante.',
+        'E: Dupla secretagogo é redundante e não faz sentido clínico.'
+      ]
+    }
+  },
+  {
+    id: 38, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>O peptídeo C é utilizado na avaliação de pacientes com DM. Sobre seu significado clínico, é correto afirmar:</p>`,
+    alternativas: [
+      'É um peptídeo inflamatório que correlaciona-se com complicações do DM.',
+      'É liberado em proporção 1:1 com a insulina endógena a partir da clivagem da proinsulina; valores &gt; 0,9 ng/mL indicam reserva preservada de insulina.',
+      'Reflete o controle glicêmico dos últimos 90 dias, similarmente à HbA1c.',
+      'É utilizado para avaliar a absorção intestinal de carboidratos.',
+      'Deve ser dosado em jejum de 72 horas para ser confiável.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A proinsulina é clivada em insulina + peptídeo C em proporção 1:1. Como o peptídeo C tem meia-vida mais longa e não sofre primeira passagem hepática, reflete melhor a secreção endógena. Valores &gt; 0,9 ng/mL indicam reserva preservada de insulina (útil para diferenciar DM1 de DM2 ou avaliar necessidade de insulinoterapia).',
+      erradas: [
+        'A: Não é um peptídeo inflamatório.',
+        'C: Não reflete controle glicêmico.',
+        'D: Não avalia absorção intestinal.',
+        'E: Dosado em jejum normal; não precisa de 72h.'
+      ]
+    }
+  },
+  {
+    id: 39, topic: 'dm2', topicLabel: 'DM2', nivel: 'medio',
+    enunciado: `<p>Qual das seguintes situações caracteriza "apresentação atípica" de DM, sugerindo investigação adicional para subtipos específicos ou formas não usuais?</p>`,
+    alternativas: [
+      'Mulher de 55 anos, obesa, hipertensa, assintomática, com glicemia de jejum de 140 mg/dL em rastreio.',
+      'Adulto magro, sem história familiar, com apresentação abrupta, sem obesidade, com antecedentes autoimunes pessoais ou familiares.',
+      'Homem de 60 anos, DM2 há 5 anos, com retinopatia e nefropatia diabética em progressão.',
+      'Criança de 8 anos, magra, com poliúria, polidipsia e cetoacidose ao diagnóstico.',
+      'Paciente com 70 anos, DM2 em uso de metformina, hipertenso, com HbA1c estável em 6,8%.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Adulto magro com apresentação abrupta, sem obesidade e com antecedentes autoimunes pessoais ou familiares sugere LADA (DM tipo 1 autoimune tardio) em vez de DM2 clássico. Outras apresentações atípicas: criança/adolescente com apresentação insidiosa + acantose nigricans (DM2 jovem); necessidade precoce de insulina em adulto que iniciou como DM2; cetoacidose ao diagnóstico em adulto obeso.',
+      erradas: [
+        'A: Apresentação típica de DM2.',
+        'C: Evolução natural do DM2.',
+        'D: Apresentação clássica de DM1 infantil, não atípica.',
+        'E: DM2 bem controlado.'
+      ]
+    }
+  },
+  {
+    id: 40, topic: 'dm2', topicLabel: 'DM2', nivel: 'facil',
+    enunciado: `<p>Qual das seguintes drogas tem maior potencial de causar descompensação glicêmica e pode precipitar diabetes mellitus em pacientes predispostos?</p>`,
+    alternativas: [
+      'Paracetamol.',
+      'Amoxicilina.',
+      'Glicocorticoides sistêmicos.',
+      'Furosemida isoladamente em doses baixas.',
+      'Omeprazol.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Glicocorticoides são causa clássica de "diabetes induzido por droga" — aumentam a gliconeogênese hepática, a resistência periférica à insulina e podem desencadear DM em predispostos. Outros medicamentos associados: tiazídicos, ácido nicotínico, pentamidina, diazóxido, agonistas β-adrenérgicos, hormônios tireoidianos em excesso, vacor (raticida), difenil-hidantoína, interferon-γ.',
+      erradas: [
+        'A, B, E: Não têm associação com descompensação glicêmica significativa.',
+        'D: Tiazídicos têm mais associação do que furosemida; doses baixas têm impacto mínimo.'
+      ]
+    }
+  },
+
+  // ==================== DI (10 questões) ====================
+  {
+    id: 41, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'facil',
+    enunciado: `<p>Sobre o hormônio antidiurético (ADH ou arginina vasopressina), é correto afirmar:</p>`,
+    alternativas: [
+      'É sintetizado pelas células lactótropas da adeno-hipófise e liberado em resposta à prolactina.',
+      'É sintetizado no hipotálamo, armazenado e liberado pela neuro-hipófise, e age principalmente via receptores V2 no túbulo coletor renal.',
+      'É o principal regulador da osmolaridade plasmática, sendo liberado quando a osmolaridade cai abaixo de 270 mOsm/kg.',
+      'Sua ação renal é mediada por inserção de canais de sódio nas células principais do túbulo coletor.',
+      'O álcool estimula sua liberação, explicando a oligúria observada em consumidores crônicos.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'O ADH é sintetizado nos neurônios magnocelulares do hipotálamo (núcleos supraóptico e paraventricular), transportado pelos axônios e armazenado/liberado pela neuro-hipófise. Age principalmente via receptores V2 nas células do túbulo coletor, levando à inserção de aquaporinas-2 na membrana apical e reabsorção de água.',
+      erradas: [
+        'A: É sintetizado no hipotálamo, não pela adeno-hipófise.',
+        'C: Aumento na osmolaridade (e não queda) estimula a liberação; o limiar osmótico de liberação do ADH é ~280-285 mOsm/kg (não 270). A faixa normal da osmolaridade plasmática é 285-295 mOsm/kg.',
+        'D: Não são canais de sódio — são aquaporinas (canais de água).',
+        'E: O álcool INIBE o ADH, causando poliúria e desidratação.'
+      ]
+    }
+  },
+  {
+    id: 42, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'medio',
+    enunciado: `<p>Mulher de 34 anos, 3 dias após craniotomia para retirada de craniofaringioma, apresenta poliúria acentuada (400 mL/h), urina de densidade 1.002, sódio sérico 155 mEq/L. Qual o diagnóstico e a conduta?</p>`,
+    alternativas: [
+      'Polidipsia psicogênica; restringir oferta hídrica gradualmente.',
+      'SIADH; restringir água livre e administrar tolvaptan.',
+      'Diabetes insípidus central pós-cirúrgico; reposição de água livre e administração de DDAVP.',
+      'Diabetes mellitus descompensado; iniciar insulinoterapia em bomba de infusão.',
+      'Hipercalcemia aguda pós-cirurgica; solicitar cálcio sérico e fosfato.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Quadro clássico de DI central pós-cirúrgico: poliúria hipotônica (densidade 1.002, urina "como água"), hipernatremia (155 mEq/L). A cirurgia lesou os neurônios produtores de ADH ou a haste. Conduta: reposição de água livre para corrigir a hipernatremia (cuidado com velocidade de correção) + DDAVP. Atenção à possível resposta trifásica.',
+      erradas: [
+        'A: Polidipsia psicogênica não ocorre assim no pós-operatório imediato; o paciente está grave.',
+        'B: SIADH cursa com hiponatremia, não hipernatremia.',
+        'D: DM causaria diurese osmótica com glicose na urina; densidade não seria 1.002.',
+        'E: Hipercalcemia pode causar DI nefrogênico, mas o contexto é claramente central pós-operatório.'
+      ]
+    }
+  },
+  {
+    id: 43, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'medio',
+    enunciado: `<p>No teste de privação hídrica, após 4-6 horas sem ingesta líquida e perda de ~3% do peso corporal, administra-se DDAVP subcutâneo. Qual é o comportamento esperado da osmolaridade urinária em cada situação?</p>`,
+    alternativas: [
+      'Diabetes insípidus central: a urina concentra apenas após DDAVP. DI nefrogênico: a urina não concentra nem antes nem depois do DDAVP.',
+      'Diabetes insípidus central: a urina concentra já antes do DDAVP. DI nefrogênico: a urina concentra após DDAVP.',
+      'Ambos os tipos concentram igualmente a urina após DDAVP.',
+      'Nenhum dos tipos concentra a urina, mesmo após administração de DDAVP.',
+      'A urina não concentra no DI central e concentra no DI nefrogênico.'
+    ],
+    correta: 0,
+    explicacao: {
+      correta: 'No DI central, o rim responde ao ADH exógeno (DDAVP) — então, após o DDAVP, a urina concentra adequadamente. No DI nefrogênico, o problema é no receptor/efetor renal, então a urina NÃO concentra nem com ADH endógeno nem com DDAVP exógeno. Essa diferenciação é a essência do teste.',
+      erradas: [
+        'B: Invertido.',
+        'C: O DI nefrogênico não concentra a urina mesmo com DDAVP.',
+        'D: O DI central concentra após DDAVP.',
+        'E: Invertido.'
+      ]
+    }
+  },
+  {
+    id: 44, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'facil',
+    enunciado: `<p>Quais são as causas mais frequentes de DI nefrogênico ADQUIRIDO em prática clínica?</p>`,
+    alternativas: [
+      'Infarto hipofisário e traumatismo craniano grave.',
+      'Lítio, hipercalcemia e hipocalemia crônica.',
+      'Sarcoidose, tuberculose e hipofisite linfocitária.',
+      'Craniofaringioma e adenoma hipofisário não funcionante.',
+      'Diabetes mellitus tipo 1 e síndrome de Cushing.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'As causas mais comuns de DI nefrogênico adquirido são: lítio (causa clássica, reduz expressão de AQP2), hipercalcemia, hipocalemia, doenças renais crônicas (rins policísticos, pielonefrite), contrastes radiológicos, anemia falciforme, hemocromatose.',
+      erradas: [
+        'A: São causas de DI CENTRAL.',
+        'C: São causas de DI central (por lesão da haste/hipófise).',
+        'D: São causas de DI central.',
+        'E: Não são causas usuais.'
+      ]
+    }
+  },
+  {
+    id: 45, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'medio',
+    enunciado: `<p>A resposta trifásica após cirurgia ou trauma na região hipotálamo-hipofisária apresenta-se em qual sequência temporal?</p>`,
+    alternativas: [
+      'Oligúria → poliúria → oligúria definitiva.',
+      'Poliúria inicial (déficit de ADH) → antidiurese (liberação de ADH por neurônios lesados em morte) → DI central definitivo ou recuperação.',
+      'SIADH → diurese normal → poliúria psicogênica.',
+      'Polidipsia → oligúria → SIADH crônico.',
+      'Hipernatremia estável → hiponatremia → hipernatremia.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A resposta trifásica clássica após trauma hipofisário: (1ª fase) poliúria por déficit de ADH, (2ª fase) antidiurese com risco de hiponatremia pela liberação descontrolada de ADH pelos neurônios em degeneração, (3ª fase) DI central definitivo (se a lesão for ampla) ou recuperação parcial. É importante conhecer essa sequência porque a 2ª fase pode enganar o clínico e causar hiponatremia iatrogênica se DDAVP e fluidos continuarem sendo administrados.',
+      erradas: [
+        'Demais: sequências incorretas que não refletem a fisiopatologia.'
+      ]
+    }
+  },
+  {
+    id: 46, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'medio',
+    enunciado: `<p>Um paciente com polidipsia psicogênica (compulsão por beber água) diferencia-se de um paciente com DI verdadeiro por qual característica clínica?</p>`,
+    alternativas: [
+      'Ausência de nictúria — o paciente com polidipsia psicogênica costuma dormir sem acordar para urinar.',
+      'Presença de hipernatremia acentuada no diagnóstico.',
+      'Densidade urinária persistentemente elevada (&gt; 1.020).',
+      'Resposta parcial ao DDAVP com concentração moderada da urina.',
+      'Volume urinário abaixo de 1 litro por dia.'
+    ],
+    correta: 0,
+    explicacao: {
+      correta: 'Pista clínica importante: na polidipsia psicogênica, o paciente NÃO costuma ter nictúria — ele dorme e não acorda para urinar, porque não bebe à noite. Já no DI verdadeiro (central ou nefrogênico), a poliúria continua durante a noite, forçando o paciente a acordar várias vezes.',
+      erradas: [
+        'B: Ao contrário — na polidipsia psicogênica, o sódio tende a estar no limite inferior ou discretamente baixo.',
+        'C: A densidade é baixa (urina diluída).',
+        'D: A diferenciação é feita com mais precisão pelo teste de privação.',
+        'E: O volume urinário é AUMENTADO, igual ao do DI.'
+      ]
+    }
+  },
+  {
+    id: 47, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'dificil',
+    enunciado: `<p>Criança de 5 anos com diagnóstico de diabetes insípidus central familiar de início aos 4 anos, investigação revela também diabetes mellitus juvenil, atrofia óptica bilateral e surdez neurossensorial progressiva. Qual é a síndrome diagnóstica mais provável?</p>`,
+    alternativas: [
+      'Síndrome de Kallmann.',
+      'Síndrome de Prader-Willi.',
+      'Síndrome de Wolfram (DIDMOAD).',
+      'Síndrome de Sheehan juvenil.',
+      'Síndrome CHARGE.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'A síndrome de Wolfram (acrônimo DIDMOAD) caracteriza-se por: Diabetes Insipidus (neurogênico), Diabetes Mellitus, Optic Atrophy e Deafness (surdez). É uma doença genética causada por mutações no gene WFS1 (wolframina), com herança predominantemente autossômica recessiva segundo a literatura atual (o material didático usado nesta aula classifica-a entre causas "familiares" ao lado do DI central familiar autossômico dominante — atenção à divergência). O quadro do paciente preenche todos os componentes.',
+      erradas: [
+        'A: Kallmann = hipogonadismo hipogonadotrófico + anosmia.',
+        'B: Prader-Willi = obesidade, hiperfagia, hipogonadismo, retardo mental, deleção do cromossomo 15.',
+        'D: Sheehan = infarto hipofisário pós-parto; não ocorre em crianças.',
+        'E: CHARGE = Coloboma, Heart defects, Atresia de coanas, Retardo, Genital hipoplasia, Ear anomalies.'
+      ]
+    }
+  },
+  {
+    id: 48, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'medio',
+    enunciado: `<p>Sobre o DI gestacional, é correto afirmar:</p>`,
+    alternativas: [
+      'Decorre da hipertrofia fisiológica da neuro-hipófise durante a gestação.',
+      'Ocorre pela degradação aumentada do ADH por uma vasopressinase produzida pela placenta; é raro e responde ao DDAVP.',
+      'Afeta 5% das gestações no Brasil, sendo a forma mais comum de DI.',
+      'Diagnóstica-se exclusivamente no puerpério tardio, dada a falta de sintomas na gestação.',
+      'Tratamento indicado é lítio oral para reduzir a atividade renal à água.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'O DI gestacional é raro e decorre da ação de uma vasopressinase placentária que degrada o ADH endógeno. Responde bem ao DDAVP porque este é resistente à vasopressinase. Tipicamente resolve após o parto.',
+      erradas: [
+        'A: Não é por hipertrofia, é por degradação enzimática.',
+        'C: É raro.',
+        'D: Sintomas ocorrem durante a gestação (poliúria, sede).',
+        'E: Lítio é CAUSA de DI nefrogênico — seria absurdamente errado dar.'
+      ]
+    }
+  },
+  {
+    id: 49, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'facil',
+    enunciado: `<p>O DDAVP (desmopressina) é o tratamento de escolha do DI central. Quais são as formas farmacêuticas disponíveis desse medicamento?</p>`,
+    alternativas: [
+      'Exclusivamente intramuscular de liberação prolongada, administrado mensalmente.',
+      'Exclusivamente oral em comprimidos de 1 mg.',
+      'Solução intranasal, comprimidos e apresentações parenterais (SC/IV).',
+      'Adesivo transdérmico único semanal e supositório diário.',
+      'Apenas em bomba de infusão contínua, em ambiente hospitalar.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'O DDAVP está disponível em: (1) solução intranasal (10 μg/puff), (2) comprimidos (0,1 e 0,2 mg), (3) ampolas parenterais (4 μg/mL). A escolha depende do paciente, disponibilidade e gravidade do quadro.',
+      erradas: [
+        'Outras: apresentações incorretas, não disponíveis ou inexistentes.'
+      ]
+    }
+  },
+  {
+    id: 50, topic: 'di', topicLabel: 'Diabetes Insípidus', nivel: 'medio',
+    enunciado: `<p>No DI nefrogênico, como o rim não responde ao ADH, as medidas terapêuticas devem ser diferentes do DI central. Qual das opções abaixo é usada no manejo do DI nefrogênico?</p>`,
+    alternativas: [
+      'Altas doses de DDAVP endovenoso.',
+      'Ingesta adequada de líquidos, dieta hipossódica e uso de anti-inflamatórios e/ou tiazídicos.',
+      'Prednisona em dose alta por tempo prolongado.',
+      'Hemodiálise profilática semanal.',
+      'Amilorida isoladamente é curativa em 100% dos casos.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'No DI nefrogênico, como o rim não responde ao ADH, o tratamento envolve: (1) ingesta adequada de líquidos, (2) dieta hipossódica (reduz a carga de solutos que o rim precisa excretar), (3) anti-inflamatórios (AINEs — aumentam indiretamente a expressão de AQP2), (4) diuréticos tiazídicos (paradoxalmente reduzem a poliúria por induzir leve depleção volêmica e aumentar a reabsorção proximal).',
+      erradas: [
+        'A: DDAVP não funciona no DI nefrogênico.',
+        'C: Prednisona não é tratamento.',
+        'D: Hemodiálise não tem papel.',
+        'E: Amilorida pode ser usada em casos específicos (lítio), mas não é curativa isoladamente em 100%.'
+      ]
+    }
+  },
+
+  // ==================== HIPOPITUITARISMO (10 questões) ====================
+  {
+    id: 51, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'medio',
+    enunciado: `<p>Mulher de 38 anos, G4P4A0, é avaliada por amenorreia, fadiga, queda de cabelo e hipotensão postural. Refere sangramento volumoso no último parto (há 10 anos) com choque hipovolêmico. Não conseguiu amamentar após esse parto. Qual é o diagnóstico mais provável?</p>`,
+    alternativas: [
+      'Síndrome dos ovários policísticos com anovulação crônica.',
+      'Hipotireoidismo primário com fadiga e queda de cabelo secundária.',
+      'Síndrome de Sheehan (infarto pós-parto da hipófise hiperplasiada).',
+      'Doença de Addison autoimune com insuficiência adrenal.',
+      'Síndrome de Cushing endógena por adenoma hipofisário.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Caso clássico de síndrome de Sheehan: hemorragia obstétrica grave → hipotensão → vasoespasmo → infarto da hipófise (hipertrofiada na gestação). A agalactia (falha na lactação) é frequentemente a primeira pista. Manifestações tardias: amenorreia, fadiga, panhipopituitarismo progressivo.',
+      erradas: [
+        'A: SOP não explica agalactia nem hipotensão.',
+        'B: Hipotireoidismo primário não explica amenorreia nem agalactia pós-parto.',
+        'D: Addison não explica a relação com parto e agalactia.',
+        'E: Cushing não cursa com esses sintomas.'
+      ]
+    }
+  },
+  {
+    id: 52, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'facil',
+    enunciado: `<p>Quando há lesão progressiva da hipófise anterior, a ordem de perda hormonal tipicamente observada é:</p>`,
+    alternativas: [
+      'ACTH → TSH → LH/FSH → GH → PRL.',
+      'GH → LH/FSH → TSH → ACTH → PRL.',
+      'PRL → ACTH → TSH → LH/FSH → GH.',
+      'TSH → GH → PRL → LH/FSH → ACTH.',
+      'LH/FSH → ACTH → GH → TSH → PRL.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'A sequência clássica de perda hormonal é: GH → LH/FSH → TSH → ACTH → PRL. A PRL é quase sempre a última a ser afetada; na verdade, em lesões da haste hipofisária ela frequentemente SOBE (por perda da inibição dopaminérgica).',
+      erradas: [
+        'Outras: sequências incorretas.'
+      ]
+    }
+  },
+  {
+    id: 53, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'medio',
+    enunciado: `<p>Homem de 55 anos, portador de macroadenoma hipofisário conhecido, chega ao pronto-socorro com cefaleia súbita e intensa ("pior cefaleia da vida"), distúrbio visual, ptose palpebral à direita e alteração do nível de consciência. TC de crânio mostra hemorragia dentro da sela turcica. Qual é o diagnóstico e a conduta imediata?</p>`,
+    alternativas: [
+      'Meningite bacteriana; iniciar antibioticoterapia empírica de amplo espectro.',
+      'Apoplexia hipofisária; iniciar hidrocortisona em dose de estresse EV e solicitar avaliação neurocirúrgica urgente.',
+      'Hemorragia subaracnoide por aneurisma; solicitar angiografia cerebral e clampear o aneurisma.',
+      'Enxaqueca oftalmoplégica; administrar sumatriptana e oxigênio de alto fluxo.',
+      'Acidente vascular isquêmico; iniciar trombolítico conforme janela terapêutica.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Apoplexia hipofisária é uma urgência endocrinológica — infarto hemorrágico espontâneo de um tumor hipofisário. Quadro clássico: cefaleia súbita e intensa, distúrbio visual (compressão do quiasma), ptose por acometimento do III par no seio cavernoso, alteração de consciência e sinais de hipoadrenalismo agudo. Conduta: HIDROCORTISONA EV IMEDIATA (evita crise adrenal) + avaliação neurocirúrgica para descompressão.',
+      erradas: [
+        'A: Meningite não tem esse padrão imagenológico.',
+        'C: Importante diagnóstico diferencial, mas a imagem mostra claramente hemorragia intra-selar.',
+        'D: Enxaqueca não causa alteração de consciência nem hemorragia à imagem.',
+        'E: Trombolítico é contraindicado em hemorragia.'
+      ]
+    }
+  },
+  {
+    id: 54, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'medio',
+    enunciado: `<p>No tratamento de reposição do hipopituitarismo, por que é obrigatório iniciar a reposição de glicocorticoide ANTES da reposição de hormônio tireoidiano?</p>`,
+    alternativas: [
+      'Porque o glicocorticoide inibe a absorção intestinal da levotiroxina, devendo ser iniciado primeiro.',
+      'Porque iniciar levotiroxina isoladamente em paciente com insuficiência adrenal pode desencadear crise adrenal, ao acelerar o metabolismo do cortisol residual.',
+      'Porque a levotiroxina causa hipoglicemia aguda grave se não houver cortisol suficiente.',
+      'Porque existe risco de hipertireoidismo paradoxal sem cobertura de corticoide.',
+      'Porque a levotiroxina aumenta a excreção renal de potássio, gerando hipocalemia grave.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Regra de ouro da reposição no hipopituitarismo: glicocorticoide SEMPRE antes do hormônio tireoidiano. Razão: a levotiroxina acelera o metabolismo do cortisol. Em um paciente que já tem insuficiência adrenal (mesmo que parcial), o pouco cortisol disponível é consumido mais rapidamente, podendo precipitar uma CRISE ADRENAL.',
+      erradas: [
+        'A: Não é por absorção.',
+        'C: Não causa hipoglicemia isolada.',
+        'D: Não há hipertireoidismo paradoxal.',
+        'E: Não é o mecanismo.'
+      ]
+    }
+  },
+  {
+    id: 55, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'facil',
+    enunciado: `<p>Para monitorar a reposição de levotiroxina em pacientes com HIPOTIREOIDISMO CENTRAL (secundário ou terciário), qual parâmetro laboratorial deve ser utilizado?</p>`,
+    alternativas: [
+      'TSH sérico, mantendo entre 0,5 e 2,5 mUI/L.',
+      'T4 livre (T4L), mantendo no terço superior da faixa de normalidade.',
+      'T3 total, mantendo em 200 ng/dL.',
+      'Tireoglobulina sérica, mantendo indetectável.',
+      'Anticorpos anti-TPO, mantendo negativos.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'No hipotireoidismo central, o TSH já está comprometido na origem (hipófise ou hipotálamo), então não serve para monitorar a reposição — pode permanecer baixo mesmo com T4L inadequado. O parâmetro correto é o T4 LIVRE, mantido no terço superior da faixa de normalidade.',
+      erradas: [
+        'A: Erro clássico — o TSH não serve nesta situação.',
+        'C: T3 não é parâmetro padrão.',
+        'D: Tireoglobulina é marcador de carcinoma.',
+        'E: Anticorpos não monitoram reposição.'
+      ]
+    }
+  },
+  {
+    id: 56, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'medio',
+    enunciado: `<p>Na etiologia do hipopituitarismo adquirido, a regra mnemônica "8 Is + 1 L" inclui qual das seguintes causas classificadas como INFILTRATIVA?</p>`,
+    alternativas: [
+      'Craniofaringioma.',
+      'Síndrome de Sheehan.',
+      'Hipofisite linfocitária.',
+      'Hemocromatose.',
+      'Síndrome de Kallmann.'
+    ],
+    correta: 3,
+    explicacao: {
+      correta: 'Dentro das causas INFILTRATIVAS temos: sarcoidose, hemocromatose (depósito tecidual de ferro; manifestação mais comum é hipogonadismo) e histiocitose de Langerhans.',
+      erradas: [
+        'A: Craniofaringioma é causa INVASIVA.',
+        'B: Sheehan é causa de INFARTO.',
+        'C: Hipofisite linfocitária é causa IMUNOLÓGICA.',
+        'E: Síndrome de Kallmann é causa IDIOPÁTICA (genética).'
+      ]
+    }
+  },
+  {
+    id: 57, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'dificil',
+    enunciado: `<p>Adolescente de 16 anos, sexo masculino, altura 1,80 m, envergadura 1,90 m, com puberdade atrasada, micropênis, testículos pré-púberes, e anosmia (não sente cheiros desde a infância). Dosagens: LH e FSH baixos, testosterona baixa. Qual é a hipótese diagnóstica mais provável?</p>`,
+    alternativas: [
+      'Síndrome de Klinefelter (47,XXY).',
+      'Síndrome de Kallmann (hipogonadismo hipogonadotrófico + anosmia).',
+      'Hipogonadismo hipergonadotrófico por falência testicular primária.',
+      'Síndrome de Prader-Willi.',
+      'Atraso constitucional do crescimento e puberdade.'
+    ],
+    correta: 1,
+    explicacao: {
+      correta: 'Síndrome de Kallmann = tríade clássica: hipogonadismo hipogonadotrófico + anosmia/hiposmia + eunucoidismo (envergadura maior que altura). Mecanismo: migração inadequada dos neurônios produtores de GnRH junto com neurônios olfatórios durante a embriogênese. Ligado ao X principalmente, genes KAL1, FGFR1, etc.',
+      erradas: [
+        'A: Klinefelter cursa com hipogonadismo HIPERGONADOTRÓFICO (LH/FSH altos); não tem anosmia.',
+        'C: A falência testicular primária também cursa com LH/FSH ALTOS; o caso tem gonadotrofinas baixas.',
+        'D: Prader-Willi cursa com obesidade e hiperfagia, que não estão descritos.',
+        'E: Atraso constitucional não cursa com anosmia nem com hábitos eunucoides persistentes.'
+      ]
+    }
+  },
+  {
+    id: 58, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'medio',
+    enunciado: `<p>No panhipopituitarismo, a deficiência de ACTH leva à insuficiência adrenal secundária. Qual é a diferença fundamental em relação à insuficiência adrenal PRIMÁRIA (doença de Addison)?</p>`,
+    alternativas: [
+      'Não há hipoaldosteronismo clinicamente significativo nem hipercalemia, pois a aldosterona é regulada pelo sistema renina-angiotensina, não pelo ACTH; também não há hiperpigmentação.',
+      'Há hiperpigmentação cutânea mais intensa, por aumento compensatório do MSH no córtex.',
+      'Há hiperreninemia secundária como consequência da perda do estímulo do ACTH.',
+      'Há hipernatremia e hipovolemia graves, por perda do efeito da aldosterona.',
+      'Há maior risco de crise adrenal em estresse, comparada à forma primária.'
+    ],
+    correta: 0,
+    explicacao: {
+      correta: 'Na insuficiência adrenal secundária (ACTH baixo), a zona glomerulosa — produtora de aldosterona — está preservada, porque a aldosterona é regulada primariamente pelo sistema renina-angiotensina, não pelo ACTH. Portanto, NÃO há hipoaldosteronismo significativo, NÃO há hipercalemia e a perda de sódio é menos grave. Também NÃO há hiperpigmentação (que é causada pelo ACTH e POMC elevados em Addison).',
+      erradas: [
+        'B: Justamente o contrário — não há hiperpigmentação na forma secundária.',
+        'C: Não há hiperreninemia.',
+        'D: Não há hipernatremia.',
+        'E: O risco de crise existe, mas não é maior que na primária.'
+      ]
+    }
+  },
+  {
+    id: 59, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'facil',
+    enunciado: `<p>Sobre a definição de panhipopituitarismo, assinale a alternativa correta:</p>`,
+    alternativas: [
+      'Deficiência isolada de prolactina em paciente nuligesta.',
+      'Deficiência de ACTH associada à resistência insulínica adquirida.',
+      'Deficiência completa de todos os hormônios da hipófise, sendo as manifestações evidentes quando há comprometimento de aproximadamente 75% do parênquima glandular.',
+      'Hiperfunção simultânea de GH, TSH e ACTH por adenoma pluri-hormonal.',
+      'Insuficiência exclusiva da neuro-hipófise com preservação da adeno-hipófise.'
+    ],
+    correta: 2,
+    explicacao: {
+      correta: 'Panhipopituitarismo = deficiência completa de todos os hormônios hipofisários. Característica importante: as manifestações tornam-se evidentes quando há comprometimento de aproximadamente 75% do parênquima hipofisário, o que explica o quadro insidioso.',
+      erradas: [
+        'A: É deficiência isolada, não pan.',
+        'B: Não é pan.',
+        'D: Hiperfunção não é hipopituitarismo.',
+        'E: Seria DI isolado, não pan.'
+      ]
+    }
+  },
+  {
+    id: 60, topic: 'hp', topicLabel: 'Hipopituitarismo', nivel: 'medio',
+    enunciado: `<p>A síndrome de Prader-Willi caracteriza-se por todas as alterações abaixo, EXCETO:</p>`,
+    alternativas: [
+      'Obesidade mórbida por hiperfagia.',
+      'Hipogonadismo hipogonadotrófico.',
+      'Retardo mental e hipotonia muscular.',
+      'Hipogonadismo HIPERgonadotrófico com testículos aumentados.',
+      'Translocação ou deleção do cromossomo 15 (região paterna).'
+    ],
+    correta: 3,
+    explicacao: {
+      correta: 'A síndrome de Prader-Willi cursa com hipogonadismo HIPOGONADOTRÓFICO (não hipergonadotrófico). No recém-nascido: criptorquidismo bilateral, ausência de pregas escrotais. Nos adultos: testículos pequenos, não aumentados. A alternativa D descreve achado incompatível.',
+      erradas: [
+        'A, B, C, E: Todos são achados característicos.'
+      ]
+    }
+  },
+];
+
+const dissertativas = [
+  {
+    id: 1, topic: 'acro', topicLabel: 'Acromegalia',
+    caso: `<p>Homem de 42 anos procura endocrinologista por alteração progressiva das feições faciais, aumento do número do calçado (de 41 para 45 nos últimos 10 anos), sudorese excessiva, dor articular difusa, cefaleia e diminuição da libido nos últimos 3 anos. Antecedentes: hipertensão arterial diagnosticada há 2 anos, pré-diabetes recente e síndrome do túnel do carpo bilateral. Ao exame: mandíbula proeminente, mãos alargadas com pele espessa, diastema dentário e pele oleosa. PA 158/98 mmHg. Campimetria mostra hemianopsia bitemporal parcial. IGF-1 sérico: 4,3× o limite superior da normalidade para idade e sexo. RM de hipófise: macroadenoma de 18 mm com extensão supraselar comprimindo o quiasma óptico.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual a hipótese diagnóstica mais provável e como confirmá-la bioquimicamente, considerando que o IGF-1 já está elevado?' },
+      { num: 'b', texto: 'Explique por que a paciente apresenta HAS, diabetes e síndrome do túnel do carpo, conectando cada manifestação ao mecanismo fisiopatológico.' },
+      { num: 'c', texto: 'Qual é a conduta terapêutica inicial apropriada neste caso e por quê?' },
+      { num: 'd', texto: 'Quais são os principais critérios de controle da doença segundo o consenso atual, e qual é o impacto do controle na expectativa de vida?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Diagnóstico: <em>acromegalia ativa por macroadenoma hipofisário secretor de GH</em>. Embora o IGF-1 já esteja elevado (e isso por si só, junto à clínica e imagem, seja suficiente), o teste confirmatório padrão é o <strong>teste de tolerância oral à glicose (GTTO) com dosagem seriada de GH</strong>. Em pessoas saudáveis, a sobrecarga de glicose suprime o GH para valores &lt;0,4 μg/L (IMC normal). Em acromegalia, o tumor é autônomo e o GH não suprime.</p>
+<p><strong>b)</strong> <em>HAS</em>: excesso crônico de GH leva a retenção de sódio, hiperatividade simpática e remodelamento vascular. <em>Diabetes/intolerância à glicose</em>: o GH e o IGF-1 são hormônios contra-reguladores, antagonizando a ação da insulina e elevando a resistência insulínica periférica e a produção hepática de glicose (~50% dos acromegálicos têm DM ou intolerância). <em>Síndrome do túnel do carpo</em>: o excesso crônico de GH/IGF-1 causa espessamento do tecido sinovial e das partes moles, com compressão mecânica do nervo mediano no túnel do carpo.</p>
+<p><strong>c)</strong> Como o paciente apresenta <strong>macroadenoma com compressão do quiasma óptico e hemianopsia bitemporal</strong>, a conduta inicial é <strong>cirurgia transesfenoidal</strong> (tratamento padrão-ouro em macroadenomas ressecáveis e especialmente quando há comprometimento visual). A cirurgia busca descomprimir a via óptica e reduzir a massa tumoral. Se houver doença residual, pode-se associar análogo de somatostatina, cabergolina ou pegvisomanto.</p>
+<p><strong>d)</strong> <strong>Consenso 2023:</strong> IGF-1 normal para idade e sexo, após 3 meses de tratamento cirúrgico ou com análogo de somatostatina. Quando o IGF-1 é normalizado, os pacientes acromegálicos obtêm expectativa de vida similar à da população saudável — sem tratamento, a mortalidade é significativamente elevada (cardiovascular predomina).</p>`
+  },
+  {
+    id: 2, topic: 'dm2', topicLabel: 'DM2',
+    caso: `<p>Mulher de 58 anos, obesa (IMC 34), hipertensa em uso de losartana, dislipidêmica, sedentária, é encaminhada ao ambulatório após glicemia de jejum de 198 mg/dL e HbA1c de 8,9% em check-up de rotina. Relata cansaço, poliúria e visão turva intermitente há 3 meses. Exame físico: PA 148/92 mmHg, circunferência abdominal 104 cm, acantose nigricans cervical. Exames: creatinina 1,4 mg/dL (TFGe 48 mL/min), LDL 158 mg/dL, HDL 32 mg/dL, triglicerídeos 310 mg/dL, microalbuminúria presente. Ecocardiograma: disfunção diastólica leve, fração de ejeção 58%.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual o diagnóstico e como classificar a gravidade desse quadro? Há alguma consideração adicional sobre o perfil de risco?' },
+      { num: 'b', texto: 'Quais são as metas terapêuticas multifatoriais (glicêmica, pressórica, lipídica) para essa paciente e por quê?' },
+      { num: 'c', texto: 'Qual é a estratégia farmacológica de primeira linha considerando o perfil clínico e comorbidades?' },
+      { num: 'd', texto: 'Quais medidas não farmacológicas são obrigatórias nesse caso e qual o benefício esperado de uma perda de peso de 5-10%?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Diagnóstico: <strong>DM tipo 2 com manifestações moderadas</strong> (glicemia 200-300 mg/dL, HbA1c 7,5-9% com sintomas). A paciente já apresenta sinais de complicações microvasculares (microalbuminúria, queda da TFGe) e alto risco cardiovascular (HAS, obesidade central, dislipidemia aterogênica, DRC incipiente). É um <em>perfil de risco cardiovascular alto a muito alto</em>.</p>
+<p><strong>b)</strong> <em>Metas:</em>
+<ul><li><strong>HbA1c &lt; 7,0%</strong> — padrão em adulto sem complicações graves (individualizar).</li>
+<li><strong>PA &lt; 130/80 mmHg</strong> — pelo perfil de DM + DRC + alto risco CV.</li>
+<li><strong>LDL &lt; 70 mg/dL</strong> (alto risco) ou &lt; 50 mg/dL (muito alto risco) — iniciar estatina de alta potência.</li>
+<li>Triglicerídeos &lt; 150 mg/dL; HDL &gt; 40 (♀).</li>
+<li>Microalbuminúria: iniciar/otimizar iECA ou BRA.</li></ul>
+</p>
+<p><strong>c)</strong> <em>Estratégia farmacológica:</em> (1) <strong>Metformina</strong> como droga piloto (TFGe 48 mL/min permite uso com ajuste de dose; contraindicado apenas se &lt; 30). (2) Segunda droga preferencial: <strong>inibidor de SGLT2</strong> (ex: dapagliflozina ou empagliflozina), que oferece benefício cardiovascular, renal (reduz progressão da DRC) e promove perda de peso. Como alternativa ou associação: <strong>agonista de GLP-1</strong> (semaglutida, tirzepatida) — especialmente útil pelo IMC elevado e benefício CV. (3) Manter losartana (BRA) e otimizar controle pressórico e lipídico. (4) Estatina de alta potência.</p>
+<p><strong>d)</strong> <em>Medidas não farmacológicas obrigatórias:</em> restrição calórica, atividade física regular (≥150 min/semana de aeróbica moderada + resistência), dieta mediterrânea/DASH, cessação do sedentarismo, controle de peso. <strong>Perda de 5-10% do peso corporal</strong> melhora significativamente o controle glicêmico, a pressão arterial, o perfil lipídico e a sensibilidade à insulina — pode inclusive induzir remissão em DM2 recente.</p>`
+  },
+  {
+    id: 3, topic: 'di', topicLabel: 'Diabetes Insípidus',
+    caso: `<p>Mulher de 28 anos, internada após traumatismo crânio-encefálico grave em acidente automobilístico. Submetida a craniotomia descompressiva há 3 dias. Nas últimas 12 horas, o enfermeiro relata diurese acentuada: 300-400 mL/hora, com urina clara como água. Balanço hídrico negativo de 2.500 mL em 12 horas. Exames: sódio sérico 158 mEq/L, osmolaridade plasmática 320 mOsm/kg, osmolaridade urinária 98 mOsm/kg, densidade urinária 1.002, glicemia 92 mg/dL, creatinina normal.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual o diagnóstico mais provável e o mecanismo fisiopatológico?' },
+      { num: 'b', texto: 'Como diferenciar entre as principais causas de poliúria no pós-operatório neurocirúrgico (DI central, DI nefrogênico, diurese osmótica, polidipsia psicogênica)?' },
+      { num: 'c', texto: 'Qual é a conduta terapêutica imediata e em que sequência?' },
+      { num: 'd', texto: 'Descreva a "resposta trifásica" clássica que pode ocorrer após lesão hipotalâmica/hipofisária e os cuidados especiais que ela requer.' }
+    ],
+    gabarito: `<p><strong>a)</strong> Diagnóstico: <strong>diabetes insípidus central pós-traumático</strong>. Mecanismo: o trauma cirúrgico e/ou do próprio TCE lesa os neurônios magnocelulares do hipotálamo (núcleos supraóptico e paraventricular) que produzem o ADH, ou o trajeto axonal pela haste hipofisária. Sem ADH, o túbulo coletor fica impermeável à água, e o paciente elimina grandes volumes de urina hipotônica, com hipernatremia por perda de água livre.</p>
+<p><strong>b)</strong> <em>DI central</em>: urina hipotônica (osm &lt; 300), densidade baixa, sódio ↑, responde ao DDAVP. <em>DI nefrogênico</em>: mesmas alterações, mas NÃO responde ao DDAVP. <em>Diurese osmótica</em> (hiperglicemia, contraste): densidade urinária geralmente elevada ou normal, presença de glicosúria ou solutos, urina mais concentrada. <em>Polidipsia psicogênica</em>: sódio baixo-normal, paciente bebe ativamente água; não é compatível com paciente inconsciente em CTI.</p>
+<p><strong>c)</strong> <em>Conduta imediata:</em>
+<ol><li><strong>Reposição de água livre</strong> com solução glicosada 5% ou via enteral/oral, conforme estado neurológico, calculando o déficit: déficit H₂O = peso × 0,6 × [(Na/140) − 1]. Corrigir lentamente (&lt; 0,5 mEq/L/h e &lt; 10-12 mEq/L/dia) para evitar edema cerebral.</li>
+<li><strong>DDAVP</strong> (desmopressina) por via intranasal, SC ou EV, titulando conforme a resposta (volume urinário e sódio).</li>
+<li>Monitoramento horário: diurese, balanço hídrico, densidade urinária, sódio sérico (a cada 4-6 h).</li>
+<li>Manter reposição de glicocorticoide de estresse se houver suspeita de comprometimento adeno-hipofisário concomitante.</li></ol></p>
+<p><strong>d)</strong> <em>Resposta trifásica clássica:</em>
+<ol><li><strong>1ª fase — Poliúria (primeiros dias):</strong> diminuição ou parada da produção de ADH por disfunção aguda dos neurônios; polidipsia e poliúria acentuadas.</li>
+<li><strong>2ª fase — Antidiurese (dias 2-14):</strong> redução progressiva do volume urinário, por descarga descontrolada de ADH pelos neurônios lesados em processo de morte celular. Risco de HIPONATREMIA grave se DDAVP continuar sendo administrado ou se líquidos hipotônicos forem mantidos — é aqui que muitos pacientes são "iatrogenicamente afogados".</li>
+<li><strong>3ª fase — DI central definitivo (semanas):</strong> estabelece-se o DI permanente se a lesão foi ampla, ou recuperação parcial se a lesão foi limitada.</li></ol>
+<strong>Cuidados especiais:</strong> monitorar sódio e balanço hídrico rigorosamente; suspender DDAVP ou reduzir a dose ao menor sinal de antidiurese; reintroduzir quando a poliúria retornar. Este é um dos poucos momentos em que a reposição hormonal pode ser <em>suspensa</em>.</p>`
+  },
+  {
+    id: 4, topic: 'hp', topicLabel: 'Hipopituitarismo',
+    caso: `<p>Mulher de 42 anos, G5P5A0, apresenta-se ao ambulatório com queixas de fadiga crônica, intolerância ao frio, queda de cabelo difusa, ausência de menstruação há anos, diminuição da libido e tontura ao se levantar. Refere que o último parto (há 12 anos) foi complicado por hemorragia obstétrica com choque e necessidade de transfusões; não conseguiu amamentar após esse parto. Ao exame: hipotensão (PA 92/58 mmHg), bradicardia (FC 56 bpm), pele seca, perda de pelos axilares e pubianos. Exames: Na 132 mEq/L, K 4,2 mEq/L, glicemia de jejum 68 mg/dL, cortisol matinal 2,1 μg/dL (baixo), ACTH 8 pg/mL (baixo-normal), T4 livre 0,4 ng/dL (baixo), TSH 0,8 mUI/L (inapropriadamente normal), LH &lt; 0,5 UI/L, FSH 1,2 UI/L, estradiol &lt; 10 pg/mL, prolactina 2 ng/mL (baixa). RM de hipófise: sela turca parcialmente vazia.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual é o diagnóstico sindrômico e o mecanismo fisiopatológico mais provável nesse caso?' },
+      { num: 'b', texto: 'Interprete os exames laboratoriais — como eles diferenciam insuficiência central de insuficiência primária dos órgãos-alvo?' },
+      { num: 'c', texto: 'Qual é o esquema de reposição hormonal e em qual ORDEM devem ser iniciadas as medicações? Explique a regra fundamental.' },
+      { num: 'd', texto: 'Que orientações importantes devem ser passadas à paciente sobre manejo em situações de estresse (infecção, cirurgia, trauma)?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Diagnóstico sindrômico: <strong>panhipopituitarismo</strong>. Causa mais provável: <strong>síndrome de Sheehan</strong> — infarto hipofisário pós-parto. Mecanismo: durante a gestação, a hipófise aumenta de tamanho (hiperplasia dos lactótrofos). Uma hemorragia pós-parto grave provoca hipovolemia → hipotensão → vasoespasmo da artéria hipofisária → infarto da hipófise hipertrofiada. A agalactia ("não conseguiu amamentar") é tipicamente a PRIMEIRA pista, seguida de amenorreia e evolução insidiosa para panhipopituitarismo em anos. A imagem tardia mostra sela turca vazia (glândula atrofiada).</p>
+<p><strong>b)</strong> <em>Interpretação laboratorial</em>: todos os hormônios periféricos estão baixos (cortisol 2,1; T4L 0,4; estradiol &lt; 10), mas os hormônios hipofisários (ACTH, TSH, LH, FSH) estão baixos ou <em>inapropriadamente normais</em> — em uma insuficiência primária, esses hormônios hipofisários deveriam estar ALTOS como feedback compensatório. A prolactina também está baixa (incomum; sugere destruição mais grave). A combinação "hormônio hipofisário baixo/normal com hormônio periférico baixo" = insuficiência CENTRAL (hipofisária ou hipotalâmica). Na forma primária, seria: cortisol baixo + ACTH alto; T4L baixo + TSH alto; estradiol baixo + LH/FSH altos.</p>
+<p><strong>c)</strong> <em>Esquema de reposição — ordem crítica:</em>
+<ol><li><strong>PRIMEIRO: glicocorticoide</strong> (hidrocortisona 15-25 mg/dia dividida, 2/3 manhã e 1/3 tarde; ou prednisona 5-7,5 mg/dia).</li>
+<li><strong>DEPOIS: levotiroxina</strong> (~1,6 μg/kg/dia) — monitorada pelo T4L, <em>não</em> pelo TSH (que já está comprometido).</li>
+<li>Reposição de esteroides sexuais: estradiol + progestágeno cíclico em mulheres pré-menopausa.</li>
+<li>GH em crianças; em adultos, considerar caso a caso.</li>
+<li>DDAVP se houver DI associado.</li></ol>
+<strong>REGRA DE OURO:</strong> iniciar glicocorticoide ANTES do hormônio tireoidiano. Razão: a levotiroxina acelera o metabolismo do cortisol; em um paciente com insuficiência adrenal parcial não reconhecida, o pouco cortisol residual é rapidamente consumido, podendo desencadear <em>crise adrenal fatal</em>.</p>
+<p><strong>d)</strong> <em>Orientações sobre estresse agudo (regra dos "dias de doença"):</em>
+<ul><li><strong>Em estresse leve</strong> (infecção com febre, doença gastrointestinal): <strong>dobrar</strong> a dose de hidrocortisona por 2-3 dias.</li>
+<li><strong>Em estresse grave</strong> (cirurgia, trauma, sepse, hospitalização): <strong>triplicar ou quadruplicar</strong> a dose; considerar via parenteral (hidrocortisona 100 mg EV a cada 8 h no dia do evento).</li>
+<li>Usar <strong>bracelete ou cartão de alerta médico</strong> identificando a condição, para que qualquer profissional em emergência saiba da necessidade imediata de corticoide.</li>
+<li>Manter sempre em casa hidrocortisona injetável para situações de intolerância oral (vômitos, diarreia intensa).</li>
+<li>Orientar familiares a reconhecer sinais de crise adrenal: hipotensão, vômitos, fraqueza severa, alteração de consciência — levar ao PS imediatamente.</li></ul>
+Essa educação é literalmente <em>salvadora de vidas</em>, porque crise adrenal é uma das causas de morte súbita em pacientes com insuficiência adrenal não reconhecida.</p>`
+  },
+  {
+    id: 5, topic: 'acro', topicLabel: 'Acromegalia',
+    caso: `<p>Paciente de 45 anos, submetido à cirurgia transesfenoidal para ressecção de macroadenoma secretor de GH há 4 meses. IGF-1 pré-cirúrgico: 3,8× o limite superior normal. IGF-1 pós-cirúrgico: 2,1× o limite superior normal. RM de controle: resíduo tumoral de 6 mm no seio cavernoso esquerdo (não abordável cirurgicamente). O paciente persiste com cefaleia, sudorese, artralgia e glicemias descontroladas.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Como você classifica o resultado do tratamento cirúrgico? Há doença ativa residual?' },
+      { num: 'b', texto: 'Quais as opções terapêuticas disponíveis para o manejo da doença residual e qual seria sua escolha inicial?' },
+      { num: 'c', texto: 'Como monitorar a resposta ao tratamento medicamentoso e quais os critérios de controle?' },
+      { num: 'd', texto: 'Quais os principais efeitos adversos a monitorar durante o tratamento escolhido?' }
+    ],
+    gabarito: `<p><strong>a)</strong> O resultado cirúrgico é <strong>parcial</strong>: houve redução do IGF-1, mas este permanece acima do limite superior normal (2,1×) e há resíduo tumoral documentado em seio cavernoso. Portanto, há <strong>doença ativa residual</strong>, confirmada pelo IGF-1 elevado + sintomas clínicos persistentes (cefaleia, sudorese, artralgia, descontrole glicêmico).</p>
+<p><strong>b)</strong> <em>Opções:</em> (1) análogos de somatostatina de segunda geração (octreotide LAR, lanreotide ou pasireotide), (2) agonistas dopaminérgicos (cabergolina), (3) pegvisomanto (antagonista do receptor de GH), (4) radioterapia (convencional ou estereotáxica, reservada para casos refratários). <em>Escolha inicial:</em> análogo de somatostatina (ex: octreotide LAR 20 mg IM mensal, titulando até 30 mg conforme resposta) — é a primeira linha medicamentosa, pode reduzir o tamanho do tumor em cerca de 42% dos casos e tem eficácia bioquímica bem estabelecida.</p>
+<p><strong>c)</strong> <em>Monitoramento:</em>
+<ul><li>IGF-1 sérico a cada 3 meses (principal marcador de eficácia).</li>
+<li>Avaliação clínica dos sintomas.</li>
+<li>RM de hipófise a cada 6-12 meses para avaliar tamanho tumoral.</li>
+<li>Controle de HbA1c, PA e comorbidades.</li></ul>
+<em>Critérios de controle (Consenso 2023):</em> IGF-1 normal para idade e sexo. Quando alcançado, a expectativa de vida retorna à da população saudável. Se o IGF-1 permanecer elevado após 3 meses do tratamento, considerar mudança ou associação de drogas.</p>
+<p><strong>d)</strong> <em>Efeitos adversos dos análogos de somatostatina:</em>
+<ul><li>Gastrointestinais precoces: diarreia, náusea, cólica (transitórios, melhoram em 8-10 semanas).</li>
+<li><strong>Cálculos biliares</strong> em até 20% dos casos nos primeiros 18 meses — indicação de ultrassom abdominal periódico.</li>
+<li>Dor/desconforto no local da injeção.</li>
+<li><strong>Piora do controle glicêmico</strong> (especialmente com pasireotide) — monitorar glicemia e HbA1c frequentemente; este paciente já tem descontrole glicêmico, requerendo atenção especial.</li>
+<li>Deficiência de vitamina B12 e bradicardia (raros).</li></ul></p>`
+  },
+  {
+    id: 6, topic: 'dm2', topicLabel: 'DM2',
+    caso: `<p>Homem de 72 anos, DM2 há 15 anos, usando metformina 2000 mg, glibenclamida 5 mg/dia e insulina NPH 20 U noturna. HbA1c 6,2%. Apresenta episódios frequentes de sudorese, tremores, confusão e fraqueza nas últimas semanas, principalmente no fim da tarde e durante a madrugada, resolvidos com ingestão de suco. Vive sozinho. Função cognitiva limítrofe. TFGe 42 mL/min, creatinina 1,5 mg/dL. IMC 24. Histórico de queda em casa há 2 meses.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual o principal problema desse paciente e por que é especialmente grave no seu perfil?' },
+      { num: 'b', texto: 'Qual é a meta de HbA1c apropriada para esse paciente e justifique.' },
+      { num: 'c', texto: 'Proponha um ajuste terapêutico, considerando o perfil de risco e as comorbidades.' },
+      { num: 'd', texto: 'Quais medidas adicionais de segurança você orientaria a esse paciente idoso que vive sozinho?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Problema principal: <strong>hipoglicemias recorrentes</strong> em paciente idoso frágil, polimedicado, com função cognitiva limítrofe e história de queda. É especialmente grave porque: (1) idosos têm menor percepção de hipoglicemia (hipoglicemia despercebida), (2) risco aumentado de quedas/fraturas, (3) comprometimento cognitivo pré-existente pode piorar, (4) hipoglicemia grave pode causar arritmias e morte súbita, (5) HbA1c 6,2% mostra tratamento excessivamente agressivo — há clara iatrogenia.</p>
+<p><strong>b)</strong> <em>Meta:</em> HbA1c &lt; 8,0% (pode ser até mais relaxada em frágil). Justificativa: em idosos com fragilidade, comorbidades limitando expectativa de vida ou alteração cognitiva, a SBD recomenda metas mais flexíveis (&lt; 8%) porque o risco de hipoglicemia supera o benefício da prevenção de complicações microvasculares tardias. O princípio é "primum non nocere".</p>
+<p><strong>c)</strong> <em>Ajuste terapêutico sugerido:</em>
+<ol><li><strong>Suspender glibenclamida imediatamente</strong> — principal responsável pelas hipoglicemias; sulfonilureias são especialmente perigosas em idosos e em DRC (acúmulo).</li>
+<li><strong>Reduzir ou reavaliar a insulina NPH</strong> — 20 U noturna pode ser excessiva; considerar redução para 10 U ou substituir por insulina basal moderna (glargina, detemir, degludeca) que tem menor risco de hipoglicemia noturna.</li>
+<li><strong>Manter metformina em dose ajustada</strong> — TFGe 42 permite uso com dose reduzida (ex: 1000-1500 mg/dia); ATENÇÃO: se TFGe &lt; 30, suspender.</li>
+<li><strong>Considerar adicionar</strong> um inibidor de DPP-4 (linagliptina é a melhor opção em DRC porque não precisa de ajuste; sitagliptina pode ser usada com ajuste de dose) — não causa hipoglicemia.</li>
+<li>Relaxar a meta: aceitar HbA1c até 8,0%.</li>
+<li>Monitorar glicemias capilares diárias e registrar.</li></ol></p>
+<p><strong>d)</strong> <em>Medidas de segurança:</em>
+<ul><li>Educar o paciente e familiar/cuidador sobre sinais de hipoglicemia e como tratar imediatamente.</li>
+<li>Manter comprimidos de glicose ou sachês de mel à mão sempre.</li>
+<li>Identificação médica (bracelete/cartão) com diagnóstico de DM e medicações.</li>
+<li>Monitorização glicêmica sistemática (especialmente antes de deitar e de madrugada).</li>
+<li>Avaliar possibilidade de apoio domiciliar (cuidador, familiares mais próximos).</li>
+<li>Reavaliar ambiente doméstico (risco de quedas).</li>
+<li>Considerar inscrição em programa de monitorização glicêmica contínua (CGM) se disponível — sensor alerta sobre hipoglicemia noturna.</li>
+<li>Avaliação cognitiva mais aprofundada (possível demência inicial que piora com hipoglicemias).</li>
+<li>Consulta próxima em 2-4 semanas para reavaliação.</li></ul></p>`
+  },
+  {
+    id: 7, topic: 'di', topicLabel: 'Diabetes Insípidus',
+    caso: `<p>Mulher de 35 anos, portadora de transtorno bipolar há 10 anos, em uso de lítio (600 mg 2×/dia) há 8 anos. Procura atendimento com queixa de poliúria (estima diurese de ~6 L/dia) e polidipsia persistente. Prefere água gelada em grandes quantidades. Nega nictúria proeminente, mas admite que acorda 1-2 vezes por noite para urinar. Exames: Na 146 mEq/L, K 4,0 mEq/L, glicemia de jejum 92 mg/dL, creatinina 1,0 mg/dL, osmolaridade plasmática 300 mOsm/kg, osmolaridade urinária 180 mOsm/kg, densidade urinária 1.008, litemia 0,8 mEq/L (faixa terapêutica).</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual é a hipótese diagnóstica principal e como confirmar?' },
+      { num: 'b', texto: 'Explique o mecanismo fisiopatológico pelo qual o lítio causa diabetes insípidus.' },
+      { num: 'c', texto: 'Qual é o tratamento recomendado nesse contexto clínico específico?' },
+      { num: 'd', texto: 'É possível suspender o lítio neste caso? Quais as considerações e alternativas?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Hipótese principal: <strong>diabetes insípidus nefrogênico induzido por lítio</strong>. Sustenta: poliúria hipotônica (densidade 1.008, osm urinária 180 &lt; 300), sódio no limite superior (146), osmolaridade plasmática elevada (300). <em>Confirmação:</em> teste de privação hídrica seguido de DDAVP. Na polidipsia primária, a privação hídrica concentra a urina (osm urinária &gt; 300-800); no DI central, não concentra espontaneamente mas responde ao DDAVP; no DI nefrogênico, NÃO concentra nem com privação nem com DDAVP. Dada a forte associação com lítio, o diagnóstico é praticamente clínico — mas o teste confirmatório é recomendado antes de mudanças terapêuticas maiores.</p>
+<p><strong>b)</strong> <em>Mecanismo do DI nefrogênico por lítio:</em> o lítio, ao ser filtrado e entrar nas células do túbulo coletor (via ENaC), interfere na sinalização intracelular do receptor V2. Isso leva a <strong>redução da expressão de aquaporina-2 (AQP2)</strong> na membrana apical, tornando o túbulo coletor relativamente impermeável à água mesmo com ADH normal. O paciente perde capacidade de concentrar a urina → poliúria hipotônica. Efeito dose-dependente e pode ser parcialmente reversível com a suspensão.</p>
+<p><strong>c)</strong> <em>Tratamento:</em>
+<ol><li><strong>Hidratação adequada</strong> (oferecer acesso livre à água; nunca restringir).</li>
+<li><strong>Dieta hipossódica</strong> — reduz a carga de solutos que o rim precisa excretar, diminuindo o volume urinário.</li>
+<li><strong>Tiazídicos</strong> (paradoxal): hidroclorotiazida 25-50 mg/dia. Mecanismo: induzem leve depleção volêmica → aumentam a reabsorção proximal de sódio e água → reduzem o volume que chega aos ductos coletores. ATENÇÃO: usar com cautela porque podem aumentar a reabsorção de lítio e causar intoxicação; monitorar litemia.</li>
+<li><strong>Amilorida</strong> (diurético poupador de potássio): 5-10 mg/dia. Bloqueia o canal ENaC no túbulo coletor, impedindo a entrada de lítio na célula → atenua o efeito do lítio na AQP2. É a droga de escolha específica para DI nefrogênico por lítio.</li>
+<li>AINEs (ex: indometacina) podem ser usados, mas com cautela em uso prolongado.</li>
+<li><strong>Não prescrever DDAVP</strong> — não é eficaz (o rim não responde).</li></ol></p>
+<p><strong>d)</strong> <em>Pode-se suspender o lítio?</em>
+<ul><li>A decisão deve ser compartilhada com o psiquiatra: suspender lítio em transtorno bipolar pode precipitar recidiva grave.</li>
+<li>Se o DI nefrogênico for leve, pode-se <strong>manter o lítio</strong> com as medidas acima (especialmente amilorida).</li>
+<li>Se grave, não controlado ou se houver progressão para doença renal crônica: considerar <strong>substituir o lítio por outro estabilizador de humor</strong> (valproato, carbamazepina, lamotrigina, antipsicóticos atípicos), sempre em coordenação com o psiquiatra.</li>
+<li>Monitorar periodicamente: litemia, função renal (creatinina, TFGe), eletrólitos, osmolaridade.</li>
+<li>Mesmo após suspender o lítio, o DI nefrogênico pode persistir em casos de uso prolongado — há alterações estruturais parcialmente irreversíveis no parênquima renal.</li></ul></p>`
+  },
+  {
+    id: 8, topic: 'hp', topicLabel: 'Hipopituitarismo',
+    caso: `<p>Paciente de 16 anos, sexo masculino, encaminhado por baixa estatura (altura 1,52 m — percentil &lt;3 para idade) e ausência de desenvolvimento puberal (Tanner 1: testículos pré-púberes, sem pilificação pubiana). Refere anosmia desde a infância (nunca sentiu cheiros), dizendo que os pais acham normal. Envergadura: 1,62 m (maior que a altura). História familiar: tio materno com "puberdade atrasada". Exame: fácies adolescente, micropênis, sem ginecomastia, ausência de pelos axilares/pubianos. Exames: LH 0,3 UI/L, FSH 0,8 UI/L, testosterona total 25 ng/dL (baixa); T4L, TSH, cortisol, ACTH, PRL normais. RM hipotálamo-hipófise: hipoplasia dos bulbos olfatórios, hipófise normal.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual é o diagnóstico mais provável e em que mecanismo embrionário ele se baseia?' },
+      { num: 'b', texto: 'Por que este paciente apresenta anosmia associada ao hipogonadismo? Qual a base genética?' },
+      { num: 'c', texto: 'Como você faria a indução da puberdade nesse adolescente e quais os objetivos do tratamento?' },
+      { num: 'd', texto: 'Como orientar o paciente sobre sua fertilidade futura?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Diagnóstico: <strong>síndrome de Kallmann</strong> — hipogonadismo hipogonadotrófico congênito associado à anosmia/hiposmia. É o tipo mais comum de hipogonadismo hipogonadotrófico congênito (incidência ~1:10.000 homens). <em>Mecanismo embrionário:</em> defeito na migração dos neurônios produtores de GnRH a partir da placoda olfatória embrionária. Normalmente, esses neurônios migram junto com os neurônios olfatórios pelas fendas da lâmina cribriforme em direção ao hipotálamo. Na síndrome de Kallmann, eles ficam presos na dura-máter próximo à placa cribriforme, não chegando ao hipotálamo. Resultado: déficit de GnRH → LH/FSH baixos → hipogonadismo, e ao mesmo tempo falha na formação dos bulbos olfatórios → anosmia/hiposmia.</p>
+<p><strong>b)</strong> A anosmia é consequência direta do mesmo defeito embriológico: os neurônios olfatórios e os neurônios produtores de GnRH têm origem embrionária comum (placoda olfatória) e compartilham o mesmo trajeto de migração. Se a migração falha, <strong>ambos</strong> os sistemas ficam comprometidos — por isso a tríade clássica é <em>hipogonadismo + anosmia + hábito eunucoide</em> (envergadura maior que a altura, como neste paciente: 1,62 m de envergadura para 1,52 m de altura). <em>Base genética:</em> herança predominantemente ligada ao X (KAL1), mas também autossômica (FGFR1, FGF8, PROKR2, PROK2, entre outros). O tio materno com "puberdade atrasada" sugere possível padrão ligado ao X na família.</p>
+<p><strong>c)</strong> <em>Indução da puberdade:</em>
+<ol><li><strong>Reposição de testosterona</strong> — iniciar com doses baixas para não fechar prematuramente as epífises e permitir crescimento estatural: ésteres de testosterona (cipionato ou enantato) IM, começando com 50-100 mg a cada 4 semanas, aumentando progressivamente a dose e a frequência a cada 6 meses até doses plenas de adulto (200-250 mg a cada 2 semanas). Alternativa: gel transdérmico ou undecanoato oral.</li>
+<li><strong>Objetivos:</strong>
+  <ul><li>Desenvolvimento dos caracteres sexuais secundários (pilificação, mudança de voz, desenvolvimento muscular, crescimento peniano).</li>
+  <li>Ganho de massa óssea (pico de massa óssea ocorre na puberdade — perder essa janela aumenta risco de osteoporose precoce).</li>
+  <li>Preservação de estatura: titulação cuidadosa para não acelerar demais o fechamento epifisário.</li>
+  <li>Melhora da libido, auto-estima, bem-estar.</li>
+  <li>Prevenção de complicações a longo prazo (anemia, atrofia muscular, depressão).</li></ul></li>
+<li>Acompanhamento regular com densitometria óssea, antropometria, dosagens hormonais (testosterona total, idealmente no meio do intervalo entre doses).</li></ol></p>
+<p><strong>d)</strong> <em>Fertilidade futura:</em>
+<ul><li>O paciente pode ser informado de que a síndrome de Kallmann <em>não é causa de infertilidade definitiva</em>: o defeito é proximal (falta de GnRH), mas as gônadas são normais e responderão a estímulo adequado.</li>
+<li>Quando desejar ter filhos no futuro, a testosterona isolada NÃO restaura a espermatogênese (na verdade, pode suprimi-la ainda mais). Será necessário:
+  <ul><li><strong>Terapia com gonadotrofinas exógenas</strong>: hCG (LH recombinante) + FSH (ou HMG) — estimulação direta dos testículos; ou</li>
+  <li><strong>GnRH pulsátil</strong> via bomba de infusão subcutânea — forma mais fisiológica, estimula a hipófise de forma pulsátil restabelecendo LH/FSH endógenos.</li></ul></li>
+<li>Taxa de sucesso: bastante favorável (60-80% de indução de espermatogênese com tratamento adequado).</li>
+<li>Orientar criopreservação de sêmen se possível.</li>
+<li>Aconselhamento genético: risco de transmissão depende da herança específica (se ligado ao X, risco 50% para filhos homens; se autossômica, varia).</li>
+<li>Apoio psicológico ao adolescente — puberdade ausente tem impacto importante no desenvolvimento emocional e social.</li></ul></p>`
+  },
+  {
+    id: 9, topic: 'dm2', topicLabel: 'DM2',
+    caso: `<p>Paciente de 25 anos, magra (IMC 22), com diagnóstico de "diabetes mellitus" aos 19 anos após glicemia de jejum 186 mg/dL em rastreio. Nunca usou insulina. Fez controle com metformina e dieta, mantendo HbA1c em torno de 7,5%. História familiar marcante: pai diagnosticado com DM aos 22 anos, avô paterno aos 24 anos, bisavô paterno aos 20 anos, e tia paterna aos 25 anos — todos sem obesidade, todos tratados com hipoglicemiantes orais, todos com controle semelhante. Exames: peptídeo C 2,8 ng/mL (normal), anticorpos anti-GAD e anti-IA2 negativos, HbA1c 7,4%.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual é a hipótese diagnóstica mais provável e como ela se diferencia de DM1 clássico e DM2 clássico?' },
+      { num: 'b', texto: 'Qual o padrão de herança e a relevância da história familiar?' },
+      { num: 'c', texto: 'Como confirmar o diagnóstico e qual o impacto terapêutico dessa confirmação?' },
+      { num: 'd', texto: 'Quais orientações específicas você daria à paciente e à sua família?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Hipótese: <strong>MODY (Maturity Onset Diabetes of the Young)</strong>, especificamente um dos tipos mais comuns (MODY 2 — mutação no gene GCK, ou MODY 3 — HNF1A). Diferenciação:
+<ul><li><strong>Diferença em relação ao DM1:</strong> no DM1 há destruição autoimune das células β → anticorpos positivos, peptídeo C baixo (ou zero), necessidade imediata de insulina, cetoacidose comum. A paciente tem peptídeo C normal (indicando reserva β) e anticorpos negativos → afasta DM1.</li>
+<li><strong>Diferença em relação ao DM2:</strong> DM2 clássico está associado a obesidade, resistência insulínica, início tardio (tipicamente &gt; 40 anos), e padrão familiar, embora presente, não costuma ser tão cedo e em tantas gerações. A paciente é magra (IMC 22), jovem (19 anos no diagnóstico) e tem padrão familiar clássico de MODY: 4 gerações consecutivas, início em idade jovem e semelhante.</li></ul>
+MODY representa 1-5% dos casos de DM e frequentemente é mal diagnosticado como DM1 ou DM2.</p>
+<p><strong>b)</strong> <em>Padrão de herança:</em> <strong>autossômico dominante</strong> (daí a "transmissão vertical" nítida através de gerações). Cada filho tem 50% de chance de herdar a mutação. A história familiar deste caso é altamente sugestiva: múltiplas gerações afetadas, sempre em idade jovem, fenótipo semelhante, sem obesidade. A relevância da história familiar é que ela sozinha é suficiente para levantar a hipótese de MODY e motivar investigação genética.</p>
+<p><strong>c)</strong> <em>Confirmação:</em>
+<ol><li><strong>Testes negativos para DM1</strong> (já feitos): anti-GAD, anti-IA2, anti-insulina — todos negativos.</li>
+<li><strong>Peptídeo C preservado</strong> (já feito): confirma reserva β.</li>
+<li><strong>Teste genético definitivo</strong>: sequenciamento dos genes mais comuns (GCK, HNF1A, HNF4A, HNF1B) — padrão-ouro. Infelizmente ainda não está disponível universalmente no SUS.</li></ol>
+<em>Impacto terapêutico:</em>
+<ul><li><strong>MODY 2 (GCK)</strong>: hiperglicemia leve estável, raramente causa complicações, geralmente NÃO precisa de tratamento medicamentoso — apenas dieta e monitoramento. Metformina pode ser suspensa.</li>
+<li><strong>MODY 3 (HNF1A)</strong>: responde EXCELENTEMENTE a sulfonilureias em baixas doses (melhor que metformina ou insulina). Trocar metformina por glimepirida em dose baixa pode dar controle ideal.</li>
+<li>A identificação do subtipo permite tratamento mais eficaz, mais econômico e com menos efeitos adversos.</li></ul></p>
+<p><strong>d)</strong> <em>Orientações:</em>
+<ul><li><strong>Aconselhamento genético:</strong> cada filho terá 50% de chance de herdar a mutação. Se desejar investigar os filhos, o rastreio pode ser feito com glicemia de jejum e/ou teste genético.</li>
+<li><strong>Investigar outros familiares:</strong> irmãos, primos, filhos de tios afetados — muitos podem estar subdiagnosticados ou classificados erroneamente como "DM1" ou "DM2".</li>
+<li><strong>Gestação:</strong> se tiver filhos, risco de DM gestacional aumentado; importante acompanhamento pré-natal especializado. Se a criança herdar MODY 2 (GCK), pode ter peso ao nascer maior; se a mãe tem MODY 2, a criança sem a mutação pode ter restrição de crescimento intra-uterino. Aconselhamento genético pré-gestacional é ideal.</li>
+<li><strong>Acompanhamento regular:</strong> embora MODY tenha curso mais benigno que DM2 clássico (especialmente tipo 2), complicações micro e macrovasculares podem ocorrer em tipos mais agressivos (MODY 3). Rastreio anual de retinopatia, nefropatia, neuropatia.</li>
+<li><strong>Educação sobre diferenças em relação ao DM2 tradicional:</strong> a paciente não precisa de todos os "dogmas" de DM2 (dieta rigorosa para perda de peso, etc., já que é magra). O foco é controle glicêmico através da medicação correta.</li>
+<li><strong>Encaminhar a endocrinologista</strong> com experiência em MODY para investigação genética e manejo.</li></ul></p>`
+  },
+  {
+    id: 10, topic: 'hp', topicLabel: 'Hipopituitarismo',
+    caso: `<p>Paciente feminina, 48 anos, com história de cefaleia intensa e súbita há 2 horas, distúrbio visual (campo visual temporal bilateral diminuído à confrontação), ptose palpebral direita, e sinais de hipoadrenalismo (PA 80/50 mmHg, náusea, vômito, glicemia 58 mg/dL). Sabidamente portadora de macroadenoma hipofisário clinicamente não funcionante há 3 anos, em seguimento ambulatorial. TC de crânio: área hiperdensa dentro da sela, sugestiva de sangramento intratumoral.</p>`,
+    perguntas: [
+      { num: 'a', texto: 'Qual o diagnóstico mais provável? Por que é considerada uma urgência endocrinológica?' },
+      { num: 'b', texto: 'Liste os fatores predisponentes conhecidos para essa condição.' },
+      { num: 'c', texto: 'Qual é a conduta imediata (primeiras horas) e qual deve ser o manejo definitivo?' },
+      { num: 'd', texto: 'Qual o prognóstico a longo prazo em termos de função hipofisária?' }
+    ],
+    gabarito: `<p><strong>a)</strong> Diagnóstico: <strong>apoplexia hipofisária</strong> — infarto hemorrágico agudo de um tumor hipofisário pré-existente. É considerada uma das <strong>urgências endocrinológicas clássicas</strong> porque: (1) pode causar <em>insuficiência adrenal aguda fatal</em> pela súbita perda de ACTH e conseqüentemente do cortisol — manifestando-se com hipotensão refratária, hipoglicemia e choque, (2) pode causar perda visual permanente por compressão/infarto do quiasma óptico e nervos ópticos, (3) pode causar morte por herniação e aumento de pressão intracraniana, (4) o tempo de intervenção é crítico — atraso no reconhecimento e tratamento aumenta muito a mortalidade.</p>
+<p><strong>b)</strong> <em>Fatores predisponentes:</em>
+<ul><li><strong>Adenoma hipofisário pré-existente</strong> (praticamente sempre presente — é o substrato).</li>
+<li>Diabetes mellitus.</li>
+<li>Hipertensão arterial sistêmica.</li>
+<li>Trauma craniano.</li>
+<li>Angiografia das carótidas.</li>
+<li>Cirurgias de grande porte, especialmente cardíacas (grandes flutuações hemodinâmicas).</li>
+<li>Uso de cocaína.</li>
+<li>Uso de anticoagulantes.</li>
+<li>Testes dinâmicos hipofisários de estímulo (teste de estímulo com TRH, GnRH, insulina).</li>
+<li>Radioterapia hipofisária prévia.</li>
+<li>Uso de agonistas dopaminérgicos (ocasionalmente em prolactinomas).</li>
+<li>Meningite.</li>
+<li>Gestação (hipertrofia fisiológica da hipófise).</li></ul></p>
+<p><strong>c)</strong> <em>Conduta imediata (primeiras horas):</em>
+<ol><li><strong>HIDROCORTISONA EV IMEDIATAMENTE</strong> — 100 mg em bolus, seguida de 50-100 mg EV a cada 6 horas OU infusão contínua 200 mg/24h. Esta é a intervenção mais importante e salva-vidas. NÃO esperar confirmação diagnóstica — se houver suspeita forte, administre.</li>
+<li><strong>Estabilização hemodinâmica</strong>: reposição volêmica com SF 0,9% ou cristaloide isotônico; corrigir hipoglicemia com glicose hipertônica.</li>
+<li><strong>RM de crânio com contraste</strong> (mais sensível que TC para detalhes da lesão hipofisária e quiasma).</li>
+<li><strong>Exames laboratoriais</strong>: cortisol, ACTH, T4L, TSH, LH, FSH, prolactina, testosterona/estradiol, IGF-1, sódio, potássio, glicemia, hemograma, coagulograma, tipagem sanguínea.</li>
+<li><strong>Avaliação neurocirúrgica urgente</strong>.</li>
+<li><strong>Avaliação oftalmológica com campimetria</strong> (se possível).</li>
+<li>Monitorização: sinais vitais, glicemia, balanço hídrico, estado neurológico, campo visual.</li></ol>
+<em>Manejo definitivo:</em>
+<ul><li><strong>Indicações cirúrgicas (descompressão transesfenoidal urgente):</strong> alteração visual progressiva ou significativa, alteração do nível de consciência, acometimento do III par em progressão, sinais de herniação. Cirurgia nas primeiras 7 dias idealmente.</li>
+<li><strong>Manejo conservador</strong>: se não houver déficit neurológico progressivo e o paciente estiver clinicamente estável — manter reposição de glicocorticoide, seguimento próximo com imagens seriadas.</li></ul></p>
+<p><strong>d)</strong> <em>Prognóstico a longo prazo:</em>
+<ul><li><strong>Hipopituitarismo definitivo</strong> é muito frequente — a maioria dos pacientes (60-80%) tem algum grau de deficiência hormonal permanente após apoplexia, frequentemente panhipopituitarismo. Requer <strong>reposição hormonal vitalícia</strong>: glicocorticoide, hormônio tireoidiano, esteroides sexuais, GH (em crianças e casos selecionados em adultos), DDAVP se houver DI associado.</li>
+<li><strong>Função visual</strong>: prognóstico depende do tempo entre o início dos sintomas e o tratamento. Se descompressão cirúrgica for feita precocemente (primeiras 24-72 h), há melhora em cerca de 80-90% dos casos com déficit visual. Atraso prolongado está associado a déficit permanente.</li>
+<li><strong>Função oculomotora</strong> (paralisia do III, IV, VI nervos cranianos): geralmente recupera em semanas a meses na maioria dos pacientes.</li>
+<li><strong>Controle tumoral</strong>: a apoplexia pode, paradoxalmente, "tratar" parcialmente o tumor (autoinfarto) em alguns casos, com redução do volume tumoral; em outros casos, há necessidade de cirurgia definitiva ou radioterapia para o resíduo.</li>
+<li><strong>Seguimento vitalício</strong> com endocrinologista, neurocirurgião e oftalmologista é mandatório.</li>
+<li>Paciente deve usar bracelete/cartão de alerta de <em>insuficiência adrenal</em> e saber reconhecer sintomas de crise adrenal. Estoque domiciliar de hidrocortisona injetável é recomendado.</li></ul></p>`
+  },
+];
+
+let currentMode = 'estudo';
+let selectedAnswers = {};
+let currentFilter = 'all';
+
+function renderQuestoes() {
+  const container = document.getElementById('objetivas');
+  container.innerHTML = '';
+  questoes.forEach(q => {
+    const div = document.createElement('div');
+    div.className = 'question';
+    div.dataset.topic = q.topic;
+    const nivelEmoji = q.nivel === 'facil' ? '🟢' : q.nivel === 'medio' ? '🟡' : '🔴';
+    div.innerHTML = `
+      <div class="q-header">
+        <span class="q-number">QUESTÃO ${q.id}</span>
+        <div class="q-meta">
+          <span class="badge ${q.nivel}">${nivelEmoji} ${q.nivel.toUpperCase()}</span>
+          <span class="badge topic">${q.topicLabel}</span>
+        </div>
+      </div>
+      <div class="stem">${q.enunciado}</div>
+      <ul class="alternatives" id="alts-${q.id}">
+        ${q.alternativas.map((alt, i) => `
+          <li onclick="selectAnswer(${q.id}, ${i})" data-idx="${i}">
+            <span class="letter">${String.fromCharCode(65 + i)})</span>
+            <span>${alt}</span>
+          </li>
+        `).join('')}
+      </ul>
+      <div class="explanation" id="exp-${q.id}">
+        <h4>✓ GABARITO: ${String.fromCharCode(65 + q.correta)}</h4>
+        <p><strong>Por que a correta está certa:</strong> ${q.explicacao.correta}</p>
+        <p style="margin-top:10px"><strong>Por que as outras estão erradas:</strong></p>
+        <ul>${q.explicacao.erradas.map(e => `<li>${e}</li>`).join('')}</ul>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderDissertativas() {
+  const container = document.getElementById('dissertativas');
+  container.innerHTML = '';
+  dissertativas.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'question';
+    div.dataset.topic = d.topic;
+    div.innerHTML = `
+      <div class="q-header">
+        <span class="q-number">DISSERTATIVA ${d.id}</span>
+        <div class="q-meta"><span class="badge topic">${d.topicLabel}</span></div>
+      </div>
+      <div class="stem">${d.caso}</div>
+      ${d.perguntas.map(p => `
+        <p style="margin-top:14px"><strong>${p.num})</strong> ${p.texto}</p>
+        <textarea class="diss-area" placeholder="Escreva sua resposta para a pergunta ${p.num})..."></textarea>
+      `).join('')}
+      <button class="toggle-btn" onclick="toggleGabarito('diss-${d.id}')">Revelar gabarito modelo</button>
+      <div class="explanation" id="diss-${d.id}">
+        <h4>📝 Resposta Modelo</h4>
+        ${d.gabarito}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectAnswer(qId, aIdx) {
+  const q = questoes.find(x => x.id === qId);
+  const ul = document.getElementById(`alts-${qId}`);
+  const items = ul.querySelectorAll('li');
+
+  if (currentMode === 'estudo') {
+    items.forEach((li, i) => {
+      li.classList.add('disabled');
+      li.onclick = null;
+      if (i === q.correta) li.classList.add('correct');
+      else if (i === aIdx) li.classList.add('wrong');
+    });
+    document.getElementById(`exp-${qId}`).classList.add('show');
+    selectedAnswers[qId] = aIdx;
+  } else {
+    items.forEach(li => li.classList.remove('selected'));
+    items[aIdx].classList.add('selected');
+    selectedAnswers[qId] = aIdx;
+  }
+}
+
+function toggleGabarito(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btn-estudo').classList.toggle('active', mode === 'estudo');
+  document.getElementById('btn-simulado').classList.toggle('active', mode === 'simulado');
+  document.getElementById('submit-btn').classList.toggle('show', mode === 'simulado');
+  document.getElementById('result-panel').classList.remove('show');
+  selectedAnswers = {};
+  renderQuestoes();
+}
+
+function finishSimulado() {
+  let correct = 0, total = questoes.length;
+  const byTopic = {}, byNivel = {};
+  questoes.forEach(q => {
+    const sel = selectedAnswers[q.id];
+    const isCorrect = sel === q.correta;
+    if (isCorrect) correct++;
+    byTopic[q.topicLabel] = byTopic[q.topicLabel] || { correct: 0, total: 0 };
+    byTopic[q.topicLabel].total++;
+    if (isCorrect) byTopic[q.topicLabel].correct++;
+    byNivel[q.nivel] = byNivel[q.nivel] || { correct: 0, total: 0 };
+    byNivel[q.nivel].total++;
+    if (isCorrect) byNivel[q.nivel].correct++;
+
+    const ul = document.getElementById(`alts-${q.id}`);
+    const items = ul.querySelectorAll('li');
+    items.forEach((li, i) => {
+      li.classList.add('disabled');
+      li.onclick = null;
+      li.classList.remove('selected');
+      if (i === q.correta) li.classList.add('correct');
+      else if (i === sel) li.classList.add('wrong');
+    });
+    document.getElementById(`exp-${q.id}`).classList.add('show');
+  });
+
+  const panel = document.getElementById('result-panel');
+  const score = document.getElementById('result-score');
+  const detail = document.getElementById('result-detail');
+  const pct = Math.round((correct / total) * 100);
+  score.textContent = `${correct}/${total} (${pct}%)`;
+
+  let html = '<h3>Por tópico:</h3><ul>';
+  for (const [k, v] of Object.entries(byTopic)) {
+    const p = Math.round((v.correct / v.total) * 100);
+    html += `<li><strong>${k}:</strong> ${v.correct}/${v.total} (${p}%)</li>`;
+  }
+  html += '</ul><h3>Por dificuldade:</h3><ul>';
+  for (const [k, v] of Object.entries(byNivel)) {
+    const p = Math.round((v.correct / v.total) * 100);
+    html += `<li><strong>${k}:</strong> ${v.correct}/${v.total} (${p}%)</li>`;
+  }
+  html += '</ul>';
+  detail.innerHTML = html;
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+function filterTopic(topic) {
+  currentFilter = topic;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.question').forEach(q => {
+    q.style.display = (topic === 'all' || q.dataset.topic === topic) ? 'block' : 'none';
+  });
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+}
+
+renderQuestoes();
+renderDissertativas();
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards APH — P1</title>
+<style>
+:root{--bg:#0f1419;--bg2:#161b22;--bg3:#1c2330;--txt:#e6edf3;--txt2:#9aa7b4;--acc:#4ea1ff;--acc2:#7ee787;--warn:#ffb454;--dang:#ff7b72;--border:#2a313c;}
+[data-theme="light"]{--bg:#f7f9fc;--bg2:#fff;--bg3:#eef2f7;--txt:#1a2330;--txt2:#55636f;--acc:#1666c7;--acc2:#1a7f37;--warn:#9a6700;--dang:#cf222e;--border:#d6dee7;}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#top{width:100%;max-width:780px;padding:14px 16px 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.brand{flex-basis:100%;display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.brand h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.2px}
+.brand span{font-size:12px;color:var(--txt2)}
+select,button{background:var(--bg3);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+.topline{display:flex;align-items:center;justify-content:center;gap:8px}
+.eyebtn{background:none;border:none;padding:2px 4px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:var(--txt2);opacity:.5;transition:opacity .15s}
+.eyebtn:hover{opacity:.95;border:none}
+.eyelbl{font-size:11px;letter-spacing:.02em}
+.eyebtn .eye-closed{display:none}
+.eyebtn.closed .eye-open{display:none}
+.eyebtn.closed .eye-closed{display:inline-block}
+#count{margin-left:auto;color:var(--txt2);font-size:13px}
+#saveNote{flex-basis:100%;color:var(--txt2);font-size:12px;margin-top:2px}
+#wrap{width:100%;max-width:780px;padding:6px 16px 16px;flex:1;display:flex;flex-direction:column}
+#card{perspective:1800px;height:62vh;min-height:360px;margin:8px 0;cursor:pointer}
+#inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+#card.flip #inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:18px;background:var(--bg2);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto}
+.back{transform:rotateY(180deg)}
+.area{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--txt2)}
+.qfront{font-size:23px;font-weight:600;color:var(--txt);margin:auto 0;line-height:1.4}
+.hint{text-align:center;color:var(--txt2);font-size:13px;margin-top:auto}
+.backq{font-size:16px;font-weight:600;color:var(--acc);border-bottom:1px solid var(--border);padding-bottom:10px;line-height:1.35}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--acc2);margin:14px 0 4px}
+.answer{font-size:17px;line-height:1.55}
+.answer b{color:var(--acc2)}
+[data-theme="light"] .answer b{color:var(--acc)}
+.obs{font-size:15px;color:var(--txt2);line-height:1.5}
+.obs b{color:var(--warn)}
+.streak{font-size:13px;color:var(--warn);margin-top:14px;min-height:18px}
+#rate{display:none;gap:8px;justify-content:center}
+#rate.show{display:flex}
+#rate button{flex:1;max-width:160px;padding:11px 6px;font-weight:700;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:1px}
+#rate small{font-size:11px;font-weight:400;color:var(--txt2)}
+.r-again{border-color:var(--dang)!important;color:var(--dang)}
+.r-hard{border-color:var(--warn)!important;color:var(--warn)}
+.r-good{border-color:var(--acc)!important;color:var(--acc)}
+.r-easy{border-color:var(--acc2)!important;color:var(--acc2)}
+#prompt{text-align:center;color:var(--txt2);font-size:13px;padding:10px}
+#prompt.hide{display:none}
+kbd{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px}
+#done{text-align:center;padding:40px;color:var(--txt2);font-size:17px}
+#done button{margin-top:8px}
+#filterPanel{display:none;width:100%;max-width:780px;padding:2px 16px 10px}
+#filterPanel.open{display:block;max-height:56vh;overflow-y:auto}
+.fgroup{margin-top:10px}
+.fgroup h4{margin:4px 0 7px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--txt2);cursor:pointer;display:flex;align-items:center;gap:8px}
+.fgroup h4 .blktog{font-size:10px;border:1px solid var(--border);border-radius:6px;padding:1px 7px;color:var(--txt2);text-transform:none;letter-spacing:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--bg3);border:1px solid var(--border);color:var(--txt2);border-radius:999px;padding:6px 11px;font-size:13px;cursor:pointer;user-select:none;line-height:1.2}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#0b1320;font-weight:600}
+[data-theme="light"] .chip.on{color:#fff}
+.factions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center;position:sticky;bottom:0;background:var(--bg);padding:8px 0 4px}
+.factions .sp{flex:1}
+#trainBtn{background:var(--acc2);border-color:var(--acc2);color:#0b1320;font-weight:700}
+[data-theme="light"] #trainBtn{color:#fff}
+.deck-switch{margin-left:auto;display:flex;gap:6px;align-self:center}
+.deck-switch a{text-decoration:none;background:var(--bg3);border:1px solid var(--border);color:var(--txt2);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;line-height:1.2;transition:border-color .15s,color .15s}
+.deck-switch a:hover{border-color:var(--acc);color:var(--txt)}
+.deck-switch a.ds-on{background:var(--acc);border-color:var(--acc);color:#0b1320}
+[data-theme="light"] .deck-switch a.ds-on{color:#fff}
+@media(max-width:520px){.deck-switch{margin-left:0;flex-basis:100%;margin-top:8px}}
+</style>
+</head>
+<body>
+<div id="top">
+<div class="brand"><h1>Flashcards APH · P1</h1><span>Atendimento Pré-Hospitalar — revisão estilo Anki</span><nav class="deck-switch"><a href="index.html" title="Página inicial">🏠 Início</a><a class="ds-on" href="p1.html">P1</a><a href="p2.html">P2</a></nav></div>
+<button id="filterBtn" onclick="togPanel()">🎯 Temas <span id="selSummary"></span> ▾</button>
+<button onclick="restart()">↺ Reiniciar sessão</button>
+<button onclick="th()">☀︎/☾</button>
+<span id="count"></span>
+<span id="saveNote">✓ Progresso salvo automaticamente neste navegador — pode fechar e voltar depois (até offline). Marque vários temas e treine só os que tem mais dificuldade.</span>
+</div>
+<div id="filterPanel"></div>
+<div id="wrap">
+<div id="card" onclick="flip()">
+<div id="inner">
+<div class="face front">
+<div class="topline"><span class="area" id="fArea"></span><button id="eyeBtn" class="eyebtn" onclick="event.stopPropagation();togArea()"><svg class="eye-open" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-closed" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4 5 10 5 10-5 10-5"/><line x1="5" y1="15" x2="4" y2="17"/><line x1="12" y1="17" x2="12" y2="19"/><line x1="19" y1="15" x2="20" y2="17"/></svg><span class="eyelbl">esconder tema</span></button></div>
+<div class="qfront" id="fQ"></div>
+<div class="hint">tente responder em voz alta · clique no card ou <kbd>espaço</kbd> para ver</div>
+</div>
+<div class="face back" id="backFace">
+<div class="backq" id="bQ"></div>
+<div class="lbl">Resposta</div><div class="answer" id="bA"></div>
+<div id="bPwrap"><div class="lbl">Dica / Observação</div><div class="answer obs" id="bP"></div></div>
+<div class="streak" id="streak"></div>
+</div>
+</div>
+</div>
+<div id="rate">
+<button class="r-again" onclick="rate(0)">Errei<small>1 · volta logo</small></button>
+<button class="r-hard" onclick="rate(1)">Difícil<small>2 · em breve</small></button>
+<button class="r-good" onclick="rate(2)">Bom<small>3 · mais tarde</small></button>
+<button class="r-easy" onclick="rate(3)">Fácil<small>4 · 2× = sai</small></button>
+</div>
+<div id="prompt">Clique no card ou <kbd>espaço</kbd> para ver a resposta · notas <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></div>
+<div id="done" style="display:none"></div>
+</div>
+<script>
+const META={
+ queim:["Queimaduras","Lesões & Queimaduras"],
+ osteo:["Lesões osteoarticulares","Lesões & Queimaduras"],
+ band:["Bandagens & imobilização","Procedimentos & Cinemática"],
+ bioss:["Biossegurança","Procedimentos & Cinemática"],
+ via:["Vias aéreas & asfixia","Procedimentos & Cinemática"],
+ cinem:["Cinemática & transporte","Procedimentos & Cinemática"]
+};
+const BLOCKS=[["Lesões & Queimaduras","Bloco 1 · Lesões & Queimaduras"],["Procedimentos & Cinemática","Bloco 2 · Procedimentos & Cinemática"]];
+const CARDS=[
+{t:"queim",q:"O que é uma queimadura?",a:"Lesão tecidual decorrente de um trauma, causada pela <b>transferência de energia</b>."},
+{t:"queim",q:"Qual é a sequência fisiopatológica após a queimadura (cadeia completa)?",a:"1) Perda da integridade do capilar → 2) ↑ permeabilidade capilar + vasodilatação (liberação de <b>histamina</b>) → 3) extravasamento de líquidos e proteínas (albumina) → 4) ↓ volume intravascular e ↓ pressão oncótica → 5) hipovolemia → 6) <b>choque</b>."},
+{t:"queim",q:"Por que a albumina extravasa e qual a consequência na pressão?",a:"A albumina sai do vaso junto com o líquido pelo ↑ da permeabilidade capilar. Isso ↓ a <b>pressão oncótica</b> dentro do vaso (a albumina é a principal responsável por reter líquido no vaso), favorecendo ainda mais a perda de líquido para fora do espaço intravascular."},
+{t:"queim",q:"Qual substância é liberada no local da lesão e que efeito causa?",a:"A <b>histamina</b> (substância endógena) → causa <b>vasodilatação</b> e ↑ da <b>permeabilidade capilar</b>."},
+{t:"queim",q:"Queimadura de 1º grau — profundidade, aspecto e tratamento?",a:"Profundidade: <b>epiderme</b>. Lesão hiperemiada, seca, sem sangue, com dor e calor. Tratamento: <b>hidratantes</b>. Cicatrização rápida."},
+{t:"queim",q:"Queimadura de 2º grau — profundidade, aspecto e evolução?",a:"Profundidade: <b>epiderme + parte da derme</b>. Hiperemia e descoloração da pele, <b>bolhas</b> e exsudato líquido, ainda dolorosa. Cicatriza em ~3 semanas; pode evoluir com <b>cicatriz hipertrófica</b>."},
+{t:"queim",q:"Queimadura de 3º grau — profundidade, aspecto, sensibilidade e procedimento?",a:"Profundidade: <b>totalidade da epiderme + derme</b>. Lesão esbranquiçada, aspecto de couro, <b>indolor</b> (terminações nervosas destruídas), redução da elasticidade da pele. Frequentemente requer <b>escarotomia</b>."},
+{t:"queim",q:"O que é escarotomia e por que é feita na queimadura de 3º grau?",a:"Procedimento que <b>libera a pressão causada pelo edema</b> que não consegue se expandir (a pele perdeu a elasticidade e não estira). Essa pressão: no <b>tórax</b> → impede a expansão pulmonar (dificulta a respiração); nos <b>membros</b> → comprime vasos → ↓ circulação → risco de isquemia/necrose."},
+{t:"queim",q:"Queimadura de 4º grau — profundidade e tratamento?",a:"Profundidade: <b>epiderme + derme + tecidos subjacentes</b>. Tratamento <b>completamente cirúrgico</b>."},
+{t:"queim",q:"Tabela-resumo: associe cada grau à característica principal.",a:"<b>1º</b>: seca, hiperemiada, dolorosa, sem bolha · <b>2º</b>: bolhas + exsudato, dolorosa, hipertrófica possível · <b>3º</b>: esbranquiçada/couro, indolor, escarotomia · <b>4º</b>: atinge tecido subjacente, cirúrgico."},
+{t:"queim",q:"XABCDE — etapa X (eXsanguination): o que se faz?",a:"Controlar <b>hemorragias massivas</b> imediatamente (prioridade antes de tudo)."},
+{t:"queim",q:"XABCDE — A (Airway): o que se avalia e qual o objetivo?",a:"Via aérea com <b>proteção da coluna cervical</b>. Prioritária para verificar lesão inalatória e edema de vias aéreas. Objetivo: manter a permeabilidade da via aérea + ofertar <b>O₂ a 100%</b>."},
+{t:"queim",q:"Quando indicar IOT (intubação) precoce em queimados e por que 'precoce'?",a:"Na <b>suspeita de lesão por inalação</b>. Deve ser feita <b>antes</b> que o edema de vias aéreas impeça o procedimento — o edema progride e pode dificultar/impedir a intubação depois."},
+{t:"queim",q:"XABCDE — B (Breathing): o que se avalia e o risco específico do queimado?",a:"Ventilação, expansibilidade torácica e eficácia das trocas gasosas. Queimaduras <b>circunferenciais de tórax</b> podem restringir a expansão pulmonar → insuficiência respiratória. Conduta: pode ser necessária <b>escarotomia</b>."},
+{t:"queim",q:"XABCDE — C (Circulation): o que se verifica e a conduta em queimaduras extensas?",a:"Controle de hemorragia + pulso, perfusão periférica e PA. Em queimaduras extensas (geralmente <b>>10% da SCQ</b>): perda significativa de líquido para o <b>3º espaço</b> → risco de hipovolemia. Conduta: <b>2 acessos venosos calibrosos</b> + reposição volêmica precoce."},
+{t:"queim",q:"XABCDE — D (Disability): o que se avalia e as causas de alteração?",a:"Estado <b>neurológico</b>. Alterações do nível de consciência podem ser por <b>hipóxia</b>, <b>intoxicação por CO</b> ou outras lesões. Importante identificar precocemente."},
+{t:"queim",q:"XABCDE — E (Exposure): o que envolve (3 partes)?",a:"1) <b>Expor totalmente</b> o paciente (avaliar extensão e outras lesões); 2) <b>prevenir hipotermia</b> (a pele queimada perde a regulação térmica) → cobrir com material limpo, aquecer, controlar o ambiente; 3) <b>analgesia</b> pré-hospitalar."},
+{t:"queim",q:"Opções de analgesia pré-hospitalar no queimado e a diferença entre elas?",a:"<b>Fentanil 1 mcg/kg</b> → mais seguro em pacientes instáveis (gera menos hipotensão). <b>Morfina 0,1 mg/kg</b> → libera muita histamina → vasodilatação e queda da PA, agravando a hipovolemia."},
+{t:"queim",q:"Critérios de encaminhamento ao centro de queimados (liste todos).",a:"Queimadura de espessura parcial >10%; <b>3º grau (qualquer extensão)</b>; queimaduras em <b>face, mão, pé, períneo</b>; <b>elétricas, por raios ou químicas</b>; muitas comorbidades; traumas concomitantes; necessidade de suporte emocional/psicológico; presença de <b>lesão inalatória</b>."},
+{t:"queim",q:"Pegadinha: queimadura de 3º grau pequena (ex.: 2%) precisa ir ao centro de queimados?",a:"<b>Sim.</b> Toda queimadura de 3º grau é critério de encaminhamento, independentemente do percentual de superfície corporal."},
+{t:"queim",q:"Quando ocorre a avaliação secundária e quais as 3 condutas (com o porquê)?",a:"Após a estabilização inicial (depois do XABCDE). 1) <b>Interromper o processo de queimadura</b> (afastar o agente) → reduz a progressão e alivia a dor; 2) <b>remover roupas e acessórios</b> → retêm calor e causam constrição pelo edema; 3) <b>cobrir as áreas com curativos estéreis não aderentes</b> → protege de contaminação, reduz perda de líquido e minimiza a dor."},
+{t:"queim",q:"Por que a reposição volêmica é necessária no queimado e por qual via?",a:"Pela perda de líquidos para o <b>3º espaço</b>. É feita por <b>infusão endovenosa</b>."},
+{t:"queim",q:"Qual a fórmula de Parkland (cálculo completo)?",a:"<b>2 mL × % de superfície corporal queimada × peso (kg)</b> = volume total nas 24h."},
+{t:"queim",q:"Como se divide a administração do volume de Parkland nas 24h?",a:"<b>Metade do volume nas primeiras 8 horas</b> e o restante nas <b>16 horas seguintes</b>."},
+{t:"queim",q:"Qual o objetivo da reposição volêmica e como se monitora se está funcionando?",a:"Objetivo: restaurar a <b>perfusão tecidual</b> e manter a estabilidade hemodinâmica. Monitora-se pela <b>diurese</b>: diurese ↓ = hipovolemia/reposição inadequada; diurese adequada = reposição eficaz."},
+{t:"queim",q:"Qual a fisiopatologia específica da queimadura elétrica?",a:"A passagem da corrente elétrica pelo corpo causa <b>lesões profundas, especialmente musculares</b>."},
+{t:"queim",q:"O que é rabdomiólise e como se relaciona à queimadura elétrica?",a:"A lesão muscular profunda causada pela corrente → <b>rabdomiólise</b> → libera <b>mioglobina</b> no sangue, que se deposita nos rins e ↑ o risco de <b>lesão renal aguda (LRA)</b>."},
+{t:"queim",q:"Outras manifestações características de queimaduras elétricas?",a:"<b>Contração muscular intensa</b> e <b>ruptura da membrana timpânica</b>."},
+{t:"queim",q:"Quais os dois componentes principais da lesão por inalação?",a:"<b>Monóxido de carbono (CO)</b> e <b>cianeto de hidrogênio</b>."},
+{t:"queim",q:"Como o monóxido de carbono (CO) causa hipóxia?",a:"O CO tem <b>afinidade maior que o O₂</b> pela hemoglobina; ocupa o lugar do O₂ (formando <b>carboxihemoglobina</b>) → hipóxia."},
+{t:"queim",q:"Qual exame indica a gravidade da intoxicação por CO e as faixas leve/grave?",a:"<b>Cooximetria (coxímetro)</b>. Leve: <b>10 a 20%</b>; Grave: <b>50 a 60%</b>."},
+{t:"queim",q:"Sintomas de intoxicação por CO?",a:"Dor de cabeça, náusea/vômito, confusão mental, sonolência, convulsões e óbito."},
+{t:"queim",q:"Tratamento da intoxicação por CO e meia-vida da CO-Hb?",a:"Ofertar <b>O₂ a 100%</b>; oxigênio <b>hiperbárico</b> (100%). Meia-vida da CO-Hb: <b>40 a 60 minutos</b> (em O₂ ambiente; o O₂ a 100% acelera essa eliminação)."},
+{t:"queim",q:"De onde vem o cianeto de hidrogênio e como age no organismo?",a:"Resulta da queima de <b>plásticos ou poliuretano</b>. Impede que as células <b>usem o oxigênio</b> (mesmo com O₂ disponível no sangue, a célula não consegue utilizá-lo)."},
+{t:"queim",q:"Antídoto para intoxicação por cianeto de hidrogênio?",a:"<b>Hidroxicobalamina</b> (também chamada cianocobalamina — vitamina B12)."},
+{t:"queim",q:"Compare CO × cianeto (mecanismo e tratamento).",a:"<b>CO</b>: compete com o O₂ pela hemoglobina → hipóxia → trata com <b>O₂ 100% / hiperbárico</b>. <b>Cianeto</b>: impede a célula de <b>usar</b> o O₂ → trata com <b>hidroxicobalamina (vit B12)</b>."},
+
+{t:"osteo",q:"O que são lesões osteoarticulares e quais os 3 tipos?",a:"Lesões que ocorrem nos <b>ossos, músculos e ligamentos</b>. Três tipos: <b>entorse, luxação e fratura</b>."},
+{t:"osteo",q:"O que é entorse?",a:"Lesão do <b>ligamento</b> de uma articulação, com estiramento <b>maior que sua amplitude normal</b>, mantendo as superfícies articulares em contato. Há risco de ruptura ligamentar."},
+{t:"osteo",q:"Sintomas da entorse e onde aparecem?",a:"Dor intensa, dificuldade de movimentação e dor à movimentação. Todos os sintomas ficam <b>restritos à articulação afetada</b> (diferente da luxação)."},
+{t:"osteo",q:"Causas comuns de entorse?",a:"Hiperextensão ou contração violenta; rotação que force a articulação."},
+{t:"osteo",q:"O que é luxação?",a:"Deslocamento repentino com perda de contato <b>parcial ou completa</b> das extremidades dos ossos de uma articulação."},
+{t:"osteo",q:"Sintomas da luxação e a diferença-chave vs entorse?",a:"Dor intensa, edema, impotência funcional, <b>deformidade visível</b> na articulação, encurtamento ou alongamento do membro. Afeta <b>TODO o membro</b> cuja articulação foi atingida (na entorse fica só na articulação)."},
+{t:"osteo",q:"Causas comuns de luxação?",a:"Traumatismo (golpe indireto), movimento articular violento e contração muscular forte o suficiente para luxar."},
+{t:"osteo",q:"Qual o maior problema/risco associado à luxação?",a:"O comprometimento de <b>tecidos moles</b>, podendo afetar: vasos sanguíneos, nervos e cápsula articular."},
+{t:"osteo",q:"Qual articulação é mais luxada e a ordem de frequência?",a:"<b>Ombro</b> (≈50% dos casos) → cotovelo → dedo → mandíbula."},
+{t:"osteo",q:"Cuidado inicial (24h) comum a entorse E luxação?",a:"<b>Compressas frias</b> nas primeiras 24 horas (reduzem edema e dor) e manter o <b>membro elevado</b>."},
+{t:"osteo",q:"Quem pode reduzir uma luxação no atendimento?",a:"<b>Apenas profissional especializado.</b> A redução da luxação é atividade exclusiva — o socorrista NÃO deve fazer."},
+{t:"osteo",q:"O que é fratura?",a:"Interrupção na <b>continuidade do osso</b>, com grande grau de deformação na região afetada."},
+{t:"osteo",q:"Sintomas da fratura?",a:"Dor local intensa (aumenta com o movimento), edema local, <b>crepitação</b> ao movimento, hematoma, equimose e paralisia."},
+{t:"osteo",q:"Causas comuns e os 2 mecanismos de ação da fratura?",a:"Causas: queda, impacto, movimento violento, esforço maior que o suportado pelo osso. Mecanismos: <b>ação direta ou indireta</b> (transmissão de força no osso) e <b>ação muscular</b>."},
+{t:"osteo",q:"Diferencie fratura fechada/interna de aberta/exposta.",a:"<b>Fechada/interna</b>: o osso permanece no interior do membro, sem perfurar a pele. <b>Aberta/exposta</b>: o osso entra em contato com o meio externo (perfurou a pele ou foi perfurado por algo externo)."},
+{t:"osteo",q:"Quando aumenta a chance de lesão vascular numa fratura?",a:"Os vasos acompanham o arcabouço ósseo; o risco ↑ quando há <b>desvio importante do eixo ósseo</b> (pontas e fragmentos ósseos que podem perfurar os vasos)."},
+{t:"osteo",q:"Conduta do APH para lesões osteoarticulares (na ordem).",a:"1) Ver o estado geral e buscar lesões graves/hemorragias (controlar a hemorragia assim que encontrada); 2) acalmar o paciente; 3) prevenir choque hipovolêmico; 4) <b>fazer curativos antes da imobilização</b>; 5) imobilizar na posição mais próxima da natural e confortável; 6) preparar para transporte; 7) encaminhar ao atendimento especializado."},
+{t:"osteo",q:"Por que o manuseio deve ser extremamente delicado?",a:"Manobras desorientadas/descontroladas podem provocar laceração de partes moles e perfurações da pele — uma <b>fratura fechada pode se transformar em aberta</b> por manuseio inadequado."},
+{t:"osteo",q:"Conduta completa no APH para fratura exposta.",a:"Controlar hemorragia arterial; <b>NÃO tentar recolocar o osso</b>; limpar o ferimento; cobrir com <b>curativo seco</b> e fixar com bandagem; <b>NÃO tocar no osso exposto</b>; manter repouso; imobilizar como fratura fechada; preparar para transporte; encaminhar ao especializado."},
+{t:"osteo",q:"Pegadinha: na fratura exposta, devo recolocar o osso antes de imobilizar?",a:"<b>NÃO.</b> Nunca recolocar nem tocar no osso exposto. A imobilização é feita como se fosse fratura fechada, após cobrir o ferimento com curativo seco e bandagem."},
+{t:"osteo",q:"Por que acidentes que causam fratura exigem atenção a outros órgãos?",a:"Porque geralmente são acidentes de <b>grande energia</b> → deve haver preocupação com o possível comprometimento de outros órgãos, não só do sistema osteoarticular."},
+
+{t:"band",q:"O que são bandagens e qual a função?",a:"Peças de tecido aplicadas sobre ferimentos para <b>exercer pressão, conferir proteção e fixar curativos</b>. Materiais: gazes, crepom, tecidos elásticos — adaptados à região do corpo."},
+{t:"band",q:"Quais os tipos de bandagem (subdivisões)?",a:"<b>Triangular / gravata</b>: fácil aplicação, usada dobrada ou improvisada com qualquer pedaço de tecido (ideal ≈1,20 m × 1,70 m; mínimo 100 cm × 60 cm). <b>Estendida</b>: útil para curativos de cabeça, braço, mão, joelho, pé e tórax. <b>Triangulares (abertas e dobradas)</b>: ferimentos de ombros, quadris e coxas."},
+{t:"band",q:"Quais as regras ao aplicar uma bandagem?",a:"Proteger e cobrir o ferimento <b>além dos limites da lesão</b>; deixar a <b>extremidade descoberta</b> para acompanhar a circulação; não apertar demais (não comprometer a circulação) nem deixar frouxa (pode se desprender); fixar com material que garanta firmeza e integridade; <b>evitar contato de duas superfícies da pele</b> (irritação); ajustar a posição do acidentado."},
+{t:"band",q:"Cuidados de apoio e o que fazer se a bandagem ensopar de sangue?",a:"A parte do corpo onde se aplica deve estar sempre <b>apoiada</b> e manter a posição; <b>saliências ósseas</b> protegidas com algodão/gaze; localizar pontos de pressão e desconforto. Se a bandagem ensopar de sangue, <b>não retirar</b> — colocar outra por cima. A imobilização do local é crucial."},
+{t:"band",q:"Qual o efeito das talas e como podem ser quanto à rigidez?",a:"As talas <b>suspendem o efeito dos movimentos</b> sobre as articulações acima e abaixo da lesão, fornecendo apoio e estabilidade. Podem ser <b>rígidas</b> (firmes ou flexíveis, industrializadas ou improvisadas com um objeto que ofereça estabilidade) ou <b>flexíveis</b> (a partir de peso, mantidas em elevação)."},
+{t:"band",q:"Regras gerais para a aplicação das talas.",a:"Cobrir <b>todos os ferimentos</b> (incluindo fraturas abertas) com curativos estéreis/limpos <b>antes</b> de aplicar a tala; firmar com segurança; <b>evitar contato direto da pele com a tala</b> (forrar); localizar pontos de pressão e desconforto; e <b>avaliar a circulação a cada 15 minutos</b>."},
+{t:"band",q:"Quando NÃO se deve deslocar/transportar o acidentado com fratura — e qual a exceção?",a:"Não deslocar, remover ou transportar antes de a parte afetada estar <b>corretamente imobilizada</b>. Única exceção: quando o acidentado (ou ele e o socorrista) correm <b>perigo iminente de vida</b> — ainda assim, com o máximo de cuidado possível."},
+
+{t:"bioss",q:"O que é biossegurança?",a:"Conjunto de medidas que visam à <b>quebra da cadeia epidemiológica</b>; num sentido mais amplo, o <b>controle da infecção</b>."},
+{t:"bioss",q:"O que são doenças infectocontagiosas e os exemplos mais comuns?",a:"Enfermidades causadas por <b>microrganismos</b> transmitidos por água, alimentos, ar, sangue, fezes e fluidos corporais. Mais comuns: <b>hepatite A, B e C; AIDS; tuberculose; influenza; covid</b>. Outras: dengue, malária, meningite, febre tifoide, sarampo, piolho/pediculose, cólera, leptospirose, caxumba, coqueluche, rubéola e escabiose."},
+{t:"bioss",q:"Quais os meios de contágio (direto e indireto)?",a:"<b>Direto</b> (pessoa-pessoa): gotículas de saliva, beijo, relação sexual e pele. <b>Indireto</b>: alimentos, vetores e objetos contaminados."},
+{t:"bioss",q:"Como ocorre a transmissão no APH (riscos para o socorrista)?",a:"Por <b>secreções eliminadas</b> pela vítima, <b>inalação de vírus e bactérias</b> no local, <b>acidentes com agulhas contaminadas</b>, inobservância das normas de biossegurança e descontaminação inadequada de materiais."},
+{t:"bioss",q:"O que é EPI e quais os equipamentos de proteção individual?",a:"Equipamento de Proteção Individual: <b>luvas de procedimentos, óculos de proteção, avental e máscara descartável</b>."},
+{t:"bioss",q:"Medidas de biossegurança (boas práticas).",a:"Lavagem das mãos conforme orientações; uso de EPI; uso de material estéril na vítima; minimizar as chances de infecção; descontaminação de equipamentos; uso de materiais descartáveis; descontaminação correta da ambulância; descarte correto do lixo hospitalar."},
+{t:"bioss",q:"Classifique os materiais em críticos, semicríticos e não-críticos (e o processamento de cada).",a:"<b>Críticos</b> (usados em intervenções invasivas) → devem ser <b>esterilizados</b> (bisturi, agulha…). <b>Semicríticos</b> (contato com pele não-íntegra ou mucosa) → devem ser <b>desinfetados</b> (máscara de O₂, sondas). <b>Não-críticos</b> (contato com pele íntegra ou que não entram em contato com o paciente) → devem ser <b>limpos</b> (ferramentas de salvamento)."},
+{t:"bioss",q:"Diferencie limpeza concorrente de limpeza terminal da ambulância.",a:"<b>Concorrente</b>: descontaminação <b>diária</b>. <b>Terminal</b>: <b>semanalmente</b> ou após situações especiais."},
+{t:"bioss",q:"Como é feito o descarte do lixo hospitalar?",a:"<b>Saco plástico branco</b> no coletor de resíduo hospitalar (gazes, ataduras úmidas contaminadas com sangue e outros líquidos); <b>expurgo</b> do hospital (secreções do frasco de aspiração); <b>caixa de material perfurante</b> (resíduos e materiais perfurocortantes)."},
+
+{t:"via",q:"O que é asfixia?",a:"Dificuldade respiratória severa ou interrupção completa da respiração, resultando na <b>falta de oxigênio (hipóxia ou anóxia)</b> no organismo, ou no <b>acúmulo de CO₂</b>."},
+{t:"via",q:"Quais as causas de asfixia (grupos)?",a:"1) <b>Obstrução das vias aéreas</b> (OVACE/corpo estranho, secreções, espasmos); 2) <b>estrangulamento, soterramento</b>, corpo estranho e afogamento; 3) <b>insuficiência de O₂ no ar</b> (altitude/ar rarefeito, compartimentos não ventilados, incêndios em ambientes fechados, gases tóxicos/fumaça densa); 4) <b>compressão do corpo</b> (compressão externa, traumatismo torácico); 5) <b>incapacidade de o sangue transportar O₂ ou parada do centro respiratório</b> (choque elétrico, venenos, doença, ferimento na cabeça ou aparelho respiratório, álcool, anestésicos, psicotrópicos calmantes)."},
+{t:"via",q:"OVACE — como deve ser reconhecida e o que a causa em crianças?",a:"Reconhecida de forma <b>rápida e objetiva</b>. Em crianças, é caracterizada pela <b>aspiração de leite</b> ou pequenos objetos, e por causas infecciosas como a <b>epiglotite</b>."},
+{t:"via",q:"Diferencie obstrução parcial (leve) de obstrução total (grave) da via aérea.",a:"<b>Parcial (leve)</b>: ainda há <b>alguma troca gasosa</b> e tosse espontânea. <b>Total (grave)</b>: tosse ineficaz e fraca, com presença de <b>ruídos respiratórios</b>, dificuldade respiratória, cianose, inconsciência e morte."},
+{t:"via",q:"Sinais de obstrução em crianças com tosse e dificuldade respiratória.",a:"Tosse e dificuldade respiratória, respiração ruidosa, sibilos, náuseas, cianose e <b>inconsciência</b> — o prolongamento leva ao óbito."},
+{t:"via",q:"Conduta no OVACE: por líquidos vs por corpo estranho visível.",a:"<b>Líquidos</b>: <b>lateralização</b> (em bloco nas vítimas traumatizadas) e <b>aspiração</b> (com sondas rígidas nas vítimas traumatizadas). <b>Corpo estranho visível</b>: só abrir a boca e retirar com os dedos. <b>Busca cega nunca deve ser realizada.</b>"},
+{t:"via",q:"Como variam as manobras de desobstrução conforme o paciente?",a:"<b>Adultos inconscientes, obesidade e gestação a termo</b> → compressão torácica (como na RCP). <b>Adulto consciente, pré-escolares e adolescentes</b> → <b>manobra de Heimlich</b> (compressão abdominal, em movimento, de baixo para cima até expelir). <b>Crianças menores de 1 ano</b> → pequenos golpes nas costas e, se ainda engasgada, compressões torácicas."},
+{t:"via",q:"Quais os métodos de controle das vias aéreas (manuais, básicos, avançados, alternativos)?",a:"<b>Manuais</b>: elevação do mento (não politraumatizados) e <b>tração da mandíbula</b> (mantém a coluna cervical; usada nos politraumatizados). <b>Mecânicos básicos</b>: cânula <b>orofaríngea/Guedel</b> (inconscientes — nos conscientes provoca vômito) e cânula <b>nasofaríngea</b> (semiconscientes; não indicada na suspeita de fratura de crânio ou coagulopatia). <b>Mecânicos avançados</b>: <b>intubação orotraqueal</b> (via aérea definitiva). <b>Alternativos</b>: combitube e <b>máscara laríngea</b>."},
+{t:"via",q:"Quais os suportes ventilatórios disponíveis?",a:"<b>Boca a boca</b>, <b>boca-máscara</b> e <b>bolsa-válvula-máscara (ambu/BVM)</b>."},
+
+{t:"cinem",q:"O que são os raios e como geram lesão elétrica?",a:"São <b>descargas elétricas do ar</b>, com voltagem, que ocorrem quando as nuvens se carregam eletricamente — a corrente sai e volta ao solo. A descarga é conduzida por materiais de baixa resistência até o solo."},
+{t:"cinem",q:"Como se classificam as lesões por raio quanto à gravidade?",a:"<b>Leves</b>: confusão mental, amnésia, surdez temporária, paralisia transitória. <b>Moderadas</b>: fraturas, convulsões, ruptura da membrana timpânica, queimaduras. <b>Graves</b>: PCR e trauma. São categorizadas em <b>4 grupos</b> conforme a gravidade."},
+{t:"cinem",q:"Quais as lesões do SNC associadas (imediatas/transitórias e tardias)?",a:"<b>Imediatas/transitórias</b>: perda de consciência, amnésia, dores de cabeça. <b>Moderadas</b>: paralisia (geralmente de membros inferiores), surdez, cegueira, ruptura da membrana timpânica. <b>Graves</b>: lesões do SNC com distúrbios do movimento (alterações do movimento fino) e lesões relacionadas ao trauma (quedas, hemorragias intracranianas)."},
+{t:"cinem",q:"Quais as lesões cardíacas por raio e a conduta recomendada?",a:"<b>Fibrilação ventricular</b>, assistolia, despolarização do miocárdio e alterações da repolarização. A <b>AHA recomenda RCP vigorosa</b> e desfibrilação precoce — inclusive em quem parece morto na avaliação inicial."},
+{t:"cinem",q:"O que é a cinemática do trauma e quais as principais causas (em ordem)?",a:"O trauma pode ser químico, térmico, elétrico, por irradiação ou <b>mecânico</b>. Principais causas em ordem: <b>traumas em estrada, violência interpessoal, violência autoinfligida, quedas, guerras, afogamentos e incêndios</b>."},
+{t:"cinem",q:"Perfil epidemiológico dos traumas em estrada e por queda?",a:"<b>Estradas</b>: homens jovens, até ~<b>29 anos</b>. <b>Quedas</b>: mais em <b>mulheres idosas</b> com mais de 65 anos."},
+{t:"cinem",q:"Quais os 3 eventos do trauma (pré / durante / pós)?",a:"<b>Pré-evento</b>: fatores que contribuem para a probabilidade de trauma. <b>Evento</b>: fatores que influenciam a gravidade. <b>Pós-evento</b>: as consequências do trauma."},
+{t:"cinem",q:"Quais as 3 fases do óbito por trauma?",a:"<b>1ª fase</b>: poucos minutos até 1 hora depois do trauma. <b>2ª fase</b>: primeiras horas após o acidente. <b>3ª fase</b>: de alguns dias até várias semanas após o trauma."},
+{t:"cinem",q:"Como varia o transporte de vítimas de 1 a 4 pessoas?",a:"<b>1</b>: de apoio ou nas costas. <b>2</b>: cadeirinha ou segurando pelas extremidades (axilas–pernas). <b>3</b>: uma segura cabeça+costas, outra a cintura+parte superior das coxas, a terceira a parte inferior das coxas+pernas. <b>4</b>: semelhante a 3, com uma pessoa a mais <b>imobilizando o segmento da coluna</b> para impedir deslocamento."},
+{t:"cinem",q:"Quais lesões um transporte mal feito pode causar?",a:"Fraturas expostas, trauma torácico, lesões em coluna, luxações, lesão de grandes vasos e até <b>amputação traumática</b>."},
+{t:"cinem",q:"Quais os tipos de impacto na cinemática do trauma?",a:"1) <b>Colisão</b> (frontal, lateral, traseira, angular); 2) <b>atropelamento</b>; 3) <b>capotamento</b>; 4) <b>agressão</b> (arma de fogo/branca); 5) <b>explosão</b> (ondas de choque); 6) <b>queda</b>."},
+{t:"cinem",q:"Lesões típicas da colisão frontal?",a:"O corpo se projeta → tórax/cabeça contra painel ou volante → lesões de <b>joelho e tíbia</b> (painel) e <b>face</b> (volante); se os pés estiverem apoiados, luxação/fratura no pé e tornozelo; <b>hiperextensão da coluna cervical</b> com possível dano medular."},
+{t:"cinem",q:"O que ocorre na agressão por arma de fogo com e sem cinto?",a:"<b>Sem cinto</b>: ejeção da vítima. <b>Com cinto</b>: não há ejeção, mas há possível <b>lesão abdominal ou torácica</b> pela contenção."},
+{t:"cinem",q:"De que depende a gravidade da queda e da explosão?",a:"<b>Queda</b>: desaceleração vertical, elasticidade do corpo e superfície de impacto (densidade e irregularidade). <b>Explosão</b>: ondas de choque."},
+{t:"cinem",q:"Quais os fatores preditivos de acidentes graves?",a:"Quedas de altura superior a <b>6 m</b> (em média 3× a altura da vítima); <b>vítima ejetada</b> do veículo (↑ 300% a probabilidade de lesões); acidente automobilístico com <b>vítima fatal</b>; <b>deformidade do veículo > 70%</b>."}
+];
+CARDS.forEach((c,i)=>c.id=i);
+const WORKING=20;
+const OFFSET=[2,4,9,15];
+let baseDeck=[],pool=[],q=[],st={},total=0,mastered=0,shown=false,hideArea=false;
+let selected=new Set(Object.keys(META));
+const SAVEKEY='aph-p1-flashcards-v1';
+function save(){try{localStorage.setItem(SAVEKEY,JSON.stringify({sel:[...selected],q:q.map(c=>c.id),pool:pool.map(c=>c.id),st:st,total:total,mastered:mastered,hideArea:hideArea}));}catch(e){}}
+function restoreSession(){
+ let d;try{d=JSON.parse(localStorage.getItem(SAVEKEY)||'null');}catch(e){return false;}
+ if(!d||!Array.isArray(d.q))return false;
+ q=d.q.map(id=>CARDS[id]).filter(Boolean);
+ pool=(d.pool||[]).map(id=>CARDS[id]).filter(Boolean);
+ if(q.length===0&&pool.length===0)return false;
+ st=d.st||{};total=d.total||0;mastered=d.mastered||0;hideArea=!!d.hideArea;
+ if(Array.isArray(d.sel))selected=new Set(d.sel.filter(k=>META[k]));
+ if(!selected.size)selected=new Set(Object.keys(META));
+ refreshChips();shown=false;render();return true;
+}
+function buildPanel(){
+ const p=document.getElementById('filterPanel');let h='';
+ for(const [blk,label] of BLOCKS){
+  const keys=Object.keys(META).filter(k=>META[k][1]===blk);if(!keys.length)continue;
+  h+='<div class="fgroup"><h4 onclick="togBlock(\''+blk+'\')">'+label+' <span class="blktog">marcar/desmarcar tudo</span></h4><div class="chips">';
+  for(const k of keys){const n=CARDS.filter(c=>c.t===k).length;h+='<button class="chip" data-k="'+k+'" onclick="togChip(\''+k+'\')">'+META[k][0]+' <span style="opacity:.55">'+n+'</span></button>';}
+  h+='</div></div>';
+ }
+ h+='<div class="factions"><button onclick="selAll()">Todos</button><button onclick="selNone()">Limpar</button><span class="sp"></span><button id="trainBtn" onclick="train()">Treinar <span id="trainN"></span></button></div>';
+ p.innerHTML=h;refreshChips();
+}
+function refreshChips(){
+ document.querySelectorAll('#filterPanel .chip').forEach(b=>b.classList.toggle('on',selected.has(b.dataset.k)));
+ const n=CARDS.filter(c=>selected.has(c.t)).length,tot=Object.keys(META).length;
+ const tn=document.getElementById('trainN');if(tn)tn.textContent='('+n+' cards)';
+ const ss=document.getElementById('selSummary');if(ss)ss.textContent=selected.size===0?'(nenhum)':selected.size===tot?'(todos)':'('+selected.size+' temas)';
+}
+function togChip(k){selected.has(k)?selected.delete(k):selected.add(k);refreshChips();}
+function togBlock(blk){const keys=Object.keys(META).filter(k=>META[k][1]===blk);const allOn=keys.every(k=>selected.has(k));keys.forEach(k=>allOn?selected.delete(k):selected.add(k));refreshChips();}
+function selAll(){selected=new Set(Object.keys(META));refreshChips();}
+function selNone(){selected=new Set();refreshChips();}
+function togPanel(){document.getElementById('filterPanel').classList.toggle('open');}
+function train(){if(!selected.size){alert('Escolha pelo menos um tema.');return;}document.getElementById('filterPanel').classList.remove('open');startSession();}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startSession(){
+ const keys=selected.size?selected:new Set(Object.keys(META));
+ baseDeck=CARDS.filter(c=>keys.has(c.t));
+ if(!baseDeck.length)baseDeck=CARDS.slice();
+ baseDeck=shuffleArr(baseDeck.slice());
+ st={};baseDeck.forEach(c=>st[c.id]=0);
+ total=baseDeck.length;mastered=0;pool=baseDeck.slice();q=[];
+ while(q.length<WORKING&&pool.length)q.push(pool.shift());
+ shown=false;render();save();
+}
+function restart(){startSession();}
+function render(){
+ const card=document.getElementById('card'),done=document.getElementById('done');
+ const rate=document.getElementById('rate'),prompt=document.getElementById('prompt');
+ if(q.length===0){
+  card.style.display='none';rate.classList.remove('show');prompt.classList.add('hide');
+  done.style.display='block';
+  done.innerHTML=total?('✅ Sessão concluída — '+mastered+' de '+total+' cards dominados (2× Fácil seguidos).<br><button onclick="restart()">↺ Recomeçar</button>'):'Sem cards.';
+  document.getElementById('count').textContent='';return;
+ }
+ card.style.display='block';done.style.display='none';
+ const c=q[0];
+ document.getElementById('fArea').textContent=META[c.t][0];
+ document.getElementById('fArea').style.visibility=hideArea?'hidden':'visible';
+ var _eb=document.getElementById('eyeBtn');if(_eb){_eb.classList.toggle('closed',hideArea);_eb.querySelector('.eyelbl').textContent=hideArea?'mostrar tema':'esconder tema';}
+ document.getElementById('fQ').innerHTML=c.q;
+ document.getElementById('bQ').innerHTML=c.q;
+ document.getElementById('bA').innerHTML=c.a;
+ var pw=document.getElementById('bPwrap');
+ if(c.p){pw.style.display='block';document.getElementById('bP').innerHTML=c.p;}else{pw.style.display='none';}
+ const s=st[c.id]||0;
+ document.getElementById('streak').textContent=s>0?'Sequência Fácil: '+s+'/2 — mais 1 "Fácil" e ele sai de rotação':'';
+ card.classList.toggle('flip',shown);
+ rate.classList.toggle('show',shown);
+ prompt.classList.toggle('hide',shown);
+ document.getElementById('count').textContent='Dominados '+mastered+'/'+total+'  ·  Em rotação '+q.length+'  ·  Aguardando '+pool.length;
+}
+function flip(){if(!shown){shown=true;render();}}
+function rate(level){
+ if(!shown)return;
+ const c=q.shift();
+ if(level===3){st[c.id]=(st[c.id]||0)+1;}else{st[c.id]=0;}
+ if(level===3&&st[c.id]>=2){mastered++;if(pool.length)q.push(pool.shift());}
+ else{q.splice(Math.min(OFFSET[level],q.length),0,c);}
+ shown=false;render();save();
+}
+function th(){const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='light'?'':'light');}
+function togArea(){hideArea=!hideArea;save();render();}
+document.addEventListener('keydown',e=>{
+ if(e.target.tagName==='SELECT'||e.target.tagName==='BUTTON')return;
+ if(e.code==='Space'){e.preventDefault();if(!shown){shown=true;render();}return;}
+ if(shown&&['1','2','3','4'].includes(e.key))rate(parseInt(e.key)-1);
+});
+buildPanel();if(!restoreSession())startSession();
+</script>
+</body>
+</html>

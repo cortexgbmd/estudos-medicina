@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Questoes - Farmacologia P2</title>
+<style>
+/* ========================================
+   DESIGN SYSTEM — Farmacologia P2
+   Dark mode padrao, toggle para light
+   ======================================== */
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-card: #1c2128;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --border-color: #30363d;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --accent-bg: rgba(88,166,255,0.1);
+  --success: #3fb950;
+  --success-bg: rgba(63,185,80,0.1);
+  --danger: #f85149;
+  --danger-bg: rgba(248,81,73,0.1);
+  --warning: #d29922;
+  --warning-bg: rgba(210,153,34,0.1);
+  --highlight-border: #f0883e;
+  --highlight-bg: rgba(240,136,62,0.08);
+  --code-bg: #161b22;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --nav-width: 280px;
+  --max-content: 860px;
+  --font-body: 16px;
+  --font-small: 14px;
+  --radius: 8px;
+}
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eaeef2;
+  --bg-card: #f6f8fa;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-muted: #8b949e;
+  --border-color: #d0d7de;
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --accent-bg: rgba(9,105,218,0.06);
+  --success: #1a7f37;
+  --success-bg: rgba(26,127,55,0.06);
+  --danger: #cf222e;
+  --danger-bg: rgba(207,34,46,0.06);
+  --warning: #9a6700;
+  --warning-bg: rgba(154,103,0,0.06);
+  --highlight-border: #d4760a;
+  --highlight-bg: rgba(212,118,10,0.06);
+  --code-bg: #f6f8fa;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: var(--font-body);
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: background 0.2s, color 0.2s;
+}
+h1, h2, h3, h4 { line-height: 1.3; font-weight: 600; }
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; padding-bottom: 0.3em; border-bottom: 2px solid var(--border-color); }
+h2 { font-size: 1.45em; margin: 1.4em 0 0.5em; color: var(--accent); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+p { margin: 0.6em 0; }
+ul, ol { margin: 0.5em 0 0.5em 1.5em; }
+li { margin: 0.3em 0; }
+strong { color: var(--accent); font-weight: 600; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+/* TOP BAR */
+.top-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.6em 1.2em;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(10px);
+}
+.top-bar h1 { font-size: 1.1em; margin: 0; padding: 0; border: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-bar-actions { display: flex; gap: 0.5em; align-items: center; flex-shrink: 0; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  padding: 0.4em 0.8em; border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary); color: var(--text-primary);
+  font-size: var(--font-small); cursor: pointer;
+  transition: all 0.15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-success { background: var(--success); color: #fff; border-color: var(--success); }
+.btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+.btn-sm { padding: 0.25em 0.6em; font-size: 0.8em; }
+.btn-lg { padding: 0.6em 1.4em; font-size: 1.05em; }
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed; top: 52px; left: 0; bottom: 0;
+  width: var(--nav-width); overflow-y: auto;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 1em 0; z-index: 90;
+  transition: transform 0.3s;
+}
+.sidebar.hidden { transform: translateX(-100%); }
+.sidebar a {
+  display: block; padding: 0.35em 1.2em;
+  color: var(--text-secondary); font-size: var(--font-small);
+  text-decoration: none; border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar a:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-bg); }
+.sidebar .nav-group { margin: 0.8em 0; }
+.sidebar .nav-group-title {
+  padding: 0.3em 1.2em; font-size: 0.75em; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-left: var(--nav-width); padding: 72px 2em 3em;
+  max-width: calc(var(--max-content) + var(--nav-width) + 4em);
+}
+.content-wrapper { max-width: var(--max-content); margin: 0 auto; }
+
+/* CARD */
+.card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius); padding: 1.2em 1.5em;
+  margin: 1em 0;
+}
+
+/* MENU TOGGLE */
+.menu-toggle {
+  display: none; background: none; border: none;
+  color: var(--text-primary); font-size: 1.4em; cursor: pointer;
+  padding: 0.2em;
+}
+
+/* BACK TO TOP */
+.back-to-top {
+  position: fixed; bottom: 2em; right: 2em;
+  width: 44px; height: 44px;
+  border-radius: 50%; border: 1px solid var(--border-color);
+  background: var(--bg-secondary); color: var(--text-primary);
+  font-size: 1.2em; cursor: pointer;
+  display: none; align-items: center; justify-content: center;
+  transition: all 0.2s; z-index: 80;
+  box-shadow: var(--shadow);
+}
+.back-to-top.visible { display: flex; }
+.back-to-top:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ==== QUIZ SPECIFIC STYLES ==== */
+
+/* Filters bar */
+.filters-bar {
+  display: flex; flex-wrap: wrap; gap: 0.6em; align-items: center;
+  padding: 0.8em 1em; margin: 1em 0;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+}
+.filters-bar label { font-size: var(--font-small); color: var(--text-secondary); font-weight: 600; }
+.filters-bar select, .filters-bar input {
+  padding: 0.3em 0.6em; border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary); color: var(--text-primary);
+  font-size: var(--font-small);
+}
+
+/* Mode toggle */
+.mode-toggle {
+  display: flex; gap: 0; margin: 1em 0;
+  border: 1px solid var(--border-color); border-radius: var(--radius);
+  overflow: hidden; width: fit-content;
+}
+.mode-toggle button {
+  padding: 0.5em 1.2em; border: none; cursor: pointer;
+  background: var(--bg-tertiary); color: var(--text-secondary);
+  font-size: var(--font-small); font-weight: 600;
+  transition: all 0.15s;
+}
+.mode-toggle button.active {
+  background: var(--accent); color: #fff;
+}
+
+/* Question card */
+.question-card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius); padding: 1.5em;
+  margin: 1.2em 0; position: relative;
+  transition: border-color 0.3s;
+}
+.question-card.correct { border-color: var(--success); }
+.question-card.incorrect { border-color: var(--danger); }
+.question-card.hidden { display: none; }
+
+.question-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 0.5em; margin-bottom: 0.8em;
+}
+.question-number {
+  font-weight: 700; color: var(--accent); font-size: 0.9em;
+}
+.question-tags {
+  display: flex; gap: 0.4em; flex-wrap: wrap;
+}
+.tag {
+  font-size: 0.7em; padding: 0.15em 0.5em; border-radius: 10px;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.tag-aula { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent); }
+.tag-easy { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+.tag-medium { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning); }
+.tag-hard { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+.tag-hidden { display: none; }
+
+.question-stem {
+  margin: 0.8em 0; line-height: 1.8;
+}
+.question-stem .vignette {
+  font-style: italic; color: var(--text-secondary);
+  border-left: 3px solid var(--accent);
+  padding-left: 0.8em; margin-bottom: 0.6em;
+}
+
+/* Options */
+.options-list { list-style: none; margin: 0.8em 0; padding: 0; }
+.option-item {
+  display: flex; align-items: flex-start; gap: 0.6em;
+  padding: 0.6em 0.8em; margin: 0.3em 0;
+  border-radius: var(--radius); cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: all 0.15s;
+}
+.option-item:hover { border-color: var(--accent); background: var(--accent-bg); }
+.option-item.selected { border-color: var(--accent); background: var(--accent-bg); }
+.option-item.correct-answer { border-color: var(--success); background: var(--success-bg); }
+.option-item.wrong-answer { border-color: var(--danger); background: var(--danger-bg); }
+.option-item.disabled { pointer-events: none; opacity: 0.95; }
+.option-letter {
+  font-weight: 700; min-width: 1.6em; text-align: center;
+  padding: 0.1em 0; color: var(--text-secondary);
+}
+.option-item.selected .option-letter { color: var(--accent); }
+.option-item.correct-answer .option-letter { color: var(--success); }
+.option-item.wrong-answer .option-letter { color: var(--danger); }
+
+/* Feedback */
+.feedback {
+  display: none; margin-top: 1em; padding: 1em;
+  border-radius: var(--radius); font-size: 0.95em; line-height: 1.7;
+}
+.feedback.show { display: block; }
+.feedback.correct-fb { background: var(--success-bg); border: 1px solid var(--success); }
+.feedback.incorrect-fb { background: var(--danger-bg); border: 1px solid var(--danger); }
+.feedback-title { font-weight: 700; margin-bottom: 0.4em; }
+.feedback.correct-fb .feedback-title { color: var(--success); }
+.feedback.incorrect-fb .feedback-title { color: var(--danger); }
+.feedback p { margin: 0.4em 0; }
+.feedback .why-wrong { color: var(--text-secondary); font-size: 0.9em; }
+.feedback .why-wrong strong { color: var(--text-secondary); }
+
+/* Explanation toggle */
+.explanation-toggle {
+  display: none; margin-top: 0.6em;
+}
+.explanation-toggle.show { display: block; }
+.explanation-content { display: none; margin-top: 0.5em; }
+.explanation-content.show { display: block; }
+
+/* Essay */
+.essay-card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius); padding: 1.5em; margin: 1.2em 0;
+}
+.essay-textarea {
+  width: 100%; min-height: 120px; padding: 0.8em;
+  background: var(--bg-tertiary); color: var(--text-primary);
+  border: 1px solid var(--border-color); border-radius: var(--radius);
+  font-family: inherit; font-size: 0.95em; line-height: 1.6;
+  resize: vertical;
+}
+.essay-textarea:focus { outline: none; border-color: var(--accent); }
+.model-answer {
+  display: none; margin-top: 1em; padding: 1em;
+  background: var(--success-bg); border: 1px solid var(--success);
+  border-radius: var(--radius); line-height: 1.7;
+}
+.model-answer.show { display: block; }
+.model-answer-title { font-weight: 700; color: var(--success); margin-bottom: 0.4em; }
+.essay-sub-q { margin: 0.8em 0; padding-left: 1em; border-left: 2px solid var(--accent); }
+
+/* Score screen */
+.score-screen {
+  display: none; text-align: center; padding: 2em;
+}
+.score-screen.show { display: block; }
+.score-big {
+  font-size: 3.5em; font-weight: 700; color: var(--accent);
+  margin: 0.2em 0;
+}
+.score-label { color: var(--text-secondary); font-size: 1.1em; }
+.score-details {
+  display: flex; flex-wrap: wrap; gap: 1em; justify-content: center;
+  margin: 1.5em 0;
+}
+.score-detail-card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius); padding: 1em 1.5em;
+  min-width: 140px; text-align: center;
+}
+.score-detail-card .sdv { font-size: 1.8em; font-weight: 700; }
+.score-detail-card .sdl { font-size: 0.8em; color: var(--text-secondary); }
+
+/* Progress bar */
+.progress-bar-container {
+  display: none; position: fixed; top: 52px; left: var(--nav-width); right: 0;
+  height: 4px; background: var(--bg-tertiary); z-index: 95;
+}
+.progress-bar-container.show { display: block; }
+.progress-bar-fill {
+  height: 100%; background: var(--accent); transition: width 0.3s;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Simulado bottom bar */
+.simulado-bar {
+  display: none; position: fixed; bottom: 0; left: var(--nav-width); right: 0;
+  background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+  padding: 0.6em 1.5em; z-index: 95;
+  justify-content: space-between; align-items: center;
+}
+.simulado-bar.show { display: flex; }
+.simulado-info { font-size: var(--font-small); color: var(--text-secondary); }
+.simulado-info span { color: var(--accent); font-weight: 700; }
+
+/* Stats bar */
+.stats-bar {
+  display: flex; flex-wrap: wrap; gap: 1em; margin: 1em 0;
+  padding: 0.8em 1em; background: var(--bg-card);
+  border: 1px solid var(--border-color); border-radius: var(--radius);
+}
+.stat-item { text-align: center; flex: 1; min-width: 80px; }
+.stat-value { font-size: 1.3em; font-weight: 700; color: var(--accent); display: block; }
+.stat-label { font-size: 0.75em; color: var(--text-secondary); text-transform: uppercase; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); box-shadow: var(--shadow); }
+  .main-content { margin-left: 0; padding: 68px 1em 2em; }
+  .menu-toggle { display: block; }
+  .top-bar h1 { font-size: 0.95em; }
+  .progress-bar-container { left: 0; }
+  .simulado-bar { left: 0; }
+}
+@media (max-width: 600px) {
+  :root { --font-body: 15px; }
+  h1 { font-size: 1.5em; }
+  .question-card { padding: 1em; }
+  .filters-bar { flex-direction: column; align-items: stretch; }
+  .score-big { font-size: 2.5em; }
+}
+@media print {
+  .top-bar, .sidebar, .back-to-top, .menu-toggle, .btn, .filters-bar, .mode-toggle, .simulado-bar, .progress-bar-container { display: none !important; }
+  .main-content { margin: 0; padding: 0; max-width: 100%; }
+  body { font-size: 11pt; color: #000; background: #fff; }
+  .question-card, .essay-card { border: 1px solid #ccc; background: #f8f8f8; break-inside: avoid; }
+  .question-card.hidden { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div style="display:flex;align-items:center;gap:0.6em">
+    <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+    <h1>Farmacologia P2 - Banco de Questoes</h1>
+  </div>
+  <div class="top-bar-actions">
+    <a href="../estudo/" class="btn btn-sm">Estudo</a>
+    <button class="btn btn-sm" id="theme-toggle"></button>
+  </div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-container" id="progress-bar-container">
+  <div class="progress-bar-fill" id="progress-bar-fill" style="width:0%"></div>
+</div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="nav-group">
+    <div class="nav-group-title">Modo</div>
+    <a href="#" onclick="setMode('estudo');return false" id="nav-estudo" class="active">Modo Estudo</a>
+    <a href="#" onclick="setMode('simulado');return false" id="nav-simulado">Modo Simulado</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Questoes Objetivas</div>
+    <a href="#" onclick="showSection('objetivas');return false" id="nav-obj" class="active">Objetivas (60)</a>
+    <a href="#" onclick="showSection('dissertativas');return false" id="nav-diss">Dissertativas (10)</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Filtrar por Aula</div>
+    <a href="#" onclick="filterAula('all');return false" class="nav-aula active" data-aula="all">Todas as Aulas</a>
+    <a href="#" onclick="filterAula('1-2');return false" class="nav-aula" data-aula="1-2">Aulas 1-2: PK/PD</a>
+    <a href="#" onclick="filterAula('3-4');return false" class="nav-aula" data-aula="3-4">Aulas 3-4: SNA</a>
+    <a href="#" onclick="filterAula('5');return false" class="nav-aula" data-aula="5">Aula 5: Anestesicos/BNM</a>
+    <a href="#" onclick="filterAula('6');return false" class="nav-aula" data-aula="6">Aula 6: Dor/Inflamacao</a>
+    <a href="#" onclick="filterAula('7');return false" class="nav-aula" data-aula="7">Aula 7: Transt. Mentais</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Filtrar por Dificuldade</div>
+    <a href="#" onclick="filterDiff('all');return false" class="nav-diff active" data-diff="all">Todas</a>
+    <a href="#" onclick="filterDiff('facil');return false" class="nav-diff" data-diff="facil">Facil</a>
+    <a href="#" onclick="filterDiff('medio');return false" class="nav-diff" data-diff="medio">Medio</a>
+    <a href="#" onclick="filterDiff('dificil');return false" class="nav-diff" data-diff="dificil">Dificil</a>
+  </div>
+</nav>
+
+<!-- SIMULADO BOTTOM BAR -->
+<div class="simulado-bar" id="simulado-bar">
+  <div class="simulado-info">
+    Respondidas: <span id="sim-answered">0</span> / <span id="sim-total">0</span>
+  </div>
+  <button class="btn btn-primary btn-lg" id="sim-submit" onclick="submitSimulado()">Finalizar Simulado</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+<div class="content-wrapper">
+
+<!-- MODE TOGGLE -->
+<div class="mode-toggle" id="mode-toggle-bar">
+  <button class="active" id="btn-estudo" onclick="setMode('estudo')">Modo Estudo</button>
+  <button id="btn-simulado" onclick="setMode('simulado')">Modo Simulado</button>
+</div>
+
+<!-- STATS (estudo mode) -->
+<div class="stats-bar" id="stats-bar">
+  <div class="stat-item"><span class="stat-value" id="stat-total">0</span><span class="stat-label">Questoes</span></div>
+  <div class="stat-item"><span class="stat-value" id="stat-correct">0</span><span class="stat-label">Acertos</span></div>
+  <div class="stat-item"><span class="stat-value" id="stat-wrong">0</span><span class="stat-label">Erros</span></div>
+  <div class="stat-item"><span class="stat-value" id="stat-pct">-</span><span class="stat-label">Aproveitamento</span></div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-bar" id="filters-bar">
+  <label>Aula:</label>
+  <select id="filter-aula" onchange="applyFilters()">
+    <option value="all">Todas</option>
+    <option value="1-2">Aulas 1-2 (PK/PD)</option>
+    <option value="3-4">Aulas 3-4 (SNA)</option>
+    <option value="5">Aula 5 (Anestesicos/BNM)</option>
+    <option value="6">Aula 6 (Dor/Inflamacao)</option>
+    <option value="7">Aula 7 (Transt. Mentais)</option>
+  </select>
+  <label>Dificuldade:</label>
+  <select id="filter-diff" onchange="applyFilters()">
+    <option value="all">Todas</option>
+    <option value="facil">Facil</option>
+    <option value="medio">Medio</option>
+    <option value="dificil">Dificil</option>
+  </select>
+  <button class="btn btn-sm" onclick="resetFilters()">Limpar Filtros</button>
+  <button class="btn btn-sm btn-primary" onclick="shuffleQuestions()">Embaralhar</button>
+</div>
+
+<!-- SCORE SCREEN (simulado) -->
+<div class="score-screen" id="score-screen">
+  <h2 style="border:none;margin-top:0">Resultado do Simulado</h2>
+  <div class="score-big" id="final-score">0%</div>
+  <div class="score-label" id="final-score-label">0 de 0 questoes corretas</div>
+  <div class="score-details" id="score-details"></div>
+  <div style="margin-top:1.5em;display:flex;gap:0.8em;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-primary btn-lg" onclick="reviewSimulado()">Revisar Questoes</button>
+    <button class="btn btn-lg" onclick="resetSimulado()">Novo Simulado</button>
+  </div>
+</div>
+
+<!-- QUESTIONS CONTAINER (OBJETIVAS) -->
+<div id="section-objetivas">
+<div id="questions-container"></div>
+</div>
+
+<!-- QUESTIONS CONTAINER (DISSERTATIVAS) -->
+<div id="section-dissertativas" style="display:none">
+<h2>Questoes Dissertativas</h2>
+<p style="color:var(--text-secondary)">Casos clinicos com perguntas encadeadas. Escreva sua resposta e depois revele o gabarito comentado.</p>
+<div id="essays-container"></div>
+</div>
+
+</div><!-- content-wrapper -->
+</div><!-- main-content -->
+
+<button class="back-to-top" id="back-to-top">&uarr;</button>
+
+<script>
+/* ========================================
+   DATA — QUESTOES OBJETIVAS
+   ======================================== */
+var questions = [
+// ===================== AULAS 1-2: FARMACOCINETICA / FARMACODINAMICA =====================
+{
+  id:1, aula:"1-2", diff:"facil",
+  stem:"Homem de 45 anos, hipertenso, em uso de varfarina (anticoagulante com alta ligacao a proteinas plasmaticas, >99%), inicia tratamento com anti-inflamatorio que tambem possui alta ligacao proteica. Apos uma semana, apresenta epistaxe de repeticao e equimoses espontaneas. O INR esta significativamente elevado.\n\nO mecanismo farmacocinetico que melhor explica o quadro clinico desse paciente e:",
+  options:[
+    "Inducao enzimatica hepatica do metabolismo da varfarina",
+    "Deslocamento da varfarina das proteinas plasmaticas, aumentando a fracao livre",
+    "Inibicao da absorcao intestinal da varfarina",
+    "Aumento da excrecao renal da varfarina por alcalinizacao urinaria",
+    "Bloqueio competitivo da varfarina no receptor de vitamina K"
+  ],
+  correct:1,
+  explanation:"A varfarina tem alta ligacao a albumina (>99%). Quando um segundo farmaco com alta afinidade proteica e introduzido, ocorre deslocamento competitivo, aumentando a fracao livre da varfarina no plasma. Como apenas a fracao livre tem efeito farmacologico, mesmo um pequeno aumento percentual gera grande elevacao do efeito anticoagulante, explicando o sangramento.",
+  wrongExplanations:[
+    "(A) A inducao enzimatica AUMENTARIA o metabolismo da varfarina, o que REDUZIRIA seu efeito (menor INR, nao maior).",
+    "(C) Nao ha mecanismo plausivel de inibicao de absorcao intestinal nesta interacao.",
+    "(D) A varfarina e um acido fraco, e a alcalinizacao urinaria aumentaria sua excrecao, nao seu efeito.",
+    "(E) A varfarina age inibindo a vitamina K epoxido redutase, nao num receptor; alem disso, o mecanismo descrito e farmacodinamico, nao farmacocinetico."
+  ]
+},
+{
+  id:2, aula:"1-2", diff:"medio",
+  stem:"Crianca de 3 anos e levada ao pronto-socorro apos ingestao acidental de amitriptilina (antidepressivo triciclico, base fraca). Apresenta-se sonolenta, com taquicardia sinusal a 150 bpm, alargamento do QRS e midriase. A equipe medica decide administrar bicarbonato de sodio IV.\n\nO principal mecanismo pelo qual o bicarbonato protege esse paciente e:",
+  options:[
+    "Aumenta a metabolizacao hepatica da amitriptilina por inducao do CYP450",
+    "Fornece Na+ que compete com o triciclico pelo canal de sodio cardiaco, revertendo a cardiotoxicidade",
+    "Alcaliniza a urina para aprisionar o farmaco ionizado e acelerar a excrecao renal",
+    "Bloqueia os receptores muscarinicos competitivamente com a amitriptilina",
+    "Aumenta a excrecao biliar da amitriptilina por conjugacao glicuronica"
+  ],
+  correct:1,
+  explanation:"A amitriptilina e uma BASE fraca (pKa ~9,4) com alto volume de distribuicao e alta ligacao proteica — a eliminacao renal e minima. O bicarbonato de sodio na intoxicacao por triciclicos atua por CARDIOPROTECAO: o Na+ compete com o ADT pelo canal de sodio cardiaco, revertendo o alargamento do QRS e reduzindo o risco de arritmias. A alcalinizacao do pH sanguineo tambem reduz a fracao livre ionizada que se liga aos canais. NAO se trata de 'aprisionar acido na urina'.",
+  wrongExplanations:[
+    "(A) O bicarbonato nao tem efeito indutor enzimatico sobre o CYP450.",
+    "(C) A amitriptilina tem alto Vd e alta ligacao proteica — a eliminacao renal e desprezivel. A alcalinizacao urinaria nao e eficaz para triciclicos.",
+    "(D) O bicarbonato nao tem afinidade por receptores muscarinicos; esse seria um mecanismo farmacodinamico, nao o racional do tratamento.",
+    "(E) A conjugacao glicuronica e uma reacao de fase II hepatica e nao e influenciada pelo pH plasmatico."
+  ]
+},
+{
+  id:3, aula:"1-2", diff:"facil",
+  stem:"Mulher de 68 anos, com insuficiencia cardiaca descompensada e congestao hepatica, esta em uso de diazepam (metabolizado por fase I e II hepatica). Apresenta sonolencia excessiva e ataxia, apesar da dose habitual.\n\nA causa mais provavel desse quadro e:",
+  options:[
+    "Aumento da absorcao intestinal do diazepam pela congestao hepatica",
+    "Reducao da biotransformacao hepatica, com acumulo do farmaco e de metabolitos ativos",
+    "Aumento da excrecao renal do diazepam pela congestao cardiaca",
+    "Deslocamento do diazepam das proteinas plasmaticas pela insuficiencia cardiaca",
+    "Inducao enzimatica causada pela congestao hepatica"
+  ],
+  correct:1,
+  explanation:"A congestao hepatica na ICC reduz a irrigacao e a funcao metabolica do figado. O diazepam depende de biotransformacao hepatica (fase I + fase II) e gera metabolitos ativos (desmetildiazepam). Com funcao hepatica comprometida, o metabolismo e mais lento, levando ao acumulo do farmaco e seus metabolitos ativos, causando sedacao excessiva. Neste contexto, LORAZEPAM seria preferivel, pois so depende de fase II (glicuronidacao).",
+  wrongExplanations:[
+    "(A) A congestao hepatica nao aumenta significativamente a absorcao intestinal.",
+    "(C) A congestao cardiaca tende a REDUZIR a perfusao renal, nao aumentar a excrecao.",
+    "(D) Embora possivel, o deslocamento proteico nao e o principal mecanismo neste caso; a reducao do metabolismo hepatico e muito mais relevante.",
+    "(E) A congestao hepatica DIMINUI a funcao metabolica, nao causa inducao enzimatica."
+  ]
+},
+{
+  id:4, aula:"1-2", diff:"medio",
+  stem:"Paciente de 50 anos, obeso (IMC 38 kg/m2), sera submetido a cirurgia eletiva e necessita de anestesia geral. O anestesista opta por um anestesico altamente lipossoluvel.\n\nEm relacao a farmacocinetica desse farmaco neste paciente, e correto afirmar que:",
+  options:[
+    "O volume de distribuicao sera menor que em pacientes nao obesos",
+    "A meia-vida sera mais curta devido ao maior metabolismo hepatico",
+    "O farmaco tera maior distribuicao no tecido adiposo, podendo ter latencia maior e efeito prolongado",
+    "A biodisponibilidade oral sera reduzida proporcionalmente ao grau de obesidade",
+    "A eliminacao renal sera acelerada pelo aumento do debito cardiaco"
+  ],
+  correct:2,
+  explanation:"Farmacos lipossolúveis se distribuem amplamente no tecido adiposo, que funciona como reservatorio. Em obesos, ha mais tecido adiposo, portanto o volume de distribuicao (Vd) e MAIOR. O farmaco precisa preencher esse compartimento maior antes de atingir a concentracao efetiva, causando latencia maior. A liberacao lenta do tecido adiposo prolonga o efeito. Isso exige ajuste cuidadoso da dose.",
+  wrongExplanations:[
+    "(A) O Vd sera MAIOR, nao menor, pois o farmaco lipossoluvel se distribui amplamente no tecido adiposo extra.",
+    "(B) O metabolismo hepatico nao e significativamente aumentado pela obesidade; a meia-vida tende a ser mais LONGA.",
+    "(D) A biodisponibilidade oral depende de absorcao intestinal e efeito de primeira passagem, nao diretamente do grau de obesidade.",
+    "(E) O debito cardiaco pode estar aumentado no obeso, mas a eliminacao renal de farmacos lipossolúveis depende primariamente da biotransformacao hepatica previa."
+  ]
+},
+{
+  id:5, aula:"1-2", diff:"dificil",
+  stem:"Paciente de 72 anos, desnutrido, com hipoalbuminemia (albumina 2,1 g/dL), inicia tratamento com fenitoina (anticonvulsivante com alta ligacao proteica e janela terapeutica estreita). A dosagem de fenitoina serica total esta dentro da faixa terapeutica, porem o paciente apresenta nistagmo, ataxia e confusao mental.\n\nA explicacao mais adequada para essa discrepancia e:",
+  options:[
+    "A fenitoina esta sendo absorvida em quantidade maior que o esperado",
+    "Ocorreu inducao enzimatica que gerou metabolitos toxicos ativos",
+    "A fracao livre da fenitoina esta aumentada pela hipoalbuminemia, causando toxicidade apesar do nivel total normal",
+    "O paciente apresenta resistencia farmacogenetica a fenitoina",
+    "A fenitoina esta sendo eliminada mais lentamente pelos rins desnutridos"
+  ],
+  correct:2,
+  explanation:"Na hipoalbuminemia, ha menos proteina disponivel para ligar o farmaco. Como a fenitoina tem alta ligacao proteica (>90%), a FRACAO LIVRE aumenta significativamente. A dosagem de fenitoina serica total mede tanto a fração ligada quanto a livre, podendo parecer 'normal'. Porem, a fracao livre (farmacologicamente ativa) esta muito elevada, causando sinais de toxicidade. Nestes pacientes, deve-se solicitar a dosagem da FRACAO LIVRE ou corrigir pela albumina.",
+  wrongExplanations:[
+    "(A) Nao ha indicacao de que a absorcao esteja aumentada; o nivel serico total e normal.",
+    "(B) A fenitoina e indutor enzimatico, mas seus metabolitos sao geralmente inativos; alem disso, inducao reduziria o nivel total.",
+    "(D) A resistencia farmacogenetica resultaria em falta de efeito, nao em toxicidade.",
+    "(E) A fenitoina e primariamente metabolizada pelo figado, nao pelos rins."
+  ]
+},
+{
+  id:6, aula:"1-2", diff:"facil",
+  stem:"Paciente em uso de antibiotico por via oral tem o tratamento alterado para a forma intravenosa na mesma dose. O medico percebe que os niveis plasmaticos ficaram muito acima do esperado, com sinais de toxicidade.\n\nA explicacao farmacocinetica mais provavel para essa situacao e:",
+  options:[
+    "A via intravenosa permite associacao com vasoconstritor local",
+    "A eliminacao hepatica e maior pela via intravenosa",
+    "A via oral sofre efeito de primeira passagem, reduzindo a biodisponibilidade; a mesma dose IV tem biodisponibilidade de 100%",
+    "A via oral tem absorcao mais rapida que a intravenosa",
+    "A metabolizacao renal e mais eficiente para farmacos administrados por via oral"
+  ],
+  correct:2,
+  explanation:"Farmacos administrados por via oral passam pelo figado (via veia porta) antes de atingir a circulacao sistemica — e o efeito de primeira passagem. Isso reduz a biodisponibilidade. A via IV tem biodisponibilidade de 100%, pois o farmaco vai diretamente a circulacao. Se a mesma dose e usada por ambas as vias, a concentracao plasmatica sera MAIOR pela IV, podendo causar toxicidade.",
+  wrongExplanations:[
+    "(A) Vasoconstritores locais sao associados a anestesicos locais, nao a antibioticos IV.",
+    "(B) A eliminacao hepatica ocorre independentemente da via; o que muda e a biodisponibilidade inicial.",
+    "(D) A absorcao oral e mais LENTA que a IV, nao mais rapida.",
+    "(E) A metabolizacao renal e pouco significativa para a maioria dos farmacos; o rim excreta, nao metaboliza significativamente."
+  ]
+},
+{
+  id:7, aula:"1-2", diff:"medio",
+  stem:"Adolescente de 16 anos e trazido a emergencia apos tentativa de suicidio com ingesta de grande quantidade de fenobarbital (acido fraco, pKa 7,4). A gasometria arterial mostra pH 7,35. A equipe decide realizar alcalinizacao urinaria com bicarbonato de sodio.\n\nO fundamento dessa conduta e:",
+  options:[
+    "O bicarbonato neutraliza o fenobarbital no estomago, impedindo absorcao",
+    "A alcalinizacao urinaria ioniza o acido fraco no tubulo renal, impedindo sua reabsorcao e acelerando a excrecao",
+    "O bicarbonato desloca o fenobarbital das proteinas plasmaticas",
+    "A alcalinizacao ativa os transportadores de efluxo renal (P-glicoproteina)",
+    "O bicarbonato inibe as enzimas CYP450, impedindo a formacao de metabolitos toxicos"
+  ],
+  correct:1,
+  explanation:"O fenobarbital e um acido fraco. Na urina alcalina (pH > pKa), a forma ionizada predomina. A forma ionizada e hidrossoluvel e NAO e reabsorvida pelo tubulo renal (nao atravessa membranas). Isso 'aprisiona' o farmaco na urina, acelerando a excrecao renal. Este e o principio da manipulacao do pH urinario em intoxicacoes.",
+  wrongExplanations:[
+    "(A) O bicarbonato IV nao atua no estomago; alem disso, a absorcao ja ocorreu.",
+    "(C) O bicarbonato nao atua deslocando farmacos de proteinas plasmaticas.",
+    "(D) A P-glicoproteina nao e ativada pelo bicarbonato.",
+    "(E) O bicarbonato nao inibe CYP450; esse efeito e de farmacos como cimetidina."
+  ]
+},
+{
+  id:8, aula:"1-2", diff:"medio",
+  stem:"Paciente de 60 anos, em uso cronico de rifampicina (indutor enzimatico) para tuberculose, recebe prescricao de contraceptivo oral combinado. Apos dois meses, engravida apesar do uso correto do anticoncepcional.\n\nA interacao medicamentosa que explica a falha contraceptiva e:",
+  options:[
+    "Inibicao da absorcao intestinal do contraceptivo pela rifampicina",
+    "Inducao enzimatica do CYP450 pela rifampicina, acelerando o metabolismo do estrogenio e reduzindo sua eficacia",
+    "Antagonismo farmacodinamico direto da rifampicina nos receptores de estrogenio",
+    "Aumento da ligacao do estrogenio a albumina, reduzindo a fracao livre",
+    "Bloqueio da excrecao biliar do estrogenio pela rifampicina"
+  ],
+  correct:1,
+  explanation:"A rifampicina e um dos mais potentes indutores enzimaticos do CYP450 (especialmente CYP3A4). Isso AUMENTA a metabolizacao hepatica dos estrogenos e progestogenos, reduzindo seus niveis plasmaticos e, consequentemente, sua eficacia contraceptiva. E uma interacao FARMACOCINETICA classica. Pacientes em uso de rifampicina devem usar metodos contraceptivos alternativos.",
+  wrongExplanations:[
+    "(A) A rifampicina nao inibe significativamente a absorcao intestinal de contraceptivos.",
+    "(C) A rifampicina nao tem acao antagonista em receptores de estrogenio; seu efeito e sobre o metabolismo.",
+    "(D) A rifampicina nao altera significativamente a ligacao proteica dos estrogenos.",
+    "(E) A rifampicina na verdade AUMENTA a excrecao biliar por inducao enzimatica, nao a bloqueia."
+  ]
+},
+{
+  id:9, aula:"1-2", diff:"dificil",
+  stem:"Paciente de 30 anos, em tratamento de epilepsia com carbamazepina (indutor enzimatico e substrato do CYP3A4), inicia macrolideo claritromicina (inibidor do CYP3A4) para infeccao respiratoria. Apos tres dias, apresenta diplopia, tontura e nistagmo.\n\nA explicacao para o quadro e:",
+  options:[
+    "A claritromicina e neurotoxica e causa esses sintomas independentemente da carbamazepina",
+    "A claritromicina inibe o CYP3A4, reduzindo o metabolismo da carbamazepina e causando acumulo toxico",
+    "A carbamazepina induz o metabolismo da claritromicina, gerando metabolitos neurotoxicos",
+    "A interacao e farmacotecnica: a claritromicina precipita ao ser associada com carbamazepina",
+    "A claritromicina desloca a carbamazepina dos receptores GABA-A no SNC"
+  ],
+  correct:1,
+  explanation:"A carbamazepina e metabolizada pelo CYP3A4. A claritromicina e um potente inibidor desse mesmo CYP3A4. Quando administrada junto, a claritromicina BLOQUEIA o metabolismo da carbamazepina, fazendo seu nivel plasmatico subir acima da janela terapeutica. A carbamazepina tem indice terapeutico relativamente estreito, e os sintomas (diplopia, tontura, nistagmo) sao classicos da intoxicacao por carbamazepina.",
+  wrongExplanations:[
+    "(A) Embora a claritromicina possa causar efeitos adversos GI, os sintomas descritos sao classicos de toxicidade por carbamazepina, nao por macrolideo.",
+    "(C) Embora a carbamazepina seja indutora enzimatica, os metabolitos da claritromicina nao sao neurotoxicos de forma clinicamente relevante neste contexto.",
+    "(D) Incompatibilidade farmacotecnica ocorre em solucoes IV; ambos sao administrados por via oral.",
+    "(E) A carbamazepina atua em canais de sodio, nao no receptor GABA-A; alem disso, a interacao e farmacocinetica."
+  ]
+},
+{
+  id:10, aula:"1-2", diff:"facil",
+  stem:"Um medicamento generico, para ser intercambiavel com o medicamento de referencia, deve comprovar bioequivalencia. Sobre esse conceito, e correto afirmar que:",
+  options:[
+    "O generico deve ter exatamente a mesma formulacao, incluindo excipientes identicos ao referencia",
+    "A bioequivalencia e demonstrada quando a biodisponibilidade do generico esta dentro de +/- 20% da do medicamento de referencia",
+    "Medicamentos similares sao automaticamente intercambiaveis com o generico",
+    "A bioequivalencia depende apenas da comparacao da concentracao maxima (Cmax) dos farmacos",
+    "Medicamentos genericos sao identificados pelo nome comercial (fantasia) na embalagem"
+  ],
+  correct:1,
+  explanation:"A bioequivalencia e comprovada quando a biodisponibilidade (medida pela Area Sob a Curva - AUC, Cmax e Tmax) do generico esta dentro de +/- 20% do medicamento de referencia. Isso garante que o generico atinja concentracoes plasmaticas semelhantes e possa ser intercambiavel. O generico e identificado pelo nome do PRINCIPIO ATIVO, nao por nome comercial.",
+  wrongExplanations:[
+    "(A) O generico deve ter o mesmo principio ativo, concentracao, forma farmaceutica e via, mas os excipientes PODEM variar.",
+    "(C) Similares so sao intercambiaveis se listados especificamente pela ANVISA, nao automaticamente.",
+    "(D) A bioequivalencia compara AUC (extensao), Cmax e Tmax (velocidade), nao apenas a Cmax.",
+    "(E) Genericos NAO tem nome comercial; sao identificados pelo nome do principio ativo."
+  ]
+},
+// ===================== AULAS 3-4: SNA / RECEPTORES =====================
+{
+  id:11, aula:"3-4", diff:"facil",
+  stem:"Paciente de 55 anos, asmatico, e diagnosticado com hipertensao arterial. O medico prescreve propranolol (betabloqueador nao seletivo). Apos iniciar o tratamento, o paciente apresenta piora significativa da dispneia e broncoespasmo.\n\nO mecanismo que explica essa reacao adversa e:",
+  options:[
+    "Estimulacao do receptor beta-2 bronquico pelo propranolol",
+    "Bloqueio do receptor beta-2 bronquico, impedindo a broncodilatacao fisiologica",
+    "Ativacao do receptor alfa-1 na musculatura lisa bronquica",
+    "Inibicao da acetilcolinesterase pulmonar pelo propranolol",
+    "Estimulacao do receptor M3 muscarínico bronquico pelo propranolol"
+  ],
+  correct:1,
+  explanation:"O propranolol e um betabloqueador NAO SELETIVO (bloqueia beta-1 E beta-2). Nos bronquios, o receptor beta-2 medeia broncodilatacao. Ao bloquear o beta-2, o propranolol impede a broncodilatacao fisiologica e facilita a broncoconstrição, agravando a asma. Em asmaticos, devem-se preferir betabloqueadores SELETIVOS para beta-1 (ex: atenolol, metoprolol).",
+  wrongExplanations:[
+    "(A) O propranolol e antagonista (bloqueia), nao agonista (estimula) de receptores beta.",
+    "(C) O propranolol nao atua em receptores alfa-1; alem disso, alfa-1 nao e o receptor predominante no bronquio.",
+    "(D) O propranolol nao inibe a acetilcolinesterase; essa e a acao de neostigmina/piridostigmina.",
+    "(E) O propranolol nao tem acao muscarinica; o bloqueio beta-2 e suficiente para explicar o broncoespasmo."
+  ]
+},
+{
+  id:12, aula:"3-4", diff:"medio",
+  stem:"Paciente de 40 anos chega a emergencia em choque anafilatico apos picada de abelha. Apresenta hipotensao grave (PA 50x30 mmHg), taquicardia, edema de glote e broncoespasmo. O medicamento de primeira escolha e a adrenalina intramuscular.\n\nOs receptores ativados pela adrenalina que justificam seu uso nessa situacao sao:",
+  options:[
+    "Alfa-2 (vasodilatacao) e beta-1 (bradicardia)",
+    "Alfa-1 (vasoconstrição) e beta-2 (broncodilatacao), alem de beta-1 (aumento do debito cardiaco)",
+    "M2 (bradicardia) e beta-2 (broncodilatacao)",
+    "Beta-1 (bradicardia reflexa) e alfa-1 (vasodilatacao)",
+    "Somente beta-2 (broncodilatacao e vasodilatacao periferica)"
+  ],
+  correct:1,
+  explanation:"A adrenalina tem afinidade IGUAL por receptores alfa e beta. No choque anafilatico: alfa-1 causa vasoconstrição (restaura pressao arterial); beta-1 aumenta frequencia e forca de contracao cardiaca (aumenta debito cardiaco); beta-2 causa broncodilatacao (reverte broncoespasmo). Essa acao multirreceptor torna a adrenalina o farmaco ideal para anafilaxia.",
+  wrongExplanations:[
+    "(A) Alfa-2 nao causa vasodilatacao direta; e um autorreceptor pre-sinaptico. Beta-1 causa TAQUICARDIA, nao bradicardia.",
+    "(C) A adrenalina nao atua em receptores muscarinicos (M2). A adrenalina e adrenergica.",
+    "(D) Beta-1 causa taquicardia e aumento de forca, nao bradicardia reflexa. Alfa-1 causa vasoconstrição, nao vasodilatacao.",
+    "(E) A acao apenas em beta-2 nao restauraria a pressao arterial; a vasoconstrição via alfa-1 e essencial."
+  ]
+},
+{
+  id:13, aula:"3-4", diff:"facil",
+  stem:"Homem de 70 anos, em uso de ipratropio inalatorio para DPOC, relata melhora significativa da dispneia. O mecanismo de acao do ipratropio no sistema respiratorio e:",
+  options:[
+    "Agonismo do receptor beta-2 na musculatura lisa bronquica",
+    "Antagonismo do receptor muscarínico M3, impedindo a broncoconstrição mediada pela acetilcolina",
+    "Inibicao da fosfolipase A2, reduzindo a inflamacao bronquica",
+    "Bloqueio dos canais de sodio nas fibras sensitivas pulmonares",
+    "Agonismo do receptor alfa-1 na musculatura lisa vascular pulmonar"
+  ],
+  correct:1,
+  explanation:"O ipratropio e um antagonista muscarínico (anticolinergico) inalatorio. Nos bronquios, a acetilcolina atua no receptor M3 causando broncoconstrição. O ipratropio bloqueia esse receptor, impedindo a acao da acetilcolina e promovendo broncodilatacao. E uma abordagem diferente e complementar ao uso de beta-2 agonistas.",
+  wrongExplanations:[
+    "(A) Essa e a acao do salbutamol/fenoterol, nao do ipratropio. Ipratropio e anticolinergico, nao adrenergico.",
+    "(C) Essa e a acao dos corticosteroides, nao de anticolinergicos.",
+    "(D) Essa e a acao dos anestesicos locais (lidocaina), nao do ipratropio.",
+    "(E) Alfa-1 na vasculatura causa vasoconstrição; nao e o mecanismo do ipratropio."
+  ]
+},
+{
+  id:14, aula:"3-4", diff:"medio",
+  stem:"Paciente de 35 anos apresenta bradicardia sinusal sintomatica (FC 38 bpm) com tontura e lipotimia. O medico administra atropina intravenosa, com elevacao da frequencia cardiaca para 72 bpm em poucos minutos.\n\nO mecanismo de acao da atropina que justifica essa resposta e:",
+  options:[
+    "Agonismo do receptor beta-1 cardiaco, aumentando diretamente a frequencia",
+    "Bloqueio do receptor muscarínico M2 cardiaco, removendo a inibicao vagal (parassimpatica) sobre o no sinusal",
+    "Inibicao da acetilcolinesterase, aumentando a acetilcolina disponivel",
+    "Agonismo do receptor alfa-1 no no sinusal, causando despolarizacao",
+    "Bloqueio do receptor nicotinico no ganglio parassimpatico cardiaco"
+  ],
+  correct:1,
+  explanation:"A atropina e um antagonista muscarínico. No coracao, o tonus parassimpatico (vagal) atua via acetilcolina no receptor M2 do no sinusal, REDUZINDO a frequencia cardiaca. Ao bloquear o M2, a atropina remove essa inibicao vagal, permitindo que o tonus simpatico predomine e a FC aumente. E como 'tirar o freio' do coracao.",
+  wrongExplanations:[
+    "(A) A atropina nao atua em receptores beta-1; essa seria a acao da dobutamina ou adrenalina.",
+    "(C) Isso e o oposto: inibidores da acetilcolinesterase (neostigmina) AUMENTAM a acetilcolina, o que causaria mais bradicardia, nao taquicardia.",
+    "(D) A atropina nao atua em receptores alfa-1; alem disso, alfa-1 nao e o receptor relevante no no sinusal.",
+    "(E) A atropina nao atua preferencialmente em receptores nicotinicos; seu alvo principal sao os MUSCARINICOS."
+  ]
+},
+{
+  id:15, aula:"3-4", diff:"dificil",
+  stem:"Agricultor de 28 anos e trazido ao pronto-socorro apos exposicao acidental a organofosforado (inseticida). Apresenta miose bilateral, sialorreia, bradicardia, broncoespasmo, diarreia e fasciculacoes musculares.\n\nSobre o mecanismo de intoxicacao e o tratamento, e correto afirmar que:",
+  options:[
+    "O organofosforado bloqueia receptores muscarinicos; o tratamento e com agonista colinergico direto",
+    "O organofosforado inibe reversivelmente a acetilcolinesterase; o tratamento e com neostigmina",
+    "O organofosforado inibe IRREVERSIVELMENTE a acetilcolinesterase, causando acumulo de acetilcolina; o tratamento e com atropina (antagonista muscarínico)",
+    "O organofosforado estimula diretamente receptores nicotinicos; o tratamento e com betabloqueador",
+    "O organofosforado bloqueia a liberacao de acetilcolina na fenda sinaptica; o tratamento e com pilocarpina"
+  ],
+  correct:2,
+  explanation:"Os organofosforados causam FOSFORILACAO IRREVERSIVEL da acetilcolinesterase (AChE). Sem AChE funcional, a acetilcolina se acumula em TODAS as sinapses colinergicas: muscarínicas (miose, bradicardia, sialorreia, broncoespasmo, diarreia) e nicotinicas (fasciculacoes). O tratamento e com ATROPINA (bloqueia os efeitos muscarinicos excessivos). Pralidoxima pode ser associada para regenerar a AChE se administrada precocemente.",
+  wrongExplanations:[
+    "(A) O organofosforado inibe a enzima (AChE), nao bloqueia receptores. Dar agonista colinergico pioraria o quadro.",
+    "(B) A inibicao e IRREVERSIVEL (fosforilacao), nao reversivel. Neostigmina tambem e anticolinesterasico e PIORARIA o quadro (mais ACh na fenda).",
+    "(D) O organofosforado nao atua diretamente em receptores nicotinicos, e sim na enzima; betabloqueador nao e o tratamento adequado.",
+    "(E) Quem bloqueia a liberacao de ACh e a toxina botulinica. Pilocarpina e agonista muscarínico e pioraria os sintomas."
+  ]
+},
+{
+  id:16, aula:"3-4", diff:"facil",
+  stem:"Mulher de 62 anos com miastenia gravis (doenca autoimune que destroi receptores nicotinicos da juncao neuromuscular) apresenta fraqueza muscular progressiva. O tratamento farmacologico baseia-se em anticolinesterasicos como a piridostigmina.\n\nO racional terapeutico dessa classe e:",
+  options:[
+    "Bloquear os receptores nicotinicos remanescentes para impedir sua destruicao",
+    "Inibir a acetilcolinesterase, aumentando a concentracao de acetilcolina na fenda e compensando a perda de receptores",
+    "Estimular diretamente os receptores muscarinicos na placa motora",
+    "Bloquear a recaptacao de noradrenalina na juncao neuromuscular",
+    "Inibir a liberacao de anticorpos contra os receptores nicotinicos"
+  ],
+  correct:1,
+  explanation:"Na miastenia gravis, anticorpos destroem receptores nicotinicos musculares (NM). Com menos receptores, a quantidade normal de acetilcolina e insuficiente para causar despolarizacao adequada. Ao inibir a AChE, a piridostigmina AUMENTA a concentracao de ACh na fenda, permitindo que os receptores remanescentes sejam mais eficientemente ativados, melhorando a forca muscular.",
+  wrongExplanations:[
+    "(A) Bloquear os receptores remanescentes pioraria a fraqueza; o objetivo e AUMENTAR a ativacao deles.",
+    "(C) A placa motora possui receptores NICOTINICOS, nao muscarinicos. Estimular M3 causaria contracoes de musculatura lisa.",
+    "(D) A juncao neuromuscular e colinergica (ACh), nao noradrenergica.",
+    "(E) Anticolinesterasicos nao tem efeito imunossupressor; para inibir anticorpos, usam-se imunossupressores."
+  ]
+},
+{
+  id:17, aula:"3-4", diff:"medio",
+  stem:"Gestante de 32 semanas com diagnostico de hipertensao gestacional. O obstetra opta por metildopa (alfametildopa) como anti-hipertensivo.\n\nO mecanismo de acao da metildopa e:",
+  options:[
+    "Bloqueio direto dos receptores beta-1 cardiacos, reduzindo debito cardiaco",
+    "Atua como precursor de falso neurotransmissor (alfa-metilnoradrenalina), que ativa receptores alfa-2 centrais, reduzindo a descarga simpatica",
+    "Bloqueio dos receptores alfa-1 vasculares, causando vasodilatacao periferica direta",
+    "Inibicao da enzima conversora de angiotensina (ECA), reduzindo a formacao de angiotensina II",
+    "Bloqueio dos canais de calcio na musculatura lisa vascular"
+  ],
+  correct:1,
+  explanation:"A metildopa (Aldomet) e um pro-farmaco. E convertida em alfa-metilnoradrenalina, que atua como 'falso neurotransmissor'. Este metabolito ativa receptores ALFA-2 CENTRAIS (pre-sinapticos), reduzindo a descarga simpatica do SNC, o que diminui a resistencia periferica e a pressao arterial. E o UNICO anti-hipertensivo considerado seguro em TODAS as fases da gestacao.",
+  wrongExplanations:[
+    "(A) Esse e o mecanismo dos betabloqueadores (propranolol, atenolol), nao da metildopa.",
+    "(C) Esse e o mecanismo da prazosina (antagonista alfa-1 periferico), nao da metildopa.",
+    "(D) Esse e o mecanismo do captopril/enalapril; IECA sao CONTRAINDICADOS na gestacao (teratogenicos).",
+    "(E) Esse e o mecanismo da nifedipina/amlodipina, nao da metildopa."
+  ]
+},
+{
+  id:18, aula:"3-4", diff:"facil",
+  stem:"Sobre a neurotransmissao ganglionar do sistema nervoso autonomo, e correto afirmar que:",
+  options:[
+    "No simpatico, a transmissao ganglionar e noradrenergica, enquanto no parassimpatico e colinergica",
+    "A transmissao ganglionar e IDENTICA em ambas as divisoes: colinergica nicotinica (receptor NN)",
+    "No parassimpatico, a transmissao ganglionar e serotoninergica",
+    "A transmissao ganglionar simpatica utiliza receptores muscarinicos M1",
+    "A transmissao ganglionar nao envolve neurotransmissores quimicos"
+  ],
+  correct:1,
+  explanation:"A neurotransmissao GANGLIONAR (entre o neuronio pre-ganglionar e o pos-ganglionar) e IDENTICA no simpatico e no parassimpatico: envolve acetilcolina atuando em receptores NICOTINICOS NEURONAIS (NN). A diferenca esta na neurotransmissao POS-GANGLIONAR: o simpatico usa noradrenalina (receptores alfa e beta), enquanto o parassimpatico usa acetilcolina em receptores MUSCARINICOS.",
+  wrongExplanations:[
+    "(A) A transmissao GANGLIONAR do simpatico tambem e colinergica nicotinica, nao noradrenergica. A noradrenalina e o neurotransmissor POS-ganglionar simpatico.",
+    "(C) Serotonina nao e o neurotransmissor ganglionar parassimpatico.",
+    "(D) Receptores muscarinicos (M1-M5) sao POS-ganglionares parassimpaticos, nao ganglionares.",
+    "(E) A transmissao ganglionar e uma sinapse quimica classica, com liberacao de ACh."
+  ]
+},
+{
+  id:19, aula:"3-4", diff:"dificil",
+  stem:"Paciente com feocromocitoma (tumor produtor de catecolaminas) e submetido a bloqueio farmacologico com fenoxibenzamina (antagonista alfa-1 irreversivel) antes da cirurgia. Apos o bloqueio alfa, recebe adrenalina intravenosa acidentalmente. Surpreendentemente, a pressao arterial CAI.\n\nA explicacao para esse fenomeno (inversao da adrenalina) e:",
+  options:[
+    "A adrenalina foi metabolizada mais rapidamente pela inducao enzimatica da fenoxibenzamina",
+    "A fenoxibenzamina converteu a adrenalina em noradrenalina por alteracao quimica",
+    "Com os receptores alfa-1 bloqueados, a acao da adrenalina fica restrita aos receptores beta-2 (vasodilatacao), resultando em queda da PA",
+    "A adrenalina ativou receptores M2 cardiacos, causando bradicardia e hipotensao",
+    "A fenoxibenzamina ativou a via descendente inibitoria simpatica no bulbo"
+  ],
+  correct:2,
+  explanation:"A adrenalina tem afinidade igual por receptores alfa e beta. Normalmente, o efeito vascular resulta em vasoconstrição (alfa-1 predominante sobre beta-2 nos vasos). Quando alfa-1 esta IRREVERSIVELMENTE bloqueado pela fenoxibenzamina, o unico efeito vascular remanescente da adrenalina e a VASODILATACAO via beta-2. Isso causa queda da PA — e o fenomeno da 'inversao da adrenalina', conceito classico em farmacologia do SNA.",
+  wrongExplanations:[
+    "(A) A fenoxibenzamina nao e indutor enzimatico e nao acelera o metabolismo da adrenalina.",
+    "(B) A fenoxibenzamina nao tem capacidade de converter adrenalina em noradrenalina; isso nao ocorre.",
+    "(D) A adrenalina e catecolamina e nao atua em receptores muscarinicos (M2).",
+    "(E) A fenoxibenzamina e um bloqueador periferico alfa-1, nao atua centralmente no bulbo."
+  ]
+},
+{
+  id:20, aula:"3-4", diff:"medio",
+  stem:"Homem de 50 anos com hiperplasia prostatica benigna (HPB) apresenta dificuldade miccional importante. E prescrito tansulosina.\n\nO mecanismo de acao desse farmaco no trato urinario e:",
+  options:[
+    "Agonismo do receptor beta-2 no musculo detrusor da bexiga",
+    "Antagonismo do receptor alfa-1 seletivo para o trato urinario, promovendo relaxamento do colo vesical e da uretra prostatica",
+    "Inibicao da 5-alfa-redutase, reduzindo o tamanho da prostata",
+    "Agonismo do receptor M3 na musculatura lisa vesical, aumentando a contracao do detrusor",
+    "Bloqueio dos canais de calcio na musculatura lisa prostatica"
+  ],
+  correct:1,
+  explanation:"A tansulosina e um antagonista alfa-1 adrenergico SELETIVO para o subtipo alfa-1A, predominante no colo vesical, uretra prostatica e prostata. O tonus simpatico (via alfa-1) mantem a contracao dessas estruturas. Ao bloquear alfa-1, a tansulosina relaxa o colo vesical e a uretra prostatica, facilitando a miccao sem reduzir significativamente a pressao arterial.",
+  wrongExplanations:[
+    "(A) Beta-2 causa relaxamento de musculatura lisa visceral, mas nao e o mecanismo da tansulosina.",
+    "(C) Essa e a acao da finasterida/dutasterida, que sao inibidores da 5-alfa-redutase, outra classe para HPB.",
+    "(D) M3 na bexiga causa contracao do detrusor, mas a tansulosina nao e colinergica.",
+    "(E) A tansulosina nao e bloqueador de canais de calcio."
+  ]
+},
+{
+  id:21, aula:"3-4", diff:"facil",
+  stem:"Sobre a inervacao simpatica da glandula suprarrenal (medula adrenal), e correto afirmar que:",
+  options:[
+    "Segue o padrao bineuronal classico, com neuronio pre e pos-ganglionar, e libera noradrenalina na medula",
+    "E uma excecao monossinaptica: um unico neuronio pre-ganglionar colinergico nicotinico inerva diretamente a medula adrenal",
+    "A medula adrenal e inervada exclusivamente pelo sistema parassimpatico via nervo vago",
+    "A glandula suprarrenal nao recebe inervacao autonomica; sua secrecao e regulada hormonalmente pelo ACTH",
+    "A medula adrenal e inervada por neuronio pos-ganglionar simpatico que libera noradrenalina"
+  ],
+  correct:1,
+  explanation:"A inervacao da medula adrenal e uma EXCECAO classica do SNA. Diferente do padrao bineuronal (pre + pos-ganglionar), um UNICO neuronio pre-ganglionar colinergico (acetilcolina em receptor nicotinico) projeta-se diretamente do SNC para a medula adrenal, que funciona como um 'ganglio modificado'. A medula libera adrenalina (80%) e noradrenalina (20%) diretamente na corrente sanguinea.",
+  wrongExplanations:[
+    "(A) A suprarrenal NAO segue o padrao bineuronal; e monossinaptica (excecao cobrada em prova).",
+    "(C) A medula adrenal e inervada pelo SIMPATICO, nao pelo parassimpatico.",
+    "(D) A medula adrenal RECEBE inervacao simpatica direta; o cortex e regulado pelo ACTH.",
+    "(E) Nao ha neuronio POS-ganglionar; o pre-ganglionar vai diretamente a medula."
+  ]
+},
+{
+  id:22, aula:"3-4", diff:"dificil",
+  stem:"Paciente recebe simultaneamente um agonista total e um agonista parcial do mesmo receptor. A concentracao do agonista parcial e progressivamente aumentada.\n\nSobre o efeito observado, e correto afirmar que:",
+  options:[
+    "O efeito total aumenta progressivamente, pois ambos ativam o receptor",
+    "O agonista parcial potencializa o efeito do agonista total por sinergismo",
+    "O efeito total DIMINUI, pois o agonista parcial compete pelos receptores mas produz resposta submaxima",
+    "O agonista parcial e convertido em antagonista quando co-administrado com agonista total",
+    "O efeito total nao se altera, pois os dois farmacos atuam em sitios diferentes"
+  ],
+  correct:2,
+  explanation:"O agonista parcial compete com o agonista total pelo MESMO sitio de ligacao, mas, ao ocupar o receptor, produz apenas resposta SUBMAXIMA. Ao aumentar a concentracao do parcial, ele desloca o agonista total de mais receptores. Como o parcial gera menos resposta por receptor, o efeito TOTAL DIMINUI. Portanto, na presenca de um agonista total, o agonista parcial funciona como ANTAGONISTA FUNCIONAL.",
+  wrongExplanations:[
+    "(A) O efeito nao aumenta porque o parcial ocupa receptores sem gerar resposta maxima.",
+    "(B) Nao ha sinergismo; ha competicao pelo mesmo receptor.",
+    "(D) O agonista parcial nao e 'convertido' em antagonista; ele sempre tem atividade intrinseca submaxima, mas na presenca de agonista total, o efeito liquido e de reducao.",
+    "(E) Ambos competem pelo MESMO sitio de ligacao (mesmo receptor)."
+  ]
+},
+// ===================== AULA 5: ANESTESICOS / BNM =====================
+{
+  id:23, aula:"5", diff:"facil",
+  stem:"Durante cirurgia eletiva, o anestesista utiliza rocuronio (bloqueador neuromuscular nao despolarizante) para facilitar a intubacao orotraqueal. Ao final do procedimento, deseja reverter o bloqueio neuromuscular.\n\nO farmaco adequado para essa reversao e:",
+  options:[
+    "Atropina isolada",
+    "Succinilcolina em dose baixa",
+    "Neostigmina (anticolinesterasico), associada a atropina",
+    "Dantroleno",
+    "Flumazenil"
+  ],
+  correct:2,
+  explanation:"A neostigmina e um anticolinesterasico que inibe a AChE na juncao neuromuscular, AUMENTANDO a concentracao de acetilcolina na fenda. Mais ACh compete com o rocuronio (antagonista competitivo) pelo receptor nicotinico, revertendo o bloqueio. A ATROPINA e associada para prevenir os efeitos muscarinicos excessivos da ACh (bradicardia, sialorreia).",
+  wrongExplanations:[
+    "(A) A atropina isolada nao reverte o bloqueio NM; ela bloqueia receptores muscarinicos, que nao estao na juncao neuromuscular.",
+    "(B) A succinilcolina e um despolarizante que CAUSARIA mais bloqueio, nao reversa o rocuronio.",
+    "(D) O dantroleno e para hipertermia maligna (bloqueia canal de Ca do reticulo), nao para reverter BNM.",
+    "(E) O flumazenil e antagonista de benzodiazepinicos, nao tem acao na JNM."
+  ]
+},
+{
+  id:24, aula:"5", diff:"medio",
+  stem:"Homem de 25 anos, submetido a reparo de hernia inguinal, recebe succinilcolina IV para intubacao e halotano como anestesico inalatorio de manutencao. Durante a cirurgia, apresenta rigidez muscular generalizada, taquicardia e elevacao rapida da temperatura corporal.\n\nO diagnostico mais provavel e a conduta imediata sao:",
+  options:[
+    "Reacao alergica ao halotano; administrar anti-histaminico IV",
+    "Intoxicacao por halotano; suspender o agente e aguardar metabolizacao",
+    "Hipertermia maligna; suspender os agentes desencadeadores e administrar dantroleno IV",
+    "Sindrome neuroleptica maligna; administrar bromocriptina",
+    "Fasciculacao prolongada pela succinilcolina; administrar neostigmina"
+  ],
+  correct:2,
+  explanation:"O quadro e classico de HIPERTERMIA MALIGNA: rigidez muscular + taquicardia + hipertermia rapida, desencadeado por succinilcolina e/ou anestesicos inalatorios halogenados em pacientes com susceptibilidade genetica (mutacao no receptor de rianodina RyR1). O tratamento e: SUSPENDER os agentes desencadeadores + DANTROLENO IV (bloqueia os canais de calcio do reticulo sarcoplasmático) + medidas de resfriamento. Dantroleno e OBRIGATORIO no centro cirurgico por lei.",
+  wrongExplanations:[
+    "(A) Anti-histaminico nao e o tratamento para hipertermia maligna; a clinica nao e de alergia classica.",
+    "(B) Intoxicacao por halotano causa hepatotoxicidade, nao hipertermia com rigidez muscular.",
+    "(D) Sindrome neuroleptica maligna ocorre com antipsicoticos (haloperidol), nao com anestesicos.",
+    "(E) Dar neostigmina a paciente que recebeu succinilcolina PROLONGA o bloqueio (inibe a enzima que degrada a succinilcolina). Alem disso, o quadro nao e fasciculacao prolongada."
+  ]
+},
+{
+  id:25, aula:"5", diff:"facil",
+  stem:"Mulher de 30 anos com unha encravada infectada e encaminhada para exerese cirurgica. O cirurgiao opta por anestesia local com lidocaina 2%. Previamente, trata a infeccao com antibiotico oral por uma semana.\n\nO motivo de tratar a infeccao ANTES da anestesia local e:",
+  options:[
+    "O antibiotico potencializa o efeito do anestesico local",
+    "O tecido infectado/inflamado tem pH acido, o que ioniza o anestesico local (basico), reduzindo sua penetracao e eficacia",
+    "A infeccao causa resistencia genetica ao anestesico local",
+    "O anestesico local inativa o antibiotico se administrado simultaneamente",
+    "A infeccao aumenta a metabolizacao do anestesico local pela colinesterase plasmatica"
+  ],
+  correct:1,
+  explanation:"Os anestesicos locais sao bases fracas. Em tecido infectado/inflamado, o pH e mais ACIDO. Em meio acido, o AL fica predominantemente na forma IONIZADA, que e menos lipossolúvel e tem menor capacidade de penetrar a membrana da fibra nervosa. Resultado: o AL nao consegue atingir seu sitio de acao (face intracelular do canal de sodio) eficientemente, e a anestesia falha ou e insuficiente.",
+  wrongExplanations:[
+    "(A) O antibiotico nao potencializa o AL; o objetivo e corrigir o pH tecidual.",
+    "(C) Infeccao nao causa resistencia genetica a anestesicos locais.",
+    "(D) Nao ha interacao de inativacao entre AL e antibioticos.",
+    "(E) A colinesterase plasmatica metaboliza anestesicos do tipo ESTER (procaina), nao a lidocaina (amida, metabolizada no figado)."
+  ]
+},
+{
+  id:26, aula:"5", diff:"medio",
+  stem:"Anestesiologista escolhe sevoflurano para manutencao anestesica de paciente previamente saudavel. Justifica a escolha pelo perfil farmacologico favoravel deste agente.\n\nA principal vantagem farmacocinetica do sevoflurano em relacao ao halotano e:",
+  options:[
+    "Maior potencia (CAM mais baixa)",
+    "Maior hepatotoxicidade, que permite menor dose",
+    "Menor coeficiente de particao sangue:gas, resultando em inducao e recuperacao mais rapidas",
+    "Menor custo que o halotano",
+    "Ausencia total de efeitos cardiovasculares"
+  ],
+  correct:2,
+  explanation:"O sevoflurano possui coeficiente de particao sangue:gas BAIXO, o que significa que o anestesico fica menos retido no sangue e chega mais rapidamente ao SNC (inducao rapida). Na recuperacao, e eliminado mais rapidamente (recuperacao rapida). O halotano tem coeficiente sangue:gas mais ALTO (inducao e recuperacao mais lentas) e e mais HEPATOTOXICO. O sevoflurano e o anestesico inalatorio mais utilizado atualmente.",
+  wrongExplanations:[
+    "(A) O halotano tem CAM mais BAIXA que o sevoflurano, portanto e MAIS potente, nao menos.",
+    "(B) A hepatotoxicidade e uma DESVANTAGEM do halotano, nao uma vantagem.",
+    "(D) O halotano e mais barato; o sevoflurano pode ser mais caro, mas tem perfil mais seguro.",
+    "(E) Todos os anestesicos inalatorios tem algum grau de efeito cardiovascular."
+  ]
+},
+{
+  id:27, aula:"5", diff:"dificil",
+  stem:"Paciente de 60 anos, com historia de doenca coronariana e fracao de ejecao reduzida (FE 30%), necessita de anestesia geral para cirurgia abdominal de emergencia. O anestesista evita propofol para inducao e opta por etomidato.\n\nA principal razao para essa escolha e:",
+  options:[
+    "O etomidato e o anestesico IV com maior efeito analgesico",
+    "O etomidato possui maior potencia hipnotica que o propofol",
+    "O etomidato apresenta ESTABILIDADE CARDIOVASCULAR superior, com minima depressao miocardica e hemodinamica",
+    "O etomidato nao requer monitorizacao pos-anestesica",
+    "O etomidato pode ser usado em infusao continua prolongada sem efeitos adversos"
+  ],
+  correct:2,
+  explanation:"O etomidato e o anestesico IV de escolha em pacientes com INSTABILIDADE HEMODINAMICA ou risco de hipotensao (cardiopatas, hipotensos, isquemicos). Ele produz MINIMA depressao cardiovascular. O propofol, embora seja o mais utilizado, causa HIPOTENSAO significativa, que pode ser catastrofica em paciente com FE de 30%. A principal limitacao do etomidato e a supressao adrenal em uso prolongado.",
+  wrongExplanations:[
+    "(A) Nenhum anestesico IV isolado (exceto cetamina parcialmente) produz analgesia significativa; todos requerem analgesico associado.",
+    "(B) A escolha nao se baseia em potencia hipnotica, mas em SEGURANCA cardiovascular.",
+    "(D) Todo paciente pos-anestesia requer monitorizacao na RPA (sala de recuperacao pos-anestesica).",
+    "(E) O uso PROLONGADO de etomidato causa supressao adrenal (inibe 11-beta-hidroxilase); por isso, nao e indicado para infusao continua."
+  ]
+},
+{
+  id:28, aula:"5", diff:"facil",
+  stem:"Sobre a diferenca entre bloqueadores neuromusculares despolarizantes e nao despolarizantes, e correto afirmar que:",
+  options:[
+    "Ambos causam hiperpolarizacao da placa motora como mecanismo de bloqueio",
+    "O despolarizante (succinilcolina) causa fasciculacoes iniciais seguidas de bloqueio; o nao despolarizante impede a despolarizacao sem fasciculacoes",
+    "O nao despolarizante e revertido com dantroleno; o despolarizante com neostigmina",
+    "A succinilcolina tem acao mais longa que o pancuronio",
+    "Ambos atravessam a barreira hematoencefalica e causam analgesia central"
+  ],
+  correct:1,
+  explanation:"A succinilcolina (despolarizante) age como 'falsa ACh': liga-se ao receptor nicotinico, causa despolarizacao inicial (fasciculacoes — fase 1) e em seguida dessensibilizacao do receptor (bloqueio — fase 2). Os nao despolarizantes (rocuronio, pancuronio) sao antagonistas competitivos: ocupam o receptor SEM ativa-lo, impedindo a ligacao da ACh, sem fasciculacoes previas.",
+  wrongExplanations:[
+    "(A) Nenhum dos dois causa hiperpolarizacao. O despolarizante causa despolarizacao sustentada; o nao despolarizante impede a despolarizacao.",
+    "(C) O nao despolarizante e revertido com ANTICOLINESTERASICO (neostigmina), nao dantroleno. O despolarizante NAO tem reversao farmacologica (metabolizado pela pseudocolinesterase).",
+    "(D) A succinilcolina tem acao CURTA (~5-10 min); o pancuronio tem acao LONGA (60-100+ min).",
+    "(E) BNM sao compostos de amonio quaternario, NAO atravessam a BHE e NAO causam analgesia nem perda de consciencia."
+  ]
+},
+{
+  id:29, aula:"5", diff:"medio",
+  stem:"Paciente pediatrico de 4 anos, grande queimado, necessita de anestesia para curativos diarios. O anestesista opta pela cetamina.\n\nA principal vantagem da cetamina neste cenario clinico e:",
+  options:[
+    "E o anestesico com menor risco de delirios e alucinacoes",
+    "Produz anestesia dissociativa com estabilidade cardiovascular, sem depressao respiratoria significativa, sendo ideal para queimados e pediatria",
+    "Tem metabolizacao exclusivamente renal, evitando sobrecarga hepatica",
+    "E o unico anestesico que nao requer monitorizacao",
+    "Potencializa os receptores GABA-A, semelhante ao propofol"
+  ],
+  correct:1,
+  explanation:"A cetamina e um antagonista do receptor NMDA (glutamato) que produz 'anestesia dissociativa' — um estado cataletico com analgesia, amnesia e estabilidade cardiovascular. NAO causa depressao respiratoria significativa (diferente do propofol). E especialmente util em queimados (curativos dolorosos, estabilidade hemodinamica), pediatria e pacientes com risco de hipotensao. Sua principal limitacao sao os 'delirios de emergencia' na recuperacao.",
+  wrongExplanations:[
+    "(A) A cetamina tem risco de delirios de emergencia (alucinacoes na recuperacao), que e sua principal limitacao.",
+    "(C) A cetamina e metabolizada no figado, nao exclusivamente nos rins.",
+    "(D) Todo paciente anestesiado requer monitorizacao continua.",
+    "(E) A cetamina e ANTAGONISTA NMDA, nao agonista GABA-A. Propofol e barbituricos atuam no GABA-A."
+  ]
+},
+{
+  id:30, aula:"5", diff:"facil",
+  stem:"Sobre a Concentracao Alveolar Minima (CAM) dos anestesicos inalatorios, e correto afirmar que:",
+  options:[
+    "Quanto MAIOR a CAM, mais potente e o anestesico",
+    "A CAM e medida em miligramas por quilograma de peso",
+    "Quanto MENOR a CAM, mais potente e o anestesico, pois necessita de menor concentracao para abolir resposta ao estimulo doloroso",
+    "A CAM mede a velocidade de inducao do anestesico",
+    "A CAM e identica para todos os anestesicos inalatorios"
+  ],
+  correct:2,
+  explanation:"A CAM (Concentracao Alveolar Minima) e a concentracao alveolar necessaria para abolir a resposta motora a um estimulo doloroso supramaximo em 50% dos individuos. Serve para COMPARAR POTENCIA entre anestesicos inalatorios. Quanto MENOR a CAM, MAIS POTENTE e o anestesico (precisa de menos para produzir o efeito). A CAM e relacionada inversamente a lipossolubilidade.",
+  wrongExplanations:[
+    "(A) E o inverso: menor CAM = mais potente.",
+    "(B) A CAM e medida em porcentagem (concentracao alveolar), nao em mg/kg.",
+    "(D) A velocidade de inducao e determinada pelo coeficiente de particao sangue:gas, nao pela CAM.",
+    "(E) Cada anestesico tem sua propria CAM, e os valores sao muito diferentes entre si."
+  ]
+},
+{
+  id:31, aula:"5", diff:"medio",
+  stem:"Paciente de 55 anos, ASA II, sera submetido a colecistectomia videolaparoscopica. O protocolo anestesico inclui propofol IV para inducao e isoflurano para manutencao.\n\nA razao para usar um agente IV na inducao e um inalatorio na manutencao e:",
+  options:[
+    "O propofol nao pode ser administrado de forma continua por risco de convulsoes",
+    "O IV permite ultrapassar rapidamente o estagio II (excitacao) de Guedel; o inalatorio permite controle mais preciso da profundidade anestesica durante a cirurgia",
+    "O isoflurano e mais barato que o propofol para uso prolongado",
+    "O propofol e o unico farmaco capaz de causar relaxamento muscular",
+    "Os inalatorios nao podem ser usados em pacientes intubados"
+  ],
+  correct:1,
+  explanation:"O estagio II de Guedel (excitacao) e uma fase perigosa com agitacao, reflexos exagerados, risco de laringoespasmo e aspiracao. O anestesico IV (propofol) tem inicio de acao RAPIDO, ultrapassando esse estagio em segundos. O inalatorio e ideal para MANUTENCAO porque permite controle MINUTO A MINUTO da profundidade anestesica atraves do vaporizador, com ajuste continuo da concentracao.",
+  wrongExplanations:[
+    "(A) O propofol PODE ser usado em infusao continua (TIVA — anestesia venosa total); nao causa convulsoes.",
+    "(C) A escolha nao se baseia primariamente em custo, mas em perfil farmacologico (velocidade vs. controle).",
+    "(D) O propofol nao causa relaxamento muscular significativo; para isso, usam-se BNM.",
+    "(E) Inalatorios sao administrados EXCLUSIVAMENTE por via aerea (mascaras ou tubo orotraqueal)."
+  ]
+},
+{
+  id:32, aula:"5", diff:"dificil",
+  stem:"Anestesista associa lidocaina (anestesico local do tipo amida) com adrenalina para realizar bloqueio de plexo braquial em paciente que sera submetido a cirurgia de mao. Porem, evita essa associacao em bloqueio digital.\n\nA adrenalina e associada ao AL para:",
+  options:[
+    "Aumentar a ionizacao do anestesico, potencializando sua acao no canal de sodio",
+    "Causar vasoconstrição local, prolongando o efeito e reduzindo a absorcao sistemica do AL; e evitada em extremidades digitais por risco de isquemia",
+    "Ativar receptores M3 muscarinicos na regiao, facilitando a acao do AL",
+    "Bloquear receptores beta-2 locais, impedindo a metabolizacao do AL",
+    "Aumentar a velocidade de metabolizacao hepatica do AL, reduzindo toxicidade"
+  ],
+  correct:1,
+  explanation:"A adrenalina como vasoconstritor local REDUZ o fluxo sanguineo regional, o que: (1) mantem o AL no local de acao por mais tempo (PROLONGA o efeito); (2) reduz a absorcao sistemica (DIMINUI toxicidade); (3) reduz sangramento local. Em extremidades com circulacao TERMINAL (dedos, orelha, nariz, penis), a vasoconstrição pode comprometer a perfusao e causar ISQUEMIA/NECROSE, sendo CONTRAINDICADA.",
+  wrongExplanations:[
+    "(A) A adrenalina nao altera a ionizacao do AL; seu efeito e vascular (vasoconstrição).",
+    "(C) A adrenalina nao atua em receptores muscarinicos; atua em alfa-1 (vasoconstrição).",
+    "(D) A adrenalina nao bloqueia beta-2 e nao atua na metabolizacao do AL.",
+    "(E) A adrenalina REDUZ a absorcao sistemica (menos farmaco chega ao figado), nao acelera a metabolizacao hepatica."
+  ]
+},
+{
+  id:33, aula:"5", diff:"medio",
+  stem:"Paciente de 40 anos recebe succinilcolina para intubacao de emergencia. Apos a intubacao, o bloqueio neuromuscular persiste por mais de 2 horas (normalmente dura 5-10 minutos).\n\nA explicacao mais provavel para essa duracao prolongada e:",
+  options:[
+    "Interacao medicamentosa com antibioticos administrados previamente",
+    "Deficiencia genetica de pseudocolinesterase (butirilcolinesterase), a enzima que metaboliza a succinilcolina",
+    "O paciente desenvolveu hipertermia maligna, que prolonga a acao da succinilcolina",
+    "A succinilcolina foi convertida em metabolito ativo de longa duracao pelo figado",
+    "O paciente apresenta miastenia gravis nao diagnosticada"
+  ],
+  correct:1,
+  explanation:"A succinilcolina e metabolizada pela PSEUDOCOLINESTERASE (butirilcolinesterase) plasmatica. Alguns individuos possuem variantes geneticas dessa enzima (deficiencia ou forma atipica), resultando em metabolizacao MUITO mais lenta. O bloqueio que normalmente dura 5-10 minutos pode persistir por HORAS. Essa e uma reacao idiosincrasica de base farmacogenetica classica. O tratamento e suporte ventilatorio ate o efeito passar.",
+  wrongExplanations:[
+    "(A) Embora alguns antibioticos (aminoglicosideos) possam potencializar BNM, um bloqueio de >2h com succinilcolina e muito mais sugestivo de deficiencia enzimatica.",
+    "(C) A hipertermia maligna causa rigidez muscular e hipertermia, nao prolongamento isolado do bloqueio.",
+    "(D) A succinilcolina e hidrolisada em metabolitos inativos (succinilmonocolina e colina); nao gera metabolitos de longa acao.",
+    "(E) A miastenia gravis causa fraqueza muscular cronica, nao prolongamento especifico de succinilcolina."
+  ]
+},
+{
+  id:34, aula:"5", diff:"facil",
+  stem:"Sobre a classificacao dos anestesicos locais em ESTERES e AMIDAS, e correto afirmar que:",
+  options:[
+    "Os esteres sao metabolizados no figado e tem acao prolongada",
+    "Os esteres sao metabolizados pela colinesterase plasmatica e tem acao CURTA; as amidas sao metabolizadas no figado e tem acao PROLONGADA",
+    "A lidocaina e o principal exemplo de anestesico do tipo ester",
+    "As amidas causam reacoes alergicas com maior frequencia que os esteres",
+    "Nao ha diferenca clinica relevante entre esteres e amidas"
+  ],
+  correct:1,
+  explanation:"ESTERES (procaina, tetracaina, benzocaina): metabolizados pela colinesterase plasmatica, acao de CURTA duracao, maior risco de reacoes alergicas (derivados do PABA). AMIDAS (lidocaina, bupivacaina, ropivacaina): metabolizadas no FIGADO, acao mais PROLONGADA, reacoes alergicas raras.",
+  wrongExplanations:[
+    "(A) Esteres sao metabolizados pela colinesterase PLASMATICA (nao no figado) e tem acao CURTA.",
+    "(C) A lidocaina e uma AMIDA, nao um ester.",
+    "(D) As reacoes alergicas sao mais frequentes com ESTERES (derivados do PABA), nao com amidas.",
+    "(E) Ha diferencas clinicamente relevantes em duracao, metabolismo, risco alergico e indicacoes."
+  ]
+},
+// ===================== AULA 6: DOR E INFLAMACAO =====================
+{
+  id:35, aula:"6", diff:"facil",
+  stem:"Mulher de 45 anos, com artrite reumatoide, em uso cronico de ibuprofeno, apresenta dor epigastrica, pirose e melena. A endoscopia digestiva alta revela ulcera gastrica.\n\nO mecanismo pelo qual o ibuprofeno causou essa complicacao e:",
+  options:[
+    "Inibicao da COX-2, reduzindo a inflamacao gastrica protetora",
+    "Inibicao da COX-1, reduzindo a sintese de prostaglandinas gastroprotetoras (muco e bicarbonato gastrico)",
+    "Estimulacao direta da secrecao de acido cloridrico pelas celulas parietais",
+    "Bloqueio dos receptores H2 gastricos, causando hiperacidez reflexa",
+    "Inducao de infeccao por Helicobacter pylori pela imunossupressao"
+  ],
+  correct:1,
+  explanation:"O ibuprofeno e um AINE nao seletivo (inibe COX-1 E COX-2). A COX-1 e CONSTITUTIVA no estomago e produz prostaglandinas (PGE2 e PGI2) que mantem a barreira gastroprotetora: estimulam secrecao de muco, bicarbonato, e mantem fluxo sanguineo da mucosa. Ao inibir a COX-1, o ibuprofeno reduz essa protecao, expondo a mucosa ao acido gastrico, causando erosao, ulcera e sangramento.",
+  wrongExplanations:[
+    "(A) A COX-2 nao produz prostaglandinas gastroprotetoras constitutivamente; e a COX-1 que e constitutiva no estomago.",
+    "(C) AINEs nao estimulam diretamente a secrecao acida; eles REMOVEM a protecao contra o acido.",
+    "(D) AINEs nao bloqueiam receptores H2; isso e acao da ranitidina/cimetidina.",
+    "(E) AINEs nao causam infeccao por H. pylori, embora H. pylori coexistente aumente o risco de ulcera."
+  ]
+},
+{
+  id:36, aula:"6", diff:"medio",
+  stem:"Paciente de 70 anos, com osteoartrose de joelho e historico de infarto agudo do miocardio ha 6 meses, necessita de anti-inflamatorio para controle da dor. O medico evita inibidores seletivos da COX-2 (coxibes).\n\nO motivo dessa precaucao e:",
+  options:[
+    "Coxibes causam hepatotoxicidade mais grave que AINEs tradicionais",
+    "Coxibes nao tem eficacia analgesica em pacientes com osteoartrose",
+    "Coxibes aumentam o risco cardiovascular (eventos tromboembolicos) por nao inibirem o tromboxano plaquetario (COX-1), enquanto reduzem a prostaciclina vascular (COX-2)",
+    "Coxibes causam nefrotoxicidade irreversivel em todos os pacientes idosos",
+    "Coxibes sao contraindicados apenas em pacientes com ulcera gastrica ativa"
+  ],
+  correct:2,
+  explanation:"Os coxibes (celecoxibe, etoricoxibe) inibem SELETIVAMENTE a COX-2. A COX-2 endotelial produz PROSTACICLINA (PGI2), que tem acao vasodilatadora e antiagregante. A COX-1 plaquetaria produz TROMBOXANO A2, que e pro-agregante. Ao inibir COX-2 sem afetar COX-1, os coxibes REDUZEM prostaciclina mas MANTEM tromboxano, deslocando o equilibrio para um estado PRO-TROMBOTICO, aumentando o risco de IAM e AVC.",
+  wrongExplanations:[
+    "(A) A hepatotoxicidade e mais associada ao diclofenaco e paracetamol em altas doses, nao especificamente aos coxibes.",
+    "(B) Coxibes tem eficacia analgesica SIMILAR aos AINEs tradicionais para osteoartrose.",
+    "(D) A nefrotoxicidade pode ocorrer, mas nao e 'irreversivel em todos os idosos'; a principal preocupacao e cardiovascular.",
+    "(E) A principal contraindicacao relativa dos coxibes e cardiovascular, nao apenas gastrica."
+  ]
+},
+{
+  id:37, aula:"6", diff:"facil",
+  stem:"Crianca de 2 anos apresenta febre de 38,8C apos vacinacao. O pediatra prescreve paracetamol. Os pais questionam por que nao foi prescrito acido acetilsalicilico (AAS).\n\nA principal contraindicacao do AAS em criancas com quadro viral e:",
+  options:[
+    "O AAS nao tem efeito antipiretico eficaz em criancas",
+    "Risco de Sindrome de Reye: encefalopatia hepatica aguda associada ao uso de AAS em criancas com infeccoes virais",
+    "O AAS causa broncoespasmo grave em todas as criancas",
+    "O AAS nao e absorvido pelo trato gastrointestinal em pediatria",
+    "O AAS interfere na eficacia das vacinas"
+  ],
+  correct:1,
+  explanation:"A Sindrome de Reye e uma complicacao grave (encefalopatia hepatica aguda) associada ao uso de AAS em criancas e adolescentes durante infeccoes virais (influenza, varicela). Tem alta mortalidade. Por esse motivo, o AAS e CONTRAINDICADO em criancas com quadros virais. O paracetamol e alternativa segura como antipiretico pediatrico.",
+  wrongExplanations:[
+    "(A) O AAS tem efeito antipiretico eficaz, mas o risco supera o beneficio em criancas com quadros virais.",
+    "(C) O AAS pode causar broncoespasmo em individuos susceptiveis, mas nao e o motivo principal de contraindicacao na pediatria.",
+    "(D) O AAS e bem absorvido pelo TGI em criancas.",
+    "(E) Nao ha evidencia de que o AAS interfira na eficacia de vacinas."
+  ]
+},
+{
+  id:38, aula:"6", diff:"medio",
+  stem:"Paciente de 55 anos, em uso de AAS 100 mg/dia para prevencao secundaria de AVC isquemico, necessita de anti-inflamatorio para lombalgia aguda. O medico evita associar corticosteroide com o AAS.\n\nO motivo dessa precaucao e:",
+  options:[
+    "Corticosteroides anulam o efeito antiagregante do AAS",
+    "A associacao AAS + corticosteroide aumenta SIGNIFICATIVAMENTE o risco gastrointestinal (ambos reduzem prostaglandinas gastroprotetoras por mecanismos diferentes, somando efeitos adversos)",
+    "Corticosteroides inibem a absorcao intestinal do AAS",
+    "Corticosteroides aumentam a metabolizacao hepatica do AAS, reduzindo sua eficacia",
+    "A associacao causa nefrotoxicidade obrigatoria em todos os pacientes"
+  ],
+  correct:1,
+  explanation:"O AAS inibe a COX-1 (reduz prostaglandinas gastroprotetoras). Os corticosteroides inibem a fosfolipase A2 (bloqueiam TODA a cascata do acido araquidonico, incluindo prostaglandinas). Quando associados, AMBOS reduzem a protecao gastrica por mecanismos diferentes mas COMPLEMENTARES, SOMANDO o risco de ulceracao, sangramento e perfuracao gastrointestinal.",
+  wrongExplanations:[
+    "(A) Corticosteroides nao interferem diretamente no efeito antiagregante do AAS.",
+    "(C) Nao ha evidencia relevante de que corticosteroides inibam a absorcao do AAS.",
+    "(D) Corticosteroides nao sao indutores enzimaticos significativos para o metabolismo do AAS.",
+    "(E) A nefrotoxicidade pode ocorrer, mas nao e 'obrigatoria em todos'; o principal risco e gastrointestinal."
+  ]
+},
+{
+  id:39, aula:"6", diff:"dificil",
+  stem:"Paciente de 60 anos com dor neuropatica pos-herpetica (neuralgia pos-herpetica) refrataria a analgesicos simples. O neurologista prescreve amitriptilina (antidepressivo triciclico) como primeira linha.\n\nO racional farmacologico para o uso de antidepressivo no tratamento da dor neuropatica e:",
+  options:[
+    "A amitriptilina bloqueia diretamente os nociceptores perifericos, impedindo a transducao da dor",
+    "O antidepressivo trata a depressao associada a dor cronica, e a melhora do humor alivia a percepcao dolorosa",
+    "A amitriptilina inibe a recaptacao de noradrenalina e serotonina, estimulando a VIA DESCENDENTE INIBITORIA DA DOR no corno dorsal da medula",
+    "A amitriptilina inibe a COX-3 central, semelhante ao paracetamol",
+    "O antidepressivo aumenta a liberacao de opioides endogenos pela hipofise"
+  ],
+  correct:2,
+  explanation:"A via descendente inibitoria da dor parte da substancia cinzenta periaquedutal, passa pelo nucleo magno da rafe e desce ate o corno dorsal da medula. Seus neurotransmissores sao SEROTONINA e NORADRENALINA, que estimulam interneuronios gabaergicos e liberacao de encefalinas, MODULANDO (inibindo) a transmissao dolorosa. A amitriptilina, ao inibir a recaptacao de 5-HT e NA, POTENCIALIZA essa via inibitoria. E por isso que antidepressivos sao 1a linha para dor neuropatica.",
+  wrongExplanations:[
+    "(A) A amitriptilina nao tem acao periferica direta em nociceptores.",
+    "(B) Embora a melhora do humor possa contribuir, o mecanismo PRINCIPAL e a modulacao da via descendente inibitoria da dor, independente do efeito antidepressivo.",
+    "(D) A amitriptilina nao inibe a COX-3; esse e o mecanismo do paracetamol e dipirona.",
+    "(E) O mecanismo nao envolve liberacao de opioides pela hipofise."
+  ]
+},
+{
+  id:40, aula:"6", diff:"facil",
+  stem:"Paciente de 35 anos ingeriu 12 gramas de paracetamol em tentativa de suicidio. Apresenta-se nauseado, com dor abdominal em hipocondrio direito. As transaminases estao muito elevadas.\n\nO antidoto especifico e o mecanismo de hepatotoxicidade sao:",
+  options:[
+    "Flumazenil; o paracetamol deprime o SNC via receptor GABA-A",
+    "N-acetilcisteina; o paracetamol em excesso satura as vias de conjugacao, gerando o metabolito toxico NAPQI que depleta glutationa hepatica e causa necrose hepatocelular",
+    "Naloxona; o paracetamol em excesso ativa receptores opioides hepaticos",
+    "Carvao ativado oral como unica medida; o paracetamol nao tem antidoto especifico",
+    "Vitamina K; o paracetamol interfere nos fatores de coagulacao"
+  ],
+  correct:1,
+  explanation:"Em doses terapeuticas, o paracetamol e metabolizado por glicuronidacao (fase II). Em DOSES ELEVADAS (>4g/dia ou >150mg/kg), as vias de conjugacao saturam, e mais farmaco e desviado para o CYP2E1, gerando o metabolito toxico N-acetil-p-benzoquinonaimina (NAPQI). O NAPQI e normalmente inativado pela GLUTATIONA, mas em excesso depleta os estoques de glutationa, causando necrose hepatocelular. A N-ACETILCISTEINA (NAC) e o antidoto pois repoe glutationa.",
+  wrongExplanations:[
+    "(A) Flumazenil e antidoto de benzodiazepinicos, nao de paracetamol.",
+    "(C) Naloxona e antidoto de opioides. O paracetamol nao atua em receptores opioides.",
+    "(D) Carvao ativado pode ser util se administrado precocemente (<2h), mas o paracetamol TEM antidoto especifico (NAC).",
+    "(E) Vitamina K e usada para reverter efeitos de anticoagulantes (varfarina), nao para intoxicacao por paracetamol."
+  ]
+},
+{
+  id:41, aula:"6", diff:"medio",
+  stem:"Paciente com dor cronica oncologica moderada (EVA 5/10) esta em uso de paracetamol sem melhora adequada. Segundo a Escada Analgesica da OMS, o proximo passo e:",
+  options:[
+    "Aumentar a dose de paracetamol ate obter resposta",
+    "Iniciar opioide forte (morfina) imediatamente",
+    "Associar opioide fraco (tramadol ou codeina) ao analgesico nao-opioide, com ou sem adjuvante",
+    "Substituir por corticosteroide em altas doses",
+    "Iniciar benzodiazepínico para reduzir a percepcao dolorosa"
+  ],
+  correct:2,
+  explanation:"A Escada Analgesica da OMS para dor cronica tem 3 degraus: Degrau 1 (dor leve, EVA 1-3): analgesicos simples (paracetamol, dipirona) +/- AINE. Degrau 2 (dor moderada, EVA 4-6): opioide FRACO (tramadol, codeina) + analgesico nao-opioide +/- adjuvante. Degrau 3 (dor intensa, EVA 7-10): opioide FORTE (morfina, fentanil) +/- nao-opioide +/- adjuvante. O paciente esta no degrau 1 sem resposta, devendo subir para o degrau 2.",
+  wrongExplanations:[
+    "(A) O paracetamol tem EFEITO TETO — aumentar a dose alem de 4g/dia nao melhora a analgesia e aumenta risco de hepatotoxicidade.",
+    "(B) Morfina e opioide FORTE (degrau 3); na escada da OMS, primeiro se tenta opioide fraco (degrau 2).",
+    "(D) Corticosteroides nao sao degrau da escada analgesica; podem ser adjuvantes, mas nao substituem a progressao da escada.",
+    "(E) Benzodiazepinicos nao sao analgesicos e nao fazem parte da escada da OMS."
+  ]
+},
+{
+  id:42, aula:"6", diff:"medio",
+  stem:"Paciente de 30 anos, em pos-operatorio de apendicectomia, recebe morfina IV para dor intensa. Apos 48 horas de uso continuo, a equipe de enfermagem nota que o paciente necessita de doses progressivamente maiores para o mesmo alivio.\n\nEsse fenomeno e denominado:",
+  options:[
+    "Efeito rebote",
+    "Sensibilizacao farmacologica",
+    "Taquifilaxia (tolerancia aguda)",
+    "Dependencia fisica",
+    "Antagonismo competitivo endogeno"
+  ],
+  correct:2,
+  explanation:"TOLERANCIA (incluindo taquifilaxia/tolerancia aguda) e a reducao progressiva da resposta ao farmaco apos administracoes repetidas, necessitando de doses maiores para o mesmo efeito. Com opioides, a tolerancia pode se desenvolver RAPIDAMENTE (12-24 horas). Os mecanismos incluem: dessensibilizacao e internalizacao dos receptores mu, ativacao compensatoria de vias excitatorias (NMDA), neuroadaptacao. Diferente de DEPENDENCIA, que e a necessidade do farmaco para evitar abstinencia.",
+  wrongExplanations:[
+    "(A) Efeito rebote ocorre na descontinuacao de um farmaco, nao durante uso continuo.",
+    "(B) Sensibilizacao e o AUMENTO da resposta com exposicoes repetidas (oposto da tolerancia).",
+    "(D) Dependencia e a necessidade do farmaco para evitar abstinencia; pode coexistir com tolerancia, mas sao conceitos diferentes.",
+    "(E) Nao ha 'antagonismo competitivo endogeno' descrito neste contexto."
+  ]
+},
+{
+  id:43, aula:"6", diff:"dificil",
+  stem:"Paciente de 40 anos em uso cronico de morfina para dor oncologica apresenta: miose bilateral persistente, constipacao cronica e necessidade de aumento progressivo da dose para analgesia.\n\nSobre a tolerancia aos efeitos da morfina, e correto afirmar que:",
+  options:[
+    "Desenvolve-se tolerancia uniforme a todos os efeitos da morfina simultaneamente",
+    "A miose NAO desenvolve tolerancia (persiste mesmo com uso cronico), diferente da analgesia e da euforia que desenvolvem tolerancia rapida",
+    "A constipacao e o primeiro efeito a desenvolver tolerancia",
+    "A depressao respiratoria nunca desenvolve tolerancia",
+    "A tolerancia a morfina e exclusivamente de origem psicologica"
+  ],
+  correct:1,
+  explanation:"A tolerancia aos opioides e DIFERENCIAL — nao se desenvolve igualmente para todos os efeitos. A analgesia, euforia e depressao respiratoria desenvolvem tolerancia relativamente rapida. Porem, a MIOSE (constrição pupilar) praticamente NAO desenvolve tolerancia, sendo um sinal clinico util para identificar uso de opioides mesmo em usuarios cronicos. A constipacao tambem tem pouca tolerancia.",
+  wrongExplanations:[
+    "(A) A tolerancia e DIFERENCIAL, nao uniforme; diferentes efeitos desenvolvem tolerancia em velocidades diferentes.",
+    "(C) A constipacao desenvolve POUCA tolerancia, sendo um dos efeitos mais persistentes dos opioides.",
+    "(D) A depressao respiratoria DESENVOLVE tolerancia, embora mais lentamente que a analgesia.",
+    "(E) A tolerancia tem base FARMACOLOGICA (dessensibilizacao de receptores, downregulation, ativacao NMDA), nao apenas psicologica."
+  ]
+},
+{
+  id:44, aula:"6", diff:"facil",
+  stem:"Sobre a Teoria do Portao (Gate Control Theory) de Wall e Melzack, e correto afirmar que:",
+  options:[
+    "Propoe que apenas fibras C transmitem qualquer tipo de informacao dolorosa",
+    "Explica que a ativacao de fibras GROSSAS (A-beta) nos cornos posteriores da medula 'fecha o portao' e reduz a transmissao dolorosa",
+    "Sugere que a dor e processada exclusivamente no cortex cerebral, sem modulacao medular",
+    "Afirma que opioides endogenos sao os unicos moduladores da dor no corno dorsal",
+    "Propoe que fibras finas (C) inibem a transmissao dolorosa"
+  ],
+  correct:1,
+  explanation:"A Teoria do Portao propoe que nos cornos posteriores da medula existe um 'portao' neural que controla a passagem dos impulsos dolorosos. Fibras GROSSAS (A-beta, de tato e pressao) 'FECHAM o portao', inibindo a transmissao dolorosa. Fibras FINAS (A-delta e C, de dor) 'ABREM o portao'. Exemplo pratico: apertar/esfregar o dedo apos bater ativa fibras A-beta e alivia a dor.",
+  wrongExplanations:[
+    "(A) As fibras A-delta tambem transmitem dor (rapida, aguda); nao apenas fibras C.",
+    "(C) A dor e modulada em multiplos niveis, incluindo o corno dorsal da medula (portao).",
+    "(D) Alem de opioides endogenos, a serotonina, noradrenalina, GABA e as fibras A-beta participam da modulacao.",
+    "(E) Fibras finas (C e A-delta) ABREM o portao (transmitem dor), nao inibem."
+  ]
+},
+{
+  id:45, aula:"6", diff:"medio",
+  stem:"Paciente de 50 anos com lombalgia cronica em uso de dipirona para dor apresenta hipotensao arterial significativa. O medico decide suspender a dipirona.\n\nA relacao da dipirona com esse quadro e:",
+  options:[
+    "A dipirona causa hipertensao por retencao de sodio e agua",
+    "A dipirona causa hipotensao como efeito indesejavel por vasodilatacao periferica e reducao da PA",
+    "A dipirona bloqueia receptores alfa-1 vasculares, mimetizando prazosina",
+    "A hipotensao e reacao alergica grave (anafilaxia) a dipirona",
+    "A dipirona inibe a aldosterona, causando perda de sodio e hipotensao"
+  ],
+  correct:1,
+  explanation:"A dipirona (metamizol) pode causar reducao IMPORTANTE da pressao arterial por mecanismo de vasodilatacao periferica. Este efeito hipotensor e clinicamente relevante e a dipirona deve ser EVITADA em pacientes com PA instavel, choque ou hipotensao previa. E uma enfase de prova da professora.",
+  wrongExplanations:[
+    "(A) A dipirona tende a REDUZIR a PA, nao causar hipertensao.",
+    "(C) A dipirona nao e um bloqueador alfa-1 como a prazosina; seu mecanismo hipotensor envolve inibicao de COX-3 e vasodilatacao por outros mecanismos.",
+    "(D) A hipotensao cronica por dipirona e diferente da anafilaxia (que seria aguda, com urticaria, broncoespasmo).",
+    "(E) A dipirona nao inibe a aldosterona; esse seria o mecanismo da espironolactona."
+  ]
+},
+{
+  id:46, aula:"6", diff:"dificil",
+  stem:"Gestante de 34 semanas em uso de diclofenaco para lombalgia apresenta reducao do liquido amniotico no ultrassom obstetrico.\n\nA complicacao obstetrica associada ao uso de AINEs no terceiro trimestre e:",
+  options:[
+    "Malformacao do tubo neural fetal",
+    "Ruptura prematura de membranas por infeccao",
+    "Fechamento prematuro do ducto arterioso fetal e oligoidramnio por reducao da perfusao renal fetal, devido a inibicao de prostaglandinas",
+    "Trombocitopenia neonatal por passagem transplacentaria de anticorpos",
+    "Hiperglicemia materna com macrossomia fetal"
+  ],
+  correct:2,
+  explanation:"As prostaglandinas mantem o ducto arterioso fetal ABERTO (fundamental para a circulacao fetal). AINEs inibem a sintese de prostaglandinas, podendo causar FECHAMENTO PREMATURO DO DUCTO ARTERIOSO, com consequencias graves (hipertensao pulmonar fetal). Alem disso, prostaglandinas participam da regulacao do fluxo renal fetal; sua inibicao pode causar OLIGOIDRAMNIO (reducao do liquido amniotico). Por isso, AINEs sao contraindicados especialmente no 3o trimestre.",
+  wrongExplanations:[
+    "(A) Defeitos de tubo neural sao associados a deficiencia de acido folico, nao a AINEs.",
+    "(B) A RPPM nao e causada por AINEs; na verdade, AINEs podem inibir contracoes uterinas.",
+    "(D) A trombocitopenia neonatal aloimune tem outra etiologia (anticorpos antiplaquetarios), nao AINEs.",
+    "(E) Hiperglicemia e macrossomia sao complicacoes do diabetes gestacional, nao de AINEs."
+  ]
+},
+{
+  id:47, aula:"6", diff:"facil",
+  stem:"Sobre a diferenca entre AINEs e opioides no tratamento da dor, e correto afirmar que:",
+  options:[
+    "AINEs tem risco de dependencia maior que opioides",
+    "Opioides tem efeito anti-inflamatorio superior aos AINEs",
+    "AINEs tem EFEITO TETO (dose maxima sem aumento do efeito), enquanto opioides tem curva dose-resposta continua sem efeito teto",
+    "Opioides nao causam constipacao como efeito adverso",
+    "AINEs sao indicados como primeira escolha para dor intensa (EVA 7-10)"
+  ],
+  correct:2,
+  explanation:"AINEs possuem EFEITO TETO: aumentar a dose alem de certo ponto nao melhora a analgesia, apenas aumenta os efeitos adversos. Opioides NAO tem efeito teto para analgesia — doses maiores produzem maior analgesia (mas tambem maiores efeitos adversos, incluindo depressao respiratoria). Isso torna os opioides indispensaveis para dor intensa, mas exige cautela na titulacao.",
+  wrongExplanations:[
+    "(A) AINEs NAO causam dependencia; opioides SIM (receptor mu, sistema mesolimbico).",
+    "(B) Opioides NAO tem efeito anti-inflamatorio; AINEs sao anti-inflamatorios.",
+    "(D) Constipacao e um dos efeitos adversos MAIS comuns dos opioides.",
+    "(E) Para dor intensa (EVA 7-10), opioides fortes sao primeira escolha (degrau 3 da OMS)."
+  ]
+},
+// ===================== AULA 7: TRANSTORNOS MENTAIS =====================
+{
+  id:48, aula:"7", diff:"facil",
+  stem:"Mulher de 30 anos, previamente higida, apresenta fadiga ha 2 meses, sem vontade de realizar atividades, insonia, inapetencia, tristeza persistente e choro frequente. Nao responde a estimulos positivos. O medico diagnostica episodio depressivo e prescreve fluoxetina.\n\nO mecanismo de acao da fluoxetina e:",
+  options:[
+    "Inibicao da monoamina oxidase (MAO), impedindo a degradacao de serotonina e noradrenalina",
+    "Bloqueio dos receptores GABA-A, aumentando a excitabilidade neuronal",
+    "Inibicao SELETIVA da recaptacao de serotonina (ISRS), aumentando a disponibilidade de serotonina na fenda sinaptica",
+    "Antagonismo dos receptores D2 dopaminergicos no sistema mesolimbico",
+    "Agonismo direto nos receptores 5-HT1A pos-sinapticos"
+  ],
+  correct:2,
+  explanation:"A fluoxetina e um ISRS (Inibidor Seletivo da Recaptacao de Serotonina). Inibe o transportador de serotonina na membrana pre-sinaptica, IMPEDINDO a recaptacao de 5-HT e AUMENTANDO sua concentracao na fenda sinaptica. E SELETIVA para serotonina (pouca afinidade por outros receptores), o que explica seu perfil de efeitos colaterais mais favoravel que os triciclicos. Os ISRS sao os antidepressivos MAIS PRESCRITOS atualmente.",
+  wrongExplanations:[
+    "(A) Esse e o mecanismo dos IMAO (fenelzina, tranilcipromina), nao dos ISRS.",
+    "(B) Bloqueadores GABA-A seriam excitatorios/convulsivantes; nao e mecanismo de antidepressivo.",
+    "(D) Antagonismo D2 e mecanismo de antipsicoticos, nao de ISRS.",
+    "(E) Agonismo 5-HT1A e mecanismo da buspirona (ansiolitico), nao da fluoxetina."
+  ]
+},
+{
+  id:49, aula:"7", diff:"medio",
+  stem:"Paciente de 50 anos, em uso de tranilcipromina (IMAO irreversivel) para depressao refrataria, come pizza de quatro queijos com vinho tinto em jantar. Apos uma hora, apresenta cefaleia intensa, hipertensao grave (PA 220x140 mmHg), taquicardia e diaforese.\n\nA explicacao para esse quadro e:",
+  options:[
+    "Reacao alergica aos laticinios mediada por IgE",
+    "Interacao medicamentosa entre IMAO e alcool, causando depressao do SNC",
+    "A tiramina presente em queijos e vinhos, normalmente metabolizada pela MAO intestinal e hepatica, acumula-se quando a MAO esta inibida, causando crise hipertensiva (reacao do queijo)",
+    "O vinho tinto ativou receptores GABA-A, potencializando o efeito do IMAO",
+    "A tranilcipromina bloqueou os receptores alfa-1, causando hipertensao reflexa"
+  ],
+  correct:2,
+  explanation:"A TIRAMINA e uma amina simpatomimetica presente em queijos envelhecidos, vinhos, embutidos e outros alimentos fermentados. Normalmente, e metabolizada pela MAO intestinal e hepatica antes de atingir a circulacao. Quando a MAO esta INIBIDA (pelo IMAO), a tiramina nao e degradada, e absorvida intacta, e causa LIBERACAO MASSIVA de noradrenalina nas terminacoes nervosas simpaticas, resultando em CRISE HIPERTENSIVA grave (a 'reacao do queijo').",
+  wrongExplanations:[
+    "(A) Nao e alergia a laticinios; a tiramina e uma amina bioativa, nao um alergeno.",
+    "(B) A interacao IMAO + alcool pode causar efeitos, mas o quadro descrito (hipertensao grave) e classico da reacao do queijo com tiramina, nao de depressao do SNC.",
+    "(D) O vinho tinto nao ativa GABA-A neste contexto; a tiramina e o agente causador.",
+    "(E) A tranilcipromina inibe a MAO, nao bloqueia alfa-1. Bloqueio alfa-1 causaria hipotensao, nao hipertensao."
+  ]
+},
+{
+  id:50, aula:"7", diff:"facil",
+  stem:"Mulher de 42 anos e levada a UPA apos ingerir 30 comprimidos de clonazepam 2 mg. Apresenta rebaixamento do nivel de consciencia, hipotensao e depressao respiratoria.\n\nO antidoto especifico para essa intoxicacao e:",
+  options:[
+    "N-acetilcisteina",
+    "Naloxona",
+    "Flumazenil",
+    "Atropina",
+    "Dantroleno"
+  ],
+  correct:2,
+  explanation:"O FLUMAZENIL e o antagonista competitivo ESPECIFICO do receptor benzodiazepínico no complexo GABA-A. Reverte os efeitos dos BZDs (sedacao, depressao respiratoria). ATENCAO: o flumazenil tem duracao de acao de apenas 2 HORAS, enquanto muitos BZDs tem meia-vida muito maior — risco de RE-SEDACAO. O paciente deve ser monitorado continuamente apos a administracao.",
+  wrongExplanations:[
+    "(A) N-acetilcisteina e antidoto do PARACETAMOL, nao de BZDs.",
+    "(B) Naloxona e antidoto de OPIOIDES (morfina, heroina), nao de BZDs.",
+    "(D) Atropina e antagonista muscarínico; usada em bradicardia e intoxicacao por organofosforados, nao em intoxicacao por BZDs.",
+    "(E) Dantroleno e usado para HIPERTERMIA MALIGNA, nao para intoxicacao por BZDs."
+  ]
+},
+{
+  id:51, aula:"7", diff:"medio",
+  stem:"Medico prescreve diazepam para paciente idoso de 78 anos com insonia. O farmaceutico sugere substituicao por lorazepam.\n\nA justificativa farmacologica para essa recomendacao e:",
+  options:[
+    "O lorazepam e mais potente que o diazepam como hipnotico",
+    "O diazepam e metabolizado por fase I e II (gera metabolitos ativos de meia-vida longa); o lorazepam so sofre fase II (glicuronidacao), sem metabolitos ativos, sendo mais seguro em idosos e hepatopatas",
+    "O lorazepam nao causa sonolencia, apenas ansiolise",
+    "O diazepam e contraindicado em maiores de 60 anos por causar convulsoes",
+    "O lorazepam nao causa dependencia, diferente do diazepam"
+  ],
+  correct:1,
+  explanation:"O diazepam e metabolizado por fase I (CYP450, gerando metabolitos ATIVOS como desmetildiazepam, com meia-vida de 50-100h) E fase II (conjugacao). Em idosos e hepatopatas, a fase I esta COMPROMETIDA, levando a acumulo do farmaco e metabolitos, com risco de sedacao excessiva, quedas e fraturas. O LORAZEPAM so sofre fase II (GLICURONIDACAO), que e preservada em idosos, e NAO gera metabolitos ativos — muito mais seguro.",
+  wrongExplanations:[
+    "(A) A potencia hipnotica nao e o motivo principal; a seguranca metabolica e a razao.",
+    "(C) O lorazepam CAUSA sonolencia (e o motivo de usa-lo como hipnotico); apenas tem metabolismo mais seguro.",
+    "(D) O diazepam nao e 'contraindicado' em idosos, mas requer cautela; e preferivel evitar. Nao causa convulsoes.",
+    "(E) TODOS os BZDs causam dependencia com uso prolongado, incluindo o lorazepam."
+  ]
+},
+{
+  id:52, aula:"7", diff:"dificil",
+  stem:"Sobre a diferenca no mecanismo de acao de benzodiazepinicos (BZDs) e barbituricos no receptor GABA-A, e correto afirmar que:",
+  options:[
+    "BZDs aumentam o TEMPO de abertura dos canais de cloreto; barbituricos aumentam a FREQUENCIA de abertura",
+    "Ambos atuam no mesmo sitio de ligacao do receptor GABA-A e possuem o mesmo perfil de seguranca",
+    "BZDs aumentam a FREQUENCIA de abertura dos canais de cloreto e dependem da presenca de GABA; barbituricos aumentam o TEMPO de abertura e, em altas doses, podem abrir canais INDEPENDENTEMENTE do GABA",
+    "Barbituricos sao mais seguros que BZDs por terem janela terapeutica mais ampla",
+    "BZDs podem causar parada cardiorrespiratoria em superdose isolada com a mesma frequencia que barbituricos"
+  ],
+  correct:2,
+  explanation:"BZDs ligam-se ao sitio benzodiazepínico do GABA-A e aumentam a FREQUENCIA de abertura dos canais de Cl-. NECESSITAM do GABA presente para funcionar (moduladores alostericos). Barbituricos ligam-se a um sitio DIFERENTE e aumentam o TEMPO de abertura. Em ALTAS DOSES, barbituricos podem abrir canais INDEPENDENTEMENTE do GABA — isso explica seu maior risco letal em superdose (depressao cardiorrespiratoria fatal). BZDs isolados raramente sao fatais em superdose.",
+  wrongExplanations:[
+    "(A) Esta invertido: BZDs = frequencia; barbituricos = tempo.",
+    "(B) Atuam em sitios DIFERENTES no GABA-A e tem perfis de seguranca muito distintos.",
+    "(D) Barbituricos sao MENOS seguros (janela terapeutica ESTREITA), nao mais seguros.",
+    "(E) BZDs em superdose ISOLADA raramente sao fatais (janela terapeutica ampla); ja barbituricos podem ser fatais."
+  ]
+},
+{
+  id:53, aula:"7", diff:"facil",
+  stem:"Paciente de 25 anos com fobia social apresenta taquicardia, tremor de extremidades e sudorese em situacoes de exposicao publica. O psiquiatra prescreve propranolol para uso situacional.\n\nO racional desse tratamento e:",
+  options:[
+    "O propranolol atua como ansiolitico central, reduzindo a ansiedade no cortex cerebral",
+    "O propranolol bloqueia receptores beta-adrenergicos, reduzindo os SINTOMAS AUTONOMICOS (taquicardia, tremor, sudorese), sem tratar a ansiedade em si",
+    "O propranolol aumenta a serotonina no SNC, como um antidepressivo",
+    "O propranolol potencializa o GABA-A, semelhante aos benzodiazepínicos",
+    "O propranolol bloqueia receptores M2 cardiacos, reduzindo a frequencia"
+  ],
+  correct:1,
+  explanation:"O propranolol e um betabloqueador NAO SELETIVO que reduz os sintomas SOMATICOS/AUTONOMICOS da ansiedade: bloqueia beta-1 (reduz taquicardia, palpitacoes) e beta-2 (reduz tremor). NAO trata a ansiedade em si (componente psicologico), apenas seus manifestacoes fisicas. E util para ansiedade de PERFORMANCE/SITUACIONAL (palestra, prova). Atenolol (beta-1 seletivo) e alternativa com menor risco de broncoespasmo.",
+  wrongExplanations:[
+    "(A) O propranolol nao e ansiolitico central; sua acao e PERIFERICA nos sintomas autonomicos.",
+    "(C) O propranolol nao tem efeito sobre a recaptacao de serotonina.",
+    "(D) O propranolol nao atua no receptor GABA-A.",
+    "(E) O propranolol bloqueia receptores BETA-adrenergicos, nao M2 muscarinicos."
+  ]
+},
+{
+  id:54, aula:"7", diff:"medio",
+  stem:"Idoso de 80 anos com ansiedade cronica necessita de ansiolitico. O geriatra opta por buspirona ao inves de benzodiazepínico.\n\nA vantagem da buspirona neste cenario e:",
+  options:[
+    "A buspirona tem efeito ansiolitico imediato, superior aos BZDs",
+    "A buspirona e agonista parcial 5-HT1A, sem propriedades sedativas significativas, sem risco de queda e sem potencial de dependencia, sendo ideal para idosos",
+    "A buspirona tem efeito anticonvulsivante potente",
+    "A buspirona e metabolizada exclusivamente por via renal, sem risco hepatico",
+    "A buspirona pode ser combinada com alcool sem risco de interacao"
+  ],
+  correct:1,
+  explanation:"A buspirona e agonista parcial do receptor 5-HT1A. Nao causa sedacao significativa (sem risco de quedas/fraturas em idosos), nao possui efeito miorrelaxante, nao tem propriedade anticonvulsivante, NAO causa dependencia e NAO potencializa a depressao do SNC pelo etanol. Sua principal desvantagem e o inicio de acao LENTO (2-3 semanas), nao sendo util para crises agudas.",
+  wrongExplanations:[
+    "(A) A buspirona tem inicio de acao LENTO (2-3 semanas), NAO imediato. BZDs tem efeito rapido (~30 min).",
+    "(C) A buspirona NAO tem propriedades anticonvulsivantes.",
+    "(D) A buspirona e metabolizada pelo FIGADO (CYP3A4), nao exclusivamente pelos rins.",
+    "(E) Embora a buspirona nao potencialize significativamente a depressao do SNC pelo etanol, dizer que 'nao ha risco' e inadequado."
+  ]
+},
+{
+  id:55, aula:"7", diff:"medio",
+  stem:"Paciente de 35 anos com depressao grave esta em uso de amitriptilina (antidepressivo triciclico). Relata boca seca, constipacao, visao turva e hipotensao ao levantar.\n\nEsses efeitos adversos sao explicados pelo bloqueio dos seguintes receptores:",
+  options:[
+    "Beta-1 cardiaco e beta-2 bronquico",
+    "Muscarinicos M1 (boca seca, constipacao, visao turva) e alfa-adrenergicos (hipotensao postural)",
+    "Receptores D2 dopaminergicos (extrapiramidalismo)",
+    "Receptores GABA-A (sedacao e amnesia)",
+    "Receptores 5-HT2A (disfuncao sexual e insonia)"
+  ],
+  correct:1,
+  explanation:"Os antidepressivos triciclicos (ADT) sao 'farmacos sujos' — alem de inibir a recaptacao de 5-HT e NA (efeito terapeutico), bloqueiam multiplos outros receptores: MUSCARINICOS M1 (boca seca, visao turva, constipacao, retencao urinaria — efeitos ANTICOLINERGICOS), HISTAMINICOS H1 (sedacao, ganho de peso), ALFA-ADRENERGICOS (hipotensao postural). Isso explica por que os ISRS (mais seletivos) sao preferidos como 1a linha.",
+  wrongExplanations:[
+    "(A) ADTs nao bloqueiam significativamente receptores beta.",
+    "(C) Bloqueio D2 e tipico de antipsicoticos, nao de ADTs.",
+    "(D) ADTs nao atuam significativamente no GABA-A.",
+    "(E) Disfuncao sexual pode ocorrer com ISRS (via serotonina), nao pelo bloqueio 5-HT2A dos ADTs."
+  ]
+},
+{
+  id:56, aula:"7", diff:"facil",
+  stem:"Paciente em uso cronico de clonazepam para insonia decide parar abruptamente o medicamento. Apos 2 dias, apresenta confusao mental, ansiedade intensa, insonia rebote e tremores.\n\nEsse quadro e compativel com:",
+  options:[
+    "Efeito colateral do clonazepam que aparece com o uso prolongado",
+    "Intoxicacao por excesso de clonazepam acumulado",
+    "Sindrome de abstinencia por retirada abrupta de benzodiazepínico",
+    "Reacao alergica tardia ao clonazepam",
+    "Sindrome serotoninergica por excesso de serotonina"
+  ],
+  correct:2,
+  explanation:"A retirada ABRUPTA de BZDs apos uso cronico causa sindrome de ABSTINENCIA: ansiedade rebote, insonia rebote, confusao mental, tremores, visao turva, diarreia, e em casos graves, convulsoes. A retirada deve ser GRADUAL: reducao de 1/4 da dose por semana, ao longo de 6-8 semanas. Pode-se trocar para BZD de meia-vida longa (diazepam) para facilitar o desmame.",
+  wrongExplanations:[
+    "(A) Efeitos colaterais ocorrem DURANTE o uso, nao apos a suspensao.",
+    "(B) Intoxicacao ocorre com EXCESSO de dose, nao apos suspensao.",
+    "(D) Reacoes alergicas tem manifestacoes cutaneas (urticaria), respiratorias ou anafilaxia, nao os sintomas descritos.",
+    "(E) Sindrome serotoninergica ocorre por excesso de serotonina (associacao ISRS + IMAO), nao por retirada de BZD."
+  ]
+},
+{
+  id:57, aula:"7", diff:"dificil",
+  stem:"Paciente com depressao em uso de ISRS (fluoxetina) recebe prescricao de tramadol (opioide com acao serotoninergica) para dor aguda. Apos 24 horas, apresenta agitacao, tremor, mioclonias, hipertermia, diarreia e rigidez muscular.\n\nO diagnostico mais provavel e:",
+  options:[
+    "Sindrome neuroleptica maligna",
+    "Hipertermia maligna",
+    "Sindrome serotoninergica, por excesso de serotonina na fenda sinaptica pela associacao de ISRS + tramadol",
+    "Intoxicacao por opioides (depressao do SNC)",
+    "Crise hipertensiva por tiramina (reacao do queijo)"
+  ],
+  correct:2,
+  explanation:"A SINDROME SEROTONINERGICA ocorre por EXCESSO de serotonina na fenda sinaptica, geralmente pela associacao de farmacos serotoninergicos. O tramadol, alem de agonista opioide, INIBE a recaptacao de serotonina. Associado a fluoxetina (ISRS), resulta em acumulo perigoso de 5-HT. Triade: (1) alteracao do estado mental (agitacao, confusao); (2) hiperatividade autonomica (hipertermia, diarreia, taquicardia); (3) anormalidades neuromusculares (tremor, mioclonias, rigidez).",
+  wrongExplanations:[
+    "(A) Sindrome neuroleptica maligna ocorre com ANTIPSICOTICOS (bloqueio D2), nao com ISRS + opioides. A apresentacao e semelhante mas a causa e diferente.",
+    "(B) Hipertermia maligna ocorre com anestesicos inalatorios e succinilcolina, nao com ISRS + tramadol.",
+    "(D) Intoxicacao por opioides causa DEPRESSAO do SNC (sedacao, miose, depressao respiratoria), nao agitacao e mioclonias.",
+    "(E) Reacao do queijo ocorre com IMAO + tiramina alimentar, nao com ISRS + tramadol."
+  ]
+},
+{
+  id:58, aula:"7", diff:"medio",
+  stem:"Sobre os benzodiazepínicos e o sono, e correto afirmar que:",
+  options:[
+    "BZDs melhoram a qualidade do sono por aumentar a fase REM",
+    "BZDs nao interferem na arquitetura do sono",
+    "BZDs aumentam o tempo total de sono, mas DIMINUEM a fase REM, prejudicando a consolidacao da memoria e a qualidade do descanso",
+    "BZDs diminuem o tempo total de sono, mas aumentam a fase REM",
+    "A alteracao do sono por BZDs e irreversivel mesmo apos a suspensao"
+  ],
+  correct:2,
+  explanation:"Os BZDs alteram a ARQUITETURA DO SONO: aumentam o tempo total de sono e reduzem a latencia para adormecer, MAS DIMINUEM o sono REM (fase essencial para consolidacao de memoria e aprendizagem). Resultado: o paciente dorme mais horas, mas acorda sem sensacao de descanso ('dormiu mas nao descansou'). A memoria e o aprendizado sao prejudicados. Alem disso, BZDs causam AMNESIA RETROGRADA.",
+  wrongExplanations:[
+    "(A) BZDs DIMINUEM a fase REM, nao aumentam.",
+    "(B) BZDs alteram SIGNIFICATIVAMENTE a arquitetura do sono.",
+    "(D) BZDs AUMENTAM o tempo total de sono, nao diminuem.",
+    "(E) A alteracao do sono e reversivel apos a suspensao gradual do BZD."
+  ]
+},
+{
+  id:59, aula:"7", diff:"facil",
+  stem:"Sobre a hipotese monoaminergica da depressao, e correto afirmar que:",
+  options:[
+    "A depressao resulta de excesso de serotonina e noradrenalina na fenda sinaptica",
+    "A depressao resulta de deficiencia de neurotransmissores monoaminergicos (serotonina e noradrenalina) na fenda sinaptica",
+    "A depressao resulta de deficiencia de GABA no SNC",
+    "A depressao resulta de excesso de dopamina nas vias mesolimbicas",
+    "A hipotese monoaminergica explica completamente todos os aspectos da depressao"
+  ],
+  correct:1,
+  explanation:"A hipotese monoaminergica propoe que a depressao resulta de DEFICIENCIA de neurotransmissores monoaminergicos (serotonina — 5-HT, e noradrenalina — NA) na fenda sinaptica. Isso justifica o mecanismo dos antidepressivos que AUMENTAM esses neurotransmissores. Porem, essa hipotese tem limitacoes: o aumento neuroquimico e imediato, mas a resposta clinica demora 2-3 semanas, sugerindo que neuroplasticidade e outros mecanismos tambem estao envolvidos.",
+  wrongExplanations:[
+    "(A) E DEFICIENCIA, nao excesso, de monoaminas na depressao.",
+    "(C) O GABA esta mais relacionado a ansiedade (ansioliticos/BZDs), nao diretamente a hipotese monoaminergica da depressao.",
+    "(D) O excesso de dopamina nas vias mesolimbicas esta mais associado a esquizofrenia (sintomas positivos), nao a depressao.",
+    "(E) A hipotese monoaminergica tem LIMITACOES reconhecidas e nao explica tudo."
+  ]
+},
+{
+  id:60, aula:"7", diff:"dificil",
+  stem:"Paciente de 45 anos com transtorno bipolar tipo I esta em uso de litio como estabilizador de humor. O monitoramento laboratorial revela nivel serico de litio proximo ao limite superior da faixa terapeutica. O paciente inicia tratamento com hidroclorotiazida para hipertensao leve.\n\nO risco dessa associacao e:",
+  options:[
+    "A hidroclorotiazida antagoniza o efeito do litio, causando recaida maniaca",
+    "A hidroclorotiazida acelera a excrecao renal do litio, reduzindo sua eficacia",
+    "Diureticos tiazidicos causam RETENCAO de litio (por reducao da excrecao renal), podendo levar a toxicidade pelo litio (tremor, diarreia, confusao, convulsoes)",
+    "A associacao causa sindrome serotoninergica",
+    "A hidroclorotiazida converte o litio em metabolito hepatotoxico"
+  ],
+  correct:2,
+  explanation:"O litio tem janela terapeutica ESTREITA. Diureticos tiazidicos (e de alca, como furosemida) causam RETENCAO de litio: ao aumentar a excrecao de sodio, o rim compensa reabsorvendo mais sodio no tubulo proximal, e o litio (que se comporta como sodio) e reabsorvido junto, AUMENTANDO seus niveis plasmaticos. Com o litio ja no limite da faixa terapeutica, a associacao pode causar TOXICIDADE grave (tremor, nausea, diarreia, confusao, convulsoes, arritmias).",
+  wrongExplanations:[
+    "(A) A hidroclorotiazida NAO antagoniza o litio; na verdade, AUMENTA seus niveis.",
+    "(B) O contrario: diureticos REDUZEM a excrecao renal de litio (retencao), nao a aceleram.",
+    "(D) Sindrome serotoninergica ocorre com farmacos serotoninergicos, nao com litio + diuretico.",
+    "(E) O litio e um ion que nao sofre metabolizacao hepatica; e excretado inalterado pelos rins."
+  ]
+}
+];
+
+/* ========================================
+   DATA — QUESTOES DISSERTATIVAS
+   ======================================== */
+var essays = [
+{
+  id:1, aula:"1-2", title:"Caso 1: Farmacocinetica Aplicada",
+  stem:"Paciente de 75 anos, feminina, 48 kg, com diagnostico de insuficiencia cardiaca congestiva (ICC) classe III, cirrose hepatica (Child-Pugh B), hipoalbuminemia (albumina 2,0 g/dL) e insuficiencia renal cronica (TFG 25 mL/min). Necessita iniciar anticoagulacao com varfarina (farmaco acido fraco, alta ligacao proteica >99%, metabolizado pelo CYP450 hepatico, estreita margem terapeutica).",
+  questions:[
+    {q:"Considerando a hipoalbuminemia, explique o impacto na fracao livre da varfarina e as consequencias clinicas esperadas.",
+     model:"Com albumina de 2,0 g/dL (normal 3,5-5,5), ha menos proteina disponivel para ligar a varfarina (>99% de ligacao). A fracao LIVRE (farmacologicamente ativa) aumenta significativamente. Mesmo que o nivel TOTAL serico esteja 'normal', a fracao livre esta elevada, podendo causar sangramento. A dosagem de fracao livre ou correcao pela albumina e necessaria. A dose deve ser REDUZIDA."},
+    {q:"Como a cirrose hepatica afeta a biotransformacao da varfarina? Explique o impacto na meia-vida e no ajuste de dose.",
+     model:"A cirrose reduz a funcao hepatocitica (menor massa hepatica funcional e menor irrigacao hepatica). Como a varfarina e metabolizada pelo CYP450 hepatico, a biotransformacao fica comprometida, resultando em: (1) MENOR metabolizacao, (2) ACUMULO do farmaco, (3) AUMENTO da meia-vida, (4) Necessidade de REDUCAO da dose e aumento dos intervalos de monitoramento."},
+    {q:"Considerando a insuficiencia renal, explique como a manipulacao do pH urinario seria relevante caso houvesse necessidade de acelerar a excrecao da varfarina em caso de intoxicacao.",
+     model:"A varfarina e um acido fraco. Para acelerar sua excrecao renal, deve-se ALCALINIZAR a urina (com bicarbonato de sodio). Em pH alcalino, o acido fraco fica IONIZADO, e a forma ionizada nao e reabsorvida pelo tubulo renal (nao atravessa membranas), sendo eliminada na urina. Porem, com TFG de 25 mL/min, a eficacia dessa estrategia e limitada pela propria insuficiencia renal."}
+  ]
+},
+{
+  id:2, aula:"3-4", title:"Caso 2: Farmacologia do SNA na Emergencia",
+  stem:"Homem de 6 anos, 22 kg, chega ao pronto-socorro apos ingestao acidental de 'chumbinho' (organofosforado). Apresenta: miose bilateral intensa, sialorreia, lacrimejamento, bradicardia (FC 45 bpm), broncoespasmo audivel, vomitos, diarreia profusa, fasciculacoes musculares e confusao mental.",
+  questions:[
+    {q:"Explique detalhadamente o mecanismo fisiopatologico da intoxicacao por organofosforado, relacionando com a neurotransmissao colinergica.",
+     model:"Os organofosforados causam FOSFORILACAO IRREVERSIVEL da acetilcolinesterase (AChE), a enzima que degrada a ACh na fenda sinaptica. Sem AChE funcional, a acetilcolina ACUMULA-SE em TODAS as sinapses colinergicas: (1) MUSCARÍNICAS: miose (M3 ocular), sialorreia e lacrimejamento (M3 glandular), bradicardia (M2 cardiaco), broncoespasmo (M3 bronquico), vomitos e diarreia (M3 gastrointestinal). (2) NICOTÍNICAS (NM): fasciculacoes musculares (excesso de ACh na JNM). (3) SNC: confusao mental (ACh central). O quadro e uma 'tempestade colinergica'."},
+    {q:"Descreva o tratamento farmacologico completo, explicando o mecanismo de cada farmaco utilizado e por que NAO se deve usar neostigmina neste caso.",
+     model:"Tratamento: (1) ATROPINA IV em altas doses: antagonista muscarínico que bloqueia os efeitos da ACh acumulada nos receptores M (reverte bradicardia, broncoespasmo, sialorreia). Dose titulada ate 'atropinizacao' (FC >80, secrecoes reduzidas). (2) PRALIDOXIMA (se disponivel e precoce): reativa a AChE fosforilada se administrada antes do 'envelhecimento' da ligacao. (3) Suporte: ventilacao mecanica se necessario. NAO usar neostigmina porque ela e um ANTICOLINESTERASICO (inibe a mesma AChE) — iria AGRAVAR o quadro ao impedir ainda mais a degradacao da ACh acumulada."},
+    {q:"Explique por que o paciente apresenta FASCICULACOES (efeito nicotinico) ao mesmo tempo que BRADICARDIA (efeito muscarínico).",
+     model:"A acetilcolina acumulada atua em TODOS os receptores colinergicos simultaneamente. Nos receptores NICOTINICOS MUSCULARES (NM) da juncao neuromuscular, o excesso de ACh causa despolarizacao repetida, resultando em fasciculacoes. Nos receptores MUSCARÍNICOS M2 do no sinusal cardiaco, o excesso de ACh causa hiperpolarizacao e reducao da frequencia cardiaca (bradicardia). Sao efeitos SIMULTANEOS em receptores DIFERENTES (nicotinico vs. muscarínico) pelo MESMO neurotransmissor acumulado (ACh)."}
+  ]
+},
+{
+  id:3, aula:"5", title:"Caso 3: Anestesia e Complicacoes",
+  stem:"Homem de 30 anos, previamente saudavel, sem doencas conhecidas, e submetido a apendicectomia de urgencia. O protocolo anestesico inclui: midazolam (pre-anestesico), propofol (inducao IV), succinilcolina (intubacao), isoflurano (manutencao inalatoria) e fentanil (analgesia). Durante a manutencao, o paciente desenvolve rigidez muscular generalizada, taquicardia extrema (180 bpm) e temperatura que sobe rapidamente para 40,5C em 20 minutos.",
+  questions:[
+    {q:"Qual o diagnostico mais provavel? Explique a fisiopatologia detalhadamente, incluindo o papel do receptor de rianodina.",
+     model:"HIPERTERMIA MALIGNA. Fisiopatologia: (1) Susceptibilidade GENETICA — mutacao no gene do receptor de RIANODINA (RyR1) do reticulo sarcoplasmático do musculo esqueletico. (2) Desencadeante: succinilcolina e/ou anestesicos inalatorios halogenados (isoflurano). (3) Estes agentes causam abertura MASSIVA e DESCONTROLADA dos canais de calcio do reticulo sarcoplasmático. (4) EXCESSO de Ca++ intracelular causa contracao muscular intensa e SUSTENTADA. (5) O hipermetabolismo resultante gera: consumo excessivo de O2, producao de CO2, calor (hipertermia), lactato (acidose) e CK (rabdomiolise). (6) Consequencias: taquicardia, rigidez muscular, hipertermia, acidose metabolica, hipercalemia, rabdomiolise, podendo evoluir para arritmia, coagulacao intravascular disseminada e morte."},
+    {q:"Descreva o tratamento farmacologico especifico e as medidas de suporte imediatas.",
+     model:"(1) SUSPENDER IMEDIATAMENTE todos os agentes desencadeadores (isoflurano e succinilcolina). (2) DANTROLENO IV: farmaco ESPECIFICO que bloqueia os canais de calcio do RETICULO SARCOPLASMÁTICO (receptor de rianodina), reduzindo a liberacao de Ca++ e quebrando o ciclo de contracao/hipermetabolismo. Dose inicial 2,5 mg/kg IV, repetir ate 10 mg/kg. (3) RESFRIAMENTO ATIVO: soro gelado IV, compressas, lavagem gastrica/vesical com soro frio. (4) Correcao da acidose: bicarbonato de sodio. (5) Tratar hipercalemia: glicose + insulina, gluconato de calcio. (6) Manter debito urinario para prevenir insuficiencia renal aguda por mioglobinuria. O dantroleno e OBRIGATORIO no centro cirurgico por lei."}
+  ]
+},
+{
+  id:4, aula:"5", title:"Caso 4: Bloqueadores Neuromusculares",
+  stem:"Mulher de 45 anos sera submetida a cirurgia abdominal eletiva de 3 horas de duracao. O anestesista planeja usar rocuronio para relaxamento muscular. Ao final da cirurgia, administra neostigmina para reverter o bloqueio. Antes da neostigmina, administra atropina.",
+  questions:[
+    {q:"Explique o mecanismo de acao do rocuronio na juncao neuromuscular e por que ele NAO causa perda de consciencia.",
+     model:"O rocuronio e um bloqueador neuromuscular NAO DESPOLARIZANTE (competitivo). Mecanismo: ocupa o receptor NICOTÍNICO MUSCULAR (NM) na juncao neuromuscular como ANTAGONISTA COMPETITIVO — impede a ligacao da acetilcolina sem ativar o receptor. Sem despolarizacao da placa motora, nao ha contracao muscular. NAO causa perda de consciencia porque: (1) E um composto de AMONIO QUATERNARIO, POLAR, que NAO atravessa a barreira hematoencefalica. (2) Atua EXCLUSIVAMENTE na JNM periferica. (3) O paciente DEVE ser sedado/anestesiado separadamente — relatos de pacientes curarízados mas conscientes sao descritos como experiencias extremamente traumaticas."},
+    {q:"Explique o mecanismo pelo qual a neostigmina reverte o bloqueio do rocuronio e por que a atropina e administrada concomitantemente.",
+     model:"A neostigmina e um ANTICOLINESTERASICO reversivel: inibe a acetilcolinesterase (AChE) na JNM, IMPEDINDO a degradacao da ACh. Com mais ACh disponivel na fenda, a acetilcolina COMPETE com o rocuronio pelo receptor NM (antagonismo competitivo e reversivel). Se a concentracao de ACh for suficiente, desloca o rocuronio e restaura a neurotransmissao. A ATROPINA e necessaria porque a neostigmina aumenta a ACh em TODAS as sinapses colinergicas (nao so na JNM): nos receptores MUSCARINICOS, o excesso de ACh causaria bradicardia (M2), sialorreia, broncoespasmo (M3). A atropina bloqueia esses efeitos muscarinicos indesejados."}
+  ]
+},
+{
+  id:5, aula:"6", title:"Caso 5: Manejo da Dor Cronica",
+  stem:"Mulher de 58 anos, com diagnostico de fibromialgia, queixa-se de dor difusa ha 3 anos (EVA 7/10), insonia, fadiga cronica e humor deprimido. Ja tentou ibuprofeno e paracetamol sem melhora adequada. Mora sozinha e relata piora dos sintomas com estresse emocional. O reumatologista prescreve amitriptilina 25 mg a noite.",
+  questions:[
+    {q:"Explique por que a amitriptilina (antidepressivo triciclico) e uma escolha racional para esta paciente, correlacionando com a via descendente inibitoria da dor.",
+     model:"A amitriptilina inibe a recaptacao de SEROTONINA e NORADRENALINA. Na via descendente inibitoria da dor: (1) A substancia cinzenta periaquedutal estimula o nucleo magno da rafe (serotonina) e o locus coeruleus (noradrenalina). (2) 5-HT e NA descem ate o corno dorsal da medula, onde estimulam interneuronios gabaergicos e liberacao de encefalinas. (3) Encefalinas e GABA inibem a transmissao do impulso doloroso (fecham o 'portao'). Ao aumentar 5-HT e NA, a amitriptilina POTENCIALIZA toda essa via inibitoria. Alem disso: (4) O efeito SEDATIVO (bloqueio H1) melhora a insonia. (5) O efeito ANTIDEPRESSIVO trata o humor deprimido concomitante. Portanto, 'mata tres coelhos com uma cajadada so': dor + insonia + depressao."},
+    {q:"Cite os principais efeitos adversos esperados da amitriptilina e explique o mecanismo de cada um.",
+     model:"(1) Boca seca, constipacao, visao turva, retencao urinaria — bloqueio de receptores MUSCARÍNICOS (M1). (2) Sonolencia, ganho de peso — bloqueio de receptores HISTAMINICOS (H1). (3) Hipotensao postural, tontura — bloqueio de receptores ALFA-ADRENERGICOS. (4) Arritmias cardiacas (em superdose) — efeito quinidina-like (bloqueio de canais de sodio cardiacos). (5) Disfuncao sexual — por mecanismos serotoninergicos e adrenergicos. Importante: orientar tomar a NOITE (aproveitar a sedacao como efeito benefico para a insonia) e advertir sobre hipotensao ao levantar-se."},
+    {q:"Se a paciente nao tolerar a amitriptilina, qual classe de antidepressivo seria alternativa para dor neuropatica/fibromialgica e por que?",
+     model:"Os INIBIDORES DA RECAPTACAO DE SEROTONINA E NORADRENALINA (IRSN), como DULOXETINA e VENLAFAXINA, sao alternativas de 1a linha para dor neuropatica/fibromialgica. Mecanismo: inibem a recaptacao de AMBOS os neurotransmissores (5-HT e NA), potencializando a via descendente inibitoria da dor de forma semelhante aos ADTs. Vantagem: sao mais SELETIVOS que os triciclicos (nao bloqueiam significativamente M1, H1 e alfa-adrenergico), resultando em MENOS efeitos colaterais (menos boca seca, menos sedacao, menos hipotensao). Outra alternativa: GABAPENTINA/PREGABALINA (bloqueiam subunidade alfa-2-delta dos canais de calcio voltagem-dependentes), uteis na dor neuropatica."}
+  ]
+},
+{
+  id:6, aula:"6", title:"Caso 6: AINEs e Risco Gastrointestinal",
+  stem:"Homem de 72 anos, com osteoartrose de quadril, hipertensao, doenca coronariana (stent ha 1 ano, em uso de AAS 100 mg/dia) e historico de ulcera gastrica ha 5 anos. Necessita de anti-inflamatorio para agudizacao da dor articular (EVA 6/10). O clinico pondera os riscos.",
+  questions:[
+    {q:"Explique o dilema farmacologico: por que tanto AINEs tradicionais quanto COXIBs apresentam riscos significativos para este paciente?",
+     model:"(1) AINEs tradicionais (ibuprofeno, diclofenaco): inibem COX-1 e COX-2. A inibicao de COX-1 gastrica reduz prostaglandinas gastroprotetoras (muco, bicarbonato, fluxo sanguineo mucoso), aumentando o risco de recorrencia da ULCERA GASTRICA. Alem disso, com AAS concomitante, o risco GI DUPLICA (ambos inibem COX-1). (2) COXIBs (celecoxibe): inibem seletivamente COX-2. Menor risco gastrico, POREM aumentam o risco CARDIOVASCULAR (reduzem prostaciclina sem afetar tromboxano, deslocando o equilibrio para estado pro-trombotico). Em paciente com doenca coronariana e stent recente, o risco de evento tromboembolico e inaceitavel. Dilema: AINEs tradicionais = risco GI; COXIBs = risco CV. Ambas as opcoes sao de alto risco neste paciente."},
+    {q:"Proponha uma estrategia analgesica mais segura para este paciente, justificando cada escolha.",
+     model:"Estrategia: (1) PARACETAMOL como analgesico de base (inibidor de COX-3 central, boa tolerabilidade GI, sem risco CV adicional). Dose maxima 3g/dia neste idoso. (2) Se insuficiente, tramadol (opioide fraco, degrau 2 da escada da OMS) — sem risco GI nem CV significativo. (3) Se necessitar AINE pontualmente: naproxeno (menor risco CV entre os nao-seletivos) em DOSE MAIS BAIXA e pelo MENOR TEMPO possivel + OMEPRAZOL (inibidor de bomba de protonica) para gastroprotecao. (4) Medidas nao farmacologicas: fisioterapia, perda de peso, crioterapia local. (5) EVITAR diclofenaco (risco CV) e ibuprofeno em altas doses (risco CV). (6) NUNCA associar AAS + AINE + corticoide (risco GI triplamente aumentado)."}
+  ]
+},
+{
+  id:7, aula:"7", title:"Caso 7: Depressao e Escolha do Antidepressivo",
+  stem:"Mulher de 32 anos, pos-parto de 3 meses, amamentando, apresenta tristeza persistente, choro frequente, insonia terminal, anedonia, fadiga e dificuldade de vinculacao com o bebe ha 6 semanas. Nega ideacao suicida. Exame fisico normal. TSH normal. O psiquiatra diagnostica episodio depressivo moderado e decide iniciar antidepressivo.",
+  questions:[
+    {q:"O psiquiatra evita prescrever paroxetina (ISRS). Explique o motivo desta contraindicacao relativa na lactacao.",
+     model:"A paroxetina e um ISRS lipossoluvel que PASSA PARA O LEITE MATERNO em concentracoes clinicamente relevantes. O neonato pode apresentar sedacao excessiva, irritabilidade, dificuldade de alimentacao e, em casos graves, sindrome serotoninergica. Farmacos lipossolúveis atravessam mais facilmente as membranas biologicas, incluindo a barreira mamaria. A professora enfatizou: 'Paroxetina NAO usar em lactantes'. A sertralina, que tem menor passagem para o leite, e geralmente preferida na lactacao."},
+    {q:"Explique por que o efeito clinico dos antidepressivos demora 2-3 semanas, embora o efeito neuroquimico (aumento de serotonina) seja imediato.",
+     model:"O aumento de 5-HT na fenda sinaptica e IMEDIATO (pela inibicao da recaptacao). Porem, a resposta clinica demora 2-3 semanas porque: (1) AUTORRECEPTORES 5-HT1A pre-sinapticos: inicialmente detectam o excesso de 5-HT e REDUZEM a liberacao de serotonina (feedback negativo), contrabalancando o efeito do farmaco. (2) Com exposicao cronica, esses autorreceptores sofrem DOWNREGULATION (dessensibilizacao), e a liberacao de 5-HT finalmente aumenta de forma sustentada. (3) NEUROPLASTICIDADE: a resposta clinica depende de mudancas na expressao genica, aumento de BDNF, remodelamento sinaptico e adaptacao pos-sinaptica, que levam SEMANAS. (4) Implicacao clinica: o paciente deve ser orientado a manter o tratamento e nao abandonar precocemente; acompanhamento proximo nas primeiras semanas e essencial."}
+  ]
+},
+{
+  id:8, aula:"7", title:"Caso 8: Ansiedade no Idoso",
+  stem:"Homem de 82 anos, viuvo ha 6 meses, morador de instituicao de longa permanencia, com diagnostico de transtorno de ansiedade generalizada (TAG). Apresenta preocupacao excessiva, irritabilidade, insonia de manutencao, tensao muscular e dificuldade de concentracao ha mais de 6 meses. Comorbidades: DPOC leve, osteoporose e historia de queda com fratura de femur ha 1 ano. Em uso de anlodipino e alendronato.",
+  questions:[
+    {q:"Explique por que benzodiazepinicos NAO sao a primeira escolha para este paciente, citando pelo menos 4 riscos especificos.",
+     model:"(1) RISCO DE QUEDA: BZDs causam sedacao, miorrelaxamento e ataxia, aumentando enormemente o risco de quedas — paciente com osteoporose e historico de fratura de femur. (2) DEPRESSAO RESPIRATORIA: paciente com DPOC ja tem funcao respiratoria comprometida; BZDs podem agravar. (3) METABOLISMO COMPROMETIDO: idosos tem reducao da funcao hepatica (especialmente fase I); BZDs como diazepam geram metabolitos ativos de meia-vida longa, acumulando e causando sedacao prolongada. (4) COMPROMETIMENTO COGNITIVO: BZDs causam amnesia retrograda e piora cognitiva, que ja pode estar presente no idoso. (5) DEPENDENCIA: idosos sao mais susceptiveis a desenvolver dependencia e abstinencia. (6) ALTERACAO DA ARQUITETURA DO SONO: reduzem REM, piorando a qualidade do sono."},
+    {q:"Proponha um esquema farmacologico racional para este paciente, justificando cada escolha.",
+     model:"1a OPCAO: BUSPIRONA — agonista parcial 5-HT1A. Sem sedacao significativa (menor risco de queda), sem depressao respiratoria (seguro na DPOC), sem dependencia, sem comprometimento cognitivo. Ideal para TAG cronico em idosos. Desvantagem: inicio lento (2-3 semanas). Se necessitar BZD pontualmente (crise aguda): LORAZEPAM — metabolizado APENAS por fase II (glicuronidacao), SEM metabolitos ativos, meia-vida intermediaria. E o BZD mais seguro para idosos e hepatopatas. Evitar diazepam e clordiazepoxido (metabolitos ativos, meia-vida longa). Para insonia associada: higiene do sono + se necessario, zolpidem em dose baixa ou trazodona em dose baixa. Se TAG for refratario: ISRS (sertralina — bom perfil em idosos) ou IRSN (venlafaxina)."}
+  ]
+},
+{
+  id:9, aula:"3-4", title:"Caso 9: Resposta de Luta-ou-Fuga",
+  stem:"Estudante de medicina de 22 anos, sem comorbidades, esta caminhando sozinho as 23h quando e abordado por assaltantes armados. Durante o evento (duracao ~5 minutos), nota: coracao acelerado, boca seca, visao mais nitida, maos frias e palidas, e nao sente dor ao cair e ralar o joelho no asfalto. Apos o assalto, no pronto-socorro, o corte no joelho causa dor intensa.",
+  questions:[
+    {q:"Descreva passo a passo a cascata fisiologica da descarga adrenergica, correlacionando cada sintoma relatado com o receptor e orgao envolvido.",
+     model:"1. PERCEPCAO DA AMEACA pelo SNC. 2. DESCARGA SIMPATICA: comprime a medula da glandula SUPRARRENAL (inervacao monossinaptica colinergica nicotinica). 3. Medula adrenal libera ADRENALINA em PULSO na corrente sanguinea. 4. Adrenalina distribui-se por todos os orgaos, ativando receptores alfa e beta:\n- CORACAO ACELERADO: beta-1 cardiaco — aumento da FC (cronotropismo+), forca de contracao (inotropismo+), debito cardiaco.\n- BOCA SECA (xerostomia): reducao da secrecao salivar por vasoconstricao das glandulas salivares.\n- VISAO MAIS NITIDA: alfa-1 no musculo radial da iris — MIDRIASE (dilatacao pupilar), permitindo entrada de mais fotons.\n- MAOS FRIAS E PALIDAS: alfa-1 nos vasos perifericos — VASOCONSTRIÇÃO, direcionando sangue para musculos.\n- NAO SENTE DOR: alfa-2 na medula espinal — bloqueio da ascensao do estimulo doloroso pelo trato neoespinotalamico (ANALGESIA central).\n- APOS O ASSALTO, DOR NO JOELHO: cessou a descarga adrenergica, a inibicao alfa-2 medular diminui, e o estimulo doloroso agora e transmitido normalmente."},
+    {q:"Diferencie a acao fisiologica da noradrenalina (liberada continuamente) da adrenalina (liberada em pulsos) na regulacao cardiovascular, incluindo a afinidade diferencial por receptores.",
+     model:"NORADRENALINA: liberada CONTINUAMENTE em pequenas quantidades pelas terminacoes nervosas pos-ganglionares simpaticas e pela medula adrenal. Tem afinidade MAIOR por receptores ALFA do que beta. Funcao principal: manter o TONUS VASCULAR basal (vasoconstrição continua via alfa-1). ADRENALINA: liberada em PULSOS/BOLUS pela medula adrenal em situacoes de ESTRESSE. Tem afinidade IGUAL por alfa E beta. Acao: ativacao ampla e simultanea de todos os receptores adrenergicos (alfa-1 + alfa-2 + beta-1 + beta-2), causando a resposta completa de luta-ou-fuga. Na vasculatura: como a DENSIDADE de alfa-1 >> beta-2 nos vasos, a resposta final a adrenalina e vasoconstrição. Se alfa-1 for BLOQUEADO, a adrenalina causa VASODILATAÇÃO (so beta-2 — inversao da adrenalina)."}
+  ]
+},
+{
+  id:10, aula:"5", title:"Caso 10: Anestesia Local — Correlacao Estrutura-Funcao",
+  stem:"Cirurgiao realiza cirurgia de mao sob bloqueio de plexo braquial. Utiliza associacao de lidocaina + bupivacaina, ambas com vasoconstritor (adrenalina). O procedimento dura 4 horas. O paciente relata perda sequencial de: primeiro dor, depois sensacao de frio, depois calor, depois tato, e por ultimo funcao motora.",
+  questions:[
+    {q:"Explique por que o cirurgiao utilizou lidocaina E bupivacaina juntas, relacionando com as propriedades farmacologicas de cada uma (inicio de acao, duracao, potencia).",
+     model:"LIDOCAINA: amida com inicio de acao RAPIDO (latencia curta), pois tem pKa mais proximo do pH fisiologico (mais moleculas na forma nao-ionizada, que penetra a membrana nervosa rapidamente). Porem, duracao INTERMEDIARIA. BUPIVACAINA: amida com inicio de acao mais LENTO, porem ALTA POTENCIA (mais lipossoluvel) e DURACAO PROLONGADA (alta ligacao a proteinas plasmaticas). A ASSOCIACAO e estrategica: lidocaina garante anestesia RAPIDA no inicio do procedimento; bupivacaina garante analgesia PROLONGADA durante as 4 horas e no pos-operatorio. E como 'acender rapido' (lidocaina) e 'manter o fogo' (bupivacaina)."},
+    {q:"Explique a sequencia de bloqueio progressivo (dor > frio > calor > tato > funcao motora) com base no tipo de fibra nervosa bloqueada.",
+     model:"Os anestesicos locais bloqueiam fibras nervosas em ordem de MENOR para MAIOR calibre: (1) DOR (primeiro): fibras A-delta (mielinizadas finas) e C (amielinizadas) — menor calibre, menor velocidade de conducao, bloqueadas primeiro. (2) FRIO, CALOR: fibras sensoriais intermediarias. (3) TATO/PRESSAO: fibras A-beta (mielinizadas, maior calibre). (4) FUNCAO MOTORA (ultimo): fibras A-alfa — maior calibre, mais mielinizadas, necessitam de maior concentracao/tempo para bloqueio. O principio e: fibras FINAS e AMIELINIZADAS sao bloqueadas ANTES das fibras GROSSAS e MIELINIZADAS. A recuperacao ocorre na ordem INVERSA (motor volta primeiro, dor por ultimo)."},
+    {q:"Descreva as tres propriedades fundamentais dos anestesicos locais e o determinante estrutural de cada uma.",
+     model:"(1) POTENCIA — determinada pela LIPOSSOLUBILIDADE (coeficiente oleo/agua). Maior lipossolubilidade = maior penetracao na membrana nervosa = maior potencia. A bupivacaina e mais lipossoluvel que a lidocaina, portanto mais potente. (2) LATENCIA (inicio de acao) — determinada pelo GRAU DE IONIZACAO (pKa). O AL deve estar na forma NAO-IONIZADA (base livre) para penetrar a membrana. Quanto mais proximo o pKa do pH fisiologico, mais moleculas nao-ionizadas, mais rapido o inicio. (3) DURACAO DO EFEITO — determinada pela LIGACAO A PROTEINAS PLASMATICAS. Maior ligacao proteica = liberacao gradual do farmaco livre = duracao mais prolongada. A bupivacaina tem alta ligacao proteica (95%), explicando sua longa duracao."}
+  ]
+}
+];
+
+/* ========================================
+   BALANCE ANSWER DISTRIBUTION (A-E)
+   Deterministically rearrange options so each letter gets ~12 correct answers
+   ======================================== */
+(function balanceAnswers() {
+  // Target positions for each question (0=A,1=B,2=C,3=D,4=E), cycling to ensure balance
+  var targetPositions = [];
+  for (var i = 0; i < questions.length; i++) {
+    targetPositions.push(i % 5);
+  }
+  // Shuffle target positions deterministically using question id as seed
+  // Simple: assign based on id distribution
+  var assignments = [
+    0,1,2,3,4, 1,2,3,4,0,  // q1-10
+    2,3,4,0,1, 3,4,0,1,2,  // q11-20
+    4,0,1,2,3, 0,1,2,3,4,  // q21-30
+    1,2,3,4,0, 2,3,4,0,1,  // q31-40
+    3,4,0,1,2, 4,0,1,2,3,  // q41-50
+    0,1,2,3,4, 1,2,3,4,0   // q51-60
+  ];
+  questions.forEach(function(q, idx) {
+    if (idx >= assignments.length) return;
+    var targetPos = assignments[idx];
+    var currentCorrect = q.correct;
+    if (targetPos === currentCorrect) return; // already in target position
+    // Swap option text
+    var tmpOpt = q.options[targetPos];
+    q.options[targetPos] = q.options[currentCorrect];
+    q.options[currentCorrect] = tmpOpt;
+    // Swap wrong explanations (wrongExplanations indexed 0-3 map to wrong options in order)
+    // Build full explanation array: index i maps to option i explanation
+    var allExp = [];
+    var wIdx = 0;
+    for (var i = 0; i < 5; i++) {
+      if (i === currentCorrect) {
+        allExp.push(null); // correct option
+      } else {
+        allExp.push(q.wrongExplanations[wIdx]);
+        wIdx++;
+      }
+    }
+    // Swap explanations
+    var tmpExp = allExp[targetPos];
+    allExp[targetPos] = allExp[currentCorrect];
+    allExp[currentCorrect] = tmpExp;
+    // Rebuild wrongExplanations
+    q.wrongExplanations = [];
+    for (var j = 0; j < 5; j++) {
+      if (j !== targetPos) {
+        q.wrongExplanations.push(allExp[j]);
+      }
+    }
+    q.correct = targetPos;
+  });
+})();
+
+/* ========================================
+   APP STATE
+   ======================================== */
+var mode = 'estudo'; // 'estudo' | 'simulado'
+var section = 'objetivas';
+var currentAula = 'all';
+var currentDiff = 'all';
+var studyStats = { answered: 0, correct: 0, wrong: 0 };
+var simAnswers = {};
+var simSubmitted = false;
+var questionOrder = [];
+
+/* ========================================
+   THEME
+   ======================================== */
+function initTheme() {
+  var saved = localStorage.getItem('farma-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+}
+function toggleTheme() {
+  var current = document.documentElement.getAttribute('data-theme');
+  var next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('farma-theme', next);
+  var btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = next === 'light' ? '\u{1F319}' : '\u{2600}\u{FE0F}';
+}
+initTheme();
+
+/* ========================================
+   RENDER QUESTIONS
+   ======================================== */
+function renderQuestions() {
+  var container = document.getElementById('questions-container');
+  container.innerHTML = '';
+  questionOrder = questions.map(function(q,i){return i;});
+  questions.forEach(function(q, idx) {
+    var diffLabel = q.diff === 'facil' ? 'Facil' : q.diff === 'medio' ? 'Medio' : 'Dificil';
+    var diffClass = q.diff === 'facil' ? 'tag-easy' : q.diff === 'medio' ? 'tag-medium' : 'tag-hard';
+    var letters = ['A','B','C','D','E'];
+    var html = '<div class="question-card" id="q-'+q.id+'" data-aula="'+q.aula+'" data-diff="'+q.diff+'" data-idx="'+idx+'">';
+    html += '<div class="question-header">';
+    html += '<span class="question-number">Questao '+q.id+'</span>';
+    html += '<div class="question-tags">';
+    html += '<span class="tag tag-aula">Aula '+q.aula+'</span>';
+    html += '<span class="tag '+diffClass+' tag-hidden" id="diff-'+q.id+'">'+diffLabel+'</span>';
+    html += '</div></div>';
+    html += '<div class="question-stem"><p>'+q.stem.replace(/\n/g,'<br>')+'</p></div>';
+    html += '<ul class="options-list" id="opts-'+q.id+'">';
+    q.options.forEach(function(opt, oi) {
+      html += '<li class="option-item" data-qid="'+q.id+'" data-oi="'+oi+'" onclick="selectOption('+q.id+','+oi+')">';
+      html += '<span class="option-letter">'+letters[oi]+'</span>';
+      html += '<span>'+opt+'</span>';
+      html += '</li>';
+    });
+    html += '</ul>';
+    // Feedback
+    html += '<div class="feedback" id="fb-'+q.id+'"></div>';
+    // Explanation toggle
+    html += '<div class="explanation-toggle" id="exptgl-'+q.id+'">';
+    html += '<button class="btn btn-sm" onclick="toggleExplanation('+q.id+')">Mostrar explicacao detalhada</button>';
+    html += '<div class="explanation-content" id="exp-'+q.id+'"></div>';
+    html += '</div>';
+    html += '</div>';
+    container.innerHTML += html;
+  });
+  applyFilters();
+}
+
+function renderEssays() {
+  var container = document.getElementById('essays-container');
+  container.innerHTML = '';
+  essays.forEach(function(e) {
+    var html = '<div class="essay-card" id="essay-'+e.id+'">';
+    html += '<div class="question-header"><span class="question-number">'+e.title+'</span>';
+    html += '<span class="tag tag-aula">Aula '+e.aula+'</span></div>';
+    html += '<div class="question-stem"><div class="vignette">'+e.stem.replace(/\n/g,'<br>')+'</div></div>';
+    e.questions.forEach(function(sq, si) {
+      html += '<div class="essay-sub-q">';
+      html += '<p><strong>Pergunta '+(si+1)+':</strong> '+sq.q+'</p>';
+      html += '<textarea class="essay-textarea" placeholder="Escreva sua resposta aqui..."></textarea>';
+      html += '<button class="btn btn-sm" style="margin-top:0.5em" onclick="toggleModelAnswer('+e.id+','+si+')">Revelar gabarito comentado</button>';
+      html += '<div class="model-answer" id="model-'+e.id+'-'+si+'">';
+      html += '<div class="model-answer-title">Resposta Modelo</div>';
+      html += '<p>'+sq.model.replace(/\n/g,'<br>')+'</p>';
+      html += '</div>';
+      html += '</div>';
+    });
+    html += '</div>';
+    container.innerHTML += html;
+  });
+}
+
+function toggleModelAnswer(eid, sid) {
+  var el = document.getElementById('model-'+eid+'-'+sid);
+  el.classList.toggle('show');
+}
+
+/* ========================================
+   SELECT OPTION
+   ======================================== */
+function selectOption(qid, oi) {
+  var q = questions.find(function(x){return x.id===qid;});
+  if (!q) return;
+  var card = document.getElementById('q-'+qid);
+  var opts = document.querySelectorAll('#opts-'+qid+' .option-item');
+
+  if (mode === 'estudo') {
+    // Check if already answered
+    if (card.dataset.answered === 'true') return;
+    card.dataset.answered = 'true';
+    // Show difficulty
+    document.getElementById('diff-'+qid).classList.remove('tag-hidden');
+    // Mark options
+    opts.forEach(function(o) { o.classList.add('disabled'); });
+    opts[oi].classList.add('selected');
+    if (oi === q.correct) {
+      opts[oi].classList.add('correct-answer');
+      card.classList.add('correct');
+      showFeedback(qid, true, q);
+      studyStats.correct++;
+    } else {
+      opts[oi].classList.add('wrong-answer');
+      opts[q.correct].classList.add('correct-answer');
+      card.classList.add('incorrect');
+      showFeedback(qid, false, q);
+      studyStats.wrong++;
+    }
+    studyStats.answered++;
+    updateStats();
+  } else {
+    // Simulado mode: just select, no feedback
+    if (simSubmitted) return;
+    opts.forEach(function(o) { o.classList.remove('selected'); });
+    opts[oi].classList.add('selected');
+    simAnswers[qid] = oi;
+    updateSimProgress();
+  }
+}
+
+function showFeedback(qid, isCorrect, q) {
+  var fb = document.getElementById('fb-'+qid);
+  var letters = ['A','B','C','D','E'];
+  fb.className = 'feedback show ' + (isCorrect ? 'correct-fb' : 'incorrect-fb');
+  var html = '<div class="feedback-title">'+(isCorrect ? 'Correto!' : 'Incorreto. Resposta correta: '+letters[q.correct])+'</div>';
+  html += '<p>'+q.explanation+'</p>';
+  fb.innerHTML = html;
+  // Explanation toggle (wrong explanations)
+  var exptgl = document.getElementById('exptgl-'+qid);
+  exptgl.classList.add('show');
+  var exp = document.getElementById('exp-'+qid);
+  var expHtml = '<div style="margin-top:0.6em">';
+  q.wrongExplanations.forEach(function(we) {
+    expHtml += '<p class="why-wrong">'+we+'</p>';
+  });
+  expHtml += '</div>';
+  exp.innerHTML = expHtml;
+}
+
+function toggleExplanation(qid) {
+  var exp = document.getElementById('exp-'+qid);
+  exp.classList.toggle('show');
+  var btn = exp.previousElementSibling || exp.parentElement.querySelector('button');
+}
+
+/* ========================================
+   FILTERS
+   ======================================== */
+function applyFilters() {
+  var aula = document.getElementById('filter-aula').value;
+  var diff = document.getElementById('filter-diff').value;
+  currentAula = aula;
+  currentDiff = diff;
+  var cards = document.querySelectorAll('.question-card');
+  var visible = 0;
+  cards.forEach(function(c) {
+    var qa = c.dataset.aula;
+    var qd = c.dataset.diff;
+    var show = true;
+    if (aula !== 'all' && qa !== aula) show = false;
+    if (diff !== 'all' && qd !== diff) show = false;
+    c.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('stat-total').textContent = visible;
+  // Update sidebar nav
+  document.querySelectorAll('.nav-aula').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.aula === aula);
+  });
+  document.querySelectorAll('.nav-diff').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.diff === diff);
+  });
+}
+
+function filterAula(v) {
+  document.getElementById('filter-aula').value = v;
+  applyFilters();
+  if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+}
+function filterDiff(v) {
+  document.getElementById('filter-diff').value = v;
+  applyFilters();
+  if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+}
+function resetFilters() {
+  document.getElementById('filter-aula').value = 'all';
+  document.getElementById('filter-diff').value = 'all';
+  applyFilters();
+}
+
+function shuffleQuestions() {
+  var container = document.getElementById('questions-container');
+  var cards = Array.from(container.children);
+  for (var i = cards.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    container.insertBefore(cards[j], cards[i]);
+    cards.splice(j, 0, cards.splice(i, 1)[0]);
+  }
+}
+
+/* ========================================
+   STATS (ESTUDO)
+   ======================================== */
+function updateStats() {
+  document.getElementById('stat-correct').textContent = studyStats.correct;
+  document.getElementById('stat-wrong').textContent = studyStats.wrong;
+  if (studyStats.answered > 0) {
+    document.getElementById('stat-pct').textContent = Math.round(studyStats.correct / studyStats.answered * 100) + '%';
+  }
+}
+
+/* ========================================
+   MODE
+   ======================================== */
+function setMode(m) {
+  mode = m;
+  simSubmitted = false;
+  simAnswers = {};
+  document.getElementById('btn-estudo').classList.toggle('active', m === 'estudo');
+  document.getElementById('btn-simulado').classList.toggle('active', m === 'simulado');
+  document.getElementById('nav-estudo').classList.toggle('active', m === 'estudo');
+  document.getElementById('nav-simulado').classList.toggle('active', m === 'simulado');
+  document.getElementById('stats-bar').style.display = m === 'estudo' ? 'flex' : 'none';
+  document.getElementById('simulado-bar').classList.toggle('show', m === 'simulado' && section === 'objetivas');
+  document.getElementById('progress-bar-container').classList.toggle('show', m === 'simulado' && section === 'objetivas');
+  document.getElementById('score-screen').classList.remove('show');
+  // Reset cards
+  document.querySelectorAll('.question-card').forEach(function(c) {
+    c.classList.remove('correct','incorrect');
+    c.dataset.answered = '';
+    var opts = c.querySelectorAll('.option-item');
+    opts.forEach(function(o) {
+      o.classList.remove('selected','correct-answer','wrong-answer','disabled');
+    });
+    var fb = c.querySelector('.feedback');
+    if (fb) fb.className = 'feedback';
+    var exptgl = c.querySelector('.explanation-toggle');
+    if (exptgl) exptgl.className = 'explanation-toggle';
+    // hide diff in simulado
+    var diffTag = c.querySelector('.tag-easy, .tag-medium, .tag-hard');
+    if (diffTag) {
+      if (m === 'simulado') diffTag.classList.add('tag-hidden');
+      else diffTag.classList.add('tag-hidden'); // also hidden in estudo until answered
+    }
+  });
+  studyStats = { answered: 0, correct: 0, wrong: 0 };
+  updateStats();
+  updateSimProgress();
+  if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+}
+
+function showSection(s) {
+  section = s;
+  document.getElementById('section-objetivas').style.display = s === 'objetivas' ? 'block' : 'none';
+  document.getElementById('section-dissertativas').style.display = s === 'dissertativas' ? 'block' : 'none';
+  document.getElementById('nav-obj').classList.toggle('active', s === 'objetivas');
+  document.getElementById('nav-diss').classList.toggle('active', s === 'dissertativas');
+  document.getElementById('simulado-bar').classList.toggle('show', mode === 'simulado' && s === 'objetivas' && !simSubmitted);
+  document.getElementById('progress-bar-container').classList.toggle('show', mode === 'simulado' && s === 'objetivas');
+  document.getElementById('filters-bar').style.display = s === 'objetivas' ? 'flex' : 'none';
+  document.getElementById('stats-bar').style.display = (s === 'objetivas' && mode === 'estudo') ? 'flex' : 'none';
+  if (window.innerWidth <= 900) document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ========================================
+   SIMULADO
+   ======================================== */
+function updateSimProgress() {
+  if (mode !== 'simulado') return;
+  var visibleCards = document.querySelectorAll('.question-card:not(.hidden)');
+  var total = visibleCards.length;
+  var answered = 0;
+  visibleCards.forEach(function(c) {
+    var qid = parseInt(c.id.replace('q-',''));
+    if (simAnswers[qid] !== undefined) answered++;
+  });
+  document.getElementById('sim-answered').textContent = answered;
+  document.getElementById('sim-total').textContent = total;
+  var pct = total > 0 ? (answered / total * 100) : 0;
+  document.getElementById('progress-bar-fill').style.width = pct + '%';
+}
+
+function submitSimulado() {
+  simSubmitted = true;
+  var visibleCards = Array.from(document.querySelectorAll('.question-card:not(.hidden)'));
+  var total = visibleCards.length;
+  var correct = 0;
+  var byAula = {};
+  var byDiff = {};
+
+  visibleCards.forEach(function(card) {
+    var qid = parseInt(card.id.replace('q-',''));
+    var q = questions.find(function(x){return x.id===qid;});
+    var userAns = simAnswers[qid];
+    var opts = card.querySelectorAll('.option-item');
+    opts.forEach(function(o) { o.classList.add('disabled'); });
+
+    // show diff
+    var diffTag = card.querySelector('.tag-easy, .tag-medium, .tag-hard');
+    if (diffTag) diffTag.classList.remove('tag-hidden');
+
+    if (userAns !== undefined) {
+      opts[userAns].classList.add('selected');
+      if (userAns === q.correct) {
+        opts[userAns].classList.add('correct-answer');
+        card.classList.add('correct');
+        correct++;
+        if (!byAula[q.aula]) byAula[q.aula] = {c:0,t:0};
+        byAula[q.aula].c++;
+      } else {
+        opts[userAns].classList.add('wrong-answer');
+        opts[q.correct].classList.add('correct-answer');
+        card.classList.add('incorrect');
+      }
+    } else {
+      opts[q.correct].classList.add('correct-answer');
+      card.classList.add('incorrect');
+    }
+    if (!byAula[q.aula]) byAula[q.aula] = byAula[q.aula] || {c:0,t:0};
+    byAula[q.aula].t++;
+
+    if (!byDiff[q.diff]) byDiff[q.diff] = {c:0,t:0};
+    byDiff[q.diff].t++;
+    if (userAns === q.correct) byDiff[q.diff].c++;
+
+    // Show feedback
+    showFeedback(qid, userAns === q.correct, q);
+  });
+
+  // Score screen
+  var pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  document.getElementById('final-score').textContent = pct + '%';
+  document.getElementById('final-score-label').textContent = correct + ' de ' + total + ' questoes corretas';
+
+  var detailsHtml = '';
+  var aulaNames = {'1-2':'Aulas 1-2','3-4':'Aulas 3-4','5':'Aula 5','6':'Aula 6','7':'Aula 7'};
+  for (var a in byAula) {
+    var ap = byAula[a].t > 0 ? Math.round(byAula[a].c / byAula[a].t * 100) : 0;
+    detailsHtml += '<div class="score-detail-card"><div class="sdv" style="color:'+(ap>=60?'var(--success)':'var(--danger)')+'">'+ap+'%</div><div class="sdl">'+(aulaNames[a]||a)+' ('+byAula[a].c+'/'+byAula[a].t+')</div></div>';
+  }
+  var diffNames = {'facil':'Facil','medio':'Medio','dificil':'Dificil'};
+  for (var d in byDiff) {
+    var dp = byDiff[d].t > 0 ? Math.round(byDiff[d].c / byDiff[d].t * 100) : 0;
+    detailsHtml += '<div class="score-detail-card"><div class="sdv" style="color:'+(dp>=60?'var(--success)':'var(--danger)')+'">'+dp+'%</div><div class="sdl">'+(diffNames[d]||d)+' ('+byDiff[d].c+'/'+byDiff[d].t+')</div></div>';
+  }
+  document.getElementById('score-details').innerHTML = detailsHtml;
+  document.getElementById('score-screen').classList.add('show');
+  document.getElementById('simulado-bar').classList.remove('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function reviewSimulado() {
+  document.getElementById('score-screen').classList.remove('show');
+  var firstQ = document.querySelector('.question-card:not(.hidden)');
+  if (firstQ) firstQ.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetSimulado() {
+  setMode('simulado');
+  shuffleQuestions();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ========================================
+   INIT
+   ======================================== */
+document.addEventListener('DOMContentLoaded', function() {
+  // Theme button
+  var themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) {
+    var current = document.documentElement.getAttribute('data-theme');
+    themeBtn.textContent = current === 'light' ? '\u{1F319}' : '\u{2600}\u{FE0F}';
+    themeBtn.addEventListener('click', toggleTheme);
+  }
+
+  // Mobile menu
+  var menuBtn = document.getElementById('menu-toggle');
+  var sidebar = document.getElementById('sidebar');
+  if (menuBtn && sidebar) {
+    menuBtn.addEventListener('click', function() { sidebar.classList.toggle('open'); });
+  }
+
+  // Back to top
+  var btt = document.getElementById('back-to-top');
+  if (btt) {
+    window.addEventListener('scroll', function() { btt.classList.toggle('visible', window.scrollY > 400); });
+    btt.addEventListener('click', function() { window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  // Render
+  renderQuestions();
+  renderEssays();
+  updateStats();
+  applyFilters();
+});
+</script>
+</body>
+</html>

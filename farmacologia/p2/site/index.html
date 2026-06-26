@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmacologia P2 - Material de Estudo</title>
+<style>
+/* ========================================
+   DESIGN SYSTEM — Farmacologia P2
+   Dark mode padrao, toggle para light
+   ======================================== */
+
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-card: #1c2128;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --border-color: #30363d;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --accent-bg: rgba(88,166,255,0.1);
+  --success: #3fb950;
+  --success-bg: rgba(63,185,80,0.1);
+  --danger: #f85149;
+  --danger-bg: rgba(248,81,73,0.1);
+  --warning: #d29922;
+  --warning-bg: rgba(210,153,34,0.1);
+  --highlight-border: #f0883e;
+  --highlight-bg: rgba(240,136,62,0.08);
+  --code-bg: #161b22;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  --nav-width: 280px;
+  --max-content: 780px;
+  --font-body: 16px;
+  --font-small: 14px;
+  --radius: 8px;
+}
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eaeef2;
+  --bg-card: #f6f8fa;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-muted: #8b949e;
+  --border-color: #d0d7de;
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --accent-bg: rgba(9,105,218,0.06);
+  --success: #1a7f37;
+  --success-bg: rgba(26,127,55,0.06);
+  --danger: #cf222e;
+  --danger-bg: rgba(207,34,46,0.06);
+  --warning: #9a6700;
+  --warning-bg: rgba(154,103,0,0.06);
+  --highlight-border: #d4760a;
+  --highlight-bg: rgba(212,118,10,0.06);
+  --code-bg: #f6f8fa;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: var(--font-body);
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: background 0.2s, color 0.2s;
+}
+
+h1, h2, h3, h4 { line-height: 1.3; font-weight: 600; }
+h1 { font-size: 1.8em; margin: 1.5em 0 0.6em; padding-bottom: 0.3em; border-bottom: 2px solid var(--border-color); }
+h2 { font-size: 1.45em; margin: 1.4em 0 0.5em; color: var(--accent); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+h4 { font-size: 1em; margin: 1em 0 0.3em; color: var(--text-secondary); }
+p { margin: 0.6em 0; }
+ul, ol { margin: 0.5em 0 0.5em 1.5em; }
+li { margin: 0.3em 0; }
+strong { color: var(--accent); font-weight: 600; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+.top-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.6em 1.2em;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(10px);
+}
+.top-bar h1 { font-size: 1.1em; margin: 0; padding: 0; border: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-bar-actions { display: flex; gap: 0.5em; align-items: center; flex-shrink: 0; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  padding: 0.4em 0.8em; border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary); color: var(--text-primary);
+  font-size: var(--font-small); cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.sidebar {
+  position: fixed; top: 52px; left: 0; bottom: 0;
+  width: var(--nav-width); overflow-y: auto;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 1em 0; z-index: 90;
+  transition: transform 0.3s;
+}
+.sidebar.hidden { transform: translateX(-100%); }
+.sidebar a {
+  display: block; padding: 0.35em 1.2em;
+  color: var(--text-secondary); font-size: var(--font-small);
+  text-decoration: none; border-left: 3px solid transparent;
+  transition: all 0.15s;
+}
+.sidebar a:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+.sidebar a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-bg); }
+.sidebar .nav-group { margin: 0.8em 0; }
+.sidebar .nav-group-title {
+  padding: 0.3em 1.2em; font-size: 0.75em; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+.sidebar a.sub { padding-left: 2.2em; font-size: 0.82em; }
+
+.main-content {
+  margin-left: var(--nav-width); padding: 72px 2em 3em;
+  max-width: calc(var(--max-content) + var(--nav-width) + 4em);
+}
+.content-wrapper {
+  max-width: var(--max-content); margin: 0 auto;
+}
+
+.card {
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: var(--radius); padding: 1.2em 1.5em;
+  margin: 1em 0;
+}
+
+.professor-highlight {
+  border-left: 4px solid var(--highlight-border);
+  background: var(--highlight-bg);
+  padding: 1em 1.2em; margin: 1em 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.professor-highlight::before {
+  content: "Destaque do Professor";
+  display: block; font-weight: 700; font-size: 0.85em;
+  color: var(--highlight-border); margin-bottom: 0.5em;
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+
+.clinical-example {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-bg);
+  padding: 1em 1.2em; margin: 1em 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.clinical-example::before {
+  content: "Exemplo Clinico";
+  display: block; font-weight: 700; font-size: 0.85em;
+  color: var(--accent); margin-bottom: 0.5em;
+}
+
+.alert-box {
+  border-left: 4px solid var(--warning);
+  background: var(--warning-bg);
+  padding: 1em 1.2em; margin: 1em 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.alert-box::before {
+  content: "Nao Confundir";
+  display: block; font-weight: 700; font-size: 0.85em;
+  color: var(--warning); margin-bottom: 0.5em;
+}
+
+.quick-summary {
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+  border-radius: var(--radius);
+  padding: 1em 1.2em; margin: 1.5em 0;
+}
+.quick-summary::before {
+  content: "Resumo Rapido";
+  display: block; font-weight: 700; font-size: 0.85em;
+  color: var(--success); margin-bottom: 0.5em;
+}
+.quick-summary ul { margin-left: 1.2em; }
+
+.connection-box {
+  border: 1px dashed var(--accent);
+  background: var(--accent-bg);
+  padding: 0.8em 1.2em; margin: 0.8em 0;
+  border-radius: var(--radius); font-size: 0.95em;
+}
+.connection-box::before {
+  content: "Conexao entre Temas";
+  display: block; font-weight: 700; font-size: 0.8em;
+  color: var(--accent); margin-bottom: 0.3em;
+}
+
+table {
+  width: 100%; border-collapse: collapse; margin: 1em 0;
+  font-size: 0.92em;
+}
+th, td {
+  padding: 0.6em 0.8em; text-align: left;
+  border: 1px solid var(--border-color);
+}
+th { background: var(--bg-tertiary); font-weight: 600; white-space: nowrap; }
+td { background: var(--bg-card); }
+tr:hover td { background: var(--bg-tertiary); }
+
+.img-container {
+  margin: 1em 0; text-align: center;
+}
+.img-container img {
+  max-width: 100%; height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+}
+.img-caption {
+  font-size: 0.85em; color: var(--text-secondary);
+  margin-top: 0.4em; font-style: italic;
+}
+
+.back-to-top {
+  position: fixed; bottom: 2em; right: 2em;
+  width: 44px; height: 44px;
+  border-radius: 50%; border: 1px solid var(--border-color);
+  background: var(--bg-secondary); color: var(--text-primary);
+  font-size: 1.2em; cursor: pointer;
+  display: none; align-items: center; justify-content: center;
+  transition: all 0.2s; z-index: 80;
+  box-shadow: var(--shadow);
+}
+.back-to-top.visible { display: flex; }
+.back-to-top:hover { border-color: var(--accent); color: var(--accent); }
+
+.menu-toggle {
+  display: none; background: none; border: none;
+  color: var(--text-primary); font-size: 1.4em; cursor: pointer;
+  padding: 0.2em;
+}
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); box-shadow: var(--shadow); }
+  .main-content { margin-left: 0; padding: 68px 1em 2em; }
+  .menu-toggle { display: block; }
+  .top-bar h1 { font-size: 0.95em; }
+}
+
+@media (max-width: 600px) {
+  :root { --font-body: 15px; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  .card, .professor-highlight, .clinical-example, .alert-box { padding: 0.8em 1em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 0.4em 0.5em; }
+}
+
+@media print {
+  .top-bar, .sidebar, .back-to-top, .menu-toggle, .btn { display: none !important; }
+  .main-content { margin: 0; padding: 0; max-width: 100%; }
+  body { font-size: 11pt; color: #000; background: #fff; }
+  .professor-highlight, .clinical-example, .alert-box, .card {
+    border: 1px solid #ccc; background: #f8f8f8; break-inside: avoid;
+  }
+  h1, h2, h3 { break-after: avoid; }
+  table { break-inside: avoid; }
+}
+
+/* Overlay for mobile sidebar */
+.sidebar-overlay {
+  display: none; position: fixed; top: 52px; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 85;
+}
+.sidebar.open ~ .sidebar-overlay { display: block; }
+
+/* Aula section spacing */
+.aula-section { padding-top: 1em; margin-bottom: 3em; }
+.aula-section:first-child { padding-top: 0; }
+
+/* Intro banner */
+.intro-banner {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.5em;
+  margin-bottom: 2em;
+}
+.intro-banner h2 { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div style="display:flex;align-items:center;gap:0.5em;">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">&#9776;</button>
+    <h1>Farmacologia P2 &mdash; Material de Estudo</h1>
+  </div>
+  <div class="top-bar-actions">
+    <button class="btn" id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema"></button>
+  </div>
+</header>
+
+<!-- SIDEBAR NAVIGATION -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 1 &mdash; Introducao</div>
+    <a href="#aula1">Visao Geral</a>
+    <a href="#a1-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a1-mecanismos" class="sub">Mecanismos (LADME)</a>
+    <a href="#a1-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a1-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a1-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 2 &mdash; Farmacocinetica</div>
+    <a href="#aula2">Visao Geral</a>
+    <a href="#a2-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a2-mecanismos" class="sub">Mecanismos</a>
+    <a href="#a2-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a2-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a2-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 3 &mdash; SNA</div>
+    <a href="#aula3">Visao Geral</a>
+    <a href="#a3-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a3-mecanismos" class="sub">Mecanismos</a>
+    <a href="#a3-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a3-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a3-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 4 &mdash; Receptores e NT</div>
+    <a href="#aula4">Visao Geral</a>
+    <a href="#a4-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a4-mecanismos" class="sub">Mecanismos</a>
+    <a href="#a4-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a4-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a4-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 5 &mdash; Anestesicos/BNM</div>
+    <a href="#aula5">Visao Geral</a>
+    <a href="#a5-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a5-mecanismos" class="sub">Mecanismos</a>
+    <a href="#a5-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a5-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a5-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 6 &mdash; Dor e Inflamacao</div>
+    <a href="#aula6">Visao Geral</a>
+    <a href="#a6-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a6-mecanismos" class="sub">Mecanismos</a>
+    <a href="#a6-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a6-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a6-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-title">Aula 7 &mdash; Transtornos Mentais</div>
+    <a href="#aula7">Visao Geral</a>
+    <a href="#a7-conceitos" class="sub">Conceitos e Definicoes</a>
+    <a href="#a7-mecanismos" class="sub">Mecanismos</a>
+    <a href="#a7-clinica" class="sub">Exemplos Clinicos</a>
+    <a href="#a7-relevancia" class="sub">Relevancia Clinica</a>
+    <a href="#a7-resumo" class="sub">Resumo Rapido</a>
+  </div>
+
+</nav>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+<div class="content-wrapper">
+
+<!-- ============================== INTRO ============================== -->
+<div class="intro-banner">
+  <h2>Bem-vindo ao seu material de Farmacologia P2</h2>
+  <p>Este material cobre as 7 aulas do primeiro bloco da disciplina de Farmacologia/Farmacoterapia 25B, desde os fundamentos ate a farmacologia dos transtornos mentais. Cada secao foi construida para ser autocontida, mas o conteudo ganha profundidade quando lido em sequencia &mdash; os conceitos das primeiras aulas sao as ferramentas que voce vai usar para entender as aulas finais.</p>
+  <p>Use a barra lateral para navegar entre aulas e subtopicos. No celular, toque no icone de menu no canto superior esquerdo.</p>
+</div>
+
+
+<!-- ============================================================== -->
+<!-- AULA 1 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula1">
+<h1>Aula 1 &mdash; Introducao a Farmacologia (05-09/02/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>A farmacologia e a ponte entre a ciencia basica e a pratica clinica. Entender como os farmacos se comportam no organismo &mdash; desde a administracao ate a excrecao &mdash; e o que diferencia uma prescricao racional de uma prescricao perigosa. O caso tragico de uma crianca de 6 anos que morreu por dose errada de adrenalina IV no Amazonas, discutido extensamente em aula, ilustra de forma dramatica por que cada conceito aqui importa.</p>
+<p>Esta aula estabelece o vocabulario e os conceitos fundamentais que serao usados ao longo de toda a disciplina. Sem dominar esses termos, as aulas seguintes ficam ininteligiveis. E, como o professor repetiu varias vezes: <em>"Nao existe farmacologia sem fisiologia."</em></p>
+
+<div class="professor-highlight">
+<p>"99% dos farmacos nao criam nada de novo. O que eles fazem? Modulam mecanismos fisiologicos &mdash; ou potencializam, ou inibem." Essa e a regra de ouro da farmacodinamica. Farmacos sao ferramentas que ajustam o que o corpo ja faz.</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a1-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Terminologia Essencial</h3>
+<p><strong>Farmacologia</strong> e o estudo das substancias que interagem com sistemas vivos por processos quimicos, desde a fonte/sintese ate o destino no organismo, mecanismo de acao e efeitos (beneficos e toxicos).</p>
+
+<p><strong>Farmaco (principio ativo)</strong>: substancia quimica com estrutura definida e efeito biologico. Pode ser obtido de fontes naturais, semi-sintetico ou totalmente sintetico.</p>
+
+<p><strong>Medicamento</strong>: produto farmaceutico que contem farmaco(s) e e administrado com finalidade terapeutica. Tem eficacia, seguranca e qualidade comprovadas.</p>
+
+<p><strong>Remedio</strong>: termo popular e amplo. Inclui medicamentos, terapias, praticas caseiras, apoio psicologico &mdash; qualquer coisa que alivie.</p>
+
+<p><strong>Placebo</strong>: substancia inerte usada em estudos clinicos. Ate 35% do efeito de um farmaco pode ser atribuido ao efeito placebo.</p>
+
+<div class="alert-box">
+<p><strong>Farmaco vs. Remedio vs. Medicamento:</strong> Farmaco e a substancia quimica pura com atividade biologica. Medicamento e o produto registrado, com eficacia comprovada. Remedio e tudo que alivia &mdash; um cha, uma caminhada, uma oracao. Todo medicamento contem farmaco, mas nem todo farmaco e medicamento, e remedio pode nao conter farmaco algum.</p>
+</div>
+
+<h3>Ciencias Relacionadas</h3>
+<ul>
+  <li><strong>Farmacodinamica</strong>: "o que o farmaco faz com o organismo" &mdash; mecanismo de acao, efeitos bioquimicos e fisiologicos</li>
+  <li><strong>Farmacocinetica</strong>: "o que o organismo faz com o farmaco" &mdash; absorcao, distribuicao, metabolismo, excrecao (ADME)</li>
+  <li><strong>Farmacognosia</strong>: estudo de materias-primas naturais para obtencao de principios ativos</li>
+  <li><strong>Farmacogenetica</strong>: influencia da variacao genetica na resposta aos farmacos (ex: polimorfismos de CYP2C19)</li>
+  <li><strong>Farmacogenomica</strong>: uso da informacao genetica para individualizar a terapia</li>
+  <li><strong>Farmacovigilancia</strong>: deteccao e prevencao de efeitos adversos apos comercializacao</li>
+  <li><strong>Farmacoeconomia</strong>: analise de custos e beneficios da farmacoterapia</li>
+</ul>
+
+<h3>Vias de Administracao</h3>
+<p>As vias se dividem em <strong>enterais</strong> (que passam pelo trato gastrointestinal: oral, sublingual, retal) e <strong>parenterais</strong> (que nao passam: IV, IM, SC, ID, inalatoria, topica, etc.).</p>
+
+<table>
+  <tr><th>Via</th><th>Vantagens</th><th>Desvantagens</th><th>Observacoes</th></tr>
+  <tr><td>Oral</td><td>Auto-administracao, economica, indolor</td><td>Absorcao variavel, efeito de 1a passagem, interacao com alimentos</td><td>Via mais usada; latencia media a longa</td></tr>
+  <tr><td>Sublingual</td><td>Cai direto na circulacao, latencia curta</td><td>Irritacao da mucosa, nao serve para inconscientes</td><td>Emergencia (ex: nitroglicerina); sem 1a passagem</td></tr>
+  <tr><td>Retal</td><td>Pacientes nao colaboradores</td><td>Absorcao irregular, desconforto</td><td>Parcialmente evita 1a passagem</td></tr>
+  <tr><td>Intramuscular</td><td>Efeito rapido, deposito</td><td>Dolorosa, volumes limitados</td><td>Deltoide 2-3 mL, gluteo 4-5 mL, coxa 3-4 mL</td></tr>
+  <tr><td>Endovenosa</td><td>Efeito imediato, controle de dose</td><td>Risco de intoxicacao, requer material/pessoal</td><td>Biodisponibilidade 100%; risco de embolia, flebite</td></tr>
+  <tr><td>Subcutanea</td><td>Absorcao lenta e sustentada</td><td>Volume max 2 mL, absorve devagar</td><td>Ex: insulina, heparina</td></tr>
+</table>
+
+<div class="professor-highlight">
+<p><strong>Formas de liberacao prolongada (XR, CR, Oros)</strong>: liberam o farmaco aos poucos. NAO podem ser trituradas, abertas ou passadas por sonda &mdash; ao fazer isso, todo o principio ativo e liberado de uma vez, causando pico de concentracao e risco de toxicidade. "Tudo que tiver sobrenome, ja e prolongado."</p>
+</div>
+
+<div class="alert-box">
+<p><strong>Pomada vs. Creme:</strong> Pomada (base oleosa/vaselina) para lesoes SECAS. Creme (emulsao agua/oleo) para lesoes UMIDAS. Aplicar pomada em lesao umida nao funciona &mdash; nao adere.</p>
+</div>
+
+<h3>Conceitos Farmacodinamicos Fundamentais</h3>
+<p><strong>Alvos farmacologicos</strong> sao as proteinas onde os farmacos atuam. Existem quatro grandes categorias:</p>
+<ul>
+  <li><strong>Receptores</strong> &rarr; terminologia: agonista/antagonista</li>
+  <li><strong>Canais ionicos</strong> &rarr; terminologia: bloqueador/modulador</li>
+  <li><strong>Enzimas</strong> &rarr; terminologia: inibidor/ativador</li>
+  <li><strong>Transportadores</strong> &rarr; terminologia: inibidor</li>
+</ul>
+
+<p><strong>Eficacia</strong>: magnitude maxima do efeito que o farmaco produz (0 a 1).</p>
+<p><strong>Potencia</strong>: quantidade necessaria para produzir 50% da resposta maxima. Farmaco mais potente = precisa de menos dose para o mesmo efeito. NAO confundir com "mais forte".</p>
+<p><strong>Afinidade</strong>: tendencia do farmaco de se ligar ao receptor. Quanto maior, mais potente tende a ser.</p>
+<p><strong>Indice terapeutico (IT)</strong>: LD50/ED50. Quanto maior o IT, mais seguro o farmaco.</p>
+<p><strong>Janela terapeutica</strong>: faixa de concentracao plasmatica entre a dose terapeutica e a dose toxica.</p>
+
+<div class="alert-box">
+<p><strong>Efeito colateral vs. Efeito adverso:</strong> Efeito colateral esta relacionado ao mecanismo de acao &mdash; e previsivel. Efeito adverso e qualquer efeito indesejado. Todo colateral e adverso, mas NEM TODO adverso e colateral. Exemplo: a sonolencia causada por um anti-histaminico H1 e colateral (bloqueio H1 no SNC). Ja uma reacao alergica inesperada e adversa, mas nao colateral.</p>
+</div>
+
+<!-- MECANISMOS -->
+<h2 id="a1-mecanismos">Mecanismos (LADME)</h2>
+
+<h3>Farmacocinetica &mdash; O caminho do farmaco no corpo</h3>
+<p>O acronimo LADME descreve as cinco etapas do trajeto do farmaco: <strong>L</strong>iberacao, <strong>A</strong>bsorcao, <strong>D</strong>istribuicao, <strong>M</strong>etabolizacao e <strong>E</strong>xcrecao.</p>
+
+<h4>Absorcao</h4>
+<p>E a passagem do farmaco do local de administracao para a corrente sanguinea. Depende de: hidrossolubilidade, grau de ionizacao (pKa vs. pH do meio), area disponivel, presenca de alimentos e transformacoes enzimaticas locais.</p>
+<p>O <strong>transporte passivo</strong> (difusao simples) e o mais comum: a favor do gradiente, sem energia, depende da lipossolubilidade. O <strong>transporte ativo</strong> e contra o gradiente, gasta ATP, usa carreador, e saturavel. A <strong>difusao facilitada</strong> usa carreador mas nao gasta energia.</p>
+
+<h4>Distribuicao</h4>
+<p>Apos absorvido, o farmaco se distribui pelos tecidos. Depende da irrigacao, da ligacao a proteinas plasmaticas (principalmente albumina) e do <strong>volume de distribuicao (Vd)</strong> &mdash; um conceito abstrato que indica o quao amplamente o farmaco se espalha. Vd alto = farmaco "some" nos tecidos; Vd baixo = fica mais no plasma.</p>
+<p>Somente a <strong>fracao livre</strong> do farmaco tem efeito. Se um segundo farmaco desloca o primeiro da albumina, a fracao livre do primeiro aumenta &mdash; risco de toxicidade em farmacos com alta ligacao proteica e janela estreita (varfarina, fenitoina).</p>
+
+<h4>Metabolizacao (Biotransformacao)</h4>
+<p>Ocorre principalmente no figado, com o objetivo de tornar o farmaco mais polar (hidrossoluvel) para facilitar a excrecao.</p>
+<ul>
+  <li><strong>Fase I</strong> (funcionalizacao): oxidacao, reducao, hidrolise &mdash; sistema CYP450. Pode gerar metabolitos ativos ou inativos.</li>
+  <li><strong>Fase II</strong> (conjugacao): glicuronidacao, acetilacao, sulfatacao &mdash; geralmente gera metabolitos INATIVOS e mais hidrossoluveis.</li>
+</ul>
+<p><strong>Profarmaco</strong>: farmaco administrado inativo que e convertido em ativo pela metabolizacao (ex: clopidogrel precisa da CYP2C19).</p>
+
+<h4>Excrecao</h4>
+<p>Eliminacao do farmaco: via renal (principal), biliar, fecal, pulmonar, leite materno. A excrecao renal envolve filtracao glomerular, reabsorcao tubular e secrecao tubular ativa.</p>
+<p><strong>Meia-vida (t1/2)</strong>: tempo para a concentracao plasmatica cair pela metade. Determina a posologia &mdash; meias-vidas longas permitem menos tomadas diarias.</p>
+
+<div class="professor-highlight">
+<p><strong>Sobre a meia-vida e adesao:</strong> "Lembrar de tomar uma vez por dia, eu lembro. Agora, lembrar tres vezes..." Quanto menos tomadas, melhor a adesao do paciente.</p>
+</div>
+
+<h4>Efeito de Primeira Passagem</h4>
+<p>Farmacos administrados por via oral sao absorvidos no TGI e vao pela veia porta ao figado ANTES de atingir a circulacao sistemica. Nesse trajeto, parte do farmaco e metabolizada, reduzindo sua biodisponibilidade. E por isso que a dose oral geralmente e MAIOR que a dose IV do mesmo farmaco.</p>
+
+<div class="connection-box">
+<p>A via sublingual evita o efeito de primeira passagem porque a absorcao ocorre diretamente para a circulacao sistemica, sem passar pelo sistema porta. Isso explica por que a nitroglicerina sublingual age tao rapido na angina.</p>
+</div>
+
+<!-- EXEMPLOS CLINICOS -->
+<h2 id="a1-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Caso da Adrenalina no Amazonas:</strong> Crianca de 6 anos com amidalite recebeu adrenalina IV em dose errada. A adrenalina estimulou receptores beta-1 cardiacos &rarr; taquicardia intensa &rarr; aumento do debito cardiaco &rarr; hipertensao &rarr; ativacao de barorreceptores &rarr; incapacidade de compensar &rarr; arritmia &rarr; parada cardiaca &rarr; morte. A crianca entrou andando e saiu no caixao. Mensagem: erro de dose e potencialmente fatal, e o conhecimento de farmacologia e o que impede isso.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Clopidogrel e Farmacogenomica:</strong> Clopidogrel e profarmaco que precisa da CYP2C19 para ser ativado. Pacientes com alelos *2 ou *3 dessa enzima sao metabolizadores deficientes &mdash; o farmaco nao e convertido em metabolito ativo, resultando em falha na inibicao plaquetaria e risco cardiovascular aumentado. Este e o exemplo classico de por que a farmacogenomica importa.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Pediatria e formas farmaceuticas:</strong> Crianca NAO e "adulto pequeno" &mdash; tem fisiologia diferente. Nao se pode simplesmente abrir capsula e dar metade. Sao necessarias formas farmaceuticas proprias (xaropes, suspensoes). Muitos medicamentos nao tem formulacao pediatrica aprovada.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a1-relevancia">Relevancia Clinica</h2>
+
+<h3>Medicamentos: Referencia, Similar e Generico</h3>
+<table>
+  <tr><th>Tipo</th><th>Bioequivalencia</th><th>Intercambiavel</th><th>Nome</th></tr>
+  <tr><td>Referencia</td><td>Estudos clinicos completos</td><td>Sim (e a referencia)</td><td>Comercial</td></tr>
+  <tr><td>Generico</td><td>Obrigatoria (+/- 20% do referencia)</td><td>Sempre</td><td>Principio ativo (sem marca)</td></tr>
+  <tr><td>Similar</td><td>Comprovacao posterior</td><td>So se listado pela Anvisa</td><td>Comercial (fantasia)</td></tr>
+</table>
+
+<div class="professor-highlight">
+<p>No servico publico, e obrigatorio prescrever pelo nome generico. Paciente cronico NAO deve ficar trocando de marca/fabricante &mdash; pequenas variacoes na formulacao podem alterar a resposta terapeutica.</p>
+</div>
+
+<h3>Populacoes Especiais</h3>
+<ul>
+  <li><strong>Pediatria:</strong> maior proporcao de agua corporal, menor ligacao proteica, sistema enzimatico imaturo &mdash; ajuste por peso obrigatorio</li>
+  <li><strong>Geriatria:</strong> menor massa muscular, maior gordura corporal, menor albumina, funcao hepatica/renal reduzida, polifarmacia (5+ medicamentos) &mdash; risco aumentado de interacoes e toxicidade</li>
+</ul>
+
+<!-- RESUMO -->
+<h2 id="a1-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>Farmacologia estuda interacoes entre substancias quimicas e sistemas vivos &mdash; farmacodinamica (efeitos) e farmacocinetica (trajeto)</li>
+  <li>LADME: Liberacao, Absorcao, Distribuicao, Metabolizacao, Excrecao</li>
+  <li>Efeito de primeira passagem reduz biodisponibilidade oral; via sublingual e IV o evitam</li>
+  <li>Alvos farmacologicos: receptores, canais ionicos, enzimas, transportadores &mdash; cada um com terminologia propria</li>
+  <li>Potencia (dose necessaria) e diferente de eficacia (efeito maximo)</li>
+  <li>Janela terapeutica = faixa segura; indice terapeutico = medida de seguranca</li>
+  <li>Formas de liberacao prolongada NAO podem ser trituradas</li>
+  <li>"99% dos farmacos nao criam nada de novo &mdash; modulam mecanismos fisiologicos"</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================== -->
+<!-- AULA 2 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula2">
+<h1>Aula 2 &mdash; Farmacocinetica e Farmacodinamica (12/02/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>Se a Aula 1 apresentou o vocabulario, esta aula aprofunda os mecanismos. Entender Henderson-Hasselbalch, por exemplo, explica por que o bicarbonato de sodio e antidoto em intoxicacoes por farmacos acidos, e por que um anestesico local falha em tecido infectado. Entender interacoes medicamentosas e o que evita que a prescricao de um farmaco se torne veneno quando combinada com outro.</p>
+<p>Esta aula tambem introduz o principio do uso racional: <em>"O menos e mais."</em> Cada medicamento adicionado a uma prescricao aumenta o risco de interacoes e efeitos adversos.</p>
+
+<div class="professor-highlight">
+<p>"Medico bom nao fica decorando. Entende mecanismo de acao." E "A bula NAO e referencia adequada para profissionais de saude (conflito de interesse da industria). Usar monografias e estudos cientificos."</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a2-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Equacao de Henderson-Hasselbalch e Ionizacao</h3>
+<p>O <strong>pKa</strong> e o pH em que 50% do farmaco esta ionizado e 50% nao ionizado. As regras fundamentais:</p>
+<ul>
+  <li>pH &gt; pKa &rarr; acido fica IONIZADO / base fica NAO-IONIZADA</li>
+  <li>pH &lt; pKa &rarr; acido fica NAO-IONIZADO / base fica IONIZADA</li>
+  <li>Forma <strong>nao-ionizada</strong> (molecular) = mais lipossoluvel = atravessa membranas = melhor absorcao</li>
+  <li>Forma <strong>ionizada</strong> = mais hidrossoluvel = nao atravessa membranas = eliminacao renal facilitada</li>
+</ul>
+
+<div class="professor-highlight">
+<p>Henderson-Hasselbalch e manipulacao de pH urinario sao cobrados frequentemente em prova. Entenda a logica: se quero ELIMINAR um farmaco acido, alcalinizo a urina (bicarbonato) para que ele fique ionizado e nao seja reabsorvido nos tubulos renais. Para basico, acidificar.</p>
+</div>
+
+<h3>Biodisponibilidade</h3>
+<p>Quantidade do farmaco que atinge a circulacao sistemica em determinada velocidade. Medida pela <strong>Area Sob a Curva (AUC)</strong>, que reflete extensao e velocidade da absorcao. Para ser generico, a biodisponibilidade deve estar dentro de +/- 20% do referencia.</p>
+<p>Biodisponibilidade depende de: forma farmaceutica, solubilidade, efeito de primeira passagem, pH do TGI, motilidade, flora intestinal, funcao hepatica, genotipo (acetiladores lentos/rapidos).</p>
+
+<h3>Tolerancia, Taquifilaxia, Dessensibilizacao e Sensibilizacao</h3>
+<table>
+  <tr><th>Fenomeno</th><th>Definicao</th><th>Exemplo</th></tr>
+  <tr><td>Tolerancia</td><td>Reducao gradual da resposta apos uso prolongado</td><td>Necessidade de doses maiores de opioides</td></tr>
+  <tr><td>Taquifilaxia</td><td>Reducao RAPIDA da resposta apos administracao repetida</td><td>Descongestionantes nasais perdem eficacia em dias</td></tr>
+  <tr><td>Dessensibilizacao</td><td>Reducao da resposta por exposicao continua</td><td>Imunoterapia para alergia</td></tr>
+  <tr><td>Sensibilizacao</td><td>AUMENTO da resposta apos exposicao repetida</td><td>Reacoes alergicas progressivamente mais graves</td></tr>
+</table>
+
+<h3>Volume de Distribuicao e Ligacao Proteica</h3>
+<p>O <strong>Vd</strong> e um conceito teorico: volume necessario para conter todo o farmaco na mesma concentracao que no plasma. Pode exceder qualquer volume fisico (volume APARENTE). Alto Vd = farmaco se distribui muito nos tecidos.</p>
+<p>A ligacao a proteinas plasmaticas (principalmente <strong>albumina</strong>) funciona como reservatorio: so a fracao livre tem efeito. Deslocamento competitivo e clinicamente relevante apenas para farmacos com alta ligacao (&gt;90%) E margem estreita (varfarina, fenitoina, diazepam).</p>
+
+<h3>P-glicoproteina e Barreiras</h3>
+<p>A <strong>P-glicoproteina (gP)</strong> e uma bomba de efluxo natural presente no intestino, figado, rins, BHE, placenta. Ela "expulsa" farmacos das celulas, reduzindo absorcao e aumentando excrecao.</p>
+<p>Barreiras fisiologicas importantes: <strong>BHE</strong> (so farmacos lipossoluveis passam &mdash; todos os farmacos que agem no SNC devem ser lipossoluveis), <strong>barreira placentaria</strong> (farmacos lipossoluveis passam para o feto), <strong>barreira hematotesticular</strong>.</p>
+
+<!-- MECANISMOS -->
+<h2 id="a2-mecanismos">Mecanismos</h2>
+
+<h3>Ionizacao e Absorcao &mdash; Passo a Passo</h3>
+<ol>
+  <li>Farmaco ACIDO em meio ACIDO (estomago, pH ~2): forma NAO-IONIZADA &rarr; lipossoluvel &rarr; absorvido no estomago</li>
+  <li>Farmaco BASICO em meio ACIDO (estomago): forma IONIZADA &rarr; hidrossoluvel &rarr; pouca absorcao gastrica &rarr; absorvido principalmente no intestino (pH mais alcalino)</li>
+  <li>A maior absorcao acontece no INTESTINO por ter a maior superficie de contato (vilosidades), independente do pH</li>
+</ol>
+
+<h3>Manipulacao de pH Urinario em Intoxicacoes</h3>
+<p>Farmaco ACIDO intoxicante: urina acida mantem a forma molecular (reabsorvida). <strong>Tratamento: alcalinizar</strong> com bicarbonato de sodio &rarr; farmaco fica ionizado &rarr; nao reabsorvido &rarr; eliminado.</p>
+<p>Farmaco BASICO intoxicante: urina basica mantem a forma molecular. <strong>Tratamento: acidificar</strong> a urina &rarr; farmaco fica ionizado &rarr; eliminado.</p>
+
+<h3>Biotransformacao &mdash; CYP450</h3>
+<p>O sistema citocromo P-450 e uma colecao de isoenzimas (nomenclatura: CYP + familia + subfamilia + gene, ex: CYP3A4). Localizado no reticulo endoplasmatico dos hepatocitos.</p>
+<ul>
+  <li><strong>Indutores enzimaticos</strong> (carbamazepina, rifampicina): AUMENTAM metabolismo &rarr; REDUZEM efeito do farmaco</li>
+  <li><strong>Inibidores enzimaticos</strong> (cimetidina, dissulfiram): REDUZEM metabolismo &rarr; AUMENTAM efeito/toxicidade</li>
+</ul>
+
+<div class="connection-box">
+<p>Mulheres tem menos alcool desidrogenase (ADH) gastrica que homens &rarr; niveis de etanol mais altos com a mesma quantidade de alcool. Isso explica parte da diferenca de tolerancia ao alcool entre sexos e conecta com a discussao de variabilidade individual.</p>
+</div>
+
+<h3>Interacoes Medicamentosas</h3>
+<p>Tipos: <strong>farmacocineticas</strong> (afetam ADME), <strong>farmacodinamicas</strong> (afetam o efeito no receptor), <strong>farmacotecnicas</strong> (incompatibilidade fisica/quimica) e <strong>patologicas</strong> (doenca altera resposta).</p>
+
+<div class="professor-highlight">
+<p>NAO combinar dois farmacos com o MESMO mecanismo de acao no mesmo receptor &mdash; eles competem entre si, o de menor potencia prejudica a resposta. Combinacao INTELIGENTE: dois farmacos que produzem o mesmo efeito final por mecanismos DISTINTOS = sinergismo sem competicao.</p>
+</div>
+
+<!-- EXEMPLOS CLINICOS -->
+<h2 id="a2-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Asma/DPOC &mdash; combinacao racional:</strong> Beta-2 agonista (salbutamol) + anticolinergico muscarinico (ipratropio) &rarr; broncodilatacao por dois mecanismos distintos &rarr; sinergismo. Propranolol (beta-bloqueador nao seletivo) em asmatico &rarr; antagoniza beta-2 &rarr; broncoconstrição &rarr; CONTRAINDICADO. Preferir atenolol (beta-1 seletivo).</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Opioides &mdash; combinacao irracional:</strong> Tramadol + codeina (ambos agem no mesmo receptor opioide) = competicao, sem beneficio. Se o paciente precisa de mais analgesia, usar opioide mais potente (morfina, fentanil), nao associar dois fracos.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Intoxicacao por amitriptilina (base fraca, pKa ~9,4):</strong> Crianca de 3 anos ingere amitriptilina. Tratamento: bicarbonato de sodio IV. O mecanismo principal e a <strong>cardioprotecao</strong>: o Na+ do bicarbonato compete com o ADT pelo canal de sodio cardiaco, revertendo o alargamento do QRS. A alcalinizacao do pH sanguineo tambem reduz a fracao livre ionizada do farmaco que se liga aos canais. A eliminacao renal dos triciclicos e minima (alto Vd e alta ligacao proteica).</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Varfarina &mdash; indice terapeutico estreito:</strong> Pequenas variacoes de dose ou interacoes podem causar sangramento (toxicidade) ou trombose (ineficacia). Cimetidina inibe metabolismo hepatico da varfarina &rarr; aumenta concentracao &rarr; RISCO. Alimentos ricos em vitamina K (verduras) antagonizam o efeito anticoagulante.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Incompatibilidades farmacotecnicas:</strong> Fenitoina precipita em glicose. Anfotericina precipita em SF. Gentamicina e incompativel com betalactamicos. Claritromicina e incompativel com SF. Precisa saber em qual diluente cada farmaco vai.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a2-relevancia">Relevancia Clinica</h2>
+
+<h3>Circulacao Entero-Hepatica</h3>
+<p>Alguns farmacos excretados na bile sao reabsorvidos no intestino (ex: digitoxina, morfina, diazepam), prolongando sua acao. Isso e a circulacao entero-hepatica.</p>
+
+<h3>Reacoes Idiossincrasicas</h3>
+<p>Reacoes nocivas em pequena minoria de pacientes, podem ocorrer com baixas doses. Podem ter base genetica (ex: hipertermia maligna) ou imunologica. Frequentemente causa mal compreendida.</p>
+
+<h3>Situacoes Especiais</h3>
+<ul>
+  <li><strong>Sonda nasoenterica:</strong> formas de liberacao prolongada NAO podem ser trituradas &mdash; libera tudo de uma vez</li>
+  <li><strong>Paciente bariatrico:</strong> menor superficie de absorcao &rarr; deficiencias (ferro, por exemplo)</li>
+  <li><strong>Lactacao:</strong> farmacos lipossoluveis passam para o leite materno &rarr; risco para o lactente</li>
+</ul>
+
+<!-- RESUMO -->
+<h2 id="a2-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>Henderson-Hasselbalch: pH vs. pKa determina ionizacao, que determina absorcao e eliminacao</li>
+  <li>Alcalinizar urina para eliminar farmacos acidos; acidificar para basicos</li>
+  <li>Biodisponibilidade = extensao + velocidade da absorcao (AUC)</li>
+  <li>Fracao livre e a unica que tem efeito; deslocamento proteico e relevante para farmacos com alta ligacao e janela estreita</li>
+  <li>Indutores enzimaticos reduzem efeito; inibidores aumentam efeito/toxicidade</li>
+  <li>NAO combinar farmacos com mesmo mecanismo; combinacao inteligente = mecanismos diferentes para o mesmo efeito</li>
+  <li>"O menos e mais" &mdash; cada medicamento adicionado aumenta riscos</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================== -->
+<!-- AULA 3 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula3">
+<h1>Aula 3 &mdash; Farmacologia Clinica / Neurofarmacologia do SNA (19/02/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>O Sistema Nervoso Autonomo (SNA) controla funcoes involuntarias que sustentam a vida: frequencia cardiaca, pressao arterial, respiracao, digestao. Praticamente todo sistema de orgaos e regulado pelo SNA. Como o professor enfatizou: <em>"Cardio e praticamente todo autonomo. Respiratorio e autonomo. Renal e autonomo."</em> Por isso o SNA e o primeiro grande tema da disciplina &mdash; ele e a base para entender farmacologia cardiovascular, respiratoria, anestesica e neuropsiquiatrica.</p>
+<p>Esta aula tambem consolida conceitos de farmacodinamica avancada (potencia vs. eficacia, tipos de antagonismo) que serao usados em todas as aulas seguintes.</p>
+
+<div class="professor-highlight">
+<p>"Se voce entender a fisiologia, a farmacologia e muito facil." &mdash; Prof. Adilson. A palavra-chave desta aula e INTER-RELACIONAR: ligar a atividade farmacologica com as acoes fisiologicas do SNA.</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a3-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Farmacodinamica Avancada</h3>
+
+<p><strong>Faixa/janela terapeutica:</strong> concentracao plasmatica em que o farmaco produz efeito terapeutico sem toxicidade. Atinge-se ao redor de 5 meias-vidas (steady-state).</p>
+
+<p><strong>Dose de ataque:</strong> dose maior que a convencional para atingir rapidamente a faixa terapeutica (ex: meningite &mdash; nao se pode esperar 5 meias-vidas). Depois, reduz-se para dose de manutencao.</p>
+
+<h4>Tipos de Receptores</h4>
+<table>
+  <tr><th>Tipo</th><th>Velocidade</th><th>Mecanismo</th><th>Exemplo</th></tr>
+  <tr><td>Ionotropicos (canais ionicos)</td><td>Milissegundos</td><td>Abertura/fechamento de canal</td><td>Receptor nicotinico de ACh</td></tr>
+  <tr><td>Metabotropicos (proteina G)</td><td>Segundos</td><td>Segundo mensageiro (AMPc, IP3)</td><td>Receptores muscarinicos, adrenergicos</td></tr>
+  <tr><td>Tirosina quinase</td><td>Minutos-horas</td><td>Fosforilacao</td><td>Receptor de insulina</td></tr>
+  <tr><td>Nucleares (intracelulares)</td><td>Horas-dias</td><td>Modificacao de transcricao genica</td><td>Receptores de corticoides</td></tr>
+</table>
+
+<h4>Agonismo e Antagonismo</h4>
+<table>
+  <tr><th>Tipo</th><th>Afinidade</th><th>Atividade Intrinseca</th><th>Efeito</th></tr>
+  <tr><td>Agonista total</td><td>Sim</td><td>Maxima</td><td>Resposta maxima</td></tr>
+  <tr><td>Agonista parcial</td><td>Sim</td><td>Submaxima</td><td>Resposta parcial (compete com agonista total)</td></tr>
+  <tr><td>Antagonista</td><td>Sim</td><td>Nenhuma</td><td>Bloqueia resposta</td></tr>
+  <tr><td>Agonista inverso</td><td>Sim</td><td>Negativa</td><td>Liga receptor na forma inativa; reduz atividade constitutiva</td></tr>
+</table>
+
+<div class="alert-box">
+<p><strong>Antagonista competitivo vs. nao competitivo:</strong> O competitivo compete pelo MESMO sitio &mdash; aumentar a dose do agonista supera o bloqueio &mdash; reduz POTENCIA (desloca curva para direita). O nao competitivo se liga em sitio DIFERENTE (alosterico) &mdash; aumentar agonista NAO supera &mdash; reduz EFICACIA (diminui efeito maximo). Isso cai em prova.</p>
+</div>
+
+<div class="alert-box">
+<p><strong>"Nao despolarizar" NAO e a mesma coisa que "hiperpolarizar":</strong> Bloqueio de canal de sodio impede despolarizacao, mas NAO causa hiperpolarizacao. O efeito final (inativacao celular) pode parecer similar, mas o mecanismo e diferente.</p>
+</div>
+
+<h3>Anatomia do SNA</h3>
+<p>O SNA se divide em <strong>simpatico</strong>, <strong>parassimpatico</strong> e <strong>enterico</strong>. Segue o padrao <strong>bineuronal</strong>: neuronio pre-ganglionar (corpo no SNC) faz sinapse no ganglio, e o neuronio pos-ganglionar projeta-se ao orgao efetor.</p>
+
+<table>
+  <tr><th>Caracteristica</th><th>Simpatico</th><th>Parassimpatico</th></tr>
+  <tr><td>Saida do SNC</td><td>Toraco-lombar (T1-L2)</td><td>Cranio-sacral (III, VII, IX, X + S2-S4)</td></tr>
+  <tr><td>Neuronio pre-ganglionar</td><td>CURTO</td><td>LONGO</td></tr>
+  <tr><td>Neuronio pos-ganglionar</td><td>LONGO</td><td>CURTO</td></tr>
+  <tr><td>Localizacao do ganglio</td><td>Cadeias paravertebrais</td><td>Proximo/dentro do orgao-alvo</td></tr>
+  <tr><td>NT ganglionar</td><td>ACh + receptor NN (IDENTICO)</td><td>ACh + receptor NN (IDENTICO)</td></tr>
+  <tr><td>NT pos-ganglionar</td><td>Noradrenalina (alfa, beta)</td><td>ACh (receptores M1-M5)</td></tr>
+  <tr><td>Predomina em</td><td>Estresse (luta-ou-fuga)</td><td>Repouso e saciedade</td></tr>
+</table>
+
+<div class="professor-highlight">
+<p><strong>Excecoes cobradas em prova:</strong> (1) Inervacao da suprarrenal e monossinaptica e colinergica nicotinica (nao ha neuronio pos-ganglionar). (2) Glandula sudoripara e simpatica mas COLINERGICA (nao noradrenergica). (3) Parassimpatico NAO inerva musculatura vascular.</p>
+</div>
+
+<h3>Receptores do SNA</h3>
+<table>
+  <tr><th>Receptor</th><th>Tipo</th><th>Local</th><th>Efeito</th></tr>
+  <tr><td>NN</td><td>Nicotinico</td><td>Ganglios autonomicos, adrenal</td><td>Transmissao ganglionar</td></tr>
+  <tr><td>NM</td><td>Nicotinico</td><td>Juncao neuromuscular</td><td>Contracao muscular esqueletica</td></tr>
+  <tr><td>M1</td><td>Muscarinico</td><td>Estomago</td><td>Secrecao acida (HCl)</td></tr>
+  <tr><td>M2</td><td>Muscarinico</td><td>Coracao</td><td>Bradicardia, reducao de forca</td></tr>
+  <tr><td>M3</td><td>Muscarinico</td><td>Musc. lisa visceral, bronquios, glandulas</td><td>Contracao, secrecao</td></tr>
+  <tr><td>Alfa-1</td><td>Adrenergico</td><td>Vasos, pupila, esfincteres</td><td>Vasoconstrição, midriase</td></tr>
+  <tr><td>Alfa-2</td><td>Adrenergico</td><td>Pre-sinaptico, medula espinal</td><td>Feedback negativo, analgesia</td></tr>
+  <tr><td>Beta-1</td><td>Adrenergico</td><td>Coracao</td><td>Taquicardia, aumento de forca</td></tr>
+  <tr><td>Beta-2</td><td>Adrenergico</td><td>Bronquios, vasos musculares</td><td>Broncodilatacao, vasodilatacao</td></tr>
+</table>
+
+<p><strong>Noradrenalina</strong>: afinidade MAIOR por receptores ALFA. <strong>Adrenalina</strong>: afinidade IGUAL por ALFA e BETA. A NA e liberada continuamente (mantem tonus vascular); a adrenalina e liberada em pulsos durante estresse.</p>
+
+<!-- MECANISMOS -->
+<h2 id="a3-mecanismos">Mecanismos</h2>
+
+<h3>Resposta de Luta-ou-Fuga</h3>
+<ol>
+  <li>Percepcao de ameaca pelo SNC</li>
+  <li>Descarga simpatica &rarr; suprarrenal libera adrenalina na corrente sanguinea</li>
+  <li>Coracao (beta-1): taquicardia + aumento de forca &rarr; aumento do DC</li>
+  <li>Pulmao (beta-2): broncodilatacao &rarr; melhor oxigenacao</li>
+  <li>Vasos perifericos (alfa-1): vasoconstrição &rarr; maos frias e palidas</li>
+  <li>Vasos musculares (beta-2): vasodilatacao &rarr; sangue direcionado para musculos</li>
+  <li>Olho: midriase (melhor visao noturna)</li>
+  <li>TGI: relaxamento musc. lisa + contracao de esfincteres &rarr; inibicao da digestao</li>
+  <li>Medula espinal (alfa-2): bloqueio da ascensao da dor &rarr; ANALGESIA</li>
+</ol>
+
+<h3>Densidade de Receptores no Vaso</h3>
+<p>Musculatura lisa vascular tem alfa-1 E beta-2. Como a densidade de alfa-1 >> beta-2, a resposta final a noradrenalina e adrenalina e vasoconstrição. Se bloquear alfa-1 com adrenalina presente &rarr; so sobra beta-2 &rarr; vasodilatacao.</p>
+
+<!-- CLINICA -->
+<h2 id="a3-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Hiperhidrose e simpatectomia:</strong> Tratamento antigo = corte do neuronio simpatico. Problema: sudorese compensatoria (migrava para outras regioes). Tratamento atual: toxina botulinica (impede exocitose de ACh) &mdash; mais eficaz, menos invasiva, porem temporaria e custosa.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Cocaina no PS:</strong> Paciente midriático, taquicardico, hipertenso e ANALGESIADO. Mecanismo: cocaina inibe recaptacao de noradrenalina, serotonina e dopamina &rarr; disponibilidade aumentada nas sinapses. A noradrenalina bloqueia dor na medula espinal (alfa-2).</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Choque anafilatico:</strong> Mastocitos liberam histamina de forma disseminada &rarr; vasodilatacao potente &rarr; PA "zera". Tratamento: ADRENALINA IV &rarr; vasoconstrição via alfa-1 + broncodilatacao via beta-2 &rarr; restaura pressao e vias aereas.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a3-relevancia">Relevancia Clinica</h2>
+<p>A logica farmacologica do SNA se resume assim: se quero <strong>mimetizar</strong> o simpatico, uso um <strong>simpatomimetico</strong>; se quero <strong>bloquear</strong>, uso um <strong>simpatolitico</strong>. Mesma logica para o parassimpatico. Entender a fisiologia torna a farmacologia "facil".</p>
+<p>PA = DC x RPT. O SNA controla ambos: beta-1 no coracao (DC) e alfa-1 nos vasos (RPT). Farmacos que agem no SNA afetam diretamente o sistema cardiovascular.</p>
+
+<!-- RESUMO -->
+<h2 id="a3-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>SNA: simpatico (toraco-lombar, pre curto/pos longo, noradrenergico) vs. parassimpatico (cranio-sacral, pre longo/pos curto, colinergico muscarinico)</li>
+  <li>Transmissao ganglionar e IDENTICA em ambos (ACh + NN)</li>
+  <li>Excecoes: suprarrenal (monossinaptica), sudoripara (simpatico colinergico), vasos (sem inervacao parassimpatica)</li>
+  <li>NA prefere alfa; adrenalina pega alfa e beta igualmente</li>
+  <li>Antagonista competitivo reduz POTENCIA; nao competitivo reduz EFICACIA</li>
+  <li>Agonista parcial + agonista total = resposta MENOR (o parcial compete)</li>
+  <li>Dose de ataque para atingir rapidamente a faixa terapeutica</li>
+</ul>
+</div>
+</section>
+
+
+<!-- ============================================================== -->
+<!-- AULA 4 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula4">
+<h1>Aula 4 &mdash; Receptores e Neurotransmissores (26/02/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>Esta aula transforma a teoria do SNA em farmacologia aplicada. Agora voce precisa saber: dado um receptor especifico em um tecido especifico, qual farmaco usar e qual efeito esperar. O professor enfatizou: <em>"Saber receptor + tecido + resposta &mdash; isso pode cair."</em></p>
+<p>Tambem entra aqui a sintese de catecolaminas, a sinapse quimica, os neurotransmissores do SNC (GABA, glutamato, dopamina, serotonina) e a introducao dos bloqueadores neuromusculares. Cada um desses temas reaparecera nas aulas seguintes.</p>
+
+<div class="professor-highlight">
+<p>"E mais facil tirar a inibicao do que aumentar a excitacao" &mdash; conceito repetido varias vezes. Na pratica, muitos farmacos funcionam removendo um freio (desinibicao) em vez de pisar no acelerador.</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a4-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Sinapse Quimica &mdash; Os 3 Destinos Pos-Sinapticos</h3>
+<p>Apos ser liberado na fenda sinaptica, o neurotransmissor pode: (1) ligar-se ao receptor pos-sinaptico e produzir efeito, (2) ser <strong>recaptado</strong> pelo neuronio pre-sinaptico, ou (3) ser <strong>degradado enzimaticamente</strong> (ex: ACh pela acetilcolinesterase).</p>
+
+<h3>Logica Excitatoria/Inibitoria</h3>
+<p>Para cada mecanismo excitatorio, existem pelo menos dois mecanismos inibitorios. Farmacologicamente, e comum explorar a inibicao: bloquear a degradacao de um NT (anticolinesterasicos), bloquear a recaptacao (antidepressivos), ou bloquear o receptor (antagonistas).</p>
+
+<h3>Sintese das Catecolaminas</h3>
+<p>Fenilalanina &rarr; <em>fenilalanina hidroxilase</em> &rarr; Tirosina &rarr; <em>tirosina hidroxilase</em> (ETAPA LIMITANTE) &rarr; DOPA &rarr; <em>descarboxilase</em> &rarr; <strong>Dopamina</strong> &rarr; <em>dopamina beta-hidroxilase</em> &rarr; <strong>Noradrenalina</strong> &rarr; <em>PNMT</em> &rarr; <strong>Adrenalina</strong></p>
+
+<div class="professor-highlight">
+<p>PNMT (feniletanolamina N-metiltransferase) converte noradrenalina em adrenalina. "Ja caiu em prova."</p>
+</div>
+
+<h3>Neurotransmissores do SNC</h3>
+<table>
+  <tr><th>NT</th><th>Papel Principal</th><th>Relevancia Clinica</th></tr>
+  <tr><td>GABA</td><td>Principal inibitorio do SNC</td><td>Ansioliticos (BZDs), anticonvulsivantes</td></tr>
+  <tr><td>Glutamato</td><td>Principal excitatorio do SNC</td><td>Cetamina (antagonista NMDA)</td></tr>
+  <tr><td>Dopamina</td><td>Movimento, recompensa, atencao</td><td>Parkinson (deficiencia), Esquizofrenia (excesso)</td></tr>
+  <tr><td>Serotonina</td><td>Humor, sono, apetite</td><td>Depressao (deficiencia), antidepressivos</td></tr>
+  <tr><td>Noradrenalina</td><td>Humor, energia, atencao</td><td>Depressao, modulacao da dor</td></tr>
+  <tr><td>ACh</td><td>Memoria, aprendizado</td><td>Alzheimer (reducao), miastenia gravis</td></tr>
+</table>
+
+<!-- MECANISMOS -->
+<h2 id="a4-mecanismos">Mecanismos</h2>
+
+<h3>Farmacos Colinergicos (Aumentam ACh)</h3>
+<p><strong>Agonistas muscarinicos diretos:</strong></p>
+<ul>
+  <li><strong>Pilocarpina</strong>: agonista M direto &rarr; glaucoma (colirio), xerostomia</li>
+  <li><strong>Betanecol</strong>: agonista M direto &rarr; hipotonia vesical, megacolon</li>
+</ul>
+<p><strong>Anticolinesterasicos (parasiimpatomimet icos INDIRETOS):</strong> inibem a acetilcolinesterase &rarr; acumulo de ACh na fenda &rarr; efeito colinergico aumentado.</p>
+<ul>
+  <li><strong>Neostigmina/Piridostigmina</strong>: miastenia gravis, reversao de curare</li>
+  <li><strong>Fisostigmina</strong>: mais lipossoluvel, atravessa BHE, absorvida pelo TGI</li>
+</ul>
+
+<h3>Anticolinergicos (Diminuem efeito da ACh)</h3>
+<ul>
+  <li><strong>Atropina</strong>: antagonista M nao seletivo &rarr; bradicardia, intoxicacao por organofosforado</li>
+  <li><strong>Escopolamina (Buscopan)</strong>: colica, espasmos</li>
+  <li><strong>Ipratropio/Tiotropio</strong>: antagonista M inalatorio &rarr; asma, DPOC</li>
+  <li><strong>Toxina botulinica</strong>: impede exocitose de ACh &rarr; hiperhidrose, espasticidade</li>
+</ul>
+
+<div class="alert-box">
+<p><strong>Anticolinergico vs. Anticolinesterasico:</strong> Sao OPOSTOS! O anticolinergico BLOQUEIA o receptor muscarinico (diminui efeito da ACh). O anticolinesterasico INIBE a enzima que degrada a ACh (AUMENTA ACh na fenda). Ex: atropina = anticolinergico; neostigmina = anticolinesterasico.</p>
+</div>
+
+<h3>Farmacos Adrenergicos</h3>
+<table>
+  <tr><th>Farmaco</th><th>Tipo</th><th>Receptor</th><th>Uso Clinico</th></tr>
+  <tr><td>Adrenalina</td><td>Agonista</td><td>Todos (alfa+beta)</td><td>Anafilaxia, PCR</td></tr>
+  <tr><td>Dobutamina</td><td>Agonista</td><td>Beta-1 seletivo</td><td>ICC aguda, choque cardiogenico</td></tr>
+  <tr><td>Salbutamol/Fenoterol</td><td>Agonista</td><td>Beta-2</td><td>Asma, broncoespasmo</td></tr>
+  <tr><td>Alfametildopa</td><td>Falso NT</td><td>Alfa-2 central</td><td>HAS na gestacao (UNICO seguro)</td></tr>
+  <tr><td>Propranolol</td><td>Antagonista</td><td>Beta-1+2 (nao seletivo)</td><td>HAS, angina, ansiedade (CI em asmaticos)</td></tr>
+  <tr><td>Metoprolol/Atenolol</td><td>Antagonista</td><td>Beta-1 seletivo</td><td>HAS (mais seguro em asmaticos)</td></tr>
+  <tr><td>Tansulosina</td><td>Antagonista</td><td>Alfa-1 urinario</td><td>Calculo renal, HPB</td></tr>
+</table>
+
+<div class="professor-highlight">
+<p>"Propranolol: queda do debito e maior que o aumento da resistencia" &mdash; por isso funciona como anti-hipertensivo, mesmo bloqueando beta-2 (que causaria vasoconstrição). Mas o bloqueio beta-2 nos bronquios e a razao pela qual e CONTRAINDICADO em asmaticos.</p>
+</div>
+
+<h3>Antidotos Essenciais</h3>
+<table>
+  <tr><th>Intoxicacao</th><th>Antidoto</th></tr>
+  <tr><td>Organofosforado (chumbinho)</td><td>Atropina</td></tr>
+  <tr><td>Overdose de betabloqueador</td><td>Glucagon</td></tr>
+  <tr><td>Curare (BNM nao despolarizante)</td><td>Anticolinesterasico (neostigmina)</td></tr>
+  <tr><td>Opioides</td><td>Naloxona</td></tr>
+  <tr><td>Benzodiazepinicos</td><td>Flumazenil</td></tr>
+</table>
+
+<!-- CLINICA -->
+<h2 id="a4-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Intoxicacao por organofosforado (chumbinho):</strong> O organofosforado fosforila IRREVERSIVELMENTE a acetilcolinesterase &rarr; ACh acumula em TODA sinapse colinergica &rarr; crise colinergica (bradicardia, broncoespasmo, hipersecrecao, diarreia). Tratamento: <strong>atropina IV</strong> (bloqueia receptores muscarinicos) + pralidoxima (reativador da enzima se dado precocemente).</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Glaucoma:</strong> Pilocarpina (agonista M) contrai musculo ciliar &rarr; abre canal de Schlemm &rarr; drena humor aquoso. Associada com fisostigmina (antiCoE) para potencializar efeito.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Miastenia gravis:</strong> Doenca autoimune contra receptores nicotinicos NM. Tratamento: piridostigmina/neostigmina (antiCoE) &rarr; aumenta ACh na fenda &rarr; supera o bloqueio parcial dos anticorpos.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a4-relevancia">Relevancia Clinica</h2>
+
+<div class="connection-box">
+<p><strong>SNA &rarr; Todas as especialidades:</strong> Estimular simpatico = SIMPATOMIMETICO. Bloquear simpatico = SIMPATOLÍTICO. Estimular parassimpatico = PARASSIMPATOMIMETICO. Bloquear parassimpatico = PARASSIMPATOLITICO. Cada farmaco discutido ate aqui encaixa em uma dessas quatro categorias.</p>
+</div>
+
+<p>A teoria neuroquimica da depressao (deficiencia de NE e/ou 5-HT) e a teoria dopaminergica da esquizofrenia (excesso de dopamina) conectam diretamente com a farmacologia do SNA e serao aprofundadas na Aula 7.</p>
+
+<!-- RESUMO -->
+<h2 id="a4-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>Receptor + tecido + resposta = a triade que voce precisa dominar</li>
+  <li>Anticolinesterasico = parassimpatomimetico INDIRETO (aumenta ACh); anticolinergico = bloqueia receptor M</li>
+  <li>Adrenalina para anafilaxia (todos os receptores); dobutamina para ICC (beta-1 seletivo)</li>
+  <li>Alfametildopa = unico anti-hipertensivo seguro na gestacao</li>
+  <li>Propranolol: CI em asmaticos (bloqueia beta-2); preferir atenolol/metoprolol</li>
+  <li>Sintese de catecolaminas: Phe &rarr; Tyr &rarr; DOPA &rarr; DA &rarr; NE &rarr; Epi (PNMT)</li>
+  <li>Antidotos: organofosforado=atropina, betabloqueador=glucagon, curare=neostigmina, opioide=naloxona, BZD=flumazenil</li>
+</ul>
+</div>
+</section>
+
+
+<!-- ============================================================== -->
+<!-- AULA 5 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula5">
+<h1>Aula 5 &mdash; Anestesicos e Bloqueadores Neuromusculares (05-12/03/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>A anestesia e o ponto onde a farmacologia encontra a pratica cirurgica. Um erro na escolha ou na dose do anestesico pode levar a consciencia durante a cirurgia (com o paciente paralisado, incapaz de avisar), parada cardiorrespiratoria, ou hipertermia maligna. A professora relatou cenarios reais da pandemia de COVID onde faltaram sedativos na UTI e pacientes curarízados ficaram conscientes &mdash; uma situacao dramatica que reforca por que entender estas drogas e tao importante.</p>
+<p>Esta aula tambem conecta diretamente com o SNA: os bloqueadores neuromusculares atuam nos mesmos receptores nicotinicos que discutimos na Aula 4, e os anestesicos locais bloqueiam canais de sodio &mdash; o mesmo mecanismo que gera o potencial de acao.</p>
+
+<div class="professor-highlight">
+<p>"Bloqueador neuromuscular NAO causa perda de consciencia nem analgesia." Enfase absoluta. SEMPRE sedar o paciente antes ou junto com o BNM. A professora relata cenarios de pacientes curarízados mas conscientes &mdash; horror clinico evitavel.</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a5-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Bloqueadores Neuromusculares (BNM)</h3>
+<p>Farmacos que bloqueiam a contracao muscular atuando na juncao neuromuscular (receptor nicotinico NM). Todos sao compostos de <strong>amonio quaternario</strong> (mimetizam o nitrogenio quaternario da ACh). Via IV obrigatoria (nao sao absorvidos pelo TGI). Nao atravessam BHE.</p>
+
+<table>
+  <tr><th>Tipo</th><th>Mecanismo</th><th>Exemplo</th><th>Reversao</th></tr>
+  <tr><td>Despolarizante</td><td>Agonista &rarr; despolarizacao sustentada &rarr; dessensibilizacao (Fase 1: fasciculacoes; Fase 2: bloqueio)</td><td>Succinilcolina (UNICO)</td><td>NAO se reverte (metabolizado pela pseudocolinesterase)</td></tr>
+  <tr><td>Nao despolarizante</td><td>Antagonista competitivo do receptor NM</td><td>Rocuronio, vecuronio, atracurio, cisatracurio, pancuronio</td><td>Anticolinesterasicos (neostigmina + atropina)</td></tr>
+</table>
+
+<div class="alert-box">
+<p><strong>PEGADINHA DE PROVA:</strong> NAO usar neostigmina para reverter succinilcolina! A neostigmina inibe a pseudocolinesterase (que degrada a succinilcolina) &rarr; PROLONGA o bloqueio em vez de reverter. Anticolinesterasicos SOMENTE para reverter NAO despolarizantes.</p>
+</div>
+
+<h3>Anestesicos Locais (AL)</h3>
+<p>Bloqueiam <strong>reversivelmente</strong> os canais de sodio voltagem-dependentes nas fibras nervosas, impedindo a geracao e conducao do potencial de acao.</p>
+
+<table>
+  <tr><th>Tipo</th><th>Metabolismo</th><th>Duracao</th><th>Alergia</th><th>Exemplos</th></tr>
+  <tr><td>Esteres</td><td>Colinesterase plasmatica</td><td>CURTA</td><td>Mais comum (derivados do PABA)</td><td>Procaina, tetracaina, benzocaina, cocaina</td></tr>
+  <tr><td>Amidas</td><td>Figado</td><td>PROLONGADA</td><td>Rara</td><td>Lidocaina, bupivacaina, ropivacaina, levobupivacaina</td></tr>
+</table>
+
+<p>Tres propriedades fundamentais dos AL:</p>
+<table>
+  <tr><th>Propriedade</th><th>Determinante</th><th>Relacao</th></tr>
+  <tr><td>Potencia</td><td>Lipossolubilidade</td><td>Mais lipossoluvel = mais potente</td></tr>
+  <tr><td>Latencia (inicio)</td><td>Grau de ionizacao (pKa)</td><td>Menos ionizado = inicio mais rapido</td></tr>
+  <tr><td>Duracao</td><td>Ligacao a proteinas</td><td>Mais ligacao = mais duracao</td></tr>
+</table>
+
+<p>Sequencia do bloqueio progressivo: <strong>Dor &rarr; Frio &rarr; Calor &rarr; Tato/pressao &rarr; Funcao motora</strong> (fibras finas primeiro, grossas depois).</p>
+
+<div class="professor-highlight">
+<p>"pH acido (infeccao/inflamacao) diminui eficacia do AL." O AL e basico; em meio acido fica mais ionizado, menos lipossoluvel, menos capaz de penetrar na fibra nervosa. Por isso, trata-se a infeccao ANTES de anestesiar.</p>
+</div>
+
+<h3>Anestesicos Gerais</h3>
+<p>Depressao completa, continua e reversivel do SNC: perda de consciencia, eliminacao da dor, relaxamento muscular, amnesia, imobilidade.</p>
+
+<h4>Estagios de Guedel</h4>
+<ol>
+  <li><strong>Estagio I (Analgesia):</strong> do inicio ate a perda de consciencia</li>
+  <li><strong>Estagio II (Excitacao):</strong> fase PERIGOSA &mdash; agitacao, reflexos exagerados. Deve ser ultrapassada rapidamente (por isso se usa indutor IV)</li>
+  <li><strong>Estagio III (Anestesia cirurgica):</strong> plano desejado</li>
+  <li><strong>Estagio IV (Depressao bulbar):</strong> risco de parada cardiorrespiratoria</li>
+</ol>
+
+<p>Regra geral: <strong>indução com IV</strong> (propofol, etomidato) para ultrapassar rapidamente o estagio II; <strong>manutencao com inalatorio</strong> (sevoflurano, isoflurano) para controle minuto a minuto.</p>
+
+<h4>Conceitos-Chave dos Inalatorios</h4>
+<p><strong>CAM (Concentracao Alveolar Minima):</strong> concentracao necessaria para abolir resposta motora a estimulo doloroso em 50% dos pacientes. <strong>Quanto MENOR a CAM, MAIS POTENTE.</strong></p>
+<p><strong>Coeficiente de particao sangue:gas:</strong> BAIXO = inducao e recuperacao RAPIDAS (fica mais no gas, chega rapido ao SNC). ALTO = inducao e recuperacao LENTAS (fica preso no sangue).</p>
+
+<table>
+  <tr><th>Anestesico</th><th>Caracteristica Principal</th><th>Particularidade</th></tr>
+  <tr><td>Halotano</td><td>Potente (CAM baixa)</td><td>HEPATOTOXICO; sensibiliza miocardio a catecolaminas; risco de HM</td></tr>
+  <tr><td>Isoflurano</td><td>Menor depressao cardiovascular</td><td>Melhor para CARDIOPATAS</td></tr>
+  <tr><td>Sevoflurano</td><td>Rapido inicio e recuperacao</td><td>Mais utilizado na pratica atual</td></tr>
+  <tr><td>Desflurano</td><td>Inducao/recuperacao muito rapidas</td><td>Irrita vias aereas</td></tr>
+  <tr><td>Oxido nitroso (N2O)</td><td>POUCO potente (CAM=188)</td><td>Usado em associacao; risco de hipoxia de difusao</td></tr>
+</table>
+
+<h4>Anestesicos Intravenosos</h4>
+<table>
+  <tr><th>Farmaco</th><th>Mecanismo</th><th>Uso Preferencial</th><th>Particularidade</th></tr>
+  <tr><td>Propofol</td><td>Agonista GABA-A</td><td>Mais utilizado (inducao e manutencao)</td><td>Emulsao; dor a injecao; NAO e analgesico; sem ressaca</td></tr>
+  <tr><td>Etomidato</td><td>Agonista GABA-A</td><td>Cardiopata/hipotenso</td><td>ESTABILIDADE cardiovascular; risco de supressao adrenal</td></tr>
+  <tr><td>Cetamina</td><td>Antagonista NMDA</td><td>Pediatria, queimados, asmaticos</td><td>Anestesia dissociativa; delirios de emergencia; nao deprime respiracao</td></tr>
+  <tr><td>Midazolam</td><td>BZD (modulador GABA-A)</td><td>Pre-medicacao ansiolítica</td><td>Janela terapeutica AMPLA; amnesia retrograda; muito seguro</td></tr>
+  <tr><td>Tiopental</td><td>Barbiturico (GABA-A)</td><td>Historico (pouco usado)</td><td>Janela ESTREITA; hepatotoxico; risco de necrose se extravasamento</td></tr>
+</table>
+
+<!-- MECANISMOS -->
+<h2 id="a5-mecanismos">Mecanismos</h2>
+
+<h3>Hipertermia Maligna</h3>
+<ol>
+  <li>Susceptibilidade genetica: mutacao no receptor de rianodina (RyR1) do reticulo sarcoplasmatico</li>
+  <li>Desencadeada por succinilcolina E/OU anestesicos inalatorios halogenados</li>
+  <li>Abertura massiva de canais de calcio do reticulo &rarr; excesso de Ca++ intracelular</li>
+  <li>Contracao muscular intensa e sustentada &rarr; hipermetabolismo</li>
+  <li>Taquicardia, hipertensao, rigidez muscular, hipertermia, acidose</li>
+  <li><strong>Tratamento: DANTROLENO</strong> (bloqueia canais de calcio do reticulo) + interromper agente + resfriamento</li>
+</ol>
+
+<div class="professor-highlight">
+<p>"Dantroleno e OBRIGATORIO por lei em todo centro cirurgico." Ha legislacao especifica obrigando a disponibilidade antes de qualquer procedimento com agentes desencadeantes.</p>
+</div>
+
+<h3>Toxicidade dos Anestesicos Locais</h3>
+<p><strong>Neurotoxicidade (SNC):</strong> progressiva e dose-dependente. Primeiro inibe fibras INIBITORIAS &rarr; agitacao, tremores, convulsoes. Depois inibe tudo &rarr; depressao respiratoria, coma.</p>
+<p><strong>Cardiotoxicidade:</strong> bloqueio de canais de sodio cardiacos &rarr; depressao miocardica, arritmias. Bupivacaina e mais cardiotoxica (preferir levobupivacaina).</p>
+<p><strong>Vasoconstritor associado:</strong> prolonga acao e diminui toxicidade, mas NAO usar em extremidades (dedos, nariz, orelha, penis) &mdash; risco de isquemia/necrose por circulacao terminal.</p>
+
+<!-- CLINICA -->
+<h2 id="a5-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Hipertermia maligna (caso do slide):</strong> Homem de 25 anos, reparo de hernia inguinal, recebeu succinilcolina IV + halotano inalado. Durante a cirurgia: rigidez muscular, taquicardia, temperatura sobe rapidamente. Diagnostico: hipertermia maligna. Conduta: dantroleno + interromper halotano + resfriamento ativo.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Anestesia local em tecido infectado:</strong> Mulher de 30 anos com unha encravada infectada. Primeiro tratar infeccao com ATB (pH acido do tecido inflamado reduziria eficacia da lidocaina), depois anestesiar para cirurgia.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Protocolo de anestesia geral:</strong> (1) Pre-medicacao: midazolam. (2) Inducao: propofol IV. (3) Intubacao: BNM (succinilcolina para emergencia ou rocuronio para cirurgia). (4) Manutencao: sevoflurano. (5) Analgesia: fentanil. (6) Reversao: neostigmina + atropina (se BNM nao despolarizante). (7) Recuperacao: RPA.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a5-relevancia">Relevancia Clinica</h2>
+
+<h3>Escolha do BNM por Perfil do Paciente</h3>
+<ul>
+  <li><strong>Emergencia (PS):</strong> succinilcolina &mdash; acao rapida e curta, ideal para intubacao</li>
+  <li><strong>Nefropata:</strong> atracurio/cisatracurio (eliminacao por via de Hofmann, independente de figado e rim)</li>
+  <li><strong>Hepatopata:</strong> evitar os de metabolizacao hepatica</li>
+  <li><strong>Asmatico/alergico:</strong> escolher o que libera MENOS histamina</li>
+</ul>
+
+<h3>Combinacao de AL na Pratica</h3>
+<p>Iniciar com <strong>lidocaina</strong> (efeito rapido) + manter com <strong>bupivacaina</strong> (efeito prolongado). Exemplo real: implante capilar.</p>
+
+<div class="connection-box">
+<p>A lidocaina, alem de anestesico local, tem acao antiarritmica (bloqueia canais de sodio cardiacos). Isso conecta com a farmacologia cardiovascular e explica por que a cardiotoxicidade e um risco dos AL.</p>
+</div>
+
+<!-- RESUMO -->
+<h2 id="a5-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>BNM NAO causa consciencia ou analgesia &mdash; sempre sedar junto</li>
+  <li>Succinilcolina (unico despolarizante): acao curta, SEM antidoto; neostigmina PROLONGA seu efeito</li>
+  <li>Nao despolarizantes: antagonistas competitivos do NM; revertem com antiCoE (neostigmina + atropina)</li>
+  <li>AL: esteres (curta duracao, mais alergia) vs. amidas (prolongada, figado)</li>
+  <li>pH acido reduz eficacia do AL (basico); tratar infeccao antes</li>
+  <li>Inalatorios: menor CAM = mais potente; menor coeficiente sangue:gas = inducao mais rapida</li>
+  <li>IV: propofol (mais usado), etomidato (cardiopata), cetamina (pediatria/queimados)</li>
+  <li>Hipertermia maligna: genetica + succinilcolina/halogenados; tratamento = DANTROLENO</li>
+</ul>
+</div>
+</section>
+
+
+<!-- ============================================================== -->
+<!-- AULA 6 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula6">
+<h1>Aula 6 &mdash; Farmacologia da Dor e Inflamacao (19/03/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>A dor e o motivo mais comum de procura por atendimento medico. No Brasil, 37% da populacao sofre de dor cronica. A dor cronica nao tratada leva a depressao, insonia, perda de funcionalidade e, em casos extremos, tentativas de suicidio. A professora relatou o caso de um paciente que se jogou de uma janela por dor intratavel.</p>
+<p>Entender a farmacologia da dor exige conhecer a fisiologia da nocicepcao (onde cada classe de farmaco atua), a cascata do acido araquidonico (alvo dos AINEs e corticoides) e o delicado equilibrio dos opioides (analgesia vs. dependencia). A epidemia de opioides nos EUA, discutida em aula, mostra o que acontece quando a prescricao nao e racional.</p>
+
+<div class="professor-highlight">
+<p>"Cada classe de medicamento age em uma fase diferente do processo da dor": AINEs inibem a transducao (via ascendente); anestesicos locais bloqueiam a transmissao; anestesicos gerais inibem a percepcao; opioides agem em multiplos pontos. ENTENDER onde cada farmaco atua e a chave para prescricao racional.</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a6-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Definicao de Dor (IASP)</h3>
+<p>"Uma experiencia sensorial e emocional desagradavel, relacionada com lesao tecidual real ou potencial, ou descrita em termos deste tipo de dano." Dois pontos criticos: <strong>a falta de lesao NAO nega a dor</strong>, e <strong>a incapacidade de verbalizacao NAO nega a dor</strong>.</p>
+
+<h3>Classificacao da Dor</h3>
+<table>
+  <tr><th>Criterio</th><th>Tipo</th><th>Caracteristica</th><th>Exemplo</th></tr>
+  <tr><td rowspan="3">Origem</td><td>Nociceptiva</td><td>Ativacao fisiologica dos nociceptores</td><td>Fratura, artrose</td></tr>
+  <tr><td>Neuropatica</td><td>Lesao/disfuncao do sistema nervoso</td><td>Diabetes, herpes zoster, membro fantasma</td></tr>
+  <tr><td>Mista</td><td>Componentes nociceptivo e neuropatico</td><td>Cancer</td></tr>
+  <tr><td rowspan="3">Duracao</td><td>Aguda</td><td>Minutos a semanas</td><td>Pos-operatorio, trauma</td></tr>
+  <tr><td>Cronica</td><td>&gt; 30 dias</td><td>Artrite reumatoide</td></tr>
+  <tr><td>Recorrente</td><td>Aguda repetitiva com carater cronico</td><td>Enxaqueca</td></tr>
+</table>
+
+<h3>Processos da Nocicepcao</h3>
+<ol>
+  <li><strong>Transducao:</strong> conversao do estimulo nocivo em sinal eletrico nos nociceptores</li>
+  <li><strong>Transmissao:</strong> conducao pelas fibras nervosas (A-delta: dor rapida/aguda; C: dor lenta/cronica)</li>
+  <li><strong>Modulacao:</strong> processamento no corno dorsal da medula (via ascendente vs. descendente)</li>
+  <li><strong>Percepcao:</strong> representacao cerebral da dor</li>
+</ol>
+
+<h3>Teoria do Portao (Gate Control)</h3>
+<p>Nos cornos posteriores da medula existe um mecanismo neural que controla a passagem dos impulsos dolorosos. Fibras grossas (A-beta) "fecham o portao" (aliviam a dor); fibras finas (A-delta, C) "abrem o portao" (transmitem a dor). Exemplo pratico: apertar o dedo apos bater estimula fibras A-beta, aliviando a dor.</p>
+
+<h3>Via Descendente Inibitoria</h3>
+<p>Substancia cinzenta periaquedutal &rarr; nucleo magno da rafe (serotonina) + locus coeruleus (noradrenalina) &rarr; corno dorsal da medula &rarr; liberacao de opioides endogenos e GABA &rarr; inibicao da transmissao dolorosa.</p>
+
+<div class="professor-highlight">
+<p>"Por que eu uso antidepressivo para dor cronica?" Porque aumentam NA e 5-HT, estimulando a via descendente inibitoria da dor. NAO decorar que e antidepressivo; ENTENDER o mecanismo.</p>
+</div>
+
+<h3>Cascata do Acido Araquidonico</h3>
+<p>Fosfolipideos de membrana &rarr; <em>fosfolipase A2</em> &rarr; Acido Araquidonico &rarr;</p>
+<ul>
+  <li><strong>Via COX:</strong> COX-1/COX-2/COX-3 &rarr; prostaglandinas, prostaciclina, tromboxanos</li>
+  <li><strong>Via lipoxigenase:</strong> 5-LOX &rarr; leucotrienos</li>
+</ul>
+<p><strong>Corticosteroides</strong> inibem a fosfolipase A2 (bloqueiam TODA a cascata). <strong>AINEs</strong> inibem apenas as COX.</p>
+
+<table>
+  <tr><th>COX</th><th>Presenca</th><th>Funcao</th><th>Inibidores</th></tr>
+  <tr><td>COX-1 (constitutiva)</td><td>Sempre presente</td><td>Muco gastrico, funcao plaquetaria, excrecao renal</td><td>AAS (baixas doses), AINEs tradicionais</td></tr>
+  <tr><td>COX-2 (induzivel)</td><td>Induzida por inflamacao</td><td>Resposta inflamatoria, dor</td><td>Celecoxibe, etoricoxibe</td></tr>
+  <tr><td>COX-3</td><td>SNC</td><td>Termorregulacao, nocicepcao central</td><td>Paracetamol, dipirona</td></tr>
+</table>
+
+<!-- MECANISMOS -->
+<h2 id="a6-mecanismos">Mecanismos</h2>
+
+<h3>AINEs</h3>
+<p>Inibem a ciclooxigenase &rarr; reduzem sintese de prostaglandinas. Acao periferica (reduzem sensibilizacao de nociceptores) e central (efeito antipiretico via inibicao de PGE2 no hipotalamo). A inibicao pode ser <strong>reversivel</strong> (maioria) ou <strong>irreversivel</strong> (AAS &mdash; acetila a COX).</p>
+
+<table>
+  <tr><th>Aspecto</th><th>AINEs tradicionais</th><th>COX-2 seletivos</th></tr>
+  <tr><td>Seletividade</td><td>COX-1 + COX-2</td><td>Preferencialmente COX-2</td></tr>
+  <tr><td>Risco gastrico</td><td>MAIOR</td><td>MENOR</td></tr>
+  <tr><td>Risco cardiovascular</td><td>Menor (exceto diclofenaco/ibuprofeno em altas doses)</td><td>MAIOR</td></tr>
+  <tr><td>Efeito antiplaquetario</td><td>SIM (AAS)</td><td>NAO</td></tr>
+</table>
+
+<h4>AINEs Especificos</h4>
+<ul>
+  <li><strong>AAS (aspirina):</strong> inibicao IRREVERSIVEL; baixas doses = antiplaquetario (COX-1); altas doses = anti-inflamatorio. RAMs: gastrotoxicidade (maior risco), Sindrome de Reye em criancas</li>
+  <li><strong>Diclofenaco:</strong> hepatotoxicidade, necrose local (IM). Em altas doses, risco CV equiparado aos COXIBs</li>
+  <li><strong>Ibuprofeno:</strong> uso pediatrico (alternado com paracetamol). Em altas doses, risco CV similar</li>
+  <li><strong>Naproxeno:</strong> MENOR risco aterotromboembolico entre os nao seletivos</li>
+  <li><strong>Celecoxibe/Etoricoxibe:</strong> COX-2 especificos; menor risco gastrico, MAIOR risco CV</li>
+</ul>
+
+<div class="alert-box">
+<p><strong>Cuidado com AINE em gestantes:</strong> inibicao de prostaglandinas pode impedir contracoes uterinas e causar fechamento prematuro do ducto arterioso. Especialmente contraindicado no 3o trimestre.</p>
+</div>
+
+<h3>Opioides</h3>
+<p>Ligam-se a receptores opioides acoplados a proteina G (mu, delta, kappa). Inibem adenilciclase, reduzem AMPc, abrem canais de K+ e inibem canais de Ca++ &rarr; diminuem atividade neuronal e liberacao de NT. Agem tanto na via ASCENDENTE (bloqueiam) quanto na DESCENDENTE (estimulam).</p>
+
+<table>
+  <tr><th>Aspecto</th><th>AINEs</th><th>Opioides</th></tr>
+  <tr><td>Local de acao</td><td>Periferico (+ central)</td><td>Central (+ periferico)</td></tr>
+  <tr><td>Tipo de dor</td><td>Leve a moderada, inflamatoria</td><td>Moderada a intensa</td></tr>
+  <tr><td>Efeito teto</td><td>SIM</td><td>NAO (dose-resposta continua)</td></tr>
+  <tr><td>Tolerancia</td><td>NAO</td><td>SIM (rapida: 12-24h)</td></tr>
+  <tr><td>Dependencia</td><td>NAO</td><td>SIM</td></tr>
+  <tr><td>Depressao respiratoria</td><td>NAO</td><td>SIM (principal risco letal)</td></tr>
+</table>
+
+<h4>Opioides Especificos</h4>
+<ul>
+  <li><strong>Morfina (prototipo):</strong> analgesia, euforia (receptor mu), depressao respiratoria, miose (NAO desenvolve tolerancia &mdash; sinal diagnostico), constipacao, nausea</li>
+  <li><strong>Codeina:</strong> opioide fraco, boa absorcao oral, usada com paracetamol, antitussigena</li>
+  <li><strong>Tramadol:</strong> opioide fraco sintetico, dor moderada inflamatoria</li>
+  <li><strong>Fentanil:</strong> acao similar a morfina, curta duracao, uso em anestesia</li>
+  <li><strong>Metadona:</strong> meia-vida &gt;24h, menor dependencia, usada na retirada de opioides</li>
+  <li><strong>Naloxona:</strong> antagonista puro, reverte depressao respiratoria por opioides, efeito curto (1-2h IV)</li>
+</ul>
+
+<h3>Escada Analgesica da OMS</h3>
+<table>
+  <tr><th>Degrau</th><th>Intensidade (EVA)</th><th>Tratamento</th></tr>
+  <tr><td>1</td><td>Leve (1-3)</td><td>Analgesicos simples (paracetamol, dipirona) +/- AINEs</td></tr>
+  <tr><td>2</td><td>Moderada (4-6)</td><td>Opioide fraco (tramadol, codeina) + analgesico nao opioide +/- adjuvantes</td></tr>
+  <tr><td>3</td><td>Intensa (7-10)</td><td>Opioide forte (morfina, fentanil) +/- analgesico nao opioide +/- adjuvantes</td></tr>
+</table>
+
+<div class="professor-highlight">
+<p>Dor cronica: COMECAR com menor potencial analgesico; opioide so na crise. Dor aguda: posso comecar com opioide se necessario. Diferenca fundamental de abordagem.</p>
+</div>
+
+<h3>Paracetamol e Dipirona</h3>
+<p><strong>Paracetamol:</strong> inibidor de COX-3 (acao central). Boa tolerabilidade digestiva. HEPATOTOXICO em doses &gt;4g/dia (metabolito toxico N-acetil-p-benzoquinonaimina). Antidoto: <strong>N-acetilcisteina</strong>.</p>
+<p><strong>Dipirona (metamizol):</strong> inibidor de COX-3. Antipiretico superior ao paracetamol. <strong>Reduz PA de forma importante</strong> &mdash; nao usar em PA instavel. Riscos graves: agranulocitose, aplasia medular.</p>
+
+<h3>Adjuvantes na Dor</h3>
+<ul>
+  <li><strong>Antidepressivos:</strong> amitriptilina, duloxetina, venlafaxina (modulam via descendente inibitoria)</li>
+  <li><strong>Anticonvulsivantes:</strong> gabapentina, pregabalina (bloqueiam canais de Ca++ alfa-2-delta); carbamazepina (canais de Na+)</li>
+  <li><strong>Relaxantes musculares centrais:</strong> ciclobenzaprina (derivado triciclico &mdash; causa sonolencia), diazepam, baclofeno</li>
+</ul>
+
+<!-- CLINICA -->
+<h2 id="a6-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Paciente com dor cronica + insonia:</strong> Usar amitriptilina (antidepressivo triciclico com efeito sedativo) &mdash; "matar dois coelhos com uma cajadada so". O mesmo mecanismo que trata a dor (aumento de NA e 5-HT na via descendente) ajuda o sono (bloqueio H1).</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Experiencia com ciclobenzaprina:</strong> A professora relatou que tomou ciclobenzaprina como relaxante muscular e quase dormiu dirigindo. Importancia de orientar o paciente sobre horario de administracao (tomar a noite).</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Epidemia de opioides nos EUA:</strong> Pacientes comecaram com doses prescritas, evoluiram para abuso e morte por parada respiratoria. A tolerancia se instala em 12-24h, e a dependencia envolve o sistema mesolimbico dopaminergico (via de recompensa). Prescricao racional e monitoramento sao obrigatorios.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Misoprostol:</strong> Analogo sintetico da prostaglandina E1 (PGE1), criado para protecao gastrica (antagonizar efeito dos AINEs no estomago). Porem, por estimular contracoes uterinas, e usada de forma irregular como abortivo.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a6-relevancia">Relevancia Clinica</h2>
+
+<h3>Corticosteroides vs. AINEs</h3>
+<table>
+  <tr><th>Aspecto</th><th>Corticosteroides</th><th>AINEs</th></tr>
+  <tr><td>Nivel de bloqueio</td><td>Fosfolipase A2 (bloqueiam TUDO)</td><td>Ciclooxigenase (so via COX)</td></tr>
+  <tr><td>Potencia anti-inflamatoria</td><td>MUITO MAIOR</td><td>Menor</td></tr>
+  <tr><td>RAMs a longo prazo</td><td>Osteopenia, supressao adrenal, hiperglicemia</td><td>GI, renal, cardiovascular</td></tr>
+  <tr><td>Retirada</td><td>GRADUAL obrigatoria</td><td>Pode ser abrupta</td></tr>
+  <tr><td>Associacao entre eles</td><td colspan="2">NAO ASSOCIAR (somam riscos GI sem beneficio adicional)</td></tr>
+</table>
+
+<h3>Tratamento da Dor Neuropatica</h3>
+<ul>
+  <li><strong>1a linha:</strong> ADTs (amitriptilina, nortriptilina) OU gabapentina/pregabalina OU lidocaina topica</li>
+  <li><strong>2a linha:</strong> Tramadol OU opioides</li>
+  <li><strong>3a linha:</strong> Anticonvulsivantes, antagonistas NMDA, capsaicina, canabinoides</li>
+</ul>
+
+<div class="connection-box">
+<p>Os mesmos antidepressivos que tratam depressao (Aula 7) tratam dor neuropatica (Aula 6). O mecanismo e o mesmo: aumento de NA e 5-HT. A diferenca e o ALVO: na depressao, o efeito e central (humor); na dor, e na via descendente inibitoria da medula. Ciclobenzaprina (relaxante muscular) e derivado triciclico &mdash; mesma familia dos ADTs.</p>
+</div>
+
+<!-- RESUMO -->
+<h2 id="a6-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>Dor: transducao &rarr; transmissao &rarr; modulacao &rarr; percepcao; cada classe de farmaco age em uma etapa</li>
+  <li>AINEs: inibem COX; COX-1 constitutiva (protecao gastrica), COX-2 induzivel (inflamacao), COX-3 central (febre/dor)</li>
+  <li>AAS inibe COX irreversivelmente; baixa dose = antiplaquetario</li>
+  <li>Opioides: receptores mu/delta/kappa; sem efeito teto; tolerancia rapida; principal risco = depressao respiratoria</li>
+  <li>Escada OMS: 1) analgesicos simples, 2) opioide fraco + AINE, 3) opioide forte</li>
+  <li>Paracetamol: hepatotoxico &gt;4g/dia; antidoto = N-acetilcisteina</li>
+  <li>Dipirona: reduz PA significativamente</li>
+  <li>NAO associar corticoide + AINE (somam riscos, mesmo mecanismo)</li>
+</ul>
+</div>
+</section>
+
+
+<!-- ============================================================== -->
+<!-- AULA 7 -->
+<!-- ============================================================== -->
+<section class="aula-section" id="aula7">
+<h1>Aula 7 &mdash; Farmacologia dos Transtornos Mentais (26/03/2026)</h1>
+
+<h3>Contexto e Motivacao</h3>
+<p>Os transtornos mentais sao a maior causa de incapacidade funcional no mundo. A OMS projeta que ate 2030 a depressao sera a 1a causa de prejuizo global. No Brasil, o Rivotril (clonazepam) e o 9o medicamento mais vendido. Entender a farmacologia ansiolítica e antidepressiva nao e opcional &mdash; e essencial para qualquer medico, independente da especialidade.</p>
+<p>Esta aula fecha o ciclo conectando tudo que foi visto: GABA (discutido nos anestesicos), serotonina e noradrenalina (discutidas na dor), receptores e neurotransmissores do SNA, e os conceitos de agonismo/antagonismo. Se voce entendeu as aulas anteriores, esta aula e a aplicacao natural daquele conhecimento.</p>
+
+<div class="professor-highlight">
+<p>"O mesmo medicamento pode ser usado para diferentes indicacoes": antidepressivos para ansiedade, anticonvulsivantes para ansiedade, antipsicóticos atípicos para depressao. NAO decorar por nome da classe; ENTENDER o mecanismo.</p>
+</div>
+
+<!-- CONCEITOS -->
+<h2 id="a7-conceitos">Conceitos e Definicoes</h2>
+
+<h3>Ansiedade: Normal vs. Patologica</h3>
+<p>A ansiedade e uma emocao NORMAL e adaptativa, parte do ciclo de luta-e-fuga. Torna-se TRANSTORNO quando: intensidade desproporcional, duracao excessiva, prejuizo funcional e sofrimento associado.</p>
+
+<h4>Tipos de Transtornos de Ansiedade</h4>
+<table>
+  <tr><th>Transtorno</th><th>Caracteristica</th></tr>
+  <tr><td>TAG</td><td>Preocupacao persistente, excessiva; inquietacao, cansaco, tensao muscular, insonia</td></tr>
+  <tr><td>Panico</td><td>Medo intenso abrupto, atinge auge em minutos (&gt;4 sintomas autonomicos)</td></tr>
+  <tr><td>Fobia social</td><td>Medo de exposicao social; palpitacoes, tremor, sudorese</td></tr>
+  <tr><td>Fobias especificas</td><td>Medo de objetos/situacoes especificas (animais, altura, sangue)</td></tr>
+  <tr><td>TOC</td><td>Obsessoes (pensamentos intrusivos) + compulsoes (comportamentos repetitivos)</td></tr>
+  <tr><td>TEPT</td><td>Sintomas apos estressor traumatico; revivencia, esquiva; dura 6-12 meses</td></tr>
+</table>
+
+<h3>Depressao vs. Tristeza Normal</h3>
+<table>
+  <tr><th>Aspecto</th><th>Depressao</th><th>Tristeza Normal</th></tr>
+  <tr><td>Intensidade</td><td>Mais intensa</td><td>Menos intensa</td></tr>
+  <tr><td>Duracao</td><td>Mais duradoura</td><td>Menos duradoura</td></tr>
+  <tr><td>Resposta a estimulos positivos</td><td>NAO reage</td><td>Reage</td></tr>
+  <tr><td>Evolucao</td><td>Piora com o tempo</td><td>Melhora com o tempo</td></tr>
+  <tr><td>Psicomotricidade</td><td>Lentificacao</td><td>Sem lentificacao</td></tr>
+</table>
+
+<p><strong>Hipotese monoaminergica:</strong> depressao resulta de deficiencia de NA e/ou 5-HT na fenda sinaptica. Limitacao: os antidepressivos aumentam NT imediatamente, mas o efeito clinico demora 2-3 semanas (necessidade de neuroadaptacao pos-sinaptica).</p>
+
+<h3>Depressao Secundaria</h3>
+<p>Causas medicas: hipotireoidismo, Cushing, Parkinson, cancer de pancreas, hepatite C, HIV, lupus. Causas medicamentosas: <strong>corticoides, propranolol, alfametildopa, anticoncepcionais, cimetidina</strong>.</p>
+
+<h3>Vias Neuronais do SNC</h3>
+<table>
+  <tr><th>Via</th><th>Funcao</th><th>Patologia Associada</th></tr>
+  <tr><td>Dopaminergica</td><td>Movimento, recompensa, atencao, prolactina</td><td>Parkinson (deficiencia nigroestriatal), esquizofrenia (excesso mesocorticolimbico)</td></tr>
+  <tr><td>Serotoninergica</td><td>Humor, sono, apetite, funcao sexual</td><td>Depressao, ansiedade (alvo da maioria dos AD)</td></tr>
+  <tr><td>Noradrenergica</td><td>Humor, energia, atencao, PA, FC</td><td>Depressao (energia), modulacao da dor</td></tr>
+  <tr><td>GABAergica</td><td>Principal via inibitoria (ansiolise, anticonvulsao, hipnose)</td><td>Ansiedade, epilepsia</td></tr>
+  <tr><td>Glutamatergica</td><td>Principal via excitatoria</td><td>Excitotoxicidade, alvo da cetamina</td></tr>
+  <tr><td>Colinergica (SNC)</td><td>Memoria, aprendizado</td><td>Alzheimer (reducao), Parkinson (excesso relativo)</td></tr>
+  <tr><td>Histaminergica</td><td>Vigilia, sono</td><td>Sedacao por anti-H1</td></tr>
+</table>
+
+<!-- MECANISMOS -->
+<h2 id="a7-mecanismos">Mecanismos</h2>
+
+<h3>Benzodiazepinicos (BZDs)</h3>
+<p>Ligam-se ao receptor GABA-A em sitio DIFERENTE do GABA. <strong>Aumentam a FREQUENCIA de abertura</strong> dos canais de cloreto &rarr; mais Cl- entra &rarr; hiperpolarizacao &rarr; inibicao neuronal. Necessitam do GABA presente para funcionar (moduladores alostericos positivos).</p>
+<p>Efeitos dose-dependentes: ansiolitico (dose baixa) &rarr; hipnotico &rarr; relaxante muscular &rarr; anticonvulsivante &rarr; perda de consciencia (dose alta).</p>
+
+<div class="professor-highlight">
+<p>"BZDs: dose mais BAIXA = ansiolitico; dose mais ALTA = hipnotico. Mais receptores ocupados, maior magnitude do efeito." E tambem: "BZD isolado nao mata, mas BZD + alcool (dois depressores do SNC) = risco de depressao cardiorrespiratoria."</p>
+</div>
+
+<h3>Barbituricos</h3>
+<p>Tambem agem no GABA-A, mas em sitio DIFERENTE dos BZDs. <strong>Aumentam o TEMPO (duracao) de abertura</strong> dos canais de cloreto. Em altas doses, podem abrir canais INDEPENDENTEMENTE do GABA &rarr; risco letal. Janela terapeutica PEQUENA.</p>
+
+<table>
+  <tr><th>Aspecto</th><th>BZDs</th><th>Barbituricos</th></tr>
+  <tr><td>Mecanismo no GABA-A</td><td>Aumentam FREQUENCIA de abertura</td><td>Aumentam TEMPO de abertura</td></tr>
+  <tr><td>Dependencia do GABA</td><td>SIM (precisam do GABA)</td><td>Em altas doses, NAO</td></tr>
+  <tr><td>Janela terapeutica</td><td>AMPLA</td><td>PEQUENA</td></tr>
+  <tr><td>Risco de morte por superdose isolada</td><td>Baixo</td><td>ALTO (parada cardiorrespiratoria)</td></tr>
+  <tr><td>Inducao enzimatica</td><td>Nao significativa</td><td>SIM (induz CYP)</td></tr>
+  <tr><td>Antagonista</td><td>Flumazenil</td><td>Nao ha especifico</td></tr>
+  <tr><td>Uso atual</td><td>AMPLO</td><td>LIMITADO (fenobarbital=epilepsia; tiopental=anestesia)</td></tr>
+</table>
+
+<h3>BZDs Especificos</h3>
+<table>
+  <tr><th>Farmaco</th><th>Meia-Vida</th><th>Uso Principal</th><th>Observacao</th></tr>
+  <tr><td>Midazolam (Dormonid)</td><td>Curta</td><td>Procedimentos, UTI</td><td>Acao rapida</td></tr>
+  <tr><td>Alprazolam (Frontal)</td><td>Intermediaria</td><td>Ansiolitico</td><td>Alta potencia; droga de submissao quimica</td></tr>
+  <tr><td>Lorazepam (Lorax)</td><td>Intermediaria</td><td>Ansiolitico, indutor do sono</td><td>SEM metabolito ativo; so fase II; ideal para IDOSOS e HEPATOPATAS</td></tr>
+  <tr><td>Diazepam (Valium)</td><td>Longa</td><td>Ansiolitico, anticonvulsivante, relaxante</td><td>Metabolitos ativos; fase I e II</td></tr>
+  <tr><td>Clonazepam (Rivotril)</td><td>Longa</td><td>Ansiolitico, anticonvulsivante</td><td>9o mais vendido no Brasil</td></tr>
+</table>
+
+<div class="professor-highlight">
+<p><strong>Lorazepam</strong> nao tem metabolito ativo e so sofre fase II (glicuronidacao). Indicado para idosos e hepatopatas porque nao depende do figado para metabolizacao completa.</p>
+</div>
+
+<h3>Efeitos Adversos e Retirada dos BZDs</h3>
+<ul>
+  <li>Sonolencia diurna (quedas, fraturas, acidentes)</li>
+  <li>Amnesia retrograda</li>
+  <li><strong>Alteracao da arquitetura do sono:</strong> elimina fase REM &rarr; dormiu mas nao descansou, nao consolida memoria</li>
+  <li>Tolerancia e dependencia</li>
+  <li>Malformacoes congenitas (nao usar em gestantes)</li>
+</ul>
+
+<p><strong>Retirada GRADUAL obrigatoria:</strong> reducao de 1/4 por semana, prazo de 6-8 semanas. Retirada abrupta causa confusao mental, ansiedade rebote, insonia rebote. Pode trocar para BZD de meia-vida longa (diazepam ou clonazepam) para facilitar o desmame.</p>
+
+<p><strong>Flumazenil:</strong> antagonista competitivo do receptor BZD. Acao de apenas 2 horas &mdash; se o BZD tem meia-vida maior, pode haver re-sedacao. Acompanhamento obrigatorio.</p>
+
+<h3>Buspirona</h3>
+<p>Agonista parcial 5-HT1A. Indicada para TAG cronico. Inicio de acao LENTO (2-3 semanas). NAO tem propriedades anticonvulsivantes ou miorrelaxantes. NAO causa sedacao significativa nem dependencia. NAO potencializa alcool. <strong>Ideal para IDOSOS</strong> (sem risco de queda).</p>
+
+<h3>Antidepressivos</h3>
+
+<h4>ISRS (Inibidores Seletivos da Recaptacao de Serotonina)</h4>
+<p>Inibem seletivamente a recaptacao de 5-HT. Pouca afinidade por outros receptores &rarr; menos efeitos colaterais. Efeito clinico em 2-3 semanas. <strong>Sao os antidepressivos MAIS PRESCRITOS e a 1a linha.</strong></p>
+<p>Farmacos: fluoxetina (Prozac), sertralina (Zoloft), paroxetina (Aropax), citalopram, escitalopram.</p>
+<p>Efeitos colaterais: nausea, insonia, disfuncao sexual.</p>
+
+<div class="professor-highlight">
+<p>Paroxetina NAO usar em lactantes: passa para o leite materno, bebe pode ter sedacao excessiva.</p>
+</div>
+
+<h4>ADTs (Antidepressivos Triciclicos)</h4>
+<p>Inibem recaptacao de NE E/OU 5-HT (nao seletivos). Tambem bloqueiam: receptores M1 (boca seca, visao turva, constipacao), H1 (sedacao), alfa-adrenergicos (hipotensao postural). Superdosagem: disritmias cardiacas graves.</p>
+<p>Farmacos: amitriptilina, nortriptilina, imipramina, clomipramina.</p>
+<p><strong>1a linha para dor neuropatica</strong> (amitriptilina, nortriptilina).</p>
+
+<h4>IMAO (Inibidores da Monoamina Oxidase)</h4>
+<p>Inibem MAO-A e/ou MAO-B no cerebro, aumentando reservas de NA, DA e 5-HT.</p>
+
+<div class="alert-box">
+<p><strong>"Reacao do queijo":</strong> tiramina presente em queijos, vinhos e embutidos e normalmente metabolizada pela MAO intestinal e hepatica. Se a MAO esta inibida, a tiramina acumula na circulacao &rarr; liberacao massiva de noradrenalina &rarr; CRISE HIPERTENSIVA GRAVE. Por isso, IMAO exigem restricao dietetica rigorosa.</p>
+</div>
+
+<h4>Atipicos</h4>
+<ul>
+  <li><strong>Bupropiona:</strong> aumento da liberacao de NA; segura em superdose; usada para TABAGISMO</li>
+  <li><strong>Venlafaxina:</strong> inibidor dual (5-HT + NE / IRSN)</li>
+  <li><strong>Trazodona:</strong> bloqueador fraco de 5-HT; sedacao (usado como hipnotico)</li>
+</ul>
+
+<table>
+  <tr><th>Aspecto</th><th>ISRS</th><th>ADTs</th></tr>
+  <tr><td>Seletividade</td><td>Seletivos para 5-HT</td><td>Nao seletivos (5-HT + NE + outros)</td></tr>
+  <tr><td>Efeitos colaterais</td><td>Nausea, insonia, disfuncao sexual</td><td>Sedacao, boca seca, constipacao, hipotensao</td></tr>
+  <tr><td>Toxicidade</td><td>MENOR</td><td>MAIOR (cardiotoxicidade em superdose)</td></tr>
+  <tr><td>1a escolha</td><td>SIM (depressao e ansiedade)</td><td>NAO (mas 1a linha para dor neuropatica)</td></tr>
+</table>
+
+<h3>Estabilizadores do Humor &mdash; Litio</h3>
+<p>Ion organico que desloca sodio das celulas eletricamente ativadas. Mecanismos multiplos: aumenta atividade da Na,K-ATPase, interfere na formacao de IP3 e DAG, aumenta transmissao de 5-HT, diminui NE e DA. Eficaz em 60-80% de mania/hipomania. Janela terapeutica <strong>PEQUENA</strong> (exige monitoramento).</p>
+
+<h3>Beta-Bloqueadores na Ansiedade</h3>
+<p>Propranolol e atenolol diminuem sintomas AUTONOMICOS: tremor, sudorese, taquicardia. NAO tratam a ansiedade em si, apenas os sintomas somaticos. Uteis em ansiedade de performance (fala publica, provas).</p>
+
+<div class="professor-highlight">
+<p>Propranolol e nao seletivo (beta-1+beta-2) &rarr; risco de broncoespasmo. Atenolol e mais seletivo (beta-1) &rarr; mais seguro. Nenhum trata ansiedade &mdash; so alivia o tremor e a taquicardia.</p>
+</div>
+
+<h3>Hierarquia do Tratamento da Ansiedade</h3>
+<table>
+  <tr><th>Linha</th><th>Medicamento</th><th>Observacao</th></tr>
+  <tr><td>1a linha</td><td>ISRS e IRSN</td><td>Custo-beneficio favoravel; demora 2-3 semanas</td></tr>
+  <tr><td>2a linha</td><td>BZDs</td><td>Efeito rapido (~30 min); risco de dependencia</td></tr>
+  <tr><td>Alternativa</td><td>Buspirona</td><td>Sem efeito hipnotico; ideal para TAG cronico e idosos</td></tr>
+  <tr><td>Situacional</td><td>Beta-bloqueadores</td><td>Apenas sintomas autonomicos</td></tr>
+</table>
+
+<!-- CLINICA -->
+<h2 id="a7-clinica">Exemplos Clinicos</h2>
+
+<div class="clinical-example">
+<p><strong>Caso clinico dos slides:</strong> Mulher de 30 anos com fadiga ha 2 meses, sem vontade de fazer nada, insonia, sem apetite, tristeza, choro frequente. Diagnostico: depressao. Prescricao: fluoxetina (ISRS). Orientacao: efeito em 2-3 semanas; nao interromper quando se sentir bem.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Dependencia psicologica de BZD:</strong> Paciente que tomava Lexotan (bromazepam). Quando a farmacia trocou o comprimido por placebo (mesma cor/formato), o paciente relatava que dormia igual. Ilustra o componente psicologico da dependencia e o poder do efeito placebo.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Idoso ansioso:</strong> Preferir buspirona (sem sedacao, sem risco de queda) ou lorazepam (sem metabolito ativo, metabolizacao fase II). BZDs com metabolitos ativos (diazepam) se acumulam em idosos &rarr; sedacao excessiva &rarr; quedas &rarr; fraturas.</p>
+</div>
+
+<div class="clinical-example">
+<p><strong>Propranolol para ansiedade de performance:</strong> Diminui tremor, sudorese e taquicardia antes de uma apresentacao. Mas NAO trata a ansiedade cognitiva. E como desligar o alarme sem apagar o incendio.</p>
+</div>
+
+<!-- RELEVANCIA -->
+<h2 id="a7-relevancia">Relevancia Clinica</h2>
+
+<h3>Eficacia dos Antidepressivos</h3>
+<p>Estrategia quando ha falha terapeutica: otimizar dose &rarr; potenciar (litio, buspirona, antipsicotico atipico) &rarr; combinar duas classes &rarr; trocar de classe &rarr; ECT em casos graves refratarios.</p>
+
+<h3>Criterios de Escolha do Antidepressivo</h3>
+<p>O melhor medicamento e aquele que o paciente responde. Considerar: eficacia (evidencia), mecanismo adequado ao perfil, tolerabilidade, seguranca, facilidade de administracao, custo, historia pessoal/familiar, comorbidades, medicamentos ja em uso.</p>
+
+<div class="connection-box">
+<p><strong>Serotonina como ponto de convergencia:</strong> Na Aula 6, participa da modulacao descendente da dor e e mediador inflamatorio periferico. Na Aula 7, e o alvo principal dos antidepressivos e ansioliticos. Os mesmos mecanismos que tratam depressao (aumento de 5-HT e NE) modulam a via descendente inibitoria da dor. E por isso que antidepressivos funcionam para dor cronica.</p>
+</div>
+
+<div class="connection-box">
+<p><strong>Flumazenil (antagonista BZD) e paralelo com Naloxona (antagonista opioide):</strong> Mesma logica farmacologica &mdash; antagonistas competitivos de seus respectivos receptores, usados para reverter overdose. Ambos tem acao mais curta que os farmacos que antagonizam &rarr; risco de re-sedacao/re-depressao.</p>
+</div>
+
+<div class="connection-box">
+<p><strong>BZDs e Anestesia (Aula 5):</strong> O midazolam e usado como pre-medicacao ansiolítica antes da cirurgia. O diazepam e relaxante muscular (Aula 6). GABA e o neurotransmissor inibitorio que permeia anestesia, ansiedade e dor.</p>
+</div>
+
+<!-- RESUMO -->
+<h2 id="a7-resumo">Resumo Rapido</h2>
+<div class="quick-summary">
+<ul>
+  <li>BZDs aumentam FREQUENCIA de abertura do canal de Cl-; barbituricos aumentam TEMPO. BZDs sao mais seguros</li>
+  <li>BZD isolado nao mata; BZD + alcool pode matar (dois depressores do SNC)</li>
+  <li>Retirada de BZD: GRADUAL (1/4 por semana, 6-8 semanas)</li>
+  <li>Buspirona: agonista parcial 5-HT1A; ideal para idosos (sem sedacao, sem dependencia)</li>
+  <li>ISRS: 1a linha para depressao e ansiedade; efeito em 2-3 semanas</li>
+  <li>ADTs: nao seletivos, mais efeitos colaterais, mas 1a linha para DOR NEUROPATICA</li>
+  <li>IMAO: restricao dietetica (tiramina); reservado para depressao refrataria</li>
+  <li>Litio: estabilizador de humor com janela terapeutica pequena; monitoramento obrigatorio</li>
+  <li>Lorazepam: sem metabolito ativo (fase II), ideal para idosos e hepatopatas</li>
+</ul>
+</div>
+</section>
+
+</div><!-- content-wrapper -->
+</main>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">&uarr;</button>
+
+<!-- INLINE JS -->
+<script>
+// Theme toggle
+function initTheme() {
+  var saved = localStorage.getItem('farma-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+}
+function toggleTheme() {
+  var current = document.documentElement.getAttribute('data-theme');
+  var next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('farma-theme', next);
+  var btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = next === 'light' ? 'Escuro' : 'Claro';
+}
+initTheme();
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Theme button label
+  var themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) {
+    var current = document.documentElement.getAttribute('data-theme');
+    themeBtn.textContent = current === 'light' ? 'Escuro' : 'Claro';
+  }
+
+  // Mobile menu toggle
+  var menuBtn = document.getElementById('menu-toggle');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebar-overlay');
+  if (menuBtn && sidebar) {
+    menuBtn.addEventListener('click', function() {
+      sidebar.classList.toggle('open');
+    });
+    if (overlay) {
+      overlay.addEventListener('click', function() {
+        sidebar.classList.remove('open');
+      });
+    }
+    sidebar.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        if (window.innerWidth <= 900) sidebar.classList.remove('open');
+      });
+    });
+  }
+
+  // Back to top button
+  var btt = document.getElementById('back-to-top');
+  if (btt) {
+    window.addEventListener('scroll', function() {
+      btt.classList.toggle('visible', window.scrollY > 400);
+    });
+    btt.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Active nav highlight on scroll
+  var navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+  if (navLinks.length > 0) {
+    var sections = [];
+    navLinks.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({ el: el, link: link });
+    });
+
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var scrollPos = window.scrollY + 100;
+          var current = null;
+          for (var i = sections.length - 1; i >= 0; i--) {
+            if (sections[i].el.offsetTop <= scrollPos) {
+              current = sections[i]; break;
+            }
+          }
+          navLinks.forEach(function(l) { l.classList.remove('active'); });
+          if (current) current.link.classList.add('active');
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+});
+</script>
+
+</body>
+</html>

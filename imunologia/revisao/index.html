@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dossiê de Revisão — Autópsia de uma Reação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f1ea;
+    --paper-2:#eae5da;
+    --ink:#1c1a17;
+    --ink-soft:#3a352e;
+    --muted:#6b6459;
+    --faint:#928a7c;
+    --rule:#d6cfc0;
+    --navy:#1f3a52;
+    --navy-soft:#2d5371;
+    --rust:#9c2a2b;
+    --rust-soft:#b8413f;
+    --gold:#9a7b2e;
+    --white:#fffdf8;
+    --shadow:rgba(28,26,23,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Newsreader',Georgia,serif;
+    font-size:18px;
+    line-height:1.68;
+    color:var(--ink);
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 15% 5%, rgba(31,58,82,0.035) 0%, transparent 32%),
+      radial-gradient(circle at 88% 95%, rgba(156,42,43,0.03) 0%, transparent 38%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.5 0 0 0 0 0.42 0 0 0 0.025 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 40px 140px}
+  @media(max-width:720px){.wrap{padding:0 22px 100px}body{font-size:17px}}
+
+  /* COVER */
+  .cover{padding:80px 0 56px;border-bottom:3px double var(--rule);margin-bottom:8px;position:relative}
+  .cover .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--rust);margin-bottom:28px}
+  .cover h1{font-family:'Fraunces',serif;font-variation-settings:"opsz" 144,"wght" 800;font-size:clamp(44px,8vw,82px);line-height:0.94;letter-spacing:-0.025em;color:var(--ink);margin-bottom:10px}
+  .cover h1 .it{font-style:italic;font-weight:400}
+  .cover .sub{font-family:'Newsreader',serif;font-style:italic;font-size:21px;color:var(--ink-soft);margin:18px 0 0;max-width:640px}
+  .cover .tagline{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.04em;color:var(--muted);margin-top:30px;line-height:1.7}
+  .cover .seal{display:inline-block;margin-top:28px;padding:7px 14px;border:1.5px solid var(--navy);color:var(--navy);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase}
+
+  /* TOC */
+  .toc{background:var(--white);border:1px solid var(--rule);box-shadow:0 1px 0 var(--shadow);padding:30px 34px;margin:40px 0 64px;border-radius:2px}
+  .toc h2{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--rust);margin-bottom:18px}
+  .toc ol{list-style:none;counter-reset:toc}
+  .toc > ol > li{counter-increment:toc;margin-bottom:4px}
+  .toc > ol > li > a{display:flex;align-items:baseline;gap:14px;text-decoration:none;color:var(--ink);padding:7px 8px;border-radius:2px;transition:background .15s,color .15s}
+  .toc > ol > li > a::before{content:counter(toc,upper-roman);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--rust);min-width:34px;letter-spacing:0.1em}
+  .toc > ol > li > a:hover{background:var(--paper-2);color:var(--navy)}
+  .toc .t-title{font-family:'Fraunces',serif;font-variation-settings:"opsz" 40,"wght" 600;font-size:18px}
+  .toc .t-sub{display:block;margin:2px 0 8px 56px;font-size:14.5px;color:var(--muted);font-style:italic}
+
+  /* SECTIONS */
+  section{margin-bottom:70px;scroll-margin-top:20px}
+  .part-head{margin:0 0 28px;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+  .part-head .pnum{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:10px}
+  .part-head h2{font-family:'Fraunces',serif;font-variation-settings:"opsz" 96,"wght" 700;font-size:clamp(30px,5vw,44px);line-height:1.02;letter-spacing:-0.02em;color:var(--ink)}
+  .part-head .pdek{font-family:'Newsreader',serif;font-style:italic;font-size:18px;color:var(--muted);margin-top:10px}
+
+  h3{font-family:'Fraunces',serif;font-variation-settings:"opsz" 60,"wght" 600;font-size:25px;letter-spacing:-0.01em;color:var(--navy);margin:42px 0 12px;line-height:1.15}
+  h3 .num{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--rust);margin-right:10px;font-weight:700;letter-spacing:0}
+  h4{font-family:'Fraunces',serif;font-variation-settings:"opsz" 40,"wght" 600;font-size:19px;color:var(--ink);margin:26px 0 8px}
+
+  p{margin-bottom:16px;color:var(--ink-soft)}
+  p strong,li strong{color:var(--ink);font-weight:600}
+  em{font-style:italic}
+  .lead{font-size:20px;line-height:1.6;color:var(--ink);margin-bottom:22px}
+  .lead::first-letter{}
+
+  a.ref{color:var(--navy-soft);text-decoration:none;border-bottom:1px dotted var(--navy-soft)}
+
+  ul,ol{margin:0 0 18px 0;padding-left:26px}
+  li{margin-bottom:9px;color:var(--ink-soft)}
+  li::marker{color:var(--rust)}
+
+  /* technical term inline */
+  .tt{font-family:'JetBrains Mono',monospace;font-size:0.82em;background:var(--paper-2);padding:1px 6px;border-radius:3px;color:var(--navy);letter-spacing:-0.01em}
+
+  /* callout boxes */
+  .box{border-left:3px solid var(--navy);background:var(--white);padding:18px 22px;margin:24px 0;border-radius:0 3px 3px 0;box-shadow:0 1px 0 var(--shadow)}
+  .box .box-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--navy);margin-bottom:8px;display:block}
+  .box p:last-child{margin-bottom:0}
+  .box.rust{border-left-color:var(--rust)}
+  .box.rust .box-label{color:var(--rust)}
+  .box.gold{border-left-color:var(--gold)}
+  .box.gold .box-label{color:var(--gold)}
+
+  /* scene-link tag */
+  .scenetag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;background:var(--navy);color:var(--white);padding:3px 9px;border-radius:2px;margin-bottom:14px;vertical-align:middle}
+  .scenetag.rust{background:var(--rust)}
+
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin:24px 0}
+  table{border-collapse:collapse;width:100%;font-size:15px;background:var(--white);box-shadow:0 1px 0 var(--shadow)}
+  caption{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 0 10px;caption-side:top}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+  thead th{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);background:var(--navy);border-bottom:none;font-weight:500}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:var(--paper)}
+  td strong{color:var(--ink)}
+  .tbl-wrap.rust thead th{background:var(--rust)}
+
+  /* sequence / step number */
+  .steps{counter-reset:step;list-style:none;padding-left:0;margin:22px 0}
+  .steps > li{counter-increment:step;position:relative;padding:4px 0 18px 52px;margin-bottom:0;border-left:1px solid var(--rule);margin-left:16px}
+  .steps > li::before{content:counter(step);position:absolute;left:-16px;top:0;width:32px;height:32px;background:var(--navy);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+  .steps > li:last-child{border-left:1px solid transparent}
+  .steps h4{margin-top:2px}
+
+  /* divider */
+  .div-orn{text-align:center;margin:48px 0;color:var(--rust);font-size:15px;letter-spacing:0.5em}
+
+  /* footer */
+  footer{margin-top:80px;padding-top:22px;border-top:3px double var(--rule);font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.06em;color:var(--muted);line-height:1.8}
+
+  /* back-to-top anchors in part heads */
+  .top-link{float:right;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--faint);text-decoration:none;margin-top:6px}
+  .top-link:hover{color:var(--rust)}
+
+  /* small note */
+  .note{font-size:14.5px;color:var(--muted);font-style:italic}
+  .kbd{font-family:'JetBrains Mono',monospace;font-size:0.8em;color:var(--rust)}
+
+  /* mnemonic / key-fact strip */
+  .keyfact{background:linear-gradient(180deg,var(--white),var(--paper));border:1px solid var(--rule);border-top:2px solid var(--rust);padding:16px 20px;margin:22px 0;border-radius:0 0 3px 3px}
+  .keyfact .kf-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:6px}
+  .keyfact p{margin:0;font-size:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===================== COVER ===================== -->
+<div class="cover" id="top">
+  <div class="kicker">Dossiê de revisão · uso de estudo · trabalho de imunologia</div>
+  <h1>Autópsia <span class="it">de uma</span> Reação</h1>
+  <div class="sub">As bases científicas completas — microbiologia, toxinologia, imunologia e fisiologia — e o mapa integral do roteiro, cena a cena.</div>
+  <div class="tagline">Anafilaxia por veneno de <em>Apis mellifera</em> africanizada · Hipersensibilidade tipo I<br>Da picada à parada: o que o veneno faz, o que o corpo faz, e por que o corpo mata.</div>
+  <div class="seal">Documento de referência · v1</div>
+</div>
+
+<!-- ===================== TOC ===================== -->
+<nav class="toc">
+  <h2>Sumário</h2>
+  <ol>
+    <li><a href="#parte1"><span class="t-title">Mapa do projeto</span></a><span class="t-sub">O enunciado, a decisão criativa, as 10 cenas e onde cada conceito mora</span></li>
+    <li><a href="#parte2"><span class="t-title">O agente — microbiologia e toxinologia</span></a><span class="t-sub">A abelha africanizada, o aparelho ferroador, a apitoxina e seus componentes</span></li>
+    <li><a href="#parte3"><span class="t-title">Farmacologia do veneno</span></a><span class="t-sub">Hialuronidase, melitina, PLA2 e a cascata do ácido araquidônico — Cena 6</span></li>
+    <li><a href="#parte4"><span class="t-title">Imunologia — hipersensibilidade tipo I</span></a><span class="t-sub">Sensibilização, IgE, mastócito, cross-link, degranulação, mediadores — Cena 8, o núcleo</span></li>
+    <li><a href="#parte5"><span class="t-title">Fisiopatologia da anafilaxia</span></a><span class="t-sub">Choque distributivo e colapso respiratório — Cena 8, fase final</span></li>
+    <li><a href="#parte6"><span class="t-title">Diagnóstico</span></a><span class="t-sub">Achados forenses, cianose × livor, triptase, IgE específica, o diferencial — Cena 9</span></li>
+    <li><a href="#parte7"><span class="t-title">Tratamento</span></a><span class="t-sub">Adrenalina e seus três mecanismos, adjuvantes, imunoterapia — Cena 10</span></li>
+    <li><a href="#parte8"><span class="t-title">A costura — ciência × narrativa</span></a><span class="t-sub">Os loops do filme e por que "o que matou ela foi não saber" é literal</span></li>
+    <li><a href="#parte9"><span class="t-title">Referências</span></a><span class="t-sub">Fontes para a bibliografia ABNT</span></li>
+  </ol>
+</nav>
+
+<!-- ===================== PARTE I ===================== -->
+<section id="parte1">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte I</span>
+    <h2>Mapa do projeto</h2>
+    <div class="pdek">O que o trabalho exige, a decisão criativa e onde cada conceito científico mora dentro do filme.</div>
+  </div>
+
+  <p class="lead">O vídeo é um trabalho de imunologia disfarçado de investigação forense. A escolha não é decorativa: a estrutura de "caso a resolver" obriga a explicar os mecanismos na ordem em que um perito os descobriria, e isso coincide com a ordem didática correta — primeiro o agente, depois o que ele faz, depois por que o corpo reagiu daquele jeito, por fim como se confirma e como se trata.</p>
+
+  <h3><span class="num">1.1</span>O enunciado e a decisão</h3>
+  <p>O enunciado pede cinco coisas, e o roteiro responde a todas: (1) <strong>características gerais</strong> do agente — aqui tratado como "o evento" picada, não como microrganismo; (2) <strong>patogênese com ênfase na imunidade</strong> — o coração do trabalho, coberto pelas Cenas 6 e 8; (3) <strong>diagnóstico clínico e laboratorial</strong> — Cena 9; (4) <strong>tratamento, que não é o foco</strong> — Cena 10, deliberadamente breve; (5) <strong>referência bibliográfica em ABNT</strong>.</p>
+  <p>A decisão de tratar a picada como "o evento" (e não exigir microbiologia clássica de microrganismo) é defensável: o agente é um veneno animal, a patogênese é toxinológica e imunológica, e a ênfase do enunciado é em <em>imunidade</em> — que é exatamente onde mora a hipersensibilidade tipo I.</p>
+
+  <div class="box gold">
+    <span class="box-label">Tese central do filme</span>
+    <p>A vítima não foi morta pelo veneno diretamente. Foi morta pela <strong>resposta imune exagerada do próprio corpo</strong> a esse veneno — uma reação de hipersensibilidade tipo I. O veneno foi o gatilho; a arma foi o sistema imune dela. E o que tornou isso fatal foi a ausência de uma informação: ela não sabia que era alérgica, e não havia adrenalina por perto. <em>"O que matou ela foi não saber."</em></p>
+  </div>
+
+  <h3><span class="num">1.2</span>As dez cenas, na ordem</h3>
+  <p>O filme tem dez cenas (~7 min). Sete são live-action em estética graphic-novel noir; três são animação científica/molecular (Cenas 6, 7 e 8). A ordem abaixo é a ordem final de montagem.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>Estrutura narrativa · ordem de montagem</caption>
+      <thead>
+        <tr><th>#</th><th>Cena</th><th>Duração</th><th>O que acontece</th><th>Tipo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Abertura / calçada</td><td>~45s</td><td>Mulher encontrada morta sentada contra um muro, interior do Brasil, ao entardecer. A perícia fotografa. Plant: uma abelha morta no chão. Pergunta de abertura: "o que matou essa pessoa?"</td><td>Live-action</td></tr>
+        <tr><td><strong>2</strong></td><td>Achados no IML</td><td>~70s</td><td>A legista examina o corpo: edema discreto, lesão puntiforme no antebraço, cianose (distinta de livor mortis), edema de laringe, pulmões congestos.</td><td>Live-action</td></tr>
+        <tr><td><strong>3</strong></td><td>Diferencial</td><td>~80s</td><td>Escorpião descartado (faltam sinais autonômicos; edema seria cardiogênico). Aranha-marrom descartada (sem necrose, timeline errada).</td><td>Live-action</td></tr>
+        <tr><td><strong>4</strong></td><td>O ferrão</td><td>~45s</td><td>Com a lupa, encontra o aparelho ferroador cravado — ferrão farpado + saco de veneno + músculo + gânglio. Abelha, não vespa.</td><td>Live-action</td></tr>
+        <tr><td><strong>5</strong></td><td>Reveal nas fotos</td><td>~35s</td><td>Revê as fotos da cena e enxerga a abelha morta que sempre esteve lá (pagamento do plant). Diálogo com o detetive.</td><td>Live-action</td></tr>
+        <tr><td><strong>6</strong></td><td>Patogênese do veneno</td><td>~75s</td><td>As três substâncias: hialuronidase espalha, melitina perfura, PLA2 libera ácido araquidônico. Termina em vasodilatação local — o fim "normal".</td><td>Animação</td></tr>
+        <tr><td><strong>7</strong></td><td>O vira</td><td>~15s</td><td>"Não foi a abelha sozinha — foi o próprio corpo da vítima." Transição mergulhando no corpo.</td><td>Híbrida</td></tr>
+        <tr><td><strong>8</strong></td><td>Hipersensibilidade tipo I</td><td>~120s</td><td>O núcleo. Sensibilização → reexposição → degranulação → duas ondas de mediadores → colapso sistêmico → o loop micro/macro → a ironia.</td><td>Animação</td></tr>
+        <tr><td><strong>9</strong></td><td>Diagnóstico</td><td>~55s</td><td>Triptase post-mortem + IgE específica. Revisão dos achados clínicos com o detetive.</td><td>Live-action</td></tr>
+        <tr><td><strong>10</strong></td><td>Fechamento</td><td>~50s</td><td>"Tinha como salvar?" → adrenalina IM (três mecanismos) → retorno à calçada espelhando a abertura → "o que matou ela foi não saber" → o detetive sai.</td><td>Live-action</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="num">1.3</span>Onde cada conceito mora</h3>
+  <p>Mapa rápido pra você localizar a ciência dentro da narrativa — útil tanto pra montar quanto pra responder perguntas na apresentação.</p>
+
+  <div class="tbl-wrap rust">
+    <table>
+      <caption>Conceito científico → cena</caption>
+      <thead><tr><th>Conceito</th><th>Cena</th></tr></thead>
+      <tbody>
+        <tr><td>Anatomia do aparelho ferroador + autotomia; abelha vs vespa</td><td>Cena 4</td></tr>
+        <tr><td>Composição do veneno (hialuronidase, melitina, PLA2)</td><td>Cena 6</td></tr>
+        <tr><td>Cascata do ácido araquidônico (COX/LOX → prostaglandinas/leucotrienos)</td><td>Cena 6 (e ecoa na 8)</td></tr>
+        <tr><td>Resposta inflamatória local (vasodilatação, edema) — o "normal"</td><td>Cena 6</td></tr>
+        <tr><td>Sensibilização: dendrítica → Th2 → IgE → mastócito armado</td><td>Cena 8 (fase A)</td></tr>
+        <tr><td>Cross-link, degranulação, mediadores (duas ondas)</td><td>Cena 8 (fase B)</td></tr>
+        <tr><td>Anafilaxia: choque distributivo + asfixia</td><td>Cena 8 (fase C) — fecha loop com Cena 2</td></tr>
+        <tr><td>Diagnóstico clínico/forense; cianose vs livor</td><td>Cenas 2 e 9</td></tr>
+        <tr><td>Triptase post-mortem + IgE específica</td><td>Cena 9</td></tr>
+        <tr><td>Diferencial peçonhento (escorpião, aranha)</td><td>Cena 3</td></tr>
+        <tr><td>Tratamento: adrenalina, adjuvantes, imunoterapia</td><td>Cena 10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== PARTE II ===================== -->
+<section id="parte2">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte II</span>
+    <h2>O agente: microbiologia e toxinologia</h2>
+    <div class="pdek">A abelha africanizada, por que ela é o agente certo para o interior do Brasil, e a química do veneno que ela injeta.</div>
+  </div>
+
+  <h3><span class="num">2.1</span><em>Apis mellifera</em> africanizada</h3>
+  <p>A abelha africanizada é um híbrido entre subespécies europeias de <em>Apis mellifera</em> e a subespécie africana <em>Apis mellifera scutellata</em>, resultado de cruzamentos a partir de enxames que escaparam de um experimento em Rio Claro (SP) em 1957. Espalhou-se por todo o continente e hoje domina a fauna apícola brasileira. É popularmente chamada de "abelha assassina" — exagero midiático, mas com base real: ela é mais defensiva, ataca em maior número e persegue por distâncias maiores que a europeia.</p>
+  <p>Para o enredo, isso importa por três motivos. Primeiro, <strong>epidemiologia</strong>: no Brasil, acidentes com himenópteros (abelhas, vespas, formigas) são notificáveis e relativamente comuns, sobretudo no interior e em zonas com mata — o cenário do filme. Segundo, <strong>plausibilidade</strong>: uma vítima sozinha, picada uma vez, longe de socorro, é um quadro realista no campo. Terceiro, o veneno é qualitativamente igual ao da abelha comum — o que muda no ataque em massa é a <em>dose</em> (centenas de picadas causam toxicidade sistêmica direta), mas <strong>na anafilaxia basta uma picada</strong>, porque o mecanismo não é dose-dependente da forma usual: é imunológico.</p>
+
+  <div class="box">
+    <span class="box-label">Distinção que vale entender</span>
+    <p>Há dois jeitos completamente diferentes de o veneno de abelha matar. <strong>(1) Toxicidade direta</strong>: muitas picadas simultâneas (tipicamente centenas), em que a quantidade de veneno causa hemólise, rabdomiólise, lesão renal — é dose-dependente. <strong>(2) Anafilaxia</strong>: uma única picada num indivíduo sensibilizado, em que a reação imune desproporcional mata em minutos — independe da dose. O filme é sobre o segundo caso: <em>uma</em> picada, num corpo que já tinha sido sensibilizado antes.</p>
+  </div>
+
+  <h3><span class="num">2.2</span>O aparelho ferroador e a autotomia</h3>
+  <p>O ferrão da abelha operária é um ovipositor modificado, localizado na ponta do abdome. O aparelho completo tem: o <strong>estilete farpado</strong> (com lancetas serrilhadas), o <strong>saco de veneno</strong> (reservatório), <strong>músculos</strong> que continuam contraindo, e <strong>gânglios nervosos</strong> que mantêm o bombeamento de forma autônoma.</p>
+  <p>Quando a abelha pica um mamífero (pele elástica e espessa), as farpas do estilete prendem na pele e a abelha não consegue retirar o ferrão. Ao tentar se soltar, ela <strong>arranca o próprio aparelho ferroador</strong> — junto com parte das vísceras — e morre em seguida. Isso é <span class="tt">autotomia</span>. O detalhe biologicamente crucial, e dramaticamente útil no filme: <strong>o ferrão arrancado continua bombeando veneno por vários minutos</strong>, porque os músculos e gânglios nervosos do aparelho seguem funcionando mesmo desconectados da abelha. É por isso que a recomendação é remover o ferrão o quanto antes — e por isso, no IML, a legista encontra o aparelho ainda cravado, com o músculo "pulsando".</p>
+
+  <div class="box gold">
+    <span class="box-label">Por que a abelha morre picando (e a vespa não)</span>
+    <p>A autotomia é, em termos evolutivos, um comportamento de <strong>defesa altruísta da colônia</strong>: a operária é geneticamente descartável (não se reproduz), e o ferrão farpado que a mata é eficaz justamente porque fica cravado bombeando. A abelha morre, mas a colmeia é defendida. A vespa, com ferrão liso, pica múltiplas vezes e sobrevive — estratégia individual diferente.</p>
+  </div>
+
+  <h3><span class="num">2.3</span>Abelha × vespa: a base do diferencial</h3>
+  <p>Essa distinção é o que permite à legista, na Cena 4, afirmar "abelha, não vespa" só de olhar o aparelho cravado.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>Ferrão: abelha × vespa</caption>
+      <thead><tr><th></th><th>Abelha (<em>Apis</em>)</th><th>Vespa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Estilete</strong></td><td>Farpado (serrilhado), prende na pele</td><td>Liso, retrátil</td></tr>
+        <tr><td><strong>Após picar</strong></td><td>Fica cravado; abelha sofre autotomia e morre</td><td>Retira o ferrão; pica várias vezes e sobrevive</td></tr>
+        <tr><td><strong>Saco de veneno</strong></td><td>Arrancado junto, continua bombeando</td><td>Permanece com o animal</td></tr>
+        <tr><td><strong>Pista forense</strong></td><td>Aparelho ferroador cravado na lesão</td><td>Ausência de ferrão cravado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="num">2.4</span>A apitoxina: composição do veneno</h3>
+  <p>O veneno da abelha — <span class="tt">apitoxina</span> — é uma mistura complexa de peptídeos, enzimas e aminas. Três componentes fazem o trabalho pesado e são os que o filme detalha na Cena 6. Outros são citados aqui por completude.</p>
+
+  <h4>Os três protagonistas</h4>
+  <ul>
+    <li><strong>Melitina</strong> — o componente mais abundante, cerca de <strong>40–50% do peso seco</strong> do veneno. Peptídeo de 26 aminoácidos, anfipático (tem porção hidrofílica e hidrofóbica). É <strong>citolítico</strong>: insere-se na membrana das células e forma poros, causando lise. Responsável por boa parte da dor e do dano local direto. Também tem ação pró-inflamatória e <strong>potencializa a fosfolipase A2</strong>.</li>
+    <li><strong>Fosfolipase A2 (PLA2)</strong> — cerca de <strong>10–12% do peso seco</strong>. Enzima que hidrolisa fosfolipídios de membrana na posição <span class="tt">sn-2</span>, liberando <strong>ácido araquidônico</strong> e lisofosfolipídios. É enzimaticamente destrutiva — <em>e</em>, o mais importante para o filme, é o <strong>principal alérgeno do veneno</strong> (ver Parte IV). É a molécula contra a qual a vítima fez IgE.</li>
+    <li><strong>Hialuronidase</strong> — cerca de <strong>1–3%</strong>. Degrada o ácido hialurônico da matriz extracelular, o "cimento" que mantém o tecido coeso. É o <strong>"fator de difusão" (spreading factor)</strong>: abre caminho para o veneno se espalhar pelo tecido em vez de ficar concentrado no ponto da picada. Também é alérgeno.</li>
+  </ul>
+
+  <h4>Coadjuvantes (menção)</h4>
+  <ul>
+    <li><strong>Apamina</strong> — neurotoxina pequena que bloqueia canais de potássio ativados por cálcio.</li>
+    <li><strong>Peptídeo MCD</strong> (mast cell degranulating peptide / peptídeo 401) — degranula mastócitos <em>diretamente</em>, sem precisar de IgE.</li>
+    <li><strong>Adolapina</strong> — efeito anti-inflamatório e analgésico.</li>
+  </ul>
+
+  <div class="box rust">
+    <span class="box-label">Nomenclatura de alérgenos — detalhe que mostra profundidade</span>
+    <p>Os alérgenos do veneno de <em>Apis mellifera</em> têm nomenclatura oficial. Os principais: <span class="tt">Api m 1</span> = fosfolipase A2 (o alérgeno major, sensibiliza a maioria dos alérgicos); <span class="tt">Api m 2</span> = hialuronidase; <span class="tt">Api m 3</span> = fosfatase ácida; <span class="tt">Api m 4</span> = melitina; mais Api m 5, 6, 10 e outros. Saber que o <strong>Api m 1 (PLA2) é o alérgeno principal</strong> conecta diretamente com a Parte IV: a mesma enzima que faz dano químico na Cena 6 é a que o sistema imune fichou como inimigo.</p>
+  </div>
+</section>
+
+<!-- ===================== PARTE III ===================== -->
+<section id="parte3">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte III</span>
+    <h2>Farmacologia do veneno</h2>
+    <div class="pdek">O que o veneno faz no tecido, na ordem em que age. Tudo isto é a Cena 6 — e termina no ponto onde a história <em>pararia</em>, se a vítima não fosse alérgica.</div>
+  </div>
+  <span class="scenetag">Cena 6 · patogênese do veneno</span>
+
+  <p class="lead">A Cena 6 segue o veneno no tempo: ele entra, abre caminho, perfura células e dispara cascatas inflamatórias. O fio condutor é uma molécula — o <strong>ácido araquidônico</strong> — que você precisa fixar, porque ela reaparece na Cena 8 vinda de outra fonte.</p>
+
+  <ol class="steps">
+    <li>
+      <h4>Inoculação</h4>
+      <p>O ferrão atravessa a epiderme e atinge a derme, onde estão os vasos e as terminações nervosas. O saco de veneno bombeia a apitoxina para o tecido — e, por causa da autotomia, continua bombeando por minutos mesmo após a abelha morrer. A dor imediata vem da melitina e da estimulação nervosa direta.</p>
+    </li>
+    <li>
+      <h4>Hialuronidase abre o caminho</h4>
+      <p>A hialuronidase degrada o <strong>ácido hialurônico</strong> — o componente gelatinoso da matriz extracelular que ocupa o espaço entre as células e mantém a coesão do tecido. Ao quebrá-lo, a enzima cria canais e permite que o veneno <strong>se espalhe</strong> por uma área maior. É por isso que uma picada inflama uma região bem maior que o pontinho do ferrão. Na lógica da anafilaxia, isso também significa que a PLA2 (o alérgeno) alcança muito mais mastócitos.</p>
+    </li>
+    <li>
+      <h4>Melitina perfura as células</h4>
+      <p>A melitina, peptídeo anfipático, insere-se na <strong>bicamada lipídica</strong> das membranas celulares. Várias moléculas se agrupam em anel e formam um <strong>poro transmembrana</strong>. A célula perde o conteúdo citoplasmático e morre — <span class="tt">citólise</span> direta. Isso causa dano tecidual e dor. A melitina ainda <strong>degranula mastócitos diretamente</strong> (independente de IgE) e <strong>potencializa a PLA2</strong> — ou seja, prepara o terreno para a reação alérgica da Cena 8.</p>
+    </li>
+    <li>
+      <h4>PLA2 libera o ácido araquidônico <span class="kbd">[beat-chave]</span></h4>
+      <p>A fosfolipase A2 cliva os fosfolipídios da membrana na posição <span class="tt">sn-2</span> e libera o <strong>ácido araquidônico</strong>, um ácido graxo que estava preso na cauda do fosfolipídio. Esse ácido araquidônico é a <strong>matéria-prima</strong> de duas cascatas de mediadores inflamatórios:</p>
+      <ul>
+        <li>via <strong>ciclo-oxigenase (COX)</strong> → <strong>prostaglandinas</strong> (e tromboxanos);</li>
+        <li>via <strong>lipoxigenase (LOX)</strong> → <strong>leucotrienos</strong>.</li>
+      </ul>
+      <p>Detalhe de localização (perguntado e que vale cravar): a <strong>PLA2 do veneno é extracelular</strong> — vem injetada pela abelha e age na face externa da membrana plasmática. O araquidonato liberado é então captado por enzimas (COX, LOX) presentes em outras células, sobretudo células inflamatórias do tecido.</p>
+    </li>
+    <li>
+      <h4>Vasodilatação e edema local — o "fim normal"</h4>
+      <p>Os mediadores gerados (histamina de mastócitos disparados pela melitina, mais prostaglandinas e leucotrienos) agem nos vasos locais e produzem <strong>vasodilatação</strong> (rubor, calor) e <strong>aumento da permeabilidade capilar</strong> (extravasamento de plasma → edema). São os sinais cardinais da inflamação descritos por Celso há dois mil anos: <em>rubor, calor, tumor, dor</em>. <strong>Numa pessoa não sensibilizada, a história pararia aqui</strong>: dói, incha, fica vermelho por horas, e sara. Resposta local, contida, autolimitada.</p>
+    </li>
+  </ol>
+
+  <div class="keyfact">
+    <span class="kf-label">Fixe esta molécula</span>
+    <p><strong>Ácido araquidônico.</strong> Liberado aqui pela PLA2 do veneno (Cena 6). Reaparece na Cena 8, liberado pela PLA2 <em>do próprio mastócito</em>, virando leucotrienos e PGD2. O veneno e o corpo usam a <strong>mesma cascata bioquímica</strong> — a diferença é só de onde vem o disparo.</p>
+  </div>
+
+  <div class="box rust">
+    <span class="box-label">O pivô do filme: local × sistêmico</span>
+    <p>Tudo na Cena 6 é uma resposta <strong>local</strong>. A Cena 8 é o mesmo conjunto de fenômenos — vasodilatação, extravasamento, mediadores — só que <strong>sistêmico, simultâneo e maciço</strong>. Não é um mecanismo novo: é o mesmo, em escala catastrófica. Essa transição (local → sistêmica) é o que separa uma picada banal de uma anafilaxia fatal, e é o que a Cena 7 anuncia.</p>
+  </div>
+</section>
+
+<!-- ===================== PARTE IV ===================== -->
+<section id="parte4">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte IV</span>
+    <h2>Imunologia: hipersensibilidade tipo I</h2>
+    <div class="pdek">O núcleo do trabalho. Como uma picada inofensiva no passado arma o corpo, e como uma segunda picada dispara a reação que mata. Esta é a Cena 8.</div>
+  </div>
+  <span class="scenetag rust">Cena 8 · o núcleo</span>
+
+  <p class="lead">A hipersensibilidade é uma resposta imune <strong>exagerada ou inadequada</strong> que causa dano ao próprio hospedeiro. A do tipo I é a alérgica imediata, mediada por <strong>IgE</strong>. Para entendê-la, é preciso separar dois momentos que acontecem em tempos muito diferentes: a <strong>sensibilização</strong> (a primeira exposição, silenciosa, que pode ter sido anos antes) e a <strong>reexposição</strong> (a picada que matou, em que a reação dispara em segundos).</p>
+
+  <h3><span class="num">4.1</span>A classificação de Gell e Coombs</h3>
+  <p>Situar o tipo I dentro das quatro categorias clássicas ajuda a não confundir mecanismos — pergunta frequente em prova.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>Hipersensibilidades · Gell & Coombs</caption>
+      <thead><tr><th>Tipo</th><th>Mediador</th><th>Mecanismo</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I</strong> — imediata</td><td><strong>IgE</strong></td><td>IgE ligada a mastócitos/basófilos; alérgeno faz cross-link → degranulação</td><td><strong>Anafilaxia</strong>, asma alérgica, rinite, urticária</td></tr>
+        <tr><td><strong>II</strong> — citotóxica</td><td>IgG, IgM</td><td>Anticorpos contra antígenos de superfície celular → lise/citotoxicidade</td><td>Anemia hemolítica autoimune, reação transfusional</td></tr>
+        <tr><td><strong>III</strong> — imunocomplexos</td><td>IgG, IgM</td><td>Complexos antígeno-anticorpo depositam em tecidos → inflamação</td><td>Doença do soro, LES, glomerulonefrite</td></tr>
+        <tr><td><strong>IV</strong> — tardia</td><td>Linfócitos T</td><td>Células T (não anticorpos); resposta em 48–72h</td><td>Dermatite de contato, teste tuberculínico (PPD)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Mnemônico clássico: <strong>ACID</strong> — <em>A</em>nafylactic (I), <em>C</em>ytotoxic (II), <em>I</em>mmune complex (III), <em>D</em>elayed (IV). Tipos I–III são mediados por anticorpos; o IV é celular.</p>
+
+  <h3><span class="num">4.2</span>Fase de sensibilização (a primeira picada)</h3>
+  <p>Anos antes da morte — talvez na infância — a vítima foi picada uma primeira vez. Não houve reação alérgica (foi só uma picada dolorida e normal), mas, em silêncio, o sistema imune dela tomou uma decisão fatídica.</p>
+
+  <ol class="steps">
+    <li>
+      <h4>Captura e apresentação do alérgeno</h4>
+      <p>A <strong>célula dendrítica</strong> — uma célula apresentadora de antígenos (APC) profissional, que patrulha os tecidos — captura fragmentos do veneno (especialmente a <strong>PLA2 / Api m 1</strong>), processa-os e migra para o linfonodo. Lá, exibe o fragmento na superfície, encaixado numa molécula de <span class="tt">MHC classe II</span>.</p>
+    </li>
+    <li>
+      <h4>Ativação do linfócito T CD4⁺ naive</h4>
+      <p>Um <strong>linfócito T CD4⁺ naive</strong> (que nunca viu esse antígeno) reconhece o complexo MHC-peptídeo pelo seu receptor <span class="tt">TCR</span>. Com o sinal coestimulatório adequado (CD28–B7), o linfócito T se ativa. É o <strong>primeiro contato</strong> do sistema imune adaptativo com o veneno.</p>
+    </li>
+    <li>
+      <h4>Diferenciação em Th2</h4>
+      <p>O linfócito T ativado pode seguir várias trilhas (Th1, Th17, Treg, Th2) conforme o ambiente de citocinas. Em indivíduos predispostos (atópicos) e diante de certos antígenos como venenos, o ambiente favorece a diferenciação em <strong>Th2</strong> — a trilha das alergias e das respostas a parasitas. A presença de <strong>IL-4</strong> no microambiente é determinante para essa escolha.</p>
+    </li>
+    <li>
+      <h4>Switch de classe → IgE</h4>
+      <p>O Th2 secreta <strong>IL-4 e IL-13</strong>, que instruem o <strong>linfócito B</strong> (que reconhece o mesmo antígeno) a fazer <span class="tt">class switching</span> — recombinação que troca a classe do anticorpo produzido — para <strong>IgE</strong>. Em vez de produzir IgM/IgG (respostas "normais" a patógenos), o B passa a produzir <strong>IgE específica anti-PLA2 de veneno de abelha</strong>. (O Th2 também secreta IL-5, importante para eosinófilos.)</p>
+    </li>
+  </ol>
+
+  <div class="box gold">
+    <span class="box-label">Por que uma picada na infância mata décadas depois</span>
+    <p>A IgE livre no plasma tem meia-vida curta (dias). Mas a <strong>IgE ancorada no mastócito</strong> (próximo tópico) dura <strong>meses</strong>, e os <strong>linfócitos B de memória</strong> produtores de IgE específica podem persistir por <strong>anos a décadas</strong> e ser reativados a cada reexposição. Por isso a sensibilização é um estado duradouro e invisível: a pessoa vive normalmente, sem nenhum sintoma, carregando uma resposta imune pronta para disparar.</p>
+  </div>
+
+  <h3><span class="num">4.3</span>A IgE e o receptor FcεRI</h3>
+  <p>A IgE produzida circula, encontra os mastócitos e se <strong>ancora na superfície deles</strong> pelo receptor de alta afinidade <span class="tt">FcεRI</span> (receptor Fc épsilon RI). Dois números explicam por que esse acoplamento é tão estável e duradouro:</p>
+  <ul>
+    <li><strong>Afinidade altíssima</strong>: a constante de associação é da ordem de <span class="tt">10¹⁰ M⁻¹</span> — a maior afinidade conhecida entre um anticorpo e seu receptor. A IgE praticamente não se desliga.</li>
+    <li><strong>Persistência</strong>: uma vez ancorada, a IgE permanece no mastócito por <strong>semanas a meses</strong>, mantendo a célula "armada" mesmo na ausência do alérgeno.</li>
+  </ul>
+  <p>O FcεRI nos mastócitos e basófilos é tetramérico (uma cadeia α que liga a IgE, uma cadeia β e duas cadeias γ, responsáveis pela sinalização).</p>
+
+  <h3><span class="num">4.4</span>O mastócito armado <span class="kbd">[key visual]</span></h3>
+  <p>Os <strong>mastócitos</strong> derivam de progenitores hematopoiéticos e amadurecem nos tecidos. Estão distribuídos justamente onde o corpo encontra o ambiente externo: <strong>pele, mucosas (respiratória e gastrointestinal) e ao redor dos vasos sanguíneos</strong>. Cada mastócito tem no citoplasma centenas de <strong>grânulos</strong> repletos de mediadores pré-formados.</p>
+  <p>Quando a sensibilização ocorre, <strong>não é um único mastócito que arma — são todos os mastócitos do corpo</strong>, cada um recoberto de IgE anti-PLA2 ancorada via FcεRI. O corpo inteiro da vítima vira um campo de armadilhas carregadas, em silêncio, por anos. Essa célula, anatomicamente, <strong>é o assassino do filme</strong>: uma célula do próprio corpo dela.</p>
+
+  <h3><span class="num">4.5</span>Reexposição: cross-link e degranulação</h3>
+  <p>Hoje, a vítima foi picada de novo. A PLA2 do veneno se espalha pelos tecidos (via hialuronidase, como na Cena 6) — só que agora encontra mastócitos cobertos de IgE específica contra ela.</p>
+
+  <ol class="steps">
+    <li>
+      <h4>Cross-link — o gatilho</h4>
+      <p>A PLA2 é uma proteína com múltiplos <strong>epitopos</strong> (regiões reconhecíveis). Uma única molécula consegue ligar <strong>duas IgEs adjacentes</strong> ao mesmo tempo, formando uma <span class="tt">ligação cruzada</span> (cross-link) entre elas. O que dispara a reação <em>não</em> é a ligação isolada, e sim a <strong>aproximação física de dois ou mais FcεRI</strong> forçada por essa ponte — o <strong>receptor clustering</strong>.</p>
+    </li>
+    <li>
+      <h4>Sinalização intracelular</h4>
+      <p>O clustering ativa quinases da família Src (<span class="tt">Lyn</span>), que fosforilam os ITAMs das cadeias do receptor, recrutando <span class="tt">Syk</span>. A cascata segue (LAT, PLCγ, PI3K) e converge em dois sinais centrais: <strong>aumento de cálcio intracelular</strong> e ativação de <strong>PKC</strong>. Em <strong>segundos</strong>, isso reorganiza o citoesqueleto e leva os grânulos à membrana.</p>
+    </li>
+    <li>
+      <h4>Degranulação <span class="kbd">[key visual]</span></h4>
+      <p>Os grânulos se fundem com a membrana plasmática e despejam o conteúdo no meio extracelular — <span class="tt">exocitose regulada</span>. Ponto importante e contraintuitivo: o mastócito <strong>não morre</strong> na degranulação (diferente da citólise pela melitina). É um processo de <em>secreção</em>; a célula esvazia, repara a membrana e regenera os grânulos em horas a dias. Por isso uma pessoa pode ter múltiplas crises ao longo da vida.</p>
+    </li>
+  </ol>
+
+  <div class="keyfact">
+    <span class="kf-label">A escala é o que mata</span>
+    <p>Uma molécula de PLA2, ligando duas IgEs, dispara <em>um</em> mastócito. Mas há milhões de moléculas de veneno espalhadas e milhares de IgEs por mastócito — então isto ocorre em <strong>todos os mastócitos sensibilizados do corpo, simultaneamente</strong>. A reação é sistêmica desde o primeiro segundo. É isso que a torna anafilaxia, e não uma reação local.</p>
+  </div>
+
+  <h3><span class="num">4.6</span>Os mediadores: duas ondas</h3>
+  <p>O que o mastócito libera vem em <strong>duas ondas</strong> com tempos diferentes — e a segunda onda é onde o ácido araquidônico da Cena 6 reaparece.</p>
+
+  <div class="tbl-wrap rust">
+    <table>
+      <caption>Mediadores da degranulação · duas ondas</caption>
+      <thead><tr><th>Onda</th><th>Tempo</th><th>Mediadores</th><th>Origem / papel</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 — pré-formados</strong></td><td>Segundos</td><td><strong>Histamina</strong>, <strong>triptase</strong>, heparina, TNF-α, quimase</td><td>Já prontos nos grânulos. Histamina: vasodilatação, permeabilidade, prurido. <strong>Triptase: marcador diagnóstico (Cena 9)</strong>.</td></tr>
+        <tr><td><strong>2 — neoformados (lipídicos)</strong></td><td>Minutos</td><td><strong>Leucotrienos</strong> (LTC4, LTD4, LTE4), <strong>prostaglandina D2</strong>, PAF</td><td>Sintetizados na hora a partir do <strong>ácido araquidônico</strong>, liberado pela PLA2 do próprio mastócito. Broncoconstrição potente, vasodilatação.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Onda 1 — pré-formados (segundos)</h4>
+  <p>Os grânulos já vinham embalados. A <strong>histamina</strong> age em receptores H1 (vasodilatação, aumento de permeabilidade, broncoconstrição leve, prurido) e H2 — é a substância que os anti-histamínicos bloqueiam. A <strong>triptase</strong> é a protease mais abundante do mastócito; seu papel no filme é forense: ela se eleva no sangue e é o que a legista vai dosar para confirmar a ativação mastocitária (Cena 9).</p>
+
+  <h4>Onda 2 — neoformados lipídicos (minutos)</h4>
+  <p>Estes <strong>não</strong> estavam prontos. A PLA2 <strong>do próprio mastócito</strong> (intracelular, ativada pelo sinal do cross-link) cliva a membrana e libera <strong>ácido araquidônico</strong> — exatamente como a PLA2 do veneno fez na Cena 6 — que as enzimas COX e LOX da célula convertem em <strong>prostaglandina D2</strong> e <strong>leucotrienos</strong>.</p>
+
+  <div class="box rust">
+    <span class="box-label">Os leucotrienos são o vilão respiratório</span>
+    <p>Os cisteinil-leucotrienos (LTC4, LTD4, LTE4) eram historicamente chamados de <strong>SRS-A</strong> (slow-reacting substance of anaphylaxis). São broncoconstritores <strong>até cerca de mil vezes mais potentes que a histamina</strong>, em base molar. São eles — não a histamina — os principais responsáveis pelo broncoespasmo da anafilaxia. <strong>É por isso que anti-histamínico isolado não salva ninguém</strong>: ele bloqueia o mediador errado para a via aérea.</p>
+  </div>
+
+  <div class="box gold">
+    <span class="box-label">A simetria que amarra Cena 6 e Cena 8</span>
+    <p>Na <strong>Cena 6</strong>, a PLA2 <em>do veneno</em> (extracelular, exógena) libera ácido araquidônico. Na <strong>Cena 8</strong>, a PLA2 <em>do mastócito</em> (intracelular, endógena) libera o mesmo ácido araquidônico. Mesma família de enzima, lados opostos da membrana, fontes opostas, <strong>mesma matéria-prima e mesma cascata</strong>. O veneno faz por fora o que o corpo dela faz por dentro. É a mesma química matando duas vezes.</p>
+  </div>
+</section>
+
+<!-- ===================== PARTE V ===================== -->
+<section id="parte5">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte V</span>
+    <h2>Fisiopatologia da anafilaxia</h2>
+    <div class="pdek">Os mediadores entram na circulação e o corpo inteiro colapsa em dois sistemas ao mesmo tempo. Esta é a fase final da Cena 8 — e fecha o loop com os achados da Cena 2.</div>
+  </div>
+  <span class="scenetag rust">Cena 8 · fase C — colapso sistêmico</span>
+
+  <h3><span class="num">5.1</span>O que é anafilaxia</h3>
+  <p>Anafilaxia é uma <strong>reação de hipersensibilidade sistêmica grave, de início rápido e potencialmente fatal</strong>. Clinicamente, é provável quando há início agudo (minutos a horas) com envolvimento de <strong>pele/mucosa</strong> (urticária, angioedema) <em>somado</em> a comprometimento <strong>respiratório</strong> (dispneia, broncoespasmo, estridor) e/ou <strong>cardiovascular</strong> (hipotensão, colapso) — ou hipotensão após exposição a um alérgeno conhecido. O ponto: é multissistêmica e rápida.</p>
+
+  <h3><span class="num">5.2</span>Colapso cardiovascular: o choque</h3>
+  <p>Os mediadores agem sobre todo o sistema vascular ao mesmo tempo. Quatro efeitos somados derrubam a hemodinâmica:</p>
+  <ol>
+    <li><strong>Vasodilatação sistêmica.</strong> Histamina, PGD2 e leucotrienos relaxam o músculo liso das arteríolas em todo o corpo. O leito vascular se expande e a <strong>resistência vascular sistêmica despenca</strong> — como abrir todas as comportas ao mesmo tempo.</li>
+    <li><strong>Aumento de permeabilidade capilar.</strong> As junções entre células endoteliais se abrem em todo lugar (mesmo mecanismo do edema local da Cena 6, agora corporal). O plasma sai dos vasos para o interstício — pode-se perder <strong>até cerca de 35–50% do volume intravascular para o terceiro espaço em ~10 minutos</strong>.</li>
+    <li><strong>Queda da pressão arterial.</strong> Vasos dilatados (resistência baixa) + menos volume circulante (plasma extravasado) = <strong>choque distributivo somado a componente hipovolêmico</strong>.</li>
+    <li><strong>Disfunção miocárdica / arritmias.</strong> A histamina tem receptores no coração (H1 e H2) e pode contribuir para arritmias; o coração ainda enfrenta pouco volume para bombear.</li>
+  </ol>
+  <p>O resultado é o <strong>choque anafilático</strong>: o cérebro deixa de ser perfundido, a vítima perde a consciência, os tecidos ficam sem oxigênio.</p>
+
+  <div class="box">
+    <span class="box-label">Conexão didática</span>
+    <p>Isto é exatamente a <strong>vasodilatação e o extravasamento locais da Cena 6</strong>, multiplicados por todos os vasos do corpo. A diferença entre uma picada banal e uma anafilaxia <strong>não é qualitativa — é de escala e de topografia</strong> (local versus sistêmica).</p>
+  </div>
+
+  <h3><span class="num">5.3</span>Colapso respiratório: a asfixia</h3>
+  <p>Há duas obstruções somadas, de mecanismos diferentes:</p>
+
+  <h4>Via aérea alta — edema de laringe</h4>
+  <p>Mesma mecânica do choque (vasodilatação + permeabilidade), aplicada à mucosa da laringe: o líquido extravasa para a parede do canal de ar, a mucosa incha e o canal estreita. Anatomia relevante: a <strong>cartilagem cricoide é o único anel cartilaginoso completo da via aérea</strong> — onde a mucosa incha contra a cricoide, ela só pode invadir para dentro (para a luz), não há para onde ceder. Poucos milímetros de edema fecham o ar.</p>
+  <div class="box">
+    <span class="box-label">Precisão anatômica</span>
+    <p>No <strong>adulto</strong>, o ponto mais estreito da via aérea é a <strong>glote (rima glótica)</strong>, entre as pregas vocais. Na <strong>criança</strong> (até ~8 anos), o ponto mais estreito é a região <strong>subglótica</strong> (ao nível da cricoide). Em ambos, o edema laríngeo é especialmente perigoso porque o anel cricoide completo não permite expansão para fora.</p>
+  </div>
+
+  <h4>Via aérea baixa — broncoconstrição</h4>
+  <p>Aqui o mecanismo é diferente: não é edema, é <strong>músculo apertando</strong>. Os bronquíolos têm músculo liso circular; os mediadores disparam sua contração. O agente principal são os <strong>leucotrienos</strong> (cisteinil-leucotrienos), muito mais potentes que a histamina nesse efeito. O resultado é broncoespasmo — o ar não passa.</p>
+
+  <div class="box gold">
+    <span class="box-label">O loop com a Cena 2 se fecha aqui</span>
+    <p>Os achados que a legista encontrou no IML — <strong>edema de laringe</strong> (canal estreitado) e <strong>pulmões congestos</strong> (pesados, com fluido) — são a <strong>marca física do que acontece nesta fase</strong>. A Cena 2 mostrou o <em>efeito</em>; a Cena 8 mostra a <em>causa</em>. O filme é um círculo: termina explicando o que abriu.</p>
+  </div>
+
+  <h3><span class="num">5.4</span>Cronologia</h3>
+  <p>Do cross-link à parada cardiorrespiratória, na anafilaxia grave por veneno, são tipicamente <strong>5 a 15 minutos</strong>. A vítima provavelmente permaneceu consciente por boa parte desse tempo: sentiu o ar ficar difícil, ouviu o silvo da própria respiração (estridor), a vista escurecendo conforme a pressão caía. <strong>Sem saber o que era.</strong> É o instante exato em que a falta de conhecimento se converteu em morte — e a razão de a frase de abertura ser literal.</p>
+
+  <div class="box rust">
+    <span class="box-label">Reação bifásica — nota clínica</span>
+    <p>Em parte dos casos, a anafilaxia tem um <strong>segundo pico</strong> horas após a aparente recuperação (reação bifásica), mesmo sem nova exposição. Por isso a observação hospitalar após estabilização é recomendada. Não é o caso central do filme (a vítima morreu na primeira onda, sozinha), mas é um ponto que pode surgir em pergunta.</p>
+  </div>
+</section>
+
+<!-- ===================== PARTE VI ===================== -->
+<section id="parte6">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte VI</span>
+    <h2>Diagnóstico</h2>
+    <div class="pdek">Como se prova que foi anafilaxia, e não outra coisa. Achados clínicos (Cenas 2 e 9), os dois exames-chave e o diferencial peçonhento completo.</div>
+  </div>
+  <span class="scenetag">Cenas 2 e 9 · diagnóstico</span>
+
+  <p class="lead">O diagnóstico de anafilaxia é <strong>primariamente clínico</strong> — reconhece-se pelo quadro e pelo contexto. Os exames laboratoriais <strong>confirmam e documentam</strong>, mas não substituem o reconhecimento clínico. No contexto forense do filme, isso vira: a legista lê o corpo (clínica) e depois confirma com dois marcadores (laboratório).</p>
+
+  <h3><span class="num">6.1</span>Os achados clínicos / forenses</h3>
+  <p>O que a legista encontra no corpo, e o que cada coisa significa:</p>
+  <div class="tbl-wrap">
+    <table>
+      <caption>Achados de necropsia · interpretação</caption>
+      <thead><tr><th>Achado</th><th>O que indica</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Edema discreto</strong> (face, partes moles)</td><td>Extravasamento de plasma por aumento de permeabilidade — angioedema</td></tr>
+        <tr><td><strong>Lesão puntiforme</strong> no antebraço, com pápula</td><td>Ponto de inoculação; a pápula é a reação local. Sem necrose (exclui aranha)</td></tr>
+        <tr><td><strong>Aparelho ferroador cravado</strong></td><td>Identifica o agente: abelha (ferrão farpado), não vespa</td></tr>
+        <tr><td><strong>Cianose</strong> (lábios, extremidades)</td><td>Hipoxemia ante-mortem — a vítima ficou sem oxigênio em vida (ver 6.2)</td></tr>
+        <tr><td><strong>Edema de laringe</strong></td><td>Obstrução de via aérea alta — mecanismo de asfixia</td></tr>
+        <tr><td><strong>Pulmões congestos / hiperinsuflados</strong></td><td>Broncoespasmo e edema — sofrimento respiratório</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="num">6.2</span>Cianose × livor mortis — a distinção forense</h3>
+  <p>É o detalhe que, no roteiro, "só um médico realmente preparado deduziria". Os dois são azulados, mas significam coisas opostas.</p>
+  <div class="tbl-wrap rust">
+    <table>
+      <caption>Cianose × livor mortis</caption>
+      <thead><tr><th></th><th>Cianose</th><th>Livor mortis (hipóstase)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>O que é</strong></td><td>Excesso de desoxihemoglobina (&gt;5 g/dL) no sangue</td><td>Acúmulo de sangue por gravidade após a morte</td></tr>
+        <tr><td><strong>Quando ocorre</strong></td><td>Em vida — sinal de hipoxemia ante-mortem</td><td>Após a morte — fenômeno cadavérico</td></tr>
+        <tr><td><strong>Distribuição</strong></td><td>Lábios, leitos ungueais, extremidades</td><td>Regiões <em>dependentes</em> (em contato com a gravidade, conforme a posição do corpo)</td></tr>
+        <tr><td><strong>Conclusão</strong></td><td>A vítima sufocou — morreu sem oxigênio</td><td>Apenas indica posição e tempo desde a morte</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>A chave é a <strong>distribuição</strong>: a cianose segue a fisiologia da hipóxia (lábios e dedos); o livor segue a gravidade (regiões em contato com a superfície). Distinguir os dois permite afirmar que houve asfixia em vida.</p>
+
+  <h3><span class="num">6.3</span>Triptase sérica — o marcador da degranulação</h3>
+  <p>A <strong>triptase</strong> é uma protease quase exclusiva dos mastócitos. Quando eles degranulam em massa (anafilaxia), a triptase sobe no sangue. É o <strong>marcador laboratorial mais útil</strong> para documentar que houve ativação mastocitária.</p>
+  <ul>
+    <li><strong>Cinética</strong>: começa a subir em ~15–30 min, atinge o pico em ~1–2h, e retorna ao basal em ~24h (meia-vida de ~2h). Por isso a coleta tem janela.</li>
+    <li><strong>Uso forense / post-mortem</strong>: níveis elevados de triptase no sangue post-mortem <strong>apoiam</strong> o diagnóstico de morte por anafilaxia. Prefere-se sangue <strong>femoral</strong> (periférico) a sangue cardíaco, que pode dar valores falsamente altos. Tem limitações (a triptase pode elevar em outras situações, e há variação interindividual), então é interpretada <em>com</em> o quadro, não isolada.</li>
+  </ul>
+
+  <h3><span class="num">6.4</span>IgE específica anti-veneno</h3>
+  <p>Dosa-se a <strong>IgE específica contra o veneno de abelha</strong> (e seus alérgenos componentes, como Api m 1). Um resultado positivo confirma que a vítima estava <strong>sensibilizada</strong> — que o corpo dela tinha IgE pré-formada marcando o veneno como inimigo. É a prova de que existia a "armadilha armada" da Parte IV. Junto com a triptase elevada e o quadro clínico, fecha o diagnóstico.</p>
+
+  <div class="box">
+    <span class="box-label">Por que a eosinofilia não serve aqui</span>
+    <p>Eosinófilos participam de inflamação alérgica de <strong>fase tardia</strong> e crônica (asma, parasitoses). Na anafilaxia <strong>aguda</strong>, que mata em minutos, a eosinofilia é um marcador <strong>fraco e inespecífico</strong> — não tem tempo de se estabelecer e não distingue o quadro. Por isso o roteiro a rejeita e fica com triptase + IgE específica, que são os marcadores corretos para o evento agudo.</p>
+  </div>
+
+  <h3><span class="num">6.5</span>O diferencial peçonhento completo</h3>
+  <p>Por que a legista descarta escorpião e aranha e fica com abelha. É o conteúdo da Cena 3, sistematizado.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <caption>Diferencial · acidentes peçonhentos</caption>
+      <thead><tr><th>Agente</th><th>Veneno / mecanismo</th><th>Quadro típico</th><th>Por que se descarta aqui</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Escorpião</strong> (<em>Tityus serrulatus</em>)</td><td>Neurotóxico; atua em canais de sódio, libera neurotransmissores</td><td><strong>Tempestade autonômica</strong>: sudorese, sialorreia, agitação, taquicardia/arritmia; casos graves com <strong>edema agudo de pulmão cardiogênico</strong> (disfunção miocárdica)</td><td>Faltam os sinais autonômicos; o edema pulmonar seria <strong>cardiogênico</strong> (de baixo, coração), não <strong>aéreo</strong> (via aérea fechando por cima). O corpo está "quieto demais" para escorpião</td></tr>
+        <tr><td><strong>Aranha-marrom</strong> (<em>Loxosceles</em>)</td><td>Esfingomielinase D (loxoscelismo)</td><td><strong>Lesão necrótica</strong> cutânea de evolução lenta (dias); forma cutâneo-visceral pode ter hemólise</td><td>A lesão da vítima está <strong>limpa, sem necrose</strong>; a timeline não bate (necrose leva dias); não fecha via aérea de forma aguda</td></tr>
+        <tr><td><strong>Abelha</strong> (<em>Apis mellifera</em>)</td><td>Apitoxina + <strong>reação de hipersensibilidade tipo I</strong></td><td>Anafilaxia: edema de via aérea, broncoespasmo, choque, em minutos</td><td><strong>É o diagnóstico</strong>: aparelho ferroador cravado + edema de laringe + cianose + ausência de necrose e de sinais autonômicos</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== PARTE VII ===================== -->
+<section id="parte7">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte VII</span>
+    <h2>Tratamento</h2>
+    <div class="pdek">Não é o foco do trabalho — então fica breve. Mas é o que torna a morte evitável, e por isso dá peso à tese. Esta é a Cena 10.</div>
+  </div>
+  <span class="scenetag">Cena 10 · tratamento (breve)</span>
+
+  <h3><span class="num">7.1</span>Adrenalina — primeira linha, sempre</h3>
+  <p>O tratamento da anafilaxia é <strong>adrenalina (epinefrina) intramuscular</strong>. Não é anti-histamínico, não é corticoide — é adrenalina, e o mais rápido possível. A genialidade farmacológica é que ela age sobre <strong>os três mecanismos da reação ao mesmo tempo</strong>, via receptores adrenérgicos diferentes:</p>
+
+  <div class="tbl-wrap rust">
+    <table>
+      <caption>Adrenalina · três mecanismos simultâneos</caption>
+      <thead><tr><th>Receptor</th><th>Efeito</th><th>Resolve qual problema</th></tr></thead>
+      <tbody>
+        <tr><td><strong>α1</strong></td><td>Vasoconstrição</td><td>Sobe a pressão (reverte o choque) e reduz o edema de mucosa (abre a via aérea alta)</td></tr>
+        <tr><td><strong>β1</strong></td><td>↑ inotropismo e cronotropismo</td><td>Aumenta o débito cardíaco</td></tr>
+        <tr><td><strong>β2</strong></td><td>Broncodilatação + estabiliza mastócitos</td><td>Abre os brônquios e reduz a liberação de mais mediadores</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="keyfact">
+    <span class="kf-label">Dose e via — para citar com precisão</span>
+    <p><strong>Adulto: 0,3–0,5 mg de adrenalina 1:1000, intramuscular, no vasto lateral</strong> (face anterolateral da coxa). A via IM no vasto lateral é preferida por absorção mais rápida e confiável que subcutânea ou que o deltoide. Pode-se repetir a cada 5–15 minutos se necessário. Autoinjetores entregam dose fixa (tipicamente 0,3 mg no adulto).</p>
+  </div>
+
+  <h3><span class="num">7.2</span>Adjuvantes — segunda linha</h3>
+  <p>Importante deixar claro o papel secundário, porque é erro comum tratar anafilaxia "com anti-histamínico":</p>
+  <ul>
+    <li><strong>Anti-histamínicos</strong> (anti-H1): aliviam sintomas cutâneos (prurido, urticária). <strong>Não revertem</strong> obstrução de via aérea nem choque. Adjuvantes, nunca substituem a adrenalina.</li>
+    <li><strong>Corticoides</strong>: início de ação lento (horas). Não têm papel no resgate agudo; a ideia tradicional de que previnem reação bifásica tem evidência fraca. Adjuvantes.</li>
+    <li><strong>Suporte</strong>: oxigênio, posição (decúbito com membros inferiores elevados se hipotensão; sentado se dispneia), volume (cristaloide IV para o choque), e via aérea avançada se necessário.</li>
+  </ul>
+
+  <h3><span class="num">7.3</span>Imunoterapia com veneno — prevenção a longo prazo</h3>
+  <p>Para quem já teve anafilaxia por himenóptero, existe a <strong>imunoterapia com veneno</strong> (dessensibilização): administração de doses crescentes e controladas do veneno, ao longo de meses a anos, que <strong>reeduca o sistema imune</strong>. Os mecanismos incluem desvio de resposta Th2 → Th1, produção de <strong>IgG4 "bloqueadora"</strong> (que intercepta o alérgeno antes da IgE) e indução de células T reguladoras. A eficácia é alta para venenos (proteção em torno de 80–98%). É a contrapartida esperançosa do filme: dá para evitar uma segunda anafilaxia — desde que se saiba do diagnóstico.</p>
+
+  <div class="box gold">
+    <span class="box-label">O argumento que fecha o trabalho</span>
+    <p>Anafilaxia por veneno de inseto é uma das poucas causas de <strong>morte súbita em adulto jovem com tratamento eficaz e barato disponível</strong>. Adrenalina IM, aplicada nos primeiros minutos por qualquer pessoa próxima, reverte a grande maioria dos casos. O custo de um autoinjetor é menor que o de uma consulta. A mensagem do vídeo não é "veneno de abelha mata" — é "<strong>anafilaxia não-diagnosticada mata, e dá para evitar</strong>". A falta de conhecimento mata onde o conhecimento já existe.</p>
+  </div>
+</section>
+
+<!-- ===================== PARTE VIII ===================== -->
+<section id="parte8">
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte VIII</span>
+    <h2>A costura: ciência × narrativa</h2>
+    <div class="pdek">Por que o filme é um círculo, e como cada loop científico vira um loop narrativo. Útil para amarrar a apresentação.</div>
+  </div>
+
+  <p class="lead">O filme foi construído para que a ciência e a história se fechem nos mesmos pontos. São três loops e uma tese. Se você dominar estes quatro fechamentos, defende o trabalho inteiro.</p>
+
+  <h3><span class="num">8.1</span>Loop do ácido araquidônico</h3>
+  <p>Aparece <strong>duas vezes</strong>. Na Cena 6, liberado pela PLA2 <em>do veneno</em> (exógena, extracelular). Na Cena 8, liberado pela PLA2 <em>do mastócito</em> (endógena, intracelular), virando os leucotrienos que fecham a via aérea. Mesma matéria-prima, mesma cascata, fontes opostas. <strong>O veneno faz por fora o que o corpo faz por dentro.</strong></p>
+
+  <h3><span class="num">8.2</span>Loop laringe/pulmão (Cena 2 ↔ Cena 8)</h3>
+  <p>A legista <em>vê</em> os achados na Cena 2 — edema de laringe, pulmões congestos — sem ainda saber a causa. A Cena 8 <em>explica</em> esses achados: são a consequência da broncoconstrição (leucotrienos) e do edema (extravasamento). A Cena 2 é o efeito; a Cena 8 é a causa. O espectador volta mentalmente à Cena 2 quando entende a Cena 8.</p>
+
+  <h3><span class="num">8.3</span>Loop do plant (Cena 1 ↔ Cena 5)</h3>
+  <p>A abelha morta aparece na calçada na abertura (Cena 1), sem destaque, como detalhe incidental. Na Cena 5, a legista revê as fotos da cena e <strong>reconhece</strong> que a abelha esteve lá o tempo todo. O reveal não é "qual bicho" (já se sabia: abelha) — é "a prova sempre esteve à vista, e ninguém a leu". Espelha o tema: o conhecimento estava disponível, faltou interpretá-lo.</p>
+
+  <h3><span class="num">8.4</span>A tese: "o que matou ela foi não saber"</h3>
+  <p>A frase é <strong>literal</strong>, não poética. A vítima morreu porque (1) não sabia que era alérgica — não tinha diagnóstico prévio que a alertasse; (2) não tinha adrenalina por perto; (3) ninguém ao redor reconheceu a anafilaxia a tempo. Os três são <strong>déficits de conhecimento/acesso</strong>, não de biologia. A biologia funcionou perfeitamente — o sistema imune fez exatamente o que evoluiu para fazer. O que falhou foi a informação. Por isso a ironia final (Cena 8, beat 10): a defesa virou a destruição, e o que transformou defesa em morte foi a ausência de saber.</p>
+
+  <div class="div-orn">· · ·</div>
+
+  <!-- ===================== PARTE IX ===================== -->
+  <span id="parte9"></span>
+</section>
+
+<section>
+  <div class="part-head">
+    <a href="#top" class="top-link">↑ topo</a>
+    <span class="pnum">Parte IX</span>
+    <h2>Referências</h2>
+    <div class="pdek">Fontes para a bibliografia. Você formata em ABNT — abaixo estão os trabalhos certos para cada bloco.</div>
+  </div>
+
+  <h4>Imunologia (base)</h4>
+  <ul>
+    <li><strong>ABBAS, A. K.; LICHTMAN, A. H.; PILLAI, S.</strong> <em>Imunologia Celular e Molecular.</em> Elsevier. — capítulos de hipersensibilidade imediata e IgE.</li>
+    <li><strong>MURPHY, K.; WEAVER, C.</strong> <em>Imunobiologia de Janeway.</em> Artmed/Garland. — alergia e hipersensibilidade tipo I, mastócitos, IgE.</li>
+  </ul>
+
+  <h4>Acidentes peçonhentos / toxinologia</h4>
+  <ul>
+    <li><strong>MINISTÉRIO DA SAÚDE (Brasil) / FUNASA.</strong> <em>Manual de Diagnóstico e Tratamento de Acidentes por Animais Peçonhentos.</em> — himenópteros, escorpiões, aranhas.</li>
+    <li><strong>PUCCA, M. B. et al.</strong> Bee Updated: Current Knowledge on Bee Venom and Bee Envenoming Therapy. <em>Frontiers in Immunology</em>, 2019. — composição do veneno e fisiopatologia.</li>
+  </ul>
+
+  <h4>Anafilaxia / alergia (diretrizes)</h4>
+  <ul>
+    <li><strong>ASBAI</strong> (Associação Brasileira de Alergia e Imunologia). <em>Guia / consenso de anafilaxia.</em></li>
+    <li><strong>CARDONA, V. et al. (World Allergy Organization).</strong> World Allergy Organization Anaphylaxis Guidance 2020. <em>World Allergy Organization Journal</em>, 2020.</li>
+  </ul>
+
+  <div class="box">
+    <span class="box-label">Nota sobre ABNT</span>
+    <p>Esses são os trabalhos corretos para fundamentar cada bloco do vídeo. A formatação final em ABNT (ordem dos campos, edição, ano, local) fica por sua conta — confira as edições que você tem acesso e ajuste. Para o veneno e a fisiopatologia, o artigo de Pucca et al. é especialmente útil porque cobre composição e mecanismo num só lugar.</p>
+  </div>
+</section>
+
+<footer>
+  AUTÓPSIA DE UMA REAÇÃO · DOSSIÊ DE REVISÃO CIENTÍFICA<br>
+  Bases: microbiologia · toxinologia · imunologia · fisiologia · diagnóstico · terapêutica<br>
+  Documento de estudo e referência — uso pessoal · trabalho de imunologia
+</footer>
+
+</div>
+</body>
+</html>

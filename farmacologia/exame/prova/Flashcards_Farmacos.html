@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards de Fármacos — Mecanismo & RAM</title>
+<style>
+:root{--bg:#0f1419;--bg2:#161b22;--bg3:#1c2330;--txt:#e6edf3;--txt2:#9aa7b4;--acc:#4ea1ff;--acc2:#7ee787;--warn:#ffb454;--dang:#ff7b72;--border:#2a313c;}
+[data-theme="light"]{--bg:#f7f9fc;--bg2:#fff;--bg3:#eef2f7;--txt:#1a2330;--txt2:#55636f;--acc:#1666c7;--acc2:#1a7f37;--warn:#9a6700;--dang:#cf222e;--border:#d6dee7;}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#top{width:100%;max-width:760px;padding:14px 16px 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,button{background:var(--bg3);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+#count{margin-left:auto;color:var(--txt2);font-size:13px}
+#saveNote{flex-basis:100%;color:var(--txt2);font-size:12px;margin-top:2px}
+#wrap{width:100%;max-width:760px;padding:6px 16px 16px;flex:1;display:flex;flex-direction:column}
+#card{perspective:1600px;height:60vh;min-height:340px;margin:8px 0;cursor:pointer}
+#inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+#card.flip #inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:18px;background:var(--bg2);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto}
+.back{transform:rotateY(180deg)}
+.area{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--txt2)}
+.classe{font-size:15px;color:var(--acc);margin-top:4px}
+.farm{font-size:32px;font-weight:700;color:var(--acc2);margin:auto 0;line-height:1.2}
+.hint{text-align:center;color:var(--txt2);font-size:13px;margin-top:auto}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--acc);margin:14px 0 2px}
+.lbl:first-of-type{margin-top:4px}
+.val{font-size:17px;line-height:1.45}
+.val.ram b,.dang{color:var(--dang)}
+.backhead{font-size:20px;font-weight:700;color:var(--acc2);border-bottom:1px solid var(--border);padding-bottom:8px}
+#nav{display:flex;gap:8px;align-items:center}
+#nav button{flex:0 0 auto}
+#bMark{margin-left:auto}
+#bMark.on{background:var(--warn);color:#1a2330;border-color:var(--warn)}
+.marked .backhead::after,.marked .farm::after{content:" ★";color:var(--warn);font-size:16px}
+kbd{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px}
+#done{text-align:center;padding:40px;color:var(--txt2);font-size:17px}
+#done button{margin-top:8px}
+#rate{display:none;gap:8px;justify-content:center}
+#rate.show{display:flex}
+#rate button{flex:1;max-width:160px;padding:11px 6px;font-weight:700;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:1px}
+#rate small{font-size:11px;font-weight:400;color:var(--txt2)}
+.r-again{border-color:var(--dang)!important;color:var(--dang)}
+.r-hard{border-color:var(--warn)!important;color:var(--warn)}
+.r-good{border-color:var(--acc)!important;color:var(--acc)}
+.r-easy{border-color:var(--acc2)!important;color:var(--acc2)}
+#prompt{text-align:center;color:var(--txt2);font-size:13px;padding:10px}
+#prompt.hide{display:none}
+.streak{font-size:13px;color:var(--warn);margin-top:8px;min-height:18px}
+</style>
+</head>
+<body>
+<div id="top">
+<select id="filtro" onchange="applyFilter()"></select>
+<button onclick="restart()">↺ Reiniciar sessão</button>
+<button onclick="th()">☀︎/☾</button>
+<span id="count"></span>
+<span id="saveNote">✓ Progresso salvo automaticamente neste navegador — pode fechar e voltar depois (até offline).</span>
+</div>
+<div id="wrap">
+<div id="card" onclick="flip()">
+<div id="inner">
+<div class="face front">
+<div><span class="area" id="fArea"></span><div class="classe" id="fClasse"></div></div>
+<div class="farm" id="fFarm"></div>
+<div class="hint">clique ou <kbd>espaço</kbd> para virar</div>
+</div>
+<div class="face back" id="backFace">
+<div class="backhead" id="bFarm"></div>
+<div class="lbl">Mecanismo</div><div class="val" id="bMec"></div>
+<div class="lbl">Efeito adverso</div><div class="val ram" id="bRam"></div>
+<div class="lbl">Pegadinha / uso</div><div class="val" id="bPeg"></div>
+<div class="streak" id="streak"></div>
+</div>
+</div>
+</div>
+<div id="rate">
+<button class="r-again" onclick="rate(0)">Errei<small>1 · volta logo</small></button>
+<button class="r-hard" onclick="rate(1)">Difícil<small>2 · em breve</small></button>
+<button class="r-good" onclick="rate(2)">Bom<small>3 · mais tarde</small></button>
+<button class="r-easy" onclick="rate(3)">Fácil<small>4 · 2× = sai</small></button>
+</div>
+<div id="prompt">Clique no card ou <kbd>espaço</kbd> para ver a resposta</div>
+<div id="done" style="display:none"></div>
+</div>
+<script>
+const META={
+ al:["Anest. locais","Soraia"],ag:["Anest. gerais","Soraia"],bnm:["BNM","Soraia"],aine:["AINEs/Analgésicos","Soraia"],opi:["Opioides","Soraia"],
+ antic:["Anticonvulsivantes","Soraia"],adep:["Antidepressivos","Soraia"],hum:["Estabiliz. de humor","Soraia"],aps:["Antipsicóticos","Soraia"],sono:["Ansiolít./Hipnóticos","Soraia"],
+ park:["Parkinson","Soraia"],alz:["Alzheimer","Soraia"],sna:["SNA","Soraia"],
+ has:["Anti-hipertensivos","Adilson"],diu:["Diuréticos","Adilson"],dig:["Digitálicos","Adilson"],arr:["Antiarrítmicos","Adilson"],ang:["Antianginosos","Adilson"],
+ vaso:["Vasoativos","Adilson"],dm:["Hipoglicemiantes","Adilson"],ins:["Insulinas","Adilson"],lip:["Dislipidemias","Adilson"],coag:["Coagulação","Adilson"],
+ inter:["Interações ⚡ (PRINCIPAIS)","Ambos"]
+};
+const CARDS=[
+{a:"al",c:"Éster",f:"Procaína, benzocaína, tetracaína",m:"Bloqueia canal de Na⁺; metabolizado por esterases plasmáticas",r:"<b>Alergia</b> (metabólito PABA); ação curta",p:"Mais alergênico"},
+{a:"al",c:"Amida",f:"Lidocaína, bupivacaína, prilocaína",m:"Bloqueia canal de Na⁺; metabolismo hepático",r:"<b>Toxicidade SNC→CV</b>; bupivacaína = + cardiotóxica",p:"Não pega em pus (pH ácido→ionizado); 2 'i' no nome; vasoconstritor prolonga"},
+{a:"ag",c:"Inalatório",f:"Sevoflurano",m:"↓excitação/↑inibição no SNC; baixa solubilidade no sangue",r:"Pouco irritante",p:"Preferido: indução/recuperação rápidas; bom em criança"},
+{a:"ag",c:"Inalatório",f:"Halotano",m:"Idem; alta solubilidade no sangue (lento)",r:"<b>Hepatotoxicidade</b>; arritmia (sensibiliza catecolamina)",p:"O mais hepatotóxico"},
+{a:"ag",c:"EV",f:"Propofol",m:"Potencializa GABA-A",r:"<b>Hipotensão</b>; dor à injeção",p:"Despertar limpo"},
+{a:"ag",c:"EV",f:"Etomidato",m:"Potencializa GABA-A",r:"Supressão adrenal, mioclonia",p:"Estável (paciente instável)"},
+{a:"ag",c:"EV",f:"Cetamina",m:"Antagonista NMDA (dissociativo)",r:"↑PA/FC, alucinação",p:"Analgesia, broncodilata"},
+{a:"ag",c:"EV",f:"Tiopental",m:"Barbitúrico (↑duração do Cl⁻ no GABA-A)",r:"Depressão resp/CV",p:"Indução ultrarrápida"},
+{a:"bnm",c:"Despolarizante",f:"Succinilcolina",m:"Agonista nicotínico: fase I despolariza, fase II dessensibiliza",r:"<b>Hipertermia maligna</b>, hipercalemia",p:"NÃO reverte c/ neostigmina; HM→dantroleno"},
+{a:"bnm",c:"Não-despolarizante",f:"Rocurônio, atracúrio, vecurônio",m:"Antagonista competitivo do receptor nicotínico",r:"Hipotensão, liberação de histamina",p:"Reverte c/ neostigmina ou sugamadex"},
+{a:"aine",c:"AINE não-seletivo",f:"AAS, ibuprofeno, diclofenaco, indometacina",m:"Inibe COX-1 e COX-2 → ↓prostaglandinas",r:"<b>Úlcera/gastrolesão</b>, nefrotox., antiagregação",p:"AAS = inibição irreversível (antiagregante)"},
+{a:"aine",c:"Coxibe (COX-2)",f:"Celecoxibe, etoricoxibe",m:"Inibe seletivamente COX-2",r:"<b>Risco cardiovascular/trombótico</b>",p:"Poupa estômago"},
+{a:"aine",c:"Analg./antitérmico",f:"Paracetamol",m:"Ação central (COX no SNC), pouca anti-inflamatória",r:"<b>Hepatotoxicidade</b> (overdose)",p:"Antídoto = N-acetilcisteína"},
+{a:"aine",c:"Analg./antitérmico",f:"Dipirona",m:"Inibe COX central",r:"Agranulocitose (rara)",p:"Classificação funcional: AAA/AAU/AA"},
+{a:"opi",c:"Agonista fraco",f:"Codeína, tramadol",m:"Agonista μ fraco (via Gi → ↓AMPc → fecha Ca²⁺)",r:"Tramadol → convulsão, sd. serotoninérgica",p:"Codeína = pró-fármaco (CYP2D6)"},
+{a:"opi",c:"Agonista potente",f:"Morfina, metadona, fentanil",m:"Agonista μ pleno → ↓ liberação de NT",r:"<b>Depressão respiratória</b>, constipação, miose",p:"Metadona → ↑QT"},
+{a:"opi",c:"Agonista-antagonista",f:"Nalorfina; buprenorfina (parcial)",m:"Agonista ou antagonista conforme dose/receptor",r:"Pode precipitar abstinência",p:"—"},
+{a:"opi",c:"Antagonista",f:"Naloxona, naltrexona",m:"Bloqueia receptor opioide",r:"Abstinência aguda",p:"Naloxona = overdose; naltrexona = crônico"},
+{a:"antic",c:"Bloq. Na⁺",f:"Fenitoína",m:"Bloqueia canal de Na⁺ dependente de uso",r:"<b>Hiperplasia gengival</b>, hirsutismo, nistagmo",p:"Cinética não-linear"},
+{a:"antic",c:"Bloq. Na⁺",f:"Carbamazepina",m:"Bloqueia canal de Na⁺",r:"<b>Hiponatremia (SIADH)</b>, Stevens-Johnson, indução enzimática",p:"Neuralgia do trigêmeo"},
+{a:"antic",c:"Bloq. Na⁺",f:"Lamotrigina",m:"Bloqueia canal de Na⁺",r:"<b>Rash / Stevens-Johnson</b>",p:"Titular devagar"},
+{a:"antic",c:"↑ GABA",f:"Ácido valproico",m:"↑GABA + bloqueia Na⁺/Ca²⁺ (amplo espectro)",r:"<b>Hepatotoxicidade</b>, teratogênese (tubo neural), ganho de peso",p:"Crise de ausência também"},
+{a:"antic",c:"↑ GABA",f:"Fenobarbital",m:"Barbitúrico: ↑duração do Cl⁻ no GABA-A",r:"Sedação, indução enzimática",p:"Status: usa-se BZD (diazepam)"},
+{a:"antic",c:"Bloq. Ca²⁺-T",f:"Etossuximida",m:"Bloqueia canal de Ca²⁺ tipo T (tálamo)",r:"GI, sonolência",p:"Escolha na <b>ausência</b>"},
+{a:"adep",c:"ISRS",f:"Fluoxetina, sertralina, paroxetina",m:"Inibe recaptação seletiva de serotonina (SERT)",r:"<b>Disfunção sexual</b>, náusea, insônia",p:"1ª linha (mais seguro)"},
+{a:"adep",c:"Tricíclico",f:"Amitriptilina, nortriptilina, clomipramina",m:"Inibe recaptação 5-HT+NA; bloqueia muscarínico/H1/α1",r:"<b>Anticolinérgico</b>, sedação, cardiotox. na overdose",p:"Bom p/ dor neuropática"},
+{a:"adep",c:"IRSN",f:"Venlafaxina, duloxetina",m:"Inibe recaptação 5-HT+NA",r:"↑PA (venlafaxina)",p:"Duloxetina: dor neuropática"},
+{a:"adep",c:"IMAO",f:"Fenelzina, tranilcipromina, selegilina",m:"Inibe MAO → ↑ monoaminas",r:"<b>'Reação do queijo'</b> (tiramina→crise HAS)",p:"Não associar a ISRS/tricíclico"},
+{a:"adep",c:"Atípico",f:"Bupropiona, mirtazapina, trazodona",m:"Bupropiona ↑NA/DA; mirtazapina ↑apetite/sono",r:"Bupropiona ↓ limiar convulsivo",p:"Bupropiona: sem disfunção sexual"},
+{a:"hum",c:"Sal de lítio",f:"Carbonato de lítio",m:"Interfere em AMPc/IP3 → modula liberação de NT",r:"<b>Janela estreita</b>: tremor, hipotireoidismo, nefrotox., diabetes insípido",p:"↑ por diurético/AINE; dosar nível sérico"},
+{a:"aps",c:"Típico alta potência",f:"Haloperidol",m:"Bloqueio forte de D2",r:"<b>Extrapiramidal</b>, hiperprolactinemia, sínd. neuroléptica maligna",p:"Menos sedação"},
+{a:"aps",c:"Típico baixa potência",f:"Clorpromazina",m:"Bloqueio D2 + antimuscarínico/α1/H1",r:"<b>Sedação, hipotensão</b>, anticolinérgico",p:"Menos extrapiramidal que haloperidol"},
+{a:"aps",c:"Atípico",f:"Risperidona, olanzapina, quetiapina, aripiprazol",m:"Bloqueio D2 + 5-HT2A",r:"<b>Síndrome metabólica</b> (peso, DM, dislipidemia)",p:"Menos extrapiramidal"},
+{a:"aps",c:"Atípico",f:"Clozapina",m:"D2 + 5-HT2A (esquizofrenia refratária)",r:"<b>Agranulocitose</b> (hemograma seriado)",p:"Mais eficaz, mas a mais perigosa"},
+{a:"sono",c:"Benzodiazepínico",f:"Diazepam, midazolam, lorazepam, clonazepam",m:"↑ <b>frequência</b> de abertura do Cl⁻ no GABA-A",r:"Sedação, dependência, <b>depressão resp. c/ álcool</b>",p:"Antídoto = flumazenil"},
+{a:"sono",c:"Hipnótico-Z",f:"Zolpidem, zopiclona",m:"Agonista GABA-A (subunidade α1)",r:"Dependência, parassonia",p:"Hipnótico, não ansiolítico"},
+{a:"sono",c:"Barbitúrico",f:"Fenobarbital, tiopental",m:"↑ <b>duração</b> de abertura do Cl⁻ no GABA-A",r:"<b>Índice terapêutico estreito</b>, indução enzimática",p:"Mais perigoso que BZD"},
+{a:"sono",c:"Azapirona",f:"Buspirona",m:"Agonista parcial 5-HT1A",r:"Início lento",p:"Ansiolítico sem sedação/dependência"},
+{a:"park",c:"Precursor de dopamina",f:"Levodopa + carbidopa",m:"Levodopa→dopamina no SNC; carbidopa inibe DOPA-descarboxilase periférica",r:"Discinesias, náusea, hipotensão",p:"Dopamina não passa a BHE; carbidopa ↑ levodopa central"},
+{a:"park",c:"Inib. COMT",f:"Entacapona",m:"↓ degradação periférica da levodopa",r:"Urina alaranjada",p:"Prolonga efeito da levodopa"},
+{a:"park",c:"Inib. MAO-B",f:"Selegilina, rasagilina",m:"↓ degradação central de dopamina",r:"Insônia",p:"—"},
+{a:"park",c:"Agonista dopaminérgico",f:"Pramipexol, bromocriptina",m:"Estimula receptor D2 direto",r:"Sonolência, distúrbio do controle do impulso",p:"—"},
+{a:"park",c:"Anticolinérgico",f:"Biperideno",m:"Reequilibra ACh/DA",r:"Efeitos anticolinérgicos",p:"Bom p/ tremor"},
+{a:"park",c:"Antiglutamatérgico",f:"Amantadina",m:"↑ liberação de dopamina, ↓ recaptação",r:"Edema, livedo, insônia",p:"—"},
+{a:"alz",c:"Anticolinesterásico",f:"Donepezila, rivastigmina, galantamina",m:"Inibe acetilcolinesterase → ↑ ACh",r:"Colinérgico (bradicardia, GI)",p:"Alzheimer leve-moderado"},
+{a:"alz",c:"Antagonista NMDA",f:"Memantina",m:"Bloqueia receptor NMDA → ↓ excitotoxicidade do glutamato",r:"Tontura",p:"Alzheimer moderado-grave"},
+{a:"sna",c:"Parassimpatomim. direto",f:"Pilocarpina, betanecol",m:"Agonista muscarínico",r:"SLUDGE",p:"Glaucoma, xerostomia, bexiga"},
+{a:"sna",c:"Parassimpatomim. indireto",f:"Neostigmina",m:"Inibe acetilcolinesterase → ↑ ACh",r:"Crise colinérgica",p:"Miastenia, reverter BNM"},
+{a:"sna",c:"Parassimpatolítico",f:"Atropina, ipratrópio",m:"Antagonista muscarínico",r:"<b>Anticolinérgico</b> (seco, quente, rubor, midríase, confuso)",p:"Bradicardia, antídoto de organofosforado"},
+{a:"has",c:"IECA",f:"Captopril, enalapril, ramipril",m:"Inibe ECA → ↓ angiotensina II e ↓ degradação de bradicinina",r:"<b>Tosse seca</b>, angioedema, hiperK, teratog.",p:"Tosse → trocar por BRA"},
+{a:"has",c:"BRA",f:"Losartan, valsartan, candesartan",m:"Bloqueia receptor AT1 da angiotensina II",r:"HiperK, teratog. (<b>sem tosse</b>)",p:"Alternativa ao IECA"},
+{a:"has",c:"BCC di-hidropiridínico",f:"Anlodipino, nifedipino",m:"Bloqueia canal de Ca²⁺ → vasodilatação",r:"<b>Edema de MMII</b>, cefaleia, rubor",p:"Vasosseletivo"},
+{a:"has",c:"BCC não-di-hidro",f:"Verapamil, diltiazem",m:"Bloqueia Ca²⁺ no coração → ↓FC/contratilidade",r:"Bradicardia, constipação (verapamil)",p:"Não associar a β-bloqueador"},
+{a:"has",c:"β-bloqueador",f:"Propranolol, atenolol, metoprolol, carvedilol",m:"Bloqueia β1 → ↓FC, ↓contratilidade, ↓renina",r:"Bradicardia, <b>broncoespasmo</b>, mascara hipoglicemia",p:"Não suspender abruptamente"},
+{a:"has",c:"Simpatolítico central",f:"Metildopa, clonidina",m:"Agonista α2 central → ↓ tônus simpático",r:"Sedação; clonidina → efeito rebote",p:"Metildopa = HAS na gestação"},
+{a:"has",c:"Vasodilatador direto",f:"Hidralazina, minoxidil, nitroprussiato",m:"Relaxa músculo liso arteriolar",r:"Taquicardia reflexa; minoxidil → hipertricose",p:"Nitroprussiato = emergência (UTI)"},
+{a:"has",c:"Inibidor de renina",f:"Alisquireno",m:"Inibe a renina diretamente",r:"HiperK, teratog.",p:"Classe nova"},
+{a:"diu",c:"Inib. anidrase carbônica (proximal)",f:"Acetazolamida",m:"Inibe anidrase carbônica → perde HCO3⁻",r:"<b>Acidose metabólica</b>",p:"Glaucoma, mal das alturas"},
+{a:"diu",c:"Osmótico",f:"Manitol",m:"Arrasta água osmoticamente",r:"Expansão de volume (cuidado em IC)",p:"Edema cerebral, ↑PIC"},
+{a:"diu",c:"De alça",f:"Furosemida",m:"Inibe cotransportador Na-K-2Cl (ramo ascendente)",r:"<b>Hipocalemia</b>, ototoxicidade, hipovolemia",p:"O mais potente; ↑ toxicidade da digoxina"},
+{a:"diu",c:"Tiazídico",f:"Hidroclorotiazida, clortalidona",m:"Inibe cotransportador Na-Cl (túbulo distal)",r:"<b>HipoK</b>, hiperglicemia, hiperuricemia, hiperCa",p:"HAS leve"},
+{a:"diu",c:"Poupador de K⁺",f:"Espironolactona, amilorida",m:"Espirono = antagonista da aldosterona; amilorida = bloqueia canal de Na⁺ (coletor)",r:"<b>Hipercalemia</b>; espirono → ginecomastia",p:"IC, hiperaldosteronismo"},
+{a:"dig",c:"Digitálico",f:"Digoxina",m:"Inibe Na⁺/K⁺-ATPase → ↑Ca²⁺ intracel → ↑contratilidade; ↑vagal → ↓FC",r:"<b>Intoxicação</b>: arritmia, náusea, xantopsia",p:"Hipocalemia (furosemida) ↑ toxicidade"},
+{a:"arr",c:"Classe I — bloq. Na⁺",f:"Quinidina, lidocaína, propafenona",m:"Bloqueia canal de Na⁺",r:"Pró-arritmia",p:"Lidocaína = arritmia ventricular"},
+{a:"arr",c:"Classe II — β-bloq",f:"Propranolol, metoprolol",m:"↓ estímulo simpático no nó SA/AV",r:"Bradicardia",p:"Controle de FC"},
+{a:"arr",c:"Classe III — bloq. K⁺",f:"Amiodarona, sotalol",m:"Bloqueia canal de K⁺ → prolonga repolarização",r:"<b>Tireoide, pulmão, fígado, córnea</b>, ↑QT",p:"Amiodarona = muitas RAMs"},
+{a:"arr",c:"Classe IV — bloq. Ca²⁺",f:"Verapamil, diltiazem",m:"Bloqueia Ca²⁺ no nó AV",r:"Bradicardia",p:"TPSV"},
+{a:"arr",c:"Outro",f:"Adenosina",m:"↓ condução no nó AV (transitório)",r:"Rubor, dispneia, pausa sinusal",p:"TPSV (meia-vida de segundos)"},
+{a:"ang",c:"Nitrato",f:"Nitroglicerina, isossorbida",m:"Doa NO → vasodilatação venosa → ↓pré-carga → ↓consumo de O2",r:"<b>Cefaleia</b>, hipotensão, tolerância",p:"Não usar com sildenafil"},
+{a:"ang",c:"β-bloq / BCC",f:"Atenolol / anlodipino",m:"↓ demanda de O2 (FC/contratilidade) ou vasodilata coronária",r:"Ver classes respectivas",p:"Profilaxia da angina"},
+{a:"vaso",c:"Catecolamina",f:"Adrenalina",m:"α e β dose-dependente",r:"Taquicardia, arritmia, isquemia",p:"Dose baixa = β (vasodilata); alta = α (vasoconstrição). Anafilaxia, PCR"},
+{a:"vaso",c:"Catecolamina",f:"Noradrenalina",m:"α &gt; β1 (vasoconstrição)",r:"Isquemia periférica",p:"Choque séptico"},
+{a:"vaso",c:"Catecolamina",f:"Dopamina",m:"Dose-dependente: DA → β → α",r:"Arritmia",p:"Efeito muda conforme a dose"},
+{a:"vaso",c:"Catecolamina",f:"Dobutamina",m:"β1 seletivo (inotrópico)",r:"Taquicardia",p:"IC descompensada"},
+{a:"dm",c:"Biguanida",f:"Metformina",m:"↓ gliconeogênese hepática, ↑ sensibilidade à insulina",r:"<b>Acidose láctica</b>, GI, ↓B12",p:"1ª linha; não dá hipoglicemia; perde peso"},
+{a:"dm",c:"Sulfonilureia",f:"Glibenclamida, gliclazida, glimepirida",m:"Fecha canal K⁺ATP na célula β → ↑ secreção de insulina",r:"<b>Hipoglicemia</b>, ganho de peso",p:"Secretagogo"},
+{a:"dm",c:"iSGLT2",f:"Dapagliflozina, empagliflozina",m:"↓ reabsorção renal de glicose (glicosúria)",r:"ITU/candidíase, cetoacidose euglicêmica",p:"Benefício CV/renal; perde peso"},
+{a:"dm",c:"iDPP-4",f:"Sitagliptina, linagliptina",m:"↑ incretinas (GLP-1 endógeno)",r:"Bem tolerado",p:"Neutro no peso"},
+{a:"dm",c:"Agonista GLP-1",f:"Liraglutida, semaglutida",m:"↑ insulina glicose-dependente, ↓ glucagon, saciedade",r:"GI (náusea)",p:"Perde peso; benefício CV"},
+{a:"dm",c:"Glitazona",f:"Pioglitazona",m:"Agonista PPAR-γ → ↑ sensibilidade",r:"<b>Edema, IC</b>, ganho de peso",p:"—"},
+{a:"dm",c:"Inib. α-glicosidase",f:"Acarbose",m:"↓ absorção intestinal de carboidrato",r:"Flatulência",p:"Controle pós-prandial"},
+{a:"ins",c:"Ultrarrápida",f:"Lispro, asparte, glulisina",m:"Início ~15 min, pico curto",r:"<b>Hipoglicemia</b>",p:"Bolus na refeição"},
+{a:"ins",c:"Rápida/Regular",f:"Insulina regular",m:"Início ~30 min",r:"Hipoglicemia",p:"Única EV (cetoacidose)"},
+{a:"ins",c:"Intermediária",f:"NPH",m:"Pico em ~6-8h",r:"Hipoglicemia noturna",p:"Basal 'antiga'"},
+{a:"ins",c:"Lenta/basal",f:"Glargina, detemir, degludeca",m:"Sem pico, ~24h",r:"Menos hipoglicemia",p:"Basal"},
+{a:"lip",c:"Estatina",f:"Atorvastatina, rosuvastatina, sinvastatina",m:"Inibe HMG-CoA redutase → ↓ síntese de colesterol → ↑ receptores LDL",r:"<b>Miopatia/rabdomiólise</b>, ↑ transaminases",p:"↓ LDL (principal)"},
+{a:"lip",c:"Fibrato",f:"Fenofibrato, ciprofibrato, genfibrozila",m:"Agonista PPAR-α → ↑ lipase lipoproteica",r:"Miopatia (↑ com estatina), litíase biliar",p:"↓ TG (hipertrigliceridemia isolada)"},
+{a:"lip",c:"Inib. de absorção",f:"Ezetimiba",m:"↓ absorção intestinal de colesterol",r:"Bem tolerado",p:"Associa à estatina"},
+{a:"lip",c:"Ácido nicotínico",f:"Niacina",m:"↓ VLDL/LDL, ↑ HDL",r:"<b>Rubor (flush)</b>",p:"—"},
+{a:"lip",c:"Resina",f:"Colestiramina",m:"Sequestra ácidos biliares",r:"↓ absorção de outros fármacos, GI",p:"—"},
+{a:"coag",c:"Cumarínico (oral)",f:"Varfarina",m:"Inibe epóxido-redutase da vit K → ↓ fatores II, VII, IX, X",r:"<b>Sangramento</b>, teratogênica",p:"INR; antídoto vit K; efeito lento (age na síntese)"},
+{a:"coag",c:"Heparina (parenteral)",f:"HNF, enoxaparina (HBPM)",m:"Ativa antitrombina → inibe IIa e Xa (HBPM = mais Xa)",r:"<b>Sangramento, HIT</b>",p:"TTPa (HNF); antídoto protamina"},
+{a:"coag",c:"DOAC (oral)",f:"Rivaroxabana, apixabana, dabigatrana",m:"Inibe Xa (riva/api) ou trombina/IIa (dabi)",r:"Sangramento",p:"Sem monitoração de rotina"},
+{a:"coag",c:"Antiagregante",f:"AAS, clopidogrel, ticagrelor",m:"AAS → inibe COX-1/TXA2; clopidogrel → bloqueia P2Y12 (ADP)",r:"Sangramento",p:"AAS = irreversível"},
+{a:"coag",c:"Fibrinolítico",f:"Alteplase, estreptoquinase",m:"Ativa plasminogênio → plasmina → dissolve fibrina",r:"<b>Hemorragia</b>",p:"IAM, AVC isquêmico, TEP"},
+{a:"inter",c:"Interação",f:"Digoxina + Furosemida",m:"Furosemida → hipocalemia; K⁺ e digoxina competem na Na⁺/K⁺-ATPase",r:"<b>Intoxicação digitálica</b> (arritmia, xantopsia)",p:"Monitorar e repor K⁺/Mg²⁺"},
+{a:"inter",c:"Interação",f:"Tiazídico + Hipoglicemiante",m:"Tiazídico → hipocalemia → ↓ secreção de insulina + ↓ sensibilidade",r:"<b>Hiperglicemia</b> — antagoniza o hipoglicemiante",p:"Dose baixa, corrigir K⁺, preferir IECA/BRA no diabético"},
+{a:"inter",c:"Interação",f:"IECA/BRA + Espironolactona ou AINE",m:"Ambos retêm potássio / ↓ excreção renal",r:"<b>Hipercalemia</b>",p:"Monitorar K⁺ e função renal"},
+{a:"inter",c:"Interação",f:"Lítio + Diurético ou AINE",m:"↓ excreção renal de lítio → ↑ níveis séricos",r:"<b>Intoxicação por lítio</b> (tremor, confusão, convulsão)",p:"Janela estreita; dosar litemia"},
+{a:"inter",c:"Interação",f:"Estatina + Fibrato (genfibrozila)",m:"Somam toxicidade muscular (↑ exposição à estatina)",r:"<b>Miopatia / rabdomiólise</b>",p:"Evitar genfibrozila; preferir fenofibrato; monitorar CK"},
+{a:"inter",c:"Interação",f:"Varfarina + AINE / Fibrato",m:"Deslocamento da ligação proteica + antiagregação/gastrolesão",r:"<b>Sangramento</b> (↑ INR)",p:"Evitar AINE; monitorar INR"},
+{a:"inter",c:"Interação",f:"IMAO + ISRS / tramadol",m:"Excesso de serotonina na fenda",r:"<b>Síndrome serotoninérgica</b> (hipertermia, rigidez)",p:"Não associar; respeitar washout"},
+{a:"inter",c:"Interação",f:"IMAO + Tiramina (queijo, vinho)",m:"MAO inibida não degrada tiramina → ↑ liberação de NA",r:"<b>Crise hipertensiva</b> ('reação do queijo')",p:"Restrição alimentar"},
+{a:"inter",c:"Interação",f:"AINE + Anti-hipertensivo (IECA/diurético)",m:"↓ prostaglandinas renais → retenção de Na⁺/água",r:"<b>↓ efeito anti-hipertensivo</b>, nefrotoxicidade",p:"Evitar AINE crônico em hipertenso/renal"},
+{a:"inter",c:"Interação",f:"Betabloqueador + Insulina/Sulfonilureia",m:"β-bloq mascara sinais adrenérgicos da hipoglicemia",r:"<b>Hipoglicemia despercebida</b>",p:"Atenção no diabético; preferir β1-seletivo"},
+{a:"inter",c:"Interação",f:"Nitrato + Sildenafil",m:"Ambos ↑ via NO/GMPc → vasodilatação somada",r:"<b>Hipotensão grave</b>",p:"Contraindicação absoluta"}
+];
+CARDS.forEach((c,i)=>c.id=i);
+const WORKING=20;                 // tamanho do conjunto de trabalho
+const OFFSET=[2,4,9,15];          // Errei, Difícil, Bom, Fácil -> em quantos cards reaparece
+let baseDeck=[], pool=[], q=[], st={}, total=0, mastered=0, shown=false;
+const SAVEKEY='farmaco-flashcards-v1';
+function save(){try{localStorage.setItem(SAVEKEY,JSON.stringify({filter:document.getElementById('filtro').value,q:q.map(c=>c.id),pool:pool.map(c=>c.id),st:st,total:total,mastered:mastered}));}catch(e){}}
+function restoreSession(){
+ let d;try{d=JSON.parse(localStorage.getItem(SAVEKEY)||'null');}catch(e){return false;}
+ if(!d||!Array.isArray(d.q))return false;
+ q=d.q.map(id=>CARDS[id]).filter(Boolean);
+ pool=(d.pool||[]).map(id=>CARDS[id]).filter(Boolean);
+ if(q.length===0&&pool.length===0)return false;
+ st=d.st||{}; total=d.total||0; mastered=d.mastered||0;
+ if(d.filter)document.getElementById('filtro').value=d.filter;
+ shown=false; render(); return true;
+}
+
+function buildFilter(){
+ const sel=document.getElementById('filtro');
+ let html='<option value="all">Todas as áreas ('+CARDS.length+')</option>';
+ html+='<option value="g:Soraia">— Bloco Soraia (SNC) —</option>';
+ html+='<option value="g:Adilson">— Bloco Adilson (Cardio/Endócrino) —</option>';
+ for(const k in META){const n=CARDS.filter(c=>c.a===k).length;html+=`<option value="${k}">${META[k][0]} (${n})</option>`;}
+ sel.innerHTML=html;
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startSession(){
+ const v=document.getElementById('filtro').value;
+ if(v==='all') baseDeck=CARDS.slice();
+ else if(v.startsWith('g:')){const g=v.slice(2);baseDeck=CARDS.filter(c=>META[c.a][1]===g);}
+ else baseDeck=CARDS.filter(c=>c.a===v);
+ baseDeck=shuffleArr(baseDeck.slice());          // aleatório
+ st={}; baseDeck.forEach(c=>st[c.id]=0);
+ total=baseDeck.length; mastered=0; pool=baseDeck.slice(); q=[];
+ while(q.length<WORKING && pool.length) q.push(pool.shift());
+ shown=false; render(); save();
+}
+function applyFilter(){startSession();}
+function restart(){startSession();}
+function render(){
+ const card=document.getElementById('card'), done=document.getElementById('done');
+ const rate=document.getElementById('rate'), prompt=document.getElementById('prompt');
+ if(q.length===0){
+   card.style.display='none';rate.classList.remove('show');prompt.classList.add('hide');
+   done.style.display='block';
+   done.innerHTML=total?('✅ Sessão concluída — '+mastered+' de '+total+' cards dominados (2× Fácil seguidos).<br><button onclick="restart()">↺ Recomeçar</button>'):'Sem cards.';
+   document.getElementById('count').textContent='';
+   return;
+ }
+ card.style.display='block';done.style.display='none';
+ const c=q[0];
+ document.getElementById('fArea').textContent=META[c.a][0]+' · '+META[c.a][1];
+ document.getElementById('fClasse').textContent=c.c;
+ document.getElementById('fFarm').textContent=c.f;
+ document.getElementById('bFarm').textContent=c.f;
+ document.getElementById('bMec').innerHTML=c.m;
+ document.getElementById('bRam').innerHTML=c.r;
+ document.getElementById('bPeg').innerHTML=c.p;
+ const s=st[c.id]||0;
+ document.getElementById('streak').textContent=s>0?'Sequência Fácil: '+s+'/2 — mais 1 "Fácil" e ele sai de rotação':'';
+ card.classList.toggle('flip',shown);
+ rate.classList.toggle('show',shown);
+ prompt.classList.toggle('hide',shown);
+ document.getElementById('count').textContent='Dominados '+mastered+'/'+total+'  ·  Em rotação '+q.length+'  ·  Aguardando '+pool.length;
+}
+function flip(){ if(!shown){shown=true;render();} }
+function rate(level){
+ if(!shown) return;
+ const c=q.shift();
+ if(level===3){ st[c.id]=(st[c.id]||0)+1; } else { st[c.id]=0; }   // Fácil acumula; resto zera
+ if(level===3 && st[c.id]>=2){                                     // 2x Fácil seguidos -> suspende
+   mastered++;
+   if(pool.length) q.push(pool.shift());                           // puxa novo p/ manter ~20
+ } else {
+   q.splice(Math.min(OFFSET[level], q.length), 0, c);              // reinsere conforme botão
+ }
+ shown=false; render(); save();
+}
+function th(){const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='light'?'':'light');}
+document.addEventListener('keydown',e=>{
+ if(e.target.tagName==='SELECT')return;
+ if(e.code==='Space'){e.preventDefault(); if(!shown){shown=true;render();} return;}
+ if(shown && ['1','2','3','4'].includes(e.key)) rate(parseInt(e.key)-1);
+});
+buildFilter(); if(!restoreSession()) startSession();
+</script>
+</body>
+</html>

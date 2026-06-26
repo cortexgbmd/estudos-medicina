@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bioestatística Clínica — 50 Questões</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1714;
+  --paper:#f4efe6;
+  --paper2:#ece4d4;
+  --line:#d4c8b0;
+  --accent:#9c2a1f;
+  --accent2:#1f5c4d;
+  --gold:#a8772a;
+  --muted:#6b6358;
+  --ok:#1f5c4d;
+  --okbg:#e3ede6;
+  --no:#9c2a1f;
+  --nobg:#f3e3df;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:18px;
+  line-height:1.6;
+  background-image:radial-gradient(circle at 1px 1px, rgba(0,0,0,0.025) 1px, transparent 0);
+  background-size:22px 22px;
+  min-height:100vh;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px 120px}
+
+/* ---- HEADER ---- */
+header{
+  padding:60px 0 32px;
+  border-bottom:3px double var(--ink);
+  margin-bottom:8px;
+}
+.kicker{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:18px;
+}
+h1{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(38px,7vw,68px);
+  line-height:.98;
+  letter-spacing:-.02em;
+  margin-bottom:16px;
+}
+h1 em{font-style:italic;color:var(--accent)}
+.lede{
+  font-size:20px;
+  color:var(--muted);
+  max-width:60ch;
+  font-style:italic;
+}
+.meta-row{
+  display:flex;flex-wrap:wrap;gap:22px;
+  margin-top:26px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  letter-spacing:.04em;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+.meta-row span b{color:var(--ink);font-weight:500}
+
+/* ---- DASHBOARD ---- */
+.dash{
+  position:sticky;top:0;z-index:50;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  padding:14px 0;
+  margin-bottom:30px;
+  backdrop-filter:blur(3px);
+}
+.dash-inner{max-width:820px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.scoreboard{font-family:'IBM Plex Mono',monospace;font-size:13px;display:flex;gap:18px;align-items:baseline}
+.scoreboard .big{font-size:24px;font-weight:500;color:var(--accent2)}
+.scoreboard .lbl{color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
+.progress-track{flex:1;min-width:120px;height:6px;background:var(--paper2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--accent2));transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+/* ---- FILTERS ---- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.05em;
+  padding:7px 13px;
+  border:1px solid var(--line);
+  background:transparent;color:var(--muted);
+  border-radius:99px;cursor:pointer;
+  transition:all .18s;text-transform:uppercase;
+}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---- QUESTION CARD ---- */
+.q-card{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#faf6ee,#f4efe6);
+  border-radius:3px;
+  padding:30px 30px 26px;
+  margin-bottom:26px;
+  position:relative;
+  box-shadow:3px 3px 0 rgba(26,23,20,.05);
+  transition:opacity .3s,transform .3s;
+}
+.q-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:16px}
+.q-num{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:42px;line-height:.8;color:var(--ink);opacity:.18;
+}
+.q-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent2);border:1px solid var(--accent2);
+  padding:4px 9px;border-radius:99px;white-space:nowrap;
+}
+.q-text{font-size:18.5px;line-height:1.55;margin-bottom:22px;font-weight:400}
+.alts{list-style:none;display:flex;flex-direction:column;gap:9px}
+.alt{
+  display:flex;gap:13px;align-items:flex-start;
+  padding:13px 16px;
+  border:1px solid var(--line);
+  border-radius:3px;background:rgba(255,255,255,.45);
+  cursor:pointer;transition:all .15s;font-size:16.5px;line-height:1.45;
+}
+.alt:hover{border-color:var(--ink);background:rgba(255,255,255,.85)}
+.alt .letter{
+  font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;
+  width:24px;height:24px;flex-shrink:0;
+  display:grid;place-items:center;
+  border:1px solid var(--muted);border-radius:50%;color:var(--muted);
+  transition:all .15s;margin-top:1px;
+}
+.alt.correct{background:var(--okbg);border-color:var(--ok)}
+.alt.correct .letter{background:var(--ok);color:#fff;border-color:var(--ok)}
+.alt.wrong{background:var(--nobg);border-color:var(--no)}
+.alt.wrong .letter{background:var(--no);color:#fff;border-color:var(--no)}
+.alt.disabled{cursor:default;pointer-events:none}
+.alt.dim{opacity:.5}
+
+.explain{
+  margin-top:18px;padding:18px 20px;
+  border-left:3px solid var(--gold);
+  background:rgba(168,119,42,.07);
+  border-radius:0 3px 3px 0;
+  font-size:16px;line-height:1.55;
+  display:none;
+}
+.explain.show{display:block;animation:fade .4s ease}
+.explain .verdict{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+  display:block;margin-bottom:7px;
+}
+.explain.right .verdict{color:var(--ok)}
+.explain.miss .verdict{color:var(--no)}
+.explain b{color:var(--gold);font-weight:600}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+.q-card.hidden{display:none}
+
+/* ---- DONE BANNER ---- */
+.done{
+  display:none;text-align:center;padding:50px 30px;
+  border:3px double var(--ink);border-radius:4px;
+  margin-bottom:30px;background:var(--paper2);
+}
+.done.show{display:block;animation:fade .5s ease}
+.done h2{font-family:'Fraunces',serif;font-size:34px;margin-bottom:8px}
+.done .score-big{font-family:'Fraunces',serif;font-size:64px;color:var(--accent);line-height:1}
+.done p{color:var(--muted);font-style:italic;margin-top:6px}
+.btn{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;
+  text-transform:uppercase;padding:11px 22px;margin-top:22px;
+  border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  border-radius:99px;cursor:pointer;transition:all .2s;
+}
+.btn:hover{background:transparent;color:var(--ink)}
+
+footer{text-align:center;padding-top:40px;border-top:1px solid var(--line);margin-top:50px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.05em;line-height:1.8}
+footer a{color:var(--accent2)}
+
+@media(max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 16px 80px}
+  .q-card{padding:22px 18px}
+  .dash-inner{padding:0 16px;gap:12px}
+  .q-num{font-size:32px}
+}
+</style>
+</head>
+<body>
+
+<div class="dash">
+  <div class="dash-inner">
+    <div class="scoreboard">
+      <div><span class="big" id="sc-acertos">0</span><span class="lbl"> acertos</span></div>
+      <div><span class="big" id="sc-resp" style="color:var(--gold)">0</span><span class="lbl">/50 feitas</span></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="pf"></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Medicina · Bioestatística · Banco de questões</div>
+    <h1>Bioestatística <em>Clínica</em></h1>
+    <p class="lede">Cinquenta questões objetivas no estilo das provas de residência, construídas sobre os conceitos das aulas — da estatística descritiva ao Kaplan-Meier.</p>
+    <div class="meta-row">
+      <span><b>50</b> questões</span>
+      <span><b>8</b> temas</span>
+      <span>Feedback <b>imediato</b></span>
+      <span>Nível <b>ENAMED / ENARE</b></span>
+    </div>
+  </header>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="done" id="done">
+    <div class="score-big" id="done-score">0/50</div>
+    <h2>Banco concluído</h2>
+    <p id="done-msg"></p>
+    <button class="btn" onclick="resetAll()">Recomeçar</button>
+  </div>
+
+  <main id="quiz"></main>
+
+  <footer>
+    Material de estudo · gerado a partir das aulas de Bioestatística<br>
+    Conteúdo: variáveis · descritiva · normalidade · teste de hipótese · 2 grupos · correlação · ANOVA · sobrevida
+  </footer>
+</div>
+
+<script>
+const TEMAS = {"variaveis": "Tipos de variáveis", "descritiva": "Estatística descritiva", "normal": "Distribuição normal e normalidade", "hipotese": "Teste de hipótese, p e erros", "doisgrupos": "Comparação de dois grupos", "correlacao": "Correlação", "anova": "ANOVA e múltiplos grupos", "sobrevida": "Análise de sobrevivência"};
+const QUESTOES = [{"tema": "variaveis", "enunciado": "Em um estudo sobre insuficiência cardíaca, um pesquisador registra para cada paciente: a classe funcional NYHA (I, II, III ou IV), o número de internações no último ano e a fração de ejeção do ventrículo esquerdo (em %). Como se classificam, respectivamente, essas três variáveis?", "alternativas": ["Qualitativa ordinal; quantitativa discreta; quantitativa contínua", "Qualitativa nominal; quantitativa contínua; quantitativa discreta", "Quantitativa discreta; qualitativa ordinal; quantitativa contínua", "Qualitativa ordinal; quantitativa contínua; quantitativa contínua"], "correta": 0, "comentario": "A classe NYHA tem ordem natural (I < II < III < IV) sem intervalo numérico definido → qualitativa ordinal. Número de internações é contagem de inteiros → quantitativa discreta. Fração de ejeção assume qualquer valor num intervalo → quantitativa contínua."}, {"tema": "variaveis", "enunciado": "Um ensaio clínico aloca pacientes em três grupos: placebo, dose baixa e dose alta de um anti-hipertensivo. O desfecho medido é a pressão arterial sistólica após 8 semanas. Sobre as variáveis envolvidas, é correto afirmar:", "alternativas": ["A pressão arterial é a variável independente, pois é o que o pesquisador manipula", "O grupo de tratamento é a variável independente e a pressão arterial é a dependente", "Ambas são variáveis dependentes, pois mudam ao longo do estudo", "O grupo de tratamento é a variável dependente, pois define a alocação"], "correta": 1, "comentario": "A variável independente (preditora) é aquela que o pesquisador manipula ou que define os grupos — aqui, o grupo de tratamento. A dependente (desfecho/resposta) é o que se mede em função dela — a pressão arterial."}, {"tema": "variaveis", "enunciado": "Qual das variáveis abaixo NÃO permite o cálculo de uma média aritmética com sentido clínico?", "alternativas": ["Glicemia de jejum (mg/dL)", "Número de filhos", "Tipo sanguíneo (A, B, AB, O)", "Idade em anos"], "correta": 2, "comentario": "Tipo sanguíneo é variável qualitativa nominal — categorias sem ordem nem valor numérico. A média de 'A, B, AB e O' não existe; o adequado é descrever por frequência. As demais são quantitativas e admitem média."}, {"tema": "variaveis", "enunciado": "Em um prontuário eletrônico, a variável 'escala de dor de 0 a 10 referida pelo paciente' é mais adequadamente classificada como:", "alternativas": ["Quantitativa contínua", "Qualitativa nominal", "Qualitativa ordinal", "Quantitativa discreta de razão"], "correta": 2, "comentario": "Escalas de dor são tipicamente tratadas como qualitativas ordinais: há ordem clara (mais dor > menos dor), mas a distância entre os pontos não é necessariamente uniforme nem possui zero absoluto interpretável como ausência mensurável proporcional."}, {"tema": "variaveis", "enunciado": "Um estudo descreve o estadiamento TNM de tumores (I, II, III, IV). Para resumir a tendência central dessa variável, a medida mais apropriada é:", "alternativas": ["Média", "Mediana ou moda", "Desvio padrão", "Erro padrão da média"], "correta": 1, "comentario": "TNM é variável qualitativa ordinal. Para tendência central de variáveis ordinais usa-se mediana ou moda — não a média (que exigiria distâncias numéricas iguais entre categorias). Desvio padrão e erro padrão são medidas de dispersão, não de tendência central."}, {"tema": "descritiva", "enunciado": "Os valores de proteinúria (mg/dia) de 11 pacientes são: 65, 70, 72, 68, 71, 69, 73, 67, 1200, 70, 66. Qual a medida de tendência central mais representativa do conjunto e por quê?", "alternativas": ["A média, porque usa todos os valores", "A moda, porque há valores repetidos", "A mediana, porque é resistente ao outlier de 1200", "O desvio padrão, porque mede o centro dos dados"], "correta": 2, "comentario": "O valor 1200 é um outlier que distorce a média para cima, tornando-a não representativa. A mediana é imune a valores extremos e descreve melhor o 'centro' real do conjunto. O desvio padrão é medida de dispersão, não de tendência central."}, {"tema": "descritiva", "enunciado": "Pressão arterial sistólica de 5 pacientes: 118, 122, 125, 130, 135 mmHg. A variância amostral (usando n−1) é de 44,5 mmHg². Qual o desvio padrão?", "alternativas": ["Aproximadamente 6,67 mmHg", "22,25 mmHg", "44,5 mmHg", "8,9 mmHg"], "correta": 0, "comentario": "O desvio padrão é a raiz quadrada da variância: √44,5 ≈ 6,67 mmHg. Ele retorna a medida para a unidade original (mmHg), enquanto a variância fica em unidades ao quadrado (mmHg²)."}, {"tema": "descritiva", "enunciado": "Em um artigo, os autores apresentam barras de erro muito pequenas e relatam usar o erro padrão da média (EPM) em vez do desvio padrão (DP). Sobre isso, é correto afirmar:", "alternativas": ["EPM e DP são sinônimos e intercambiáveis", "O EPM é sempre maior que o DP, exagerando a dispersão", "O EPM é menor que o DP (divide por √n) e descreve a precisão da média, não a dispersão dos dados", "O EPM deve sempre ser usado para descrever a variabilidade da amostra"], "correta": 2, "comentario": "EPM = DP/√n, portanto sempre menor que o DP. O EPM mede a precisão da estimativa da média; o DP mede a dispersão dos dados. Usar EPM para 'parecer' que os dados têm pouca dispersão é prática enganosa: para descrever variabilidade, usa-se DP."}, {"tema": "descritiva", "enunciado": "Os seguintes valores de creatinina (mg/dL), já ordenados, foram obtidos em 8 pacientes: 0,8 — 0,9 — 1,0 — 1,1 — 1,2 — 1,3 — 1,5 — 2,0. Qual é a mediana?", "alternativas": ["1,1 mg/dL", "1,15 mg/dL", "1,2 mg/dL", "1,225 mg/dL"], "correta": 1, "comentario": "Com n par (8), a mediana é a média dos dois valores centrais (4º e 5º): (1,1 + 1,2)/2 = 1,15 mg/dL."}, {"tema": "descritiva", "enunciado": "Em uma amostra com n = 12 valores ordenados, deseja-se calcular o primeiro quartil (Q1, percentil 25). A posição é 0,25 × 12 = 3. Como Q1 deve ser determinado?", "alternativas": ["É exatamente o 3º valor da série ordenada (posição inteira)", "É a média entre o 3º e o 4º valor", "É sempre o menor valor da amostra", "Corresponde à mediana dos dados"], "correta": 1, "comentario": "Quando a posição calculada cai exatamente sobre um inteiro (3), a convenção comum interpola entre esse valor e o seguinte — a média entre o 3º e o 4º valor. (Quando dá decimal, arredonda-se para a posição seguinte.) Q1 não é o mínimo nem a mediana."}, {"tema": "descritiva", "enunciado": "No boxplot de uma variável, a 'caixa' representa o intervalo interquartil (IIQ). O que esse intervalo contém?", "alternativas": ["Os 25% menores valores da amostra", "Os 50% centrais dos dados, entre Q1 e Q3", "Todos os valores entre o mínimo e o máximo", "Apenas a média ± 1 desvio padrão"], "correta": 1, "comentario": "A caixa do boxplot vai de Q1 (P25) a Q3 (P75), contendo os 50% centrais dos dados. A linha interna marca a mediana (Q2). Os bigodes alcançam os extremos (ou 1,5×IIQ), e pontos além disso são outliers."}, {"tema": "descritiva", "enunciado": "Dados não-normais de tempo de internação devem ser descritos em um artigo da forma mais adequada como:", "alternativas": ["Média ± desvio padrão", "Média ± erro padrão da média", "Mediana e intervalo interquartil (IIQ)", "Apenas o valor máximo observado"], "correta": 2, "comentario": "Para dados assimétricos/não-normais, a descrição apropriada é mediana acompanhada do IIQ, pois ambos são robustos a outliers e assimetria. Média ± DP é reservado para dados aproximadamente normais."}, {"tema": "descritiva", "enunciado": "Um residente afirma: 'a média de glicemia do grupo foi 110 mg/dL'. Por que essa informação, isolada, é insuficiente para descrever a amostra?", "alternativas": ["Porque a média nunca deve ser reportada", "Porque falta uma medida de dispersão (ex.: desvio padrão) que indique o espalhamento dos dados", "Porque a média só vale para variáveis qualitativas", "Porque a glicemia não é uma variável quantitativa"], "correta": 1, "comentario": "Tendência central sem dispersão esconde a heterogeneidade: uma média de 110 pode vir de um grupo homogêneo (todos perto de 110) ou caótico (de 70 a 200). É preciso acompanhar de uma medida de dispersão como o desvio padrão."}, {"tema": "normal", "enunciado": "Numa distribuição normal de glicemia com média 90 mg/dL e desvio padrão 10 mg/dL, aproximadamente que proporção da população tem glicemia entre 70 e 110 mg/dL?", "alternativas": ["68%", "95%", "99,7%", "50%"], "correta": 1, "comentario": "70 a 110 corresponde a μ ± 2σ (90 ± 20). Pela regra empírica 68-95-99,7, o intervalo de ±2 desvios padrão contém cerca de 95% dos valores."}, {"tema": "normal", "enunciado": "Na distribuição normal (curva de Gauss), qual relação entre média, mediana e moda é esperada?", "alternativas": ["Média > mediana > moda", "As três coincidem no ponto central", "Moda > média > mediana", "Média e moda coincidem, mas a mediana é sempre menor"], "correta": 1, "comentario": "Por ser simétrica e unimodal, na distribuição normal a média, a mediana e a moda coincidem exatamente no centro (pico) da curva."}, {"tema": "normal", "enunciado": "O teste de Shapiro-Wilk é aplicado aos dados de um grupo e resulta em p = 0,03. Qual a interpretação correta para a escolha do teste estatístico subsequente?", "alternativas": ["Os dados são normais; pode-se usar teste paramétrico", "Os dados não seguem distribuição normal; deve-se preferir teste não-paramétrico", "O resultado indica diferença significativa entre os grupos", "O teste foi inconclusivo e deve ser repetido"], "correta": 1, "comentario": "No Shapiro-Wilk, H₀ é 'os dados são normais'. Com p = 0,03 (≤ 0,05), rejeita-se H₀: os dados NÃO são normais. Logo, opta-se por testes não-paramétricos (Mann-Whitney, Kruskal-Wallis, Spearman)."}, {"tema": "normal", "enunciado": "Sobre o teste de normalidade de Shapiro-Wilk, qual afirmação está correta?", "alternativas": ["Um p alto (>0,05) é 'ruim', pois indica diferença entre grupos", "Queremos p > 0,05 para tratar os dados como normais e usar testes paramétricos", "O teste compara as médias de dois grupos", "Só pode ser aplicado a variáveis qualitativas"], "correta": 1, "comentario": "É um ponto que confunde: no Shapiro-Wilk, p > 0,05 é o desejável, pois significa 'sem evidência de que os dados difiram de uma normal' — liberando o uso de paramétricos. Aqui, ao contrário da maioria dos testes, p baixo é o cenário restritivo."}, {"tema": "normal", "enunciado": "Por que muitas variáveis biológicas (altura, pressão, glicemia) tendem a se distribuir de forma aproximadamente normal?", "alternativas": ["Porque são sempre medidas em escala contínua", "Porque resultam da soma de muitos fatores independentes (genéticos, ambientais), conforme o Teorema Central do Limite", "Porque o organismo regula todos os valores para a média", "Por uma exigência matemática de qualquer medida clínica"], "correta": 1, "comentario": "Pelo Teorema Central do Limite, a soma de muitas variáveis aleatórias independentes tende à normal, independentemente da distribuição original de cada fator. Características poligênicas e multifatoriais por isso se aproximam da curva de Gauss."}, {"tema": "normal", "enunciado": "Em uma amostra com distribuição assimétrica à direita (cauda longa para valores altos, ex.: viremia), qual estratégia permite, frequentemente, aplicar testes paramétricos?", "alternativas": ["Aumentar arbitrariamente o nível α para 0,20", "Transformar os dados (ex.: logaritmo) e reavaliar a normalidade", "Remover metade dos dados ao acaso", "Substituir todos os valores pela média"], "correta": 1, "comentario": "A transformação logarítmica é clássica para dados assimétricos à direita: normaliza a distribuição, permitindo usar testes paramétricos sobre os dados transformados. Depois refaz-se o teste de normalidade. Manipular α ou descartar dados não corrige a distribuição."}, {"tema": "hipotese", "enunciado": "Em um ensaio clínico, a hipótese nula (H₀) afirma que 'o novo fármaco não altera a pressão arterial em relação ao placebo'. O valor p obtido foi 0,002. A interpretação correta do valor p é:", "alternativas": ["Há 0,2% de probabilidade de a hipótese nula ser verdadeira", "Há 99,8% de chance de o fármaco funcionar", "Se H₀ fosse verdadeira, a probabilidade de observar dados tão (ou mais) extremos seria 0,2%", "O efeito do fármaco é grande em magnitude"], "correta": 2, "comentario": "O valor p é P(dados ou mais extremos | H₀ verdadeira). Não é a probabilidade de H₀ ser verdadeira, nem mede a magnitude do efeito. Um p de 0,002 indica que, sob H₀, os dados observados seriam muito improváveis — daí rejeitar H₀."}, {"tema": "hipotese", "enunciado": "Um estudo com 20.000 pacientes mostra que um anti-hipertensivo reduz a PA sistólica em 1,2 mmHg com p < 0,001. A melhor interpretação é:", "alternativas": ["O resultado é estatisticamente significativo e clinicamente muito relevante", "O resultado é estatisticamente significativo, mas a magnitude (1,2 mmHg) é clinicamente irrelevante", "O resultado não tem significância estatística", "O p < 0,001 prova que o efeito é grande"], "correta": 1, "comentario": "Significância estatística ≠ relevância clínica. Com n enorme, diferenças triviais ficam 'significativas'. Uma redução de 1,2 mmHg não muda risco cardiovascular de forma clinicamente importante, mesmo com p minúsculo. Sempre avaliar a magnitude do efeito."}, {"tema": "hipotese", "enunciado": "Um teste conclui que um tratamento funciona, quando na verdade ele não funciona. Que tipo de erro foi cometido?", "alternativas": ["Erro tipo I (falso positivo)", "Erro tipo II (falso negativo)", "Erro de medição sistemático", "Erro amostral aleatório"], "correta": 0, "comentario": "Afirmar que existe efeito/diferença quando ela não existe é o erro tipo I (falso positivo), controlado diretamente pelo nível de significância α. O erro tipo II (β) é o oposto: não detectar um efeito que existe."}, {"tema": "hipotese", "enunciado": "Um estudo com apenas 18 pacientes encontra redução de 22 mmHg na PA com p = 0,09 (não significativo). A explicação mais provável é:", "alternativas": ["O tratamento certamente não funciona", "Provável erro tipo I por amostra grande", "Possível erro tipo II por amostra pequena / baixo poder, valendo repetir com n maior", "O valor p prova a hipótese nula"], "correta": 2, "comentario": "Efeito grande (22 mmHg) com p não significativo e n pequeno sugere falta de poder estatístico — risco de erro tipo II (falso negativo). 'Não significativo' não prova ausência de efeito; vale repetir com amostra maior."}, {"tema": "hipotese", "enunciado": "Sobre o poder estatístico de um estudo (1 − β), qual fator o AUMENTA?", "alternativas": ["Reduzir o tamanho da amostra", "Aumentar a variabilidade dos dados", "Aumentar o tamanho da amostra", "Reduzir o tamanho do efeito real"], "correta": 2, "comentario": "O poder aumenta com: maior n (fator mais controlável), maior tamanho de efeito real, menor variabilidade (σ menor) e maior α. Aumentar a amostra é a alavanca clássica para elevar o poder e reduzir o erro tipo II."}, {"tema": "hipotese", "enunciado": "Quando se deve preferir um teste de hipótese bilateral (bicaudal) em vez de unilateral?", "alternativas": ["Sempre que se quiser facilitar a obtenção de p < 0,05", "Quando não há certeza prévia da direção do efeito — é a opção padrão e mais conservadora", "Apenas quando a amostra é pequena", "Quando o desfecho é qualitativo"], "correta": 1, "comentario": "O teste bilateral é o padrão e mais conservador, usado quando o efeito pode ocorrer em qualquer direção. O unilateral só se justifica com hipótese direcional pré-especificada; usá-lo só para 'forçar' significância é inadequado."}, {"tema": "hipotese", "enunciado": "Um pesquisador deseja reduzir a chance de falso positivo em seu estudo. Qual medida atua diretamente sobre isso?", "alternativas": ["Adotar um α mais rigoroso (ex.: 0,01 em vez de 0,05)", "Aumentar a variabilidade dos dados", "Usar teste unilateral sem justificativa", "Remover o grupo controle"], "correta": 0, "comentario": "O erro tipo I (falso positivo) é controlado pelo α. Adotar α menor (0,01) reduz a chance de falso positivo — porém às custas de menor poder (mais erro tipo II). É um equilíbrio."}, {"tema": "doisgrupos", "enunciado": "Deseja-se comparar a pressão sistólica entre dois grupos independentes de pacientes. Ambos os grupos passaram no teste de Shapiro-Wilk (p > 0,05). Qual teste é o indicado?", "alternativas": ["Teste t para amostras independentes", "Teste de Mann-Whitney", "Teste de Kruskal-Wallis", "Correlação de Spearman"], "correta": 0, "comentario": "Dois grupos independentes + ambos com distribuição normal → teste t para amostras independentes ('unpaired t'). Mann-Whitney seria a opção caso pelo menos um grupo não fosse normal."}, {"tema": "doisgrupos", "enunciado": "Ao comparar a proteinúria entre dois grupos independentes, o grupo A não passou no teste de Shapiro-Wilk (p = 0,01). Qual o teste apropriado?", "alternativas": ["Teste t independente", "Teste t pareado", "Teste de Mann-Whitney", "ANOVA de uma via"], "correta": 2, "comentario": "Basta que UM dos grupos não seja normal para indicar o equivalente não-paramétrico: o teste de Mann-Whitney, que compara as posições (ranks) em vez das médias."}, {"tema": "doisgrupos", "enunciado": "Mediu-se a pressão arterial dos MESMOS pacientes antes e depois de 4 semanas de tratamento. Os dados das diferenças são normais. Qual o teste correto?", "alternativas": ["Teste t para amostras independentes", "Teste t pareado", "Teste de Mann-Whitney", "Kruskal-Wallis"], "correta": 1, "comentario": "Medidas antes/depois no mesmo paciente são dados pareados. Com normalidade (das diferenças), usa-se o teste t pareado. Se as diferenças não fossem normais, o equivalente seria o teste de Wilcoxon pareado."}, {"tema": "doisgrupos", "enunciado": "O teste de Mann-Whitney, equivalente não-paramétrico do teste t independente, baseia sua comparação em:", "alternativas": ["Médias dos dois grupos", "Variâncias dos dois grupos", "Postos (ranks) atribuídos aos valores ordenados", "Frequências de categorias qualitativas"], "correta": 2, "comentario": "Mann-Whitney ordena todos os valores juntos, atribui ranks e compara as somas de ranks de cada grupo. Por trabalhar com posições, é robusto a outliers e não exige normalidade — por isso interpretado como comparação de medianas."}, {"tema": "doisgrupos", "enunciado": "Após aplicar o teste de Mann-Whitney, qual a forma correta de reportar a tendência central e a dispersão dos grupos?", "alternativas": ["Média ± desvio padrão", "Média ± erro padrão", "Mediana e intervalo interquartil (IIQ)", "Apenas o valor p, sem medidas descritivas"], "correta": 2, "comentario": "Como Mann-Whitney não assume normalidade e lida com ranks/medianas, é incoerente reportar média ± DP. O correto é mediana acompanhada do IIQ, consistente com a natureza não-paramétrica do teste."}, {"tema": "doisgrupos", "enunciado": "Em um teste t independente, qual dos seguintes NÃO é um pressuposto do teste em sua forma clássica?", "alternativas": ["Normalidade em cada grupo", "Independência entre as observações", "Que as duas amostras tenham exatamente a mesma média", "Homogeneidade (semelhança) das variâncias entre os grupos"], "correta": 2, "comentario": "Os pressupostos são normalidade, independência e homogeneidade de variâncias. 'Mesma média' não é pressuposto — é justamente o que o teste investiga (H₀: médias iguais). Quando as variâncias diferem muito, usa-se a correção de Welch."}, {"tema": "doisgrupos", "enunciado": "Em um estudo, o grupo B teve PA sistólica 173,1 ± 13,7 mmHg e o grupo A teve 120,2 ± 1,7 mmHg, com p < 0,001 no teste t independente. A conclusão mais apropriada é:", "alternativas": ["Não há diferença entre os grupos", "A PA do grupo B foi significativamente maior que a do grupo A", "Os dois grupos têm a mesma média populacional", "O resultado é clinicamente irrelevante"], "correta": 1, "comentario": "Com p < 0,001 e diferença de quase 53 mmHg, rejeita-se H₀: a PA do grupo B é significativamente maior. A magnitude é grande e clinicamente relevante (sugere hipertensão no grupo B)."}, {"tema": "correlacao", "enunciado": "Um estudo encontra correlação de Pearson r = 0,98 (p < 0,001) entre número de propagandas e vendas de um produto. A interpretação correta é:", "alternativas": ["As propagandas causam o aumento das vendas", "Há forte associação linear, mas correlação não prova causalidade", "Não há associação relevante entre as variáveis", "As variáveis são independentes"], "correta": 1, "comentario": "r = 0,98 indica associação linear positiva muito forte. Porém correlação não implica causalidade — pode haver confundidores (sazonalidade, lançamento de produto) influenciando ambas. É a regra de ouro da estatística."}, {"tema": "correlacao", "enunciado": "Deseja-se medir a associação entre duas variáveis quantitativas, mas uma delas é fortemente assimétrica e há outliers. Qual coeficiente é mais apropriado?", "alternativas": ["Pearson, pois é mais sensível", "Spearman, pois trabalha com ranks e é robusto a outliers", "Qui-quadrado", "Teste t pareado"], "correta": 1, "comentario": "Pearson exige normalidade e relação linear, e é muito sensível a outliers. Spearman usa postos (ranks), sendo robusto a outliers, a distribuições não-normais e a relações monotônicas não-lineares. É a escolha aqui."}, {"tema": "correlacao", "enunciado": "Um coeficiente de correlação de Pearson igual a 0 indica que:", "alternativas": ["As variáveis têm correlação positiva perfeita", "Não há correlação LINEAR entre as variáveis (pode existir relação não-linear)", "As variáveis são idênticas", "Há correlação negativa forte"], "correta": 1, "comentario": "r = 0 significa ausência de correlação linear. Atenção: pode haver associação não-linear forte (ex.: relação em U) que o Pearson não capta. Por isso recomenda-se sempre plotar os dados (diagrama de dispersão)."}, {"tema": "correlacao", "enunciado": "Em um estudo, obteve-se r = 0,5 entre duas variáveis. O coeficiente de determinação (R²) e sua interpretação são:", "alternativas": ["R² = 0,5; 50% da variação de Y é explicada por X", "R² = 0,25; 25% da variação de Y é explicada por X", "R² = 0,7; correlação muito forte", "R² = 1,0; relação perfeita"], "correta": 1, "comentario": "R² = r² = 0,5² = 0,25. Ou seja, apenas 25% da variabilidade de Y é explicada por X — um r de 0,5 que parece 'moderado' explica, na prática, só um quarto da variação."}, {"tema": "correlacao", "enunciado": "Qual é o pressuposto do coeficiente de correlação de Pearson que o diferencia de Spearman?", "alternativas": ["Pearson assume relação linear e normalidade; Spearman exige apenas relação monotônica", "Pearson só serve para variáveis qualitativas", "Spearman exige normalidade, e Pearson não", "Não há diferença de pressupostos entre eles"], "correta": 0, "comentario": "Pearson é paramétrico: assume normalidade bivariada e relação linear. Spearman é não-paramétrico: trabalha com ranks e detecta qualquer relação monotônica (sempre crescente ou sempre decrescente), não precisando ser linear."}, {"tema": "anova", "enunciado": "Um pesquisador quer comparar a PA média entre TRÊS grupos (controle, dose baixa, dose alta), todos com dados normais. Por que NÃO se deve simplesmente fazer vários testes t entre os pares?", "alternativas": ["Porque o teste t não existe para três grupos", "Porque múltiplas comparações inflam a probabilidade de erro tipo I (falso positivo)", "Porque o teste t exige dados não-normais", "Porque a ANOVA é menos poderosa que vários testes t"], "correta": 1, "comentario": "Cada teste t carrega 5% de risco de erro tipo I; repetir vários testes infla a chance global de pelo menos um falso positivo (problema das comparações múltiplas). A ANOVA testa todas as médias de uma vez, controlando o erro global."}, {"tema": "anova", "enunciado": "A ANOVA de uma via resulta em p < 0,05 ao comparar três grupos. O que se pode concluir?", "alternativas": ["Todos os grupos são diferentes entre si", "Pelo menos um grupo difere dos demais, mas a ANOVA não diz qual", "Nenhum grupo difere", "O grupo controle é necessariamente o diferente"], "correta": 1, "comentario": "ANOVA significativa indica que pelo menos uma média difere, mas não identifica qual(is). Para localizar as diferenças entre pares é preciso um pós-teste (Tukey, Bonferroni, Dunnett, etc.)."}, {"tema": "anova", "enunciado": "Após uma ANOVA significativa, deseja-se comparar cada tratamento APENAS contra o grupo controle (não os tratamentos entre si). Qual pós-teste é o mais indicado e poderoso para esse cenário?", "alternativas": ["Tukey HSD", "Bonferroni", "Dunnett", "Newman-Keuls"], "correta": 2, "comentario": "O pós-teste de Dunnett é desenhado especificamente para comparar vários tratamentos contra um único controle, sendo mais poderoso que Bonferroni nesse cenário. Tukey compara todos os pares; Bonferroni é genérico e conservador."}, {"tema": "anova", "enunciado": "Três grupos com dados NÃO-normais devem ser comparados. Qual é o teste apropriado e seu respectivo pós-teste?", "alternativas": ["ANOVA seguida de Tukey", "Kruskal-Wallis seguido do pós-teste de Dunn", "Teste t pareado seguido de Bonferroni", "Correlação de Pearson"], "correta": 1, "comentario": "Para 3+ grupos independentes não-normais, usa-se Kruskal-Wallis (equivalente não-paramétrico da ANOVA, compara ranks). O pós-teste padrão para localizar diferenças é o teste de Dunn."}, {"tema": "anova", "enunciado": "Sobre a correção de Bonferroni em comparações múltiplas, é correto afirmar:", "alternativas": ["Aumenta o α para facilitar a detecção de diferenças", "Divide o α pelo número de comparações, sendo conservadora e perdendo poder com muitas comparações", "É indicada quando há milhares de comparações simultâneas", "Substitui a necessidade de fazer a ANOVA"], "correta": 1, "comentario": "Bonferroni divide α pelo número de comparações (ex.: 0,05/3 ≈ 0,017), mantendo o erro global em ~5%. É conservadora e perde poder quando há muitas comparações. Para milhares de testes (genômica), prefere-se o controle de FDR."}, {"tema": "anova", "enunciado": "Em estudos de genômica com milhares de comparações simultâneas, exigir p < 0,05/10000 (Bonferroni) elimina quase todo sinal. Qual abordagem moderna é preferida?", "alternativas": ["Aumentar α para 0,5", "Controle da taxa de descobertas falsas (FDR, Benjamini-Hochberg)", "Usar apenas o teste t", "Ignorar a correção para múltiplas comparações"], "correta": 1, "comentario": "O FDR (False Discovery Rate, Benjamini-Hochberg) controla a PROPORÇÃO de falsos positivos entre as descobertas, em vez de exigir zero falsos positivos. É a abordagem padrão para grande volume de testes (RNA-seq, proteômica)."}, {"tema": "anova", "enunciado": "A estatística F da ANOVA é, essencialmente, uma razão entre:", "alternativas": ["Variância entre os grupos / variância dentro dos grupos", "Média do grupo A / média do grupo B", "Desvio padrão / erro padrão", "Número de grupos / tamanho da amostra"], "correta": 0, "comentario": "F = variância entre grupos ÷ variância dentro dos grupos. F grande (médias afastadas, grupos internamente coesos) → p pequeno. F próximo de 1 → variâncias parecidas → sem evidência de diferença."}, {"tema": "sobrevida", "enunciado": "Em um estudo de sobrevida de 5 anos para câncer de mama, um paciente mudou de cidade e foi perdido de seguimento no 3º ano, ainda vivo. Como ele deve ser tratado na análise de Kaplan-Meier?", "alternativas": ["Excluído completamente do estudo", "Considerado como óbito no momento da perda", "Censurado no momento da última informação disponível", "Considerado vivo até o fim dos 5 anos"], "correta": 2, "comentario": "O paciente deve ser censurado no tempo da última informação (3º ano). Censura não é óbito nem exclusão: o paciente contribuiu com tempo de observação válido até ali, e a curva de Kaplan-Meier incorpora isso corretamente."}, {"tema": "sobrevida", "enunciado": "Por que NÃO se deve usar um teste t comum sobre o 'tempo médio até o óbito' em estudos de sobrevida?", "alternativas": ["Porque o teste t é não-paramétrico", "Porque ignora a censura e os tempos de seguimento variáveis, gerando viés grave", "Porque o tempo é uma variável qualitativa", "Porque o teste t exige mais de três grupos"], "correta": 1, "comentario": "Análise de sobrevida exige métodos próprios (Kaplan-Meier, Cox) porque há censura (pacientes sem o evento ao fim ou perdidos) e tempos de seguimento desiguais. O teste t no 'tempo médio' ignora ambos, introduzindo viés grave."}, {"tema": "sobrevida", "enunciado": "Para comparar estatisticamente DUAS curvas de Kaplan-Meier (ex.: tratamento vs placebo), qual teste é o utilizado?", "alternativas": ["Teste t independente", "Teste de log-rank (Mantel-Cox)", "Correlação de Pearson", "Qui-quadrado de aderência"], "correta": 1, "comentario": "O log-rank (Mantel-Cox) é o teste padrão para comparar curvas de sobrevida entre grupos. É, grosso modo, o 'equivalente do teste t' para análise de sobrevivência, testando se as curvas vêm da mesma distribuição."}, {"tema": "sobrevida", "enunciado": "Na regressão de Cox, um beta-bloqueador apresentou hazard ratio (HR) = 0,67 (IC 95%: 0,55–0,82). A interpretação correta é:", "alternativas": ["Aumenta o risco de óbito em 67%", "Reduz o risco de óbito em cerca de 33%, e o efeito é significativo (IC não inclui 1)", "Não tem efeito sobre a mortalidade", "Reduz o risco em 67%"], "correta": 1, "comentario": "HR = 0,67 indica fator protetor: redução de risco de 1 − 0,67 = 0,33, isto é, ~33%. Como o IC 95% (0,55–0,82) não inclui o valor neutro 1, o efeito é estatisticamente significativo."}, {"tema": "sobrevida", "enunciado": "Na codificação dos dados para Kaplan-Meier, o que representam os valores '1' e '0' na coluna de status do evento?", "alternativas": ["1 = paciente censurado; 0 = evento (óbito) ocorrido", "1 = evento (óbito) ocorrido; 0 = paciente censurado", "1 = grupo tratamento; 0 = grupo controle", "1 = dado válido; 0 = dado ausente"], "correta": 1, "comentario": "Por convenção, na coluna de status: 1 = o evento (óbito/recidiva) ocorreu naquele tempo; 0 = o sujeito foi censurado (saiu do estudo ou chegou ao fim sem o evento). Inverter essa codificação compromete toda a análise."}];
+
+
+const LETTERS = ['A','B','C','D','E'];
+let answered = {};   // idx -> chosenIndex
+let activeFilter = 'todos';
+
+const quizEl = document.getElementById('quiz');
+const filtersEl = document.getElementById('filters');
+
+// build filters
+const filterDefs = [['todos','Todos']].concat(Object.keys(TEMAS).map(k=>[k,TEMAS[k]]));
+filterDefs.forEach(([key,label])=>{
+  const b=document.createElement('button');
+  b.className='chip'+(key==='todos'?' active':'');
+  b.textContent=label;
+  b.dataset.key=key;
+  b.onclick=()=>{activeFilter=key;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.key===key));applyFilter();};
+  filtersEl.appendChild(b);
+});
+
+// render questions
+QUESTOES.forEach((q,idx)=>{
+  const card=document.createElement('article');
+  card.className='q-card';
+  card.dataset.tema=q.tema;
+  card.dataset.idx=idx;
+
+  let altsHtml='';
+  q.alternativas.forEach((a,ai)=>{
+    altsHtml+=`<li class="alt" data-ai="${ai}" onclick="choose(${idx},${ai})"><span class="letter">${LETTERS[ai]}</span><span>${a}</span></li>`;
+  });
+
+  card.innerHTML=`
+    <div class="q-head">
+      <span class="q-num">${String(idx+1).padStart(2,'0')}</span>
+      <span class="q-tag">${TEMAS[q.tema]}</span>
+    </div>
+    <p class="q-text">${q.enunciado}</p>
+    <ul class="alts">${altsHtml}</ul>
+    <div class="explain" id="exp-${idx}"></div>
+  `;
+  quizEl.appendChild(card);
+});
+
+function choose(idx,ai){
+  if(answered[idx]!==undefined) return;
+  const q=QUESTOES[idx];
+  answered[idx]=ai;
+  const card=quizEl.querySelector(`[data-idx="${idx}"]`);
+  const alts=card.querySelectorAll('.alt');
+  alts.forEach(el=>{
+    const a=+el.dataset.ai;
+    el.classList.add('disabled');
+    if(a===q.correta) el.classList.add('correct');
+    else if(a===ai) el.classList.add('wrong');
+    else el.classList.add('dim');
+  });
+  const acertou=ai===q.correta;
+  const exp=document.getElementById('exp-'+idx);
+  exp.className='explain show '+(acertou?'right':'miss');
+  exp.innerHTML=`<span class="verdict">${acertou?'✓ Correto':'✕ Gabarito: '+LETTERS[q.correta]}</span>${q.comentario}`;
+  updateScore();
+}
+
+function updateScore(){
+  const resp=Object.keys(answered).length;
+  let ac=0;
+  Object.keys(answered).forEach(i=>{if(answered[i]===QUESTOES[i].correta)ac++});
+  document.getElementById('sc-acertos').textContent=ac;
+  document.getElementById('sc-resp').textContent=resp;
+  document.getElementById('pf').style.width=(resp/QUESTOES.length*100)+'%';
+  if(resp===QUESTOES.length){
+    const d=document.getElementById('done');
+    d.classList.add('show');
+    document.getElementById('done-score').textContent=ac+'/50';
+    const pct=ac/50*100;
+    let msg;
+    if(pct>=90)msg='Domínio sólido. Pronto para a prova.';
+    else if(pct>=70)msg='Bom desempenho — revise os temas que escaparam.';
+    else if(pct>=50)msg='Base razoável; vale reforçar os fundamentos.';
+    else msg='Hora de revisar as aulas com calma antes de seguir.';
+    document.getElementById('done-msg').textContent=msg;
+    d.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+
+function applyFilter(){
+  document.querySelectorAll('.q-card').forEach(c=>{
+    c.classList.toggle('hidden', activeFilter!=='todos' && c.dataset.tema!==activeFilter);
+  });
+}
+
+function resetAll(){
+  answered={};
+  document.getElementById('done').classList.remove('show');
+  document.querySelectorAll('.q-card').forEach(c=>{
+    c.querySelectorAll('.alt').forEach(el=>el.className='alt');
+    const idx=c.dataset.idx;
+    const exp=document.getElementById('exp-'+idx);
+    exp.className='explain';exp.innerHTML='';
+  });
+  updateScore();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

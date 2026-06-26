@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Questões — Geriatria P1</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --surface: #161923;
+    --surface-2: #1e2231;
+    --text: #e8eaf2;
+    --muted: #9aa3b8;
+    --accent: #7aa2f7;
+    --accent-2: #bb9af7;
+    --highlight: #e0af68;
+    --border: #2a2f42;
+    --danger: #f7768e;
+    --ok: #9ece6a;
+    --red-bg: rgba(247, 118, 142, 0.15);
+    --green-bg: rgba(158, 206, 106, 0.15);
+  }
+  [data-theme="light"] {
+    --bg: #f7f7f4; --surface: #ffffff; --surface-2: #efefe8;
+    --text: #1b1b1f; --muted: #555a6a;
+    --accent: #2f5bd6; --accent-2: #7b3fb0;
+    --highlight: #b8730a; --border: #d8d6cd;
+    --danger: #c33b57; --ok: #3d7a12;
+    --red-bg: rgba(195, 59, 87, 0.12); --green-bg: rgba(61, 122, 18, 0.12);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px; line-height: 1.6;
+  }
+  header.top {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 10;
+  }
+  header.top h1 { margin: 0; font-size: 1.3rem; color: var(--accent); }
+  .controls { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  button {
+    background: var(--surface-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 0.45rem 0.9rem; cursor: pointer; font-size: 0.9rem;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+  main { max-width: 860px; margin: 2rem auto; padding: 0 1rem; }
+  .hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero h2 { margin: 0 0 0.5rem; color: var(--accent); }
+  .hero p { margin: 0.3rem 0; color: var(--muted); }
+  .filters {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .filter-btn {
+    padding: 0.3rem 0.7rem; font-size: 0.85rem;
+    border-radius: 20px;
+  }
+  .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .question {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+  .question.hidden { display: none; }
+  .qmeta {
+    display: flex; gap: 0.8rem; flex-wrap: wrap;
+    font-size: 0.8rem; color: var(--muted);
+    margin-bottom: 0.7rem;
+  }
+  .qmeta span {
+    background: var(--surface-2);
+    padding: 0.15rem 0.55rem;
+    border-radius: 12px;
+  }
+  .qmeta .nivel.facil { color: var(--ok); }
+  .qmeta .nivel.medio { color: var(--highlight); }
+  .qmeta .nivel.dificil { color: var(--danger); }
+  .qenun { margin-bottom: 0.8rem; }
+  .alternativa {
+    display: block;
+    padding: 0.6rem 0.9rem;
+    margin: 0.35rem 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .alternativa:hover { background: var(--surface-2); }
+  .alternativa.sel { background: var(--surface-2); border-color: var(--accent); }
+  .alternativa.correct { background: var(--green-bg); border-color: var(--ok); }
+  .alternativa.wrong { background: var(--red-bg); border-color: var(--danger); }
+  .alternativa .letra { font-weight: 700; margin-right: 0.5rem; color: var(--accent); }
+  .feedback {
+    display: none;
+    margin-top: 0.8rem; padding: 0.8rem 1rem;
+    border-left: 4px solid var(--accent); background: var(--surface-2);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+  }
+  .feedback.show { display: block; }
+  .feedback h4 { margin: 0 0 0.3rem; color: var(--accent); font-size: 0.9rem; }
+  .feedback ul { padding-left: 1.2rem; margin: 0.4rem 0; }
+  .dissertativa-resposta textarea {
+    width: 100%; min-height: 80px;
+    background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 0.6rem; font-family: inherit; font-size: 0.95rem;
+  }
+  .dissertativa .gab-model {
+    display: none; margin-top: 0.8rem; padding: 0.8rem 1rem;
+    background: var(--surface-2); border-radius: 8px;
+    border-left: 4px solid var(--accent-2);
+  }
+  .dissertativa .gab-model.show { display: block; }
+  .score-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;
+  }
+  .score-panel h2 { color: var(--accent); margin-top: 0; }
+  .score-big { font-size: 3rem; font-weight: 700; margin: 0.5rem 0; }
+  .score-big.ok { color: var(--ok); }
+  .score-big.med { color: var(--highlight); }
+  .score-big.low { color: var(--danger); }
+  .diagnostico-item {
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    background: var(--surface-2);
+    border-left: 4px solid var(--danger);
+    border-radius: 0 8px 8px 0;
+  }
+  .diagnostico-item.medio { border-left-color: var(--highlight); }
+  .diagnostico-item a {
+    display: inline-block;
+    margin-top: 0.3rem;
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+  h3.aula-header {
+    color: var(--accent-2);
+    margin: 2rem 0 0.5rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .hidden { display: none !important; }
+  @media print {
+    header.top, .controls, .filters, button { display: none !important; }
+    .question { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>🩺 Banco — Geriatria P1</h1>
+  <div class="controls">
+    <button id="modoEstudoBtn" class="primary">Modo Estudo</button>
+    <button id="modoSimuladoBtn">Modo Simulado</button>
+    <button id="themeToggle" title="Tema">🌙</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="intro">
+  <h2>Banco de questões — 60 objetivas + 10 dissertativas</h2>
+  <p><strong>Modo Estudo</strong>: responde e vê o gabarito imediatamente.</p>
+  <p><strong>Modo Simulado</strong>: responde todas, vê resultado, score por aula/nível e links para revisão no resumão.</p>
+  <p style="font-size:0.85rem; margin-top:0.8rem;">Distribuição por dificuldade: ~30% fácil · ~50% médio · ~20% difícil.</p>
+</section>
+
+<div class="filters" id="filtros">
+  <button class="filter-btn active" data-filter="todas">Todas</button>
+  <button class="filter-btn" data-filter="aula1">Aula 1 — Epidem.</button>
+  <button class="filter-btn" data-filter="aula2">Aula 2 — Senesc.</button>
+  <button class="filter-btn" data-filter="aula3">Aula 3 — Anamnese</button>
+  <button class="filter-btn" data-filter="aula4">Aula 4 — AGA 1</button>
+  <button class="filter-btn" data-filter="aula5">Aula 5 — AGA 2</button>
+  <button class="filter-btn" data-filter="aula6">Aula 6 — Farmaco.</button>
+  <button class="filter-btn" data-filter="facil">Fáceis</button>
+  <button class="filter-btn" data-filter="medio">Médias</button>
+  <button class="filter-btn" data-filter="dificil">Difíceis</button>
+</div>
+
+<div id="scorePanel" class="score-panel hidden"></div>
+
+<div id="questoes"></div>
+
+<div style="text-align:center; margin:2rem 0;">
+  <button id="finalizarBtn" class="primary hidden">Finalizar simulado</button>
+</div>
+
+</main>
+
+<script>
+// ============================================================================
+// Configuração
+// ============================================================================
+const RESUMAO_BASE = "../resumao/index.html";
+
+// Mapeamento topic -> secao do resumão
+const topicToResumo = {
+  "ep-conceitos":        { anchor: "#r-conceitos",    label: "Conceitos em Geriatria",       subtopics: "senescência×senilidade, independência×autonomia, bem-sucedido×frágil" },
+  "ep-numeros":          { anchor: "#r-epidem",       label: "Epidemiologia do envelhecimento", subtopics: "% idosos, fecundidade, esperança de vida, feminização" },
+  "ep-transicao":        { anchor: "#r-epidem",       label: "Transições demográfica/epidemiológica", subtopics: "estágios de Lebrão, DCNT, causa de morte por faixa" },
+  "sen-cv":              { anchor: "#r-sen-cv",       label: "Senescência cardiovascular",    subtopics: "PAS↑/PAD↓, disfunção diastólica, ↓β-adrenérgica" },
+  "sen-resp":            { anchor: "#r-sen-resp",     label: "Senescência respiratória",      subtopics: "↑VR, ↓CV, PaO₂=109−0,43×idade, ↓surfactante" },
+  "sen-snc":             { anchor: "#r-sen-snc",      label: "Senescência neurológica",       subtopics: "↓ACh/DA, leucoaraiose, presbiacusia/presbiopia" },
+  "sen-renal":           { anchor: "#r-sen-renal",    label: "Senescência renal",             subtopics: "↓TFG, poliúria noturna, Cockcroft-Gault" },
+  "sen-imune":           { anchor: "#r-sen-imune",    label: "Imunossenescência",             subtopics: "↑IL-6, ↓resposta vacinal, ↑neoplasia" },
+  "sen-sentidos":        { anchor: "#r-sen-sentidos", label: "Órgãos dos sentidos",           subtopics: "presbiopia, presbiacusia, perda do salgado" },
+  "sen-pele":            { anchor: "#r-sen-pele",     label: "Pele e composição corporal",    subtopics: "púrpura senil, onicogrifose, ↓H₂O, ↑gordura" },
+  "an-atipica":          { anchor: "#r-anamnese",     label: "Apresentações atípicas",        subtopics: "mudança de estado, delirium, febre ausente" },
+  "an-sindromes":        { anchor: "#r-5is",          label: "Síndromes geriátricas (5 Is)",  subtopics: "cognição, imobilidade, instabilidade, incontinência, iatrogenia" },
+  "an-escalas":          { anchor: "#r-escalas",      label: "Escalas básicas",               subtopics: "MEEM, relógio, fluência, Katz, Lawton, GDS" },
+  "an-vacinacao":        { anchor: "#r-vacinas",      label: "Imunizações e rastreamentos",   subtopics: "influenza, pneumo, zóster, dT, AGS" },
+  "aga-multi":           { anchor: "#r-multi",        label: "Multimorbidade",                subtopics: "definição, prevalência, desfechos" },
+  "aga-sindgeriatrica":  { anchor: "#r-sindgeriatrica", label: "Conceito de síndrome geriátrica", subtopics: "múltiplas causas → um fenômeno" },
+  "aga-dimensoes":       { anchor: "#r-aga",          label: "AGA — 4 dimensões",             subtopics: "física, funcional, mental, sócio-ambiental" },
+  "aga-funcional":       { anchor: "#r-funcional",    label: "Instrumentos funcionais",       subtopics: "Katz, Lawton, Barthel, TUG, SPPB, SARC-F" },
+  "aga-mental":          { anchor: "#r-mental",       label: "Instrumentos cognitivos/humor", subtopics: "MEEM (Brucki), relógio Okamoto, GDS-15, CDR, FAST" },
+  "farmaco-pk":          { anchor: "#r-pk",           label: "Farmacocinética no idoso",      subtopics: "absorção, distribuição (Vd), metabolismo (fase I/II), excreção" },
+  "farmaco-pd":          { anchor: "#r-pd",           label: "Farmacodinâmica no idoso",      subtopics: "sensibilidade BZD/opioide/β-bloq" },
+  "farmaco-grupos":      { anchor: "#r-grupos",       label: "Classes críticas",              subtopics: "AINH, BZD, anticolinérgicos, digoxina, IECA, varfarina" },
+  "farmaco-interacoes":  { anchor: "#r-interacoes",   label: "Interações medicamentosas",     subtopics: "sinergismo, antagonismo, PK × PD" }
+};
+
+// ============================================================================
+// Banco de questões
+// ============================================================================
+const questoes = [
+// ============ AULA 1 — EPIDEMIOLOGIA (8 objetivas) ============
+{id:1, aula:"aula1", nivel:"facil", topic:"ep-conceitos",
+ enun:"Segundo o Estatuto do Idoso (Lei 10.741/2003), considera-se idosa a pessoa com idade igual ou superior a:",
+ alts:[
+   "55 anos, alinhando-se ao conceito de idoso da Organização Pan-Americana da Saúde.",
+   "60 anos, critério legal brasileiro distinto do critério adotado pela OMS.",
+   "65 anos, critério da Organização Mundial da Saúde aplicado aos países em desenvolvimento.",
+   "70 anos, patamar consagrado pela Sociedade Brasileira de Geriatria em documentos recentes.",
+   "75 anos, limite utilizado pela classificação de Riley para idosos muito velhos."
+ ], correta:1,
+ exp:{
+   geral:"O Estatuto do Idoso (Lei 10.741, de 1º de outubro de 2003) define idoso como a pessoa com idade igual ou superior a 60 anos — o critério brasileiro é distinto da OMS (65 anos).",
+   erradas:["55 anos não corresponde a qualquer definição legal ou de organização internacional utilizada no Brasil.","(correta)","65 anos é o critério da OMS, não o brasileiro.","70 anos não é critério legal — a SBGG segue o Estatuto.","Na classificação de Riley, 75 anos separa idosos jovens dos idosos velhos, não define o início da velhice."]
+ }},
+{id:2, aula:"aula1", nivel:"facil", topic:"ep-conceitos",
+ enun:"Paciente de 80 anos sofreu AVE com sequela motora importante há 1 ano, mas permanece lúcido, gere seu dinheiro e decide seus tratamentos com clareza. Qual é a situação funcional correta?",
+ alts:[
+   "Perdeu autonomia, mas mantém independência, pela presença da sequela motora.",
+   "Perdeu independência e autonomia simultaneamente, pela extensão da sequela neurológica.",
+   "Mantém autonomia, mas perdeu independência, pela sequela motora com cognição preservada.",
+   "Mantém autonomia e independência, pois reabilitou a função motora no último ano.",
+   "Preencheu critério de fragilidade por perda ponderal e sarcopenia associadas ao AVE."
+ ], correta:2,
+ exp:{
+   geral:"Independência = executar tarefas sem auxílio (função física); autonomia = decidir sobre a própria vida (cognição/ética). A paciente perdeu a primeira, mas preserva a segunda.",
+   erradas:["Inverte os conceitos — a sequela motora compromete independência, não autonomia.","O enunciado afirma que ela decide com clareza, logo autonomia está preservada.","(correta)","Sequela motora importante há 1 ano implica dependência motora residual.","Fragilidade requer critérios específicos (Fried) não descritos no caso."]
+ }},
+{id:3, aula:"aula1", nivel:"medio", topic:"ep-conceitos",
+ enun:"Sobre a distinção entre senescência e senilidade, é correto afirmar que:",
+ alts:[
+   "Senescência reúne as alterações naturais do envelhecimento sem encurtar a vida, enquanto senilidade corresponde a condições fisiopatológicas.",
+   "Senilidade descreve as alterações fisiológicas do organismo, ao passo que senescência congrega as doenças do idoso.",
+   "Ambos os termos são sinônimos, usados intercambiavelmente para designar o processo de envelhecimento.",
+   "Senescência refere-se exclusivamente às alterações cognitivas, e senilidade às alterações orgânicas motoras.",
+   "Senilidade é o processo normal, enquanto senescência identifica apenas fenômenos iatrogênicos do envelhecimento."
+ ], correta:0,
+ exp:{
+   geral:"Senescência (Wilson Jacob Filho, SBGG-2016) = alterações ligadas à evolução no tempo, sem mecanismo de doença; senilidade = condições baseadas em mecanismos fisiopatológicos.",
+   erradas:["(correta)","Exatamente o inverso.","Não são sinônimos — a diferenciação é central no raciocínio geriátrico.","Nenhum dos termos se restringe a um único domínio funcional.","Senilidade descreve doença, não processo normal."]
+ }},
+{id:4, aula:"aula1", nivel:"medio", topic:"ep-numeros",
+ enun:"Segundo o Censo IBGE 2022, a população idosa brasileira atingiu aproximadamente:",
+ alts:[
+   "12 milhões de pessoas, correspondendo a cerca de 6% da população total.",
+   "18 milhões, cerca de 9% da população total brasileira.",
+   "22 milhões, aproximadamente 11% da população nacional.",
+   "31 milhões, cerca de 15% da população total de 203 milhões.",
+   "48 milhões, correspondendo a cerca de 24% dos habitantes."
+ ], correta:3,
+ exp:{
+   geral:"Censo 2022: 203,1 milhões de habitantes e 31,3 milhões de idosos (≈15%).",
+   erradas:["Subestimativa grosseira, compatível com décadas anteriores.","Próximo do cenário de 2000, não de 2022.","Próximo do valor de 2018 (13%, 28 mi), não do Censo 2022.","(correta)","Apenas a projeção para 2060 alcança ≈25,5%."]
+ }},
+{id:5, aula:"aula1", nivel:"medio", topic:"ep-numeros",
+ enun:"Avaliando a taxa de fecundidade brasileira (filhos/mulher), a sequência histórica que melhor descreve a evolução é:",
+ alts:[
+   "6,2 em 1940; 4,4 em 1980; 2,9 em 1991; 2,0 em 2010; 1,77 em 2017.",
+   "7,0 em 1940; 5,5 em 1980; 3,8 em 1991; 3,0 em 2010; 2,5 em 2017.",
+   "5,0 em 1940; 3,8 em 1980; 2,5 em 1991; 1,8 em 2010; 1,2 em 2017.",
+   "6,2 em 1940; 5,0 em 1980; 3,5 em 1991; 2,8 em 2010; 2,2 em 2017.",
+   "4,5 em 1940; 3,8 em 1980; 2,9 em 1991; 2,4 em 2010; 2,0 em 2017."
+ ], correta:0,
+ exp:{
+   geral:"A sequência apresentada na aula: 1940 → 6,2; 1980 → 4,4; 1991 → 2,9; 2010 → 2,0; 2017 → 1,77; projeção 2060 → 1,66; 2100 → 1,2.",
+   erradas:["(correta)","Superestima valores intermediários e recentes.","Subestima — 1,2 só será atingido em 2100.","Mantém fecundidade acima da real para 2010.","Subestima valores históricos iniciais."]
+ }},
+{id:6, aula:"aula1", nivel:"medio", topic:"ep-transicao",
+ enun:"A respeito da transição epidemiológica no Brasil, é correto afirmar que:",
+ alts:[
+   "Mantém o padrão de país jovem, com predomínio de doenças infectocontagiosas até o momento.",
+   "Implica mudança de um modelo focado em cura/morte para um modelo de compensação das DCNT.",
+   "Define-se apenas pela queda da natalidade, independente das mudanças nos padrões de morbidade.",
+   "Refere-se exclusivamente ao aumento da mortalidade infantil sem relação com morbidade crônica.",
+   "Corresponde à elevação simultânea da natalidade e das doenças crônicas no mesmo período."
+ ], correta:1,
+ exp:{
+   geral:"A transição epidemiológica implica mudança nos padrões de morbi-mortalidade: de país jovem (doença aguda, modelo cura/morte) para país idoso (DCNT, modelo compensação/não compensação).",
+   erradas:["Brasil já deslocou-se para o perfil de DCNT.","(correta)","Transição demográfica é quem trata da natalidade; epidemiológica trata dos padrões de doença.","O Brasil reduziu mortalidade infantil, não aumentou.","Natalidade caiu, não se elevou."]
+ }},
+{id:7, aula:"aula1", nivel:"dificil", topic:"ep-transicao",
+ enun:"Entre os idosos brasileiros, a mortalidade proporcional por causas em 2013 mostrou, nos octogenários (≥80 anos), predomínio relativo de:",
+ alts:[
+   "Causas neoplásicas, que respondem por cerca de 30% dos óbitos nessa faixa etária.",
+   "Acidentes de trânsito, refletindo a alta exposição a violência urbana desses indivíduos.",
+   "Doenças respiratórias, que ultrapassam 20% dos óbitos e superam as neoplasias.",
+   "Doenças renais agudas, em razão da alta prevalência de sepse urinária terminal.",
+   "Suicídio, relacionado a depressão não tratada em domicílio multigeracional."
+ ], correta:2,
+ exp:{
+   geral:"Nos octogenários: 30% circulatório, ~20% respiratório, 13% neoplasia. A maior letalidade de pneumonia nessa faixa etária explica o aumento relativo das causas respiratórias em comparação com idosos mais jovens. Entre causas externas, predominam quedas (não trânsito).",
+   erradas:["Neoplasias são mais proeminentes em idosos jovens (25%).","Trânsito e agressão predominam entre 60–79 anos.","(correta)","Renal aguda não figura entre as principais causas proporcionais.","Não é a causa predominante na faixa etária."]
+ }},
+{id:8, aula:"aula1", nivel:"facil", topic:"ep-numeros",
+ enun:"O perfil do idoso brasileiro (PNAD 2017) apresenta qual característica mais fiel ao perfil descrito em aula?",
+ alts:[
+   "Predomínio masculino entre os ≥75 anos e baixa prevalência de viuvez.",
+   "Feminização do envelhecimento, com 59,7% da população acima de 74 anos sendo feminina.",
+   "Escolaridade média acima de 8 anos entre os ≥75 anos no território nacional.",
+   "Baixa prevalência de doenças crônicas graças ao avanço da atenção primária.",
+   "Residência solitária em 86,8% dos domicílios com ≥65 anos no Brasil."
+ ], correta:1,
+ exp:{
+   geral:"Dados PNAD 2017: feminização (59,7% das >74 anos são mulheres), escolaridade baixa (média 4,6 anos), alta prevalência de DCNT, domicílio multigeracional em 86,8%.",
+   erradas:["Predomínio é feminino; viuvez relatada como 3,6/1.","(correta)","Média é 4,6 anos; 28,5% são analfabetos entre >75 anos.","DCNT têm alta prevalência.","Multigeracional, não solitário."]
+ }},
+
+// ============ AULA 2 — SENESCÊNCIA (12 objetivas) ============
+{id:9, aula:"aula2", nivel:"facil", topic:"sen-cv",
+ enun:"O perfil característico da pressão arterial durante o envelhecimento fisiológico inclui:",
+ alts:[
+   "Redução da PA sistólica e elevação da PA diastólica, reduzindo a pressão de pulso habitualmente.",
+   "Elevação da PA sistólica, redução da PA diastólica e aumento da pressão de pulso.",
+   "Elevação tanto da PA sistólica quanto da PA diastólica em proporções equivalentes no idoso.",
+   "Redução simultânea de PA sistólica e diastólica, com manutenção da pressão de pulso.",
+   "Elevação exclusivamente da PA diastólica por aumento da resistência vascular periférica."
+ ], correta:1,
+ exp:{
+   geral:"A calcificação da camada média arterial e a ↓ elasticidade aumentam PAS e pressão de pulso, com PAD tendendo a cair — padrão de HAS sistólica isolada.",
+   erradas:["Sentido invertido.","(correta)","PAD tende a cair, não a subir igualmente.","Ambas se reduzirem é padrão de choque, não de senescência.","A elevação é da sistólica, não da diastólica."]
+ }},
+{id:10, aula:"aula2", nivel:"medio", topic:"sen-cv",
+ enun:"Qual alteração cardíaca abaixo é característica da senescência e explica a limitação da frequência cardíaca máxima no exercício?",
+ alts:[
+   "Hipertrofia atrial com fibrose difusa do septo interventricular e bloqueio atrioventricular.",
+   "Redução da densidade de células do nó sinusal e diminuição da resposta β-adrenérgica.",
+   "Elevação da responsividade β-adrenérgica e aumento expressivo da contratilidade em estresse.",
+   "Manutenção do volume sistólico exclusivamente por elevação da fração de ejeção.",
+   "Dilatação progressiva do anel mitral associada a hipossinalização simpática central."
+ ], correta:1,
+ exp:{
+   geral:"Perda de ~90% das células do nó sinusal com idade avançada e queda da resposta β-adrenérgica impedem taquicardia adequada → FC máx ≈ 220 − idade.",
+   erradas:["Fibrose difusa não é o mecanismo central; bloqueio AV nem sempre ocorre.","(correta)","A sensibilidade β-adrenérgica cai, não sobe.","Função sistólica de repouso preservada não explica limitação de FC máx.","Dilatação mitral não explica FC máx."]
+ }},
+{id:11, aula:"aula2", nivel:"dificil", topic:"sen-cv",
+ enun:"Qual achado ecocardiográfico é MAIS consistente com o envelhecimento fisiológico isolado, sem doença estrutural?",
+ alts:[
+   "Fração de ejeção reduzida para 35% com hipocinesia difusa e dilatação ventricular esquerda.",
+   "Fração de ejeção preservada, relaxamento diastólico lentificado e espessamento valvar leve.",
+   "Hipertrofia ventricular excêntrica com fração de ejeção de 25% e insuficiência mitral funcional.",
+   "Aneurisma apical com trombo mural e acinesia de parede inferior do ventrículo esquerdo.",
+   "Regurgitação aórtica grave por endocardite crônica e remodelamento ventricular avançado."
+ ], correta:1,
+ exp:{
+   geral:"Na senescência pura, função sistólica (FE) é preservada; há disfunção diastólica (↓ velocidade de enchimento em até 50%) e espessamento valvar (mitral/aórtica).",
+   erradas:["FE reduzida indica cardiopatia, não senescência.","(correta)","Hipertrofia excêntrica com FE baixa indica IC com redução de FE.","Trombo/acinesia indica isquemia prévia.","Endocardite é doença, não senescência."]
+ }},
+{id:12, aula:"aula2", nivel:"medio", topic:"sen-resp",
+ enun:"Em relação ao sistema respiratório do idoso, a alteração NÃO esperada na senescência é:",
+ alts:[
+   "Aumento do volume residual em até 50%, devido à perda de elasticidade pulmonar.",
+   "Redução da capacidade vital em até 75% do valor do jovem, com enrijecimento da parede torácica.",
+   "Queda da PaO₂ seguindo aproximadamente a fórmula PaO₂ = 109 − 0,43 × idade.",
+   "Elevação progressiva da PaCO₂ arterial basal, por hipoventilação alveolar estrutural.",
+   "Redução da produção de surfactante, com aumento da permeabilidade alveolar."
+ ], correta:3,
+ exp:{
+   geral:"PaCO₂ NÃO se altera com a senescência; PaO₂ tende a cair com a fórmula dada. VR aumenta, capacidade vital diminui, surfactante se reduz.",
+   erradas:["Correta na aula.","Correta na aula.","Correta na aula.","(incorreta — portanto gabarito)","Correta na aula."]
+ }},
+{id:13, aula:"aula2", nivel:"facil", topic:"sen-snc",
+ enun:"Sobre o sistema nervoso no envelhecimento fisiológico, é CORRETO afirmar:",
+ alts:[
+   "Há aumento da produção de acetilcolina e dopamina, compensando a perda neuronal.",
+   "A rarefação da substância branca periventricular caracteriza a leucoaraiose.",
+   "A barreira hematoencefálica torna-se totalmente impermeável a fármacos lipossolúveis.",
+   "O volume cerebral mantém-se estável até os 80 anos por neurogênese ativa cortical.",
+   "O acúmulo de lipofuscina está restrito ao epitélio do túbulo proximal renal."
+ ], correta:1,
+ exp:{
+   geral:"Há perda de axônios e redução de mielina → rarefação da substância branca periventricular, denominada leucoaraiose. ACh e DA caem; BHE fica mais permeável; volume cerebral ↓ 2–3%/década após 50 anos.",
+   erradas:["ACh e DA caem, não sobem.","(correta)","BHE torna-se mais permeável com a idade.","Volume cerebral cai 2–3%/década após os 50.","Lipofuscina acumula-se em vários tecidos (SNC, fígado, pâncreas)."]
+ }},
+{id:14, aula:"aula2", nivel:"medio", topic:"sen-snc",
+ enun:"A redução fisiológica da acetilcolina cerebral no idoso tem como consequência prática IMPORTANTE:",
+ alts:[
+   "A redução da eficácia de fármacos colinérgicos em doenças cardiovasculares agudas.",
+   "A maior vulnerabilidade a efeitos adversos de medicamentos anticolinérgicos, incluindo delirium.",
+   "O aumento da eficácia de betabloqueadores centrais em situações de estresse fisiológico.",
+   "A redução do risco de aspiração alimentar por aumento compensatório do tônus esfincteriano.",
+   "A elevação da resposta adrenérgica periférica frente a estímulos dolorosos e inflamatórios."
+ ], correta:1,
+ exp:{
+   geral:"Como o substrato colinérgico central já está diminuído, bloqueá-lo ainda mais com fármacos anticolinérgicos precipita delirium (risco 5–12×), boca seca, constipação, retenção urinária, hipotensão ortostática.",
+   erradas:["Colinérgicos não são primeira linha em emergências cardiovasculares.","(correta)","BBB centrais não têm sua eficácia aumentada por queda de ACh.","Risco de aspiração aumenta, não diminui.","A resposta β-adrenérgica está reduzida, não elevada."]
+ }},
+{id:15, aula:"aula2", nivel:"facil", topic:"sen-renal",
+ enun:"O clearance de creatinina (ClCr) tende a se reduzir, em média, em que ritmo após os 50 anos de idade?",
+ alts:[
+   "Cerca de 2 mL/min por década, declínio desprezível do ponto de vista clínico.",
+   "Aproximadamente 8 a 10 mL/min por década, com importante impacto na dose de fármacos.",
+   "Em torno de 30 mL/min por década, conforme documentado em estudos populacionais recentes.",
+   "Apenas nos indivíduos com HAS ou DM, sem queda relevante em idosos hígidos.",
+   "O ClCr aumenta progressivamente com a idade, como forma de compensação metabólica."
+ ], correta:1,
+ exp:{
+   geral:"ClCr cai 8–10 mL/min por década após os 50 anos — base do ajuste de dose para fármacos de excreção renal.",
+   erradas:["Subestima fortemente.","(correta)","Superestima — essa magnitude seria falência renal.","Declínio ocorre mesmo em idosos hígidos.","ClCr cai, não sobe."]
+ }},
+{id:16, aula:"aula2", nivel:"medio", topic:"sen-imune",
+ enun:"A imunossenescência se manifesta, tipicamente, por:",
+ alts:[
+   "Aumento da produção de IL-2 e redução de IL-6, com melhor resposta vacinal global.",
+   "Maior número e menor função de linfócitos T, com elevação de IL-6 e estado pró-inflamatório.",
+   "Aumento da afinidade dos anticorpos produzidos pelos linfócitos B em todas as faixas etárias.",
+   "Redução isolada da imunidade inata sem impacto sobre imunidade adquirida ou resposta vacinal.",
+   "Preservação integral das funções fagocitárias e quimiotáticas de neutrófilos ao longo da vida."
+ ], correta:1,
+ exp:{
+   geral:"Imunossenescência: ↓ IL-2, ↑ IL-6 (inflammaging), maior número e menor função de linfócitos T, pior qualidade dos anticorpos B → menor resposta vacinal.",
+   erradas:["Inverte as citocinas.","(correta)","Qualidade dos anticorpos é prejudicada, não aumentada.","Tanto inata quanto adquirida são afetadas.","Potencial microbicida e quimiotaxia dos neutrófilos diminuem."]
+ }},
+{id:17, aula:"aula2", nivel:"medio", topic:"sen-sentidos",
+ enun:"A perda auditiva inicial característica do idoso (presbiacusia) apresenta-se tipicamente por:",
+ alts:[
+   "Perda predominante de baixas frequências e dificuldade de ouvir pessoas calmas em ambientes silenciosos.",
+   "Perda predominante de altas frequências com dificuldade de discriminar a fala em ambientes ruidosos.",
+   "Surdez súbita unilateral completa, com intervenção cirúrgica de urgência indicada em todos os casos.",
+   "Alucinações auditivas associadas a lesões corticais do lobo temporal por amiloidose senil.",
+   "Perda mista, simétrica e estável, sem progressão clínica relevante com o passar dos anos."
+ ], correta:1,
+ exp:{
+   geral:"Presbiacusia tem início com perda de altas frequências e dificuldade em discriminar a fala em ambientes com ruído de fundo; progressiva e bilateral.",
+   erradas:["O padrão é de altas frequências.","(correta)","Não é surdez súbita — é progressiva.","Alucinações não caracterizam presbiacusia.","Progressão existe."]
+ }},
+{id:18, aula:"aula2", nivel:"dificil", topic:"sen-pele",
+ enun:"Durante avaliação em enfermaria geriátrica, um residente identifica sinal da prega positivo em paciente de 84 anos. Qual a conduta mais adequada?",
+ alts:[
+   "Diagnosticar desidratação grave e iniciar hidratação endovenosa agressiva imediatamente na beira do leito.",
+   "Repetir o sinal em múltiplos sítios para confirmar o diagnóstico de desidratação com maior acurácia.",
+   "Considerar que o sinal da prega é pouco confiável no idoso e avaliar outros parâmetros clínicos.",
+   "Solicitar TC de crânio urgente para pesquisa de infarto lacunar associado à hipovolemia cerebral.",
+   "Presumir hipernatremia grave e iniciar solução hipotônica em infusão rápida sob monitorização."
+ ], correta:2,
+ exp:{
+   geral:"A redução de elasticidade cutânea torna o sinal da prega universalmente positivo no idoso — ele NÃO serve para diagnosticar desidratação. Use mucosas, axila, diurese, PA postural, Na sérico.",
+   erradas:["Decisão precipitada baseada em sinal não confiável.","Repetir um exame não confiável não o torna confiável.","(correta)","TC não se indica por sinal de prega.","Hipernatremia precisa de dado laboratorial."]
+ }},
+{id:19, aula:"aula2", nivel:"medio", topic:"sen-pele",
+ enun:"Entre as alterações na composição corporal do idoso, destacam-se:",
+ alts:[
+   "Aumento da água intracelular e redução proporcional da gordura corpórea total no envelhecimento.",
+   "Redução da água intracelular (15-20%) e aumento da gordura corpórea (20-40% em cintura pélvica).",
+   "Ambas mantidas estáveis ao longo de toda a vida sem mudanças na composição corporal.",
+   "Redução da massa gorda associada a aumento simultâneo da massa magra pela sarcopenia.",
+   "Elevação da massa magra com perda seletiva do tecido ósseo trabecular em topografia axial."
+ ], correta:1,
+ exp:{
+   geral:"Água intracelular cai 15-20%; gordura aumenta 20-40% (predominância pélvica); massa magra diminui — base para alterações PK de fármacos hidro e lipossolúveis.",
+   erradas:["Sentido invertido.","(correta)","Mudanças ocorrem.","Sarcopenia é perda de massa magra, não de gordura.","Massa magra diminui, não aumenta."]
+ }},
+{id:20, aula:"aula2", nivel:"medio", topic:"sen-sentidos",
+ enun:"Na senescência do paladar, há redução MAIS acentuada para qual gosto primário?",
+ alts:[
+   "Azedo, por queda específica na sensibilidade a hidrogênio iônico nas papilas circunvaladas.",
+   "Amargo, por perda seletiva das papilas caliciformes localizadas na base da língua.",
+   "Salgado, com redução mais pronunciada que demais gostos primários no idoso.",
+   "Doce, pela atrofia difusa das papilas fungiformes da ponta da língua em ambos os sexos.",
+   "Umami, por perda seletiva dos receptores específicos para glutamato em nível bulbar."
+ ], correta:2,
+ exp:{
+   geral:"A redução do paladar no idoso é maior para o sabor salgado — parte da fisiopatologia de anorexia do idoso e de hábitos alimentares hiperssalgados compensatórios.",
+   erradas:["Não é o sabor mais afetado.","Não é o sabor mais afetado.","(correta)","Doce é relativamente preservado.","Umami não é o mais afetado na senescência."]
+ }},
+
+// ============ AULA 3 — ANAMNESE (10 objetivas) ============
+{id:21, aula:"aula3", nivel:"facil", topic:"an-sindromes",
+ enun:"Os 'Gigantes da Geriatria' propostos por Bernard Isaacs em 1976 incluem:",
+ alts:[
+   "Hipertensão, diabetes, dislipidemia, osteoporose e obesidade sarcopênica avançada.",
+   "Insuficiência cognitiva, imobilidade, instabilidade postural, incontinência e iatrogenia.",
+   "Infarto agudo, insuficiência cardíaca, insuficiência renal, infecção e insônia crônica.",
+   "Insônia, irritabilidade, indecisão, isolamento social e inapetência progressiva do idoso.",
+   "Imobilidade, infecção urinária, incontinência fecal, insuficiência hepática e iatrogenia."
+ ], correta:1,
+ exp:{
+   geral:"Os 5 Is de Isaacs: insuficiência cognitiva, imobilidade, instabilidade postural/quedas, incontinência (urinária/fecal) e iatrogenia.",
+   erradas:["DCNT não compõem a lista.","(correta)","Não é a definição original de Isaacs.","Não corresponde à classificação.","Mistura componentes corretos e incorretos."]
+ }},
+{id:22, aula:"aula3", nivel:"medio", topic:"an-atipica",
+ enun:"Idosa de 88 anos, previamente lúcida, passa a 'ver pessoas estranhas no quarto' e confunde familiares nas últimas 24 horas. Sem febre, queixa ou sinal focal. A hipótese mais provável, considerando a apresentação atípica característica, é:",
+ alts:[
+   "Surto psicótico primário de início tardio com necessidade de internação psiquiátrica imediata.",
+   "Delirium, que pode ser a única manifestação inicial de infecção, TEP ou IAM no idoso.",
+   "Demência de corpos de Lewy fulminante instalada em período inferior a 24 horas.",
+   "Síndrome paraneoplásica com degeneração límbica autoimune de apresentação aguda isolada.",
+   "Acidente vascular cerebral de tronco sem sinais motores ou sensitivos objetivos detectáveis."
+ ], correta:1,
+ exp:{
+   geral:"No idoso, 'mudança de estado' aguda frequentemente é delirium — que pode ser a ÚNICA manifestação de ITU, pneumonia, IAM, TEP, distúrbio metabólico ou iatrogenia farmacológica.",
+   erradas:["Surtos psicóticos primários são raros nessa faixa etária.","(correta)","Demência de corpos de Lewy tem curso crônico com flutuações.","Síndromes paraneoplásicas são raras e requerem investigação complementar.","AVE de tronco geralmente tem sinais objetivos."]
+ }},
+{id:23, aula:"aula3", nivel:"medio", topic:"an-escalas",
+ enun:"Na aplicação do MEEM a um paciente com 5 anos de escolaridade, pelo ponto de corte de Brucki et al. (2003), a pontuação abaixo da qual se considera déficit cognitivo é:",
+ alts:[
+   "20 pontos, ponto de corte utilizado em pacientes analfabetos conforme a normatização brasileira.",
+   "25 pontos, que corresponde ao ponto de corte para a faixa de 1 a 4 anos de escolaridade.",
+   "26 pontos, ponto de corte para a faixa de 5 a 8 anos de escolaridade formal no Brasil.",
+   "28 pontos, adotado para a faixa de 9 a 11 anos de escolaridade conforme a norma atual.",
+   "29 pontos, ponto de corte aplicado aos pacientes com 12 ou mais anos de escolaridade."
+ ], correta:2,
+ exp:{
+   geral:"Brucki et al. 2003: analfabeto 20; 1-4 anos 25; 5-8 anos 26; 9-11 anos 28; ≥12 anos 29.",
+   erradas:["Analfabeto.","1-4 anos.","(correta)","9-11 anos.","≥12 anos."]
+ }},
+{id:24, aula:"aula3", nivel:"facil", topic:"an-escalas",
+ enun:"A escala de Katz avalia atividades básicas da vida diária (ABVDs). Entre os itens abaixo, qual é avaliado por essa escala?",
+ alts:[
+   "Usar transporte público, realizar compras e administrar autonomamente as próprias finanças.",
+   "Preparar a própria refeição, usar o telefone e realizar tarefas domésticas simples.",
+   "Banho, vestir, toalete, mobilidade (sair da cama), continência e alimentação próprias.",
+   "Dirigir automóvel, tomar decisões legais e administrar medicações complexas sem auxílio.",
+   "Usar computador, receber visitas sozinho e interpretar instruções médicas escritas."
+ ], correta:2,
+ exp:{
+   geral:"Katz avalia ABVDs (banho, vestir, toalete, mobilidade, continência, alimentação). Atividades instrumentais (AIVDs: telefone, transporte, compras, finanças, preparo de refeição) são de Lawton.",
+   erradas:["Itens de Lawton (AIVDs).","Itens de Lawton.","(correta)","Dirigir não integra Katz nem Lawton clássicos.","Atividades avançadas, não básicas."]
+ }},
+{id:25, aula:"aula3", nivel:"medio", topic:"an-vacinacao",
+ enun:"Segundo o calendário citado em aula para idosos, a recomendação de vacinação inclui:",
+ alts:[
+   "Influenza a cada 5 anos, pneumocócica anual e herpes-zóster bienal a partir de 70 anos.",
+   "Influenza anual, pneumocócica em dose única a partir de 65 anos e herpes-zóster a partir de 60 anos.",
+   "Influenza bienal, pneumocócica trienal e herpes-zóster apenas para imunocomprometidos.",
+   "Apenas vacina antitetânica isolada, outras contraindicadas na população idosa brasileira.",
+   "Influenza quadrivalente mensal durante o outono e pneumocócica repetida a cada 3 anos."
+ ], correta:1,
+ exp:{
+   geral:"Recomendações mencionadas em aula: influenza anual; pneumocócica dose única a partir de 65 anos; herpes-zóster dose única a partir de 60 anos; dT a cada 10 anos.",
+   erradas:["Periodicidade totalmente incorreta.","(correta)","Periodicidade totalmente incorreta.","Outras vacinas são indicadas.","Esquema inexistente na prática."]
+ }},
+{id:26, aula:"aula3", nivel:"medio", topic:"an-vacinacao",
+ enun:"De acordo com a American Geriatrics Society (AGS), entre os rastreios mencionados em aula para idosos, qual conduta está correta?",
+ alts:[
+   "Mamografia anual sem limite superior de idade nas pacientes acima de 75 anos.",
+   "Papanicolau anual indefinidamente, a cada 6 meses após os 75 anos, independente do histórico.",
+   "Colonoscopia a cada 10 anos entre 50 e 75 anos conforme o perfil de risco individual.",
+   "PSA e toque retal como rotina obrigatória após os 80 anos na população masculina.",
+   "Rastreamento anual de câncer de pulmão por tomografia em todos ≥65 anos, independente do tabagismo."
+ ], correta:2,
+ exp:{
+   geral:"Segundo AGS (aula): mamografia bienal 50-74; Papanicolau anual até 65; colonoscopia a cada 10 anos (50-75); PSA/toque retal não recomendado após 75 anos.",
+   erradas:["Rastreamento bienal e limitado a 74 anos.","Limite etário de 65 anos, periodicidade anual.","(correta)","Não recomendado após 75 anos.","Rastreamento pulmonar não é recomendação da AGS em aula."]
+ }},
+{id:27, aula:"aula3", nivel:"dificil", topic:"an-escalas",
+ enun:"Idoso de 76 anos, 7 anos de escolaridade, nomeia 7 animais em 1 minuto no teste de fluência verbal. Em relação ao ponto de corte, este resultado indica:",
+ alts:[
+   "Desempenho normal, dado que o paciente tem mais de 70 anos e escolaridade intermediária.",
+   "Desempenho abaixo do esperado para a faixa de 1 a 7 anos de escolaridade, sugerindo investigação.",
+   "Desempenho adequado porque o ponto de corte aplicável é de 6 animais em um minuto.",
+   "Indicação imediata de tratamento farmacológico para doença de Alzheimer leve/moderada.",
+   "Teste inválido — fluência verbal só pode ser aplicada a pacientes com mais de 8 anos de estudo."
+ ], correta:1,
+ exp:{
+   geral:"Pontos de corte: analfabeto ≥9; 1-7 anos ≥12; ≥8 anos ≥13. Com 7 animais, o paciente está abaixo do mínimo de 12 para sua escolaridade — indica investigação.",
+   erradas:["Idade não muda o ponto de corte — escolaridade sim.","(correta)","Ponto de corte de 6 não existe.","Teste é rastreio; não indica tratamento isoladamente.","O teste é válido em qualquer escolaridade com cortes específicos."]
+ }},
+{id:28, aula:"aula3", nivel:"medio", topic:"an-escalas",
+ enun:"Paciente idosa apresenta perda de 9% do peso corporal em 3 meses, sem causa aparente, sem dieta restritiva. Segundo a tabela de Najas (2011), essa perda é classificada como:",
+ alts:[
+   "Fisiológica, dentro do esperado para a faixa etária com hábitos sedentários associados.",
+   "Significativa, mas abaixo do patamar que caracteriza a perda ponderal grave no período.",
+   "Grave, compatível com desnutrição e investigação obrigatória de causas orgânicas.",
+   "Não avaliável, pois a escala de Najas não se aplica a pacientes com mais de 70 anos.",
+   "Benéfica, porque sobrepeso é fator de risco independente em qualquer idosa brasileira."
+ ], correta:2,
+ exp:{
+   geral:"Tabela de Najas (2011): em 3 meses, 5-7% = significativa; >7% = grave. Perda de 9% em 3 meses está na faixa grave e exige investigação obrigatória (neoplasia oculta, depressão, disfagia, iatrogenia, causas endócrinas).",
+   erradas:["Perda involuntária não é fisiológica.","9% está acima de 7% — é grave, não significativa.","(correta)","A tabela se aplica a idosos.","Perda involuntária no idoso é sempre alarme."]
+ }},
+{id:29, aula:"aula3", nivel:"facil", topic:"an-sindromes",
+ enun:"Aproximadamente que percentual de idosos cai pelo menos uma vez ao ano, conforme apontado em aula?",
+ alts:[
+   "5 a 10%, justificando rastreio seletivo apenas em idosos com múltiplas comorbidades.",
+   "30 a 60%, justificando rastreio rotineiro de todas as quedas e seus contextos.",
+   "Menos de 5%, número considerado desprezível em populações ambulatoriais de geriatria.",
+   "Cerca de 90%, caracterizando a queda como evento universal no envelhecimento saudável.",
+   "Aproximadamente 20% exclusivamente entre institucionalizados, sem impacto ambulatorial."
+ ], correta:1,
+ exp:{
+   geral:"A aula aponta 30-60% de idosos que caem ao menos 1×/ano — razão para avaliação ativa de circunstâncias, medicações e contexto.",
+   erradas:["Muito baixo.","(correta)","Muito baixo.","Exagerado.","Afeta ambulatoriais também."]
+ }},
+{id:30, aula:"aula3", nivel:"medio", topic:"an-sindromes",
+ enun:"Sobre o uso de medicamentos em idosos brasileiros, segundo dados citados em aula (EPIDOSO-SP):",
+ alts:[
+   "Apenas 20% usam pelo menos um medicamento, com polifarmácia rara nessa população específica.",
+   "72% usam pelo menos um medicamento, sendo 32% classificados como polimedicados (≥5 drogas).",
+   "Todos usam pelo menos cinco medicamentos, refletindo acesso universal à atenção primária.",
+   "A maioria não utiliza medicação alguma por limitação financeira no estudo paulista EPIDOSO.",
+   "Cerca de 10% usam benzodiazepínico diariamente, sem outras associações frequentes na amostra."
+ ], correta:1,
+ exp:{
+   geral:"EPIDOSO-SP: 72% usam pelo menos um medicamento (54% DCV, 21% TGI, 18% SNC) e 32% atendem critério de polimedicação (≥5 drogas).",
+   erradas:["Muito baixo.","(correta)","Universalização de polifarmácia não existe.","Dados mostram uso elevado.","Foco do dado não é benzodiazepínico isolado."]
+ }},
+
+// ============ AULA 4 — AGA 1 (8 objetivas) ============
+{id:31, aula:"aula4", nivel:"facil", topic:"aga-multi",
+ enun:"A definição de multimorbidade, conforme discutida em aula, corresponde a:",
+ alts:[
+   "Uma doença crônica única com múltiplos sintomas distintos originados por mecanismos diversos.",
+   "Coexistência de duas ou mais doenças crônicas, sem relação causal entre si, sem uma dominante.",
+   "Conjunto de sinais e sintomas agudos em um mesmo paciente, no contexto de uma síndrome clínica.",
+   "Associação obrigatória entre hipertensão, diabetes e dislipidemia em indivíduos muito idosos.",
+   "Qualquer paciente com duas ou mais internações hospitalares nos últimos 12 meses, sem critério etiológico."
+ ], correta:1,
+ exp:{
+   geral:"Multimorbidade = coexistência, em um mesmo indivíduo, de duas ou mais doenças crônicas, sem relação causal entre si e sem que nenhuma seja 'a principal'. Prevalência 65% entre 65-84 e 82% entre ≥85 anos (Barnett, 2012).",
+   erradas:["Uma única doença não é multimorbidade.","(correta)","Condições agudas não.","Nenhuma combinação específica define.","Internação não é critério conceitual."]
+ }},
+{id:32, aula:"aula4", nivel:"medio", topic:"aga-sindgeriatrica",
+ enun:"Qual das afirmações melhor distingue síndrome geriátrica de síndrome clínica tradicional?",
+ alts:[
+   "A síndrome geriátrica tem apenas uma etiologia bem definida e cursa com risco de vida iminente.",
+   "Na síndrome geriátrica, múltiplas alterações concorrem simultaneamente para um único fenômeno clínico.",
+   "A síndrome clínica tradicional envolve sempre múltiplas etiologias, e a geriátrica sempre uma única etiologia.",
+   "Síndromes geriátricas cursam apenas no paciente hospitalizado, sendo ambulatoriais extremamente raras.",
+   "Toda síndrome geriátrica tem resposta terapêutica universal, com alto sucesso de intervenção isolada."
+ ], correta:1,
+ exp:{
+   geral:"Síndrome clínica tradicional = UMA alteração → múltiplos fenômenos. Síndrome geriátrica = MÚLTIPLAS alterações → UM fenômeno (queda, delirium, incontinência). Etiologias múltiplas, complexidade terapêutica elevada.",
+   erradas:["Etiologias múltiplas, e risco de vida não é iminente.","(correta)","Inverte os conceitos.","Também ocorrem ambulatorialmente.","São de complexidade terapêutica elevada, resposta variável."]
+ }},
+{id:33, aula:"aula4", nivel:"facil", topic:"aga-dimensoes",
+ enun:"A Avaliação Geriátrica Ampla (AGA) é estruturada em quatro dimensões primárias. Quais são elas?",
+ alts:[
+   "Saúde física, saúde mental, saúde reprodutiva e saúde preventiva dirigida ao idoso.",
+   "Saúde física, saúde funcional, saúde mental e parâmetros sócio-ambientais do idoso.",
+   "Saúde cognitiva, saúde emocional, saúde biológica e saúde econômica específica do idoso.",
+   "Antecedentes clínicos, histórico familiar, exame físico detalhado e avaliação laboratorial ampla.",
+   "Indicadores laboratoriais, indicadores de imagem, indicadores cognitivos e indicadores sociais."
+ ], correta:1,
+ exp:{
+   geral:"As 4 dimensões da AGA: (1) Saúde Física; (2) Saúde Funcional; (3) Saúde Mental; (4) Parâmetros Sócio-Ambientais.",
+   erradas:["Saúde reprodutiva não é dimensão da AGA.","(correta)","Nomenclatura não oficial.","Descreve anamnese tradicional, não AGA.","Indicadores não substituem as dimensões conceituais."]
+ }},
+{id:34, aula:"aula4", nivel:"medio", topic:"aga-dimensoes",
+ enun:"Qual o conjunto de critérios essenciais para que a AGA seja efetivamente eficaz, segundo Wieland e Ellis?",
+ alts:[
+   "Restringir a aplicação apenas a pacientes internados em UTI e reavaliar após a alta ambulatorial.",
+   "Selecionar idosos que se beneficiam, produzir um plano de cuidado e implementá-lo por equipe interdisciplinar.",
+   "Utilizar exclusivamente o MEEM, o relógio e o Katz em todos os idosos independentemente do contexto.",
+   "Aplicar apenas em idosos institucionalizados com uso sistemático de antipsicóticos por demência.",
+   "Realizar avaliação única, sem implementação posterior do plano, para fins diagnósticos iniciais."
+ ], correta:1,
+ exp:{
+   geral:"Três condições (Wieland 2003; Ellis & Langhorne 2005): (1) seleção dos idosos que se beneficiam; (2) plano de cuidado concreto; (3) implementação, preferencialmente interdisciplinar.",
+   erradas:["UTI não é restrição.","(correta)","Instrumentos isolados não bastam.","Público-alvo não é apenas institucionalizados.","Sem implementação a AGA não é eficaz."]
+ }},
+{id:35, aula:"aula4", nivel:"medio", topic:"aga-dimensoes",
+ enun:"Idoso que NÃO se beneficia prioritariamente de uma AGA, segundo os critérios apresentados em aula, é:",
+ alts:[
+   "Paciente muito idoso (≥85 anos) com múltiplas comorbidades e dependência funcional prévia.",
+   "Idoso frágil internado com pneumonia e histórico recente de quedas recorrentes de origem diversa.",
+   "Idoso robusto, autônomo, sem comorbidades, plenamente ativo e sem síndromes geriátricas.",
+   "Idoso oncológico em planejamento de quimioterapia com múltiplas comorbidades crônicas associadas.",
+   "Idoso com insuficiência cardíaca avançada e polifarmácia crônica em ambulatório especializado."
+ ], correta:2,
+ exp:{
+   geral:"A AGA é para idosos com complexidade: muito idosos, frágeis, com incapacidade, multimorbidade, síndromes geriátricas, neoplasia, insuficiências orgânicas, hospitalizados com doença aguda. Idosos robustos não se beneficiam tanto (baixo rendimento do rastreio).",
+   erradas:["Típico candidato.","Típico candidato.","(correta)","Típico candidato.","Típico candidato."]
+ }},
+{id:36, aula:"aula4", nivel:"medio", topic:"aga-dimensoes",
+ enun:"A hipotensão ortostática, destacada como ponto crítico na AGA, é definida por:",
+ alts:[
+   "Queda de 5 mmHg na PA sistólica em menos de 1 minuto, em qualquer contexto clínico.",
+   "Queda ≥20 mmHg na PA sistólica ao assumir posição ortostática em até 3 minutos.",
+   "Elevação de 20 mmHg na PA sistólica ao se levantar, mantida por mais de 10 minutos.",
+   "Queda de 10 mmHg na pressão de pulso após manobra de Valsalva em decúbito lateral direito.",
+   "Queda de 50 mmHg na PA diastólica durante exame de tilt-test positivo em idosos quedadores."
+ ], correta:1,
+ exp:{
+   geral:"Hipotensão ortostática: queda ≥20 mmHg na PAS (ou ≥10 mmHg na PAD) em até 3 minutos após ortostase.",
+   erradas:["Limiar muito baixo.","(correta)","É queda, não elevação.","Não é o critério.","Diminuição de 50 é grave mas não é o critério limiar."]
+ }},
+{id:37, aula:"aula4", nivel:"dificil", topic:"aga-sindgeriatrica",
+ enun:"A afirmação 'não se gerencia o que não se mede' aplicada à AGA justifica-se, principalmente, por:",
+ alts:[
+   "Enfatizar a obrigatoriedade de registro de frequência cardíaca mínima durante toda consulta geriátrica.",
+   "Destacar a necessidade de instrumentos padronizados para objetivar, comparar e acompanhar o idoso.",
+   "Reforçar que idosos devem ser avaliados somente por equipe uniprofissional para maior acurácia.",
+   "Exigir que todos idosos tenham biomarcadores genéticos mapeados antes de iniciar qualquer intervenção.",
+   "Recomendar prescrição universal de polivitamínicos para idosos frágeis sem avaliação individual."
+ ], correta:1,
+ exp:{
+   geral:"A frase de Deming, citada na aula, resume a lógica central da AGA: padronizar instrumentos (MEEM, Katz, Lawton, GDS, MAN, TUG) permite medir, comparar e gerenciar o cuidado longitudinal.",
+   erradas:["Registro de FC não é o ponto central.","(correta)","A equipe deve ser interdisciplinar.","Mapeamento genético não é exigência.","Prescrição universal vai contra a lógica da AGA."]
+ }},
+{id:38, aula:"aula4", nivel:"facil", topic:"aga-multi",
+ enun:"Marjory Warren é conhecida como 'mãe da geriatria' porque:",
+ alts:[
+   "Descreveu a cascata de coagulação em idosos e os primeiros fatores envolvidos em doença tromboembólica.",
+   "Assumiu a chefia de hospital de doenças crônicas e criou uma avaliação especializada focada em funcionalidade.",
+   "Fundou a primeira sociedade de geriatria do mundo no Brasil durante a década de 1920.",
+   "Desenvolveu a primeira classificação internacional de demências precoces em humanos.",
+   "Descobriu a utilidade do MEEM em hospitais psiquiátricos britânicos, em publicação de 1950."
+ ], correta:1,
+ exp:{
+   geral:"Marjory Warren assumiu chefia de hospital londrino de doenças crônicas (anos 30), introduziu reabilitação focada em funcionalidade e criou a base da avaliação geriátrica especializada.",
+   erradas:["Não era sua área.","(correta)","Sociedade de geriatria não é mérito dela.","Não foi ela.","O MEEM é atribuído a Folstein (1975)."]
+ }},
+
+// ============ AULA 5 — AGA 2 (10 objetivas) ============
+{id:39, aula:"aula5", nivel:"facil", topic:"aga-funcional",
+ enun:"No teste Timed Up and Go (TUG), considera-se risco aumentado de queda quando o tempo ultrapassa:",
+ alts:[
+   "5 segundos, limite crítico para identificar instabilidade postural em qualquer idoso ambulatorial.",
+   "10 segundos, ponto a partir do qual se considera desempenho limítrofe mas ainda normal.",
+   "15 segundos, ponto de corte para indicação de fisioterapia motora especializada obrigatória.",
+   "20 segundos, ponto acima do qual o risco de queda é considerado aumentado clinicamente.",
+   "30 segundos, limite consagrado para caracterizar imobilidade funcional completa do idoso."
+ ], correta:3,
+ exp:{
+   geral:"TUG: <10 s normal; 10-20 s alterado; >20 s = risco aumentado de queda.",
+   erradas:["Muito baixo.","É o limite do normal.","Não é o ponto de corte.","(correta)","30 s já é gravíssimo, mas não é o limiar definido."]
+ }},
+{id:40, aula:"aula5", nivel:"medio", topic:"aga-funcional",
+ enun:"A bateria SPPB (Short Physical Performance Battery) avalia três domínios de desempenho físico. São eles:",
+ alts:[
+   "Força de preensão manual, flexibilidade lombar e capacidade aeróbica em esteira ergométrica.",
+   "Equilíbrio, velocidade de marcha e força de membros inferiores (teste de sentar e levantar).",
+   "Memória de curto prazo, reconhecimento visual de imagens e coordenação motora fina.",
+   "Tempo de reação a estímulo luminoso, força isométrica e habilidade manual com objetos pequenos.",
+   "Pressão arterial postural, saturação de oxigênio no esforço e consumo máximo de oxigênio."
+ ], correta:1,
+ exp:{
+   geral:"SPPB: equilíbrio (pés juntos/semi-tandem/tandem), velocidade de marcha (4 m) e força de MMII (sit-to-stand 5×). Cada domínio 0-4 pontos; total 0-12.",
+   erradas:["Não são os domínios.","(correta)","Domínios cognitivos, não pertencem à SPPB.","Não descreve SPPB.","Não descreve SPPB."]
+ }},
+{id:41, aula:"aula5", nivel:"medio", topic:"aga-funcional",
+ enun:"O questionário SARC-F serve para rastreio de sarcopenia. Seus cinco componentes são:",
+ alts:[
+   "Perda ponderal, exaustão, atividade física reduzida, lentidão e fraqueza muscular de MMSS.",
+   "Força (5 kg), ajuda para caminhar, levantar da cadeira, subir escadas e quedas no último ano.",
+   "IMC baixo, dinamometria reduzida, circunferência panturrilha, circunferência braquial e peso.",
+   "Avaliação de equilíbrio estático, velocidade de marcha, tempo de levantar, fadiga e ausência de apetite.",
+   "Dinamometria, força de preensão manual, flexão de cotovelo, flexão de joelho e massa muscular."
+ ], correta:1,
+ exp:{
+   geral:"SARC-F: Strength (carregar 5kg), Assistance in walking, Rise from a chair, Climb stairs, Falls. Cada item 0-2; ≥4 sugere sarcopenia.",
+   erradas:["São critérios de Fried para fragilidade.","(correta)","Variáveis antropométricas, não SARC-F.","Mistura SPPB.","Não é SARC-F."]
+ }},
+{id:42, aula:"aula5", nivel:"medio", topic:"aga-mental",
+ enun:"Na escala GDS-15, o ponto de corte acima do qual se considera suspeita de depressão é:",
+ alts:[
+   "Acima de 2 pontos, com sensibilidade elevada para sintomas depressivos em idosos ambulatoriais.",
+   "Acima de 5 pontos, com sugestão de depressão e indicação de investigação clínica adicional.",
+   "Acima de 10 pontos, ponto de corte específico para rastreio em populações institucionalizadas.",
+   "Apenas 15 pontos (máximo), necessário para confirmação diagnóstica de depressão maior no idoso.",
+   "Independe da pontuação — apenas as respostas às perguntas 1 e 5 definem o diagnóstico."
+ ], correta:1,
+ exp:{
+   geral:"GDS-15: >5 = suspeita de depressão; >10 = depressão moderada a grave.",
+   erradas:["Ponto muito baixo.","(correta — >5 sugere depressão)","É o limiar para moderada a grave.","Não é o critério.","Todas perguntas compõem a pontuação."]
+ }},
+{id:43, aula:"aula5", nivel:"facil", topic:"aga-dimensoes",
+ enun:"No teste da sacola de remédios, o paciente é orientado a trazer:",
+ alts:[
+   "Apenas os medicamentos prescritos pelo médico geriatra responsável no momento da consulta.",
+   "Todos os medicamentos em uso, incluindo tópicos, naturais, fitoterápicos e vitaminas.",
+   "Somente receitas médicas dos últimos 6 meses, sem a necessidade de trazer os medicamentos físicos.",
+   "Exclusivamente a lista digitada de medicações controlada pela família, dispensando a conferência.",
+   "Apenas os psicofármacos e sedativos prescritos no contexto de transtornos do sono crônicos."
+ ], correta:1,
+ exp:{
+   geral:"Pede-se todos os medicamentos em sacola: prescritos, OTC, tópicos, naturais/fitoterápicos, vitaminas, automedicação. Perguntar posologia, tempo de uso, motivo, mudanças recentes.",
+   erradas:["Restrição perigosa.","(correta)","Receitas isoladas perdem o uso real.","Lista digitada não reflete uso real.","Restrição perigosa."]
+ }},
+{id:44, aula:"aula5", nivel:"medio", topic:"aga-mental",
+ enun:"O FAST (Functional Assessment Staging Tool), apresentado em aula, estadia a Doença de Alzheimer. No estágio 5, o paciente tipicamente apresenta:",
+ alts:[
+   "Funções normais, apenas com queixas subjetivas esporádicas para encontrar vocabulário.",
+   "Dificuldades para tarefas cotidianas simples, como escolher a roupa — início da dependência.",
+   "Incontinência urinária estabelecida como único sinal clínico da progressão neurológica.",
+   "Perda da capacidade de andar e de sorrir, compatível com DA grave (estágio terminal).",
+   "Dificuldades apenas em atividades profissionais e relações sociais complexas do cotidiano."
+ ], correta:1,
+ exp:{
+   geral:"FAST estágio 5 = dificuldade para tarefas cotidianas simples (como escolher roupa); início da dependência; corresponde a DA moderado.",
+   erradas:["Estágio 2.","(correta)","Incontinência é 6D.","Estágio 7.","Estágio 3."]
+ }},
+{id:45, aula:"aula5", nivel:"medio", topic:"aga-funcional",
+ enun:"Na avaliação nutricional pela MAN (Mini Nutritional Assessment), na avaliação global, o paciente é considerado desnutrido com pontuação:",
+ alts:[
+   "Abaixo de 24 pontos, com diagnóstico firmado de desnutrição em qualquer idade de idoso.",
+   "Entre 17 e 23,5 pontos, com diagnóstico confirmado de desnutrição franca do idoso.",
+   "Abaixo de 17 pontos, configurando desnutrição na avaliação global do instrumento.",
+   "Abaixo de 11 pontos, critério único para classificação como desnutrido na MAN completa.",
+   "Abaixo de 7 pontos, apenas em idosos institucionalizados em unidade de longa permanência."
+ ], correta:2,
+ exp:{
+   geral:"MAN avaliação global: ≥24 nutrido; 17-23,5 risco de desnutrição; <17 desnutrido.",
+   erradas:["Abaixo de 24 é risco.","É faixa de risco.","(correta)","11 é triagem.","Não é o critério."]
+ }},
+{id:46, aula:"aula5", nivel:"dificil", topic:"aga-mental",
+ enun:"Idosa de 82 anos, viúva, polimedicada (clonazepam, fenobarbital, varfarina, amiodarona, metformina), refere humor deprimido há anos sem tratamento ('é da idade'), com MEEM 21/30, relógio 3/15, fluência 5/12 e GDS 10/15. A hipótese MAIS provável é:",
+ alts:[
+   "Doença de Alzheimer em estágio moderado, com indicação imediata de inibidor de acetilcolinesterase.",
+   "Pseudodemência depressiva, devendo-se priorizar antidepressivo antes de firmar diagnóstico de demência.",
+   "Demência vascular avançada, com indicação imediata de institucionalização em unidade especializada.",
+   "Delirium subagudo associado a infecção oculta, com necessidade de investigação infecciosa urgente.",
+   "Demência frontotemporal variante comportamental, devendo-se considerar antipsicóticos atípicos."
+ ], correta:1,
+ exp:{
+   geral:"Clássico caso de pseudodemência: depressão de longa data, GDS alto, queda cognitiva compatível com humor — reavaliar após tratar depressão (antidepressivo dual) e desprescrever BZD. Só depois firmar demência.",
+   erradas:["Não se pode firmar DA antes de tratar depressão.","(correta)","Demência vascular não é o cenário mais provável; institucionalização é precipitada.","Sem sinais agudos.","Quadro não é típico de DFT."]
+ }},
+{id:47, aula:"aula5", nivel:"medio", topic:"aga-mental",
+ enun:"O APGAR da família avalia a disfunção nas relações familiares e de amigos. Uma pontuação menor que 3 indica:",
+ alts:[
+   "Suporte familiar ideal com alta coesão afetiva e cuidado adequado em qualquer cenário.",
+   "Disfunção leve ou ausente nas relações, sem necessidade de intervenção psicossocial.",
+   "Acentuada disfunção nas relações familiares e de amizade, sinalizando fragilidade de suporte.",
+   "Disfunção moderada, compatível com apoio parcial em episódios críticos de saúde.",
+   "Erro do aplicador, pois o escore mínimo do APGAR familiar não pode ser inferior a 3 pontos."
+ ], correta:2,
+ exp:{
+   geral:"APGAR da família e dos amigos: <3 = acentuada disfunção; 4-6 moderada; >6 = leve/ausente.",
+   erradas:["Seria >6.","Seria >6.","(correta)","Seria 4-6.","Escore pode ser 0."]
+ }},
+{id:48, aula:"aula5", nivel:"medio", topic:"aga-funcional",
+ enun:"Pela escala de Katz tradicional (Sim/Não), um idoso com pontuação 4 de 6 é classificado como:",
+ alts:[
+   "Totalmente dependente para as atividades básicas de vida diária no contexto ambulatorial.",
+   "Parcialmente dependente, situando-se entre a independência plena e a dependência importante.",
+   "Independente para a totalidade das ABVDs, sem necessidade de adaptação domiciliar adicional.",
+   "Com dependência exclusivamente em atividades instrumentais, sem impacto nas ABVDs básicas.",
+   "Em situação de fragilidade avançada, independentemente de outros achados da avaliação clínica."
+ ], correta:1,
+ exp:{
+   geral:"Katz (Sim=1, Não=0): 6 = independente; 4 = parcialmente dependente; 2 = muito dependente. (Existe outra convenção onde 0 = independente — cuidado com o formulário usado.)",
+   erradas:["Seria 2.","(correta)","Seria 6.","AIVDs são avaliadas por Lawton.","Katz 4 não define fragilidade isoladamente."]
+ }},
+
+// ============ AULA 6 — FARMACOLOGIA (12 objetivas) ============
+{id:49, aula:"aula6", nivel:"facil", topic:"farmaco-pk",
+ enun:"No envelhecimento, o aumento da gordura corpórea e a redução da água corporal levam a:",
+ alts:[
+   "Diminuição do volume de distribuição de fármacos lipossolúveis, com meia-vida reduzida no idoso.",
+   "Aumento do volume de distribuição e da meia-vida de fármacos lipossolúveis, favorecendo acúmulo.",
+   "Ausência de impacto sobre drogas lipossolúveis, alterando apenas os fármacos hidrossolúveis.",
+   "Redução da ligação à albumina e diminuição global do volume de distribuição plasmático.",
+   "Eliminação mais rápida dos fármacos lipossolúveis, exigindo doses mais elevadas no idoso."
+ ], correta:1,
+ exp:{
+   geral:"↑ gordura → ↑ Vd e ↑ t½ de lipossolúveis (ex.: diazepam passa de ~24 h para ~90 h no idoso). ↓ água → ↑ concentração plasmática dos hidrossolúveis (digoxina, aminoglicosídeos, lítio).",
+   erradas:["Inverte a relação.","(correta)","Afeta ambos.","Albumina cai, mas o Vd de lipossolúveis aumenta.","Sentido invertido."]
+ }},
+{id:50, aula:"aula6", nivel:"medio", topic:"farmaco-pk",
+ enun:"As reações de biotransformação de FASE II (conjugação) dos fármacos apresentam, no idoso:",
+ alts:[
+   "Redução marcante de 30-40%, acompanhando a queda observada nas reações de fase I.",
+   "Preservação relativa, diferentemente das reações de fase I, o que favorece o uso do lorazepam.",
+   "Dependência completa do citocromo P450, tornando-se inutilizáveis em pacientes com hepatopatia.",
+   "Aumento global da atividade, promovendo excreção renal acelerada de benzodiazepínicos longos.",
+   "Substituição por reações de absorção intestinal ativa em idosos com má absorção crônica."
+ ], correta:1,
+ exp:{
+   geral:"Fase I (oxidação/redução, CYP450) cai 30-40%; fase II (conjugação) é preservada. Por isso o lorazepam (só fase II) é o BZD preferido no idoso.",
+   erradas:["Fase II é preservada.","(correta)","CYP450 é fase I, não fase II.","Não aumenta — apenas é preservada.","Não há substituição."]
+ }},
+{id:51, aula:"aula6", nivel:"medio", topic:"farmaco-pk",
+ enun:"A queda da taxa de filtração glomerular no idoso exige ajuste de dose preferencialmente para:",
+ alts:[
+   "Paracetamol, morfina oral e tramadol, devido a metabolismo exclusivamente renal desses fármacos.",
+   "Aminoglicosídeos, vancomicina, digoxina e quinolonas, de excreção predominantemente renal.",
+   "Anti-inflamatórios não esteroides em doses baixas, irrelevantes do ponto de vista cinético.",
+   "Benzodiazepínicos e antidepressivos tricíclicos, devido à excreção renal elevada dessas classes.",
+   "Corticoides tópicos cutâneos e oftalmológicos, que não apresentam absorção sistêmica apreciável."
+ ], correta:1,
+ exp:{
+   geral:"Excreção predominantemente renal: aminoglicosídeos, ampicilina, quinolonas, ceftriaxone, penicilina, vancomicina, doxiciclina, digoxina. Ajuste por Cockcroft-Gault.",
+   erradas:["Paracetamol é hepático; morfina tem metabólito ativo renal, mas não é o exemplo padrão da aula.","(correta)","AINH não é exemplo de ajuste renal — é contraindicação relativa.","BZD e ADT têm metabolismo hepático predominante.","Corticoides tópicos não têm absorção sistêmica relevante."]
+ }},
+{id:52, aula:"aula6", nivel:"medio", topic:"farmaco-pk",
+ enun:"A redução da albumina sérica no idoso (~15-20%) aumenta a fração livre de qual dos fármacos abaixo, com risco de toxicidade?",
+ alts:[
+   "Metformina, metronidazol, lactulose, omeprazol e sais de cálcio administrados via oral.",
+   "Varfarina, fenitoína, salicilatos, furosemida, sulfoniluréias e diazepam, ligadas à albumina.",
+   "Ibuprofeno tópico, colírios oftalmológicos e corticoides inalatórios, com mínima ligação proteica.",
+   "Digoxina e aminoglicosídeos, cuja cinética não depende da ligação à albumina plasmática.",
+   "Insulina subcutânea e heparina não fracionada, sem relação com albumina no idoso."
+ ], correta:1,
+ exp:{
+   geral:"Fármacos fortemente ligados à albumina: hormônios tireoidianos, AINH, varfarina, salicilatos, furosemida, fenitoína, sulfoniluréias, digoxina, diazepam. ↓ albumina → ↑ fração livre → ↑ risco de toxicidade.",
+   erradas:["Baixa ligação à albumina, em geral.","(correta)","Mínima absorção sistêmica/ligação proteica.","Digoxina liga-se pouco à albumina — a interferência é outra.","Insulina e heparina não se ligam à albumina como mecanismo relevante."]
+ }},
+{id:53, aula:"aula6", nivel:"facil", topic:"farmaco-pd",
+ enun:"Entre as classes abaixo, a que apresenta MAIOR sensibilidade no idoso (efeitos amplificados com doses menores) é:",
+ alts:[
+   "Beta-bloqueadores, devido à maior densidade de receptores cardíacos no envelhecimento.",
+   "Benzodiazepínicos, opioides e antidepressivos, com maior efeito central no idoso.",
+   "Beta-adrenérgicos inalatórios, com resposta broncodilatadora marcadamente exagerada.",
+   "Diuréticos tiazídicos, com resposta diurética amplificada e efeito adverso raro na idade.",
+   "Corticoides tópicos dermatológicos, com impacto sistêmico comprovadamente aumentado."
+ ], correta:1,
+ exp:{
+   geral:"No idoso: ↑ sensibilidade a benzodiazepínicos, opioides e antidepressivos; ↓ sensibilidade a beta-bloqueadores e beta-adrenérgicos.",
+   erradas:["Sensibilidade aos betabloqueadores é REDUZIDA.","(correta)","A resposta β-adrenérgica está reduzida.","Resposta diurética preservada, com efeitos adversos relevantes (hipocalemia).","Corticoides tópicos têm baixa repercussão sistêmica."]
+ }},
+{id:54, aula:"aula6", nivel:"medio", topic:"farmaco-grupos",
+ enun:"O risco de delirium com fármacos anticolinérgicos no idoso, em comparação ao adulto jovem, é:",
+ alts:[
+   "Semelhante, pois a transmissão colinérgica central não é alterada pelo envelhecimento cerebral.",
+   "Cerca de 5 a 12 vezes maior, em função da redução fisiológica da acetilcolina central no idoso.",
+   "Reduzido, em virtude da diminuição da permeabilidade da barreira hematoencefálica na idade avançada.",
+   "Inexistente, considerando a compensação dopaminérgica adequada no idoso saudável comum.",
+   "Ausente, pois os anticolinérgicos contraindicados na pediatria são seguros em qualquer idoso."
+ ], correta:1,
+ exp:{
+   geral:"↓ ACh central no envelhecimento + bloqueio farmacológico → delirium 5-12× mais frequente. Também: visão embaçada, boca seca, constipação, retenção urinária, hipotensão ortostática.",
+   erradas:["Há alteração clara com a idade.","(correta)","BHE é mais permeável.","Inexiste compensação dopaminérgica para colinérgica.","Pediatria e geriatria compartilham vulnerabilidade, não segurança."]
+ }},
+{id:55, aula:"aula6", nivel:"medio", topic:"farmaco-grupos",
+ enun:"Em idoso em uso de IECA, que aumento de creatinina basal é considerado ainda tolerável antes de suspender a droga?",
+ alts:[
+   "Aumento de até 10%, limite acima do qual a suspensão do IECA torna-se obrigatória em 24 horas.",
+   "Elevação de até 30%, cabendo iniciar com cautela se a creatinina basal estiver entre 1,5 e 2,0 mg/dL.",
+   "Aumento de até 50%, sem necessidade de monitorização laboratorial posterior em pacientes estáveis.",
+   "Qualquer aumento justifica suspensão imediata do IECA na população idosa ambulatorial.",
+   "Dobrar a creatinina basal é considerado dentro da faixa esperada e não exige conduta adicional."
+ ], correta:1,
+ exp:{
+   geral:"Em idosos: tolera-se elevação de até 30% da creatinina após IECA; iniciar com cautela quando Cr basal entre 1,5 e 2,0 mg/dL (monitorar K⁺ e Cr).",
+   erradas:["Muito rigoroso.","(correta)","50% é demais — suspender.","Suspensão precoce não é preconizada.","Dobrar é dano renal agudo, suspender."]
+ }},
+{id:56, aula:"aula6", nivel:"dificil", topic:"farmaco-grupos",
+ enun:"Paciente de 79 anos, 55 kg, creatinina 1,4 mg/dL. Usando a fórmula de Cockcroft-Gault, o clearance de creatinina estimado é aproximadamente:",
+ alts:[
+   "Cerca de 28 mL/min, compatível com doença renal crônica estágio 4 nessa paciente.",
+   "Aproximadamente 40 mL/min, indicando reserva renal comprometida porém funcional no idoso.",
+   "Por volta de 55 mL/min, representando função renal quase normal para essa faixa etária.",
+   "Em torno de 70 mL/min, configurando ClCr preservado sem necessidade de ajuste farmacológico.",
+   "Próximo a 90 mL/min, considerado normal mesmo em idosas com creatinina próxima a 1,5 mg/dL."
+ ], correta:0,
+ exp:{
+   geral:"ClCr = [(140 − 79) × 55] / (72 × 1,4) × 0,85 (mulher) = (61 × 55)/(100,8) × 0,85 = 33,28 × 0,85 ≈ 28,3 mL/min. Ponto-chave: multiplicar por 0,85 para mulheres é obrigatório — esquecer esse fator gera superestimativa grosseira. ClCr ~28 indica DRC estágio 4 e requer ajuste de aminoglicosídeos, vancomicina, digoxina.",
+   erradas:["(correta — ~28 mL/min)","Seria o resultado se esquecêssemos o ×0,85.","Superestima em quase o dobro.","Compatível com função renal normal de adulto jovem.","Não corresponde à idade e creatinina dadas."]
+ }},
+{id:57, aula:"aula6", nivel:"medio", topic:"farmaco-grupos",
+ enun:"Qual hipoglicemiante oral deve ser EVITADO no idoso devido à meia-vida prolongada e ao risco de hipoglicemia grave?",
+ alts:[
+   "Metformina, por causar acidose lática e hipoglicemia sintomática frequente na população idosa.",
+   "Clorpropamida, por apresentar meia-vida até 72 horas e risco de hipoglicemia prolongada grave.",
+   "Insulina NPH, formalmente contraindicada em pacientes acima de 75 anos em qualquer dose.",
+   "Gliclazida MR, pela ototoxicidade e maior risco de sangramento gastrointestinal no idoso.",
+   "Empagliflozina, por causar hipernatremia grave na faixa etária ≥70 anos nos ensaios clínicos."
+ ], correta:1,
+ exp:{
+   geral:"Clorpropamida tem t½ até 72 h no idoso → hipoglicemia grave e prolongada. Evitar.",
+   erradas:["Metformina não causa hipoglicemia por mecanismo isolado (ajustar em IR).","(correta)","Insulina NPH não é contraindicada por idade.","Não é esse o perfil clássico.","Empagliflozina não causa hipernatremia grave como padrão."]
+ }},
+{id:58, aula:"aula6", nivel:"medio", topic:"farmaco-grupos",
+ enun:"Em idoso, a varfarina deve ser prescrita com qual cuidado cinético-dinâmico principal?",
+ alts:[
+   "Doses habitualmente maiores do que no adulto jovem, com controle mensal único do RNI quando estável.",
+   "Doses menores pela maior sensibilidade hepática à inibição da síntese de fatores de coagulação.",
+   "Substituição obrigatória por heparina de baixo peso molecular em todos os pacientes acima de 65 anos.",
+   "Associação rotineira com AINH para potencializar o efeito anticoagulante na fibrilação atrial.",
+   "Uso intermitente em ciclos de 5 dias seguidos por 2 de pausa, mesmo em FA crônica valvar."
+ ], correta:1,
+ exp:{
+   geral:"Maior sensibilidade hepática à inibição dos fatores de coagulação no idoso → doses MENORES de varfarina.",
+   erradas:["Doses menores e monitoração frequente do RNI.","(correta)","Substituição não é regra.","AINH + varfarina aumenta sangramento — contraindicado.","Ciclos intermitentes não são conduta."]
+ }},
+{id:59, aula:"aula6", nivel:"medio", topic:"farmaco-interacoes",
+ enun:"Exemplo clássico de interação farmacocinética de DISTRIBUIÇÃO é:",
+ alts:[
+   "Indução do CYP450 pela rifampicina, com redução do efeito do contraceptivo oral combinado.",
+   "Fenilbutazona deslocando a tolbutamida da ligação proteica, com hipoglicemia resultante.",
+   "Atropina potencializando o efeito de outro anticolinérgico pela soma dos efeitos receptores.",
+   "Tiazídico causando hipocalemia e predispondo à intoxicação digitálica por perda de potássio.",
+   "Anti-muscarínico reduzindo o esvaziamento gástrico e atrasando a absorção de outro fármaco."
+ ], correta:1,
+ exp:{
+   geral:"Deslocamento da ligação proteica é interação na DISTRIBUIÇÃO (ex.: fenilbutazona desloca tolbutamida → hipoglicemia).",
+   erradas:["Interação de metabolismo (indução enzimática).","(correta)","Farmacodinâmica (mesmo local/receptor).","Interação de excreção (perda de K).","Interação de absorção (motilidade TGI)."]
+ }},
+{id:60, aula:"aula6", nivel:"dificil", topic:"farmaco-interacoes",
+ enun:"Idoso de 78 anos iniciou ranitidina e agora apresenta confusão mental. Quais fármacos DE USO CRÔNICO prévios têm sua toxicidade potencializada por essa associação?",
+ alts:[
+   "Paracetamol, dipirona e metformina oral em doses plenas, sem influência cinética adicional.",
+   "Propranolol, varfarina e fenitoína, por interferência no metabolismo hepático pela ranitidina.",
+   "Insulina subcutânea e heparina, por mecanismo de deslocamento da ligação à albumina.",
+   "Amoxicilina e cefalexina, por inibição da secreção tubular renal pela ranitidina em uso crônico.",
+   "Ácido acetilsalicílico em dose antiagregante e clopidogrel, por aumento do tempo de sangramento."
+ ], correta:1,
+ exp:{
+   geral:"Ranitidina interfere no metabolismo hepático (inibição enzimática), aumentando toxicidade de propranolol, varfarina, fenitoína. Pode também causar confusão mental diretamente.",
+   erradas:["Sem interação clinicamente relevante descrita.","(correta)","Mecanismo diferente.","Não é o perfil.","Não é a interação da ranitidina."]
+ }},
+
+// ============ DISSERTATIVAS (10) ============
+{id:61, aula:"aula1", nivel:"medio", topic:"ep-conceitos", dissertativa:true,
+ enun:"Sr. José, 78 anos, ex-operário, reside com filha em bairro periférico de São Paulo. Tem HAS de controle irregular, DM2 com complicação micro e macrovascular, DLP, queixa-se de dispneia aos médios esforços que o impede de ir ao centro comunitário (atividade que mantinha há 20 anos) e sentimento de 'estar velho, não servir para nada'. A filha relata que ele 'entende tudo' e toma as decisões sobre os próprios tratamentos. Responda:\n\na) Classifique o paciente quanto a senescência × senilidade, independência × autonomia e bem-sucedido × frágil, justificando cada classificação.\nb) Explique por que o paradigma de saúde geriátrica não é 'ausência de doença'.\nc) Identifique pelo menos três desafios do cuidado desse idoso no Brasil atual.",
+ gabarito:"a) Há **senilidade** (HAS, DM2 com lesão de órgão-alvo, DLP — doenças com mecanismo fisiopatológico, não fazem parte do envelhecimento 'normal'). Preserva **autonomia** (toma decisões, compreende); perde **independência** parcial (incapacidade de ir ao centro comunitário). Perfil **frágil / envelhecimento usual**, não bem-sucedido — há múltiplas doenças crônicas mal controladas, impacto funcional e sentimento depressivo (sinal de alarme).\n\nb) A ausência de doença é rara entre idosos — a **capacidade funcional** passa a ser o paradigma. Saúde geriátrica resulta da interação multidimensional entre saúde física, saúde mental (cognitiva e emocional), autonomia, integração social, suporte familiar e independência econômica. Um idoso com várias doenças compensadas e plena funcionalidade está 'saudável'; um idoso sem doença crônica mas com incapacidade, não está.\n\nc) Exemplos aceitáveis (≥3): (1) decisão terapêutica baseada em idade cronológica, não em expectativa de vida; (2) famílias menos disponíveis para cuidar; (3) baixa escolaridade/letramento em saúde do idoso brasileiro; (4) baixa renda (40% <1 SM); (5) pressão sobre Previdência; (6) 'comprimir a morbidade' requer mudanças de estilo de vida difíceis nessa faixa; (7) isolamento social (caso descrito); (8) risco de depressão + polifarmácia."},
+{id:62, aula:"aula2", nivel:"medio", topic:"sen-cv", dissertativa:true,
+ enun:"Mulher de 74 anos, hígida, sem doenças conhecidas. Ao exame: PA 158×72 mmHg, FC 68, MV+ sem RA. Laboratório recente: função renal, hepática, tireoidiana, íons, glicemia e colesterol total normais.\n\na) Descreva o perfil pressórico esperado na senescência e explique fisiopatologicamente por que ele ocorre.\nb) Antes de introduzir qualquer anti-hipertensivo, que avaliação clínica beira-leito é OBRIGATÓRIA nessa paciente? Justifique.\nc) Estime a PaO₂ esperada para essa paciente e cite duas alterações respiratórias da senescência que você justificaria verificar.",
+ gabarito:"a) Perfil: **↑ PAS, ↓ PAD, ↑ pressão de pulso** (HAS sistólica isolada). Fisiopatologia: calcificação e espessamento da camada média arterial → perda de elasticidade (enrijecimento) → ↑ resistência periférica → ↑ PAS. Paralelamente, a perda de complacência aórtica reduz o 'reservatório' diastólico → ↓ PAD. A função sistólica ventricular esquerda mantém-se preservada em repouso; a disfunção é DIASTÓLICA (↓ 50% na velocidade de enchimento).\n\nb) **Avaliar hipotensão ortostática** — medir PA/FC após 3-5 min de decúbito e repetir 1 e 3 minutos após ortostase. Queda ≥20 mmHg na PAS (ou ≥10 mmHg na PAD) = HO. Justificativa: ↓ da resposta β-adrenérgica, ↓ do tônus venoso e pior compensação do barorreceptor tornam o idoso vulnerável a quedas se a PA cair ao introduzir anti-hipertensivo.\n\nc) PaO₂ estimada = 109 − 0,43×74 ≈ 77,2 mmHg. Alterações a verificar (2): ↑ volume residual (até 50%), ↓ capacidade vital (até 75%), ↓ surfactante, ↓ reflexo de tosse, ↓ sensibilidade dos quimiorreceptores a PCO₂/PO₂/pH."},
+{id:63, aula:"aula2", nivel:"dificil", topic:"sen-snc", dissertativa:true,
+ enun:"Correlacione as alterações neurobiológicas da senescência com suas repercussões clínicas e farmacológicas. Responda:\n\na) Por que a redução da acetilcolina e da dopamina no idoso constitui a 'base neuroquímica da vulnerabilidade' a Alzheimer e Parkinson?\nb) Como a leucoaraiose se relaciona à queda e à marcha do idoso?\nc) Por que a barreira hematoencefálica mais permeável no idoso importa para a prática prescricional?",
+ gabarito:"a) A ACh tem papel central na memória e atenção; sua queda fisiológica reduz a reserva funcional colinérgica — em Alzheimer, ocorre perda adicional de neurônios colinérgicos do núcleo basal de Meynert, levando ao comprometimento cognitivo clinicamente detectável (base para inibidores da AChE). A DA regula a atividade motora nos gânglios da base; sua queda fisiológica associada à perda de neurônios dopaminérgicos da substância negra na doença de Parkinson explica bradicinesia, rigidez e tremor. Em ambos os casos, a senescência REDUZ A RESERVA, e a doença leva o sistema a cruzar o limiar sintomático.\n\nb) Leucoaraiose = rarefação da substância branca periventricular por perda de axônios/mielina. Compromete as vias descendentes que coordenam postura e marcha → marcha de pequenos passos, base alargada, instabilidade postural e, somada à sarcopenia, fragilidade nas panturrilhas e alteração autonômica, aumenta o risco de queda.\n\nc) BHE mais permeável → fármacos com penetração central (especialmente lipossolúveis, como benzodiazepínicos, opioides, anti-histamínicos, anticolinérgicos) atingem concentrações neurais mais altas que no jovem, com dose aparentemente 'normal'. Isso se soma à ↑ sensibilidade PD a BZD/opioides/antidepressivos e à ↓ ACh → justifica 'start low, go slow' e evitar anticolinérgicos (risco de delirium 5-12×)."},
+{id:64, aula:"aula3", nivel:"medio", topic:"an-atipica", dissertativa:true,
+ enun:"Idosa de 88 anos, lúcida previamente, chega à UPA trazida pela filha com história de 36 horas de 'ficar confusa, falar desconexo, sem reconhecer parentes'. Negam febre, queixa urinária, dor torácica ou abdominal. Faz uso de: captopril, AAS, metformina, losartana, sinvastatina, clonazepam 2 mg à noite (há 4 meses). Exame: PA 110×65, FC 98 bpm, Tax 37,1°C, pulmões limpos, abdome sem alterações, sem sinais focais neurológicos. Urina I: nitrito +, leucocitúria.\n\na) Qual é a hipótese diagnóstica sindrômica MAIS provável? Por que ela é considerada uma 'apresentação atípica'?\nb) Nomeie pelo menos 4 causas possíveis para essa apresentação no idoso.\nc) Que medicação da lista levanta suspeita de iatrogenia contribuinte? Por quê?\nd) Qual escala de rastreio cognitivo você aplicaria — e por quê essa escolha?",
+ gabarito:"a) **Delirium** (insuficiência cognitiva aguda, de curso flutuante, com alteração de atenção e pensamento). É atípica porque o idoso 'apresenta o cérebro' — uma infecção (neste caso ITU), um IAM, um TEP, um distúrbio hidroeletrolítico ou uma iatrogenia podem manifestar-se apenas como confusão mental, sem febre, dor, dispneia ou alteração focal.\n\nb) ITU (muito provável pelo exame de urina), pneumonia, IAM silencioso, TEP, distúrbios hidroeletrolíticos (Na, Ca, glicemia), hipoxemia, constipação/fecaloma, retenção urinária, desidratação, iatrogenia medicamentosa, abstinência.\n\nc) **Clonazepam** (benzodiazepínico de ação longa): no idoso, t½ muito prolongada, acúmulo, ↑ sensibilidade PD, risco de sedação, confusão mental e quedas. A introdução há 4 meses pode estar contribuindo para a mudança de estado mental. O ideal seria redução gradual até suspensão e, se necessário, troca por lorazepam (fase II preservada) em dose baixa, ou abordagem não-farmacológica.\n\nd) CAM (Confusion Assessment Method) — ferramenta específica para delirium — com os 4 critérios: início agudo/curso flutuante + desatenção + (pensamento desorganizado OU alteração do nível de consciência). Alternativamente, aplicar MEEM serve para marcar a severidade do rebaixamento, mas o CAM é o padrão-ouro operacional para diagnosticar delirium no idoso."},
+{id:65, aula:"aula3", nivel:"dificil", topic:"an-sindromes", dissertativa:true,
+ enun:"Explique e aplique os 5 Is de Bernard Isaacs. Responda:\n\na) Enuncie os 5 Is e defina cada um em até duas linhas.\nb) Dê um exemplo clínico para cada I — de preferência que mostre como dois ou mais Is podem se retroalimentar (síndrome geriátrica).\nc) Por que a iatrogenia frequentemente 'amarra' as outras 4? Cite pelo menos 2 exemplos farmacológicos.",
+ gabarito:"a) **Insuficiência cognitiva** — déficit de memória + outra função cognitiva (linguagem, praxia, gnosia, executiva) com repercussão nas AVDs. **Imobilidade** — perda da capacidade de deambular ou transferir-se, com cascata de complicações (úlceras, TVP, TEP, atrofia muscular). **Instabilidade postural e quedas** — 30-60% dos idosos caem ao menos 1×/ano; fatores intrínsecos (marcha senil, sarcopenia, HO) e extrínsecos (ambiente). **Incontinência** urinária e fecal — impacto social e risco de maus-tratos. **Iatrogenia** — dano causado por ato médico, especialmente farmacológico.\n\nb) Exemplos (variação aceita):\n- Cognição + iatrogenia: BZD introduzido para insônia gera delirium, que agrava cognitivo, gera queda.\n- Imobilidade + quedas: fratura de fêmur após queda imobiliza o idoso, levando a úlceras e TVP.\n- Incontinência + cognição: idoso com demência perde cognição para sinalizar vontade miccional → incontinência.\n- Iatrogenia + cognição + quedas: anticolinérgico prescrito para IU de urgência causa delirium e queda.\n- Instabilidade + imobilidade: medo de cair após 1ª queda → paciente não sai do sofá → sarcopenia → nova queda.\n\nc) A iatrogenia amarra as demais porque o idoso é farmacologicamente mais vulnerável (↓ reserva, PD e PK alteradas), e cada novo fármaco pode precipitar um dos 4 outros Is. Exemplos: (1) **Anticolinérgicos** (amitriptilina, antihistamínicos, oxibutinina) → delirium 5-12×, retenção urinária, constipação, HO e quedas. (2) **Benzodiazepínicos de ação longa** (diazepam) → sedação, quedas, confusão. (3) **AINH** → uremia, sangramento, confusão após uso prolongado. (4) **Diuréticos** → hipovolemia, hiponatremia, HO e queda."},
+{id:66, aula:"aula4", nivel:"medio", topic:"aga-sindgeriatrica", dissertativa:true,
+ enun:"Diferencie síndrome clínica tradicional da síndrome geriátrica.\n\na) Apresente a distinção conceitual com exemplo concreto de cada uma.\nb) Cite três características que tornam a síndrome geriátrica especial (do ponto de vista de desfecho, tratamento e diagnóstico).\nc) Explique como o conceito de 'fenômeno do iceberg' (Willianson, 1964) dialoga com o conceito de síndrome geriátrica.",
+ gabarito:"a) **Tradicional (adulto jovem)**: UMA alteração causa MÚLTIPLOS fenômenos clínicos. Ex.: anemia ferropriva → fadiga, palidez, taquicardia, dispneia. **Geriátrica**: MÚLTIPLAS alterações concorrem para UM ÚNICO fenômeno clínico. Ex.: queda = resultante de sarcopenia + leucoaraiose + HO por captopril + visão deficiente + tapete solto; incontinência urinária = contração vesical + prolapso + BZD + limitação motora.\n\nb) (1) **Etiologias múltiplas** — não há 'uma doença' a tratar; é preciso atuar em várias frentes. (2) **Perda funcional** — comprometem a qualidade de vida, mesmo quando não há risco iminente à vida. (3) **Complexidade terapêutica elevada** — intervenção requer equipe interdisciplinar. (4) Associam-se a maior mortalidade, declínio funcional e uso elevado de serviços.\n\nc) O fenômeno do iceberg (Willianson, 1964) descreve que o médico identifica apenas a 'ponta' (queixas evidentes), enquanto problemas funcionais, síndromes geriátricas e iatrogenias permanecem 'submersos' — subdiagnosticados e atribuídos 'à idade'. As síndromes geriátricas são exatamente esse conteúdo submerso: multifatoriais, não evidentes na anamnese tradicional, reveladas pela AGA estruturada."},
+{id:67, aula:"aula5", nivel:"medio", topic:"aga-funcional", dissertativa:true,
+ enun:"Uma idosa de 82 anos vai para sua consulta ambulatorial. Você decide aplicar a AGA. Responda:\n\na) Organize os instrumentos por dimensão (4 dimensões da AGA). Cite pelo menos 2 instrumentos por dimensão.\nb) O teste Timed Up and Go leva 28 segundos. O que isso significa? Que ações práticas você recomendaria?\nc) SARC-F 5 pontos: interprete. Quais próximos passos para investigar sarcopenia?",
+ gabarito:"a) **Saúde Física**: MAN (nutricional), teste da sacola de remédios (polifarmácia), teste do sussurro (audição), tabela de Snellen (visão), revisão vacinal.\n**Saúde Funcional**: Katz (ABVDs), Lawton (AIVDs), Barthel, Pfeffer, Timed Up and Go, SPPB, SARC-F.\n**Saúde Mental**: MEEM (Brucki), teste do relógio (Okamoto), fluência verbal, MoCA, GDS-15, CDR, FAST.\n**Sócio-Ambientais**: APGAR da família e amigos, avaliação de rede social, adequação econômica, segurança domiciliar.\n\nb) TUG 28 s = **risco aumentado de queda** (>20 s). Ações: avaliar medicações potencialmente quedogênicas (BZD, anti-hipertensivos, hipoglicemiantes), avaliar hipotensão ortostática, encaminhar à fisioterapia motora focada em fortalecimento de MMII e equilíbrio, revisar ambiente domiciliar (tapetes, iluminação, barras de apoio no banheiro), revisar calçado, avaliar visão/audição, revisar vitamina D e cálcio, considerar SPPB para quantificar componentes afetados.\n\nc) SARC-F ≥4 = rastreio POSITIVO para sarcopenia. Próximos passos: confirmar com avaliação de força (dinamometria de preensão palmar), massa muscular (DEXA ou bioimpedância), desempenho físico (SPPB ou velocidade de marcha <0,8 m/s). Se confirmada, intervenção: treinamento resistido progressivo + aporte proteico (1,2-1,5 g/kg/d), vitamina D, tratamento de comorbidades catabolizantes. A sarcopenia é um dos pilares da fragilidade — revisar critérios de Fried."},
+{id:68, aula:"aula5", nivel:"dificil", topic:"aga-mental", dissertativa:true,
+ enun:"Caso completo. Idosa de 82 anos, 4 anos de escolaridade, viúva há 5 anos, reside sozinha, acompanhada pela filha. Queixa: recusa a se alimentar. Humor deprimido há anos sem tratamento ('é da idade'); insônia em uso crônico de clonazepam 2 mg/noite; epilepsia controlada há 10 anos; HAS com lesão de órgão-alvo (stent em CD); FA crônica anticoagulada; DM (macro e microvascular); quedas recorrentes (TCE com drenagem de subdural há 5 anos; fratura de fêmur há 2 anos; osteoporose sem tratamento); IU de urgência; hipoacusia bilateral.\n\nMedicações: clonazepam 2 mg, fenobarbital 100 mg, captopril 25 mg 2×d, AAS 100 mg, sinvastatina 20 mg, mononitrato 20 mg 3×d, varfarina conforme RNI, amiodarona 200 mg, metformina 500 mg 2×d.\n\nAGA: MAN 15,5 (desnutrida); Katz 1/6; Lawton 10/27; TUG 30 s; MEEM 21/30; relógio 3/15; fluência 5/12; GDS 10/15; SARC-F 5.\n\na) Elabore a lista de problemas.\nb) Proponha um plano terapêutico completo (farmacológico e não-farmacológico) e justifique pelo menos 4 decisões.\nc) Qual é a principal hipótese diagnóstica para o quadro cognitivo? Como você confirmaria?",
+ gabarito:"a) Lista de problemas: (1) Depressão grave (GDS 10/15) não tratada; (2) Polifarmácia com medicações inapropriadas para idoso (clonazepam, fenobarbital); (3) Desnutrição (MAN 15,5; recusa alimentar); (4) Dependência importante nas ABVDs (Katz 1/6) e grave nas AIVDs (Lawton 10/27); (5) Risco de queda alto (TUG 30 s) com história de 2 quedas com lesão; (6) Sarcopenia/fragilidade (SARC-F 5); (7) Osteoporose não tratada com fratura prévia; (8) HAS com LOA + FA + DM com complicações; (9) Déficit cognitivo a esclarecer (MEEM 21/30 para 4 anos de escolaridade = abaixo do ponto de corte 25 → alterado); (10) Incontinência urinária de urgência; (11) Hipoacusia bilateral (pode mimetizar déficit cognitivo); (12) Insuficiência familiar? (reside sozinha, acompanhada de filha).\n\nb) Plano (exemplos ≥4 justificados):\n- **Tratar depressão** com antidepressivo dual (venlafaxina ou duloxetina) — trata humor + dor neuropática/fibromialgia comum em idosos. Justifica-se pelo GDS 10/15 e repercussão funcional/nutricional.\n- **Desmame do clonazepam** (redução ~25% a cada 2 semanas) até suspensão. BZD longo no idoso → quedas, delirium, sedação, acúmulo. Justificativa farmacológica: t½ prolongada, ↑ sensibilidade PD, e risco quedas está alto (TUG 30 s, 2 quedas prévias).\n- **Reavaliar fenobarbital**: indutor enzimático, pode precipitar confusão, potencializa sedação com clonazepam; discutir ajuste com neuro — muitos epilépticos idosos migram para lamotrigina ou levetiracetam.\n- **Iniciar alendronato (bifosfonato) + cálcio + vitamina D** para osteoporose — fratura prévia confirmada, sem tratamento.\n- **Fisioterapia motora** focada em marcha/equilíbrio + treinamento resistido — TUG 30 s, sarcopenia.\n- **Suplementação proteica/calórica** e seguimento nutricional — MAN 15,5 (desnutrida).\n- **Regime de toalete** (condutas comportamentais) para IU de urgência antes de introduzir anticolinérgico (risco delirium).\n- **Encaminhar ao otorrinolaringologista** — hipoacusia pode estar mascarando suposto déficit cognitivo.\n- **Avaliar desprescrever mononitrato** se angina estável sem sintomas.\n- **Apoio social** — acionar família/CRAS — insuficiência familiar possível.\n\nc) Principal hipótese: **pseudodemência depressiva**. MEEM alterado, relógio 3/15 e fluência 5/12 em paciente gravemente deprimida e polimedicada são compatíveis com déficit secundário ao humor e à iatrogenia. Confirmação: tratar depressão por 8-12 semanas, desmamar BZD, corrigir hipoacusia — reaplicar MEEM/relógio/fluência. Se normalizar = pseudodemência. Se persistir → investigar demência (TC/RM já mostrou redução volumétrica + infartos lacunares → cogitar componente vascular; ainda assim, a prioridade é tratar depressão e iatrogenia primeiro)."},
+{id:69, aula:"aula6", nivel:"medio", topic:"farmaco-pk", dissertativa:true,
+ enun:"Explique, a partir das alterações fisiológicas do envelhecimento, por que o diazepam é particularmente problemático no idoso e qual seria sua escolha farmacológica se fosse necessário prescrever ansiolítico agudo em um idoso de 80 anos.\n\na) Descreva o que acontece com o Vd, o metabolismo (fase I e II) e a t½ do diazepam no idoso.\nb) Explique por que o lorazepam seria uma alternativa mais segura em termos cinéticos.\nc) Antes de prescrever qualquer BZD, quais são as medidas não-farmacológicas e clínicas que devem ser tentadas primeiro?",
+ gabarito:"a) Diazepam é **altamente lipossolúvel**. Com o envelhecimento, há ↑ gordura corpórea (18-36% em mulheres; 33-48% em homens) → ↑ Vd. Metabolismo hepático envolve fase I (oxidação via CYP450), que está REDUZIDA 30-40% no idoso. Com ↑ Vd + ↓ clearance da fase I, a **t½ do diazepam passa de ~24 h no jovem para ~90 h no idoso**, com ACÚMULO progressivo e risco de sedação, confusão, quedas e dependência após dias de uso.\n\nb) **Lorazepam** é metabolizado **apenas pela fase II (conjugação/glicuronidação)**, que NÃO sofre influência da senescência. Assim, sua t½ se mantém similar no idoso e no jovem, reduzindo risco de acúmulo. É a escolha preferencial quando um BZD for realmente necessário.\n\nc) Antes de BZD: (1) **higiene do sono** — horário regular, restrição de cafeína/álcool, exposição à luz natural, ambiente escuro, sem TV/celular no quarto; (2) tratar **causas médicas** da insônia — dor, DPOC, IC descompensada, noctúria, depressão, ansiedade; (3) **revisar medicações quedogênicas** ou estimulantes; (4) terapia cognitivo-comportamental para insônia (TCC-I), se disponível; (5) considerar **melatonina** (indicação limitada, mas mais segura); (6) se for absolutamente necessário farmaco: preferir trazodona em dose baixa ou doxepina em dose muito baixa, ou lorazepam 0,25-0,5 mg por curto prazo, com plano de retirada desde a 1ª prescrição."},
+{id:70, aula:"aula6", nivel:"dificil", topic:"farmaco-grupos", dissertativa:true,
+ enun:"Mulher de 84 anos, 50 kg, creatinina 1,3 mg/dL, com diagnóstico recente de fibrilação atrial crônica, CHA₂DS₂-VASc = 5 (HAS, DM, AVE prévio, idade, sexo). Uso prévio de: captopril 25 mg 2×d, metformina 500 mg 2×d, atorvastatina 20 mg, AAS 100 mg. Inicia varfarina. Após 10 dias, apresenta epistaxe volumosa com RNI 6,8, além de confusão mental. A filha relata ter introduzido ranitidina 150 mg 2×d há 15 dias para queimação epigástrica.\n\na) Calcule o ClCr pela fórmula de Cockcroft-Gault e interprete.\nb) Explique o mecanismo mais provável de o RNI ter disparado apesar da dose correta.\nc) Como as alterações farmacocinéticas do envelhecimento ajudam a explicar o caso?\nd) Que medicação você considera substituir/ajustar e por quê?",
+ gabarito:"a) ClCr = [(140-84) × 50] / (72 × 1,3) × 0,85 = (56 × 50) / 93,6 × 0,85 ≈ 29,9 × 0,85 ≈ 25,4 mL/min. **Disfunção renal moderada a grave** — impõe ajuste de múltiplos fármacos e monitorização frequente.\n\nb) A **ranitidina inibe o metabolismo hepático** de vários fármacos (inibição enzimática CYP450), incluindo a **varfarina** e a **fenitoína** e o propranolol. O resultado é acúmulo de varfarina, aumento da inibição dos fatores de coagulação vitamina K-dependentes e elevação do RNI além do alvo, com risco hemorrágico.\n\nc) Fatores cinéticos somados: (1) ↓ albumina (15-20%) → ↑ fração livre de varfarina (fortemente ligada à albumina); (2) ↓ fluxo sanguíneo hepático (35%) e ↓ massa hepática (20-30%) → ↓ metabolismo de primeira passagem e ↑ níveis plasmáticos; (3) fase I já reduzida 30-40% → menos 'folga' para suportar inibição adicional pela ranitidina; (4) maior sensibilidade HEPÁTICA à inibição da síntese dos fatores de coagulação pela varfarina (PD) → doses MENORES já são efetivas. Tudo somado, o RNI dispara.\n\nd) Substituir a **ranitidina** — suspender (causa confusão mental por si + interage com varfarina, propranolol, fenitoína) e introduzir **IBP em dose baixa por tempo definido** (ex.: omeprazol 20 mg por 4-8 semanas) se dispepsia persistir, com investigação clínica. Reduzir dose da **varfarina**, acompanhar RNI a cada 2-3 dias até estabilizar, considerar temporariamente vitamina K oral/IV se sangramento grave. Revisar **captopril** se creatinina subir >30%. Manter **metformina** suspensa enquanto ClCr <30 mL/min (risco de acidose láctica). Avaliar troca do AAS/varfarina por esquema único (na FA com varfarina, em geral o AAS pode ser suspenso se não houver indicação vascular adicional) para reduzir risco de sangramento. Considerar DOAC ajustado à função renal (apixabana tem melhor perfil com ClCr ≥15) — embora a escolha dependa de contexto e preferência."}
+];
+
+// ============================================================================
+// Render
+// ============================================================================
+let modo = "estudo";
+let respostas = {};
+let filtroAtual = "todas";
+
+function renderQuestoes() {
+  const cont = document.getElementById("questoes");
+  cont.innerHTML = "";
+  let aulaAtual = null;
+  const aulaNomes = {
+    aula1: "Aula 1 — Apresentação e Epidemiologia do Envelhecimento",
+    aula2: "Aula 2 — Senescência",
+    aula3: "Aula 3 — Anamnese e Apresentações Atípicas",
+    aula4: "Aula 4 — Avaliação Geriátrica Ampla (AGA 1)",
+    aula5: "Aula 5 — AGA: Instrumentos (AGA 2)",
+    aula6: "Aula 6 — Farmacologia no Idoso"
+  };
+  questoes.forEach(q => {
+    const passa = (filtroAtual === "todas" ||
+                   filtroAtual === q.aula ||
+                   filtroAtual === q.nivel);
+    if (!passa) return;
+    if (q.aula !== aulaAtual && filtroAtual === "todas") {
+      aulaAtual = q.aula;
+      const h = document.createElement("h3");
+      h.className = "aula-header";
+      h.textContent = aulaNomes[q.aula];
+      cont.appendChild(h);
+    }
+    cont.appendChild(renderQ(q));
+  });
+}
+
+function renderQ(q) {
+  const div = document.createElement("div");
+  div.className = "question" + (q.dissertativa ? " dissertativa" : "");
+  div.id = "q" + q.id;
+  div.dataset.aula = q.aula;
+  div.dataset.nivel = q.nivel;
+
+  const niveis = {facil:"Fácil", medio:"Médio", dificil:"Difícil"};
+  const aulas = {aula1:"Aula 1", aula2:"Aula 2", aula3:"Aula 3", aula4:"Aula 4", aula5:"Aula 5", aula6:"Aula 6"};
+
+  div.innerHTML = `
+    <div class="qmeta">
+      <span>#${q.id}</span>
+      <span>${aulas[q.aula]}</span>
+      <span class="nivel ${q.nivel}">${niveis[q.nivel]}</span>
+      ${q.dissertativa ? '<span>Dissertativa</span>' : '<span>Objetiva</span>'}
+    </div>
+    <div class="qenun">${q.enun.replace(/\n/g, "<br>")}</div>
+  `;
+
+  if (q.dissertativa) {
+    div.innerHTML += `
+      <div class="dissertativa-resposta">
+        <textarea placeholder="Formule sua resposta aqui..."></textarea>
+      </div>
+      <button class="btn-gab" onclick="revelarGabaritoDisser(${q.id})">Mostrar resposta modelo</button>
+      <div class="gab-model" id="gab-d-${q.id}"><h4>Resposta modelo</h4><div>${q.gabarito.replace(/\n/g, "<br>")}</div></div>
+    `;
+  } else {
+    let altsHTML = '<div class="alternativas">';
+    q.alts.forEach((alt, i) => {
+      const letra = String.fromCharCode(65 + i);
+      altsHTML += `<label class="alternativa" data-i="${i}" onclick="selecionar(${q.id}, ${i})">
+        <span class="letra">${letra})</span>${alt}
+      </label>`;
+    });
+    altsHTML += '</div>';
+    div.innerHTML += altsHTML;
+    div.innerHTML += `<div class="feedback" id="fb-${q.id}"></div>`;
+  }
+
+  return div;
+}
+
+function selecionar(qid, i) {
+  const q = questoes.find(x => x.id === qid);
+  if (!q) return;
+  respostas[qid] = i;
+  const div = document.getElementById("q" + qid);
+  div.querySelectorAll(".alternativa").forEach((el, idx) => {
+    el.classList.remove("sel", "correct", "wrong");
+    if (idx === i) el.classList.add("sel");
+  });
+  if (modo === "estudo") mostrarFeedback(qid);
+}
+
+function mostrarFeedback(qid) {
+  const q = questoes.find(x => x.id === qid);
+  const div = document.getElementById("q" + qid);
+  const fb = document.getElementById("fb-" + qid);
+  const sel = respostas[qid];
+  if (sel === undefined) return;
+  div.querySelectorAll(".alternativa").forEach((el, idx) => {
+    el.classList.remove("correct", "wrong", "sel");
+    if (idx === q.correta) el.classList.add("correct");
+    else if (idx === sel) el.classList.add("wrong");
+  });
+  const letras = ["A","B","C","D","E"];
+  let html = `<h4>${sel === q.correta ? "✅ Correta" : "❌ Incorreta"} · Gabarito: ${letras[q.correta]}</h4>`;
+  html += `<p><strong>Por que ${letras[q.correta]} é a correta:</strong> ${q.exp.geral}</p>`;
+  html += `<p><strong>Análise das demais:</strong></p><ul>`;
+  q.exp.erradas.forEach((e, idx) => {
+    if (idx !== q.correta) html += `<li><strong>${letras[idx]}:</strong> ${e}</li>`;
+  });
+  html += `</ul>`;
+  html += `<p style="margin-top:0.6rem; font-size:0.85rem; color: var(--muted)">📖 Tópico: ${topicToResumo[q.topic] ? topicToResumo[q.topic].label : q.topic}</p>`;
+  fb.innerHTML = html;
+  fb.classList.add("show");
+}
+
+function revelarGabaritoDisser(qid) {
+  const gab = document.getElementById("gab-d-" + qid);
+  gab.classList.toggle("show");
+}
+
+function setModo(m) {
+  modo = m;
+  document.getElementById("modoEstudoBtn").classList.toggle("primary", m === "estudo");
+  document.getElementById("modoSimuladoBtn").classList.toggle("primary", m === "simulado");
+  document.getElementById("finalizarBtn").classList.toggle("hidden", m !== "simulado");
+  document.getElementById("scorePanel").classList.add("hidden");
+  document.querySelectorAll(".feedback").forEach(el => el.classList.remove("show"));
+  document.querySelectorAll(".alternativa").forEach(el => el.classList.remove("correct", "wrong", "sel"));
+  respostas = {};
+}
+
+function finalizar() {
+  const painel = document.getElementById("scorePanel");
+  const objetivas = questoes.filter(q => !q.dissertativa);
+  let acertos = 0, respondidas = 0;
+  const porAula = {}, porNivel = {}, porTopico = {};
+  objetivas.forEach(q => {
+    porAula[q.aula] = porAula[q.aula] || {t:0, a:0};
+    porNivel[q.nivel] = porNivel[q.nivel] || {t:0, a:0};
+    porTopico[q.topic] = porTopico[q.topic] || {t:0, a:0};
+    porAula[q.aula].t++; porNivel[q.nivel].t++; porTopico[q.topic].t++;
+    if (respostas[q.id] !== undefined) {
+      respondidas++;
+      if (respostas[q.id] === q.correta) {
+        acertos++;
+        porAula[q.aula].a++; porNivel[q.nivel].a++; porTopico[q.topic].a++;
+      }
+    }
+  });
+  const total = objetivas.length;
+  const pct = Math.round((acertos / total) * 100);
+  let cls = "low"; if (pct >= 70) cls = "ok"; else if (pct >= 50) cls = "med";
+
+  // mostrar feedbacks
+  objetivas.forEach(q => { if (respostas[q.id] !== undefined) mostrarFeedback(q.id); });
+
+  const aulaNomes = {
+    aula1: "Aula 1 — Epidemiologia",
+    aula2: "Aula 2 — Senescência",
+    aula3: "Aula 3 — Anamnese",
+    aula4: "Aula 4 — AGA 1",
+    aula5: "Aula 5 — AGA 2",
+    aula6: "Aula 6 — Farmacologia"
+  };
+  const niveis = {facil:"Fáceis", medio:"Médias", dificil:"Difíceis"};
+
+  let html = `<h2>Resultado do Simulado</h2>`;
+  html += `<p class="score-big ${cls}">${acertos}/${total} <span style="font-size:1rem;">(${pct}%)</span></p>`;
+  html += `<p>Respondidas: ${respondidas}/${total}</p>`;
+
+  html += `<h3 style="margin-top:1.5rem;">Por aula</h3><ul>`;
+  Object.keys(porAula).forEach(a => {
+    const p = porAula[a];
+    html += `<li>${aulaNomes[a]}: <strong>${p.a}/${p.t}</strong> (${Math.round(p.a/p.t*100)}%)</li>`;
+  });
+  html += `</ul>`;
+  html += `<h3>Por dificuldade</h3><ul>`;
+  Object.keys(porNivel).forEach(n => {
+    const p = porNivel[n];
+    html += `<li>${niveis[n]}: <strong>${p.a}/${p.t}</strong> (${Math.round(p.a/p.t*100)}%)</li>`;
+  });
+  html += `</ul>`;
+
+  // Diagnóstico por tópico
+  const fracos = Object.keys(porTopico)
+    .map(t => ({t, ...porTopico[t], pct: porTopico[t].a / porTopico[t].t * 100}))
+    .filter(x => x.pct < 100)
+    .sort((a,b) => a.pct - b.pct);
+  html += `<h3 style="margin-top:1.5rem;">🎯 Diagnóstico — revisar no resumão</h3>`;
+  if (fracos.length === 0) {
+    html += `<p>🎉 Parabéns! Você acertou tudo — não há tópico fraco para revisar.</p>`;
+  } else {
+    fracos.forEach(f => {
+      const mapping = topicToResumo[f.t] || {label: f.t, anchor:"", subtopics:""};
+      const ind = f.pct < 50 ? "🔴" : "🟡";
+      const cls2 = f.pct < 50 ? "" : " medio";
+      html += `<div class="diagnostico-item${cls2}">
+        <strong>${ind} ${mapping.label}</strong> — ${f.a}/${f.t} (${Math.round(f.pct)}%)
+        <br><small>Revisar: ${mapping.subtopics}</small>
+        <br><a href="${RESUMAO_BASE}${mapping.anchor}" target="_blank">→ Ir ao resumão</a>
+      </div>`;
+    });
+  }
+
+  painel.innerHTML = html;
+  painel.classList.remove("hidden");
+  painel.scrollIntoView({behavior:"smooth"});
+}
+
+// Filtros
+document.querySelectorAll(".filter-btn").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    filtroAtual = b.dataset.filter;
+    renderQuestoes();
+  });
+});
+
+document.getElementById("modoEstudoBtn").onclick = () => setModo("estudo");
+document.getElementById("modoSimuladoBtn").onclick = () => setModo("simulado");
+document.getElementById("finalizarBtn").onclick = finalizar;
+
+// Theme
+(function() {
+  var btn = document.getElementById('themeToggle');
+  var stored = localStorage.getItem('geriatria-theme');
+  if (stored === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  btn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+  btn.addEventListener('click', function() {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (cur === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('geriatria-theme', 'dark');
+      btn.textContent = '🌙';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('geriatria-theme', 'light');
+      btn.textContent = '☀️';
+    }
+  });
+})();
+
+renderQuestoes();
+</script>
+
+</body>
+</html>

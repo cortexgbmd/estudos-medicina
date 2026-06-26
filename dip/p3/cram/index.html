@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIP P3 — Cram · Resumo · Questões</title>
+<style>
+  :root{--bg:#0e1117;--panel:#161b22;--panel2:#1c2230;--bd:#2a3240;--tx:#e6edf3;--mut:#9aa7b4;
+        --acc:#4dd0a7;--acc2:#5aa0ff;--good:#4dd0a7;--bad:#ff6b6b;--warn:#ffcc66;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55;padding-bottom:70px}
+  header{position:sticky;top:0;z-index:30;background:rgba(14,17,23,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
+  .hwrap{max-width:1000px;margin:0 auto;padding:10px 14px}
+  .ttl{font-weight:700;font-size:1rem}
+  .ttl small{color:var(--mut);font-weight:400;font-size:.72rem;display:block}
+  .tabs{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .tab{flex:1;min-width:120px;text-align:center;background:var(--panel2);border:1px solid var(--bd);color:var(--mut);
+       padding:8px 6px;border-radius:9px;cursor:pointer;font-size:.82rem;font-weight:600}
+  .tab.on{color:#0e1117;background:linear-gradient(90deg,var(--acc),var(--acc2));border-color:transparent}
+  main{max-width:1000px;margin:0 auto;padding:16px 14px}
+  .page{display:none}.page.on{display:block}
+  h2.sec{font-size:1.05rem;margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+  .prof{font-size:1.3rem;font-weight:800;margin:26px 0 4px;color:#fff;border-bottom:2px solid #444;padding-bottom:4px}
+  .topic{background:var(--panel);border:1px solid var(--bd);border-radius:11px;margin:10px 0;overflow:hidden}
+  .topic>summary{padding:12px 14px;cursor:pointer;font-weight:700;font-size:.98rem;color:var(--acc2);list-style:none}
+  .topic>summary::-webkit-details-marker{display:none}
+  .topic>summary::before{content:"▸ ";color:var(--mut)}
+  .topic[open]>summary::before{content:"▾ "}
+  .tbody{padding:0 14px 12px}
+  .sub{font-weight:700;margin:10px 0 2px;font-size:.9rem}
+  .tbody p{margin:3px 0;font-size:.88rem}
+  .tbody ol{margin:4px 0 4px 18px;padding:0}.tbody li{font-size:.88rem;margin:3px 0}
+  .pega{border-left:3px solid var(--warn);background:rgba(255,204,102,.07);padding:7px 10px;border-radius:6px;margin:8px 0;font-size:.82rem;font-style:italic;color:#d8c89a}
+  .pega b{color:var(--warn);font-style:normal}
+  /* progress */
+  .bar{height:9px;background:var(--panel2);border:1px solid var(--bd);border-radius:99px;overflow:hidden}
+  .fill{height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .3s}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  .btn{background:var(--panel2);border:1px solid var(--bd);color:var(--tx);border-radius:8px;padding:7px 12px;font-size:.8rem;cursor:pointer;font-weight:600}
+  .btn:hover{border-color:var(--acc)}
+  .btn.p{background:linear-gradient(90deg,var(--acc),var(--acc2));color:#0e1117;border:none}
+  .pill{font-size:.72rem;color:var(--mut);background:var(--panel2);border:1px solid var(--bd);padding:3px 9px;border-radius:99px}
+  /* flashcard */
+  .fcwrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:10px}
+  .card{width:100%;max-width:560px;min-height:230px;perspective:1400px;cursor:pointer}
+  .cInner{position:relative;width:100%;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+  .card.flip .cInner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--bd);border-radius:14px;
+        padding:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+  .front{background:var(--panel)}
+  .back{background:#13241f;transform:rotateY(180deg);border-color:#2c5446}
+  .face .tg{position:absolute;top:10px;left:14px;font-size:.66rem;color:var(--mut)}
+  .face .qa{font-size:1.05rem;font-weight:600}
+  .back .qa{color:#cdeee0;font-weight:500}
+  .hint{font-size:.7rem;color:var(--mut);position:absolute;bottom:10px}
+  .fcbtns{display:flex;gap:10px;width:100%;max-width:560px}
+  .fcbtns .btn{flex:1}
+  .errei{background:rgba(255,107,107,.15);border-color:#5a2a2a;color:#ffb4b4}
+  .acertei{background:rgba(77,208,167,.15);border-color:#2c5446;color:#9fe9cf}
+  /* quiz */
+  .q{background:var(--panel);border:1px solid var(--bd);border-radius:11px;padding:13px 15px;margin:11px 0}
+  .q .qn{font-size:.72rem;color:var(--mut);margin-bottom:4px}
+  .q .stem{font-size:.92rem;margin-bottom:9px}
+  .opt{display:block;border:1px solid var(--bd);border-radius:8px;padding:9px 11px;margin:6px 0;font-size:.86rem;cursor:pointer;background:var(--panel2)}
+  .opt:hover{border-color:var(--acc2)}
+  .opt.correct{background:rgba(77,208,167,.15);border-color:var(--good)}
+  .opt.wrong{background:rgba(255,107,107,.15);border-color:var(--bad)}
+  .opt.disabled{cursor:default;opacity:.92}
+  .exp{font-size:.82rem;color:#bcd;margin-top:8px;border-top:1px dashed var(--bd);padding-top:7px;display:none}
+  .exp.show{display:block}
+  .topicfilter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .tf{font-size:.72rem;padding:4px 9px;border-radius:99px;border:1px solid var(--bd);background:var(--panel2);color:var(--mut);cursor:pointer}
+  .tf.on{color:#0e1117;background:var(--acc);border-color:transparent}
+  .scorebox{position:sticky;top:96px;z-index:20;background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:.84rem;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .scorebox b{color:var(--acc)}
+  .savetag{font-size:.68rem;color:var(--good);opacity:0;transition:opacity .3s}
+  .diss{background:rgba(90,160,255,.08);border:1px solid rgba(90,160,255,.25);border-radius:9px;padding:10px 12px;margin:8px 0;font-size:.86rem}
+  .diss b{color:var(--acc2)}
+  footer{max-width:1000px;margin:26px auto 0;padding:0 14px;color:var(--mut);font-size:.72rem;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div class="ttl">📚 DIP P3 — material de prova <small>Resumo dos slides · Cram · 50 questões (+ prova real). Progresso salvo neste navegador.</small></div>
+    <div class="tabs">
+      <div class="tab on" data-p="resumo">📖 Resumo</div>
+      <div class="tab" data-p="cram">🃏 Cram</div>
+      <div class="tab" data-p="quiz">📝 Questões</div>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="page on" id="resumo"></section>
+
+  <section class="page" id="cram">
+    <h2 class="sec">Cram — flashcards</h2>
+    <div class="bar"><div class="fill" id="fcfill"></div></div>
+    <div class="tools">
+      <span class="pill" id="fcstat">0/0 dominados</span>
+      <button class="btn" id="fconly">Só as que errei</button>
+      <button class="btn" id="fcshuffle">Embaralhar</button>
+      <button class="btn" id="fcreset">↺ Zerar</button>
+      <span class="savetag" id="fcsave">salvo ✓</span>
+    </div>
+    <div class="fcwrap">
+      <div class="card" id="card"><div class="cInner">
+        <div class="face front"><span class="tg" id="fctag"></span><div class="qa" id="fcfront"></div><div class="hint">toque para virar</div></div>
+        <div class="face back"><span class="tg">resposta</span><div class="qa" id="fcback"></div><div class="hint">toque para virar</div></div>
+      </div></div>
+      <div class="fcbtns">
+        <button class="btn errei" id="bErrei">✗ Errei</button>
+        <button class="btn acertei" id="bAcertei">✓ Acertei</button>
+      </div>
+      <div class="pill" id="fcpos"></div>
+    </div>
+  </section>
+
+  <section class="page" id="quiz">
+    <h2 class="sec">Questões — 50 no estilo da prova</h2>
+    <div class="scorebox">
+      <span>Respondidas: <b id="qAns">0</b>/<span id="qTot">0</span></span>
+      <span>Acertos: <b id="qOk">0</b></span>
+      <span>Aproveitamento: <b id="qPct">—</b></span>
+      <button class="btn" id="qreset" style="margin-left:auto">↺ Zerar respostas</button>
+      <span class="savetag" id="qsave">salvo ✓</span>
+    </div>
+    <div class="topicfilter" id="qfilter"></div>
+    <div id="quizroot"></div>
+
+    <h2 class="sec" style="margin-top:30px">Prova real de 12/06 (reconstruída) — refaça</h2>
+    <p style="font-size:.82rem;color:var(--mut)">Gabarito reconstruído a partir das suas fotos; as 4 dissertativas estão como roteiro para você treinar a escrita.</p>
+    <div id="examroot"></div>
+    <div id="dissroot"></div>
+  </section>
+
+  <footer>Conteúdo baseado nos slides do professor e na prova de 12/06/2026 (Santa Marcelina — DIP). Material de estudo, não fonte oficial. Progresso guardado em localStorage (cada navegador tem o seu).</footer>
+</main>
+
+<script>
+/* =================== DADOS =================== */
+const SUMMARY=[
+ {prof:"Luís",topics:[
+  {t:"Hepatite B",b:[
+   ["s","Transmissão"],["p","Parenteral – rara/raríssima (bancos de sangue raríssimo, agulhas/seringas, sangue contaminado)."],
+   ["p","Sexual – PRINCIPAL (relação desprotegida). Vertical – rara, maior risco no parto; tratamento liberado na gravidez."],
+   ["s","Agente"],["p","Vírus DNA, Hepadnaviridae, DNA parcialmente duplicado; 8 genótipos (A–H)."],
+   ["s","Marcadores"],
+   ["p","HBsAg: 1º a positivar; presença = infecção; >6 meses = crônica."],
+   ["p","Anti-HBc total: contato prévio com o vírus (não vacina). Anti-HBc IgM: aguda."],
+   ["p","Anti-HBs: imunidade (vacina ou cura). HBeAg: replicação. Anti-HBe: baixa replicação."],
+   ["s","Perfis (decorar)"],
+   ["p","Vacinado: HBsAg−, anti-HBc−, anti-HBs+. | Cura natural: HBsAg−, anti-HBc+, anti-HBs+. | Crônica ativa: HBsAg+, anti-HBc+, HBeAg+, anti-HBs−."],
+   ["s","Complicações e tratamento"],
+   ["p","Cirrose e hepatocarcinoma (pode ir direto a CHC). Tto: tenofovir/entecavir/TAF, interferon. Alvo = transcriptase reversa; cccDNA = sem cura esterilizante."],
+   ["pega","Prova: Q06/Q07 sorologia; Q08 carcinoma hepático. Pegadinha: rastreio de CHC = US ± AFP a cada 6 meses (não elastografia/biópsia)."]
+  ]},
+  {t:"Malária",b:[
+   ["s","Agente/vetor"],["p","Plasmodium (vivax+comum BR, falciparum+grave/África, malariae, ovale, knowlesi). Vetor Anopheles (An. darlingi). Não é contagiosa."],
+   ["s","Latência/clínica"],["p","Hipnozoítos (vivax/ovale) no fígado → recaídas. Acesso malárico: calafrio+febre+sudorese (hemólise) → anemia + icterícia."],
+   ["s","Diagnóstico"],["p","Padrão-ouro = gota espessa (microscopia, espécie + parasitemia). Testes rápidos não dão densidade nem servem de critério de cura."],
+   ["pega","Não caiu hoje. Pegadinha: traço falciforme PROTEGE (heterozigoto); P. knowlesi = Sudeste Asiático."]
+  ]},
+  {t:"Febre Amarela",b:[
+   ["s","Agente/ciclos"],["p","Vírus RNA, Flaviviridae. Américas: silvestre (Haemagogus/Sabethes, primatas morrem=sentinela) e urbano (Aedes aegypti)."],
+   ["s","Clínica"],["p","Viscerotrópico. Fase virêmica (sinal de Faget = febre + bradicardia) → 70–80% curam; fase de intoxicação: icterícia, hemorragia/CIVD, IRA, choque."],
+   ["s","Diagnóstico/tto/vacina"],["p","RT-PCR (≤5º dia), MAC-ELISA IgM. Tratamento = suporte. Vacina = vírus vivo atenuado, 1 dose = imunidade definitiva."],
+   ["pega","Não caiu hoje. Pegadinha: sem corticoide (suporte); primatas das Américas adoecem/morrem."]
+  ]},
+  {t:"Introdução a Doenças Fúngicas",b:[
+   ["s","Antifúngicos (cai)"],
+   ["n",["Azóis (fluconazol, itraconazol, voriconazol): inibem síntese de ergosterol → MEMBRANA. Fungistáticos na Candida.",
+         "Polienos (anfotericina B, nistatina): poro na MEMBRANA (ergosterol) → fungicida, amplo espectro, nefrotóxico.",
+         "Equinocandinas (caspofungina, micafungina, anidulafungina): inibem 1,3-β-glucano → PAREDE."]],
+   ["pega","Pegadinha: equinocandina = PAREDE; azol/polieno = MEMBRANA. Pitiríase versicolor = Malassezia (levedura)."]
+  ]},
+  {t:"Aspergilose",b:[
+   ["s","Agente/risco"],["p","Aspergillus fumigatus (90%), filamentoso, hifas hialinas, angioinvasor. Risco invasiva: neutropenia prolongada/transplante de medula."],
+   ["s","Formas"],["n",["Aspergiloma: bola fúngica em cavidade pré-existente; hemoptise; cirúrgico.",
+      "ABPA: sem imunossupressão; corticoide + itraconazol/voriconazol.",
+      "Invasiva: neutropênico; halo/crescente na TC; voriconazol."]],
+   ["s","Diagnóstico"],["p","Galactomanana (sangue/LBA) + TC tórax e seios da face; padrão-ouro = biópsia com hifas."],
+   ["pega","Prova: Q09/Q10, Q14 (fator de risco = neutropenia/transplante), Q23 dissertativa. Pegadinha: fluconazol NÃO cobre Aspergillus."]
+  ]},
+  {t:"Micoses Profundas",b:[
+   ["s","Paracoco"],["p","P. brasiliensis/lutzii; dimórfico (levedura 'roda de leme' no tecido); rural/agricultor, homens. Lesões orais ulceradas (pontilhado hemorrágico), RX asa de borboleta. Dx = ver o fungo a fresco; sorologia p/ acompanhar. Grave: anfo B + SMX-TMP → itraconazol."],
+   ["s","Histoplasmose"],["p","H. capsulatum; solo com fezes de aves/morcegos (cavernas). Aguda (90% assint., simula TB miliar), crônica cavitária, disseminada (AIDS). Dx = antígeno (histoplasmina = teste cutâneo)."],
+   ["s","Criptococose"],["p","C. neoformans (pombos, HIV) × C. gattii (imunocompetente). Neurocriptococose; LCR tinta da China/antígeno. Indução = anfotericina B + flucitosina → fluconazol."],
+   ["pega","Prova: Q11–13 (paracoco), Q15 (histo), Q22 dissertativa. Pegadinhas: histoplasmina é teste cutâneo; indução da cripto = ampho B + flucitosina."]
+  ]}
+ ]},
+ {prof:"Karin",topics:[
+  {t:"ATB 1 — Bases",b:[
+   ["s","Estrutura/Gram"],["p","Parede (alvo só da bactéria — beta-lactâmicos) × membrana. Gram+ peptidoglicano espesso + ácido teicoico (roxo); Gram− fino (rosa)."],
+   ["s","Sítios estéreis"],["p","Sangue/coração/urina/LCR estéreis. Sangue: S. aureus e Candida = infecção; Staph coagulase− = contaminação."],
+   ["s","PK/PD"],["p","Vancomicina = janela estreita, nefrotóxica → vancocinemia (vale)."]
+  ]},
+  {t:"ATB 2 — Beta-lactâmicos",b:[
+   ["p","CIM; bacteriostático × bactericida. Beta-lactâmicos (penicilinas, cefalosporinas, carbapenêmicos, monobactâmicos) inibem a PAREDE. Carbapenêmicos = Gram− resistente, hospitalar."],
+   ["pega","Prova: Q18 e Q19 (mecanismo de parede → beta-lactâmico + glicopeptídeo: ceftriaxona + vancomicina)."]
+  ]},
+  {t:"ATB 3 — Classes",b:[
+   ["s","Por alvo"],["n",["Parede: beta-lactâmicos, glicopeptídeos.","Proteína: macrolídeo, tetraciclina, aminoglicosídeo, clinda, linezolida.","DNA: quinolonas.","Membrana: daptomicina, polimixina.","Folato: SMX-TMP."]],
+   ["s","Coberturas"],["p","MRSA: vanco, dapto (não pulmão), linezolida, tigeciclina. Pseudomonas: cipro, amicacina, cefepime, pip-tazo, ceftazidima, polimixina. Enterococo: ampicilina (não aminoglicosídeo isolado)."]
+  ]},
+  {t:"Tuberculose",b:[
+   ["s","Micro/transmissão"],["p","M. tuberculosis: BAAR, ácido micólico, crescimento lento, intracelular. Gotícula de Flügge → núcleo de Wells."],
+   ["s","Fisiopatologia"],["p","Macrófago fagocita → escape/replicação → necrose caseosa → granuloma → latência/calcificação/reativação."],
+   ["s","Dx/tto"],["p","Baciloscopia/BAAR, cultura (sensibilidade), TRM-TB (confirma). PPD/IGRA = latente. Esquema RHZE 2m + RH 4m."],
+   ["pega","Prova: Q20 (assinale a INCORRETA), Q24 dissertativa (infecção até cavitação)."]
+  ]},
+  {t:"Meningite",b:[
+   ["s","LCR"],["p","Bacteriana: turvo, neutrófilos, glicose↓, proteína↑, pressão↑. Viral: claro, linfócitos, glicose normal. TB/fúngica: crônica, linfócitos, glicose↓."],
+   ["s","Empírico"],["n",["Neonato: cefotaxima + ampicilina.","&gt;2m/adulto: ceftriaxona + vancomicina.","Extremos/gestante/imuno: + ampicilina (Listeria).","Pós-trauma/neurocirurgia: cefepime ou meropenem + vancomicina."]],
+   ["pega","Prova: Q16 (LCR, assinale ERRADA), Q17 (ceftriaxona + vancomicina). Pegadinha: Listeria = bacilo Gram+, não meningococo."]
+  ]}
+ ]},
+ {prof:"Vanessa",topics:[
+  {t:"Esquistossomose",b:[
+   ["s","Ciclo"],["p","S. mansoni; intermediário caramujo Biomphalaria. Cercária penetra a pele → esquistossômulo → fígado → veias mesentéricas (ovos nas fezes)."],
+   ["s","Clínica"],["p","Dermatite cercariana; febre de Katayama 3–7 sem (imunocomplexos, eosinofilia). Crônica: fibrose de Symmers → hipertensão portal → varizes (compensada = função preservada)."],
+   ["s","Dx/tto"],["p","Kato-Katz; praziquantel."],
+   ["pega","Prova: Q03 (hepatoesplênica compensada/Symmers), Q04 (Katayama 3–7 sem, imunocomplexos)."]
+  ]},
+  {t:"Síndromes Respiratórias Virais",b:[
+   ["s","COVID-19"],["p","SARS-CoV-2, RNA, Betacoronavírus. SRAG = gripal + dispneia/SatO₂<95%/cianose. Fases: precoce (antiviral) → pulmonar → hiperinflamação (corticoide só em O₂/grave). Dx: RT-PCR (padrão-ouro); TC vidro fosco."],
+   ["s","Influenza"],["p","RNA; A (maior variação, H/N, pandemias) × B (humanos) × C × D (bovinos). Oseltamivir; vacina anual."],
+   ["s","VSR"],["p","RNA; lactente <6m/prematuro; coriza/sibilo/recusa alimentar; alerta: cianose, chiado, prostração."],
+   ["pega","Prova: Q01 (corticoide só grave), Q02 (VSR=RNA), Q05 (Influenza A>B), Q21 dissertativa (SRAG pelo MS). Pegadinha: EM não é comorbidade de gravidade da COVID."]
+  ]}
+ ]}
+];
+
+const CARDS=[
+ ["Hep B","1º marcador a positivar na hepatite B?","HBsAg (7–10 dias antes dos sintomas)"],
+ ["Hep B","HBsAg+ por mais de 6 meses significa?","Infecção crônica"],
+ ["Hep B","Perfil sorológico do VACINADO?","HBsAg−, anti-HBc−, anti-HBs+"],
+ ["Hep B","Perfil de CURA NATURAL?","HBsAg−, anti-HBc total+, anti-HBs+"],
+ ["Hep B","Marcador de replicação/infectividade?","HBeAg"],
+ ["Hep B","Anti-HBc IgM indica?","Infecção aguda"],
+ ["Hep B","Rastreio de hepatocarcinoma na hep B?","Ultrassom ± alfafetoproteína a cada 6 meses"],
+ ["Hep B","Por que não há cura esterilizante?","O cccDNA persiste no núcleo do hepatócito"],
+ ["Malária","Espécie mais grave / mais comum no BR?","falciparum (grave) / vivax (comum no Brasil)"],
+ ["Malária","Padrão-ouro do diagnóstico da malária?","Gota espessa (microscopia)"],
+ ["Malária","Causa das recaídas da malária?","Hipnozoítos (vivax/ovale) latentes no fígado"],
+ ["Malária","Traço falciforme e malária?","Protege contra forma grave (vantagem do heterozigoto)"],
+ ["Febre Amarela","Vetores do ciclo silvestre nas Américas?","Haemagogus e Sabethes (urbano: Aedes aegypti)"],
+ ["Febre Amarela","O que é o sinal de Faget?","Febre com bradicardia (dissociação pulso-temperatura)"],
+ ["Febre Amarela","Tratamento da febre amarela?","Suporte (sem antiviral, sem corticoide)"],
+ ["Febre Amarela","Tipo de vacina da febre amarela?","Vírus vivo atenuado — 1 dose = imunidade definitiva"],
+ ["Antifúngico","Equinocandina age em quê?","Parede celular (inibe 1,3-β-glucano)"],
+ ["Antifúngico","Azóis e polienos agem em quê?","Membrana (ergosterol)"],
+ ["Antifúngico","Mecanismo da anfotericina B?","Liga-se ao ergosterol → poro na membrana (fungicida)"],
+ ["Antifúngico","Agente da pitiríase versicolor?","Malassezia (levedura) — não é dermatófito"],
+ ["Aspergilose","Agente da aspergilose?","Aspergillus fumigatus (filamentoso, hifas hialinas, angioinvasor)"],
+ ["Aspergilose","Fator de risco da forma INVASIVA?","Neutropenia prolongada / transplante de medula"],
+ ["Aspergilose","O que é o aspergiloma?","Bola fúngica em cavidade pré-existente (tto cirúrgico)"],
+ ["Aspergilose","Tratamento da ABPA?","Corticoide + itraconazol/voriconazol"],
+ ["Aspergilose","Biomarcador da aspergilose?","Galactomanana (sangue + lavado broncoalveolar)"],
+ ["Aspergilose","Tto de 1ª linha da invasiva?","Voriconazol"],
+ ["Aspergilose","Fluconazol cobre Aspergillus?","NÃO"],
+ ["Micoses","Agente da paracoco?","Paracoccidioides brasiliensis e lutzii (dimórfico)"],
+ ["Micoses","Morfologia da paracoco no tecido?","Levedura em 'roda de leme' / orelhas de Mickey"],
+ ["Micoses","Imagem pulmonar típica da paracoco?","Asa de borboleta (poupa ápices)"],
+ ["Micoses","Padrão-ouro do dx da paracoco?","Visualização do fungo a fresco (raspado/biópsia/escarro)"],
+ ["Micoses","Tratamento da paracoco grave?","Anfotericina B + SMX-TMP → depois itraconazol"],
+ ["Micoses","Fonte ambiental do Histoplasma?","Solo com fezes de aves e morcegos (cavernas)"],
+ ["Micoses","Diagnóstico da histoplasmose?","Antígeno (histoplasmina = teste cutâneo, não dx)"],
+ ["Micoses","Indução da criptococose?","Anfotericina B + flucitosina (5-FC)"],
+ ["Micoses","C. gattii vs C. neoformans?","gattii = imunocompetente; neoformans = pombos, HIV"],
+ ["TB","Como se transmite a TB?","Gotícula de Flügge → núcleo de Wells (alcança o alvéolo)"],
+ ["TB","Características do M. tuberculosis?","BAAR, ácido micólico, crescimento lento, intracelular"],
+ ["TB","Esquema de tratamento da TB?","RHZE 2 meses + RH 4 meses"],
+ ["TB","Exame que confirma TB rapidamente?","TRM-TB (cultura dá sensibilidade)"],
+ ["TB","PPD/IGRA servem para quê?","TB latente"],
+ ["TB","Extrapulmonar mais grave / mais comum?","NeuroTB (grave) / pleural e ganglionar (comuns)"],
+ ["TB","Achado de imagem da TB?","Cavitação em ápices, árvore em brotamento"],
+ ["Meningite","LCR da meningite bacteriana?","Turvo, neutrófilos, glicose↓, proteína↑, pressão↑"],
+ ["Meningite","LCR da meningite viral?","Claro, linfócitos, glicose normal"],
+ ["Meningite","Empírico em >2m/adulto?","Ceftriaxona + vancomicina"],
+ ["Meningite","Quando acrescentar ampicilina?","Extremos de idade/gestante/imunossuprimido (Listeria)"],
+ ["Meningite","Listeria é o meningococo?","Não — Listeria é bacilo Gram+; meningococo = Neisseria meningitidis"],
+ ["ATB","Quais inibem a parede celular?","Beta-lactâmicos e glicopeptídeos"],
+ ["ATB","Quais cobrem MRSA?","Vancomicina, daptomicina, linezolida, tigeciclina"],
+ ["ATB","Daptomicina não usar em quê?","Pneumonia (surfactante inativa)"],
+ ["ATB","Quais cobrem Pseudomonas?","Cipro, amicacina, cefepime, pip-tazo, ceftazidima, polimixina"],
+ ["ATB","Efeitos adversos da quinolona?","Tendão, prolongamento do QT, teratogenia"],
+ ["Esquisto","Agente e hospedeiro intermediário?","S. mansoni / caramujo Biomphalaria"],
+ ["Esquisto","Forma que infecta o homem?","Cercária (penetra ativamente a pele)"],
+ ["Esquisto","Febre de Katayama: quando e por quê?","3–7 semanas; reação por imunocomplexos (eosinofilia)"],
+ ["Esquisto","Mecanismo da forma hepatoesplênica?","Fibrose de Symmers → hipertensão portal → varizes"],
+ ["Esquisto","Diagnóstico e tratamento?","Kato-Katz / praziquantel"],
+ ["SRV","Agente e tipo do vírus da COVID?","SARS-CoV-2 — RNA, Betacoronavírus"],
+ ["SRV","Definição de SRAG (MS)?","Síndrome gripal + dispneia/SatO₂<95%/desconforto/cianose"],
+ ["SRV","Quando usar corticoide na COVID?","Só em grave / uso de O₂ (não na leve)"],
+ ["SRV","Padrão-ouro do dx da COVID?","RT-PCR (naso + orofaringe)"],
+ ["SRV","Influenza A vs B?","A: maior variação (H/N, drift/shift), pandemias"],
+ ["SRV","Tratamento da influenza?","Oseltamivir (até 48h)"],
+ ["SRV","Tipo de vírus e risco do VSR?","RNA; lactente <6m/prematuro/cardiopata"],
+ ["SRV","Sinais de alerta do VSR?","Cianose, chiado, prostração"]
+];
+
+// 50 questões geradas (estilo prova). c = índice correto (0-3)
+const QUIZ=[
+ ["SRV","Lactente de 2 meses, prematuro, com coriza hialina, sibilos e recusa alimentar. Sobre o agente mais provável:",["VSR, vírus DNA, reservatório em aves","VSR, vírus RNA, transmissão por contato/gotícula, prematuro é grupo de risco","Influenza A, transmissão por aerossol exclusivo","Cianose e chiado são esperados e não são sinais de alerta"],1,"VSR é RNA, reservatório humano, gotícula/contato; lactente prematuro = risco. Cianose/chiado SÃO sinais de alerta."],
+ ["SRV","Paciente com COVID-19 grave, SatO₂ 90% em ar ambiente, vidro fosco bilateral. Conduta farmacológica:",["Dexametasona em todos os estágios, inclusive leve","Corticoide sistêmico (recomendado em grave/uso de O₂)","Tocilizumabe como 1ª linha independentemente da inflamação","Aguardar ventilação mecânica antes de qualquer terapia"],1,"Corticoide só na fase hiperinflamatória/grave com O₂ — nunca na forma leve."],
+ ["SRV","Sobre a influenza sazonal:",["Tipo B tem maior variação antigênica que o A","Tipo A é o mais sujeito a variações (H e N), infecta várias espécies e causa pandemias","Tipo C é o principal das pandemias","Tipo D infecta primariamente humanos"],1,"Influenza A = maior variação (drift/shift), zoonótico, pandemias. B = humanos, menor variação."],
+ ["SRV","Qual define SRAG pelo Ministério da Saúde?",["Apenas febre e tosse","Síndrome gripal + dispneia/SatO₂<95%/desconforto/cianose","Qualquer coriza com anosmia","Tosse isolada por mais de 7 dias"],1,"SRAG = síndrome gripal somada a sinais de gravidade respiratória."],
+ ["SRV","Exame padrão-ouro para diagnóstico de COVID-19:",["Teste de antígeno","RT-PCR (naso+orofaringe, 2º–5º dia)","Sorologia IgM","Tomografia de tórax"],1,"RT-PCR é o padrão-ouro; antígeno pode dar falso-negativo com baixa replicação."],
+ ["SRV","Comorbidade NÃO associada a maior gravidade da COVID-19:",["Obesidade","Diabetes","Esclerose múltipla","Doença renal crônica"],2,"Os fatores são idade, obesidade, DM, HAS, doença cardio/pulmonar/renal — EM não entra."],
+ ["SRV","Janela ideal para iniciar oseltamivir na influenza:",["Até 48 horas do início dos sintomas","Só após 7 dias","Apenas com PCR positivo","Não há janela"],0,"Oseltamivir é mais eficaz nas primeiras 48h."],
+ ["SRV","Sinais de ALERTA na infecção por VSR em lactente:",["Coriza e tosse","Cianose, chiado e prostração","Febre baixa isolada","Espirros"],1,"Cianose, chiado e prostração indicam gravidade; coriza/tosse são do quadro habitual."],
+ ["Hep B","HBsAg+, anti-HBc total+, anti-HBc IgM−, anti-HBs−. Interpretação:",["Infecção aguda","Infecção crônica (>6 meses)","Vacinação","Cura natural"],1,"HBsAg+ persistente com IgM negativo = crônica."],
+ ["Hep B","HBsAg−, anti-HBc−, anti-HBs+:",["Crônica ativa","Vacinação prévia","Cura natural","Infecção aguda"],1,"Só anti-HBs+ (sem anti-HBc) = vacinado."],
+ ["Hep B","HBsAg−, anti-HBc total+, anti-HBs+:",["Vacinado","Contato prévio com imunidade (cura natural)","Crônica","Suscetível"],1,"Anti-HBc+ indica contato com o vírus; com anti-HBs+ = cura."],
+ ["Hep B","Rastreamento de hepatocarcinoma na hepatite B crônica:",["Elastografia mensal","Biópsia a cada 6 meses","Ultrassom ± alfafetoproteína a cada 6 meses","Tomografia anual"],2,"Vigilância de CHC = US ± AFP semestral; elastografia avalia fibrose, não rastreia CHC."],
+ ["Hep B","Sobre o agente da hepatite B:",["Vírus RNA da Flaviviridae","Vírus DNA da Hepadnaviridae, com cccDNA que impede cura esterilizante","Bactéria intracelular","Retrovírus sem DNA"],1,"DNA, Hepadnaviridae; cccDNA explica a ausência de cura esterilizante."],
+ ["Hep B","Marcador que indica replicação viral ativa:",["Anti-HBs","HBeAg","Anti-HBe","Anti-HBc IgG"],1,"HBeAg = replicação/infectividade."],
+ ["Aspergilose","Principal fator de risco para aspergilose pulmonar INVASIVA:",["Uso de corticoide inalatório","Neutropenia prolongada / transplante de medula","Tabagismo","Diabetes isolado"],1,"A invasiva ocorre em neutropênicos/transplantados de medula."],
+ ["Aspergilose","Tratamento da aspergilose broncopulmonar alérgica (ABPA):",["Fluconazol isolado","Corticoide + itraconazol/voriconazol","Apenas cirurgia","Anfotericina B + flucitosina"],1,"ABPA = corticoide ± azol com ação anti-Aspergillus; fluconazol não cobre Aspergillus."],
+ ["Aspergilose","Massa de hifas dentro de cavidade pulmonar pré-existente, com hemoptise:",["Aspergilose invasiva","Aspergiloma (bola fúngica) — tto preferencialmente cirúrgico","ABPA","Criptococoma"],1,"Aspergiloma se forma em cavidade prévia (ex.: TB)."],
+ ["Aspergilose","Conduta no neutropênico febril com suspeita de aspergilose:",["Apenas hemocultura","TC de tórax e seios da face + galactomanana","Somente PPD","Sorologia para HIV apenas"],1,"Investigar com TC (tórax e seios) e galactomanana, sem deixar de pensar em aspergilose."],
+ ["Aspergilose","Tratamento de 1ª linha da aspergilose invasiva:",["Fluconazol","Voriconazol","Nistatina","Caspofungina isolada de rotina"],1,"Voriconazol é o triazol de escolha."],
+ ["Aspergilose","Aspergillus à microscopia:",["Levedura encapsulada","Hifas hialinas septadas em ângulo agudo, angioinvasor","Pseudo-hifas","Bacilo álcool-ácido resistente"],1,"Hifas hialinas septadas, angioinvasoras (halo/crescente na TC)."],
+ ["Micoses","Agricultor com lesões orais ulceradas (pontilhado hemorrágico) e RX em asa de borboleta:",["Histoplasmose","Paracoccidioidomicose — dx padrão-ouro = visualizar o fungo","Aspergiloma","Criptococose"],1,"Quadro clássico de paracoco; diagnóstico por visualização direta do fungo."],
+ ["Micoses","Forma do Paracoccidioides no tecido:",["Hifa hialina","Levedura em 'roda de leme'","Bacilo","Pseudo-hifa de Candida"],1,"No tecido (37°C) = levedura com brotamento múltiplo em roda de leme."],
+ ["Micoses","Tratamento da paracoco GRAVE:",["Fluconazol oral","Anfotericina B + SMX-TMP, depois itraconazol","Apenas cirurgia","Praziquantel"],1,"Grave = internação com anfotericina B + SMX-TMP, transição para itraconazol."],
+ ["Micoses","Principal fonte ambiental do Histoplasma capsulatum:",["Água do mar","Solo com fezes de aves e morcegos (cavernas)","Regiões desérticas e áridas","Transmissão sexual"],1,"Geofílico, ligado a fezes de aves/morcegos; desértico/árido remete a Coccidioides."],
+ ["Micoses","Diagnóstico da histoplasmose:",["Histoplasmina (teste cutâneo) confirma doença ativa","Antígeno (sangue/urina) e sorologia","Gota espessa","PPD"],1,"Histoplasmina é teste cutâneo (epidemiológico); o dx usa antígeno/sorologia."],
+ ["Micoses","Terapia de INDUÇÃO da neurocriptococose:",["Fluconazol isolado","Anfotericina B + flucitosina (5-FC)","Itraconazol","Voriconazol"],1,"Indução = anfotericina B + flucitosina; fluconazol entra na consolidação/manutenção."],
+ ["Micoses","Sobre os Cryptococcus:",["neoformans só imunocompetentes","gattii pode acometer imunocompetentes; neoformans liga-se a pombos e HIV","ambos exclusivos de HIV","não causam meningite"],1,"gattii = imunocompetente (vegetal); neoformans = pombos/imunossuprimido."],
+ ["Micoses","Achado histopatológico comum das micoses profundas:",["Necrose caseosa exclusiva","Formação de granulomas","Ausência de inflamação","Cristais de Charcot-Leyden"],1,"Granulomas são o achado comum; sorologia ajuda no acompanhamento."],
+ ["Fúngicas","A equinocandina atua em qual estrutura fúngica?",["Membrana (ergosterol)","Parede celular (1,3-β-glucano)","DNA","Ribossomo"],1,"Equinocandina inibe a síntese de β-glucano da PAREDE."],
+ ["Fúngicas","Qual NÃO é antifúngico?",["Fluconazol","Anidulafungina","Voriconazol","Ciprofloxacino"],3,"Ciprofloxacino é antibiótico (quinolona)."],
+ ["TB","Mecanismo de transmissão da tuberculose:",["Fecal-oral","Gotícula de Flügge → núcleo de Wells (inalação)","Vetorial","Contato sexual"],1,"Aerossóis: gotícula de Flügge resseca em núcleo de Wells e chega ao alvéolo."],
+ ["TB","Esquema básico de tratamento da TB no adulto:",["RHZE 2 meses + RH 4 meses","RH 6 meses apenas","RHZE 6 meses","Apenas isoniazida 9 meses"],0,"RHZE por 2 meses (intensiva) + RH por 4 meses (manutenção)."],
+ ["TB","Exame que confirma TB e identifica resistência (rápido):",["PPD","TRM-TB / cultura","Hemograma","Raio-X isolado"],1,"TRM-TB confirma; cultura avalia sensibilidade; PPD = latente."],
+ ["TB","Característica do M. tuberculosis:",["Gram-negativo fermentador","BAAR, parede com ácido micólico, crescimento lento, intracelular","Anaeróbio estrito","Espiroqueta"],1,"BAAR, ácido micólico, crescimento lento, sobrevive em macrófagos."],
+ ["TB","Achado radiológico clássico da TB pulmonar:",["Derrame pleural maciço isolado","Cavitação em ápices e árvore em brotamento","Vidro fosco difuso","Massa única em base"],1,"Cavitação apical e micronódulos em árvore em brotamento."],
+ ["TB","Forma extrapulmonar mais grave da TB:",["Pleural","Ganglionar","NeuroTB","Cutânea"],2,"NeuroTB é a mais grave; pleural e ganglionar são as mais comuns."],
+ ["Meningite","LCR da meningite bacteriana:",["Claro, linfócitos, glicose normal","Turvo, neutrófilos, glicose↓, proteína↑","Hemorrágico sempre","Normal"],1,"Bacteriana = turvo, neutrofílico, glicose consumida, proteína alta."],
+ ["Meningite","Esquema empírico para adulto com meningite bacteriana:",["Aciclovir","Ceftriaxona + vancomicina","Apenas ampicilina","Fluconazol"],1,"Ceftriaxona + vancomicina (cobre pneumococo resistente)."],
+ ["Meningite","Quando associar ampicilina ao esquema empírico:",["Jovem hígido","Extremos de idade/gestante/imunossuprimido (cobrir Listeria)","Pós-trauma","Nunca"],1,"Ampicilina para Listeria nos grupos de risco."],
+ ["Meningite","Listeria monocytogenes é:",["O meningococo","Bacilo Gram-positivo","Diplococo Gram-negativo","Um fungo"],1,"Listeria = bacilo Gram+; meningococo = Neisseria meningitidis (Gram−)."],
+ ["ATB","Classes que inibem a PAREDE celular:",["Macrolídeo e quinolona","Beta-lactâmicos e glicopeptídeos","Aminoglicosídeo e sulfa","Polimixina e daptomicina"],1,"Parede = beta-lactâmicos + glicopeptídeos (ex.: ceftriaxona + vancomicina)."],
+ ["ATB","Antibiótico que NÃO deve ser usado em pneumonia:",["Ceftriaxona","Daptomicina (inativada pelo surfactante)","Levofloxacino","Linezolida"],1,"Daptomicina é inativada pelo surfactante pulmonar."],
+ ["ATB","Cobrem Pseudomonas, EXCETO:",["Cefepime","Piperacilina-tazobactam","Ceftriaxona","Ciprofloxacino"],2,"Ceftriaxona não cobre Pseudomonas; cefepime/pip-tazo/cipro sim."],
+ ["ATB","Sobre o Enterococcus:",["Vancomicina nunca cobre","Não usar aminoglicosídeo isoladamente","Cefalexina é 1ª escolha","É sempre Gram-negativo"],1,"Enterococo: ampicilina/vancomicina; aminoglicosídeo só em associação."],
+ ["Esquisto","Febre de Katayama: tempo e mecanismo:",["Na penetração da cercária, por contato cutâneo","3–7 semanas após exposição, por imunocomplexos (eosinofilia)","Anos depois, por fibrose","Não existe"],1,"Katayama = 3–7 semanas, reação por imunocomplexos com eosinofilia."],
+ ["Esquisto","Mecanismo da forma hepatoesplênica da esquistossomose:",["Necrose hepatocelular maciça pelo verme adulto","Fibrose periportal (de Symmers) → hipertensão portal → varizes","Cirrose alcoólica","Obstrução biliar"],1,"Granuloma periportal → fibrose de Symmers → hipertensão portal (compensada = função preservada)."],
+ ["Esquisto","Hospedeiro intermediário do S. mansoni no Brasil:",["Aedes aegypti","Caramujo Biomphalaria","Anopheles","Triatomíneo"],1,"Biomphalaria (caramujo de água doce parada)."],
+ ["Esquisto","Diagnóstico e tratamento da esquistossomose:",["Gota espessa / cloroquina","Kato-Katz / praziquantel","Sorologia / anfotericina","PCR / oseltamivir"],1,"Kato-Katz nas fezes; tratamento com praziquantel."],
+ ["Micoses","Sorologia na paracoccidioidomicose serve principalmente para:",["Fechar o diagnóstico sozinha","Acompanhar a resposta ao tratamento (titulação cai)","Rastrear contatos","Nada"],1,"Sorologia (titulação) é útil no acompanhamento; o dx é a visualização do fungo."]
+];
+
+// Prova real reconstruída (MCQ com gabarito provável)
+const EXAM=[
+ ["Q01","SRV","COVID-19 grave (SatO₂ 92%, vidro fosco): conduta farmacológica.",["Dexametasona em todos os estágios","Corticoide sistêmico (grave/uso de O₂)","Tocilizumabe 1ª linha","Aguardar ventilação mecânica"],1,"Corticoide só em grave/O₂."],
+ ["Q02","SRV","Lactente 3 meses prematuro (VSR): assinale a correta.",["VSR é DNA, reservatório em aves","VSR é RNA, contato, prematuro = risco grave","Acomete só <2 anos, sem risco em adulto","Cianose e chiado não são alerta"],1,"VSR = RNA; prematuro é grupo de risco; cianose/chiado são alerta."],
+ ["Q03","Esquisto","Homem do NE, S. mansoni, fígado nodular, varizes sem sangramento: forma e mecanismo.",["Hepatoesplênica descompensada por necrose hepatocelular","Hepatoesplênica compensada — fibrose de Symmers / hipertensão portal","Varizes sem ascite é exclusiva da descompensada","Fibrose compromete função sintética com icterícia obrigatória"],1,"Forma hepatoesplênica compensada: fibrose periportal, função preservada."],
+ ["Q04","Esquisto","Surto de esquistossomose aguda em turistas (Katayama).",["Ocorre na penetração das cercárias, hipersensibilidade só cutânea","Eosinofilia por deposição de ovos na 1ª semana","Katayama 3–7 semanas, oviposição e imunocomplexos","Sem relação com eosinofilia"],2,"Katayama = 3–7 semanas, imunocomplexos, eosinofilia."],
+ ["Q05","SRV","Influenza sazonal: assinale a correta.",["Tipo B com maior variação que A","Tipo A mais sujeito a variações (H/N), várias espécies, gotículas","Tipo C exclusivo humano e pandêmico","Tipo D principal em humanos"],1,"Influenza A = maior variação antigênica, zoonótico."],
+ ["Q06","Hep B","Hep B crônica 20 anos com icterícia: marcadores mais prováveis.",["HBsAg−/anti-HBc−/anti-HBs+","HBsAg+/anti-HBc+/anti-HBs+","HBsAg+/anti-HBc+/anti-HBs−/HBeAg+/anti-HBe−","HBsAg+/anti-HBc−/anti-HBs−"],2,"Crônica em atividade: HBsAg+, anti-HBc+, HBeAg+, anti-HBs−."],
+ ["Q07","Hep B","Sorologias: hep A IgG+, HBsAg+/anti-HBc total+/HBeAg+/anti-HBs−, hep C+. Hipótese:",["Hepatite C aguda","Contato prévio com hep B e imunidade","Hep B crônica em atividade + coinfecção por hep C","Hep B crônica portador inativo"],2,"HBsAg+/HBeAg+ (ativa) com hep C+ = coinfecção."],
+ ["Q08","Hep B","Na hep B crônica, além de cirrose e insuficiência, preocupar também com:",["Fenômenos trombóticos","Anemia","Carcinoma hepático","Adenocarcinoma gástrico"],2,"Hepatocarcinoma é a complicação a rastrear."],
+ ["Q10","Aspergilose","Sobre a aspergilose, assinale a correta.",["Indicação de tto sistêmico é a bola fúngica","A forma invasiva e a disseminada são as mais graves","Não se faz biópsia na suspeita","Limita-se ao trato respiratório superior e inferior"],1,"Invasiva e disseminada = formas mais graves/letais."],
+ ["Q11","Micoses","Agricultor, BAAR no escarro: preenche as lacunas (HD mais comum – resultado – HD após RX).",["Tuberculose – positivo – paracoccidioidomicose","Paracoccidioidomicose – positivo – tuberculose","Tuberculose – negativo – paracoccidioidomicose","Paracoccidioidomicose – negativo – tuberculose"],2,"HD inicial TB; BAAR negativo → vira paracoco."],
+ ["Q12","Micoses","Diagnóstico definitivo (padrão-ouro) e exame que não diagnostica mas acompanha:",["Biópsia – radiografia","PCR – sorologia","Sorologia – tomografia","Biópsia – sorologia"],3,"Padrão-ouro = biópsia (ver o fungo); sorologia para acompanhamento."],
+ ["Q13","Micoses","Tratamento da paracoco (graves – preferencial; leves/moderadas – opções):",["Parenterais – anfotericina B; orais – SMX-TMP/itraconazol","Orais – itraconazol; orais – SMX-TMP/itraconazol","Orais – anfotericina B; parenterais – ceftriaxona","Parenterais – anfotericina B; orais – ceftriaxona"],0,"Grave = parenteral/anfotericina B; leve/moderada = oral (itraconazol/SMX-TMP)."],
+ ["Q14","Aspergilose","Principal fator de risco da aspergilose pulmonar invasiva:",["Corticoide inalatório","Neutropenia <1 semana","Pacientes em fase de transplante de medula óssea","Diabéticos"],2,"Transplante de medula/neutropenia prolongada."],
+ ["Q15","Micoses","Sobre a histoplasmose, assinale a correta.",["Forma pulmonar aguda é sempre sintomática e sempre tratada","Oportunista exclusivamente em imunocompetentes","Infecção por esporos em solo com fezes de aves/morcegos","Disseminada rara em órgãos além do pulmão"],2,"Fonte = solo com fezes de aves/morcegos; pode ser assintomática e disseminar."],
+ ["Q16","Meningite","Sobre as meningites, assinale a ERRADA.",["TB: crônica, LCR xantocrômico, linfócitos, pressão↑","Bacteriana: aguda, neutrofílica, glicose↓","Fúngica: crônica, acomete SEMPRE imunossuprimidos, pressão↑↑","Viral: mais comum, benigna, linfócitos, celularidade baixa"],2,"'Sempre imunossuprimidos' é falso (C. gattii acomete imunocompetente)."],
+ ["Q17","Meningite","Adulto 35a, cefaleia/febre/rigidez de nuca/sonolência: hipótese e esquema empírico.",["Viral, aciclovir","Bacteriana, cefepime ou meropenem + vancomicina","Fúngica, anfotericina B","Bacteriana, ceftriaxona + vancomicina"],3,"Bacteriana comunitária: ceftriaxona + vancomicina."],
+ ["Q19","ATB","Inibem a síntese da parede celular — exemplos:",["Beta-lactâmicos e aminoglicosídeos (meropenem e amicacina)","Aminoglicosídeos e quinolonas","Beta-lactâmicos e glicopeptídeos (ceftriaxona e vancomicina)","Glicopeptídeos e quinolonas"],2,"Parede = beta-lactâmico + glicopeptídeo."],
+ ["Q20","TB","Sobre o diagnóstico de TB, assinale a INCORRETA.",["É clínico-radiológico e pode iniciar tratamento empírico","PBK é teste de lâmina barato, depende da amostra","TRM é automatizado e sensível, exceto em sangue","A cultura é o ÚNICO exame que confirma o diagnóstico microbiológico"],3,"O TRM-TB também confirma; cultura não é a única."]
+];
+
+const DISS=[
+ ["Q21 (SRV/COVID)","Classifique a síndrome (gripal/SRAG) segundo o Ministério da Saúde, justificando CADA critério, e explique a fisiopatologia da progressão (tempestade de citocinas) ligada a um fator de risco."],
+ ["Q22 (Paracoco)","Explique transmissão, formas clínicas e fatores de risco da paracoccidioidomicose, e comente os métodos de confirmação diagnóstica."],
+ ["Q23 (Aspergilose)","Explique a relação entre neutropenia febril e aspergilose pulmonar invasiva; descreva sinais clínicos, achados de imagem (halo), métodos diagnósticos (galactomanana) e a importância do tratamento precoce (voriconazol)."],
+ ["Q24 (Tuberculose)","Resuma o processo de infecção pela micobactéria, da inalação até a formação da consolidação cavitada (Flügge→Wells→macrófago→granuloma→necrose caseosa→cavitação)."]
+];
+
+/* =================== RENDER =================== */
+const LS="dipcram_";
+const save=(k,v)=>{try{localStorage.setItem(LS+k,v)}catch(e){}};
+const load=k=>{try{return localStorage.getItem(LS+k)}catch(e){return null}};
+const slug=t=>t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").slice(0,40);
+function flash(id){const e=document.getElementById(id);if(!e)return;e.style.opacity=1;clearTimeout(e._t);e._t=setTimeout(()=>e.style.opacity=0,800);}
+
+// ---- Resumo ----
+let rh="";
+SUMMARY.forEach(P=>{
+  rh+=`<div class="prof">${P.prof}</div>`;
+  P.topics.forEach(tp=>{
+    let body="";
+    tp.b.forEach(bl=>{
+      if(bl[0]==="s") body+=`<div class="sub">${bl[1]}</div>`;
+      else if(bl[0]==="p") body+=`<p>${bl[1]}</p>`;
+      else if(bl[0]==="n"){ body+="<ol>"; bl[1].forEach(it=>body+=`<li>${it}</li>`); body+="</ol>"; }
+      else if(bl[0]==="pega") body+=`<div class="pega"><b>⚑ </b>${bl[1]}</div>`;
+    });
+    rh+=`<details class="topic"><summary>${tp.t}</summary><div class="tbody">${body}</div></details>`;
+  });
+});
+document.getElementById("resumo").innerHTML=rh;
+
+// ---- Tabs ----
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on"); document.getElementById(t.dataset.p).classList.add("on");
+  save("tab",t.dataset.p); window.scrollTo(0,0);
+}));
+const lastTab=load("tab"); if(lastTab){const tt=document.querySelector(`.tab[data-p="${lastTab}"]`); if(tt)tt.click();}
+
+// ---- Cram ----
+let deck=[...CARDS.keys()], pos=0, onlyWrong=false;
+const card=document.getElementById("card");
+function cardState(i){return load("c"+i+"_"+slug(CARDS[i][1]))||"new";}
+function setCard(i,v){save("c"+i+"_"+slug(CARDS[i][1]),v);}
+function buildDeck(){
+  deck=[...CARDS.keys()].filter(i=>!onlyWrong||cardState(i)!=="good");
+  if(deck.length===0){deck=[...CARDS.keys()];onlyWrong=false;document.getElementById("fconly").classList.remove("p");}
+  pos=0; showCard();
+}
+function showCard(){
+  card.classList.remove("flip");
+  const i=deck[pos%deck.length];
+  document.getElementById("fctag").textContent=CARDS[i][0];
+  document.getElementById("fcfront").textContent=CARDS[i][1];
+  document.getElementById("fcback").textContent=CARDS[i][2];
+  document.getElementById("fcpos").textContent=`carta ${pos%deck.length+1} de ${deck.length}`;
+  recalcFC();
+}
+function recalcFC(){
+  let good=0;CARDS.forEach((c,i)=>{if(cardState(i)==="good")good++;});
+  const pct=Math.round(good/CARDS.length*100);
+  document.getElementById("fcfill").style.width=pct+"%";
+  document.getElementById("fcstat").textContent=`${good}/${CARDS.length} dominados (${pct}%)`;
+}
+card.addEventListener("click",()=>card.classList.toggle("flip"));
+function mark(v){const i=deck[pos%deck.length];setCard(i,v);flash("fcsave");pos++;if(onlyWrong)buildDeck();else showCard();recalcFC();}
+document.getElementById("bErrei").addEventListener("click",()=>mark("again"));
+document.getElementById("bAcertei").addEventListener("click",()=>mark("good"));
+document.getElementById("fconly").addEventListener("click",function(){onlyWrong=!onlyWrong;this.classList.toggle("p",onlyWrong);buildDeck();});
+document.getElementById("fcshuffle").addEventListener("click",()=>{for(let i=deck.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[deck[i],deck[j]]=[deck[j],deck[i]];}pos=0;showCard();});
+document.getElementById("fcreset").addEventListener("click",()=>{if(!confirm("Zerar o progresso dos flashcards?"))return;CARDS.forEach((c,i)=>localStorage.removeItem(LS+"c"+i+"_"+slug(c[1])));onlyWrong=false;document.getElementById("fconly").classList.remove("p");buildDeck();});
+buildDeck();
+
+// ---- Quiz ----
+const topics=[...new Set(QUIZ.map(q=>q[0]))];
+let activeTopic="Todos";
+const qfilter=document.getElementById("qfilter");
+qfilter.innerHTML=["Todos",...topics].map(t=>`<span class="tf${t==="Todos"?" on":""}" data-t="${t}">${t}</span>`).join("");
+qfilter.querySelectorAll(".tf").forEach(b=>b.addEventListener("click",()=>{qfilter.querySelectorAll(".tf").forEach(x=>x.classList.remove("on"));b.classList.add("on");activeTopic=b.dataset.t;renderQuiz();}));
+
+function qid(prefix,i){return prefix+"_"+i;}
+function renderList(arr,prefix,root){
+  let html="";
+  arr.forEach(([idx,q])=>{
+    const stored=load(qid(prefix,idx));
+    const tag=prefix==="ex"?q[0]:`Q${idx+1}`;
+    const stem=prefix==="ex"?q[2]:q[1];
+    const opts=prefix==="ex"?q[3]:q[2];
+    const corr=prefix==="ex"?q[4]:q[3];
+    const exp=prefix==="ex"?q[5]:q[4];
+    const topic=prefix==="ex"?q[1]:q[0];
+    let o="";
+    opts.forEach((op,k)=>{
+      let cls="opt";
+      if(stored!==null){cls+=" disabled";if(k===corr)cls+=" correct";else if(k==+stored)cls+=" wrong";}
+      o+=`<div class="${cls}" data-p="${prefix}" data-i="${idx}" data-k="${k}" data-c="${corr}">${String.fromCharCode(65+k)}) ${op}</div>`;
+    });
+    html+=`<div class="q"><div class="qn">${tag} · ${topic}</div><div class="stem">${stem}</div>${o}<div class="exp${stored!==null?" show":""}">✓ Correta: ${String.fromCharCode(65+corr)}. ${exp}</div></div>`;
+  });
+  root.innerHTML=html;
+}
+function renderQuiz(){
+  const arr=QUIZ.map((q,i)=>[i,q]).filter(([i,q])=>activeTopic==="Todos"||q[0]===activeTopic);
+  renderList(arr,"q",document.getElementById("quizroot"));
+  recalcScore();
+}
+function renderExam(){
+  renderList(EXAM.map((q,i)=>[i,q]),"ex",document.getElementById("examroot"));
+  document.getElementById("dissroot").innerHTML="<h2 class='sec' style='margin-top:22px'>Dissertativas — treine a escrita</h2>"+
+    DISS.map(d=>`<div class="diss"><b>${d[0]}</b><br>${d[1]}</div>`).join("");
+}
+document.addEventListener("click",e=>{
+  const o=e.target.closest(".opt"); if(!o||o.classList.contains("disabled"))return;
+  save(qid(o.dataset.p,o.dataset.i),o.dataset.k); flash("qsave");
+  if(o.dataset.p==="q")renderQuiz(); else renderExam();
+});
+function recalcScore(){
+  let ans=0,ok=0;
+  QUIZ.forEach((q,i)=>{const v=load(qid("q",i));if(v!==null){ans++;if(+v===q[3])ok++;}});
+  document.getElementById("qAns").textContent=ans;
+  document.getElementById("qTot").textContent=QUIZ.length;
+  document.getElementById("qOk").textContent=ok;
+  document.getElementById("qPct").textContent=ans?Math.round(ok/ans*100)+"%":"—";
+}
+document.getElementById("qreset").addEventListener("click",()=>{
+  if(!confirm("Zerar suas respostas das questões (geradas e prova)?"))return;
+  QUIZ.forEach((q,i)=>localStorage.removeItem(LS+qid("q",i)));
+  EXAM.forEach((q,i)=>localStorage.removeItem(LS+qid("ex",i)));
+  renderQuiz();renderExam();
+});
+renderQuiz(); renderExam();
+</script>
+</body>
+</html>

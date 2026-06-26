@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microbiologia P1 - Guia Completo de Estudo</title>
+<style>
+/* ========== CSS RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1a1a2e;--card:#16213e;--accent:#e94560;--text:#eee;--link:#0f9b8e;
+  --gold:#d4a853;--teal:#2ec4b6;--muted:#8892b0;--border:#2a2a4a;
+  --sidebar-w:280px;--content-max:720px;
+  --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --font-mono:"SF Mono","Fira Code",Consolas,monospace;
+}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{
+  font-family:var(--font-body);font-size:16px;line-height:1.7;
+  background:var(--bg);color:var(--text);transition:background .3s,color .3s;
+}
+body.light{--bg:#f5f5f5;--card:#fff;--text:#1a1a2e;--border:#ddd;--muted:#555;--sidebar-bg:#e8e8e8}
+body.light{background:var(--bg);color:var(--text)}
+a{color:var(--link);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent);text-decoration:underline}
+img{max-width:100%;height:auto;border-radius:6px}
+
+/* ========== SIDEBAR ========== */
+.sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+  background:#0f0f23;border-right:1px solid var(--border);
+  overflow-y:auto;padding:20px 0;z-index:100;transition:transform .3s;
+}
+body.light .sidebar{background:#e0e0e0;border-right-color:#ccc}
+.sidebar-header{padding:10px 20px 16px;border-bottom:1px solid var(--border)}
+.sidebar-header h2{font-size:15px;color:var(--accent);letter-spacing:.5px;text-transform:uppercase}
+.sidebar nav{padding:8px 0}
+.sidebar nav a{
+  display:block;padding:6px 20px;font-size:13px;color:var(--muted);
+  border-left:3px solid transparent;transition:all .2s;
+}
+.sidebar nav a:hover,.sidebar nav a.active{
+  color:var(--text);border-left-color:var(--accent);background:rgba(233,69,96,.06);text-decoration:none;
+}
+.sidebar nav a.nav-h2{font-weight:600;padding-left:20px;margin-top:6px}
+.sidebar nav a.nav-h3{padding-left:34px;font-size:12px}
+.hamburger{
+  display:none;position:fixed;top:12px;left:12px;z-index:200;
+  background:var(--accent);border:none;border-radius:6px;padding:8px 12px;
+  cursor:pointer;color:#fff;font-size:20px;line-height:1;
+}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90}
+.overlay.show{display:block}
+
+/* ========== MAIN CONTENT ========== */
+.main{margin-left:var(--sidebar-w);padding:40px 32px 120px}
+.content{max-width:var(--content-max);margin:0 auto}
+
+/* ========== TYPOGRAPHY ========== */
+h1{font-size:2rem;color:var(--accent);margin-bottom:8px;line-height:1.3}
+h2{font-size:1.55rem;color:var(--accent);margin:48px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+h3{font-size:1.2rem;color:var(--gold);margin:32px 0 12px}
+h4{font-size:1.05rem;color:var(--teal);margin:20px 0 8px}
+p{margin-bottom:14px}
+strong{color:var(--gold)}
+em{color:var(--teal);font-style:italic}
+ul,ol{margin:0 0 16px 24px}
+li{margin-bottom:6px}
+li::marker{color:var(--accent)}
+code{font-family:var(--font-mono);background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:.9em}
+body.light code{background:rgba(0,0,0,.06)}
+
+/* ========== CARDS & BOXES ========== */
+.card{background:var(--card);border-radius:10px;padding:24px 28px;margin-bottom:24px;border:1px solid var(--border)}
+body.light .card{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.professor-box{
+  border-left:4px solid var(--gold);background:rgba(212,168,83,.08);
+  padding:14px 20px;margin:18px 0;border-radius:0 8px 8px 0;
+}
+body.light .professor-box{background:rgba(212,168,83,.12)}
+.professor-box::before{content:"🎯 ";font-size:1.1em}
+.clinical-box{
+  border-left:4px solid var(--teal);background:rgba(46,196,182,.07);
+  padding:14px 20px;margin:18px 0;border-radius:0 8px 8px 0;
+}
+body.light .clinical-box{background:rgba(46,196,182,.1)}
+.clinical-box::before{content:"🏥 ";font-size:1.1em}
+.summary-box{
+  background:rgba(233,69,96,.08);border:1px solid rgba(233,69,96,.25);
+  border-radius:10px;padding:20px 24px;margin:32px 0;
+}
+.summary-box h4{color:var(--accent);margin-top:0}
+.summary-box ul{margin-bottom:0}
+.connection-box{
+  border-left:4px solid var(--muted);background:rgba(136,146,176,.08);
+  padding:12px 18px;margin:16px 0;border-radius:0 8px 8px 0;font-size:.95em;
+}
+.connection-box::before{content:"🔗 "}
+
+/* ========== TABLES ========== */
+table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:.92em}
+th{background:var(--accent);color:#fff;padding:10px 14px;text-align:left;font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid var(--border)}
+tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+body.light tr:nth-child(even) td{background:rgba(0,0,0,.03)}
+body.light th{background:var(--accent)}
+
+/* ========== THEME TOGGLE ========== */
+.theme-toggle{
+  position:fixed;top:12px;right:16px;z-index:200;
+  background:var(--card);border:1px solid var(--border);border-radius:50%;
+  width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:20px;transition:background .3s;
+}
+.theme-toggle:hover{background:var(--accent)}
+
+/* ========== BACK TO TOP ========== */
+.back-top{
+  position:fixed;bottom:24px;right:24px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:50%;
+  width:46px;height:46px;font-size:22px;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(233,69,96,.4);transition:transform .2s;
+}
+.back-top:hover{transform:scale(1.1)}
+.back-top.show{display:flex}
+
+/* ========== HERO ========== */
+.hero{text-align:center;padding:40px 0 32px}
+.hero h1{font-size:2.4rem;margin-bottom:8px}
+.hero .subtitle{color:var(--muted);font-size:1.05rem}
+.hero .badge{
+  display:inline-block;background:var(--accent);color:#fff;
+  padding:4px 14px;border-radius:20px;font-size:.8rem;margin-top:10px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .hamburger{display:block}
+  .main{margin-left:0;padding:60px 18px 100px}
+}
+
+/* ========== PRINT ========== */
+@media print{
+  .sidebar,.hamburger,.theme-toggle,.back-top,.overlay{display:none!important}
+  .main{margin-left:0}
+  body{background:#fff;color:#000;font-size:11pt}
+  h1,h2,h3{color:#000}
+  .card{border:1px solid #ccc;box-shadow:none}
+  .professor-box,.clinical-box,.summary-box,.connection-box{border-color:#999;background:#f9f9f9}
+  table{font-size:9pt}
+  th{background:#ccc;color:#000}
+  a{color:#000;text-decoration:underline}
+  .hero .badge{border:1px solid #000;background:transparent;color:#000}
+}
+</style>
+</head>
+<body>
+
+<!-- HAMBURGER -->
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle" onclick="toggleTheme()" title="Alternar tema claro/escuro">🌓</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>Microbio P1</h2>
+  </div>
+  <nav id="sidebar-nav">
+    <a href="#topic1" class="nav-h2">1. Fundamentos</a>
+    <a href="#t1-reinos" class="nav-h3">Reinos de Whittaker</a>
+    <a href="#t1-nomenclatura" class="nav-h3">Nomenclatura binomial</a>
+    <a href="#t1-tipos" class="nav-h3">Procarioto vs. Eucarioto</a>
+    <a href="#t1-escalas" class="nav-h3">Escalas de tamanho</a>
+
+    <a href="#topic2" class="nav-h2">2. Microbiota e Cultivo</a>
+    <a href="#t2-microbiota" class="nav-h3">Microbiota normal</a>
+    <a href="#t2-meios" class="nav-h3">Meios de cultura</a>
+    <a href="#t2-ufc" class="nav-h3">UFC</a>
+
+    <a href="#topic3" class="nav-h2">3. Processo Infeccioso</a>
+    <a href="#t3-modelo" class="nav-h3">Modelo em etapas</a>
+    <a href="#t3-implantacao" class="nav-h3">Implantacao</a>
+    <a href="#t3-adaptacao" class="nav-h3">Adaptacao</a>
+    <a href="#t3-multiplicacao" class="nav-h3">Multiplicacao</a>
+    <a href="#t3-fatores" class="nav-h3">Fatores de virulencia</a>
+
+    <a href="#topic4" class="nav-h2">4. Exotoxinas e Endotoxinas</a>
+    <a href="#t4-etec" class="nav-h3">ETEC (LT / ST)</a>
+    <a href="#t4-ehec" class="nav-h3">EHEC (Shiga-like)</a>
+    <a href="#t4-escaldada" class="nav-h3">Pele Escaldada</a>
+    <a href="#t4-endotoxinas" class="nav-h3">Endotoxinas / LPS</a>
+    <a href="#t4-gonorreia" class="nav-h3">Gonorreia</a>
+
+    <a href="#topic5" class="nav-h2">5. Estrutura Bacteriana</a>
+    <a href="#t5-formas" class="nav-h3">Formas e arranjos</a>
+    <a href="#t5-gram" class="nav-h3">Coloracao de Gram</a>
+    <a href="#t5-essenciais" class="nav-h3">Estruturas essenciais</a>
+    <a href="#t5-facultativas" class="nav-h3">Estruturas facultativas</a>
+    <a href="#t5-endosporo" class="nav-h3">Endosporo</a>
+    <a href="#t5-mycoplasma" class="nav-h3">Mycoplasma</a>
+    <a href="#t5-bacteriofagos" class="nav-h3">Bacteriofagos</a>
+
+    <a href="#topic6" class="nav-h2">6. Virologia</a>
+    <a href="#t6-estrutura" class="nav-h3">Estrutura viral</a>
+    <a href="#t6-replicacao" class="nav-h3">Replicacao</a>
+    <a href="#t6-citopatico" class="nav-h3">Efeito citopatico</a>
+    <a href="#t6-latencia" class="nav-h3">Latencia viral</a>
+    <a href="#t6-envelope" class="nav-h3">Envelope viral</a>
+
+    <a href="#topic7" class="nav-h2">7. Imunologia</a>
+    <a href="#t7-linfocitosT" class="nav-h3">Linfocitos T</a>
+    <a href="#t7-linfocitosB" class="nav-h3">Linfocitos B</a>
+    <a href="#t7-anticorpos" class="nav-h3">Anticorpos (5 classes)</a>
+    <a href="#t7-funcoes" class="nav-h3">Funcoes dos anticorpos</a>
+    <a href="#t7-imunocomplexos" class="nav-h3">Imunocomplexos</a>
+
+    <a href="#topic8" class="nav-h2">8. Hipersensibilidades</a>
+    <a href="#t8-tipo1" class="nav-h3">Tipo 1 (Alergia)</a>
+    <a href="#t8-tipo2" class="nav-h3">Tipo 2 (Citotoxica)</a>
+    <a href="#t8-tipo3" class="nav-h3">Tipo 3 (Imunocomplexos)</a>
+    <a href="#t8-tipo4" class="nav-h3">Tipo 4 (Celular)</a>
+    <a href="#t8-autoimunidade" class="nav-h3">Autoimunidade</a>
+
+    <a href="#topic9" class="nav-h2">9. Micologia Geral</a>
+    <a href="#t9-caract" class="nav-h3">Caracteristicas</a>
+    <a href="#t9-parede" class="nav-h3">Parede (quitina)</a>
+    <a href="#t9-morfologia" class="nav-h3">Bolores e leveduras</a>
+    <a href="#t9-hifas" class="nav-h3">Hifas</a>
+    <a href="#t9-dimorfismo" class="nav-h3">Dimorfismo</a>
+    <a href="#t9-reproducao" class="nav-h3">Reproducao</a>
+
+    <a href="#topic10" class="nav-h2">10. Micologia Clinica</a>
+    <a href="#t10-ascomycota" class="nav-h3">Filo Ascomycota</a>
+    <a href="#t10-candida" class="nav-h3">Candida (geral)</a>
+    <a href="#t10-candida-morfologia" class="nav-h3">Candida: morfologia</a>
+    <a href="#t10-candida-locais" class="nav-h3">Candida: sitios anatomicos</a>
+    <a href="#t10-candida-origem" class="nav-h3">Candida: origem endo/exogena</a>
+    <a href="#t10-candida-diag" class="nav-h3">Candida: diagnostico</a>
+    <a href="#t10-candida-trat" class="nav-h3">Candida: tratamento</a>
+    <a href="#t10-aspergillus" class="nav-h3">Aspergillus (geral)</a>
+    <a href="#t10-asp-especies" class="nav-h3">Aspergillus: especies</a>
+    <a href="#t10-aflatoxina" class="nav-h3">Aflatoxina</a>
+    <a href="#t10-asp-pulmonar" class="nav-h3">Aspergilose pulmonar</a>
+    <a href="#t10-asp-diag" class="nav-h3">Aspergillus: diagnostico</a>
+    <a href="#t10-asp-trat" class="nav-h3">Aspergillus: tratamento</a>
+    <a href="#t10-antifungicos" class="nav-h3">Antifungicos (tabela)</a>
+    <a href="#t10-coloracoes" class="nav-h3">Coloracoes para fungos</a>
+    <a href="#t10-outros" class="nav-h3">Penicillium / Trichophyton</a>
+    <a href="#t10-paracoccidioides" class="nav-h3">Paracoccidioides</a>
+    <a href="#t10-auris" class="nav-h3">C. auris (ameaca global)</a>
+
+    <a href="#topic11" class="nav-h2">11. Ferro e Criptococose</a>
+    <a href="#t11-ferro" class="nav-h3">Ferro e patogenese</a>
+    <a href="#t11-hemocromatose" class="nav-h3">Hemossiderose / Hemocromatose</a>
+    <a href="#t11-crypto" class="nav-h3">Cryptococcus neoformans</a>
+    <a href="#t11-capsula" class="nav-h3">Capsula (GXM / GXM-Gal)</a>
+    <a href="#t11-vias" class="nav-h3">3 vias para o SNC</a>
+    <a href="#t11-titan" class="nav-h3">Celula tita</a>
+    <a href="#t11-imuno" class="nav-h3">Imunodeficiencias</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+<div class="content">
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Microbiologia P1</h1>
+  <p class="subtitle">Guia Completo de Estudo &mdash; Fundamentos, Bacteriologia, Virologia, Imunologia e Micologia</p>
+  <span class="badge">Prova 1 &bull; 2026.1</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- TOPIC 1: FUNDAMENTOS -->
+<!-- ============================================================ -->
+<section id="topic1">
+<h2>1. Fundamentos de Microbiologia</h2>
+
+<p>Antes de falar de qualquer infeccao, voce precisa saber <em>quem</em> sao os micro-organismos, <em>como</em> classifica-los e <em>por que</em> a nomenclatura correta pode salvar vidas. Um erro de nomenclatura no prontuario pode direcionar o laboratorio para o exame errado e atrasar o diagnostico.</p>
+
+<h3 id="t1-reinos">Cinco Reinos de Whittaker</h3>
+
+<p>O modelo adotado na disciplina e o de <strong>Whittaker</strong>, que organiza os seres vivos em cinco reinos, do menos ao mais complexo:</p>
+
+<table>
+<tr><th>Reino</th><th>Tipo celular</th><th>Caracteristicas</th></tr>
+<tr><td><strong>Monera</strong> (Prokaryota)</td><td>Procarionte</td><td>Bacterias; sem envoltorio nuclear</td></tr>
+<tr><td><strong>Protista</strong></td><td>Eucarionte</td><td>Unicelulares (protozoarios)</td></tr>
+<tr><td><strong>Fungi</strong></td><td>Eucarionte</td><td>Uni ou multicelulares; parede de quitina; aclorofilados</td></tr>
+<tr><td><strong>Plantae</strong></td><td>Eucarionte</td><td>Parede de celulose; clorofila; formam tecidos</td></tr>
+<tr><td><strong>Animalia</strong></td><td>Eucarionte</td><td>Mais complexos; formam tecidos</td></tr>
+</table>
+
+<p>A classificacao nao parou ai. Desde Aristoteles (animais uteis vs. inuteis), passando por Lineu (2 reinos), Haeckel (3 reinos), Chatton (2 imperios: Procariota e Eucariota), Copeland (4 reinos) e chegando ate Ruggiero em 2015 (7 reinos), a taxonomia se refinou. Para a nossa prova, o modelo de <strong>5 reinos</strong> e o referencial.</p>
+
+<p>A <strong>hierarquia taxonomica</strong> completa e: <em>Reino &gt; Filo &gt; Classe &gt; Ordem &gt; Familia &gt; Genero &gt; Especie</em>.</p>
+
+<h3 id="t1-nomenclatura">Nomenclatura Binomial</h3>
+
+<p>Esse e um ponto que o professor repetiu diversas vezes, com razao: erros de nomenclatura no prontuario sao erros clinicos.</p>
+
+<div class="professor-box"><strong>NAO EXISTE ESPECIE SEM GENERO.</strong> Escrever apenas "coli" e inutil porque tres organismos compartilham esse epitetio especifico: <em>Entamoeba coli</em> (protozoario), <em>Escherichia coli</em> (bacteria) e <em>Balantidium coli</em> (protozoario). Sem o genero, o laboratorio nao sabe qual exame solicitar.</div>
+
+<p><strong>Regras fundamentais:</strong></p>
+<ul>
+  <li>Sistema <strong>binomial</strong>: genero + especie</li>
+  <li>Genero com inicial <strong>maiuscula</strong>, especie toda em <strong>minuscula</strong></li>
+  <li>Sempre em <strong>italico</strong> (texto digitado) ou <strong>sublinhado</strong> (manuscrito)</li>
+  <li>Na primeira mencao, escrever o nome <strong>completo por extenso</strong>. So depois abreviar (ex.: <em>Escherichia coli</em> &rarr; <em>E. coli</em>)</li>
+  <li><strong>sp.</strong> = uma especie nao identificada do genero (singular). Exemplo: <em>Candida</em> sp. = uma especie de <em>Candida</em> cuja identidade nao foi determinada. <strong>spp.</strong> = varias/multiplas especies do genero (plural). Exemplo: <em>Staphylococcus</em> spp. = multiplas especies de <em>Staphylococcus</em>.</li>
+  <li>Em texto cientifico, <strong>nao usar artigo</strong> antes do nome cientifico (errado: "a <em>Candida albicans</em>"; correto: "<em>Candida albicans</em> e fungo")</li>
+</ul>
+
+<h3 id="t1-tipos">Procarioto vs. Eucarioto</h3>
+
+<p>A diferenca numero um que separa bacterias do restante dos seres vivos:</p>
+
+<table>
+<tr><th>Caracteristica</th><th>Procarionte</th><th>Eucarionte</th></tr>
+<tr><td>Envoltorio nuclear (carioteca)</td><td>Ausente</td><td>Presente</td></tr>
+<tr><td>Organelas membranosas (RE, Golgi, mitocondria, lisossomo)</td><td>Ausentes</td><td>Presentes</td></tr>
+<tr><td>Ribossomos</td><td>Presentes (70S = 30S + 50S)</td><td>Presentes (80S = 40S + 60S)</td></tr>
+</table>
+
+<div class="professor-box"><strong>Nao diga que o procarionte tem "nucleo desorganizado".</strong> Ele nao tem envoltorio nuclear, mas tem organizacao &mdash; um ser desorganizado nao sobreviveria ha 3 bilhoes de anos neste planeta.</div>
+
+<h3 id="t1-escalas">Escalas de Tamanho</h3>
+
+<p>As escalas importam porque determinam o <strong>metodo diagnostico</strong> que voce vai usar:</p>
+
+<table>
+<tr><th>Estrutura</th><th>Tamanho</th><th>Visualizacao</th></tr>
+<tr><td>Celula eucarionte humana</td><td>10 &ndash; 100 &mu;m</td><td>Microscopia optica</td></tr>
+<tr><td>Bacteria</td><td>1 &ndash; 10 &mu;m</td><td>Microscopia optica (1000x, apos coloracao)</td></tr>
+<tr><td>Virus (virion)</td><td>~20 &ndash; 300 nm</td><td>Somente microscopia eletronica (20.000 &ndash; 30.000x)</td></tr>
+</table>
+
+<p>Uma relacao clinicamente fundamental: <strong>a bacteria cabe dentro da celula eucarionte</strong>. Isso significa que bacterias podem infectar macrofagos, proliferar intracelularmente e disseminar-se. O virus, por sua vez, cabe dentro da bacteria (bacteriofagos) e dentro da celula humana.</p>
+
+<div class="clinical-box"><strong>Exemplo pratico:</strong> Uma levedura (fungo eucarionte) e cerca de 10 vezes maior que uma bacteria ao microscopio. Ja um eritrocito humano ao lado de uma bacteria demonstra que a bacteria poderia caber dentro da hemacia.</div>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Fundamentos</h4>
+<ul>
+  <li>Microbiologia moderna = Bacteriologia + Micologia + Virologia</li>
+  <li>5 reinos de Whittaker: Monera, Protista, Fungi, Plantae, Animalia</li>
+  <li>Nomenclatura binomial: genero (maiuscula) + especie (minuscula), em italico</li>
+  <li>Nunca escrever especie sem genero &mdash; consequencias clinicas reais</li>
+  <li>Procarionte: sem envoltorio nuclear e sem organelas membranosas</li>
+  <li>Escala: eucarionte &gt; bacteria &gt; virus (cada um cabe dentro do anterior)</li>
+  <li>Ribossomo bacteriano (70S) difere do eucariotico (80S) &mdash; alvo de antibioticos</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 2: MICROBIOTA E CULTIVO -->
+<!-- ============================================================ -->
+<section id="topic2">
+<h2>2. Microbiota Normal e Tecnicas de Cultivo</h2>
+
+<p>Entender a microbiota e entender que <strong>80% das infeccoes hospitalares</strong> sao causadas por micro-organismos que ja estavam no proprio paciente. A fronteira entre comensal e patogeno e mais fina do que parece.</p>
+
+<h3 id="t2-microbiota">Microbiota Permanente e Transitoria</h3>
+
+<p>O corpo humano abriga uma populacao enorme de micro-organismos comensais (bacterias, fungos e virus). Essa microbiota e dividida em:</p>
+
+<ul>
+  <li><strong>Microbiota permanente (residente):</strong> populacao estavel, adaptada ao local, que normalmente nao causa doenca. Exemplos: <em>Staphylococcus epidermidis</em> na pele, <em>Escherichia coli</em> no intestino, <em>Candida</em> spp. em mucosas.</li>
+  <li><strong>Microbiota transitoria:</strong> micro-organismos que colonizam temporariamente, sem se fixar definitivamente.</li>
+</ul>
+
+<p>A <strong>disbiose</strong> ocorre quando ha desequilibrio da microbiota &mdash; por exemplo, quando o uso de antibacterianos elimina parte da flora normal, abrindo espaco para patogenos oportunistas (como <em>Clostridioides difficile</em> no intestino).</p>
+
+<div class="professor-box"><strong>80% das infeccoes hospitalares</strong> sao causadas por micro-organismos da propria microbiota do paciente. Uma bacteria comensal da pele pode causar infeccao ao penetrar numa ferida cirurgica. Uma bacteria comensal da boca pode causar <strong>endocardite</strong> se encontrar porta de entrada na gengiva e atingir o coracao.</div>
+
+<div class="clinical-box"><strong>Cenario clinico:</strong> Um paciente idoso com dentadura mal-ajustada. A protese machuca a gengiva, criando uma porta de entrada. <em>Staphylococcus aureus</em> da microbiota oral entra na corrente sanguinea e se fixa nas valvas cardiacas &rarr; endocardite bacteriana. A fonte nao e o ambiente hospitalar, mas o proprio paciente.</div>
+
+<h3 id="t2-meios">Meios de Cultura</h3>
+
+<p>Quando a amostra clinica nao tem micro-organismos suficientes para fazer a lamina direta, e necessario <strong>cultivar</strong> o material. Em 24 a 72 horas, colonias bacterianas tornam-se visiveis a olho nu.</p>
+
+<table>
+<tr><th>Meio</th><th>Tipo</th><th>Uso principal</th></tr>
+<tr><td><strong>Sabouraud (SAB)</strong></td><td>Solido</td><td>Crescimento de fungos. Adiciona-se 2% de cloranfenicol (antibacteriano) para inibir bacterias</td></tr>
+<tr><td><strong>BHI</strong> (Brain Heart Infusion)</td><td>Liquido ou solido</td><td>Crescimento geral de bacterias</td></tr>
+<tr><td><strong>Agar sangue</strong></td><td>Solido</td><td>Bacterias exigentes; permite ver hemolise</td></tr>
+</table>
+
+<p>A <strong>tecnica asseptica</strong> e fundamental: fixar amostra na lamina passando 3 vezes no fogo, esterilizar o loop, trabalhar proximo ao bico de Bunsen. Sem assepsia, qualquer cultura fica contaminada e o resultado e inutil.</p>
+
+<h3 id="t2-ufc">UFC &mdash; Unidade Formadora de Colonia</h3>
+
+<p>Cada colonia visivel na placa se originou de <strong>uma unica bacteria viva e viavel</strong> que proliferou por fissao binaria (1 &rarr; 2 &rarr; 4 &rarr; 8...). Essa bacteria original e a <strong>Unidade Formadora de Colonia (UFC)</strong>.</p>
+
+<ul>
+  <li>Uma unica UFC pode gerar 10<sup>5</sup> a 10<sup>6</sup> celulas em ~24 horas</li>
+  <li>A contagem de UFCs estima a <strong>carga microbiana</strong> do paciente</li>
+  <li>Aumento de UFCs = piora do quadro infeccioso</li>
+  <li>Essencial em testes de eficacia de farmacos na industria farmaceutica</li>
+</ul>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Microbiota e Cultivo</h4>
+<ul>
+  <li>Microbiota permanente convive com o hospedeiro sem causar doenca</li>
+  <li>80% das infeccoes hospitalares: micro-organismos da propria microbiota</li>
+  <li>Disbiose: desequilibrio da flora, favorece oportunistas</li>
+  <li>Meio Sabouraud + cloranfenicol: cultivo seletivo para fungos</li>
+  <li>UFC: uma bacteria viavel origina uma colonia; contagem estima carga microbiana</li>
+  <li>Tecnica asseptica: base de qualquer procedimento laboratorial</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 3: PROCESSO INFECCIOSO -->
+<!-- ============================================================ -->
+<section id="topic3">
+<h2>3. Processo Infeccioso e Fatores de Virulencia</h2>
+
+<p>Por que estudar infeccao em etapas? Porque cada etapa representa um ponto onde o corpo <strong>tenta barrar</strong> o patogeno e onde o patogeno <strong>usa um truque especifico</strong> para sobreviver. Entender isso e pensar clinicamente.</p>
+
+<h3 id="t3-modelo">Modelo de Infeccao em Etapas</h3>
+
+<p>A infeccao e um <strong>processo sequencial</strong> com 4 etapas:</p>
+
+<ol>
+  <li><strong>Implantacao</strong> &mdash; o micro-organismo entra em contato e se fixa no tecido do hospedeiro</li>
+  <li><strong>Adaptacao</strong> &mdash; ajusta-se ao novo ambiente, competindo com a microbiota e escapando das defesas</li>
+  <li><strong>Multiplicacao</strong> &mdash; apos adaptacao bem-sucedida, reproduz-se exponencialmente</li>
+  <li><strong>Dano celular / Lesao tecidual</strong> &mdash; pode ser <em>local</em> (restrito ao sitio) ou <em>disseminado</em> (via macrofagos, corrente sanguinea, tecido adjacente)</li>
+</ol>
+
+<div class="professor-box">O motivo de usar esse modelo e que ele permite visualizar <strong>cada etapa separadamente</strong>, facilitando a compreensao clinica. O dano celular pode ser <strong>direto</strong> (causado pelo micro-organismo) ou <strong>indireto</strong> (causado pela resposta imune especifica do hospedeiro).</div>
+
+<h3 id="t3-implantacao">Etapa 1 &mdash; Implantacao</h3>
+
+<h4>Exemplo bacteriano: <em>Neisseria gonorrhoeae</em></h4>
+<p><em>Neisseria gonorrhoeae</em> (gonococo) e um diplococo Gram-negativo com dose infecciosa muito baixa (~100 organismos). Entra pela uretra durante relacao sexual desprotegida.</p>
+<p><strong>Fator de virulencia para implantacao:</strong> <em>fimbrias tipo IV</em> (bundle-forming pilus). Funcionam como <strong>ventosas de polvo</strong>, grudando nas celulas da uretra com tanta forca que resistem a pressao mecanica da miccao.</p>
+<p><strong>Conceito de tropismo:</strong> fimbrias diferentes encontram receptores em locais diferentes. Bacterias com fimbrias para o trato respiratorio nao grudam no intestino, e vice-versa. <em>Neisseria meningitidis</em>, "prima" do gonococo, possui fimbrias para a nasofaringe e causa meningite.</p>
+
+<h4>Exemplo viral: HIV</h4>
+<p>O HIV se implanta em celulas <strong>CD4 positivas</strong>: linfocitos T helper (CD4+), macrofagos e celulas dendriticas. A glicoproteina <strong>gp120</strong> do HIV se liga ao receptor CD4, depois a co-receptores acessorios, provocando mudanca conformacional que permite a penetracao. Linfocitos T CD8+ e linfocitos B <em>nao</em> sao infectados (nao expressam CD4).</p>
+
+<h4>Exemplo alimentar: <em>E. coli</em></h4>
+<p>Uma <em>E. coli</em> diarreiogenica ingerida num alimento contaminado enfrenta barreiras em sequencia:</p>
+<ul>
+  <li><strong>Boca:</strong> enzimas digestivas, lisozima (bactericida), variacoes de pH</li>
+  <li><strong>Estomago:</strong> pH extremamente acido &rarr; fator de virulencia: <strong>bomba de protons (H+)</strong> que expulsa ions H+ do interior da bacteria, mantendo o pH intracelular neutro</li>
+  <li><strong>Intestino:</strong> pH alcalino (mais favoravel), mas movimentos peristalticos tentam "varrer" a bacteria &rarr; fator de virulencia: <strong>fimbrias especificas</strong> que se fixam ao enterocito</li>
+</ul>
+
+<h3 id="t3-adaptacao">Etapa 2 &mdash; Adaptacao</h3>
+
+<p>Apos se fixar, a <em>E. coli</em> diarreiogenica precisa vencer tres desafios:</p>
+
+<ol>
+  <li><strong>Competir com a microbiota normal:</strong> produz <strong>bacteriocinas</strong> (antibioticos naturais) que matam bacterias sensiveis ao redor, liberando espaco anatomico. A propria <em>E. coli</em> e resistente ao antibiotico que produz.</li>
+  <li><strong>Neutralizar defesas humorais:</strong> na mucosa intestinal, o anticorpo <strong>IgA secretora</strong> tenta neutralizar a bacteria. Fator de virulencia: producao de <strong>IgA protease</strong>, enzima que cliva o anticorpo IgA.</li>
+  <li><strong>Escapar da fagocitose:</strong> macrofagos tentam englobar a bacteria. Fator de virulencia: producao de <strong>capsula (exopolissacarideo)</strong>, composta de acucares semelhantes aos do hospedeiro &rarr; <strong>mimetismo molecular</strong> (o macrofago nao reconhece como estranho).</li>
+</ol>
+
+<div class="professor-box">Bacterias capsuladas geralmente estao envolvidas em <strong>doencas invasivas</strong> (meningite, pneumonia, infeccoes disseminadas) porque a capsula confere grande vantagem de evasao imune. Para fagocitar bacterias capsuladas, o hospedeiro precisa de <strong>opsoninas</strong> (anticorpos e complemento) &mdash; isso sera detalhado na Secao 7 (Imunologia).</div>
+
+<h3 id="t3-multiplicacao">Etapa 3 &mdash; Multiplicacao</h3>
+
+<p>Superadas as barreiras, a bacteria se multiplica por <strong>fissao binaria</strong> em progressao geometrica: 1 &rarr; 2 &rarr; 4 &rarr; 8 &rarr; 16 &rarr; 32... Uma unica bacteria pode gerar centenas de milhares de copias em horas.</p>
+
+<h3 id="t3-fatores">Fatores de Virulencia &mdash; Classificacao</h3>
+
+<p>Fatores de virulencia sao o <strong>conjunto de elementos</strong> que o micro-organismo possui e que determinam cada etapa do processo infeccioso:</p>
+
+<table>
+<tr><th>Tipo</th><th>Descricao</th><th>Exemplos</th></tr>
+<tr><td><strong>Estruturais</strong></td><td>Fazem parte da estrutura/morfologia</td><td>Fimbrias, capsula, LPS</td></tr>
+<tr><td><strong>Substancias elaboradas</strong></td><td>Sintetizadas e liberadas pela bacteria</td><td>Exotoxinas, IgA protease, bacteriocinas</td></tr>
+</table>
+
+<div class="professor-box"><strong>Conceito critico para prova:</strong> a <strong>mesma especie pode ter geneticas diferentes</strong>. <em>E. coli</em> comensal (microbiota intestinal, sem doenca), <em>E. coli</em> diarreiogenica (ETEC, EHEC, EAEC, DAEC), <em>E. coli</em> uropatogenica. "Ter diagnostico com genero e especie apenas, muitas vezes, NAO e suficiente para entender se aquele e o agente etiologico."</div>
+
+<div class="connection-box">Isso conecta diretamente com a Secao 4: os <strong>patotipos de E. coli</strong> (ETEC, EHEC) se diferenciam pelos fatores de virulencia que possuem, nao pelo nome da especie.</div>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Processo Infeccioso</h4>
+<ul>
+  <li>Infeccao em etapas: implantacao &rarr; adaptacao &rarr; multiplicacao &rarr; dano</li>
+  <li>Dano pode ser direto (micro-organismo) ou indireto (resposta imune)</li>
+  <li>Implantacao: fimbrias tipo IV (Neisseria), gp120 (HIV), bomba de protons (E. coli no estomago)</li>
+  <li>Adaptacao: bacteriocinas, IgA protease, capsula com mimetismo molecular</li>
+  <li>Mesma especie, genetica diferente: E. coli comensal vs. patogenica</li>
+  <li>Bacterias capsuladas = doencas invasivas (meningite, pneumonia)</li>
+  <li>Opsonizacao e necessaria para fagocitar capsuladas</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 4: EXOTOXINAS E ENDOTOXINAS -->
+<!-- ============================================================ -->
+<section id="topic4">
+<h2>4. Dano Celular Direto: Exotoxinas e Endotoxinas</h2>
+
+<p>Agora vamos ao ultimo passo do modelo de infeccao: o <strong>dano</strong>. Quando o micro-organismo causa lesao diretamente (sem depender da resposta imune adaptativa), chamamos de <strong>dano direto</strong>. As ferramentas sao as exotoxinas (substancias elaboradas) e as endotoxinas (componentes estruturais).</p>
+
+<h3 id="t4-etec">ETEC &mdash; <em>E. coli</em> Enterotoxigenica</h3>
+
+<p>Causa a classica <strong>"diarreia do viajante"</strong>: aquela diarreia de batizado, casamento, cachorro-quente de rua. E a principal causa epidemiologica de diarreia toxigenica.</p>
+
+<h4>Toxina Termolabil (LT &mdash; Heat-Labile)</h4>
+<p>Desnatura a 70 &deg;C por 15 min. O mecanismo passo a passo:</p>
+<ol>
+  <li>Toxina se liga ao receptor na microvilosidade do enterocito</li>
+  <li>Mudanca conformacional &rarr; mobilizacao do citoesqueleto de actina</li>
+  <li>Endocitose &rarr; no complexo de Golgi, a subunidade ativa e liberada</li>
+  <li>Aumento de <strong>adenilato ciclase</strong> &rarr; aumento de <strong>AMPc</strong></li>
+  <li>AMPc em excesso causa <strong>disturbio eletrolitico</strong>: expulsao massiva de agua, inibicao da reabsorcao de Na+, expulsao de Cl-</li>
+  <li>Resultado: <strong>diarreia aquosa profusa</strong></li>
+</ol>
+
+<h4>Toxina Termoestavel (ST &mdash; Heat-Stable)</h4>
+<p>Nao desnatura a 70 &deg;C por 15 min. Mecanismo diferente:</p>
+<ol>
+  <li>Liga-se a um receptor <em>diferente</em> na superficie celular</li>
+  <li><strong>Nao penetra</strong> na celula (diferente da LT)</li>
+  <li>Realiza <strong>transducao de sinal</strong> atraves do receptor</li>
+  <li>Aumento de <strong>GMPc</strong> &rarr; disturbio eletrolitico semelhante ao da LT</li>
+  <li>Resultado: <strong>diarreia aquosa</strong> (mesmo fenotipo final)</li>
+</ol>
+
+<div class="professor-box">Se a ETEC produzir <strong>ambas as toxinas</strong> (LT + ST), a diarreia sera mais intensa. O professor enfatizou: "Nao e para decorar subunidade A, subunidade B. Eu quero que voce ENTENDA o mecanismo de acao."</div>
+
+<div class="clinical-box"><strong>Exemplo comparativo &mdash; <em>Staphylococcus aureus</em>:</strong> A toxina alimentar do <em>S. aureus</em> e <strong>termoestavel</strong>. Mesmo que voce frite o presunto esverdeado, a toxina permanece ativa. O paciente apresenta diarreia intensa ~2 horas apos ingestao. Seria necessario aquecer por ~2 horas para inativar, o que e impraticavel.</div>
+
+<h3 id="t4-ehec">EHEC &mdash; <em>E. coli</em> Entero-Hemorragica</h3>
+
+<div class="clinical-box"><strong>Caso real:</strong> Surto no McDonald's (EUA, outubro 2024) associado a cebola contaminada do Quarter Pounder: 1 morte e diversas hospitalizacoes. O classico surto de 1993 no Jack in the Box gerou indenizacao recorde de ~50 milhoes de dolares.</div>
+
+<h4>Lesao attaching-effacing (A/E)</h4>
+<ol>
+  <li>EHEC adere ao enterocito com fimbrias</li>
+  <li>Sistema de secrecao tipo III promove <strong>adesao intima</strong></li>
+  <li>As <strong>microvilosidades sao destruidas</strong> &mdash; obliteracao irreversivel</li>
+  <li>Cria-se uma <strong>lesao em pedestal</strong> (lesao A/E) &mdash; <em>attaching and effacing</em></li>
+</ol>
+
+<h4>Toxina Shiga-like (Stx)</h4>
+<p>O nome vem da toxina Shiga original, produzida pela <em>Shigella</em>. A EHEC produz uma versao <em>semelhante</em> (Shiga-like ou verotoxina). O mecanismo:</p>
+<ol>
+  <li>Toxina e secretada na luz intestinal</li>
+  <li>Realiza <strong>passagem transepitelial</strong> (atravessa o enterocito sem destrui-lo)</li>
+  <li>Atinge a <strong>microcirculacao</strong> (vasos submucosos)</li>
+  <li>Liga-se a celulas do <strong>endotelio vascular</strong></li>
+  <li>Vai ao <strong>reticulo endoplasmatico</strong></li>
+  <li>Causa <strong>inibicao da sintese proteica</strong></li>
+  <li>Induz <strong>apoptose</strong> pela via de estresse do reticulo endoplasmatico</li>
+</ol>
+
+<p><strong>Consequencias em cascata:</strong></p>
+<ol>
+  <li>Morte de celulas endoteliais &rarr; formacao de fibrina e agregacao plaquetaria</li>
+  <li>Producao continua de toxina &rarr; mais celulas morrem</li>
+  <li>Acumulo de <strong>microtrombos</strong> nos vasos</li>
+  <li><strong>Oclusao vascular</strong> &rarr; isquemia &rarr; <strong>necrose isquemica</strong></li>
+</ol>
+
+<p><strong>Fenotipo clinico:</strong> diarreia com <strong>muco e sangue</strong> (nao apenas aquosa como na ETEC). Pode evoluir para <strong>Sindrome Hemolitico-Uremica (SHU)</strong> &mdash; complicacao gravissima, potencialmente fatal.</p>
+
+<div class="professor-box"><strong>EHEC NAO e tratada com antibioticos!</strong> A lise bacteriana pelo antibiotico libera MAIS toxina, agravando o quadro. Tratamento: <strong>reposicao hidroeletrolitica</strong> e suporte clinico.</div>
+
+<h3 id="t4-escaldada">Sindrome da Pele Escaldada Estafilococica</h3>
+
+<p><strong>Agente:</strong> <em>Staphylococcus aureus</em> produtor de <strong>esfoliatina</strong> (exotoxina com acao enzimatica/litica). Nem todo <em>S. aureus</em> produz esfoliatina &mdash; depende da genetica.</p>
+
+<div class="clinical-box"><strong>Cenario clinico:</strong> Recem-nascido, parto normal. Durante passagem pelo canal de parto, adquire micro-organismos. Em ~8 horas, dobras cutaneas ja estao colonizadas. Se o <em>S. aureus</em> adquirido for produtor de esfoliatina, inicia-se o quadro.</div>
+
+<p><strong>Mecanismo:</strong> A esfoliatina <strong>cliva a desmogleina</strong> &mdash; proteina de adesao dos desmossomos entre queratinocitos. Resultado: <strong>descolamento das camadas da epiderme</strong>, com aspecto de queimadura por agua quente (pele "escaldada"), bolhas e descolamento extenso.</p>
+
+<div class="connection-box">Perceba a diferenca de mecanismo: ETEC causa <strong>disturbio metabolico</strong> (altera AMPc/GMPc sem destruir a celula), enquanto a esfoliatina do <em>S. aureus</em> causa <strong>acao enzimatica litica</strong> (quebra fisicamente uma proteina estrutural). Sao os dois tipos de acao das exotoxinas.</div>
+
+<h3 id="t4-endotoxinas">Endotoxinas &mdash; LPS</h3>
+
+<p><strong>Endotoxinas</strong> sao <em>componentes estruturais</em> do micro-organismo (nao sao secretadas), que desencadeiam quadros inflamatorios intensos.</p>
+
+<div class="professor-box">"Se voce perguntar para a inteligencia artificial, ela vai dizer que LPS e a unica endotoxina. NAO e." Peptideoglicano (Gram-positivas e negativas) e a proteina Spike do SARS-CoV-2 tambem sao exemplos de endotoxinas.</div>
+
+<h4>Estrutura do LPS</h4>
+<p>Presente <strong>exclusivamente na membrana externa</strong> das bacterias <strong>Gram-negativas</strong>:</p>
+
+<table>
+<tr><th>Componente</th><th>Funcao</th></tr>
+<tr><td><strong>Lipideo A</strong></td><td>Porcao lipidica ancorada na membrana externa; e a porcao <strong>toxica/inflamatoria</strong></td></tr>
+<tr><td><strong>Core (nucleo)</strong></td><td>Oligossacarideo estrutural que estabiliza a molecula</td></tr>
+<tr><td><strong>Antigeno O</strong></td><td>Cadeia lateral repetitiva de carboidratos; altamente variavel entre sorotipos (ex.: O157:H7)</td></tr>
+</table>
+
+<p>O LPS e liberado quando a bacteria morre/e lisada. O corpo humano possui receptores para LPS nas celulas do sistema imune, desencadeando producao massiva de citocinas pro-inflamatorias.</p>
+
+<h3 id="t4-gonorreia">Exemplo Clinico de Endotoxina: Gonorreia</h3>
+
+<p>A sequencia completa da gonorreia por <em>Neisseria gonorrhoeae</em> integra todo o modelo de infeccao em etapas:</p>
+
+<ol>
+  <li><strong>Implantacao:</strong> gonococo gruda na uretra com fimbrias tipo IV</li>
+  <li><strong>Endocitose direcionada:</strong> induz a celula a internaliza-lo (mobilizacao de actina)</li>
+  <li><strong>Transcitose:</strong> atravessa o epitelio e sai no intersticio</li>
+  <li><strong>Fagocitose parcial:</strong> macrofago basal nao consegue matar eficientemente (mais da metade sobrevive)</li>
+  <li><strong>Morte parcial &rarr; LPS liberado</strong></li>
+  <li>LPS estimula producao de <strong>TNF-&alpha;, IL-1, IL-6</strong> (3 citocinas pro-inflamatorias principais)</li>
+  <li>Citocinas recrutam <strong>neutrofilos</strong> ao local (desvio a esquerda no hemograma)</li>
+  <li>Neutrofilos hiperativados produzem <strong>EROs</strong> e enzimas hidroliticas massivamente</li>
+  <li>Excesso de EROs supera a capacidade destoxificante (superoxido dismutase insuficiente)</li>
+  <li>Neutrofilo <strong>morre</strong> (suicidio oxidativo), liberando enzimas e EROs no tecido</li>
+  <li>Resultado: <strong>destruicao tecidual local</strong></li>
+</ol>
+
+<p><strong>Fenotipo clinico:</strong></p>
+<ul>
+  <li><strong>Exsudato uretral (corrimento):</strong> neutrofilos mortos + bacterias + debris celulares</li>
+  <li>No penis: <strong>sintomatico</strong> (corrimento visivel, especialmente matinal)</li>
+  <li>Na vagina: frequentemente <strong>assintomatico</strong> &mdash; dificulta controle epidemiologico</li>
+  <li>Disuria: dor ao urinar ("xixi de canivete")</li>
+  <li>Lamina: diplococos Gram-negativos intra e extracelulares (dentro de neutrofilos)</li>
+</ul>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Exotoxinas e Endotoxinas</h4>
+<ul>
+  <li>Exotoxinas: substancias elaboradas. 2 mecanismos: disturbio metabolico (ETEC) ou acao litica (esfoliatina)</li>
+  <li>ETEC: LT (termolabil, AMPc) + ST (termoestavel, GMPc) &rarr; diarreia aquosa</li>
+  <li>EHEC: lesao A/E + Shiga-like &rarr; inibicao de sintese proteica &rarr; microtrombos &rarr; diarreia sanguinolenta. NAO usar antibiotico!</li>
+  <li>Esfoliatina: cliva desmogleina &rarr; Sindrome da Pele Escaldada</li>
+  <li>Endotoxinas: componentes estruturais (LPS, peptideoglicano). LPS: Lipideo A (toxico) + Core + Antigeno O</li>
+  <li>Gonorreia: LPS &rarr; TNF-&alpha;/IL-1/IL-6 &rarr; neutrofilos hiperativados &rarr; suicidio oxidativo &rarr; dano tecidual</li>
+  <li>Dano por neutrofilo hiperativado e DIRETO (inato), nao indireto (adaptativo)</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 5: ESTRUTURA BACTERIANA -->
+<!-- ============================================================ -->
+<section id="topic5">
+<h2>5. Estrutura e Morfologia Bacteriana</h2>
+
+<p>Quando o resultado da coloracao de Gram chega ao medico, a <strong>forma e o arranjo</strong> da bacteria muitas vezes sao <strong>suficientes</strong> para direcionar a conduta clinica, antes mesmo da identificacao completa do genero e especie.</p>
+
+<h3 id="t5-formas">Formas e Arranjos</h3>
+
+<h4>Cocos (esfericos)</h4>
+<table>
+<tr><th>Arranjo</th><th>Planos de divisao</th><th>Exemplo clinico</th></tr>
+<tr><td><strong>Diplococo</strong> (pares)</td><td>1 plano</td><td><em>N. meningitidis</em> (Gram-neg, meningite), <em>S. pneumoniae</em> (Gram-pos, pneumonia/meningite)</td></tr>
+<tr><td><strong>Estreptococo</strong> (cadeias)</td><td>1 plano, mais proteinas de ancoragem</td><td><em>S. pyogenes</em> (faringoamigdalite, febre reumatica)</td></tr>
+<tr><td><strong>Estafilococo</strong> (cachos)</td><td>3 planos (aleatorio)</td><td><em>S. aureus</em> (sepse, endocardite, pele escaldada, furunculos)</td></tr>
+<tr><td><strong>Tetrade</strong> (4) / <strong>Sarcina</strong> (8)</td><td>2 / 3 planos</td><td>Sem importancia clinica em imunocompetentes</td></tr>
+</table>
+
+<div class="clinical-box"><strong><em>Staphylococcus aureus</em> &mdash; o vilao hospitalar:</strong> Coagulase-positivo (unico Staphylococcus com esta propriedade). O teste da coagulase: estafilocoagulase mimetiza trombina &rarr; converte fibrinogenio em fibrina &rarr; coagulo em 8-24h. O <em>clumping factor</em> encapa a bacteria com fibrina, dificultando fagocitose. Principal causador de sepse hospitalar e endocardite. Presente na faringe de ~60% das pessoas como comensal.</div>
+
+<h4>Bacilos (cilindricos)</h4>
+<table>
+<tr><th>Arranjo</th><th>Exemplo clinico</th></tr>
+<tr><td><strong>Bacilo isolado</strong></td><td><em>E. coli</em> (Gram-neg), <em>Klebsiella pneumoniae</em> (Gram-neg, 2o maior causador de sepse hospitalar; cepa KPC: resistente a carbapenemas)</td></tr>
+<tr><td><strong>Diplobacilo</strong></td><td><em>Haemophilus influenzae</em> tipo b (Gram-neg, meningite infantil; pleomorfico: pode aparecer como cocobacilo)</td></tr>
+<tr><td><strong>Palicada</strong> (angulos/letras chinesas)</td><td><em>Corynebacterium diphtheriae</em> (Gram-pos, difteria) &mdash; arranjo <strong>patognomonico</strong></td></tr>
+<tr><td><strong>Cocobacilo</strong> (oval)</td><td><em>Gardnerella vaginalis</em> (vaginose), <em>Chlamydia trachomatis</em> (tracoma, uretrite)</td></tr>
+</table>
+
+<h4>Formas espiraladas</h4>
+<table>
+<tr><th>Subtipo</th><th>Estrutura</th><th>Exemplo</th></tr>
+<tr><td><strong>Vibriao</strong> (virgula)</td><td>Curva simples</td><td><em>Vibrio cholerae</em> (colera; toxina CTX e a mais potente; pode matar em 10h)</td></tr>
+<tr><td><strong>Espirilo</strong></td><td>Helicoidal <strong>rigida</strong>, flagelos polares</td><td><em>Helicobacter pylori</em> (gastrite, risco de cancer gastrico)</td></tr>
+<tr><td><strong>Espiroqueta</strong></td><td>Helicoidal <strong>flexivel</strong>, endoflagelos internos, mobilidade "saca-rolha"</td><td><em>Treponema pallidum</em> (sifilis), <em>Leptospira</em> spp. (leptospirose)</td></tr>
+</table>
+
+<div class="professor-box"><strong>Nao confunda espirilo com espiroqueta!</strong> Espirilo: rigido, flagelos polares externos. Espiroqueta: flexivel, endoflagelos no espaco periplasmatico com motor em cada polo, mobilidade tipo saca-rolha (fator de virulencia que permite penetracao em mucosas).</div>
+
+<h3 id="t5-gram">Coloracao de Gram</h3>
+<p>Um dos primeiros exames diante de suspeita de infeccao bacteriana:</p>
+<ol>
+  <li>Fixar amostra (passar no fogo 3x)</li>
+  <li>Aplicar <strong>cristal violeta</strong> (roxo) &mdash; penetra em todas as bacterias</li>
+  <li>Aplicar <strong>lugol</strong> (fixador)</li>
+  <li><strong>Descoloracao</strong> com alcool-acetona: Gram+ <em>mantem</em> o roxo; Gram- <em>perde</em></li>
+  <li>Aplicar <strong>fucsina/safranina</strong> (contracorante): Gram- absorve e fica <strong>rosa</strong>; Gram+ permanece <strong>roxa</strong></li>
+</ol>
+
+<p><strong>Resultado final:</strong> Gram-positiva = <span style="color:#9b59b6;font-weight:bold">roxa</span> | Gram-negativa = <span style="color:#e91e63;font-weight:bold">rosa</span></p>
+
+<p>A diferenca estrutural que explica isso:</p>
+<table>
+<tr><th></th><th>Gram-positiva</th><th>Gram-negativa</th></tr>
+<tr><td>Peptideoglicano</td><td>Espesso (40-80%)</td><td>Fino (~5-10%)</td></tr>
+<tr><td>Membrana externa</td><td>Ausente</td><td>Presente (com LPS e porinas)</td></tr>
+<tr><td>Acido teicoico</td><td>Presente</td><td>Ausente</td></tr>
+<tr><td>Periplasma</td><td>Minimo</td><td>Presente</td></tr>
+<tr><td>LPS</td><td>Ausente</td><td>Presente</td></tr>
+</table>
+
+<h3 id="t5-essenciais">Estruturas Essenciais (presentes em TODAS as bacterias)</h3>
+
+<h4>1. Citoplasma</h4>
+<p>Meio interno da celula com todas as reacoes metabolicas.</p>
+
+<h4>2. Ribossomo (70S)</h4>
+<p><strong>Alvo de antibacterianos:</strong> como o ribossomo bacteriano (70S = 30S + 50S) difere do eucariotico (80S), antibioticos podem inibi-lo sem afetar nossas celulas. <strong>Mecanismo de resistencia:</strong> mutacao no ribossomo altera o sitio de ligacao do antibiotico (a "fechadura" muda).</p>
+
+<h4>3. Membrana plasmatica</h4>
+<p>Modelo de mosaico fluido, permeabilidade seletiva. Composicao: proteinas (60%) + fosfolipidios (40%) <em>(dados dos slides)</em>. Diferenca importante: membrana bacteriana <strong>nao contem esterois</strong> (colesterol), exceto <em>Mycoplasma</em>. Contem <strong>hopanoides</strong> (equivalente funcional do colesterol).</p>
+
+<h4>4. DNA cromossomal</h4>
+<ul>
+  <li><strong>Unico cromossomo</strong> (monocromossomica): DNA dupla fita, circular, continuo</li>
+  <li>~4,6 milhoes de pares de base; esticado, teria 480x o tamanho da bacteria</li>
+  <li>Compactado por <strong>proteinas histona-like</strong> (carga positiva liga-se ao fosfato do DNA; semelhantes as histonas eucariontes, mas nao sao histonas verdadeiras)</li>
+  <li>Concentrado na regiao chamada <strong>nucleoide</strong> (nao e nucleo verdadeiro, nao tem carioteca)</li>
+  <li>Contem <strong>ilhas de patogenicidade</strong>: regioes que codificam fatores de virulencia</li>
+</ul>
+
+<h3 id="t5-facultativas">Estruturas Facultativas</h3>
+<p>Presentes em <em>algumas</em> bacterias, conferem vantagem adaptativa:</p>
+<ul>
+  <li><strong>Capsula:</strong> evasao de fagocitose, invasividade</li>
+  <li><strong>Fimbrias/pili:</strong> adesao a tecidos</li>
+  <li><strong>Flagelos:</strong> mobilidade</li>
+  <li><strong>Plasmideo:</strong> DNA extracromossomal; pode carregar genes de resistencia</li>
+  <li><strong>Biofilme:</strong> matriz exopolissacaridea protetora em superficies (cateteres, proteses, sondas). ~80% das infeccoes hospitalares envolvem procedimentos invasivos com biofilme</li>
+  <li><strong>Endosporo</strong> (detalhado abaixo)</li>
+</ul>
+
+<h3 id="t5-endosporo">Endosporo</h3>
+
+<p><strong>Endosporo</strong> e uma estrutura de resistencia produzida por certas bacterias. Protege contra temperatura extrema, radiacao UV, dessecacao, agentes quimicos e enzimas. A bacteria em forma de endosporo esta em <strong>estado de latencia</strong> (nao metaboliza, nao se reproduz). Quando as condicoes ficam favoraveis, <strong>germina</strong> e volta a atividade.</p>
+
+<div class="clinical-box"><strong>Durabilidade impressionante:</strong> Endosporos do "Homem de Gelo" (Otzi, ~5.300 anos) foram recuperados e <strong>germinaram em laboratorio</strong>. So e destruido por <strong>autoclavagem</strong>: 121 &deg;C, 103 kPa, por 15 minutos. Identificacao laboratorial: coloracao com <strong>verde malaquita</strong> (endosporo = verde; celula vegetativa = vermelha).</div>
+
+<p><strong>Generos clinicamente relevantes:</strong></p>
+<table>
+<tr><th>Genero</th><th>Especie</th><th>Doenca</th></tr>
+<tr><td rowspan="3"><strong>Clostridium</strong></td><td><em>C. tetani</em></td><td>Tetano</td></tr>
+<tr><td><em>C. perfringens</em></td><td>Gangrena gasosa</td></tr>
+<tr><td><em>C. difficile</em></td><td>Colite pseudomembranosa</td></tr>
+<tr><td><strong>Bacillus</strong></td><td><em>B. anthracis</em></td><td>Antraz (arma biologica: endosporos em po enviados por cartas pos-11/09)</td></tr>
+</table>
+
+<h3 id="t5-mycoplasma"><em>Mycoplasma</em> &mdash; A Excecao</h3>
+
+<p><em>Mycoplasma</em> e uma bacteria que <strong>nao possui parede celular</strong>. E tao pequena que fica na fronteira de tamanho entre virus e bacterias. A distincao: <em>Mycoplasma</em> <strong>produz energia</strong> (metabolismo proprio), virus nao.</p>
+
+<div class="professor-box">"O <em>Mycoplasma</em> vai ter que saber." <em>Mycoplasma pneumoniae</em> causa pneumonia atipica e pode desencadear <strong>anemia hemolitica autoimune</strong>: um fragmento antigenico do <em>Mycoplasma</em> e semelhante a antigenos dos eritrocitos &rarr; mimetismo molecular &rarr; auto-anticorpos destroem hemacias.</div>
+
+<div class="connection-box">Isso se conecta com a Secao 8 (Hipersensibilidades): a anemia hemolitica por <em>Mycoplasma</em> e um exemplo de <strong>hipersensibilidade tipo 2</strong> (anticorpos anti-hospedeiro) causada por <strong>mimetismo molecular</strong>.</div>
+
+<h3 id="t5-bacteriofagos">Bacteriofagos</h3>
+
+<p><strong>Bacteriofago</strong>: particula viral que infecta <strong>somente bacterias</strong> (procariontes). Nossas celulas eucariontes nao possuem receptores para bacteriofagos. Exemplos: fago T4, fago MS2 (~24 nm, pode ser menor que um ribossomo).</p>
+
+<p><strong>Relevancia clinica:</strong></p>
+<ul>
+  <li><strong>Transduccao:</strong> transfere material genetico entre bacterias, podendo conferir resistencia a antibioticos ou fatores de virulencia</li>
+  <li><strong>Fagoterapia:</strong> pesquisa ativa sobre uso de bacteriofagos para destruir bacterias especificas. Vantagem: e direcionado, nao afeta celulas humanas</li>
+</ul>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Estrutura Bacteriana</h4>
+<ul>
+  <li>Formas: cocos (diplo, estrepto, estafilo), bacilos (isolado, diplo, palicada, cocobacilo), espirais (vibriao, espirilo, espiroqueta)</li>
+  <li>Gram: cristal violeta &rarr; lugol &rarr; descoloracao &rarr; fucsina. Positiva = roxa, Negativa = rosa</li>
+  <li>4 estruturas essenciais: citoplasma, ribossomo 70S, membrana, DNA cromossomal circular</li>
+  <li>Nucleoide: regiao onde DNA compactado por histona-like se concentra</li>
+  <li>Endosporo: resistencia extrema, generos Clostridium e Bacillus. Destruido so por autoclavagem (121 &deg;C)</li>
+  <li><em>Mycoplasma</em>: sem parede celular; causa pneumonia atipica e anemia hemolitica autoimune</li>
+  <li>Bacteriofagos: infectam so bacterias; transduccao e fagoterapia</li>
+  <li>S. aureus: coagulase positivo, MRSA (mutacao em PBP), principal agente de sepse/endocardite</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 6: VIROLOGIA -->
+<!-- ============================================================ -->
+<section id="topic6">
+<h2>6. Virologia e Patogenese Viral</h2>
+
+<p>Virus sao os parasitas mais simples que existem: uma capa de proteina com material genetico dentro. Sem metabolismo. Sem energia propria. Mas conseguem causar doencas devastadoras exatamente porque <strong>sequestram a maquinaria da celula hospedeira</strong>.</p>
+
+<h3 id="t6-estrutura">Estrutura da Particula Viral</h3>
+
+<ul>
+  <li><strong>Capsideo:</strong> capa proteica que protege o material genetico</li>
+  <li><strong>Material genetico:</strong> DNA <em>ou</em> RNA (nunca ambos)</li>
+  <li><strong>Enzimas:</strong> algumas particulas carregam enzimas especificas</li>
+  <li><strong>Envelope (opcional):</strong> membrana lipidica adquirida da celula hospedeira</li>
+</ul>
+
+<p>Caracteristica fundamental: a particula viral e <strong>metabolicamente inerte</strong>. E um <strong>parasita intracelular obrigatorio</strong>.</p>
+
+<h3 id="t6-replicacao">Replicacao Viral &mdash; Exemplo do Herpesvirus</h3>
+
+<p>O herpesvirus possui DNA de dupla fita, continuo, linear. O ciclo replicativo:</p>
+<ol>
+  <li>Apos penetracao, o DNA viral vai ao <strong>nucleo</strong> da celula hospedeira</li>
+  <li>Replicacao do DNA viral no nucleo</li>
+  <li>Producao de RNAs mensageiros virais</li>
+  <li>RNAs saem do nucleo &rarr; traduzidos em <strong>proteinas virais</strong> no citoplasma</li>
+  <li>Proteinas retornam ao nucleo, auxiliando na producao de mais RNA e genoma</li>
+  <li><strong>Montagem do capsideo</strong> ocorre <strong>dentro do nucleo</strong></li>
+  <li>O virus adquire envelope da <strong>membrana nuclear</strong> ao sair</li>
+  <li>Empacotamento no complexo de Golgi</li>
+  <li>Liberacao por <strong>exocitose</strong></li>
+</ol>
+
+<h3 id="t6-citopatico">Efeito Citopatico Direto</h3>
+
+<p><strong>Definicao:</strong> qualquer alteracao morfologica em uma celula resultante de invasao por um agente infeccioso.</p>
+
+<div class="professor-box">Efeito citopatico direto <strong>NAO e exclusivo de virus</strong>. Bacterias invasoras de celulas tambem podem causa-lo. Porem, e mais <em>comum</em> em virus. Isso contradiz a ideia popular de que "somente virus fazem citopatico direto".</div>
+
+<p><strong>Exemplos de virus com efeito citopatico:</strong> variola (poxvirus), hepatite B, herpesvirus (herpes simples, varicela-zoster), poliovirus, sarampo, influenza. <em>(exemplos citados pelo professor: variola, hepatite B, herpesvirus; adicionais dos slides: poliovirus, sarampo, influenza)</em></p>
+
+<p>Em laboratorio, celulas infectadas (cultivo celular) perdem aderencia ao plastico da placa, arredondam-se e morrem &mdash; visual completamente diferente das celulas saudaveis.</p>
+
+<h3 id="t6-latencia">Latencia Viral</h3>
+
+<p><strong>Definicao:</strong> o material genetico viral permanece dentro da celula hospedeira em estado inativo, sem producao de novas particulas.</p>
+
+<p><strong>Mecanismo no herpesvirus:</strong></p>
+<ul>
+  <li>O DNA viral se circulariza &rarr; estado <strong>epissomal</strong> (semelhante a plasmideo)</li>
+  <li>Fica "quieto" no nucleo da celula hospedeira</li>
+  <li>A latencia e mantida pela <strong>pressao imunologica</strong> (citocinas)</li>
+</ul>
+
+<p><strong>Reativacao ocorre quando:</strong> estresse (emocional, fisico), imunossupressao (mesmo leve) &mdash; qualquer fator que reduza a pressao imunologica.</p>
+
+<h4>Exemplos clinicos de latencia</h4>
+
+<p><strong>Herpes simples (HSV):</strong> ~29% da populacao ja entrou em contato. Lesoes superficiais em face/labios. Fica latente e reativa em periodos de estresse.</p>
+
+<p><strong>Varicela-zoster (VZV):</strong> Primoinfeccao na infancia = catapora. O virus <em>nao e eliminado</em> &mdash; permanece latente. Reativacao anos depois = <strong>herpes-zoster ("cobreiro")</strong>, geralmente em idosos ou imunossuprimidos. Dor em faixa (dermatomal) com lesoes vesiculares seguindo trajeto de nervo.</p>
+
+<div class="clinical-box"><strong>Conduta clinica:</strong> Ao ver paciente idoso com herpes-zoster, <strong>investigar imunossupressao subjacente</strong> (diabetes mellitus tipo 2, por exemplo). Pedir glicemia e hemoglobina glicada (HbA1c).</div>
+
+<h3 id="t6-envelope">Aquisicao de Envelope Viral</h3>
+
+<p>Nem todo virus envelopado adquire o envelope da mesma fonte:</p>
+
+<table>
+<tr><th>Virus</th><th>Fonte do envelope</th><th>Mecanismo de saida</th></tr>
+<tr><td><strong>Herpesvirus</strong></td><td>Membrana nuclear</td><td>Exocitose (Golgi &rarr; membrana plasmatica)</td></tr>
+<tr><td><strong>HIV</strong></td><td>Membrana plasmatica</td><td>Brotamento (budding) &mdash; leva membrana da celula, causando dano</td></tr>
+</table>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Virologia</h4>
+<ul>
+  <li>Particula viral: capsideo + material genetico (DNA ou RNA) +/- envelope. Metabolicamente inerte</li>
+  <li>Herpesvirus: monta-se dentro do nucleo, adquire envelope da membrana nuclear, sai por exocitose</li>
+  <li>HIV: brota da membrana plasmatica da celula hospedeira</li>
+  <li>Efeito citopatico direto: alteracao morfologica por invasao &mdash; nao exclusivo de virus</li>
+  <li>Latencia: DNA viral epissomal mantido por pressao imunologica (citocinas)</li>
+  <li>Reativacao: estresse ou imunossupressao &rarr; herpes-zoster em idosos sugere investigar DM2</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 7: IMUNOLOGIA -->
+<!-- ============================================================ -->
+<section id="topic7">
+<h2>7. Imunologia</h2>
+
+<p>A imunologia e o elo que une tudo: explica tanto a <strong>defesa</strong> do hospedeiro quanto o <strong>dano indireto</strong> causado quando essa defesa sai do controle. Saber como linfocitos e anticorpos funcionam e pre-requisito para entender hipersensibilidades e autoimunidade.</p>
+
+<h3 id="t7-linfocitosT">Linfocitos T (maturacao no Timo)</h3>
+
+<h4>Linfocito T CD4+ (auxiliar/helper)</h4>
+<p>O <strong>coordenador</strong> da resposta imune especifica:</p>
+<ul>
+  <li>Ativa linfocitos B para producao de anticorpos</li>
+  <li>Ativa linfocitos T CD8+ para funcao citotoxica</li>
+  <li>Na periferia, libera <strong>citocinas</strong> sobre macrofagos, ativando-os plenamente ("tunando" o macrofago para matar patogenos intracelulares)</li>
+</ul>
+
+<h4>Linfocito T CD8+ (citotoxico/citolitico)</h4>
+<p>O <strong>matador direto</strong>:</p>
+<ul>
+  <li>Reconhece antigenos apresentados por <strong>HLA de classe I</strong> (todas as celulas nucleadas expressam HLA-I)</li>
+  <li>Utiliza <strong>perforinas e granzimas</strong> para induzir apoptose</li>
+  <li>Mata celula a celula &mdash; resposta muito agressiva, pode causar <strong>dano colateral</strong> ao tecido</li>
+</ul>
+
+<div class="professor-box"><strong>Analogia do CD8+ (sala de aula):</strong> O predio = orgao. Cada sala = celula. HLA classe I = placa na porta mostrando quem esta dentro. CD8+ = seguranca procurando um invasor especifico. Se encontrar: mata todos na sala (apoptose). "Dano transversal" = pode destruir paredes estruturais do predio.</div>
+
+<h3 id="t7-linfocitosB">Linfocitos B e Plasmocitos</h3>
+
+<p>Linfocitos B maturam na <strong>medula ossea</strong>. Quando ativados (pelo CD4+), proliferam e se transformam em <strong>plasmocitos</strong> &mdash; celulas efetoras cuja funcao e produzir e secretar <strong>anticorpos</strong> (imunoglobulinas). O plasmocito "trabalha muito e morre cedo".</p>
+
+<h3 id="t7-anticorpos">Anticorpos &mdash; 5 Classes</h3>
+
+<p><strong>Estrutura do monomero:</strong></p>
+<ul>
+  <li><strong>Porcao Fab</strong> (fragmento de ligacao ao antigeno): regiao variavel &mdash; as "maozinhas" que reconhecem e neutralizam o antigeno</li>
+  <li><strong>Porcao Fc</strong> (fragmento cristalizavel): regiao constante &mdash; a "bundinha" que define a <em>classe</em> e a <em>funcao fisiologica</em></li>
+</ul>
+
+<table>
+<tr><th>Classe</th><th>Cadeia pesada</th><th>Funcao principal</th></tr>
+<tr><td><strong>IgM</strong></td><td>&mu; (mu)</td><td>Primeiro anticorpo da resposta primaria</td></tr>
+<tr><td><strong>IgG</strong></td><td>&gamma; (gama)</td><td>Principal anticorpo serico</td></tr>
+<tr><td><strong>IgA</strong></td><td>&alpha; (alfa)</td><td>Principal anticorpo de mucosas ("IgA de amor")</td></tr>
+<tr><td><strong>IgD</strong></td><td>&delta; (delta)</td><td>Receptor de superficie do linfocito B</td></tr>
+<tr><td><strong>IgE</strong></td><td>&epsilon; (epsilon)</td><td>Relacionado a alergias e parasitas</td></tr>
+</table>
+
+<h3 id="t7-funcoes">3 Funcoes Fisiologicas dos Anticorpos</h3>
+
+<h4>1. Ativacao do Sistema Complemento</h4>
+<p>O anticorpo (via Fc) ativa o sistema complemento: proteinas plasmaticas que, em cascata, geram lise celular (complexo de ataque a membrana &mdash; MAC).</p>
+
+<div class="professor-box"><strong>O anticorpo NAO e litico por si so.</strong> "Nao existe anticorpo litico." Ele <em>ativa</em> o sistema complemento, que realiza a lise.</div>
+
+<h4>2. Ligacao a Receptores Fc</h4>
+<ul>
+  <li><strong>Celulas NK:</strong> imunidade inata, mesmo poder de matar que o CD8+. Ao ligar-se a Fc do anticorpo, "adquire" especificidade &rarr; <strong>ADCC</strong> (citotoxicidade celular dependente de anticorpo)</li>
+  <li><strong>Neutrofilos:</strong> possuem receptores Fc. A ligacao pode induzir <strong>degranulacao</strong> (liberacao de EROs e enzimas sobre o tecido &mdash; pode causar dano)</li>
+</ul>
+
+<h4>3. Opsonizacao</h4>
+<p><strong>Definicao:</strong> facilitar/favorecer o processo de fagocitose (do grego: "preparar para comer"). O anticorpo neutraliza o patogeno pelas "maos" (Fab) e apresenta-o ao macrofago pela "bunda" (Fc). O macrofago tem receptores Fc e fagocita o complexo.</p>
+
+<div class="connection-box">Lembra da capsula bacteriana que impede a fagocitose (Secao 3)? A opsonizacao e a solucao do hospedeiro: anticorpos e complemento funcionam como opsoninas que vencem a barreira capsular.</div>
+
+<h3 id="t7-imunocomplexos">Imunocomplexos e Depuracao</h3>
+
+<p><strong>Imunocomplexo:</strong> anticorpos ligados a patogenos ou fragmentos. Formam precipitados que precisam ser removidos da circulacao.</p>
+
+<p><strong>Processo normal:</strong> macrofagos fagocitam os imunocomplexos (depuracao) &rarr; resolucao da infeccao.</p>
+
+<p><strong>Quando falha:</strong> se a formacao de imunocomplexos excede a capacidade de depuracao, eles se <strong>acumulam na circulacao</strong> e se <strong>depositam em tecidos</strong> (pela porcao Fc, de forma inespecifica) &rarr; causam dano (hipersensibilidade tipo 3, detalhada na Secao 8).</p>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Imunologia</h4>
+<ul>
+  <li>CD4+: coordenador &mdash; ativa B, CD8+ e macrofagos (via citocinas)</li>
+  <li>CD8+: citotoxico &mdash; perforinas/granzimas, mata celula a celula via HLA-I</li>
+  <li>Linfocito B &rarr; plasmocito &rarr; anticorpos (5 classes: IgM, IgG, IgA, IgD, IgE)</li>
+  <li>Fab = reconhecimento (variavel); Fc = funcao e classe (constante)</li>
+  <li>3 funcoes dos anticorpos: ativar complemento, ligar-se a receptores Fc, opsonizacao</li>
+  <li>Anticorpo NAO e litico &mdash; ativa o complemento que faz a lise</li>
+  <li>Imunocomplexos: quando depuracao falha, depositam-se inespecificamente em tecidos</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 8: HIPERSENSIBILIDADES -->
+<!-- ============================================================ -->
+<section id="topic8">
+<h2>8. Hipersensibilidades e Autoimunidade</h2>
+
+<p>Hipersensibilidade e quando a resposta imune <strong>sai do controle</strong> e causa mais dano do que beneficio ao proprio hospedeiro. Sao "erros" do sistema imune. Entender os 4 tipos e fundamental para a clinica medica.</p>
+
+<h3 id="t8-tipo1">Tipo 1 &mdash; Alergia/Atopia</h3>
+<p>Mediada por <strong>IgE</strong>, ativacao de <strong>mastocitos</strong> e <strong>basofilos</strong> (receptores de alta afinidade para IgE). Degranulacao massiva &rarr; liberacao de <strong>histamina</strong> e mediadores inflamatorios.</p>
+<p><strong>Exemplos:</strong> asma bronquica, rinite alergica, alergia alimentar, alergias a acaros.</p>
+
+<h3 id="t8-tipo2">Tipo 2 &mdash; Citotoxica (Anticorpos Anti-Hospedeiro)</h3>
+<p>O anticorpo se liga <strong>diretamente</strong> a celulas ou tecidos proprios pela <strong>porcao Fab</strong> (especifica contra o tecido).</p>
+<p><strong>Mecanismos de lesao:</strong></p>
+<ol>
+  <li>Opsonizacao e fagocitose de celulas proprias</li>
+  <li>Recrutamento de neutrofilos que degranulam sobre o tecido</li>
+  <li>Ativacao do complemento sobre celulas proprias (lise pelo MAC)</li>
+  <li>Resposta de CD8+ contra celulas proprias</li>
+</ol>
+<p><strong>Exemplos:</strong> febre reumatica (anticorpos anti-coracao), anemia hemolitica autoimune (<em>Mycoplasma pneumoniae</em>).</p>
+
+<h3 id="t8-tipo3">Tipo 3 &mdash; Imunocomplexos</h3>
+<p>Deposicao <strong>inespecifica</strong> de complexos antigeno-anticorpo em tecidos (pela porcao Fc).</p>
+
+<div class="clinical-box"><strong>Exemplo classico &mdash; Meningococcemia fulminante:</strong> <em>Neisseria meningitidis</em> libera LPS massivamente. Producao intensa de anticorpos forma imunocomplexos que excedem a depuracao. Depositam-se em glomerulos (&rarr; glomerulonefrite) e em paredes vasculares (&rarr; vasculite). Neutrofilos se ligam a Fc e degranulam sobre os vasos: EROs + enzimas &rarr; destruicao da parede vascular.</div>
+
+<p><strong>Outros exemplos:</strong> glomerulonefrite pos-estreptococica, lupus eritematoso sistemico, artrite reumatoide.</p>
+
+<div class="professor-box"><strong>Distincao crucial:</strong> No <strong>tipo 3</strong> (imunocomplexo), o anticorpo esta ligado ao patogeno e "cai" no tecido pela Fc (inespecifico). No <strong>tipo 2</strong> (anti-hospedeiro), o anticorpo reconhece DIRETAMENTE a celula propria pela Fab (especifico). Essa diferenca e cobrada em prova.</div>
+
+<h3 id="t8-tipo4">Tipo 4 &mdash; Mediada por Celulas (Tardia)</h3>
+<p>Mediada por <strong>linfocitos T</strong> (nao por anticorpos). Dois mecanismos:</p>
+
+<h4>Via CD8+:</h4>
+<p>Reconhece antigenos via HLA-I, induz apoptose diretamente. Resposta muito agressiva &mdash; "dano transversal" pode destruir o tecido/orgao.</p>
+
+<h4>Via CD4+:</h4>
+<p>Libera citocinas sobre macrofagos &rarr; ativa plenamente &rarr; se excessiva, forma <strong>granuloma</strong> e causa destruicao tecidual.</p>
+
+<p><strong>Exemplo importante &mdash; DM tipo 1:</strong> O DM1 envolve predominantemente mecanismos de hipersensibilidade tipo 4 (destruicao de celulas beta por CD8+), embora auto-anticorpos (anti-GAD, anti-IA2) tambem estejam presentes (componente tipo 2). A maioria dos livros-texto classifica o DM1 como tipo 4.</p>
+
+<div class="clinical-box"><strong>Tuberculose &mdash; o exemplo classico:</strong> <em>Mycobacterium tuberculosis</em> sobrevive dentro do macrofago alveolar (mecanismos de resistencia a fagocitose). O CD4+ precisa chegar e liberar citocinas para ativar plenamente o macrofago. Forma-se o <strong>granuloma</strong> (macrofagos ativados + linfocitos T circundantes) que contem a infeccao, mas <strong>destroi tecido pulmonar</strong>. No HIV (sem CD4+ suficientes), os macrofagos nao sao ativados &rarr; tuberculose disseminada e fatal.</div>
+
+<h3 id="t8-autoimunidade">Autoimunidade &mdash; Triade e Mimetismo Molecular</h3>
+
+<h4>Triade da Autoimunidade</h4>
+<p>Para desenvolver doenca autoimune, sao necessarios <strong>tres fatores</strong>:</p>
+<ol>
+  <li><strong>Predisposicao genetica:</strong> capacidade de gerar clones autoreativos. Peso menor do que se acreditava: gemeos univitelinos tem concordancia <strong>menor que 50%</strong> para DM1.</li>
+  <li><strong>Quebra da tolerancia imunologica:</strong> O sistema normalmente elimina clones autoreativos. Tolerancia central no timo: <strong>95% dos timocitos morrem</strong> por apoptose (autoreativos); apenas 5% sobrevivem. Tolerancia periferica nos orgaos linfoides secundarios.</li>
+  <li><strong>Fator ambiental (gatilho):</strong> sem ele, mesmo com predisposicao e falha de tolerancia, a doenca NAO se desenvolve. Na maioria dos casos, a etiologia e <strong>idiopatica</strong>.</li>
+</ol>
+
+<h4>Mimetismo Molecular</h4>
+<p>Semelhanca estrutural entre antigeno externo e antigeno proprio. Exemplos:</p>
+
+<table>
+<tr><th>Fator ambiental</th><th>Alvo mimetizado</th><th>Doenca</th></tr>
+<tr><td>Proteina M do <em>S. pyogenes</em></td><td>Proteinas do tecido cardiaco</td><td><strong>Febre reumatica</strong> (6 semanas apos faringite; 3% da populacao; so pos-infeccao faringea)</td></tr>
+<tr><td>Albumina bovina (leite de vaca)</td><td>Celula beta pancreatica</td><td><strong>DM tipo 1</strong> (criancas com DM1 precoce: ~100% com anticorpos anti-albumina bovina)</td></tr>
+<tr><td>Peptideos do <em>Mycoplasma pneumoniae</em></td><td>Antigenos eritrocitarios</td><td><strong>Anemia hemolitica autoimune</strong></td></tr>
+</table>
+
+<div class="professor-box">A <strong>febre reumatica</strong> e um dos poucos exemplos em que a etiologia autoimune e <strong>conhecida</strong>. Ocorre <em>somente</em> apos infeccao faringea por <em>S. pyogenes</em> (nao apos infeccao de pele). A manifestacao mais grave e a <strong>cardite</strong>. O Brasil tem alta incidencia &mdash; importancia do tratamento adequado da faringite.</div>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Hipersensibilidades e Autoimunidade</h4>
+<ul>
+  <li>Tipo 1: IgE + mastocitos/basofilos &rarr; alergia (histamina)</li>
+  <li>Tipo 2: anticorpos anti-hospedeiro via Fab (especificos) &rarr; febre reumatica, anemia hemolitica</li>
+  <li>Tipo 3: imunocomplexos depositados via Fc (inespecificos) &rarr; glomerulonefrite, vasculite, meningococcemia</li>
+  <li>Tipo 4: mediada por celulas T &mdash; CD8+ (apoptose direta) e CD4+ (ativacao de macrofago &rarr; granuloma) &rarr; tuberculose, DM1 (CD8+ destroi celulas beta)</li>
+  <li>Triade: predisposicao genetica + quebra de tolerancia + fator ambiental</li>
+  <li>Selecao timica: 95% dos timocitos morrem (autoreativos)</li>
+  <li>Mimetismo molecular: S. pyogenes/coracao, albumina bovina/celula beta, Mycoplasma/eritrocitos</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 9: MICOLOGIA GERAL -->
+<!-- ============================================================ -->
+<section id="topic9">
+<h2>9. Micologia Geral</h2>
+
+<p>Fungos sao responsaveis por infeccoes cada vez mais prevalentes, especialmente em pacientes imunossuprimidos. E o unico grupo de micro-organismos com <strong>zero suscetibilidade a antibacterianos</strong> &mdash; entender por que e saber o que os torna unicos.</p>
+
+<h3 id="t9-caract">Caracteristicas Gerais dos Fungos</h3>
+<ul>
+  <li><strong>Eucariontes</strong> (envoltorio nuclear + organelas membranosas)</li>
+  <li><strong>Parede celular de QUITINA</strong> (polissacarideo)</li>
+  <li><strong>Aclorofilados</strong> (sem clorofila, sem cloroplastos)</li>
+  <li><strong>Nao formam tecidos</strong> organizados</li>
+  <li><strong>Heterotroficos</strong> (nao produzem energia pela fotossintese)</li>
+  <li><strong>Saprofitas</strong> (vivem de restos em decomposicao)</li>
+  <li><strong>Zero suscetibilidade a antibacterianos</strong></li>
+  <li>Reproducao sexuada e assexuada</li>
+  <li>~5 milhoes de especies; ~5.100.000 catalogadas; ~6.000 no Brasil</li>
+</ul>
+
+<div class="professor-box"><strong>"E QUITINA!"</strong> Nao e queratina (que esta na pele) e nao e actina (proteina do citoesqueleto). Erro comum dos alunos que o professor corrigiu varias vezes.</div>
+
+<h3 id="t9-parede">Parede Celular</h3>
+<table>
+<tr><th>Organismo</th><th>Componente da parede</th></tr>
+<tr><td>Fungo</td><td><strong>Quitina</strong> (polimero de N-acetilglicosamina) + glucanas + mananas</td></tr>
+<tr><td>Planta</td><td>Celulose (+ lignina)</td></tr>
+<tr><td>Bacteria</td><td>Peptideoglicano</td></tr>
+</table>
+
+<p>A parede de quitina e o motivo pelo qual antibacterianos nao funcionam contra fungos: o alvo (peptideoglicano) simplesmente nao existe. Os antifungicos atuam sobre <strong>ergosterol</strong> (membrana), <strong>beta-glucana</strong> (parede) ou <strong>sintese de acidos nucleicos</strong>.</p>
+
+<h3 id="t9-morfologia">Bolores vs. Leveduras</h3>
+
+<table>
+<tr><th></th><th>Bolores (mofos)</th><th>Leveduras (levedos)</th></tr>
+<tr><td>Tipo celular</td><td>Filamentoso (hifas)</td><td>Arredondado/ovalado</td></tr>
+<tr><td>Aspecto macroscopico</td><td>Algodonoso, aveludado</td><td>Cremoso</td></tr>
+<tr><td>Exemplos</td><td><em>Aspergillus</em>, <em>Penicillium</em>, <em>Trichophyton</em></td><td><em>Candida</em>, <em>Saccharomyces</em></td></tr>
+</table>
+
+<h3 id="t9-hifas">Hifas e Micelio</h3>
+
+<p><strong>Hifas</strong> sao as celulas alongadas dos fungos filamentosos. Contem membrana, parede celular, organelas e nucleos. Crescem na direcao do nutriente.</p>
+
+<table>
+<tr><th>Tipo</th><th>Descricao</th></tr>
+<tr><td><strong>Hifas septadas</strong></td><td>Possuem septos (divisoes) entre compartimentos de citoplasma</td></tr>
+<tr><td><strong>Hifas cenocíticas</strong> (= nao septadas = asseptadas)</td><td>Sem septos; multiplos nucleos no mesmo citoplasma continuo</td></tr>
+<tr><td><strong>Pseudo-hifas</strong></td><td>Leveduras que se alongam sem se separar, formando cadeia (ex.: <em>C. albicans</em>)</td></tr>
+</table>
+
+<p>Formacao do septo: sempre de fora para dentro = <strong>centripeta</strong> (invaginacao da membrana e parede). <strong>Micelio</strong> = conjunto (coletivo) de hifas. Um fungo na forma miceliana e um "fungo filamentoso".</p>
+
+<p>Estruturas reprodutivas dos filamentosos: <strong>esporangio</strong> (bolsa cheia de esporos nas extremidades das hifas, facilita dispersao) e <strong>rizoide</strong> (semelhante a raiz).</p>
+
+<h3 id="t9-dimorfismo">Dimorfismo e Termodimorfismo</h3>
+
+<p>Alguns fungos podem existir como <strong>levedura E como micelio</strong>, dependendo das condicoes. Quando a mudanca depende da temperatura, e <strong>termodimorfismo</strong>.</p>
+
+<div class="clinical-box"><strong>Exemplo classico &mdash; <em>Paracoccidioides brasiliensis</em>:</strong> presente no solo. E inalado na <strong>forma miceliana</strong> (filamentosa, a 25 &deg;C). Ao chegar ao pulmao (36 &deg;C), converte-se em <strong>levedura</strong>. Essa transicao e o termodimorfismo. Causa paracoccidioidomicose &mdash; uma micose <strong>sistemica</strong> (nao superficial).</div>
+
+<h3 id="t9-reproducao">Reproducao</h3>
+
+<h4>Assexuada: Brotamento</h4>
+<p>A celula-mae gera uma ou mais celulas-filha (brotos). <strong>NAO e mitose classica</strong> (na mitose sao sempre 2 celulas-filha; no brotamento pode ser 1, 2, 3 ou 4). Nas bacterias, o analogo e a <strong>cissiparidade</strong> (fissao binaria).</p>
+
+<h4>Sexuada: Fusao de nucleos haploides</h4>
+<p>Celulas haploides (obtidas por meiose) fundem seus nucleos. <strong>Nao ha dimorfismo sexual</strong> (nao existe "fungo macho" nem "fungo femea"). Nao ha gametas diferenciados.</p>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Micologia Geral</h4>
+<ul>
+  <li>Fungos: eucariontes, parede de quitina, aclorofilados, heterotroficos</li>
+  <li>Zero suscetibilidade a antibacterianos (penicilina vem de <em>Penicillium</em>!)</li>
+  <li>Bolores (filamentosos/algodonosos) vs. Leveduras (arredondadas/cremosas)</li>
+  <li>Hifas septadas vs. cenocíticas (asseptadas); formacao do septo e centripeta</li>
+  <li>Micelio = coletivo de hifas</li>
+  <li>Dimorfismo: fungo pode ser levedura E micelio; termodimorfismo: <em>Paracoccidioides</em></li>
+  <li>Reproducao assexuada = brotamento (nao e mitose); sexuada = fusao de nucleos haploides</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 10: MICOLOGIA CLINICA -->
+<!-- ============================================================ -->
+<section id="topic10">
+<h2>10. Micologia Clinica</h2>
+
+<p>Aqui vamos aos fungos que voce vai encontrar na pratica: desde a <em>Candida</em> do dia a dia ate fungos emergentes multirresistentes. A clinica e a identificacao laboratorial andam juntas. Nesta secao, alem do panorama geral, voce vai encontrar o conteudo <strong>detalhado</strong> do Filo Ascomycota &mdash; o filo que contem <em>Candida</em> e <em>Aspergillus</em>, dois dos generos fungicos mais relevantes para a pratica medica.</p>
+
+<!-- ==================== ASCOMYCOTA ==================== -->
+<h3 id="t10-ascomycota">Filo Ascomycota &mdash; Caracteristicas Gerais</h3>
+
+<p>Vamos comecar pelo filo inteiro antes de entrar em cada genero. Entender o filo ajuda a conectar as caracteristicas que <em>Candida</em> e <em>Aspergillus</em> compartilham.</p>
+
+<h4>Morfologia e nomenclatura</h4>
+<p>O nome <strong>Ascomycota</strong> vem do grego <em>ascos</em> = saco (ou odre). Refere-se a estrutura reprodutiva em forma de saco. Na natureza, alguns representantes apresentam essa forma macroscopica de saco claramente visivel; outros sao unicelulares e nao exibem essa forma tao evidente. Alguns podem ter aspecto semelhante a cogumelos com pedunculo e chapeu (o "chapeu" e composto por estruturas portadoras de esporos).</p>
+
+<h4>Estrutura celular</h4>
+<p>Quando formam micelio, as hifas sao <strong>septadas</strong> (com septos/divisorias) &mdash; esta e uma particularidade importante do grupo. O filo e grande e diversificado: inclui tanto organismos <strong>unicelulares</strong> quanto <strong>multicelulares</strong>.</p>
+
+<div class="professor-box"><strong>Hifas dos Ascomycota sao SEPTADAS.</strong> Se cair na prova uma questao sobre tipo de hifa do filo Ascomycota, a resposta e septada. Diferente dos Zigomicetos, que possuem hifas cenociticas (asseptadas).</div>
+
+<h4>Reproducao</h4>
+<ul>
+  <li><strong>Sexuada:</strong> esporos chamados <strong>ascosporos</strong> (esporos armazenados dentro do asco, dentro do "saco"). Analogia: assim como nos Basidiomycetos o esporo e basidiosporo, e nos Zigomicetos e zigosporo.</li>
+  <li><strong>Assexuada:</strong> forma dominante e o desenvolvimento de <strong>conidios</strong> atraves do <strong>conidioforo</strong> &mdash; a estrutura reprodutiva assexuada que lembra uma arvore conifera ou a cauda de um pavao. O esporo liberado e chamado de <strong>conidio</strong>.</li>
+  <li><strong>Ciclo:</strong> ascosporo cai no ambiente &rarr; diferencia-se em hifas &rarr; hifas crescem ou combinam (troca de material genetico) &rarr; individuo diploide &rarr; meiose &rarr; celulas haploides caem no ambiente.</li>
+</ul>
+
+<div class="professor-box"><strong>Esporos sexuados = ascosporos; esporos assexuados = conidios.</strong> Essa distincao e cobrada em prova. Nao confunda: conidio e a forma assexuada (predominante), ascosporo e a forma sexuada.</div>
+
+<h4>Habitat e distribuicao</h4>
+<ul>
+  <li><strong>Habitat:</strong> tanto terrestre quanto aquatico, mas a <strong>maioria e terrestre</strong></li>
+  <li><strong>Distribuicao:</strong> cosmopolitas &mdash; espalhados por todo o mundo</li>
+  <li><strong>Simbiose com algas:</strong> capacidade de combinar-se com algas microscopicas formando <strong>liquens</strong> (indicadores de qualidade do ar: muitos liquens = boa qualidade do ar)</li>
+</ul>
+
+<h4>Relacao com o homem</h4>
+<p>A maioria NAO e patogenica. Os patogenicos sao os <strong>microscopicos</strong>. Os macroscopicos podem produzir <strong>micotoxinas</strong> (sao toxigenicos, nao propriamente patogenicos). Representantes importantes do grupo:</p>
+<ul>
+  <li><strong><em>Penicillium</em></strong> &mdash; fonte da penicilina (importancia farmacologica)</li>
+  <li><strong><em>Saccharomyces</em></strong> &mdash; industria alimenticia (levedura de fermentacao)</li>
+  <li><strong><em>Candida</em></strong> &mdash; clinicamente importante</li>
+  <li><strong><em>Aspergillus</em></strong> &mdash; clinicamente importante</li>
+</ul>
+
+<!-- ==================== CANDIDA ==================== -->
+<h3 id="t10-candida">Genero <em>Candida</em> &mdash; Visao Geral</h3>
+
+<p>Pertence ao filo Ascomycota e possui mais de <strong>100 especies</strong>. O nome <em>Candida albicans</em> carrega uma redundancia proposital: "candida" = branco/candido; "albicans" = de alvo (branco). O nome refere-se as <strong>placas esbranquicadas</strong> que o fungo forma nas mucosas.</p>
+
+<div class="professor-box"><strong>Moniliase = Candidiase!</strong> O nome antigo do genero era <em>Monilia</em>, e a infeccao era chamada de <strong>moniliase</strong>. Prova pode usar "moniliase" em vez de "candidiase" para testar se voce conhece a nomenclatura antiga. Outro nome popular: <strong>"sapinho"</strong> (denominacao compartilhada com infeccao por herpes na linguagem popular).</div>
+
+<p><strong>Especies clinicamente importantes:</strong></p>
+<ul>
+  <li><em>Candida albicans</em> &mdash; a mais comum</li>
+  <li><em>Candida glabrata</em> &mdash; reproduz-se apenas por brotamento; pode coexistir com <em>C. albicans</em></li>
+  <li><em>Candida auris</em> &mdash; emergente, multirresistente (detalhada mais adiante)</li>
+</ul>
+
+<p>Presente na <strong>microbiota normal</strong> (mucosa nasal, trato gastrointestinal). Parede celular com <strong>beta-glucana</strong> (presente em todo o genero).</p>
+
+<h3 id="t10-candida-morfologia">Morfologia de <em>Candida</em></h3>
+
+<p><strong>Forma:</strong> leveduroide (unicelular). <em>Candida</em> pode formar tanto <strong>pseudo-hifas</strong> (nao verdadeiras) quanto <strong>hifas verdadeiras</strong>. Essa versatilidade reprodutiva &mdash; levedura + hifa + pseudo-hifa &mdash; causa dano rapido ao tecido colonizado.</p>
+
+<p><strong>Reproducao:</strong> por <strong>brotamento</strong>. As estruturas em brotamento sao chamadas de <strong>blastosporos</strong> (blastoconidio), pelo fato de estarem intimamente ligados a uma celula-mae.</p>
+
+<div class="clinical-box"><strong>Relevancia clinica:</strong> Em biopsias de quadros infecciosos por Candida, voce pode observar formacoes alongadas (pseudo-hifas ou hifas verdadeiras). Nao e necessario saber diferenciar pseudo-hifa de hifa verdadeira na pratica, mas saiba que ambas podem ocorrer.</div>
+
+<h3 id="t10-candida-locais">Localizacoes Anatomicas &mdash; Sitios de Infeccao por <em>Candida</em></h3>
+
+<p><strong>Condicoes favoraveis:</strong> calor, temperatura elevada e umidade.</p>
+
+<h4>Regioes de dobra (mais comuns)</h4>
+<ul>
+  <li>Axila</li>
+  <li>Virilha</li>
+  <li>Espaco interdigital (maos e pes)</li>
+  <li>Dobra submamaria</li>
+  <li>Dobras do dorso do pe</li>
+  <li>Canto da boca (<strong>queilite angular</strong>)</li>
+</ul>
+
+<h4>Mucosas</h4>
+<ul>
+  <li>Esofago</li>
+  <li>Lingua / mucosa oral</li>
+  <li>Orofaringe</li>
+</ul>
+
+<h4>Outros locais</h4>
+<ul>
+  <li>Couro cabeludo</li>
+  <li>Orelha</li>
+  <li>Fenda palpebral (olho) &mdash; o professor relata ja ter isolado Candida de fenda palpebral</li>
+  <li>Visceras (nos quadros mais graves)</li>
+  <li>Unhas (<strong>onicomicose</strong>)</li>
+</ul>
+
+<h4>Manifestacoes clinicas detalhadas</h4>
+<ul>
+  <li><strong>Pele:</strong> coceira, escamacao. "Frieira" entre os dedos dos pes e muito comum &mdash; uso de calcados fechados + meias = calor + umidade + transpiracao = ambiente ideal. Tratamento simples com locoes/pomadas, resolucao rapida.</li>
+  <li><strong>Mucosa:</strong> incomodo significativo (mucosa oral, esofagica). Candidíase orofaringea ("sapinho"), candidíase vulvovaginal.</li>
+  <li><strong>Onicomicose:</strong> etimologia: onico = unha (de <em>onyx</em>); micose = infeccao fungica. O fungo se desenvolve <strong>embaixo da unha</strong> (nao sobre ela), causa desvio da trajetoria de crescimento. Quadro mais complicado de tratar.</li>
+  <li><strong>Sistema nervoso:</strong> pode afetar em alguns casos, dependendo da imunidade do paciente.</li>
+  <li><strong>Biofilme</strong> em dispositivos medicos: cateteres, canulas, sondas uretrais e nasogastricas.</li>
+  <li>Esofagite, pneumonia, endocardite, neuropatia, infeccao hematogenica (em transplantados/HIV).</li>
+</ul>
+
+<h3 id="t10-candida-origem">Origem da Infeccao por <em>Candida</em></h3>
+
+<div class="professor-box"><strong>Candidiase pode ter origem ENDOGENA (microbiota propria) ou EXOGENA (procedimentos).</strong> Essa distincao e clinicamente fundamental e pode cair em prova: ajuda a direcionar a investigacao epidemiologica e a prevencao.</div>
+
+<h4>Origem endogena (microbiota propria)</h4>
+<p>Vem da propria <strong>microbiota</strong> do individuo. Locais de afeccao:</p>
+<ul>
+  <li><strong>Orofaringe e esofago:</strong> relacionados a quimioterapia imunossupressora, quimioterapia para cancer e AIDS/imunodeficiencia adquirida.</li>
+  <li><strong>Candidiase mucocutanea cronica:</strong> variante clinica importante, relacionada a imunodeficiencia e imunossupressao.</li>
+  <li><strong>Pneumonia por aspiracao:</strong> conteudo da mucosa oral e aspirado para o aparelho respiratorio (especialmente em idosos que engasgam).</li>
+  <li><strong>Pneumonia por imunossupressao.</strong></li>
+</ul>
+
+<h4>Origem exogena (fonte externa)</h4>
+<p>Vem de fonte que NAO e do organismo humano (nutricao parenteral, introducao de valvula cardiaca, outros procedimentos invasivos). Locais de afeccao:</p>
+<ul>
+  <li><strong>Aparelho urinario (uretra):</strong> manipulacao de sonda vesical. Candida nao deveria estar na uretra. Contaminacao por manipulacao da canula sem luva, ou permanencia prolongada da canula em contato com roupa hospitalar.</li>
+  <li><strong>Coracao:</strong> ato cirurgico (substituicao de valvula cardiaca) &rarr; pode gerar <strong>endocardite</strong> ou <strong>pericardite</strong>.</li>
+  <li><strong>Sistema nervoso:</strong> manipulacao cirurgica hospitalar. Em imunocompetentes, improvavel; em imunossuprimidos, mais provavel.</li>
+  <li><strong>Globo ocular:</strong> cirurgia ou trauma. Pode ser exogena ou endogena.</li>
+  <li><strong>Ossos e articulacoes:</strong> cirurgias, traumatismos. Diabetes como fator predisponente.</li>
+</ul>
+
+<h4>Origem exogena e/ou endogena</h4>
+<ul>
+  <li><strong>Infeccao abdominal:</strong> peritonite e ascite. Causas: perfuracao por instrumento cirurgico, instrumento perfurocortante (violencia, projeteis) ou <strong>CAPD</strong> (dialise peritoneal ambulatorial continua).</li>
+  <li><strong>Infeccao hematogenica (disseminada):</strong> sepse, fungemia. Ocorre em transplante de orgaos, contaminacao sanguinea, maquinas de hemodialise contaminadas.</li>
+</ul>
+
+<div class="clinical-box"><strong>Dialise peritoneal (CAPD):</strong> Alternativa a hemodialise feita em casa. Bolsa com liquido introduzido no peritonio, trocada a cada noite em dispositivo mecanico. A fistula permanente (ponto aberto para introducao da canula todas as noites) representa risco de infeccao. A contaminacao pode ser exogena ou endogena (da pele). &mdash; Em hospitais, deveria haver higienizacao da maquina de hemodialise entre cada paciente, mas por razoes economicas (solucao de limpeza e cara), alguns servicos fazem higienizacao a cada 2-3 pacientes, gerando risco de <strong>infeccao cruzada</strong>.</div>
+
+<h3 id="t10-candida-diag">Diagnostico de Candidiase</h3>
+
+<h4>Diagnostico clinico</h4>
+<p>Relativamente facil pela observacao das lesoes (placas esbranquicadas nos sitios tipicos).</p>
+
+<div class="professor-box"><strong>O diagnostico clinico de candidiase e facil (placas brancas). A dificuldade e quando NAO e <em>C. albicans</em>.</strong> Quando a infeccao e por outra especie de Candida, o tratamento empirico para <em>C. albicans</em> pode nao funcionar, exigindo identificacao laboratorial.</div>
+
+<h4>Diagnostico laboratorial</h4>
+<ol>
+  <li><strong>Exame direto a fresco:</strong> raspado da lesao observado ao microscopio.</li>
+  <li><strong>Cultura:</strong> semeadura em meio padrao ou <strong>meio cromogenico &mdash; CHROMagar Candida</strong> &mdash; meio especial que permite diferenciacao de especies pela cor das colonias.</li>
+  <li><strong>Imunofluorescencia:</strong> deteccao de anticorpos anti-Candida.</li>
+  <li><strong>Histopatologico:</strong> ve-se o fungo (levedura), mas nao se pode afirmar a especie. Apenas sugere infeccao fungica.</li>
+</ol>
+
+<h4>Coloracoes importantes para biopsias</h4>
+
+<div class="professor-box"><strong>HE NAO SERVE PARA FUNGO!</strong> Na hematoxilina-eosina (HE), o fungo e redondinho/ovalado e confunde-se com linfocito (que tambem pega bastante corante com HE). O profissional DEVE solicitar a coloracao adequada ao laboratorio. Se nao solicitar, o laboratorio faz HE automaticamente &mdash; e voce tera que repetir a biopsia.</div>
+
+<p><strong>Coloracoes adequadas para fungos:</strong></p>
+<ul>
+  <li><strong>PAS</strong> (Acido Periodico de Schiff) &mdash; excelente para evidenciacao de fungos</li>
+  <li><strong>Grocott</strong> (metanamina de prata / prata de Grocott) &mdash; excelente para fungos</li>
+  <li><strong>Azul de lactofenol</strong> (<em>lactophenol cotton blue</em>) &mdash; excelente para fungos</li>
+</ul>
+
+<h3 id="t10-candida-trat">Tratamento da Candidiase</h3>
+
+<p>Varia de acordo com o tipo e local da afeccao:</p>
+
+<ul>
+  <li><strong>Tratamento topico:</strong> cremes, locoes (para afeccoes cutaneas superficiais como frieiras). Resolucao rapida.</li>
+  <li><strong>Via oral:</strong> <strong>Itraconazol</strong> (muito utilizado), <strong>Voriconazol</strong> e azolicos de modo geral.</li>
+  <li><strong>Anfotericina B:</strong> farmaco potente, reservado para <strong>casos mais graves</strong>.</li>
+  <li><strong>Caspofungina</strong> (equinocandina): farmaco mais recente, mostra-se bastante eficaz.</li>
+</ul>
+
+<div class="professor-box"><strong>CUIDADO com Cetoconazol!</strong> O professor ressalvou que ha uma questao importante sobre este farmaco: classicamente e <strong>hepatotoxico</strong>. Usar com cautela e monitorar funcao hepatica.</div>
+
+<div class="professor-box"><strong>Anfotericina B: reservada para casos graves</strong> (tanto para Candida quanto para Aspergillus). E um farmaco potente com efeitos adversos significativos &mdash; nao se usa de primeira linha em infeccoes simples.</div>
+
+<!-- ==================== ASPERGILLUS ==================== -->
+<h3 id="t10-aspergillus">Genero <em>Aspergillus</em> &mdash; Visao Geral</h3>
+
+<p><em>Aspergillus</em> e um fungo filamentoso (bolor) do filo Ascomycota, causa de <strong>aspergilose</strong>. A forma clinica principal e a <strong>pulmonar</strong> (tambem pode afetar sistema nervoso, mas o pulmao e o alvo predominante). Morfologicamente, apresenta hifas septadas e <strong>arvore conidial</strong> (conidioforo) caracteristica. E um fungo <strong>cosmopolita</strong> com esporos em <strong>suspensao no ar</strong> &mdash; facilmente inalados.</p>
+
+<div class="clinical-box"><strong>Orientacao pratica como medico de familia:</strong> ao visitar casas de pacientes imunossuprimidos, <strong>verificar presenca de fungos no banheiro</strong>. Higienizacao: pano umedecido em 5 L de agua + 1 colher de sopa de agua sanitaria; depois, pintura com tinta a oleo (impede retencao de umidade).</div>
+
+<h3 id="t10-asp-especies">Especies Clinicamente Importantes de <em>Aspergillus</em></h3>
+
+<table>
+<tr><th>Especie</th><th>Caracteristica/Cor</th><th>Habitat/Associacao</th></tr>
+<tr><td><strong><em>A. fumigatus</em></strong></td><td>Mais comum em hospitais</td><td>Principal agente de aspergilose invasiva</td></tr>
+<tr><td><strong><em>A. flavus</em></strong></td><td>Amarelado</td><td>Amendoim; produtor de <strong>aflatoxina</strong></td></tr>
+<tr><td><strong><em>A. niger</em></strong></td><td>Negro/preto/escuro</td><td>Banheiros (bolor escuro em tetos/paredes); pneumonia em imunocomprometidos</td></tr>
+<tr><td><strong><em>A. ochraceus</em></strong></td><td>Cor ocre (amarelo-dourado fosco)</td><td>Presente em suspensao no ar</td></tr>
+</table>
+
+<div class="clinical-box"><strong>Dica do professor para memorizar os nomes:</strong> muitos nomes tem relacao com a <strong>cor</strong> da colonia. Niger = negro/preto. Flavus = amarelo. Ochraceus = cor de ocre (amarelo-dourado fosco). E lembre que <em>Candida albicans</em> tambem segue a logica: candido = branco, albicans = alvo = branco ("alvejante" tira manchas porque alvo = branco).</div>
+
+<h3 id="t10-aflatoxina">Aflatoxina (<em>Aspergillus flavus</em>)</h3>
+
+<div class="professor-box"><strong>Aflatoxina = A(spergillus) + fla(vus) + toxina.</strong> Essa etimologia e cobrada em prova. Basta decompor a palavra para lembrar a origem.</div>
+
+<p><strong>Fonte mais comum:</strong> amendoim armazenado por muito tempo. Forma um pozinho esbranquicado (colonia de fungo) na embalagem ou sobre o amendoim.</p>
+
+<p><strong>Mecanismo:</strong> ingestao do fungo &rarr; fungo produz toxina nociva para celulas intestinais &rarr; <strong>toxo-infeccao</strong> (contaminacao pelo fungo que produz toxina).</p>
+
+<p><strong>Tratamento:</strong> casos relativamente simples &mdash; <strong>hidratacao e alimentacao corrigida</strong>. Normalmente autolimitante. Populacoes de risco: idosos e criancas (extremos de idade) sofrem mais no processo infeccioso.</p>
+
+<h3 id="t10-asp-pulmonar">Aspergilose Pulmonar &mdash; Quadro Clinico</h3>
+
+<p>A apresentacao clinica frequente e um quadro de <strong>asma</strong> (hipersensibilidade do tipo I / alergia do aparelho respiratorio), tendo o proprio fungo <em>Aspergillus</em> como alergeno.</p>
+
+<div class="professor-box"><strong>Aspergilose pulmonar: quadro de asma + eosinofilia + IgE elevada.</strong> Essa triade e a chave para suspeitar de aspergilose. Se o paciente chega com asma e voce encontra eosinofilia no hemograma + IgE alta, pense em Aspergillus.</div>
+
+<h4>Achados histopatologicos/laboratoriais</h4>
+<ul>
+  <li>Infiltrado com <strong>neutrofilos</strong> e <strong>eosinofilos</strong> em grande quantidade na biopsia</li>
+  <li><strong>Eosinofilia</strong> no sangue periferico</li>
+  <li>Aumento de <strong>IgE</strong> (imunoglobulina E) &mdash; uma das 5 classes de anticorpos, elevada em processos alergicos</li>
+</ul>
+
+<h4>Sintomas</h4>
+<ul>
+  <li>Sinusite</li>
+  <li>Cefaleia (dor de cabeca)</li>
+  <li>Febre</li>
+  <li><strong>Hemoptise</strong> (sangue no escarro)</li>
+  <li>Dor toracica (pela tosse excessiva e uso intenso da musculatura intercostal &mdash; dor lateral e posterior)</li>
+</ul>
+
+<div class="connection-box">Lembra da hipersensibilidade tipo 1 (Secao 8)? A aspergilose pulmonar e um exemplo clinico real: os esporos do fungo funcionam como <strong>alergeno</strong>, ativando IgE &rarr; mastocitos &rarr; histamina &rarr; broncoespasmo (asma).</div>
+
+<h4>Diagnostico diferencial</h4>
+<p>Paciente chega com asma. Voce <strong>NAO pode dizer de imediato</strong> que e aspergilose. Considere primeiro:</p>
+<ol>
+  <li><strong>Polen</strong> (sazonalidade): meses de agosto a dezembro (periodo de polinizacao). Asma sazonal.</li>
+  <li><strong>Poeira domestica:</strong> especialmente em cidades grandes e poluidas.</li>
+</ol>
+<p><strong>O que direciona para Aspergillus:</strong> o <strong>raio-X de torax</strong> (padrao radiologico sugestivo) associado aos achados laboratoriais (eosinofilia + IgE).</p>
+
+<h3 id="t10-asp-diag">Diagnostico de Aspergilose</h3>
+
+<h4>Exame direto</h4>
+<ul>
+  <li><strong>Exame direto a fresco:</strong> material de escarro (tosse produtiva). Coleta do escarro &rarr; coloca entre lamina e laminula com gota de <strong>KOH (hidroxido de potassio)</strong> para eliminar celulas epiteliais e evidenciar o fungo.</li>
+  <li><strong>Exame direto com coloracao:</strong> gota de <strong>azul de lactofenol</strong> &rarr; fungo evidenciado com coloracao azulada. Permite sugerir Aspergillus, mas <strong>NAO confirmar</strong>.</li>
+</ul>
+
+<div class="clinical-box"><strong>Importancia do exame direto:</strong> ambulatorios de dermatologia e pneumologia ja possuem microscopio para exame direto e pre-diagnostico. O exame direto e rapido, barato e direciona a conduta inicial.</div>
+
+<h4>Cultura</h4>
+<ul>
+  <li><strong>Meio Sabouraud:</strong> cultivo inicial (placa de Petri com meio Sabouraud). Tecnica de coleta: paciente tosse na placa de Petri &rarr; fecha &rarr; flamba &rarr; leva ao laboratorio.</li>
+  <li><strong>Agar Dextrose Batata (BDA &mdash; Batata Dextrose Agar):</strong> para identificacao. Transferir colonia do Sabouraud para BDA. Leva tempo para crescer.</li>
+</ul>
+
+<h4>Histopatologico</h4>
+<p>Mesma limitacao: ve-se o fungo, mas nao se pode identificar a especie sem testes adicionais. Coloracoes adequadas: PAS, Grocott, azul de lactofenol.</p>
+
+<h4>ELISA</h4>
+
+<div class="professor-box"><strong>ELISA para anticorpo anti-Aspergillus confirma o genero.</strong> Se o anticorpo anti-Aspergillus esta presente, praticamente define o genero com seguranca. E o exame que fecha o raciocinio diagnostico.</div>
+
+<h3 id="t10-asp-trat">Tratamento da Aspergilose</h3>
+
+<ul>
+  <li><strong>"Topico" (entre aspas):</strong> nao existe tratamento topico propriamente dito, pois os orgaos afetados sao internos (pulmoes). O que existe e <strong>ar filtrado hospitalar</strong> &mdash; internacao em ala com ar filtrado impede nova inalacao de esporos. Requer sistema de sucessao de portas para evitar contaminacao.</li>
+  <li><strong>Tratamento quimioterapico:</strong> <strong>azolicos</strong> (voriconazol, itraconazol) &mdash; via oral ou intravenoso. Funcionam bem.</li>
+  <li><strong>Cirurgia:</strong> em casos de comprometimento grave, extracao cirurgica do tecido acometido (<strong>aspergiloma</strong>).</li>
+</ul>
+
+<div class="professor-box"><strong>Ar filtrado NAO e tratamento, e condicao ambiental.</strong> E muito caro e poucos hospitais no Brasil possuem alas com ar filtrado. Nao confunda com tratamento farmacologico &mdash; a prova pode tentar essa pegadinha.</div>
+
+<!-- ==================== ANTIFUNGICOS ==================== -->
+<h3 id="t10-antifungicos">Farmacos Antifungicos &mdash; Tabela Resumo</h3>
+
+<p>Esta tabela resume os antifungicos mencionados nas aulas sobre Candida e Aspergillus. Use-a como referencia rapida:</p>
+
+<table>
+<tr><th>Farmaco</th><th>Classe</th><th>Indicacao</th><th>Observacoes</th></tr>
+<tr><td><strong>Itraconazol</strong></td><td>Azolico</td><td>Candidiase e Aspergilose (oral)</td><td>Muito utilizado, boa eficacia</td></tr>
+<tr><td><strong>Voriconazol</strong></td><td>Azolico</td><td>Candidiase e Aspergilose</td><td>Boa eficacia; oral ou IV</td></tr>
+<tr><td><strong>Cetoconazol</strong></td><td>Azolico</td><td>Candidiase</td><td><strong>CUIDADO</strong> &mdash; hepatotoxicidade</td></tr>
+<tr><td><strong>Anfotericina B</strong></td><td>Polieno</td><td>Casos graves (Candida e Aspergillus)</td><td>Potente; <strong>reservada para quadros graves</strong></td></tr>
+<tr><td><strong>Caspofungina</strong></td><td>Equinocandina</td><td>Candidiase + Aspergilose</td><td>Mais recente, bastante eficaz</td></tr>
+<tr><td><strong>Topicos</strong> (cremes, locoes)</td><td>Variados</td><td>Candidiase cutanea superficial</td><td>Para frieiras e lesoes cutaneas simples</td></tr>
+</table>
+
+<div class="connection-box">Os antifungicos atuam sobre alvos que nao existem nas celulas humanas: <strong>ergosterol</strong> (membrana do fungo, alvo dos azolicos e anfotericina B), <strong>beta-glucana</strong> (parede do fungo, alvo das equinocandinas). Isso explica por que antibacterianos (que atacam peptideoglicano) nao funcionam contra fungos &mdash; conceito visto na Secao 9.</div>
+
+<!-- ==================== COLORACOES ==================== -->
+<h3 id="t10-coloracoes">Coloracoes para Diagnostico de Fungos</h3>
+
+<table>
+<tr><th>Coloracao</th><th>Resultado</th><th>Indicacao</th></tr>
+<tr><td><strong>PAS</strong> (Acido Periodico de Schiff)</td><td>Fungo: <span style="color:#8b0000;font-weight:bold">bordeaux/vinho</span>; Tecido: azulado</td><td>Excelente para visualizar fungos em biopsia (indicacao geral)</td></tr>
+<tr><td><strong>Grocott</strong> (metanamina de prata / prata de Grocott)</td><td>Fungo evidenciado em tons escuros</td><td>Excelente para fungos em histopatologico</td></tr>
+<tr><td><strong>Azul de lactofenol</strong> (<em>lactophenol cotton blue</em>)</td><td>Fungo: azulado</td><td>Excelente para exame direto e identificacao de fungos filamentosos</td></tr>
+<tr><td><strong>Mucicarmina</strong></td><td>Fungo: <span style="color:#c2185b;font-weight:bold">magenta</span>; Celulas humanas: marrom/acinzentado</td><td>Coloracao de eleicao para <em>Cryptococcus</em> em necropsias/biopsias</td></tr>
+<tr><td><strong>HE</strong> (Hematoxilina-eosina)</td><td>Fungo e leucocitos coram de forma semelhante</td><td>Padrao geral, mas <strong>RUIM</strong> para fungos (confunde fungo com linfocito)</td></tr>
+</table>
+
+<div class="professor-box"><strong>"Estude coloracoes em Patologia!"</strong> Se voce pedir biopsia e nao especificar a coloracao, o laboratorio faz HE automaticamente. HE nao e adequado para fungos &mdash; voce tera que fazer nova biopsia (duplo procedimento para o paciente). Solicite PAS, Grocott ou azul de lactofenol.</div>
+
+<!-- ==================== OUTROS FUNGOS ==================== -->
+<h3 id="t10-outros"><em>Penicillium</em> e <em>Trichophyton</em></h3>
+
+<p><strong><em>Penicillium</em>:</strong> fungo filamentoso com esporangio em <strong>forma de vassoura</strong>. Aspecto: regiao central esverdeada, periferia branca. E o fungo do qual Alexander Fleming derivou a <strong>penicilina</strong> (1926, Premio Nobel). 2026 marca os 100 anos dessa publicacao.</p>
+
+<p><strong><em>Trichophyton</em>:</strong> dermatofito causador de <strong>tinhas</strong> (tinea capitis, tinea corporis, tinea pedis) &mdash; infeccoes de pele queratinizada, unhas e pelos. <strong>Nota cientifica:</strong> A dermatite seborreica (caspa) e causada por <em>Malassezia</em> spp., nao por <em>Trichophyton</em>.</p>
+
+<h3 id="t10-paracoccidioides"><em>Paracoccidioides brasiliensis</em></h3>
+
+<p>Agente da <strong>paracoccidioidomicose</strong> (micose sistemica, nao cutanea superficial). Habitat: solo. Via de infeccao: inalacao. Fungo <strong>termodimorfico</strong>: inalado como micelio (25 &deg;C), converte-se em levedura no pulmao (36 &deg;C).</p>
+
+<div class="connection-box">A paracoccidioidomicose, junto com histoplasmose e blastomicose, forma o grupo das <strong>micoses sistemicas endemicas</strong> do continente americano. Sao fungos endemicos de grande importancia em infectologia.</div>
+
+<!-- ==================== C. AURIS ==================== -->
+<h3 id="t10-auris"><em>Candida auris</em> &mdash; Ameaca Global</h3>
+
+<p>Fungo emergente considerado <strong>seria ameaca global</strong> pelo CDC. Tres razoes de preocupacao:</p>
+<ol>
+  <li><strong>Multirresistente:</strong> resistente a multiplos antifungicos; algumas cepas resistentes a todas as 3 classes disponiveis</li>
+  <li><strong>Dificil identificacao:</strong> pode ser confundida com outras especies por metodos laboratoriais padrao</li>
+  <li><strong>Causa surtos</strong> em ambientes de saude</li>
+</ol>
+<div class="professor-box" style="border-left-color:#888"><strong>&#128203; Dados dos slides (nao discutidos em aula oral):</strong></div>
+<p>Dados: 10.788 casos clinicos nos EUA (2016-2023); ~50 casos no Brasil ate jun/2023; 59% dos hospitais brasileiros pesquisados <strong>nao possuem</strong> metodo que identifique <em>C. auris</em>.</p>
+
+<!-- ==================== CONCEITOS GERAIS ==================== -->
+<h4>Conceitos gerais enfatizados pelo professor</h4>
+
+<p><strong>Afeccao vs. Infeccao:</strong> <em>afeccao</em> = de "afetar" (qual local foi afetado?); <em>infeccao</em> = de "invadir" (invasao por micro-organismo). Pode haver afeccao sem infeccao (ex.: trauma) e afeccao POR infeccao (ex.: infeccao viral do aparelho respiratorio).</p>
+
+<p><strong>Quimioterapia (conceito amplo):</strong> qualquer tratamento com agentes quimicos. Na aula, refere-se especialmente a quimioterapia <strong>imunossupressora</strong> e <strong>antineoplasica</strong> (para cancer) &mdash; que causa imunossupressao como efeito colateral, predispondo a infeccoes oportunistas por Candida e Aspergillus.</p>
+
+<p><strong>Populacoes de risco:</strong></p>
+<ul>
+  <li><strong>Imunossuprimidos:</strong> quimioterapia antineoplasica, AIDS, transplantados</li>
+  <li><strong>Extremos de idade:</strong> idosos e criancas</li>
+  <li><strong>Diabeticos:</strong> predisposicao a infeccoes fungicas</li>
+  <li><strong>Hospitalizados:</strong> procedimentos invasivos (sondas, cateteres, cirurgias, proteses valvares, dialise)</li>
+</ul>
+
+<p><strong>Meios de cultura para fungos:</strong></p>
+<table>
+<tr><th>Meio</th><th>Funcao</th></tr>
+<tr><td><strong>Sabouraud</strong></td><td>Meio padrao para isolamento inicial de fungos</td></tr>
+<tr><td><strong>Agar Dextrose Batata (BDA)</strong></td><td>Meio para identificacao, especialmente para <em>Aspergillus</em></td></tr>
+<tr><td><strong>CHROMagar Candida</strong> (cromogenico)</td><td>Meio especial para diferenciacao de especies de <em>Candida</em></td></tr>
+</table>
+
+<!-- ==================== PONTOS DE PROVA ==================== -->
+<div class="summary-box">
+<h4>Pontos de Prova &mdash; Ascomycota, Candida e Aspergillus (Enfatizados pelo Professor)</h4>
+<ol>
+  <li><strong>Moniliase = Candidiase</strong> (nome antigo pode aparecer em prova)</li>
+  <li>Hifas dos Ascomycota sao <strong>septadas</strong></li>
+  <li>Esporos sexuados = <strong>ascosporos</strong>; assexuados = <strong>conidios</strong></li>
+  <li><em>Candida albicans</em>: mais de 100 especies no genero; <em>C. albicans</em> e a mais comum, mas <em>C. glabrata</em> e <em>C. auris</em> tambem sao relevantes</li>
+  <li>Diagnostico clinico de candidiase e facil (placas brancas); a dificuldade e quando NAO e <em>C. albicans</em></li>
+  <li><strong>HE nao serve para fungo</strong> &mdash; solicitar PAS, Grocott ou azul de lactofenol</li>
+  <li>Aflatoxina = A(spergillus) + fla(vus) + toxina</li>
+  <li>Aspergilose pulmonar: quadro de <strong>asma + eosinofilia + IgE elevada</strong></li>
+  <li>ELISA para anticorpo anti-Aspergillus confirma o genero</li>
+  <li><strong>Anfotericina B:</strong> reservada para casos graves (Candida e Aspergillus)</li>
+  <li><strong>Cetoconazol:</strong> usar com cautela (hepatotoxicidade)</li>
+  <li>Candidiase pode ter origem <strong>endogena</strong> (microbiota) ou <strong>exogena</strong> (procedimentos)</li>
+  <li><strong>Ar filtrado</strong> nao e tratamento, e condicao ambiental para aspergilose</li>
+</ol>
+</div>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Micologia Clinica</h4>
+<ul>
+  <li>Filo Ascomycota: hifas septadas, ascosporos (sexuados), conidios (assexuados), cosmopolitas</li>
+  <li><em>C. albicans</em>: versatil (levedura + hifa + pseudo-hifa), microbiota normal, &gt;100 especies no genero</li>
+  <li>Candidiase = moniliase (nome antigo). Sapinho = nome popular</li>
+  <li>Candida: origem endogena (microbiota) ou exogena (procedimentos invasivos, CAPD)</li>
+  <li>Diagnostico de Candida: exame direto, CHROMagar, imunofluorescencia, histopatologico (PAS/Grocott)</li>
+  <li>4 especies de Aspergillus: fumigatus, flavus, niger, ochraceus &mdash; nomes ligados a cor</li>
+  <li>Aflatoxina: A. flavus + amendoim, toxo-infeccao autolimitante</li>
+  <li>Aspergilose pulmonar: asma + eosinofilia + IgE; confirmar com ELISA anti-Aspergillus</li>
+  <li>HE nao serve para fungo &mdash; usar PAS, Grocott, azul de lactofenol</li>
+  <li>Antifungicos: azolicos (itraconazol, voriconazol), anfotericina B (graves), caspofungina. Cetoconazol: hepatotoxico</li>
+  <li>Ar filtrado: condicao ambiental, nao tratamento</li>
+  <li><em>C. auris</em>: multirresistente, dificil identificacao, causa surtos</li>
+  <li><em>Penicillium</em>: esporangio em vassoura, origem da penicilina (Fleming, 1926)</li>
+  <li><em>Trichophyton</em>: dermatofito, causador de tinhas (tinea capitis, corporis, pedis). Nota: dermatite seborreica (caspa) = <em>Malassezia</em> spp.</li>
+  <li><em>Paracoccidioides</em>: micose sistemica, termodimorfico (micelio &rarr; levedura a 36 &deg;C)</li>
+  <li>PAS: coloracao geral para fungos; mucicarmina: eleicao para <em>Cryptococcus</em></li>
+</ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 11: FERRO E CRIPTOCOCOSE -->
+<!-- ============================================================ -->
+<section id="topic11">
+<h2>11. Ferro no Metabolismo Fungico e Criptococose</h2>
+
+<p>O ferro e tao fundamental para o fungo quanto e para nos. E tambem o ponto de intercessao entre hematologia, endocrinologia e infectologia: pacientes com excesso de ferro e/ou diabetes tem <strong>dupla predisposicao</strong> a infeccoes fungicas graves.</p>
+
+<h3 id="t11-ferro">Ferro e Patogenese Fungica</h3>
+
+<p>Diversas enzimas e ativacoes proteicas no metabolismo celular dos fungos sao <strong>ferro-dependentes</strong>. Sem ferro, essas reacoes nao acontecem. O ferro participa de tres etapas fundamentais:</p>
+
+<ol>
+  <li><strong>Aderencia ao tecido:</strong> proteinas facilitadoras da adesao dependem de ferro</li>
+  <li><strong>Invasividade:</strong> proteinas de invasao tecidual sao ferro-dependentes</li>
+  <li><strong>Injuria celular:</strong> capacidade de promover lesao e morte da celula hospedeira</li>
+</ol>
+
+<h3 id="t11-hemocromatose">Hemossiderose e Hemocromatose</h3>
+
+<table>
+<tr><th>Condicao</th><th>Origem</th><th>Causa</th></tr>
+<tr><td><strong>Hemossiderose</strong></td><td>Exogena (adquirida)</td><td>Transfusoes repetidas (anemia aplasica, anemia falciforme), uso de quelantes</td></tr>
+<tr><td><strong>Hemocromatose</strong></td><td>Genetica</td><td>Gene HH (hemocromatose hereditaria). Acumulo em figado e musculo</td></tr>
+</table>
+
+<div class="professor-box"><strong>Dado clinico importante:</strong> Diabetes mellitus e encontrado em <strong>30% a 60%</strong> dos pacientes com hemocromatose. Sao duas condicoes predisponentes a infeccao fungica: excesso de ferro (nutriente para o fungo) + diabetes (imunocomprometimento). Profissionais de hemocentros devem estar atentos.</div>
+
+<h3 id="t11-crypto"><em>Cryptococcus neoformans</em></h3>
+
+<p>Basidiomiceto, levedura unicelular. Causa <strong>criptococose/neurocriptococose</strong>. Populacao-alvo: imunocomprometidos, especialmente <strong>HIV/AIDS</strong>. Habitat: disseminado no ambiente; vetores incluem pombos, galinhas e aves em geral.</p>
+
+<h4>Estrutura do fungo</h4>
+<ul>
+  <li><strong>Membrana celular:</strong> fosfolipidios, proteinas e <strong>ergosterol</strong></li>
+  <li><strong>Parede celular:</strong> quitina, glucanas, mananas e <strong>melanina</strong></li>
+  <li><strong>Capsula polissacaridea</strong> (diferencial!): a maioria dos fungos clinicos NAO tem capsula; <em>Cryptococcus</em> e excecao notavel</li>
+</ul>
+
+<h3 id="t11-capsula">Capsula: GXM e GXM-Gal</h3>
+
+<h4>GXM (Glucuronoxilomanana)</h4>
+<ol>
+  <li><strong>Inibe a rede de fagocitose do neutrofilo:</strong> o neutrofilo normalmente forma uma "rede proteica" que aprisiona o micro-organismo. A GXM impede a formacao dessa rede.</li>
+  <li><strong>Neutraliza EROs:</strong> mesmo se o fungo for englobado, a GXM neutraliza as especies reativas de oxigenio dentro da vesicula fagocitica. Sem EROs, o fungo nao morre (enzimas lisossomicas so digerem o que ja esta morto).</li>
+</ol>
+
+<h4>GXM-Gal (Glucuronoxilomanogalactana)</h4>
+<p><strong>Efeito imunomodulatorio:</strong> inibe a producao de <strong>TNF</strong> e <strong>IL-1</strong> pelo macrofago. Sem TNF e IL-1, outros macrofagos nao recebem estimulo para fagocitar ativamente, e linfocitos CD8+, NK e CD4+ nao sao ativados adequadamente.</p>
+
+<h4>Melanina</h4>
+<p>Sintetizada pela enzima <strong>laccase</strong> (via: tirosina &rarr; DOPA &rarr; dopaquinona &rarr; ... &rarr; polimero de hidroxindol = melanina). Depositada na parede celular. Funcoes: no ambiente, protege contra UV; no hospedeiro, contribui para <strong>termotolerancia e resistencia</strong>. Em necropsias cerebrais, areas colonizadas pelo fungo aparecem <strong>escurecidas</strong>.</p>
+
+<h4>Fosfolipase, Urease e outros fatores</h4>
+
+<table>
+<tr><th>Molecula</th><th>Funcao</th></tr>
+<tr><td><strong>Fosfolipase</strong></td><td>Degrada fosfolipidios da membrana do hospedeiro &rarr; lesao <strong>irreversivel</strong> de membrana (principio de Patologia)</td></tr>
+<tr><td><strong>Urease</strong></td><td>Digere proteinas das juncoes firmes da barreira hematoencefalica nos sitios nitrogenados &rarr; <strong>via paracelular</strong></td></tr>
+<tr><td>Superoxido dismutase</td><td>Interacao com EROs, sobrevivencia</td></tr>
+<tr><td>Laccase</td><td>Producao de melanina</td></tr>
+<tr><td>DNase, proteases</td><td>Degradacao de DNA e proteinas do hospedeiro</td></tr>
+</table>
+
+<p>Essas moleculas sao empacotadas em <strong>vesiculas</strong> e exocitadas. No meio extracelular, as vesiculas se rompem por condicoes osmoticas, liberando o conteudo sobre as celulas hospedeiras. A fosfolipase e mantida em vesiculas porque, se ficasse livre no citoplasma, degradaria a propria membrana do fungo.</p>
+
+<h3 id="t11-titan">Celula Tita</h3>
+
+<p>O <em>Cryptococcus</em> pode variar de tamanho: celulas muito pequenas, normais ou <strong>celulas gigantes (celula tita)</strong>. A celula tita e <strong>maior que um macrofago</strong> &rarr; <em>impossivel de ser fagocitada</em> (a fagocitose exige que o fagocito seja maior que o alvo). Possui maior acumulo de material polissacaridico na capsula, todas as camadas mais densas.</p>
+
+<h3 id="t11-vias">3 Vias de Disseminacao para o SNC</h3>
+
+<p>O fungo e <strong>inalado</strong> &rarr; chega ao alveolo &rarr; pode sair sozinho ou ser englobado pelo macrofago (o englobamento nao e impedido; o que e impedido e a <strong>morte</strong> do fungo dentro dele, gracas a capsula). A partir dai, tres vias levam ao SNC:</p>
+
+<table>
+<tr><th>Via</th><th>Mecanismo</th></tr>
+<tr><td><strong>1. Transcelular</strong></td><td>Fungo chega sozinho pela circulacao. Celula endotelial da barreira hematoencefalica possui proteina <strong>CD44</strong> com afinidade pelo fungo. CD44 liga-se &rarr; endocitose &rarr; fungo atravessa a celula e sai do outro lado (tecido nervoso).</td></tr>
+<tr><td><strong>2. Cavalo de Troia</strong></td><td>Macrofago que fagocitou o fungo no alveolo cai na circulacao. Chega a barreira hematoencefalica e faz <strong>diapedese</strong>, levando o fungo dentro dele. No SNC, o macrofago morre e libera os fungos. (Como os gregos escondidos no cavalo de Troia.)</td></tr>
+<tr><td><strong>3. Paracelular</strong> (urease)</td><td>Fungo libera vesiculas com <strong>urease</strong>. A urease digere as proteinas das <strong>juncoes firmes</strong> (tight junctions) da barreira nos sitios nitrogenados (ligacao peptidica). Com as juncoes desfeitas, o fungo passa <strong>entre as celulas</strong>.</td></tr>
+</table>
+
+<div class="professor-box"><strong>"Urease e importante voce saber. Urease e importante estar na sua cabeca."</strong> A urease age nos sitios nitrogenados das proteinas de juncao: ligacao peptidica = carbono de um aminoacido + nitrogenio do outro. Ao romper essas ligacoes, decompoe a malha proteica das juncoes firmes.</div>
+
+<p><strong>Apos o Cavalo de Troia, liberacao do fungo no SNC:</strong></p>
+<ol>
+  <li><strong>Exocitose litica:</strong> fungo se reproduz ate macrofago romper (lise)</li>
+  <li><strong>Vomocitose:</strong> macrofago "solta" o fungo sem morrer (mecanismo ainda em estudo)</li>
+  <li><strong>Transferencia celula a celula:</strong> macrofago cheio de fungo funde membranas com outro macrofago (sincicio)</li>
+</ol>
+
+<h4>Quadro clinico</h4>
+
+<p><strong>Em imunocompetentes:</strong> infeccao <strong>autolimitada</strong> (vesiculas em palma das maos e planta dos pes, coçam, cicatrizam em ~1 semana). A maioria da populacao ja teve contato.</p>
+
+<p><strong>Em imunocomprometidos (HIV/AIDS):</strong></p>
+<ul>
+  <li><strong>Neurocriptococose:</strong> meninges espessadas por exsudato</li>
+  <li><strong>Criptococoma:</strong> acumulo focal de fungos no cerebro (aspecto de tumor &mdash; "-oma")</li>
+  <li>Efeito de massa, assimetria entre hemisferios</li>
+  <li>Fatalidade quase inevitavel; sequelas graves</li>
+  <li><strong>Pneumocriptococose:</strong> tambem ocorre; muito mais facil de tratar que neurocriptococose</li>
+</ul>
+
+<h3 id="t11-imuno">Imunodeficiencias &mdash; Conceitos Fundamentais</h3>
+
+<table>
+<tr><th>Tipo</th><th>Causa</th><th>Exemplo</th></tr>
+<tr><td><strong>Imunossupressao</strong></td><td>Uso de farmacos</td><td>Imunossupressores pos-transplante, quimioterapia anticancer</td></tr>
+<tr><td><strong>Imunodeficiencia secundaria</strong></td><td>Extrinseca ao sistema imune</td><td>HIV/AIDS</td></tr>
+<tr><td><strong>Imunodeficiencia primaria</strong> (erros inatos)</td><td>Intrinseca (genetica)</td><td>Agamaglobulinemia, DiGeorge, Chediak-Higashi, Doenca granulomatosa cronica</td></tr>
+</table>
+
+<table>
+<tr><th>Imunodeficiencia primaria</th><th>Defeito</th><th>Consequencia</th></tr>
+<tr><td><strong>Agamaglobulinemia</strong></td><td>Gene para sintese de anticorpos</td><td>Nao produz anticorpos (defeito em celula B)</td></tr>
+<tr><td><strong>Sindrome de DiGeorge</strong></td><td>Delecao cromoossomica (sem timo)</td><td>Nao produz linfocitos T</td></tr>
+<tr><td><strong>Chediak-Higashi</strong></td><td>Gene das cinesinas (transito vesicular)</td><td>Fagocito engloba mas nao completa fagocitose (lisossomo nao se funde)</td></tr>
+<tr><td><strong>Doenca granulomatosa cronica</strong></td><td>Nao produz EROs</td><td>Engloba mas nao mata (sem burst oxidativo)</td></tr>
+</table>
+
+<div class="connection-box">Lembra da relacao TB-HIV (Secao 8)? A mesma logica se aplica aqui: sem CD4+ funcionais (HIV/AIDS), macrofagos nao sao ativados plenamente e nao conseguem conter o <em>Cryptococcus</em>. A criptococose e uma das <strong>infeccoes definidoras de AIDS</strong>.</div>
+
+<p><strong>Plasticidade fenotipica:</strong> O <em>Cryptococcus</em> possui genes <strong>HDAC (histona desacetilases)</strong> responsaveis por uma versatilidade notavel: variacao de tamanho (celula tita), producao de melanina, capsula imunoevasiva, multiplas vias de entrada no SNC, termotolerancia. <em>Candida albicans</em>, apesar de ser o patogeno fungico mais comum, nao possui esse repertorio.</p>
+
+<div class="summary-box">
+<h4>Resumo &mdash; Ferro e Criptococose</h4>
+<ul>
+  <li>Ferro e essencial para aderencia, invasividade e injuria celular do fungo</li>
+  <li>Hemossiderose (exogena) vs. hemocromatose (genetica, gene HH); 30-60% dos hemocromatoticos tem DM</li>
+  <li><em>Cryptococcus neoformans</em>: basidiomiceto, levedura com capsula (GXM + GXM-Gal), melanina, fosfolipase, urease</li>
+  <li>GXM: inibe rede de fagocitose + neutraliza EROs</li>
+  <li>GXM-Gal: inibe TNF e IL-1 (imunomodulacao)</li>
+  <li>3 vias para o SNC: transcelular (CD44), cavalo de Troia (macrofago), paracelular (urease)</li>
+  <li>Celula tita: maior que macrofago, impossivel de fagocitar</li>
+  <li>Genes HDAC: responsaveis pela plasticidade fenotipica</li>
+  <li>Mucicarmina: coloracao de eleicao (fungo = magenta)</li>
+</ul>
+</div>
+</section>
+
+<!-- FINAL -->
+<div style="text-align:center;padding:48px 0 0;border-top:2px solid var(--border);margin-top:64px">
+  <p style="color:var(--muted);font-size:.9rem">Material gerado a partir das transcricoes de aula e slides dos professores Cassio e Michelangelo.<br>Disciplina de Microbiologia, Parasitologia e Doencas Infecciosas &mdash; 2026.1</p>
+</div>
+
+</div><!-- .content -->
+</div><!-- .main -->
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">&uarr;</button>
+
+<script>
+// ===== THEME TOGGLE =====
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme',document.body.classList.contains('light')?'light':'dark');
+}
+(function(){
+  if(localStorage.getItem('theme')==='light') document.body.classList.add('light');
+})();
+
+// ===== SIDEBAR TOGGLE (mobile) =====
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+// Close sidebar on link click (mobile)
+document.querySelectorAll('.sidebar nav a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    if(window.innerWidth<=900){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+// ===== BACK TO TOP =====
+window.addEventListener('scroll',()=>{
+  document.getElementById('backTop').classList.toggle('show',window.scrollY>400);
+});
+
+// ===== ACTIVE NAV HIGHLIGHT =====
+(function(){
+  const sections=document.querySelectorAll('section[id], h3[id]');
+  const navLinks=document.querySelectorAll('.sidebar nav a');
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id=e.target.id;
+        navLinks.forEach(l=>{
+          l.classList.toggle('active',l.getAttribute('href')==='#'+id);
+        });
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(s=>observer.observe(s));
+})();
+</script>
+</body>
+</html>

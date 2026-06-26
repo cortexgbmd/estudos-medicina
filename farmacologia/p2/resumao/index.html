@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumao - Farmacologia P2</title>
+<style>
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-card: #1c2128;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --border-color: #30363d;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --accent-bg: rgba(88,166,255,0.1);
+  --success: #3fb950;
+  --success-bg: rgba(63,185,80,0.1);
+  --danger: #f85149;
+  --danger-bg: rgba(248,81,73,0.1);
+  --warning: #d29922;
+  --warning-bg: rgba(210,153,34,0.1);
+  --highlight-border: #f0883e;
+  --highlight-bg: rgba(240,136,62,0.08);
+  --radius: 6px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #eaeef2;
+  --bg-card: #f6f8fa;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --text-muted: #8b949e;
+  --border-color: #d0d7de;
+  --accent: #0969da;
+  --accent-hover: #0550ae;
+  --accent-bg: rgba(9,105,218,0.06);
+  --success: #1a7f37;
+  --success-bg: rgba(26,127,55,0.06);
+  --danger: #cf222e;
+  --danger-bg: rgba(207,34,46,0.06);
+  --warning: #9a6700;
+  --warning-bg: rgba(154,103,0,0.06);
+  --highlight-border: #d4760a;
+  --highlight-bg: rgba(212,118,10,0.06);
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: background 0.2s, color 0.2s;
+}
+/* TOP BAR */
+.top-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.45em 1em;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(10px);
+}
+.top-bar h1 { font-size: 1em; margin: 0; padding: 0; border: none; color: var(--accent); font-weight: 700; }
+.top-bar h1 span { color: var(--text-muted); font-weight: 400; font-size: 0.85em; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.3em;
+  padding: 0.3em 0.6em; border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary); color: var(--text-primary);
+  font-size: 13px; cursor: pointer; transition: all 0.15s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+/* NAV INDEX */
+.nav-index {
+  position: fixed; top: 40px; left: 0; right: 0; z-index: 99;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.35em 1em;
+  display: flex; gap: 0.3em; flex-wrap: wrap; align-items: center;
+  font-size: 12px;
+}
+.nav-index a {
+  color: var(--text-secondary); text-decoration: none;
+  padding: 0.2em 0.5em; border-radius: var(--radius);
+  transition: all 0.15s; white-space: nowrap;
+}
+.nav-index a:hover, .nav-index a.active { color: var(--accent); background: var(--accent-bg); }
+.nav-index .sep { color: var(--text-muted); }
+/* CONTENT */
+.content {
+  max-width: 820px; margin: 0 auto;
+  padding: 90px 1.2em 3em;
+}
+/* SECTIONS */
+.aula-section { margin-bottom: 1.8em; }
+.aula-section h2 {
+  font-size: 1.15em; font-weight: 700; color: var(--accent);
+  margin: 0 0 0.5em; padding-bottom: 0.25em;
+  border-bottom: 2px solid var(--border-color);
+  line-height: 1.3;
+}
+.aula-section h3 {
+  font-size: 0.95em; font-weight: 600; margin: 0.7em 0 0.3em;
+  color: var(--text-primary);
+}
+ul { margin: 0.2em 0 0.4em 1.3em; }
+li { margin: 0.15em 0; }
+strong { color: var(--accent); font-weight: 600; }
+/* BOXES */
+.prof-box {
+  border-left: 3px solid var(--highlight-border);
+  background: var(--highlight-bg);
+  padding: 0.5em 0.8em; margin: 0.5em 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 13px;
+}
+.prof-box::before {
+  content: "DESTAQUE DO PROFESSOR";
+  display: block; font-weight: 700; font-size: 0.75em;
+  color: var(--highlight-border); margin-bottom: 0.25em;
+  letter-spacing: 0.04em;
+}
+.alert-box {
+  border-left: 3px solid var(--warning);
+  background: var(--warning-bg);
+  padding: 0.5em 0.8em; margin: 0.5em 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 13px;
+}
+.alert-box::before {
+  content: "NAO CONFUNDIR";
+  display: block; font-weight: 700; font-size: 0.75em;
+  color: var(--warning); margin-bottom: 0.25em;
+  letter-spacing: 0.04em;
+}
+.keyword-box {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 0.4em 0.7em; margin: 0.5em 0;
+  font-size: 12px;
+}
+.keyword-box::before {
+  content: "PALAVRAS-CHAVE DE PROVA";
+  display: block; font-weight: 700; font-size: 0.7em;
+  color: var(--accent); margin-bottom: 0.2em;
+  letter-spacing: 0.04em;
+}
+.keyword-box span {
+  display: inline-block; background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px; padding: 0.1em 0.4em; margin: 0.1em;
+  font-size: 12px; color: var(--text-primary);
+}
+/* TABLES */
+table {
+  width: 100%; border-collapse: collapse; margin: 0.4em 0;
+  font-size: 12.5px;
+}
+th, td {
+  padding: 0.35em 0.5em; text-align: left;
+  border: 1px solid var(--border-color);
+}
+th { background: var(--bg-tertiary); font-weight: 600; white-space: nowrap; font-size: 12px; }
+td { background: var(--bg-card); }
+tr:hover td { background: var(--bg-tertiary); }
+/* BACK TO TOP */
+.back-to-top {
+  position: fixed; bottom: 1.5em; right: 1.5em;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary); color: var(--text-primary);
+  font-size: 1.1em; cursor: pointer;
+  display: none; align-items: center; justify-content: center;
+  transition: all 0.2s; z-index: 80; box-shadow: var(--shadow);
+}
+.back-to-top.visible { display: flex; }
+.back-to-top:hover { border-color: var(--accent); color: var(--accent); }
+/* FINAL TABLES */
+.tables-section { margin-top: 2em; }
+.tables-section h2 {
+  font-size: 1.2em; font-weight: 700; color: var(--danger);
+  margin-bottom: 0.6em; padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--danger);
+}
+.tables-section h3 {
+  font-size: 0.95em; font-weight: 600; margin: 1em 0 0.3em;
+  color: var(--text-primary);
+}
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  body { font-size: 13px; }
+  .content { padding: 85px 0.8em 2em; }
+  .nav-index { font-size: 11px; gap: 0.15em; padding: 0.25em 0.6em; }
+  table { font-size: 11.5px; }
+  th, td { padding: 0.25em 0.4em; }
+}
+/* PRINT */
+@media print {
+  .top-bar, .nav-index, .back-to-top, .btn { display: none !important; }
+  .content { padding: 0; margin: 0; max-width: 100%; }
+  body { font-size: 10pt; color: #000; background: #fff; line-height: 1.4; }
+  .aula-section { break-inside: avoid-column; margin-bottom: 1em; }
+  .aula-section h2 { color: #000; border-color: #999; font-size: 12pt; }
+  h3 { font-size: 10pt; }
+  .prof-box, .alert-box, .keyword-box {
+    border: 1px solid #999; background: #f5f5f5; break-inside: avoid;
+  }
+  .prof-box::before, .alert-box::before, .keyword-box::before { color: #333; }
+  strong { color: #000; }
+  table { break-inside: avoid; font-size: 9pt; }
+  th { background: #e0e0e0; }
+  td { background: #fff; }
+  th, td { border-color: #999; }
+  .keyword-box span { background: #eee; border-color: #999; color: #000; }
+  a { color: #000; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>RESUMAO <span>Farmacologia P2</span></h1>
+  <button class="btn" id="theme-toggle" onclick="toggleTheme()"></button>
+</div>
+
+<nav class="nav-index" id="nav-index">
+  <a href="#aula1">Aula 1</a><span class="sep">|</span>
+  <a href="#aula2">Aula 2</a><span class="sep">|</span>
+  <a href="#aula3">Aula 3</a><span class="sep">|</span>
+  <a href="#aula4">Aula 4</a><span class="sep">|</span>
+  <a href="#aula5">Aula 5</a><span class="sep">|</span>
+  <a href="#aula6">Aula 6</a><span class="sep">|</span>
+  <a href="#aula7">Aula 7</a><span class="sep">|</span>
+  <a href="#tabelas" style="color:var(--danger);font-weight:700;">Tabelas</a>
+</nav>
+
+<div class="content">
+
+<!-- ==================== AULA 1 ==================== -->
+<section class="aula-section" id="aula1">
+<h2>Aula 1 -- Introducao a Farmacologia</h2>
+
+<ul>
+  <li><strong>Farmaco modula</strong>, nao cria funcao -- 99% dos farmacos potencializam ou inibem mecanismos fisiologicos</li>
+  <li><strong>LADME</strong>: Liberacao, Absorcao, Distribuicao, Metabolizacao, Excrecao</li>
+  <li><strong>Efeito de 1a passagem</strong>: farmaco oral passa pelo figado (via porta) antes da circulacao sistemica -- reduz biodisponibilidade</li>
+  <li><strong>Biodisponibilidade</strong>: velocidade + extensao com que farmaco atinge circulacao sistemica (AUC)</li>
+  <li><strong>Meia-vida</strong>: tempo para concentracao cair pela metade; steady-state em ~5 meias-vidas</li>
+  <li><strong>Indice Terapeutico</strong> = LD50/ED50 -- quanto maior, mais seguro</li>
+  <li>Liberacao prolongada (XR, CR, Oros): <strong>NUNCA triturar/abrir</strong> -- libera tudo de uma vez</li>
+</ul>
+
+<div class="alert-box">
+  <ul style="margin-left:1em">
+    <li><strong>Remedio</strong> (termo popular) vs <strong>Medicamento</strong> (produto registrado) vs <strong>Farmaco</strong> (principio ativo puro)</li>
+    <li><strong>Efeito colateral</strong> (previsivel, ligado ao mecanismo) vs <strong>Efeito adverso</strong> (qualquer efeito indesejavel) -- colateral e adverso, mas adverso nem sempre e colateral</li>
+  </ul>
+</div>
+
+<div class="keyword-box">
+  <span>LADME</span> <span>1a passagem</span> <span>biodisponibilidade</span> <span>meia-vida</span> <span>indice terapeutico</span> <span>janela terapeutica</span> <span>CYP2C19 + clopidogrel</span>
+</div>
+</section>
+
+<!-- ==================== AULA 2 ==================== -->
+<section class="aula-section" id="aula2">
+<h2>Aula 2 -- Farmacocinetica e Farmacodinamica</h2>
+
+<ul>
+  <li><strong>Henderson-Hasselbalch</strong>: pKa = pH onde 50% ionizado. Forma nao-ionizada = lipossolivel = atravessa membranas</li>
+  <li><strong>Acido fraco em meio acido</strong> = nao-ionizado = mais absorvido. <strong>Base fraca em meio basico</strong> = nao-ionizada = mais absorvida</li>
+  <li><strong>Intoxicacao</strong>: farmaco acido -- alcalinizar urina (NaHCO3); farmaco basico -- acidificar urina</li>
+  <li><strong>Ligacao proteica</strong>: so fracao LIVRE age. Deslocamento competitivo causa risco em farmacos de alta ligacao + margem estreita (varfarina, fenitoina)</li>
+  <li><strong>Biotransformacao</strong>: Fase I (CYP450 -- oxidacao/reducao) + Fase II (conjugacao -- inativa). Indutor enzimatico (rifampicina) reduz efeito; Inibidor (cimetidina) aumenta toxicidade</li>
+  <li><strong>Nao combinar 2 farmacos no MESMO mecanismo/receptor</strong> -- competem, sem beneficio</li>
+  <li><strong>Combinacao inteligente</strong>: mecanismos diferentes, mesmo efeito final (beta-2 agonista + anticolinergico na asma)</li>
+</ul>
+
+<div class="prof-box">
+  <ul style="margin-left:1em">
+    <li>"O menos e mais" -- uso racional de medicamentos (repetido varias vezes)</li>
+    <li>Formas de liberacao prolongada NAO podem ser trituradas/passadas por sonda</li>
+    <li>Henderson-Hasselbalch e manipulacao de pH: cobrado frequentemente</li>
+    <li>Fenitoina precipita em glicose. Anfotericina precipita em SF</li>
+  </ul>
+</div>
+
+<table>
+  <tr><th>Situacao</th><th>pH urinario</th><th>Elimina mais rapido</th></tr>
+  <tr><td>Intox. farmaco acido (AAS)</td><td>Alcalinizar (NaHCO3)</td><td>Acido fica ionizado = nao reabsorve</td></tr>
+  <tr><td>Intox. farmaco basico</td><td>Acidificar</td><td>Base fica ionizada = nao reabsorve</td></tr>
+</table>
+
+<div class="keyword-box">
+  <span>Henderson-Hasselbalch</span> <span>ionizacao</span> <span>CYP450</span> <span>indutor/inibidor</span> <span>fracao livre</span> <span>1a passagem</span> <span>P-glicoproteina</span>
+</div>
+</section>
+
+<!-- ==================== AULA 3 ==================== -->
+<section class="aula-section" id="aula3">
+<h2>Aula 3 -- SNA: Simpatico e Parassimpatico</h2>
+
+<ul>
+  <li><strong>Ganglionar</strong> (ambos): colinergica nicotinica (ACh + receptor NN) -- IDENTICA</li>
+  <li><strong>Pos-ganglionar simpatico</strong>: noradrenergica (NA + alfa/beta). <strong>Pos-ganglionar parassimpatico</strong>: colinergica muscarinica (ACh + M1-M5)</li>
+  <li><strong>Simpatico</strong>: toraco-lombar, pre CURTO/pos LONGO, cadeias paravertebrais</li>
+  <li><strong>Parassimpatico</strong>: cranio-sacral, pre LONGO/pos CURTO, ganglio proximo/dentro do orgao</li>
+  <li><strong>Noradrenalina</strong>: afinidade MAIOR por alfa. <strong>Adrenalina</strong>: afinidade IGUAL alfa e beta</li>
+  <li>Vasos: alfa-1 >> beta-2, por isso resposta final = vasoconstriccao. <strong>Parassimpatico NAO inerva vasos</strong></li>
+</ul>
+
+<div class="prof-box">
+  <strong>EXCECOES cobradas em prova:</strong>
+  <ul style="margin-left:1em">
+    <li>Suprarrenal: inervacao monossinaptica, colinergica nicotinica (sem pos-ganglionar)</li>
+    <li>Glandula sudoripara: simpAtico mas colinergica (nao noradrenergica)</li>
+    <li>Somatico: monossinaptico, nicotinico muscular (NM)</li>
+  </ul>
+</div>
+
+<div class="alert-box">
+  <ul style="margin-left:1em">
+    <li><strong>Potencia</strong> (menor dose p/ mesmo efeito) vs <strong>Eficacia</strong> (efeito maximo possivel) -- "mais forte" NAO existe em farmacologia</li>
+    <li>Antagonista <strong>competitivo</strong> reduz POTENCIA (curva p/ direita) vs Antagonista <strong>nao-competitivo</strong> reduz EFICACIA (diminui efeito max)</li>
+    <li><strong>Nao despolarizar</strong> NAO e hiperpolarizar -- mecanismos diferentes</li>
+  </ul>
+</div>
+
+<div class="keyword-box">
+  <span>NN vs NM</span> <span>M1-M5</span> <span>alfa-1/alfa-2</span> <span>beta-1/beta-2</span> <span>excecao sudoripara</span> <span>excecao suprarrenal</span> <span>tonus vascular</span>
+</div>
+</section>
+
+<!-- ==================== AULA 4 ==================== -->
+<section class="aula-section" id="aula4">
+<h2>Aula 4 -- Farmacologia Colinergica e Adrenergica</h2>
+
+<ul>
+  <li><strong>Sintese catecolaminas</strong>: Fenilalanina -> Tirosina -> DOPA -> Dopamina -> NE -> Adrenalina (PNMT -- ja caiu em prova)</li>
+  <li><strong>Anticolinesterasico</strong> = parassimpatomimetico INDIRETO (aumenta ACh na fenda)</li>
+  <li>Chumbinho (organofosforado): fosforila AChE IRREVERSIVELMENTE -- tto: atropina</li>
+  <li>"E mais facil tirar a inibicao do que aumentar a excitacao" -- conceito repetido</li>
+</ul>
+
+<table>
+  <tr><th>Farmaco</th><th>Tipo</th><th>Indicacao-chave</th></tr>
+  <tr><td>Pilocarpina</td><td>Agonista M</td><td>Glaucoma</td></tr>
+  <tr><td>Betanecol</td><td>Agonista M</td><td>Hipotonia vesical</td></tr>
+  <tr><td>Atropina</td><td>Antagonista M</td><td>Bradicardia, intox. organofosforado</td></tr>
+  <tr><td>Ipratropio/Tiotropio</td><td>Antagonista M inalatorio</td><td>Asma/DPOC</td></tr>
+  <tr><td>Neostigmina/Piridostigmina</td><td>Anticolinesterasico</td><td>Miastenia gravis, reversao curare</td></tr>
+  <tr><td>Adrenalina</td><td>alfa+beta</td><td>Anafilaxia, PCR</td></tr>
+  <tr><td>Dobutamina</td><td>beta-1 seletivo</td><td>ICC pos-IAM</td></tr>
+  <tr><td>Salbutamol/Fenoterol</td><td>beta-2</td><td>Asma (broncodilatacao)</td></tr>
+  <tr><td>Propranolol</td><td>beta-bloq nao seletivo</td><td>HAS, arritmia (CI em asmaticos!)</td></tr>
+  <tr><td>Alfametildopa</td><td>Falso NT</td><td>HAS na gestante (unico seguro)</td></tr>
+  <tr><td>Tansulosina</td><td>Antagonista alfa-1 urinario</td><td>Calculo renal, HPB</td></tr>
+</table>
+
+<div class="keyword-box">
+  <span>PNMT</span> <span>tirosina hidroxilase (etapa limitante)</span> <span>organofosforado</span> <span>atropina</span> <span>neostigmina</span> <span>dobutamina</span> <span>alfametildopa</span>
+</div>
+</section>
+
+<!-- ==================== AULA 5 ==================== -->
+<section class="aula-section" id="aula5">
+<h2>Aula 5 -- Anestesicos e Bloqueadores Neuromusculares</h2>
+
+<h3>Bloqueadores Neuromusculares (BNM)</h3>
+<ul>
+  <li>BNM <strong>NAO causa consciencia nem analgesia</strong> -- SEMPRE sedar junto</li>
+  <li><strong>Succinilcolina</strong> (unico despolarizante): agonista NM -> fasciculacoes -> dessensibilizacao -> bloqueio curto. Degradado pela pseudocolinesterase. <strong>SEM antidoto</strong></li>
+  <li><strong>Nao-despolarizantes</strong> (pancuronio, rocuronio, vecuronio): antagonistas competitivos NM. Reversao = <strong>anticolinesterasico (neostigmina)</strong></li>
+</ul>
+
+<div class="alert-box">
+  <strong>PEGADINHA:</strong> Neostigmina em paciente que recebeu succinilcolina PROLONGA o bloqueio (inibe a enzima que a degrada). So reverter NAO-despolarizantes!
+</div>
+
+<h3>Anestesicos Locais (AL)</h3>
+<ul>
+  <li>Bloqueio de <strong>canais de sodio</strong> voltagem-dependentes -> impede potencial de acao</li>
+  <li><strong>Esteres</strong> (procaina, tetracaina) = acao CURTA, metabolismo pela colinesterase plasmatica</li>
+  <li><strong>Amidas</strong> (lidocaina, bupivacaina) = acao PROLONGADA, metabolismo hepatico</li>
+  <li>Potencia = lipossolubilidade | Latencia = pKa (ionizacao) | Duracao = ligacao proteica</li>
+  <li>Sequencia de bloqueio: dor -> frio -> calor -> tato -> funcao motora</li>
+  <li><strong>pH acido (infeccao) diminui eficacia do AL</strong> -- fica ionizado, nao penetra</li>
+  <li>Vasoconstritor (adrenalina) prolonga efeito mas <strong>NAO usar em extremidades</strong></li>
+</ul>
+
+<h3>Anestesicos Gerais</h3>
+<ul>
+  <li>Inducao = IV (propofol, etomidato). Manutencao = inalatorio</li>
+  <li><strong>CAM</strong>: menor CAM = mais potente. <strong>Coef. sangue:gas</strong>: menor = inducao mais rapida</li>
+  <li><strong>Halotano</strong>: potente mas HEPATOTOXICO; sensibiliza miocardio a catecolaminas</li>
+  <li><strong>Sevoflurano</strong>: mais usado atualmente (rapido, seguro)</li>
+  <li><strong>Propofol</strong>: mais usado IV; sem ressaca; NAO causa analgesia</li>
+  <li><strong>Cetamina</strong>: antagonista NMDA; anestesia dissociativa; nao deprime respiracao; uso em queimados/pediatria</li>
+  <li><strong>Etomidato</strong>: estabilidade CV -- cardiopata/hipotenso</li>
+  <li><strong>Hipertermia maligna</strong>: mutacao RyR1 + succinilcolina/halogenados -> Ca++ descontrolado -> tto: <strong>DANTROLENO</strong> (obrigatorio no CC)</li>
+</ul>
+
+<div class="keyword-box">
+  <span>despolarizante vs nao-despolarizante</span> <span>succinilcolina</span> <span>neostigmina</span> <span>CAM</span> <span>coef. sangue:gas</span> <span>dantroleno</span> <span>hipertermia maligna</span> <span>lidocaina</span> <span>propofol</span> <span>cetamina</span>
+</div>
+</section>
+
+<!-- ==================== AULA 6 ==================== -->
+<section class="aula-section" id="aula6">
+<h2>Aula 6 -- Dor e Inflamacao (AINEs, Opioides)</h2>
+
+<ul>
+  <li><strong>Cascata do AA</strong>: Fosfolipideos -> (Fosfolipase A2) -> AA -> (COX) -> Prostaglandinas/Tromboxanos. (Lipoxigenase) -> Leucotrienos</li>
+  <li><strong>Corticosteroides</strong> bloqueiam Fosfolipase A2 (tudo). <strong>AINEs</strong> bloqueiam so COX. <strong>NAO associar</strong> corticoide + AINE (somam riscos GI)</li>
+  <li><strong>AAS</strong>: inibicao IRREVERSIVEL da COX (acetilacao). Baixa dose = antiagregante (COX-1). Sindrome de Reye em criancas</li>
+  <li><strong>COX-2 seletivos</strong> (celecoxibe): menor risco GI, MAIOR risco cardiovascular</li>
+  <li><strong>Paracetamol</strong>: COX-3 (central). Hepatotoxico >4g/dia. Antidoto = <strong>N-acetilcisteina</strong></li>
+  <li><strong>Dipirona</strong>: COX-3. Reduz PA (CI em PA instavel). Risco: agranulocitose</li>
+  <li><strong>Opioides</strong>: receptor mu (analgesia + euforia + depressao respiratoria + dependencia)</li>
+  <li><strong>Miose por morfina NAO desenvolve tolerancia</strong> -- sinal diagnostico</li>
+  <li>Tolerancia opioide: rapida (12-24h). Depressao respiratoria = principal risco letal</li>
+</ul>
+
+<div class="prof-box">
+  <ul style="margin-left:1em">
+    <li>"Por que antidepressivo para dor cronica?" -- Aumenta NE e 5-HT -> estimula via descendente inibitoria da dor</li>
+    <li>Escada OMS: leve (1-3) = analgesicos; moderada (4-6) = opioide fraco + AINE; intensa (7-10) = opioide forte</li>
+    <li>AINE em gestante: pode fechar ducto arterioso e impedir contracoes</li>
+    <li>AINEs tem EFEITO TETO; opioides NAO tem</li>
+  </ul>
+</div>
+
+<div class="keyword-box">
+  <span>COX-1 vs COX-2 vs COX-3</span> <span>AAS irreversivel</span> <span>celecoxibe</span> <span>escada OMS</span> <span>receptor mu</span> <span>naloxona</span> <span>N-acetilcisteina</span> <span>miose sem tolerancia</span>
+</div>
+</section>
+
+<!-- ==================== AULA 7 ==================== -->
+<section class="aula-section" id="aula7">
+<h2>Aula 7 -- Transtornos Mentais (BZDs, Antidepressivos)</h2>
+
+<ul>
+  <li><strong>BZDs</strong>: aumentam FREQUENCIA de abertura do canal Cl- (GABA-A). Necessitam do GABA. Janela ampla</li>
+  <li><strong>Barbituricos</strong>: aumentam TEMPO de abertura. Em alta dose, abrem canais SEM GABA -> risco letal. Janela pequena</li>
+  <li><strong>BZD isolado nao mata</strong>, mas BZD + alcool = depressao cardiorrespiratoria</li>
+  <li><strong>Flumazenil</strong>: antagonista BZD, acao de apenas 2h -> risco de RE-SEDACAO se BZD tem meia-vida maior</li>
+  <li><strong>Lorazepam</strong>: sem metabolito ativo (so fase II) -- ideal para <strong>idosos e hepatopatas</strong></li>
+  <li><strong>Buspirona</strong>: agonista parcial 5-HT1A, inicio lento (2-3 sem), sem sedacao -> ideal para <strong>idosos com TAG</strong></li>
+  <li><strong>ISRS</strong>: 1a linha, mais prescritos. Efeitos: nausea, insonia, disfuncao sexual</li>
+  <li><strong>Triciclicos (ADT)</strong>: inibem recaptacao NE + 5-HT + bloqueio muscarinico/H1/alfa. Cardiotoxicos em superdose. <strong>1a linha para dor neuropatica</strong></li>
+  <li><strong>IMAO</strong>: "reacao do queijo" -- tiramina + MAO inibida = crise hipertensiva. Reservado para depressao refrataria</li>
+  <li><strong>Litio</strong>: estabilizador de humor, janela terapeutica PEQUENA</li>
+  <li>Retirada de BZD: GRADUAL (1/4 por semana, 6-8 semanas). Abrupta = ansiedade/insonia rebote</li>
+  <li>BZD altera arquitetura do sono: elimina REM -> dormiu mas nao descansou</li>
+</ul>
+
+<div class="alert-box">
+  <ul style="margin-left:1em">
+    <li><strong>Paroxetina NAO usar em lactantes</strong> (passa para leite)</li>
+    <li><strong>Sindrome serotoninergica</strong>: ISRS + IMAO = hipertermia, rigidez, colapso CV</li>
+    <li>Propranolol na ansiedade: so trata sintomas AUTONOMICOS (tremor, taquicardia), nao a ansiedade em si</li>
+  </ul>
+</div>
+
+<div class="keyword-box">
+  <span>GABA-A</span> <span>frequencia vs tempo</span> <span>flumazenil</span> <span>lorazepam (idoso)</span> <span>buspirona (5-HT1A)</span> <span>ISRS</span> <span>triciclicos</span> <span>IMAO + queijo</span> <span>litio</span> <span>sindrome serotoninergica</span>
+</div>
+</section>
+
+<!-- ==================== TABELAS FINAIS ==================== -->
+<section class="tables-section" id="tabelas">
+<h2>Tabelas de Comparacao -- Revisao Final</h2>
+
+<h3>Simpatico vs Parassimpatico</h3>
+<table>
+  <tr><th></th><th>Simpatico</th><th>Parassimpatico</th></tr>
+  <tr><td><strong>Saida</strong></td><td>Toraco-lombar (T1-L2)</td><td>Cranio-sacral (III,VII,IX,X + S2-S4)</td></tr>
+  <tr><td><strong>Pre/Pos</strong></td><td>Pre CURTO / Pos LONGO</td><td>Pre LONGO / Pos CURTO</td></tr>
+  <tr><td><strong>Ganglio</strong></td><td>Cadeias paravertebrais</td><td>Proximo/dentro do orgao</td></tr>
+  <tr><td><strong>NT pos-ganglionar</strong></td><td>Noradrenalina (alfa/beta)</td><td>ACh (muscarinico M1-M5)</td></tr>
+  <tr><td><strong>Coracao</strong></td><td>Taquicardia (beta-1)</td><td>Bradicardia (M2)</td></tr>
+  <tr><td><strong>Bronquios</strong></td><td>Broncodilatacao (beta-2)</td><td>Broncoconstriccao (M3)</td></tr>
+  <tr><td><strong>Pupila</strong></td><td>Midriase (alfa-1)</td><td>Miose (M3)</td></tr>
+  <tr><td><strong>TGI</strong></td><td>Relaxa musc. lisa / Contrai esfincteres</td><td>Contrai musc. lisa / Relaxa esfincteres</td></tr>
+  <tr><td><strong>Vasos</strong></td><td>Vasoconstriccao (alfa-1)</td><td>SEM INERVACAO</td></tr>
+</table>
+
+<h3>Receptores Completos</h3>
+<table>
+  <tr><th>Receptor</th><th>Tipo</th><th>Local</th><th>Efeito</th></tr>
+  <tr><td><strong>NN</strong></td><td>Nicotinico</td><td>Ganglio, adrenal</td><td>Transmissao ganglionar</td></tr>
+  <tr><td><strong>NM</strong></td><td>Nicotinico</td><td>JNM</td><td>Contracao esqueletica</td></tr>
+  <tr><td><strong>M1</strong></td><td>Muscarinico</td><td>Estomago</td><td>Secrecao acida (HCl)</td></tr>
+  <tr><td><strong>M2</strong></td><td>Muscarinico</td><td>Coracao</td><td>Bradicardia, reduz conducao</td></tr>
+  <tr><td><strong>M3</strong></td><td>Muscarinico</td><td>Visceras, bronquios, glandulas</td><td>Contracao musc. lisa, secrecoes</td></tr>
+  <tr><td><strong>alfa-1</strong></td><td>Adrenergico</td><td>Vasos, pupila, esfincteres</td><td>Vasoconstriccao, midriase</td></tr>
+  <tr><td><strong>alfa-2</strong></td><td>Adrenergico</td><td>Pre-sinaptico, medula espinal</td><td>Feedback negativo, analgesia</td></tr>
+  <tr><td><strong>beta-1</strong></td><td>Adrenergico</td><td>Coracao</td><td>Taquicardia, inotropismo+</td></tr>
+  <tr><td><strong>beta-2</strong></td><td>Adrenergico</td><td>Bronquios, vasos, utero</td><td>Broncodilatacao, vasodilatacao</td></tr>
+</table>
+
+<h3>BNM: Despolarizante vs Nao-Despolarizante</h3>
+<table>
+  <tr><th></th><th>Succinilcolina (desp.)</th><th>Nao-despolarizantes</th></tr>
+  <tr><td><strong>Mecanismo</strong></td><td>Agonista NM -> dessensibilizacao</td><td>Antagonista competitivo NM</td></tr>
+  <tr><td><strong>Inicio</strong></td><td>Muito rapido</td><td>3-6 min</td></tr>
+  <tr><td><strong>Duracao</strong></td><td>Curta (~5-10 min)</td><td>30-100+ min</td></tr>
+  <tr><td><strong>Fasciculacoes</strong></td><td>SIM</td><td>NAO</td></tr>
+  <tr><td><strong>Reversao</strong></td><td>NAO (pseudocolinesterase)</td><td>Anticolinesterasico (neostigmina)</td></tr>
+  <tr><td><strong>Hipercalemia</strong></td><td>SIM</td><td>NAO</td></tr>
+  <tr><td><strong>Hipertermia maligna</strong></td><td>SIM (risco)</td><td>NAO</td></tr>
+  <tr><td><strong>Uso principal</strong></td><td>Intubacao de emergencia</td><td>Cirurgias longas</td></tr>
+</table>
+
+<h3>AINEs: COX-1 vs COX-2 vs COX-3</h3>
+<table>
+  <tr><th></th><th>COX-1 (constitutiva)</th><th>COX-2 (induzivel)</th><th>COX-3 (SNC)</th></tr>
+  <tr><td><strong>Presenca</strong></td><td>Continua (homeostase)</td><td>So na inflamacao</td><td>SNC</td></tr>
+  <tr><td><strong>Funcao</strong></td><td>Muco gastrico, plaquetas, rim</td><td>Sinalizacao dor/inflamacao</td><td>Termorregulacao, nocicepcao</td></tr>
+  <tr><td><strong>Inibidores</strong></td><td>AAS (baixa dose), AINEs tradicionais</td><td>Celecoxibe, etoricoxibe</td><td>Paracetamol, dipirona</td></tr>
+  <tr><td><strong>Risco GI</strong></td><td>ALTO (inibir = perder protecao)</td><td>Menor</td><td>Minimo</td></tr>
+  <tr><td><strong>Risco CV</strong></td><td>Menor</td><td>MAIOR</td><td>--</td></tr>
+</table>
+
+<h3>Opioides Fracos vs Fortes</h3>
+<table>
+  <tr><th></th><th>Fracos</th><th>Fortes</th></tr>
+  <tr><td><strong>Exemplos</strong></td><td>Codeina, tramadol</td><td>Morfina, fentanil, metadona</td></tr>
+  <tr><td><strong>Dor</strong></td><td>Moderada (degrau 2 OMS)</td><td>Intensa (degrau 3 OMS)</td></tr>
+  <tr><td><strong>Depressao resp.</strong></td><td>Menor</td><td>Maior (principal risco letal)</td></tr>
+  <tr><td><strong>Dependencia</strong></td><td>Menor</td><td>Maior</td></tr>
+  <tr><td><strong>Obs</strong></td><td>Codeina: antitussigeno. Tramadol: NAO combinar com outro opioide</td><td>Morfina: miose sem tolerancia. Metadona: retirada de opioides</td></tr>
+</table>
+
+<h3>BZDs: Curta vs Intermediaria vs Longa Duracao</h3>
+<table>
+  <tr><th>Meia-vida</th><th>Exemplos</th><th>Indicacao</th></tr>
+  <tr><td><strong>Curta</strong></td><td>Midazolam (Dormonid)</td><td>Procedimentos (endoscopia), inducao anestesica</td></tr>
+  <tr><td><strong>Intermediaria</strong></td><td>Alprazolam (Frontal), Lorazepam (Lorax)</td><td>Ansiolitico, hipnotico. Lorazepam = ideal p/ idoso/hepatopata</td></tr>
+  <tr><td><strong>Longa</strong></td><td>Diazepam (Valium), Clonazepam (Rivotril)</td><td>Ansiolitico, anticonvulsivante, retirada gradual</td></tr>
+</table>
+
+<h3>Antidepressivos: ISRS vs Triciclicos vs IMAO</h3>
+<table>
+  <tr><th></th><th>ISRS</th><th>Triciclicos (ADT)</th><th>IMAO</th></tr>
+  <tr><td><strong>Mecanismo</strong></td><td>Inibe recaptacao 5-HT</td><td>Inibe recaptacao NE + 5-HT</td><td>Inibe MAO (degradacao)</td></tr>
+  <tr><td><strong>Seletividade</strong></td><td>Alta (so 5-HT)</td><td>Baixa (bloqueia M, H1, alfa)</td><td>Baixa</td></tr>
+  <tr><td><strong>Efeitos adversos</strong></td><td>Nausea, insonia, disf. sexual</td><td>Sedacao, boca seca, hipotensao, cardiotoxicidade</td><td>Crise hipertensiva (tiramina), hipotensao</td></tr>
+  <tr><td><strong>Seguranca superdose</strong></td><td>MAIOR</td><td>MENOR (arritmias)</td><td>MENOR</td></tr>
+  <tr><td><strong>Restricao dietetica</strong></td><td>NAO</td><td>NAO</td><td>SIM (queijo, vinho)</td></tr>
+  <tr><td><strong>Posicao</strong></td><td>1a linha geral</td><td>1a linha dor neuropatica</td><td>Depressao refrataria</td></tr>
+  <tr><td><strong>Exemplos</strong></td><td>Fluoxetina, sertralina, paroxetina</td><td>Amitriptilina, nortriptilina</td><td>Fenelzina, tranilcipromida</td></tr>
+</table>
+
+<h3>BZDs vs Barbituricos</h3>
+<table>
+  <tr><th></th><th>BZDs</th><th>Barbituricos</th></tr>
+  <tr><td><strong>Mecanismo GABA-A</strong></td><td>Aumentam FREQUENCIA</td><td>Aumentam TEMPO</td></tr>
+  <tr><td><strong>Depende do GABA?</strong></td><td>SIM</td><td>Alta dose: NAO</td></tr>
+  <tr><td><strong>Janela terapeutica</strong></td><td>AMPLA</td><td>PEQUENA</td></tr>
+  <tr><td><strong>Risco letal isolado</strong></td><td>Baixo</td><td>ALTO (parada CR)</td></tr>
+  <tr><td><strong>Antagonista</strong></td><td>Flumazenil</td><td>Nao ha especifico</td></tr>
+  <tr><td><strong>Uso atual</strong></td><td>Amplo</td><td>Limitado (fenobarbital, tiopental)</td></tr>
+</table>
+
+<h3>Antidotos Essenciais</h3>
+<table>
+  <tr><th>Intoxicacao</th><th>Antidoto</th></tr>
+  <tr><td>Opioides</td><td><strong>Naloxona</strong></td></tr>
+  <tr><td>Benzodiazepinicos</td><td><strong>Flumazenil</strong> (acao 2h -- cuidado re-sedacao)</td></tr>
+  <tr><td>Organofosforado (chumbinho)</td><td><strong>Atropina</strong></td></tr>
+  <tr><td>Curare (nao-despolarizante)</td><td><strong>Neostigmina</strong> (anticolinesterasico)</td></tr>
+  <tr><td>Overdose betabloqueador</td><td><strong>Glucagon</strong></td></tr>
+  <tr><td>Paracetamol</td><td><strong>N-acetilcisteina</strong></td></tr>
+  <tr><td>Hipertermia maligna</td><td><strong>Dantroleno</strong></td></tr>
+  <tr><td>Varfarina</td><td><strong>Vitamina K</strong></td></tr>
+</table>
+
+<h3>Anestesicos IV -- Escolha Rapida</h3>
+<table>
+  <tr><th>Farmaco</th><th>Mecanismo</th><th>Uso especial</th><th>Cuidado</th></tr>
+  <tr><td><strong>Propofol</strong></td><td>GABA-A</td><td>Mais usado (geral)</td><td>Dor a injecao; NAO e analgesico</td></tr>
+  <tr><td><strong>Etomidato</strong></td><td>GABA-A</td><td>Cardiopata/hipotenso</td><td>Supressao adrenal (uso prolongado)</td></tr>
+  <tr><td><strong>Cetamina</strong></td><td>Antagonista NMDA</td><td>Queimado, pediatrico, asmatico</td><td>Delirios de emergencia</td></tr>
+  <tr><td><strong>Midazolam</strong></td><td>GABA-A (BZD)</td><td>Pre-anestesico, sedacao</td><td>Amnesia retrograda</td></tr>
+</table>
+
+</section>
+
+</div>
+
+<button class="back-to-top" id="back-to-top" title="Voltar ao topo">&#8593;</button>
+
+<script>
+// Theme
+function initTheme() {
+  var saved = localStorage.getItem('farma-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+}
+function toggleTheme() {
+  var current = document.documentElement.getAttribute('data-theme');
+  var next = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('farma-theme', next);
+  updateThemeBtn();
+}
+function updateThemeBtn() {
+  var btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  var t = document.documentElement.getAttribute('data-theme');
+  btn.textContent = t === 'light' ? '\u{1F319}' : '\u{2600}\u{FE0F}';
+}
+initTheme();
+
+document.addEventListener('DOMContentLoaded', function() {
+  updateThemeBtn();
+
+  // Back to top
+  var btt = document.getElementById('back-to-top');
+  if (btt) {
+    window.addEventListener('scroll', function() {
+      btt.classList.toggle('visible', window.scrollY > 300);
+    });
+    btt.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Active nav
+  var navLinks = document.querySelectorAll('.nav-index a[href^="#"]');
+  var sections = [];
+  navLinks.forEach(function(link) {
+    var id = link.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (el) sections.push({ el: el, link: link });
+  });
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        var scrollPos = window.scrollY + 100;
+        var current = null;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (sections[i].el.offsetTop <= scrollPos) {
+            current = sections[i]; break;
+          }
+        }
+        navLinks.forEach(function(l) { l.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+});
+</script>
+</body>
+</html>

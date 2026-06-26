@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIP P2 — Banco de Questões</title>
+<style>
+:root {
+  --bg: #0f1115; --bg-elev: #171a21; --bg-soft: #1e222b; --text: #e6e8ee;
+  --text-dim: #a5a9b5; --text-muted: #737885; --border: #262a33;
+  --accent: #6ea8ff; --accent-soft: #1b2b4a;
+  --correct: #8ec07c; --correct-bg: #1e2d1c; --wrong: #ef6f6c; --wrong-bg: #2d1e1e;
+  --highlight-bg: #1d2329; --highlight-border: #f6c177;
+}
+[data-theme="light"] {
+  --bg: #fafafa; --bg-elev: #fff; --bg-soft: #f2f3f5; --text: #1a1c22;
+  --text-dim: #4a4e59; --text-muted: #6c717c; --border: #e4e6eb;
+  --accent: #2e5fcf; --accent-soft: #e8efff;
+  --correct: #2f7d32; --correct-bg: #e6f4e6; --wrong: #c23c3c; --wrong-bg: #fbe9e9;
+  --highlight-bg: #fff8ec; --highlight-border: #d48f1f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+.app { max-width: 900px; margin: 0 auto; padding: 32px 24px 120px; }
+header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+header h1 { margin: 0 0 4px; font-size: 28px; letter-spacing: -0.3px; }
+header p { margin: 0; color: var(--text-dim); font-size: 14px; }
+.controls {
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 20px; padding: 14px; background: var(--bg-elev);
+  border-radius: 10px; border: 1px solid var(--border);
+}
+.controls label { font-size: 13px; color: var(--text-dim); margin-right: 6px; }
+.controls select, .controls button {
+  background: var(--bg-soft); color: var(--text); border: 1px solid var(--border);
+  padding: 7px 11px; border-radius: 6px; font-size: 13px; cursor: pointer;
+  font-family: inherit;
+}
+.controls button:hover { background: var(--border); }
+.controls button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.controls button.primary:hover { filter: brightness(1.1); }
+.mode-banner {
+  padding: 10px 14px; border-radius: 8px; margin-bottom: 16px;
+  background: var(--accent-soft); color: var(--accent); font-size: 13px;
+  border: 1px solid var(--accent); font-weight: 500;
+}
+.quest {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 22px; margin-bottom: 18px;
+}
+.quest .qmeta {
+  display: flex; justify-content: space-between; gap: 10px;
+  font-size: 12px; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.8px;
+}
+.quest .qmeta .dif { padding: 2px 8px; border-radius: 20px; background: var(--bg-soft); }
+.quest .qmeta .dif.facil { color: var(--correct); }
+.quest .qmeta .dif.medio { color: var(--highlight-border); }
+.quest .qmeta .dif.dificil { color: var(--wrong); }
+.quest .num { font-weight: 700; color: var(--text); }
+.quest .stem { margin-bottom: 14px; }
+.quest .stem p { margin: 0 0 8px; }
+.quest .stem strong { color: var(--text); }
+.quest .alts { list-style: none; padding: 0; margin: 0; }
+.quest .alts li { margin: 6px 0; }
+.quest .alts label {
+  display: flex; gap: 10px; padding: 10px 12px;
+  border: 1px solid var(--border); border-radius: 8px;
+  cursor: pointer; transition: background .15s;
+  background: var(--bg); font-size: 15px; line-height: 1.5;
+}
+.quest .alts label:hover { background: var(--bg-soft); }
+.quest .alts input[type="radio"] { margin-top: 3px; accent-color: var(--accent); }
+.quest .alts .letter { font-weight: 700; min-width: 18px; color: var(--text-dim); }
+.quest.answered .alts label.chosen { border-color: var(--accent); }
+.quest.answered .alts label.correct { border-color: var(--correct); background: var(--correct-bg); }
+.quest.answered .alts label.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+.quest.answered .alts label { cursor: default; }
+.quest.answered .alts input { pointer-events: none; }
+.explain {
+  margin-top: 14px; padding: 12px 16px;
+  background: var(--bg-soft); border-radius: 8px; border-left: 3px solid var(--accent);
+  font-size: 14.5px; display: none;
+}
+.quest.answered .explain { display: block; }
+.explain strong { color: var(--text); }
+.explain .e-correct { color: var(--correct); font-weight: 600; }
+.explain .e-wrong { color: var(--wrong); font-weight: 600; }
+.explain h4 { margin: 10px 0 4px; font-size: 13px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; }
+.diss {
+  background: var(--bg-elev); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 22px; margin-bottom: 18px;
+}
+.diss .caso { margin-bottom: 14px; }
+.diss .caso p { margin: 6px 0; }
+.diss .perguntas { padding-left: 22px; }
+.diss .perguntas li { margin-bottom: 8px; }
+.diss .reveal-btn {
+  background: var(--bg-soft); color: var(--accent); border: 1px solid var(--accent);
+  padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+  margin-top: 12px; font-family: inherit;
+}
+.diss .reveal-btn:hover { background: var(--accent); color: #fff; }
+.diss .gabarito {
+  margin-top: 14px; padding: 14px 18px;
+  background: var(--accent-soft); border-radius: 8px;
+  border-left: 3px solid var(--accent); display: none;
+}
+.diss.revealed .gabarito { display: block; }
+.diss .gabarito h4 { margin: 12px 0 4px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px; }
+.diss .gabarito h4:first-child { margin-top: 0; }
+.simulado-results {
+  display: none; background: var(--bg-elev); border: 1px solid var(--border);
+  border-radius: 10px; padding: 24px; margin-bottom: 22px;
+}
+.simulado-results.show { display: block; }
+.simulado-results h2 { margin: 0 0 10px; font-size: 22px; }
+.score { font-size: 32px; font-weight: 700; color: var(--accent); margin: 6px 0; }
+.score-breakdown { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; font-size: 14px; }
+.score-breakdown .box { background: var(--bg-soft); padding: 10px 12px; border-radius: 6px; }
+.score-breakdown .box strong { display: block; color: var(--text-dim); font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.diag-panel { background: var(--bg-soft); padding: 14px 18px; border-radius: 8px; margin-top: 12px; }
+.diag-panel h3 { margin: 0 0 10px; font-size: 15px; color: var(--text); }
+.diag-panel .item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.diag-panel .item:last-child { border: none; }
+.diag-panel .item .top { display: flex; justify-content: space-between; align-items: center; }
+.diag-panel .item .top b { color: var(--text); }
+.diag-panel .item .sub { color: var(--text-muted); font-size: 13px; margin-top: 2px; }
+nav.indice {
+  position: sticky; top: 12px; background: var(--bg-elev); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; font-size: 13px;
+}
+nav.indice summary { cursor: pointer; font-weight: 600; color: var(--text); }
+nav.indice details[open] summary { margin-bottom: 8px; }
+nav.indice a { color: var(--accent); text-decoration: none; margin-right: 14px; display: inline-block; margin-top: 4px; }
+nav.indice a:hover { text-decoration: underline; }
+h2.aula-sep { margin: 32px 0 14px; font-size: 20px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.theme-toggle {
+  position: fixed; bottom: 16px; right: 16px; background: var(--bg-soft);
+  color: var(--text); border: 1px solid var(--border); padding: 8px 12px;
+  border-radius: 8px; cursor: pointer; font-size: 13px; font-family: inherit;
+}
+.hidden { display: none !important; }
+@media (max-width: 700px) { .app { padding: 18px 14px 100px; } .score-breakdown { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<header>
+  <h1>Banco de Questões — DIP P2</h1>
+  <p>6 aulas · 60 questões objetivas · 10 dissertativas. Estilo ENADE/ENAMED. Teste-se em modo estudo (feedback imediato) ou simulado (resultado no final).</p>
+</header>
+
+<div class="controls">
+  <label>Modo</label>
+  <select id="modeSel">
+    <option value="estudo">Modo Estudo (feedback imediato)</option>
+    <option value="simulado">Modo Simulado (resultado no final)</option>
+  </select>
+  <label>Filtro</label>
+  <select id="filterSel">
+    <option value="todas">Todas as aulas</option>
+    <option value="a1">Aula 1 — Epidemiologia</option>
+    <option value="a2">Aula 2 — FOI</option>
+    <option value="a3">Aula 3 — Hepatites/Cirrose</option>
+    <option value="a4">Aula 4 — Hepatite A</option>
+    <option value="a5">Aula 5 — Leishmaniose</option>
+    <option value="a6">Aula 6 — Hepatite C</option>
+  </select>
+  <button id="applyBtn" class="primary">Aplicar</button>
+  <button id="resetBtn">Limpar respostas</button>
+  <button id="submitBtn" class="primary hidden">Finalizar simulado</button>
+</div>
+
+<div id="modeBanner" class="mode-banner">Modo Estudo — responda cada questão e o feedback aparece na hora.</div>
+
+<nav class="indice">
+  <details>
+    <summary>Índice de questões por aula</summary>
+    <div id="idxContent"></div>
+  </details>
+</nav>
+
+<div id="simResults" class="simulado-results"></div>
+
+<div id="questList"></div>
+
+<h2 class="aula-sep" id="diss-section">Questões dissertativas</h2>
+<div id="dissList"></div>
+
+</div>
+
+<button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☾ Tema claro</button>
+
+<script>
+const QUESTOES = [
+  // ============ AULA 1 — EPIDEMIOLOGIA (10 questões) ============
+  {id:1, aula:"a1", topic:"epi-mortalidade", dif:"facil", stem:"Em um hospital, 200 pacientes foram diagnosticados com uma determinada doença infecciosa ao longo de um mês, e 20 deles foram a óbito nesse período. Para descrever a gravidade dessa doença entre os afetados, o indicador adequado é",
+    alts:["Incidência acumulada.","Prevalência instantânea.","Taxa de mortalidade geral.","Letalidade.","Mortalidade proporcional."],
+    correct:3,
+    exp:{correct:"Letalidade = óbitos ÷ doentes confirmados × 100. Responde 'quão grave é a doença para quem a contraiu' (aqui, 20/200 = 10%).",
+      wrongs:["Incidência mede casos novos sobre população exposta; não captura mortalidade entre os que adoeceram.","Prevalência mede quantos têm a doença num momento; não trata de óbitos.","Mortalidade geral usa a população total como denominador, não os doentes — não mede gravidade entre afetados.","Correta.","Mortalidade proporcional é o percentual de um tipo de óbito sobre o total de mortes; não informa a gravidade específica da doença entre os doentes."]}},
+
+  {id:2, aula:"a1", topic:"epi-morbidade", dif:"facil", stem:"Um pesquisador deseja estimar, em um município de 50 000 habitantes, <strong>quantas pessoas vivem hoje com hipertensão arterial</strong>, doença de evolução crônica. O indicador epidemiológico mais apropriado para esse objetivo é",
+    alts:["Taxa de mortalidade específica.","Prevalência.","Coeficiente de letalidade.","Mortalidade proporcional.","Incidência anual."],
+    correct:1,
+    exp:{correct:"Prevalência mede casos totais (novos + antigos) num momento, sendo o indicador de escolha para doenças crônicas como a hipertensão.",
+      wrongs:["Mortalidade específica mede óbitos, não adoecimento, e é medida sobre causas específicas.","Correta.","Letalidade avalia a mortalidade entre os doentes, não a frequência da doença.","Mortalidade proporcional descreve o perfil de causas de morte, não a frequência de uma doença na população.","Incidência mede apenas casos novos em um período — inadequada para condição crônica já estabelecida."]}},
+
+  {id:3, aula:"a1", topic:"epi-definicoes", dif:"medio", stem:"Em uma creche de bairro, no intervalo de duas semanas, são identificados seis casos confirmados de varicela entre crianças que compartilham a mesma sala. A classificação epidemiológica adequada para esse evento é",
+    alts:["Endemia, pois a varicela circula habitualmente no Brasil.","Epidemia, pois o número de casos ultrapassa o limiar epidêmico municipal.","Surto, pois há casos com relação epidemiológica em espaço delimitado.","Pandemia, pois a varicela tem distribuição global.","Caso esporádico sem relevância epidemiológica."], correct:2,
+    exp:{correct:"Surto é a ocorrência de dois ou mais casos com relação epidemiológica entre si, em espaço delimitado (escola, creche, quartel). Mesmo poucos casos configuram surto se estiverem agrupados.",
+      wrongs:["Endemia exige ocorrência sistemática e contínua na população ao longo do tempo, não um agregado pontual em creche.","Epidemia refere-se a elevação em área mais ampla acima do limiar esperado — o critério é regional, não restrito a uma creche.","Correta.","Pandemia é disseminação mundial sustentada de doença nova; não se aplica a casos localizados.","Seis casos com relação epidemiológica e espaço delimitado não são esporádicos — formam surto por definição."]}},
+
+  {id:4, aula:"a1", topic:"epi-definicoes", dif:"medio", stem:"Um gestor de saúde argumenta que a tuberculose no Brasil é uma endemia. A justificativa epidemiológica mais adequada para essa afirmação é",
+    alts:["Foram identificados dois ou mais casos em um mesmo ambiente delimitado.","A tuberculose apresentou elevação súbita da incidência em 2024 acima do esperado.","A doença tem disseminação mundial com transmissão sustentada de pessoa a pessoa em diferentes continentes.","A doença ocorre sistematicamente na população, com incidência relativamente constante ao longo do tempo, permitindo variações sazonais.","A doença apresenta letalidade superior a 50% entre os casos confirmados."],
+    correct:3,
+    exp:{correct:"Endemia é definida pela ocorrência sistemática e relativamente constante de uma doença em determinada população e espaço, temporalmente ilimitada, com possíveis variações cíclicas/sazonais.",
+      wrongs:["Casos em ambiente delimitado caracterizam surto, não endemia.","Elevação súbita acima do esperado caracteriza epidemia, não endemia.","Disseminação mundial sustentada define pandemia.","Correta.","Letalidade alta caracteriza a gravidade da doença entre os afetados, não o padrão de distribuição endêmica."]}},
+
+  {id:5, aula:"a1", topic:"epi-mortalidade", dif:"medio", stem:"Uma gestora analisa os óbitos de um município e identifica que 40% das mortes se devem a doenças cardiovasculares, 18% a neoplasias, 10% a causas externas e os demais a outras causas. Esse tipo de análise corresponde a",
+    alts:["Mortalidade proporcional (Índice de Swaroop-Uemura).","Taxa de letalidade por doença cardiovascular.","Taxa de incidência por causa de morte.","Prevalência por causa cardiovascular.","Coeficiente de mortalidade específica por causa."],
+    correct:0,
+    exp:{correct:"A mortalidade proporcional (Swaroop-Uemura) expressa cada causa de óbito como percentual do total de mortes, retratando o perfil epidemiológico da comunidade.",
+      wrongs:["Correta.","Letalidade mede a mortalidade entre os doentes de uma doença, não entre os óbitos gerais.","Incidência refere-se a casos novos da doença, não a distribuição de óbitos.","Prevalência refere-se a casos existentes de uma doença, não a mortes.","A mortalidade específica divide óbitos por uma causa pela população em risco — precisa de denominador populacional, não percentual sobre total de óbitos."]}},
+
+  {id:6, aula:"a1", topic:"epi-mortalidade", dif:"medio", stem:"Uma gestante de 32 semanas sofre atropelamento na via pública e falece por traumatismo. Durante a notificação, um residente pergunta se esse óbito entra no indicador de mortalidade materna. A resposta correta é",
+    alts:["Sim, pois ocorreu durante a gestação, independentemente da causa.","Não, pois o óbito não foi por causa relacionada ao ciclo gravídico-puerperal.","Sim, pois o feto também foi afetado pelo evento.","Não, porque a gestante tinha menos de 37 semanas.","Sim, todo óbito em gestante é contabilizado como materna."],
+    correct:1,
+    exp:{correct:"A mortalidade materna refere-se a óbitos por causas relacionadas à gravidez, parto ou puerpério. Morte por trauma externo, sem relação causal com o ciclo, não é computada.",
+      wrongs:["O fato de ocorrer durante a gestação não basta; é preciso relação causal com a gravidez.","Correta.","A contabilização de mortalidade materna considera a causa da morte materna, e não o desfecho fetal.","A idade gestacional não é o critério; o critério é causal, não temporal.","Nem todo óbito em gestante entra no indicador — o critério é causa relacionada ao ciclo gravídico-puerperal."]}},
+
+  {id:7, aula:"a1", topic:"epi-morbidade", dif:"medio", stem:"Em um serviço de vigilância, observa-se que a dengue apresenta grande aumento de casos novos durante o verão na região Sudeste. Para descrever esse fenômeno sazonal, o indicador adequado é",
+    alts:["Mortalidade proporcional.","Incidência.","Mortalidade geral.","Prevalência anual.","Letalidade específica."],
+    correct:1,
+    exp:{correct:"Incidência mede casos novos em um período e é ideal para doenças agudas com comportamento sazonal, como a dengue no verão.",
+      wrongs:["Mortalidade proporcional trata do perfil de óbitos, não da ocorrência da doença.","Correta.","Mortalidade geral mede óbitos na população, não casos novos de dengue.","Prevalência mede todos os casos em um momento — é mais adequada para doenças crônicas.","Letalidade mede a mortalidade entre os doentes; não captura o volume de novos casos."]}},
+
+  {id:8, aula:"a1", topic:"epi-mortalidade", dif:"dificil", stem:"O indicador de mortalidade infantil neonatal reflete, preferencialmente, a qualidade de",
+    alts:["Acesso a saneamento básico e coleta de lixo domiciliar.","Programas de imunização da infância tardia.","Assistência ao pré-natal e ao parto, além das primeiras horas de vida.","Taxa de fecundidade e planejamento familiar.","Cobertura vacinal da adolescência."], correct:2,
+    exp:{correct:"A mortalidade neonatal (óbitos de menores de 28 dias) reflete especialmente a qualidade do pré-natal, da assistência ao parto e dos cuidados iniciais do recém-nascido.",
+      wrongs:["Saneamento influencia mais a mortalidade pós-neonatal (28 dias a 1 ano), ligada a gastroenterites e doenças respiratórias.","Imunização da infância tardia atinge faixas acima do período neonatal.","Correta.","Fecundidade e planejamento familiar afetam natalidade e fatores sociais, mas não são o principal reflexo do período neonatal.","Cobertura vacinal de adolescentes não tem relação direta com o período neonatal."]}},
+
+  {id:9, aula:"a1", topic:"epi-definicoes", dif:"dificil", stem:"A pandemia de SARS-CoV-2 (2020) foi caracterizada formalmente a partir do momento em que a doença apresentou",
+    alts:["Ocorrência sistemática e constante em uma dada população.","Letalidade superior a 5% em múltiplas regiões do mundo.","Elevação acima do limiar epidêmico em um único país.","Transmissão sustentada de pessoa a pessoa em diferentes continentes.","Incidência concentrada em idosos de todas as continentes."],
+    correct:3,
+    exp:{correct:"Pandemia é a disseminação mundial de uma nova doença caracterizada por transmissão sustentada de pessoa a pessoa em diferentes continentes.",
+      wrongs:["Ocorrência constante define endemia.","Letalidade não é critério para classificar pandemia — pandemia refere-se a distribuição geográfica, não gravidade.","Elevação em um único país é epidemia local.","Correta.","Distribuição por faixa etária não é critério definidor de pandemia."]}},
+
+  {id:10, aula:"a1", topic:"epi-morbidade", dif:"dificil", stem:"Em um estudo epidemiológico, uma cidade de 100 000 habitantes tem 8 000 pessoas vivendo com diabetes tipo 2, com 200 novos diagnósticos no ano. Assinale a afirmação correta sobre a interpretação desses dados.",
+    alts:["A prevalência é de 8% e a incidência anual é de 0,2%, padrão compatível com doença crônica acumulativa.","A incidência é de 8% e a prevalência de 0,2%, padrão compatível com surto.","Os dados não permitem calcular nenhum dos dois indicadores.","Tanto incidência quanto prevalência estão corretamente expressas em percentual de óbitos.","A incidência é de 8% e a prevalência é de 0,2%, caracterizando doença aguda."],
+    correct:0,
+    exp:{correct:"Prevalência = casos totais/população = 8 000/100 000 = 8%. Incidência anual = novos/população = 200/100 000 = 0,2%/ano. Prevalência alta com incidência baixa é típico de doença crônica que se acumula.",
+      wrongs:["Correta.","Os valores estão trocados; além disso, 8% de prevalência não caracteriza surto.","Os dados fornecidos são suficientes para ambos os cálculos.","Nenhum dos dois indicadores se expressa como percentual de óbitos.","Os valores estão trocados — 8 000 existentes é prevalência, 200 novos é incidência."]}},
+
+  // ============ AULA 2 — FEBRE DE ORIGEM INDETERMINADA (10 questões) ============
+  {id:11, aula:"a2", topic:"foi-fisiopat", dif:"facil", stem:"Na fisiopatologia da febre, o principal mediador hipotalâmico responsável pela elevação do set point de temperatura é",
+    alts:["Histamina liberada por mastócitos.","Serotonina de origem neuronal central.","Prostaglandina E2 produzida sob estímulo de citocinas.","Bradicinina gerada durante a resposta inflamatória sistêmica.","Norepinefrina do sistema simpático."], correct:2,
+    exp:{correct:"As citocinas inflamatórias (IL-1, IL-6, TNF) chegam ao hipotálamo e estimulam a produção de prostaglandina E2, que eleva o set point do termostato hipotalâmico.",
+      wrongs:["Histamina relaciona-se a reações alérgicas e vasodilatação local, não à elevação do set point térmico.","Serotonina tem funções neurológicas diversas, mas não é o mediador central da febre.","Correta.","Bradicinina atua em dor e vasodilatação locais, não na regulação do set point.","Norepinefrina contribui em respostas de estresse, mas não é o mediador do set point febril."]}},
+
+  {id:12, aula:"a2", topic:"foi-fisiopat", dif:"facil", stem:"Homem de 28 anos apresenta, após exercício intenso em dia de calor extremo, confusão mental, pele quente e seca e temperatura axilar de 40,5 °C. Sobre a fisiopatologia desse quadro, é correto afirmar que",
+    alts:["O set point hipotalâmico está elevado, como ocorre em toda febre infecciosa.","O antitérmico (paracetamol) é a medida terapêutica de eleição.","O set point está normal e o problema é desequilíbrio entre produção/perda de calor, caracterizando hipertermia.","Trata-se de febre de origem indeterminada, por duração prolongada inexplicada.","A resposta adequada envolve sobretudo inibição da prostaglandina E2."], correct:2,
+    exp:{correct:"Na hipertermia (golpe de calor, por exemplo), o set point hipotalâmico não é alterado; o problema é mecânico/ambiental. A conduta é resfriamento físico.",
+      wrongs:["Na hipertermia, o set point está normal — não há mediação por PGE2.","Antitérmicos atuam reduzindo PGE2; como o set point já está normal, não funcionam na hipertermia — o tratamento é resfriamento físico ativo.","Correta.","FOI exige ≥ 3 semanas de febre com investigação prévia sem diagnóstico — incompatível com quadro agudo de exposição ambiental.","A inibição de PGE2 não se aplica à hipertermia, pois o set point já está normal."]}},
+
+  {id:13, aula:"a2", topic:"foi-conceito", dif:"medio", stem:"Qual das situações abaixo preenche os critérios clássicos de febre de origem indeterminada (FOI)?",
+    alts:["Paciente com febre recente e coriza, em domicílio, sem outras queixas.","Paciente com febre de 37,6 °C por duas semanas com hemograma normal.","Paciente com febre ≥ 38,3 °C por mais de 3 semanas, sem diagnóstico após 3 dias de internação.","Paciente com febre há 5 dias sem investigação laboratorial.","Paciente com hipertermia pós-exercício e confusão mental."],
+    correct:2,
+    exp:{correct:"FOI clássica: temperatura ≥ 38,3 °C, duração &gt; 3 semanas, sem diagnóstico definido após 3 dias de internação (ou 3 consultas ambulatoriais).",
+      wrongs:["Febre recente com coriza sugere quadro viral agudo, não FOI.","Temperatura abaixo de 38,3 °C não preenche o critério térmico.","Correta.","Duração insuficiente e ausência de investigação prévia exclui FOI.","Hipertermia pós-exercício é quadro agudo e mecânico, não FOI."]}},
+
+  {id:14, aula:"a2", topic:"foi-conceito", dif:"medio", stem:"Paciente internado há 5 dias por pielonefrite em tratamento com ceftriaxona, com boa evolução inicial, desenvolve no quinto dia febre de 38,7 °C sem novo foco aparente. A melhor classificação desse quadro é",
+    alts:["Febre de origem inflamatória autoimune.","FOI clássica.","FOI relacionada à imunodeficiência.","FOI nosocomial.","FOI associada ao HIV."],
+    correct:3,
+    exp:{correct:"FOI nosocomial ocorre em paciente hospitalizado que não tinha febre na admissão e a desenvolve após ≥ 48 h, sem diagnóstico após 3 dias de investigação.",
+      wrongs:["Há pontos clínicos sugestivos de causa infecciosa, mas a apresentação se encaixa na definição nosocomial.","FOI clássica aplica-se a pacientes da comunidade, não hospitalizados no momento do início da febre.","FOI relacionada à imunodeficiência exige estado de imunossupressão não mencionado.","Correta.","FOI associada ao HIV requer infecção por HIV documentada."]}},
+
+  {id:15, aula:"a2", topic:"foi-etiologia", dif:"medio", stem:"Sobre a distribuição dos diagnósticos etiológicos em pacientes com febre de origem indeterminada, pode-se afirmar que",
+    alts:["As doenças autoimunes respondem, em média, por mais de 50% dos casos.","As infecções são a categoria mais comum, respondendo por 30–50% dos casos.","As neoplasias são responsáveis por mais de 60% dos casos em qualquer idade.","O diagnóstico de febre factícia é o mais frequente em adultos.","A maioria dos casos corresponde a infecções virais autolimitadas de vias aéreas."], correct:1,
+    exp:{correct:"A distribuição mais aceita aponta infecções em 30–50%, seguidas por neoplasias/hematológicas e autoimunes (10–30% cada) e miscelânea (20–40%).",
+      wrongs:["Autoimunes ficam em 10–30%, não em maioria dos casos.","Correta.","Neoplasias são causa importante (10–30%), mas não predominam.","Febre factícia é causa rara, não a principal.","FOI exige investigação prévia sem diagnóstico; viroses autolimitadas não se enquadram, pois durariam menos que 3 semanas."]}},
+
+  {id:16, aula:"a2", topic:"foi-investigacao", dif:"medio", stem:"Sobre a abordagem de investigação da febre de origem indeterminada, é correto afirmar que",
+    alts:["Existe algoritmo padronizado de investigação, independente do paciente.","A biópsia hepática deve ser realizada antes dos exames laboratoriais iniciais.","A investigação deve ser guiada pelas hipóteses levantadas na anamnese e exame físico, priorizando medidas menos invasivas.","Antibioticoterapia empírica de amplo espectro deve ser iniciada em todos os casos ao diagnóstico.","A ultrassonografia abdominal não contribui para o diagnóstico em FOI."], correct:2,
+    exp:{correct:"Não há algoritmo único em FOI: a investigação é individualizada, dirigida por hipóteses e prioriza medidas menos invasivas antes das mais invasivas.",
+      wrongs:["Não existe fórmula; a investigação é individualizada.","Exames laboratoriais e de imagem menos invasivos precedem biópsias e procedimentos invasivos.","Correta.","O tratamento em FOI é direcionado à causa; empirismo é exceção reservada a deterioração clínica.","A ultrassonografia abdominal é exame útil e não invasivo, frequentemente incluído na investigação inicial."]}},
+
+  {id:17, aula:"a2", topic:"foi-tratamento", dif:"medio", stem:"Sobre o tratamento empírico em pacientes com febre de origem indeterminada, é correto afirmar que",
+    alts:["É contraindicado em qualquer circunstância.","Deve ser reservado para pacientes cuja condição clínica está deteriorando, sendo orientado pela epidemiologia e quadro clínico mais provável.","Deve ser iniciado sempre com associação de corticoide e antibiótico de amplo espectro.","Deve ser suspenso assim que a temperatura normaliza, independentemente de diagnóstico etiológico.","Deve ser iniciado em todos os casos, para evitar progressão."],
+    correct:1,
+    exp:{correct:"Em FOI, o tratamento deve ser direcionado à causa. A exceção é o paciente com deterioração clínica, quando o tratamento empírico é norteado pela epidemiologia e quadro mais provável.",
+      wrongs:["Pode ser necessário em pacientes que pioram clinicamente, como exceção.","Correta.","Associação de corticoide e antibiótico sem hipótese é inadequada e pode piorar o paciente.","Suspender tratamento baseado apenas em normalização da temperatura ignora a causa; conduta errada mesmo em casos empíricos.","Tratamento empírico indiscriminado pode mascarar o diagnóstico e prejudicar a investigação."]}},
+
+  {id:18, aula:"a2", topic:"foi-fisiopat", dif:"medio", stem:"Paciente com diagnóstico de endocardite bacteriana apresenta febre contínua elevada, fadiga e calafrios. O papel funcional da febre na resposta imune desse paciente inclui, entre outros,",
+    alts:["Produção de bradicinina e broncoconstrição seletiva.","Eliminação de amônia pela barreira hematoencefálica.","Redução da quimiotaxia e inibição de fagocitose, para evitar hiperativação.","Aumento da atividade bactericida celular e da resposta dos linfócitos B.","Vasoconstrição periférica sustentada e hipertensão arterial prolongada."],
+    correct:3,
+    exp:{correct:"A febre aumenta mecanismos de defesa: quimiotaxia, fagocitose, atividade bactericida celular e resposta dos linfócitos B.",
+      wrongs:["Bradicinina participa de dor e inflamação local, não é efeito central da febre.","A eliminação de amônia envolve fígado e rim, não a resposta febril.","A febre aumenta — não reduz — quimiotaxia e fagocitose.","Correta.","A febre em si não produz hipertensão prolongada; pode haver taquicardia, mas não vasoconstrição sustentada como mecanismo central."]}},
+
+  {id:19, aula:"a2", topic:"foi-curva", dif:"dificil", stem:"Uma curva febril caracterizada por picos de febre alta intercalados com períodos em que a temperatura retorna ao normal, em intervalos razoavelmente previsíveis, é típica de",
+    alts:["Hepatite aguda medicamentosa.","Infecção urinária complicada.","Tuberculose miliar.","Artrite reumatoide em atividade.","Malária."],
+    correct:4,
+    exp:{correct:"A curva febril intermitente — picos seguidos de retorno à temperatura normal — é classicamente associada à malária, refletindo o ciclo de replicação parasitária.",
+      wrongs:["Hepatite aguda medicamentosa pode cursar com febre, mas sem o padrão intermitente periódico.","ITU complicada pode dar febre alta com calafrios, porém sem o padrão intermitente periódico com afebrilia absoluta.","Tuberculose clássica cursa com febre vespertina diária (não intermitente entre picos e normalidade).","AR pode dar febre, mas sem padrão intermitente característico descrito.","Correta."]}},
+
+  {id:20, aula:"a2", topic:"foi-fisiopat", dif:"dificil", stem:"Um plantonista prescreve paracetamol para um paciente em estado de golpe de calor, com temperatura de 41 °C, ambiente quente e pele seca. Sobre essa conduta, é correto afirmar que",
+    alts:["É adequada, desde que se combine com ácido acetilsalicílico em dose plena.","É indiferente, pois qualquer antitérmico reduz a temperatura corporal igualmente em todas as situações.","É inadequada apenas se houver alergia documentada ao paracetamol.","É adequada, pois o paracetamol inibe a prostaglandina E2 e baixará a temperatura.","É inadequada, pois na hipertermia o set point hipotalâmico está normal e antitérmicos não atuam — a conduta correta é resfriamento físico ativo."],
+    correct:4,
+    exp:{correct:"No golpe de calor (hipertermia), o set point está normal — antitérmicos não funcionam. O tratamento é resfriamento físico (gelo, compressas, banho frio) e reposição volêmica.",
+      wrongs:["Associar AAS em golpe de calor pode ser deletério (sangramento, disfunção plaquetária) e não resolve o problema mecânico.","Antitérmicos não atuam em hipertermia — a mecânica fisiopatológica é diferente da febre.","O problema não é alergia, mas o fato de que antitérmicos não têm ação em hipertermia com set point normal.","Paracetamol só tem efeito quando o set point está elevado; não baixa temperatura em hipertermia.","Correta."]}},
+
+  // ============ AULA 3 — HEPATITES E CIRROSE (12 questões) ============
+  {id:21, aula:"a3", topic:"hep-def", dif:"facil", stem:"Sobre o conceito de hepatite e cirrose, assinale a afirmação correta.",
+    alts:["Cirrose e hepatite são sinônimos e podem ser usados de modo intercambiável.","Hepatite é processo exclusivamente viral de inflamação hepática.","Cirrose refere-se a inflamação reversível do fígado.","Hepatite é inflamação do fígado e pode ser aguda (com remissão ou fulminação) ou crônica (com risco de cirrose, insuficiência hepática e hepatocarcinoma).","Hepatite aguda tem maior risco de evolução para cirrose do que a hepatite crônica."],
+    correct:3,
+    exp:{correct:"Hepatite é inflamação do fígado, por causas diversas. Aguda pode evoluir para cura ou fulminação; crônica pode evoluir para cirrose, insuficiência hepática e hepatocarcinoma.",
+      wrongs:["São entidades distintas: hepatite é inflamação; cirrose é o estágio final de fibrose avançada.","Hepatite tem várias causas além de viral (álcool, medicamentosa, autoimune, parasitária, metabólica).","Cirrose é processo irreversível de substituição fibrosa com nódulos regenerativos.","Correta.","Cirrose resulta de estímulo inflamatório prolongado — portanto, tipicamente da hepatite crônica, não da aguda."]}},
+
+  {id:22, aula:"a3", topic:"hep-etiologia", dif:"facil", stem:"A principal causa de hepatite crônica é",
+    alts:["Hepatite autoimune.","Esquistossomose hepatoesplênica.","Doença de Wilson.","Hepatite medicamentosa por paracetamol.","Uso abusivo de álcool."],
+    correct:4,
+    exp:{correct:"O uso abusivo crônico de álcool é a principal causa de hepatite crônica; pode progredir para insuficiência hepática e cirrose.",
+      wrongs:["Correta.","A esquistossomose causa fibrose periportal com hipertensão portal, mas sua prevalência como causa de hepatite crônica é bem menor que a do álcool.","Doença de Wilson é causa rara de hepatopatia crônica.","Hepatite medicamentosa é tipicamente aguda; entre as agudas tem o maior risco de fulminação, mas não é a principal causa de hepatite crônica.","Hepatite autoimune existe, mas tem prevalência menor que a alcoólica."]}},
+
+  {id:23, aula:"a3", topic:"cir-hipertensao-portal", dif:"medio", stem:"Homem de 60 anos, cirrótico por álcool, tem ascite volumosa, circulação colateral em abdome, esplenomegalia e varizes de esôfago em endoscopia. A explicação fisiopatológica comum para todos esses achados é",
+    alts:["Redução da função das células de Kupffer.","Insuficiência renal aguda secundária à síndrome hepatorrenal.","Aumento da resistência ao fluxo sanguíneo no sistema portal.","Deficiência isolada de fatores de coagulação, com sangramento por consumo.","Carcinoma hepatocelular produzindo alfa-fetoproteína."],
+    correct:2,
+    exp:{correct:"Todos esses achados decorrem da hipertensão portal: o fígado fibrótico aumenta a resistência ao fluxo portal, forçando o desvio do sangue por anastomoses portossistêmicas (ascite, colateral, esplenomegalia, varizes).",
+      wrongs:["Redução da função de Kupffer contribui à imunopatogenia, mas não explica as varizes e a ascite.","A síndrome hepatorrenal decorre das alterações hemodinâmicas da cirrose, mas não explica a ascite e as varizes simultaneamente.","Correta.","Coagulopatia existe, mas não justifica esplenomegalia nem varizes.","CHC é complicação, não o mecanismo comum das manifestações da hipertensão portal."]}},
+
+  {id:24, aula:"a3", topic:"cir-hipertensao-portal", dif:"medio", stem:"As varizes de esôfago, uma das complicações da cirrose, resultam diretamente de",
+    alts:["Atrofia muscular de esôfago por desnutrição.","Extravasamento de plasma para a cavidade peritoneal.","Redução de pressão oncótica pela hipoalbuminemia.","Desvio de fluxo portal para veias esofágicas através de anastomoses portossistêmicas.","Compressão extrínseca pela esplenomegalia."],
+    correct:3,
+    exp:{correct:"Com a hipertensão portal, o sangue busca vias alternativas — a comunicação entre veia gástrica esquerda (portal) e veias esofágicas (sistêmicas, ázigos) forma as varizes.",
+      wrongs:["Atrofia muscular não forma varizes venosas.","Extravasamento para peritônio gera ascite, não varizes.","A hipoalbuminemia contribui para ascite e edema, mas não é causa direta das varizes.","Correta.","A esplenomegalia coexiste mas não comprime o esôfago."]}},
+
+  {id:25, aula:"a3", topic:"cir-insuficiencia", dif:"medio", stem:"Paciente cirrótico apresenta-se no pronto-socorro com confusão mental e flapping (asterixis). A esposa informa que há três dias não evacua. A hipótese mais provável para o quadro é",
+    alts:["Síndrome de abstinência alcoólica.","Encefalopatia hepática precipitada por constipação intestinal.","Acidente vascular encefálico isquêmico de instalação recente.","Intoxicação alcoólica aguda isolada.","Hipoglicemia sintomática."],
+    correct:1,
+    exp:{correct:"A amônia produzida pela ação bacteriana sobre proteínas no intestino se acumula com a constipação; no cirrótico sem função hepática, a amônia atravessa a barreira hematoencefálica, sendo convertida em glutamina pelos astrócitos e causando edema e disfunção cerebral. Por isso se prescreve lactulose para manter 2 ou mais evacuações ao dia.",
+      wrongs:["Abstinência alcoólica cursa com tremor, sudorese e agitação, sem flapping característico.","Correta.","AVC isquêmico cursa com déficit focal, não com flapping bilateral característico de encefalopatia hepática.","Intoxicação alcoólica aguda não explica especificamente o asterixis.","Hipoglicemia é diferencial, mas o padrão com flapping é mais clássico de encefalopatia hepática e a história de constipação corrobora."]}},
+
+  {id:26, aula:"a3", topic:"cir-insuficiencia", dif:"medio", stem:"Sobre o quadro laboratorial da insuficiência hepática crônica, assinale a afirmação correta.",
+    alts:["Transaminases em valores normais excluem qualquer hepatopatia.","A creatinina está tipicamente reduzida por hepatopatia.","A hipoalbuminemia é achado precoce e rápido.","O alargamento do tempo de protrombina (INR) é mais sensível a alterações agudas da função hepática do que a albumina.","A bilirrubina direta cai em casos de colestase."],
+    correct:3,
+    exp:{correct:"TP/INR alarga-se rápido na falência aguda porque os fatores de coagulação vitamina K-dependentes têm meia-vida curta. A albumina tem meia-vida ~20 dias, reflete crônico.",
+      wrongs:["Transaminases normais não excluem hepatopatia — no cirrótico com fibrose estabelecida, os valores podem estar normais ou levemente alterados.","A creatinina não é alterada diretamente pela hepatopatia; na síndrome hepatorrenal ela sobe por vasoconstrição renal.","Hipoalbuminemia é marcador crônico, não agudo; a albumina cai lentamente.","Correta.","Em colestase, a bilirrubina direta (conjugada) sobe, não cai."]}},
+
+  {id:27, aula:"a3", topic:"transaminases", dif:"medio", stem:"Sobre as transaminases AST e ALT, é correto afirmar que",
+    alts:["AST e ALT se elevam apenas em hepatopatias.","ALT tem alta concentração intracelular nos hepatócitos e é mais específica de fígado que a AST.","ALT é mais elevada que AST em lesões musculares agudas.","As duas enzimas têm idêntica localização, concentração e especificidade orgânica.","AST é mais específica de fígado que ALT."],
+    correct:1,
+    exp:{correct:"A ALT tem concentração predominantemente intracelular em hepatócitos, sendo a transaminase mais específica de fígado. AST existe também em músculo cardíaco, esquelético, rins e cérebro.",
+      wrongs:["AST pode se elevar em infarto agudo do miocárdio, rabdomiólise, AVC — não apenas em hepatopatias.","Correta.","Em lesões musculares, é a AST que se eleva de forma mais marcante, não a ALT.","As enzimas diferem em localização e especificidade: ALT predomina em fígado; AST tem distribuição mais ampla.","É o contrário — ALT é mais específica de fígado que AST."]}},
+
+  {id:28, aula:"a3", topic:"cir-hipertensao-portal", dif:"medio", stem:"A peritonite bacteriana espontânea (PBE) em paciente com ascite cirrótica ocorre por",
+    alts:["Translocação bacteriana a partir do intestino, em meio a hipertensão portal e imunidade comprometida.","Contaminação iatrogênica exclusivamente durante paracentese terapêutica.","Disseminação a partir de endocardite bacteriana aguda.","Ruptura de víscera oca com derramamento de conteúdo intestinal.","Hematogênese bacteriana originada de foco pulmonar."],
+    correct:0,
+    exp:{correct:"A PBE decorre da translocação bacteriana pela parede intestinal, favorecida pela hipertensão portal e pela imunidade reduzida do cirrótico, com infecção secundária do líquido ascítico.",
+      wrongs:["Correta.","Paracentese é procedimento seguro com baixa taxa de contaminação iatrogênica; PBE é predominantemente endógena.","Endocardite é causa rara de PBE; a via é primordialmente intestinal.","PBE é, por definição, espontânea — sem perfuração visceral (que caracterizaria peritonite secundária).","Foco pulmonar pode causar bacteremia mas não é a via principal da PBE."]}},
+
+  {id:29, aula:"a3", topic:"hep-etiologia", dif:"medio", stem:"Sobre a hepatite medicamentosa aguda, é correto afirmar que",
+    alts:["Apresenta o menor risco de fulminação entre as hepatites agudas.","Entre as hepatites agudas, apresenta maior risco de evolução para insuficiência hepática.","Nunca ocorre com fitoterápicos, como a valeriana.","É sempre reversível com a suspensão do medicamento, independentemente do tempo de exposição.","Corresponde à maior parte dos casos de hepatite crônica."], correct:1,
+    exp:{correct:"Entre as hepatites agudas, a medicamentosa apresenta o maior risco de evolução para insuficiência hepática — especialmente em fármacos de alto potencial hepatotóxico, doses elevadas ou sensibilidade individual.",
+      wrongs:["Pelo contrário, apresenta o maior risco, não o menor.","Correta.","Fitoterápicos como a valeriana estão na lista de hepatotóxicos — a ideia de 'natural = seguro' é incorreta.","A reversibilidade depende do grau de necrose instalada; em casos graves pode progredir mesmo após retirada.","A hepatite medicamentosa é forma predominantemente aguda, não crônica."]}},
+
+  {id:30, aula:"a3", topic:"cir-insuficiencia", dif:"dificil", stem:"Sobre a síndrome hepatorrenal na cirrose hepática avançada, é correto afirmar que",
+    alts:["Não se relaciona à hipoalbuminemia e à redução da pressão oncótica.","Cursa com aumento do fluxo sanguíneo renal e elevação da taxa de filtração glomerular.","É prontamente revertida pelo uso isolado de diurético tiazídico.","Decorre de lesão estrutural irreversível do parênquima renal desde o início.","É causada por vasodilatação esplâncnica com queda do volume circulante efetivo e vasoconstrição renal compensatória."],
+    correct:4,
+    exp:{correct:"Na cirrose, a vasodilatação esplâncnica reduz o volume circulante efetivo; o organismo ativa SRAA e simpático, gerando vasoconstrição renal, retenção de sódio e água e queda da filtração. Não há, inicialmente, lesão estrutural — trata-se de insuficiência renal funcional.",
+      wrongs:["A hipoalbuminemia contribui ao reduzir a pressão oncótica, agravando o quadro volêmico.","O fluxo sanguíneo renal cai e a TFG diminui na síndrome hepatorrenal.","Tiazídico isolado não reverte o quadro; o manejo envolve volume e vasoconstritores esplâncnicos específicos.","Não há lesão estrutural inicial; trata-se de insuficiência funcional por alterações hemodinâmicas.","Correta."]}},
+
+  {id:31, aula:"a3", topic:"cir-insuficiencia", dif:"dificil", stem:"Na encefalopatia hepática, o mecanismo central pelo qual a amônia contribui para a disfunção cerebral envolve",
+    alts:["Ativação direta de receptores NMDA nos oligodendrócitos.","Formação de placas amiloides a partir da amônia oxidada.","Apoptose direta de neurônios por ação citotóxica da amônia no citoplasma neuronal.","Acumulação de amônia nos astrócitos, onde é convertida em glutamina, aumentando a osmolaridade intracelular e gerando edema astrocitário.","Precipitação da amônia nas sinapses, bloqueando canais de cloro."],
+    correct:3,
+    exp:{correct:"No SNC, astrócitos captam a amônia e a convertem em glutamina, aumentando a osmolaridade intracelular, causando edema celular e disfunção neuronal com alterações de neurotransmissão.",
+      wrongs:["Não é o mecanismo descrito.","Não é o mecanismo descrito; placas amiloides são da doença de Alzheimer, não da encefalopatia hepática.","O mecanismo descrito não é de apoptose direta neuronal primária, e sim alteração astrocitária osmótica.","Correta.","Não é o mecanismo descrito — a alteração é astrocitária e osmótica."]}},
+
+  {id:32, aula:"a3", topic:"cir-etiologia", dif:"dificil", stem:"Na esquistossomose hepatoesplênica, a ascite pode ser pronunciada apesar da função hepatocelular preservada. A razão para isso é",
+    alts:["A esquistossomose causa cirrose clássica com falência precoce dos hepatócitos.","Há fibrose periportal (fibrose de Symmers) com hipertensão portal intensa, mas a síntese de albumina fica relativamente preservada.","A hipoalbuminemia grave é achado inicial e dominante.","A ascite ocorre por infecção bacteriana direta do líquido peritoneal.","A doença causa obstrução prévia da veia cava inferior."], correct:1,
+    exp:{correct:"A esquistossomose gera fibrose periportal (Symmers), aumentando a resistência portal e gerando ascite por mecanismo hemodinâmico. A arquitetura lobular e a síntese de albumina ficam relativamente preservadas — a ascite é hemodinâmica, não hipoalbuminêmica.",
+      wrongs:["A esquistossomose tipicamente não causa cirrose clássica no início; seu mecanismo é diferente.","Correta.","A hipoalbuminemia grave não é a característica inicial dominante da esquistossomose.","A ascite é hemodinâmica, não primariamente infecciosa.","Não há obstrução de cava na esquistossomose; a fibrose é periportal."]}},
+
+  // ============ AULA 4 — HEPATITE A (8 questões) ============
+  {id:33, aula:"a4", topic:"hepA-transmissao", dif:"facil", stem:"A principal via de transmissão da hepatite A é",
+    alts:["Vertical, com soroconversão no último trimestre.","Aerossol, em ambientes mal ventilados.","Parenteral, por compartilhamento de seringas.","Sexual, especialmente em relações desprotegidas.","Fecal-oral, por ingestão de água ou alimentos contaminados."],
+    correct:4,
+    exp:{correct:"A hepatite A é transmitida por via fecal-oral, via ingestão de água ou alimentos contaminados, frequentemente por manipulação inadequada das mãos. O homem é o único hospedeiro natural do vírus.",
+      wrongs:["Transmissão vertical não é característica de hepatite A.","Aerossol não é via de transmissão da hepatite A.","Parenteral é mecanismo clássico de hepatite B e C, não A.","Sexual pode ter relevância em práticas oro-anais, mas não é a via principal.","Correta."]}},
+
+  {id:34, aula:"a4", topic:"hepA-virus", dif:"facil", stem:"O vírus da hepatite A pertence à família",
+    alts:["Hepadnaviridae.","Picornaviridae.","Retroviridae.","Herpesviridae.","Flaviviridae."],
+    correct:1,
+    exp:{correct:"O VHA é um vírus RNA da família Picornaviridae, sem envelope, com cerca de 27 nm.",
+      wrongs:["Hepadnaviridae é a família do vírus da hepatite B.","Correta.","Retroviridae é a família de retrovírus como o HIV — não corresponde ao VHA.","Herpesviridae engloba HSV, CMV, EBV — não o VHA.","Flaviviridae é a família do vírus da hepatite C."]}},
+
+  {id:35, aula:"a4", topic:"hepA-clinica", dif:"medio", stem:"Sobre a evolução da hepatite A, é correto afirmar que",
+    alts:["Cronifica em 75% dos casos, exigindo tratamento antiviral prolongado.","O diagnóstico requer PCR para HAV-RNA em todos os casos.","A doença responde bem a antivirais diretos como o sofosbuvir.","Todos os pacientes apresentam icterícia clássica.","Até 70% das crianças menores de 10 anos são assintomáticas; em adultos, a doença costuma ser mais sintomática e o risco de fulminância após os 40 anos é de cerca de 2%."],
+    correct:4,
+    exp:{correct:"Em crianças menores de 10 anos, até 70% são assintomáticas; nos adultos, a doença costuma ser mais sintomática; o risco de falência hepática fulminante é de 0,3% na infância e 2% em adultos após os 40 anos. A doença não cronifica.",
+      wrongs:["A hepatite A não cronifica; essa afirmação se aplica à hepatite C.","PCR não é exigência diagnóstica de rotina; o padrão é sorologia (IgM anti-VHA).","Não há antivirais específicos aprovados para hepatite A; o tratamento é de suporte.","A maioria dos pacientes — e especialmente crianças — é assintomática ou oligossintomática.","Correta."]}},
+
+  {id:36, aula:"a4", topic:"hepA-diag", dif:"medio", stem:"Criança de 6 anos, frequentadora de creche com surto recente de diarreia e icterícia, apresenta transaminases acima de 10× o valor de referência e colúria. O exame laboratorial mais apropriado para confirmar hepatite A aguda é",
+    alts:["Pesquisa de IgM anti-VHA por ELISA.","HCV-RNA por PCR quantitativo.","HBsAg quantitativo.","Dosagem de alfa-fetoproteína sérica.","Pesquisa de IgG anti-VHA isoladamente."],
+    correct:0,
+    exp:{correct:"O diagnóstico específico da hepatite A aguda é feito por ELISA IgM anti-VHA, detectável a partir do 5º dia de sintomas e marcador de infecção recente.",
+      wrongs:["Correta.","HCV-RNA é exame para hepatite C, não A.","HBsAg é exame para hepatite B, não A.","Alfa-fetoproteína é marcador de hepatocarcinoma, sem utilidade diagnóstica em hepatite A aguda.","IgG isolado indica apenas contato prévio ou vacinação, não infecção aguda."]}},
+
+  {id:37, aula:"a4", topic:"hepA-prevencao", dif:"medio", stem:"Sobre a prevenção da hepatite A no Brasil, é correto afirmar que",
+    alts:["Não existe vacina licenciada.","A vacinação não está incluída no calendário do SUS.","A vacina confere imunidade definitiva e está incluída no calendário do SUS aos 15 meses de idade, para crianças maiores de 1 ano.","A vacinação é realizada apenas em profissionais de saúde.","A vacina deve ser repetida anualmente, como a da influenza."], correct:2,
+    exp:{correct:"A vacina da hepatite A confere imunidade definitiva; no Brasil, é aplicada pelo SUS aos 15 meses de idade, para crianças maiores de 1 ano. Higiene, saneamento e água tratada compõem a prevenção.",
+      wrongs:["A vacina é licenciada e disponível.","Ela está, sim, no calendário vacinal do SUS.","Correta.","A vacinação não se restringe a profissionais de saúde.","A vacina não requer reforço anual; o esquema previsto é único (com esquemas diferentes em adultos)."]}},
+
+  {id:38, aula:"a4", topic:"hepA-tratamento", dif:"medio", stem:"O tratamento da hepatite A aguda baseia-se em",
+    alts:["Transplante hepático em todos os casos.","Antibioticoterapia empírica de amplo espectro.","Antivirais de ação direta contra o VHA.","Interferon peguilado associado à ribavirina.","Medidas de suporte, hidratação e controle de sintomas."],
+    correct:4,
+    exp:{correct:"Não há tratamento antiviral específico para hepatite A; o manejo é de suporte, com controle de sintomas, hidratação e observação clínica.",
+      wrongs:["Transplante é reservado apenas aos casos raros de falência hepática fulminante.","Hepatite A é causada por vírus; antibiótico não tem papel no tratamento do agente.","Não há antivirais específicos aprovados para hepatite A.","Peg-IFN + ribavirina era parte do esquema antigo para hepatite C, não hepatite A.","Correta."]}},
+
+  {id:39, aula:"a4", topic:"hepA-epidemiologia", dif:"dificil", stem:"Sobre a epidemiologia da hepatite A no Brasil, é correto afirmar que",
+    alts:["A região Norte apresenta a maior incidência, enquanto o Sudeste apresenta a menor, refletindo diferenças de saneamento básico.","A doença é menos frequente em áreas com bom saneamento.","A maior parte dos casos no Brasil ocorre em adultos acima de 60 anos.","Menos de 10% da população brasileira teve contato prévio com o VHA.","A incidência é homogênea em todas as regiões do país."],
+    correct:0,
+    exp:{correct:"No Brasil, a região Norte apresenta a maior incidência (11,37–36,19/100 000 hab), enquanto o Sudeste tem a menor (0,88–5/100 000 hab). A distribuição reflete diferenças de saneamento básico; cerca de 75% dos adultos brasileiros já tiveram contato prévio com o VHA.",
+      wrongs:["Correta.","É o contrário: a doença é mais comum em áreas com déficit de saneamento. Essa alternativa inverte a associação.","Cerca de 57% dos casos ocorrem em menores de 10 anos; idosos não predominam.","No Brasil, cerca de 75% dos adultos já tiveram contato com o vírus, não menos de 10%.","A distribuição é heterogênea entre regiões do Brasil."]}},
+
+  {id:40, aula:"a4", topic:"hepA-transmissao", dif:"dificil", stem:"Uma manipuladora de alimentos em um restaurante em bairro urbano apresentou-se com icterícia, colúria e fadiga, sendo confirmada hepatite A aguda (IgM anti-VHA reagente). Ela relata início dos sintomas há 7 dias. O período de maior transmissibilidade e a conduta de saúde pública mais apropriada são, respectivamente,",
+    alts:["Apenas durante a fulminação hepática; afastamento indicado só se houver febre.","Somente enquanto IgG estiver negativo; afastamento por 60 dias.","Durante a icterícia, apenas; continuação normal do trabalho.","Começa ~10 dias após a infecção e dura cerca de 20 dias, podendo preceder os sintomas; afastar a profissional do manuseio de alimentos.","Somente após a soroconversão IgG; afastamento desnecessário."],
+    correct:3,
+    exp:{correct:"A eliminação do vírus começa ~10 dias após a infecção e dura cerca de 20 dias, podendo preceder o aparecimento dos sintomas. Por isso, o afastamento do manuseio de alimentos é fundamental no controle do surto.",
+      wrongs:["Transmissibilidade existe em todos os casos, não só fulminantes.","IgG positivo não define fim do período de transmissibilidade; o critério é epidemiológico.","A transmissibilidade excede o período de icterícia — precede o início dos sintomas inclusive.","Correta.","A soroconversão IgG não é o marcador da transmissibilidade; a eliminação fecal é o que importa."]}},
+
+  // ============ AULA 5 — LEISHMANIOSE (12 questões) ============
+  {id:41, aula:"a5", topic:"leish-geral", dif:"facil", stem:"Sobre as características gerais da leishmaniose, é correto afirmar que",
+    alts:["É uma doença contagiosa, transmitida diretamente de pessoa a pessoa.","É uma doença infecciosa, não contagiosa, zoonótica, transmitida por vetor.","É transmitida apenas em ambiente urbano, sem vínculo com vetores silvestres.","Tem apenas a forma cutânea, sem acometimento visceral.","A infecção natural confere imunidade protetora definitiva."], correct:1,
+    exp:{correct:"A leishmaniose é infecciosa e não contagiosa; é zoonose (acomete outros animais e secundariamente o homem), transmitida pela picada de flebotomíneos.",
+      wrongs:["Não há transmissão direta pessoa-pessoa.","Correta.","Ocorre tanto em ambiente silvestre quanto urbano, com reservatórios distintos.","Apresenta forma cutânea (LTA) e visceral (LV).","A infecção e a doença não conferem imunidade protetora; há risco de reinfecção."]}},
+
+  {id:42, aula:"a5", topic:"leish-vetor", dif:"facil", stem:"O vetor da leishmaniose é",
+    alts:["Um mosquito Anopheles, com hábito diurno.","Um flebotomíneo (Lutzomyia spp.), popularmente conhecido como mosquito-palha, com hábito vespertino/noturno.","O Triatoma infestans (barbeiro), por contato com fezes no local da picada.","Um carrapato Rhipicephalus, por fixação prolongada.","A Simulium (borrachudo), após picada indolor."], correct:1,
+    exp:{correct:"O vetor é o flebotomíneo, mais conhecido como mosquito-palha, birigui ou asa-branca; no Brasil, a forma visceral é transmitida por Lutzomyia longipalpis. Hábito vespertino/noturno.",
+      wrongs:["Anopheles é vetor da malária, não da leishmaniose.","Correta.","Triatoma (barbeiro) é vetor da doença de Chagas.","Carrapato não transmite leishmaniose.","Borrachudo não é vetor da leishmaniose."]}},
+
+  {id:43, aula:"a5", topic:"leish-parasita", dif:"medio", stem:"As duas formas evolutivas principais de Leishmania e seus ambientes são, respectivamente,",
+    alts:["Promastigota, no tubo digestivo do inseto vetor; amastigota, intracelular nos macrófagos do hospedeiro mamífero.","Taquizoíto, no sangue; bradizoíto, no músculo.","Merozoíto, nas hemácias; hipnozoíto, no fígado.","Microfilária, no sangue; adulto, no sistema linfático.","Trofozoíto, no intestino humano; cisto, no vetor."],
+    correct:0,
+    exp:{correct:"Leishmania é parasita intracelular obrigatório de macrófagos do sistema fagocítico mononuclear. Tem duas formas: promastigota (flagelada, no vetor) e amastigota (aflagelada, no hospedeiro, dentro de macrófagos).",
+      wrongs:["Correta.","Taquizoíto/bradizoíto são formas de Toxoplasma gondii, não Leishmania.","Merozoíto/hipnozoíto são formas de Plasmodium (malária).","Microfilária/adulto referem-se às filárias, não a Leishmania.","Trofozoíto/cisto pertencem a protozoários do intestino (Entamoeba, Giardia), não Leishmania."]}},
+
+  {id:44, aula:"a5", topic:"leish-reservatorio", dif:"medio", stem:"No Brasil, o principal reservatório urbano da leishmaniose visceral é",
+    alts:["O cão (Canis familiaris).","A raposa.","O marsupial.","O homem.","O gato doméstico."],
+    correct:0,
+    exp:{correct:"Em área urbana, o cão é o principal reservatório da leishmaniose visceral, com prevalência maior entre cães que entre humanos. Em ambiente silvestre, os reservatórios incluem raposas e marsupiais.",
+      wrongs:["Correta.","A raposa é reservatório silvestre, não urbano.","O marsupial é reservatório silvestre, não urbano.","O homem é hospedeiro acidental, não reservatório primário.","O gato não é o principal reservatório urbano."]}},
+
+  {id:45, aula:"a5", topic:"leish-lta-lesao", dif:"medio", stem:"A lesão cutânea clássica da leishmaniose tegumentar americana caracteriza-se como",
+    alts:["Nódulo pigmentado, indolor e de crescimento exofítico rápido.","Vesículas agrupadas em base eritematosa, com crostas melicéricas.","Petéquias puntiformes generalizadas em extremidades.","Placa eritematoescamosa, com escamas prateadas, sem ulceração.","Úlcera arredondada, com bordas elevadas e infiltradas (em moldura), com o parasito concentrado nas bordas."],
+    correct:4,
+    exp:{correct:"A lesão clássica é uma úlcera arredondada, com bordas elevadas e infiltradas (em moldura). O parasito concentra-se nas bordas — por isso a biópsia deve ser feita na borda, não no centro necrótico.",
+      wrongs:["Nódulo pigmentado exofítico não corresponde à LTA clássica.","Vesículas agrupadas com crostas melicéricas sugerem impetigo ou herpes, não LTA.","Petéquias generalizadas não são a forma típica de LTA.","Esse padrão (placa eritematoescamosa com escamas prateadas) sugere psoríase, não LTA.","Correta."]}},
+
+  {id:46, aula:"a5", topic:"leish-imunidade", dif:"medio", stem:"Sobre a resposta imune na leishmaniose, é correto afirmar que",
+    alts:["A resposta imune não influencia o desfecho clínico da doença.","A resposta humoral (Th2) é eficaz em eliminar o parasita em todas as formas.","Na forma tegumentar clássica, predomina resposta celular (Th1), útil para conter o parasita.","A leishmaniose visceral é eliminada por anticorpos protetores produzidos durante a infecção.","A IgE específica é o marcador imunológico mais associado a cura nas formas graves."],
+    correct:2,
+    exp:{correct:"Na LTA, predomina resposta celular Th1 (IFN-γ, IL-12, TNF), que ativa macrófagos e contém o parasita em granulomas. Na LV, há desvio para Th2, com anticorpos detectáveis mas sem eliminação eficaz do parasita.",
+      wrongs:["A resposta imune influencia diretamente o desfecho: Th1 dominante tende a controlar; Th2 dominante permite progressão.","A resposta humoral Th2 é detectável na LV, mas não é eficaz em eliminar o parasita.","Correta.","Os anticorpos da LV são detectáveis mas não protetores; não curam a infecção.","IgE não é o marcador imunológico central da cura de leishmaniose."]}},
+
+  {id:47, aula:"a5", topic:"leish-lv-clinica", dif:"medio", stem:"Homem de 40 anos, procedente de Araçatuba (SP), apresenta febre há 3 meses, perda de 8 kg, palidez importante e esplenomegalia que ultrapassa a linha umbilical. Hemograma revela pancitopenia. A hipótese diagnóstica mais provável é",
+    alts:["Hepatite A aguda anictérica.","Malária por Plasmodium vivax.","Linfoma de Hodgkin clássico.","Leishmaniose cutânea localizada.","Leishmaniose visceral (calazar)."],
+    correct:4,
+    exp:{correct:"Febre prolongada + hepatoesplenomegalia + pancitopenia + procedência de área endêmica (Araçatuba é foco urbano de LV no Brasil) = pensar em leishmaniose visceral (calazar).",
+      wrongs:["Hepatite A aguda é quadro curto, com icterícia e transaminases elevadas; não explica pancitopenia e esplenomegalia gigante.","Malária também entra como diferencial, mas a esplenomegalia gigante e a pancitopenia com evolução de meses em área de transmissão de LV é mais sugestiva de leishmaniose visceral.","Linfoma é diferencial e pode causar quadro similar, mas a procedência é a pista epidemiológica principal para LV.","Leishmaniose cutânea é tegumentar e cursa com lesões de pele, não com hepatoesplenomegalia.","Correta."]}},
+
+  {id:48, aula:"a5", topic:"leish-diag", dif:"medio", stem:"O método de escolha para diagnóstico parasitológico da leishmaniose visceral é",
+    alts:["Hemocultura em meio específico para Leishmania.","Intradermorreação de Montenegro (IRM), atualmente de rotina.","Dosagem sérica de alfa-fetoproteína.","Raspado das bordas de úlceras cutâneas.","Aspirado de medula óssea para pesquisa de amastigotas."],
+    correct:4,
+    exp:{correct:"O diagnóstico parasitológico da LV é feito pelo aspirado de medula óssea (ou de baço), com pesquisa de amastigotas dentro de macrófagos. A sorologia (ELISA, imunofluorescência) também é útil pela ativação humoral na LV.",
+      wrongs:["Hemocultura não é rotina diagnóstica da leishmaniose.","A IRM não é mais utilizada como exame de rotina no Brasil.","Alfa-fetoproteína é marcador de hepatocarcinoma, sem relação com leishmaniose.","Raspado de borda de úlcera é método para LTA, não LV.","Correta."]}},
+
+  {id:49, aula:"a5", topic:"leish-tratamento", dif:"medio", stem:"Os medicamentos considerados de primeira escolha para tratamento da leishmaniose, no Brasil, são",
+    alts:["Benzonidazol e nifurtimox.","Antimoniais pentavalentes (ex.: antimoniato de meglumina) e, em casos específicos, anfotericina B.","Mebendazol e albendazol.","Sulfadiazina e pirimetamina.","Cloroquina e primaquina."], correct:1,
+    exp:{correct:"No Brasil, o tratamento depende da forma: para LTA, antimoniais pentavalentes (antimoniato de meglumina / Glucantime) continuam como 1ª linha. Para LV, o PCDT-MS atual recomenda anfotericina B lipossomal como 1ª escolha na maioria dos pacientes (&lt;1 a ou ≥50 a, gestantes, comorbidades, HIV, falha prévia); antimonial é alternativa restrita a adultos jovens sem risco.",
+      wrongs:["Benzonidazol e nifurtimox são usados em doença de Chagas.","Correta.","Mebendazol/albendazol são anti-helmínticos.","Sulfadiazina + pirimetamina são indicados em toxoplasmose.","Cloroquina + primaquina tratam malária."]}},
+
+  {id:50, aula:"a5", topic:"leish-lta-mucocutanea", dif:"medio", stem:"A forma mucocutânea da leishmaniose tegumentar caracteriza-se por",
+    alts:["Aparecimento simultâneo com a lesão cutânea inicial.","Localização preferencial em pele de tronco e extremidades, poupando face.","Lesões destrutivas em mucosas (nariz, faringe, laringe), frequentemente secundárias e tardias em relação à lesão cutânea inicial.","Involução espontânea em dias a semanas, sem necessidade de tratamento.","Evolução benigna, com resposta rápida à terapêutica tradicional."], correct:2,
+    exp:{correct:"As lesões mucocutâneas geralmente surgem meses ou anos após a resolução da lesão cutânea inicial, acometendo cavidades nasais, faringe, laringe e cavidade oral, com caráter destrutivo.",
+      wrongs:["Em geral são secundárias, surgindo meses ou anos após a lesão cutânea inicial, não simultaneamente.","A forma mucocutânea acomete mucosas (nariz, faringe, laringe, cavidade oral) — não a pele de tronco e extremidades. A forma cutânea tampouco poupa face; acomete áreas expostas.","Correta.","Não involuem espontaneamente; são lesões graves e progressivas que exigem tratamento.","A forma mucocutânea responde mal à terapia tradicional e exige tratamento prolongado, frequentemente com anfotericina B."]}},
+
+  {id:51, aula:"a5", topic:"leish-controle", dif:"dificil", stem:"Sobre as medidas de controle da leishmaniose visceral no Brasil, é correto afirmar que",
+    alts:["Não há papel da educação em saúde nas ações de controle.","Não há indicação de borrifação de inseticidas nas áreas de casos humanos.","A eliminação indiscriminada de todos os cães domésticos da área é conduta vigente.","As estratégias atuais incluem luta antivetorial periódica, manejo dos reservatórios (eutanásia apenas dos cães doentes), tratamento dos casos humanos e educação em saúde.","A vacinação humana em larga escala é a principal estratégia de controle."],
+    correct:3,
+    exp:{correct:"As ações de controle compreendem luta antivetorial (borrifação em casas com casos humanos ou caninos a cada 6 meses, por mínimo 2 anos), manejo de reservatórios (revisão do sacrifício: atualmente se preconiza eutanásia apenas dos animais doentes), tratamento humano (reduz letalidade e, secundariamente, fontes) e educação em saúde.",
+      wrongs:["A educação em saúde é parte das quatro estratégias de controle.","Ha indicação sim de borrifação em casas com casos autóctones.","A política evoluiu: não mais eliminação indiscriminada, e sim eutanásia dos animais doentes.","Correta.","Não há vacina humana de rotina para LV no Brasil."]}},
+
+  {id:52, aula:"a5", topic:"leish-imunidade", dif:"dificil", stem:"Das espécies a seguir, a que induz resposta celular mais intensa, com maior destruição tecidual e menor quantidade de parasitos na lesão, é",
+    alts:["Leishmania major europeia.","Leishmania (L.) amazonensis.","Leishmania (V.) braziliensis.","Leishmania chagasi (= infantum).","Leishmania guyanensis."],
+    correct:2,
+    exp:{correct:"L. (V.) braziliensis induz resposta celular (Th1) mais intensa e mais rápida; por isso há maior destruição tecidual e poucos parasitos visualizáveis nas lesões.",
+      wrongs:["Não há 'L. major europeia' como entidade causadora do padrão clínico perguntado; a resposta correta é L. braziliensis.","L. amazonensis induz resposta celular menos intensa e mais lenta, com mais parasitos na lesão.","Correta.","L. chagasi / infantum é a causadora da leishmaniose visceral, com quadro diferente (humoral Th2 predominante, não destruição tecidual cutânea).","L. guyanensis ocorre no norte da bacia amazônica; seu padrão não é o de maior destruição tecidual entre as espécies."]}},
+
+  // ============ AULA 6 — HEPATITE C (10 questões) ============
+  {id:53, aula:"a6", topic:"hepC-virus", dif:"facil", stem:"O vírus da hepatite C é um vírus",
+    alts:["DNA, família Herpesviridae, com latência em gânglios sensoriais.","RNA, família Retroviridae, com transcrição reversa.","DNA, família Hepadnaviridae, com integração ao genoma do hospedeiro.","RNA, família Flaviviridae, com replicação citoplasmática sem integração ao genoma do hospedeiro.","RNA, família Picornaviridae, sem envelope."],
+    correct:3,
+    exp:{correct:"O VHC é um vírus RNA da família Flaviviridae. Toda a replicação ocorre no citoplasma, sem integração do material genético ao DNA do hospedeiro — fundamento molecular da cura esterilizante.",
+      wrongs:["Herpesviridae não engloba o VHC.","Retroviridae (HIV) faz transcrição reversa — VHC não.","Hepadnaviridae é do VHB, com integração ao DNA hospedeiro; o VHC é diferente.","Correta.","Picornaviridae é a família do vírus da hepatite A."]}},
+
+  {id:54, aula:"a6", topic:"hepC-transmissao", dif:"facil", stem:"A via de transmissão mais importante do vírus da hepatite C, no contexto epidemiológico atual, é",
+    alts:["Compartilhamento de agulhas e seringas no uso de drogas injetáveis, além de materiais médico/odontológico e estéticos com biossegurança inadequada.","Transmissão aérea em ambientes de alta densidade.","Transmissão por vetor hematófago, em áreas tropicais.","Transmissão vertical, responsável pela maioria absoluta dos casos.","Transmissão oro-fecal, via alimentos contaminados."],
+    correct:0,
+    exp:{correct:"Uso de drogas injetáveis com compartilhamento e materiais sem esterilização adequada (saúde, manicure, tatuagem) são as principais vias atuais. Sexual e vertical existem mas são minoritárias.",
+      wrongs:["Correta.","O VHC não é transmitido por via aérea.","Não há vetor artrópode conhecido para VHC.","Vertical é incomum — menos de 5% da transmissão no Brasil.","Oro-fecal é hepatite A, não C."]}},
+
+  {id:55, aula:"a6", topic:"hepC-aguda", dif:"medio", stem:"Sobre a hepatite C aguda, é correto afirmar que",
+    alts:["A evolução para fulminante é frequente e ocorre em mais de 30% dos casos.","Há clareamento espontâneo em menos de 5% dos casos agudos.","A soroconversão do anti-HCV ocorre em até 24 horas após a exposição.","Cursa com icterícia clássica em 80% dos casos.","Pode ser sintomática em até 20% dos casos, com sintomas inespecíficos; a icterícia ocorre em menos de 10%."],
+    correct:4,
+    exp:{correct:"Cerca de 80% dos casos agudos são assintomáticos; quando sintomáticos, os sinais são inespecíficos (astenia, febre baixa, náuseas). Icterícia ocorre em menos de 10%. Fulminante é rara. Clareamento espontâneo ocorre em 25–50%.",
+      wrongs:["Fulminante é rara, não frequente.","Clareamento espontâneo ocorre em 25–50% dos casos, muito acima de 5%.","A soroconversão leva em média 6–8 semanas; 24 horas não é compatível.","Pelo contrário, icterícia é rara.","Correta."]}},
+
+  {id:56, aula:"a6", topic:"hepC-cronica", dif:"medio", stem:"A progressão natural da hepatite C não tratada, ao longo de décadas, envolve aproximadamente",
+    alts:["Cronificação em 5% dos casos e ausência de evolução para cirrose em qualquer contexto.","Cura espontânea da forma crônica em 80% dos casos sem intervenção.","Cronificação em 75% dos casos e cura espontânea tardia em 50% dos cirróticos estabelecidos.","Resolução em 100% dos casos após 10 anos, sem tratamento.","Cronificação em 75% dos casos; cirrose em 20% dos crônicos; hepatocarcinoma em 2–5% dos crônicos."],
+    correct:4,
+    exp:{correct:"Na história natural sem tratamento: cronificação ~75%; 20% dos crônicos evoluem para cirrose; 2–5% dos crônicos evoluem para hepatocarcinoma.",
+      wrongs:["Taxa de cronificação é alta (~75%), e a cirrose ocorre em 20% dos crônicos.","Cura espontânea da forma crônica é muito rara.","Não há cura espontânea tardia significativa em cirróticos sem tratamento.","A maioria dos casos cronifica; resolução universal é incorreta.","Correta."]}},
+
+  {id:57, aula:"a6", topic:"hepC-diag", dif:"medio", stem:"Paciente doador de sangue assintomático apresenta anti-HCV reagente na triagem. O próximo passo diagnóstico mais adequado é",
+    alts:["Iniciar imediatamente tratamento com sofosbuvir + velpatasvir.","Repetir o anti-HCV após 6 meses, sem outros exames.","Solicitar HCV-RNA por PCR para confirmar infecção ativa.","Solicitar HBsAg e HBeAg quantitativos para refinar o diagnóstico.","Encaminhar para biópsia hepática imediata, antes de qualquer outro exame."], correct:2,
+    exp:{correct:"Anti-HCV reagente indica apenas contato prévio. A confirmação de infecção ativa é feita por HCV-RNA por PCR. Genotipagem já não é rotina porque o tratamento é pangenotípico.",
+      wrongs:["O tratamento não deve ser iniciado antes da confirmação por HCV-RNA.","Simples repetição da sorologia não confirma infecção ativa.","Correta.","HBsAg/HBeAg são marcadores de hepatite B, não C.","Biópsia não é o próximo passo; a confirmação diagnóstica precede a avaliação de fibrose."]}},
+
+  {id:58, aula:"a6", topic:"hepC-diag", dif:"medio", stem:"Em um paciente com hepatite C previamente tratado e com resposta virológica sustentada (cura), a sorologia (anti-HCV) costuma permanecer",
+    alts:["Positiva apenas em coinfecção com HIV.","Negativa, imediatamente após o término do tratamento.","Positiva, por período prolongado, mesmo após a cura; não serve, portanto, para controle do tratamento.","Positiva somente enquanto persistir o HCV-RNA detectável.","Negativa após 6 meses, marcando a cura definitiva."],
+    correct:2,
+    exp:{correct:"O anti-HCV costuma permanecer positivo por longo período mesmo após a cura. Por isso, o controle pós-tratamento é feito por HCV-RNA (PCR), não por sorologia.",
+      wrongs:["A persistência do anti-HCV após cura não depende de coinfecção com HIV.","A sorologia não negativa imediatamente — pode permanecer positiva por anos.","Correta.","A positividade da sorologia não depende do HCV-RNA estar detectável.","A sorologia não necessariamente negativa em 6 meses."]}},
+
+  {id:59, aula:"a6", topic:"hepC-ciclo", dif:"medio", stem:"A explicação molecular para a cura esterilizante da hepatite C, diferentemente do que ocorre no HIV ou na hepatite B, é",
+    alts:["A formação de reservatórios latentes em neurônios sensoriais.","A produção de anticorpos neutralizantes de longa duração pelo hospedeiro.","A replicação intramitocondrial exclusiva.","A alta taxa de integração do material genético viral no núcleo do hepatócito.","O ciclo viral ocorrer integralmente no citoplasma, sem integração do RNA viral ao genoma do hospedeiro."],
+    correct:4,
+    exp:{correct:"O ciclo do VHC ocorre no citoplasma do hepatócito; o RNA viral não é integrado ao genoma do hospedeiro. Por isso, ao eliminar-se o vírus, não há reservatório latente para reativação — cura é esterilizante.",
+      wrongs:["Reservatórios em neurônios sensoriais são próprios dos herpesvírus.","Anticorpos neutralizantes de longa duração não se formam adequadamente em VHC — daí a possibilidade de reinfecção.","Não há replicação intramitocondrial do VHC.","VHB integra DNA ao genoma do hospedeiro, o VHC não.","Correta."]}},
+
+  {id:60, aula:"a6", topic:"hepC-tratamento", dif:"medio", stem:"Sobre o tratamento atual da hepatite C com antivirais de ação direta (esquema pangenotípico sofosbuvir + velpatasvir), é correto afirmar que",
+    alts:["O tratamento dura 1 semana em todos os pacientes.","A genotipagem é obrigatória para definir o esquema, pois cada genótipo requer combinação distinta.","A resposta virológica sustentada é avaliada imediatamente após o último comprimido.","O tratamento só é indicado para pacientes cirróticos.","Todos os pacientes com hepatite C devem ser tratados, independentemente do grau de fibrose, com taxa de cura acima de 97%."],
+    correct:4,
+    exp:{correct:"O PCDT atual indica tratamento para todos, independentemente da fibrose. Sofosbuvir + velpatasvir (Epclusa®) tem cura &gt; 97%. Duração: 12 semanas em não cirróticos ou Child A; em Child B/C, 12 semanas com ribavirina (ou 24 semanas sem ribavirina se houver contraindicação a ela). A resposta virológica sustentada é avaliada 12 semanas após o término.",
+      wrongs:["A duração é 12 ou 24 semanas, não 1 semana.","Com o esquema pangenotípico, a genotipagem de rotina deixou de ser necessária para iniciar o tratamento.","A RVS é avaliada 12 semanas após o fim do tratamento, não imediatamente.","O tratamento é para todos os pacientes, não só cirróticos.","Correta."]}},
+
+  {id:61, aula:"a6", topic:"hepC-cronica-riscos", dif:"dificil", stem:"Entre os fatores associados à progressão mais rápida para fibrose hepática em pacientes com hepatite C crônica, destaca-se",
+    alts:["Coinfecção com HIV e/ou vírus da hepatite B, etilismo, idade maior que 40 anos no momento da infecção e esteatose hepática.","Tratamento prévio com antivirais pangenotípicos.","Residência em área rural, exclusivamente.","Uso de vacinação contra hepatite A.","Sexo feminino e idade menor que 30 anos no momento da infecção."],
+    correct:0,
+    exp:{correct:"Fatores associados a progressão mais rápida: idade &gt; 40 anos à infecção, sexo masculino, etilismo, coinfecção com VHB e/ou HIV, imunossupressão, esteatose hepática, resistência insulínica.",
+      wrongs:["Correta.","Tratamento prévio não acelera a fibrose; o tratamento efetivo idealmente a detém.","A residência rural por si só não é fator de progressão.","Vacinação contra hepatite A é medida preventiva independente, não acelera a progressão da hepatite C.","Sexo feminino e idade &lt; 30 anos ao infectar-se são, ao contrário, fatores de melhor prognóstico (maior chance de clareamento espontâneo, progressão mais lenta)."]}},
+
+  {id:62, aula:"a6", topic:"hepC-aguda-classif", dif:"dificil", stem:"Em uma profissional de saúde que sofreu acidente perfurocortante há 8 semanas, com fonte sabidamente positiva para hepatite C, a definição de hepatite C aguda inclui",
+    alts:["Soroconversão recente (anti-HCV negativo na exposição → reagente em 90 dias), ou anti-HCV não reagente com HCV-RNA detectável até 90 dias após a exposição.","Exclusivamente anti-HCV reagente em uma única amostra, sem necessidade de soroconversão documentada.","Apenas a presença de icterícia clínica, independente de exame laboratorial.","Presença de HBsAg reagente em paciente expostada.","Alterações de função hepática após mais de 6 meses de acompanhamento sintomático."], correct:0,
+    exp:{correct:"Os critérios envolvem: soroconversão recente documentada (anti-HCV negativo no momento da exposição e reagente em novo exame com intervalo de 90 dias), ou anti-HCV não reagente com HCV-RNA detectável por até 90 dias após a exposição/sintomas.",
+      wrongs:["Correta.","Uma única sorologia reagente, sem documentação prévia negativa, não confirma caráter agudo.","Icterícia ocorre em menos de 10% da hepatite C aguda; diagnóstico não é clínico isolado.","HBsAg é marcador de hepatite B.","Alterações após 6 meses caracterizariam cronificação, não hepatite aguda."]}},
+
+  // Difíceis finais (para completar 60)
+  {id:63, aula:"a3", topic:"cir-bilirrubina", dif:"dificil", stem:"Um paciente com insuficiência hepática crônica apresenta bilirrubina total 6 mg/dL, com predomínio de bilirrubina direta. A interpretação fisiopatológica mais correta é",
+    alts:["Lesão hepatocelular com vazamento da bilirrubina já conjugada e/ou colestase, levando a predomínio da fração direta.","Deficiência isolada da conjugação hepática, com elevação exclusiva da indireta.","Insuficiência renal com retenção da bilirrubina não conjugada.","Síndrome de Gilbert como causa mais provável do padrão.","Hemólise intravascular com aumento isolado da bilirrubina indireta."],
+    correct:0,
+    exp:{correct:"Na lesão hepatocelular avançada ou colestase, a bilirrubina conjugada (direta) vaza para o sangue porque está pronta para excreção mas não consegue seguir para a bile. Predomínio de direta aponta para origem hepática/biliar.",
+      wrongs:["Correta.","Deficiência de conjugação elevaria a indireta, não a direta.","A retenção renal não é o mecanismo principal de hiperbilirrubinemia na hepatopatia.","Gilbert cursa com elevação isolada da bilirrubina indireta, não com predomínio de direta.","Hemólise eleva predominantemente a indireta, não a direta."]}},
+
+  {id:64, aula:"a2", topic:"foi-etiologia", dif:"dificil", stem:"Mulher de 70 anos, internada há 8 semanas por FOI clássica, está sendo investigada. Hemoculturas negativas, HIV negativo, painel reumatológico sem alterações. TC de tórax e abdome sem foco. Qual das seguintes hipóteses deve ser considerada, dada a frequência etiológica em idosos?",
+    alts:["Febre factícia como causa mais provável, descartando qualquer outra hipótese.","Síndrome de Munchausen associada a uso crônico de antitérmico.","Exclusivamente doença de Kawasaki.","Neoplasias e doenças hematológicas, como linfomas, que respondem por parcela importante das causas em idosos, especialmente em investigações infecciosas inconclusivas.","Apenas infecções virais autolimitadas do trato respiratório."],
+    correct:3,
+    exp:{correct:"Neoplasias e doenças hematológicas (linfomas especialmente) respondem por parcela importante das causas de FOI em idosos, devendo ser investigadas quando a propedêutica infecciosa inicial é negativa.",
+      wrongs:["Febre factícia é causa rara; deve ser considerada, mas não como única hipótese.","Munchausen é causa rara e requer aspectos psiquiátricos compatíveis.","Kawasaki é doença tipicamente pediátrica.","Correta.","Viroses autolimitadas não se enquadram — FOI exige mais de 3 semanas sem diagnóstico."]}},
+
+  {id:65, aula:"a1", topic:"epi-definicoes", dif:"dificil", stem:"Diferenciar epidemia de endemia em uma região requer considerar",
+    alts:["O limiar epidêmico local (acima do qual é epidemia) e o padrão de ocorrência constante (endemia), considerando espaço e tempo.","A gravidade clínica dos casos, independentemente do número.","A origem geográfica do agente etiológico.","O perfil etário dos afetados, sem considerar incidência.","Apenas o número absoluto de casos."],
+    correct:0,
+    exp:{correct:"Endemia tem ocorrência constante ao longo do tempo (temporalmente ilimitada, com variações sazonais); epidemia tem elevação inesperada acima do limiar epidêmico preestabelecido para aquela circunstância e doença.",
+      wrongs:["Correta.","Gravidade clínica não é o critério de distinção.","Origem geográfica do agente não define endemia vs epidemia.","Perfil etário não é critério definidor.","Número absoluto não basta — o que importa é a comparação com o esperado/limiar."]}},
+
+  {id:66, aula:"a5", topic:"leish-lta-ciclo", dif:"dificil", stem:"Sobre o tropismo de Leishmania nas infecções em humanos, é correto afirmar que",
+    alts:["É intracelular obrigatório, sobretudo em macrófagos e outras células do sistema fagocitário mononuclear, como células de Kupffer hepáticas e células reticulares esplênicas.","Infecta preferencialmente linfócitos T CD4+.","Tem tropismo exclusivo por hepatócitos.","Localiza-se em neurônios do SNC, causando encefalopatia direta primária.","O parasita é extracelular obrigatório, circulando livremente no plasma."],
+    correct:0,
+    exp:{correct:"Leishmania é parasita intracelular obrigatório do sistema fagocitário mononuclear (macrófagos teciduais, células de Kupffer, células reticulares do baço). É por isso que fígado, baço e medula óssea são alvos preferenciais na LV.",
+      wrongs:["Correta.","Não infecta linfócitos T CD4+; esses recrutam a resposta contra o parasita.","Não é tropismo a hepatócitos, e sim células de Kupffer (macrófagos hepáticos).","Não invade neurônios do SNC.","Não é extracelular; depende de macrófago para sobreviver."]}},
+
+  {id:67, aula:"a6", topic:"hepC-vigilancia", dif:"dificil", stem:"Sobre o acompanhamento de paciente com hepatite C crônica que atinge resposta virológica sustentada (cura), é correto afirmar que",
+    alts:["A cura remove completamente o risco de hepatocarcinoma em todos os casos.","Em paciente que já tinha cirrose instalada, a erradicação viral não remove o risco de hepatocarcinoma ou de descompensação clínica — o seguimento deve ser mantido.","Após a cura, pode ser feita imunização que impede qualquer reinfecção.","A cura é sempre acompanhada de negativação completa da sorologia em 6 meses.","Após a cura, o paciente torna-se fonte protetora para outros, com imunidade transmissível."], correct:1,
+    exp:{correct:"Em paciente com cirrose já instalada, a erradicação do VHC não elimina o risco de hepatocarcinoma nem de descompensação hepática — por isso a vigilância (ultrassom + AFP periódicos) deve ser mantida.",
+      wrongs:["O risco de CHC não é totalmente removido, especialmente em cirróticos.","Correta.","Não existe imunidade protetora após a cura — há possibilidade de reinfecção.","A sorologia pode permanecer positiva por anos; não é critério de cura.","A cura não gera imunidade transmissível a outras pessoas."]}},
+
+  {id:68, aula:"a5", topic:"leish-lv-orgaos", dif:"dificil", stem:"Na leishmaniose visceral, as alterações patológicas mais típicas do baço incluem",
+    alts:["Baço de tamanho normal com atrofia folicular.","Aumento acentuado do volume, cápsula tensa, congestão dos sinusoides, hipertrofia e hiperplasia do sistema reticuloendotelial densamente parasitado.","Nódulos satélites subcapsulares neoplásicos predominantes.","Substituição fibrosa completa do parênquima esplênico.","Ausência de alterações histológicas detectáveis."], correct:1,
+    exp:{correct:"Na LV, o baço é profundamente acometido: grande aumento de volume, cápsula tensa por congestão, reativação do SRE com macrófagos e plasmócitos densamente parasitados por amastigotas.",
+      wrongs:["A característica marcante é aumento volumoso, não tamanho normal.","Correta.","Nódulos satélites neoplásicos não são o achado típico da LV.","Não há substituição fibrosa completa; há hipertrofia do SRE.","Alterações histológicas são pronunciadas na LV."]}},
+
+  {id:69, aula:"a2", topic:"foi-exames", dif:"dificil", stem:"Homem de 55 anos com FOI clássica, sem foco aparente, apresenta sopro cardíaco novo em ausculta e petéquias em extremidades. Dentre as condutas diagnósticas abaixo, a mais apropriada, além das hemoculturas, é",
+    alts:["Eletroencefalograma para investigação neurológica.","Biópsia hepática guiada por tomografia como primeira medida.","Ecocardiograma, preferencialmente transesofágico, para pesquisa de endocardite infecciosa.","Ressonância de encéfalo para descartar hemorragia subaracnoidea.","Colonoscopia diagnóstica."],
+    correct:2,
+    exp:{correct:"A tríade FOI + sopro cardíaco novo + petéquias sugere endocardite infecciosa. O ecocardiograma (preferencialmente transesofágico) é o exame de imagem indicado, juntamente com hemoculturas seriadas.",
+      wrongs:["EEG não é adequado para investigar endocardite.","Biópsia hepática não é a medida inicial adequada nesse contexto.","Correta.","RM de encéfalo não é o próximo passo prioritário nesse cenário.","Colonoscopia não é a prioridade quando há sopro novo e petéquias."]}},
+
+  {id:70, aula:"a4", topic:"hepA-fisiopat", dif:"dificil", stem:"Sobre a fisiopatogenia da hepatite A, é correto afirmar que",
+    alts:["Há integração do RNA viral ao genoma do hospedeiro, com possível reativação.","O vírus atinge diretamente o hepatócito pela corrente sanguínea sem passar pelo intestino.","O vírus, após ingestão, infecta enterócitos, dissemina-se por via hematogênica e alcança o fígado com tropismo para hepatócitos; os vírions são secretados via biliar e eliminados nas fezes.","A transmissão ocorre por vetores artrópodes, com picada em áreas tropicais.","O vírus cronifica no fígado em cerca de 75% dos casos."],
+    correct:2,
+    exp:{correct:"Após ingestão, o VHA infecta enterócitos, produz grande quantidade de vírus localmente, dissemina por via hematogênica, atinge o fígado (tropismo hepatocitário), causa necrose hepatocelular; os vírions são secretados na bile e eliminados nas fezes, reiniciando o ciclo.",
+      wrongs:["Não há integração do RNA do VHA ao genoma do hospedeiro.","O vírus passa sim pelo intestino — é a porta de entrada via ingestão.","Correta.","Não há vetor artrópode para hepatite A.","Não cronifica; esse é o padrão da hepatite C."]}},
+
+  {id:71, aula:"a3", topic:"hep-etiologia", dif:"medio", stem:"Uma paciente em uso regular de paracetamol em dose elevada para enxaqueca apresenta, após 5 dias, icterícia, transaminases acima de 10× o valor de referência e alargamento do INR. A hipótese mais provável é",
+    alts:["Hepatite medicamentosa (toxicidade por paracetamol) com risco de insuficiência hepática aguda.","Hepatite autoimune crônica.","Esteatose hepática não alcoólica descompensada.","Esquistossomose hepatoesplênica aguda.","Hepatite viral A aguda."],
+    correct:0,
+    exp:{correct:"Paracetamol em dose elevada é clássico hepatotóxico agudo. Entre as hepatites agudas, a medicamentosa tem o maior risco de evolução para insuficiência hepática fulminante.",
+      wrongs:["Correta.","Hepatite autoimune crônica não se instala em dias com essa intensidade.","Esteatose não se manifesta classicamente com elevações tão agudas.","Esquistossomose não gera elevação aguda de transaminases desse padrão.","Hepatite A aguda é possível, mas a história de paracetamol em dose alta aponta diretamente para toxicidade medicamentosa."]}},
+
+  {id:72, aula:"a1", topic:"epi-mortalidade", dif:"medio", stem:"Dois países são comparados pelos indicadores de saúde: país X tem mortalidade infantil de 8/1000, enquanto país Y tem 42/1000. A interpretação epidemiológica mais adequada é",
+    alts:["Y apresenta condições de saúde materno-infantil, saneamento e acesso à atenção primária piores que X.","X tem maior fertilidade, por isso o denominador é maior.","Y tem menor letalidade por infecções.","Os indicadores não permitem qualquer comparação.","O país Y é mais populoso que o X."],
+    correct:0,
+    exp:{correct:"A mortalidade infantil é indicador sensível de condições de saúde materno-infantil, assistência ao pré-natal e parto, e saneamento. Valor mais alto em Y sugere piores condições.",
+      wrongs:["Correta.","O denominador é 'nascidos vivos', não reflete fertilidade de maneira distorcida.","A mortalidade infantil não é letalidade específica.","Os indicadores permitem, sim, comparação entre populações.","O número absoluto populacional não é captado pelo indicador (é taxa por 1000)."]}}
+];
+
+const DISSERTATIVAS = [
+  // ============ DISS 1 — AULA 1 ============
+  {id:"d1", aula:"a1", title:"Epidemia vs endemia no planejamento em saúde pública",
+    caso:"Você é o médico coordenador de uma região com histórico de transmissão constante de tuberculose, com prevalência acima de 50/100.000 há décadas. No início de 2026, a vigilância detecta aumento de casos de sarampo em uma comunidade circunvizinha — o número de casos semanais ultrapassou o triplo do esperado para o período. Em paralelo, a Organização Mundial da Saúde declara transmissão sustentada de um novo coronavírus respiratório em cinco continentes.",
+    perguntas:[
+      "1. Classifique epidemiologicamente cada um dos três cenários acima (TB, sarampo, novo coronavírus), justificando com a definição.",
+      "2. Explique por que 'endemia' relaciona-se mais a prevalência do que a incidência, enquanto 'epidemia' depende de observar a incidência.",
+      "3. Como a resposta de saúde pública esperada difere entre uma endemia e uma epidemia estabelecidas? Dê dois exemplos concretos."
+    ],
+    modelo:[
+      "1. TB = endemia (ocorrência sistemática, ao longo do tempo, em espaço característico, com incidência relativamente constante). Sarampo na comunidade vizinha = epidemia (elevação inesperada e descontrolada acima do limiar esperado, delimitada no espaço e tempo). Novo coronavírus respiratório com transmissão sustentada em cinco continentes = pandemia (disseminação mundial de doença nova com transmissão sustentada pessoa-pessoa intercontinental).",
+      "2. Endemia acompanha o estoque de casos num espaço populacional ao longo do tempo — muitos casos presentes continuamente — que é a própria definição de prevalência. Epidemia é detectada pela mudança no ritmo de aparecimento de casos novos sobre um período, tornando a incidência o indicador central: é a comparação entre a incidência observada e a incidência esperada (limiar epidêmico) que define o surto de crescimento.",
+      "3. Endemia exige resposta de longo prazo, integrada e contínua: ações estruturais de atenção primária, rastreio (busca ativa de sintomáticos respiratórios na TB), tratamento supervisionado, vigilância permanente. Já a epidemia exige resposta aguda: reforço vacinal de bloqueio no caso do sarampo, vigilância ativa de contatos, isolamento de casos, notificação compulsória imediata, mobilização de equipe e insumos extraordinários. Dois exemplos concretos: (a) TB endêmica — DOT (tratamento diretamente observado) e investigação de contatos em UBS; (b) epidemia de sarampo — bloqueio vacinal em menores de 5 anos da área e interdição temporária de atividades de aglomeração na comunidade afetada."
+    ]},
+
+  // ============ DISS 2 — AULA 2 ============
+  {id:"d2", aula:"a2", title:"Febre de origem indeterminada em idosa institucionalizada",
+    caso:"Idosa de 74 anos, institucionalizada em residência para idosos, chega ao ambulatório com febre diária há 28 dias, com temperatura axilar máxima diária de 38,6 °C. Refere astenia, perda de 4 kg no período e sudorese noturna. Nega tosse ou diarreia. Duas consultas prévias, com hemograma que revelou anemia leve (Hb 10,2), aumento de VHS e sem foco evidente. Exame físico: esplenomegalia palpável 2 cm abaixo do rebordo costal, sem linfonodomegalia periférica. A investigação microbiológica inicial (urocultura e hemocultura) foi negativa.",
+    perguntas:[
+      "1. Essa paciente preenche os critérios de FOI? Justifique.",
+      "2. Liste, em ordem de frequência esperada, as grandes categorias etiológicas a serem consideradas nesta paciente e dê um exemplo de cada.",
+      "3. Qual seria o próximo passo na investigação, considerando os achados de esplenomegalia, anemia e VHS elevado?"
+    ],
+    modelo:[
+      "1. Sim. Critérios de FOI clássica: temperatura ≥ 38,3 °C (atingida), duração &gt; 3 semanas (28 dias), sem diagnóstico após 3 dias de investigação hospitalar ou 3 consultas ambulatoriais (ela teve duas + investigação inicial). A apresentação se enquadra.",
+      "2. (a) Infecções (30–50%) — ex.: endocardite subaguda, tuberculose extrapulmonar, abscesso oculto; (b) Neoplasias e doenças hematológicas (10–30%) — ex.: linfoma (atenção em idosos); (c) Doenças autoimunes (10–30%) — ex.: arterite de células gigantes em &gt;50 anos, polimiosite; (d) Miscelânea (20–40%) — ex.: febre medicamentosa, tireoidite.",
+      "3. A combinação de esplenomegalia + anemia + VHS elevado, com perda de peso e sudorese noturna, é altamente sugestiva de doença hematológica (linfoma) ou infecção crônica (tuberculose extrapulmonar, endocardite). Próximos passos: tomografia de tórax e abdome (pesquisa de linfonodomegalia profunda, abscessos, nódulos); sorologias (HIV, CMV, EBV); ecocardiograma (endocardite); pesquisa de BAAR e PPD/IGRA; em função dos achados, biópsia dirigida (linfonodo se presente, medula óssea se pancitopenia) — seguindo o princípio: do menos invasivo ao mais invasivo, guiado por hipótese."
+    ]},
+
+  {id:"d3", aula:"a2", title:"Febre x hipertermia em cenário de emergência",
+    caso:"Plantão de um pronto-socorro em dia de onda de calor (41 °C na cidade). Um estudante de 21 anos é trazido pelos amigos após treino prolongado ao ar livre. Inconsciente, pele quente e seca, temperatura retal de 41,6 °C, FC 142 bpm, FR 28 irpm, PA 90x60 mmHg. Um médico recém-formado sugere prescrever dipirona endovenosa.",
+    perguntas:[
+      "1. Diferencie conceitualmente febre e hipertermia.",
+      "2. Qual é a provável condição deste paciente e por que antitérmicos não têm efeito significativo nesse cenário?",
+      "3. Qual a conduta correta?"
+    ],
+    modelo:[
+      "1. Febre: elevação da temperatura corporal com aumento do set point hipotalâmico mediado por PGE2. O corpo ativamente 'quer' estar quente para apoiar a resposta imune. Hipertermia: elevação da temperatura sem alteração do set point hipotalâmico — o problema é um desequilíbrio entre produção/perda de calor (ambiente quente, produção muscular intensa, incapacidade de perder calor, lesão hipotalâmica).",
+      "2. Trata-se de golpe de calor (hipertermia exercício-associada em onda de calor, pele seca mostrando falência de sudorese, rebaixamento de consciência, instabilidade hemodinâmica). Antitéricos como dipirona/paracetamol agem inibindo a síntese hipotalâmica de PGE2. Como o set point aqui está normal, não há PGE2 elevada para inibir — a temperatura não baixa. Usar antitérmico nesse cenário é inócuo e atrasa a conduta correta.",
+      "3. Resfriamento físico ativo imediato: retirar roupas, imersão em água fria/gelada (se disponível), compressas frias em grandes vasos (pescoço, axilas, virilhas), ventilação forçada e nebulização. Monitorar temperatura central continuamente, parando quando chegar a ~38,5 °C para evitar hipotermia reativa. Reposição volêmica com SF 0,9%, considerar UTI por risco de rabdomiólise e falência de múltiplos órgãos. Investigar complicações: CPK, função renal, eletrólitos, coagulação."
+    ]},
+
+  // ============ DISS 3 — AULA 3 ============
+  {id:"d4", aula:"a3", title:"Cirrose descompensada com encefalopatia",
+    caso:"Homem de 57 anos, etilista crônico, chega ao pronto-socorro trazido pela esposa por 'ficar confuso'. Não evacua há 4 dias. Exame: ictérico +3/4, ascite volumosa, circulação colateral em abdome, asterixis positivo. Hemograma: Hb 9,8; plaquetas 68.000; leucócitos 4.200. Bioquímica: albumina 2,1 g/dL; bilirrubina total 5,8 (direta 4,2); TP/INR 1,9; creatinina 1,5; Na 131.",
+    perguntas:[
+      "1. Qual é a síndrome clínica em curso e quais achados a sustentam?",
+      "2. Liste as quatro grandes consequências fisiopatológicas da insuficiência hepática identificáveis neste paciente e a repercussão clínica de cada.",
+      "3. Qual a conduta imediata inicial para o fator precipitante mais provável da descompensação neurológica?",
+      "4. Explique por que a esposa dele, no papel de cuidadora, precisa ser orientada a garantir que ele evacue pelo menos duas vezes ao dia em casa."
+    ],
+    modelo:[
+      "1. Cirrose descompensada com encefalopatia hepática (provavelmente grau II) e alterações de hipertensão portal. Achados: história de etilismo + icterícia + ascite + circulação colateral + plaquetopenia (hiperesplenismo) + hipoalbuminemia + alargamento do TP + asterixis + confusão. O conjunto define insuficiência hepática + hipertensão portal descompensadas.",
+      "2. (a) Deficiência de detoxificação → acúmulo de amônia → encefalopatia; (b) Deficiência de síntese de albumina → hipoalbuminemia → ascite, edema, derrames; (c) Deficiência de síntese de fatores de coagulação → TP/INR alargado → risco de sangramento; (d) Deficiência de excreção de bilirrubina → icterícia (direta), colúria, acolia fecal.",
+      "3. O fator precipitante mais provável é constipação intestinal (4 dias sem evacuar). Conduta imediata: lactulose (via oral ou SNG), titulada para atingir 2 a 3 evacuações pastosas por dia (nem firmes, nem líquidas); reposição eletrolítica; pesquisar e tratar outros precipitantes (PBE por paracentese diagnóstica, sangramento digestivo, uso de sedativos, distúrbios eletrolíticos, infecção, hiponatremia). Excluir sempre PBE em ascítico que descompensa.",
+      "4. A encefalopatia hepática é precipitada pelo acúmulo de amônia, produzida pela ação bacteriana sobre proteínas no cólon. Quando o cirrótico fica constipado, a amônia é absorvida em maior quantidade e, pelo shunt portossistêmico, chega à circulação sistêmica sem passar pelo fígado; atravessa a barreira hematoencefálica, é convertida em glutamina pelos astrócitos, causa edema e disfunção cerebral. Garantir 2 evacuações pastosas por dia reduz o tempo de trânsito e o acúmulo de amônia. A lactulose também acidifica o cólon, retendo NH4+ no lúmen. É medida simples, mas decisiva na prevenção de reinternações."
+    ]},
+
+  {id:"d5", aula:"a3", title:"Diferenciação etiológica de hepatopatia crônica",
+    caso:"Três pacientes na mesma enfermaria, todos com suspeita de hepatopatia crônica: (A) homem de 48 anos, etilista de longa data; (B) mulher de 35 anos, sem etilismo, com ANA e anticorpo anti-músculo liso positivos; (C) homem de 39 anos, procedente do Nordeste brasileiro, com história de contato com água de riachos e esplenomegalia maciça, ascite volumosa e função hepática (albumina, TP, bilirrubina) praticamente normal.",
+    perguntas:[
+      "1. Qual é a etiologia mais provável para cada paciente? Justifique.",
+      "2. Por que o paciente C tem ascite tão volumosa com função hepatocelular preservada? Compare com o mecanismo do paciente A.",
+      "3. Qual o princípio terapêutico que muda completamente entre a hepatite alcoólica (A) e a hepatite autoimune (B)?"
+    ],
+    modelo:[
+      "1. (A) Hepatopatia alcoólica crônica — o álcool é a principal causa de hepatopatia crônica. (B) Hepatite autoimune — perfil sorológico com ANA e anti-músculo liso positivos é compatível. (C) Esquistossomose hepatoesplênica — procedência nordestina, contato com água de riacho (cercária de Schistosoma mansoni), esplenomegalia maciça com função hepatocelular preservada é a apresentação clássica.",
+      "2. No paciente C (esquistossomose), o parasita gera fibrose periportal (fibrose de Symmers), aumentando a resistência ao fluxo portal e gerando hipertensão portal. A arquitetura lobular e a função hepatocelular ficam relativamente preservadas. A ascite é hemodinâmica, dependente da hipertensão portal — não da queda da albumina. No paciente A (cirrose alcoólica), a ascite resulta da combinação de hipertensão portal + hipoalbuminemia (fígado cirrótico não sintetiza albumina adequadamente), com queda da pressão oncótica somando-se ao mecanismo vascular. Por isso, na esquistossomose, a ascite pode ser volumosa sem edema de MMII tão importante; na cirrose alcoólica, edema e anasarca acompanham a ascite.",
+      "3. Na hepatite alcoólica (A), o princípio fundamental é a abstinência — a evolução para insuficiência hepática e cirrose é, na ausência de cirrose estabelecida, reversível com a interrupção do álcool. Na hepatite autoimune (B), o princípio é imunossupressão: corticoides (prednisona) com ou sem azatioprina; sem esse tratamento, a progressão para cirrose é alta. Portanto, um se baseia em evitar o agressor; o outro se baseia em suprimir a resposta imune que é o próprio agressor."
+    ]},
+
+  // ============ DISS 4 — AULA 4 ============
+  {id:"d6", aula:"a4", title:"Surto de hepatite A em creche",
+    caso:"Em uma creche com 52 crianças, cinco delas apresentaram, em um período de 2 semanas, quadro de febre baixa, anorexia, dor abdominal e, em três casos, icterícia com colúria. Uma das manipuladoras de alimentos também apresentou icterícia nos últimos 5 dias. Exames sorológicos revelam IgM anti-VHA reagente em todos os casos sintomáticos.",
+    perguntas:[
+      "1. Qual o agente etiológico e qual o período provável de transmissibilidade a considerar?",
+      "2. Quais medidas imediatas de controle do surto devem ser tomadas?",
+      "3. Por que, mesmo com apenas cinco casos confirmados, devem-se investigar outras crianças da creche — incluindo as assintomáticas?"
+    ],
+    modelo:[
+      "1. Vírus da Hepatite A (VHA), família Picornaviridae, RNA, transmitido por via fecal-oral. O período de eliminação do vírus começa cerca de 10 dias após a infecção e dura aproximadamente 20 dias, podendo preceder o início dos sintomas — ou seja, pessoas ainda assintomáticas podem estar transmitindo.",
+      "2. (a) Afastar os casos sintomáticos da creche pelo período de transmissibilidade; (b) afastar a manipuladora de alimentos imediatamente, com retorno somente após período seguro; (c) reforçar higienização das mãos, talheres, pratos, brinquedos e fraldário; (d) garantir água tratada e alimentos cozidos; (e) notificar à vigilância epidemiológica; (f) oferecer vacinação de bloqueio aos contactantes suscetíveis segundo a política local; (g) investigar ativamente outras crianças e funcionários da creche; (h) orientar pais sobre sinais de alarme (piora da icterícia, sonolência anormal — sugestivos de evolução para fulminante, rara mas possível).",
+      "3. Porque até 70% das crianças menores de 10 anos são assintomáticas durante a infecção por VHA, e o período de transmissibilidade começa antes dos sintomas aparecerem. Casos assintomáticos continuam eliminando vírus e são fontes silenciosas de contágio. Buscá-los é essencial para interromper a cadeia de transmissão na creche, especialmente antes de eventos que aglomeram os pais (reuniões, atividades coletivas)."
+    ]},
+
+  // ============ DISS 5 — AULA 5 ============
+  {id:"d7", aula:"a5", title:"Leishmaniose visceral em área emergente",
+    caso:"Em um município do interior paulista, emergência para leishmaniose desde 1998. Um paciente de 38 anos, morador da zona urbana, dono de dois cães, procura o ambulatório com febre há 2 meses, perda ponderal de 7 kg, esplenomegalia que ultrapassa a linha umbilical e pancitopenia (Hb 7,9, leucócitos 2.100, plaquetas 58.000).",
+    perguntas:[
+      "1. Qual é a hipótese diagnóstica mais provável e quais exames devem ser solicitados?",
+      "2. Explique, do ponto de vista imunológico, por que a leishmaniose visceral (forma clássica) cursa com sorologia positiva, enquanto a leishmaniose tegumentar clássica tem sorologia habitualmente negativa.",
+      "3. Quais medidas de saúde pública devem ser implementadas nesse território, considerando os dois cães do paciente e a epidemiologia urbana da doença?",
+      "4. Qual é o tratamento habitual e por que o paciente deve ser acompanhado por tempo prolongado?"
+    ],
+    modelo:[
+      "1. Leishmaniose visceral (calazar). Exames: aspirado de medula óssea (pesquisa direta de amastigotas em macrófagos — padrão-ouro); sorologia (ELISA e imunofluorescência indireta, positivas pela resposta humoral desviada); PCR se disponível; hemograma completo, função hepática, albumina, proteínas totais (hipergamaglobulinemia com hipoalbuminemia clássica); função renal; HIV (pela coinfecção).",
+      "2. A leishmaniose visceral cursa com desvio da resposta imune para o padrão Th2 (humoral), com produção de IL-4, IL-10 e outras interleucinas que estimulam a produção de anticorpos — daí a positividade da sorologia. Paradoxalmente, essa resposta humoral não elimina o parasita (intracelular obrigatório em macrófagos), de modo que a positividade sorológica reflete falência da resposta celular protetora. Na LTA clássica, predomina a resposta Th1 (IFN-γ, IL-12, TNF), que ativa macrófagos e contém o parasita em granulomas, mas não gera níveis significativos de anticorpos circulantes — por isso a sorologia é habitualmente pouco útil na LTA clássica.",
+      "3. (a) Investigação sorológica e tratamento dos cães da casa (e de vizinhos) — o cão é o principal reservatório urbano da LV; (b) luta antivetorial: borrifação domiciliar com inseticidas em todas as casas com casos humanos ou caninos autóctones, repetida a cada 6 meses por pelo menos 2 anos; (c) educação em saúde: reforçar o manejo ambiental (limpeza de quintais, eliminação de matéria orgânica em decomposição); (d) notificação à vigilância epidemiológica (LV é de notificação compulsória); (e) busca ativa por outros casos humanos na área.",
+      "4. Tratamento: antimoniais pentavalentes (antimoniato de meglumina — Glucantime®) em primeira linha; anfotericina B (convencional ou lipossomal) em casos graves, gestantes, falência terapêutica ou quando houver comorbidades. Acompanhamento prolongado porque: (i) a doença pode recidivar, especialmente em imunossuprimidos (HIV+); (ii) a infecção e a doença não conferem imunidade protetora — o paciente pode reinfectar; (iii) é necessário monitorar resposta terapêutica (redução de esplenomegalia, recuperação hematológica, ganho de peso); (iv) complicações cardiotóxicas e pancreáticas dos antimoniais exigem vigilância laboratorial durante o tratamento."
+    ]},
+
+  {id:"d8", aula:"a5", title:"Leishmaniose tegumentar — manejo inicial",
+    caso:"Homem de 42 anos, caminhoneiro com rota que passa por áreas rurais do Norte do Brasil, chega ao ambulatório com úlcera em perna direita, evoluindo há 8 semanas. Ao exame, lesão de 3 cm de diâmetro, arredondada, bordas elevadas e infiltradas, fundo granuloso, indolor. Sem linfonodomegalia regional importante e sem outras lesões.",
+    perguntas:[
+      "1. Qual a hipótese diagnóstica principal e qual o exame de escolha para confirmação?",
+      "2. Qual o risco tardio mais importante desta forma, considerando a possível espécie causadora, e em quanto tempo ele pode aparecer?",
+      "3. Quais medidas de orientação e cuidado o paciente deve receber?"
+    ],
+    modelo:[
+      "1. Leishmaniose tegumentar americana (LTA), forma cutânea localizada. Lesão clássica em moldura (bordas elevadas e infiltradas) é altamente sugestiva. Exame de escolha: raspado das bordas da lesão com esfregaço e coloração (Giemsa), pesquisa direta de amastigotas; alternativamente, biópsia das bordas com exame histopatológico e/ou PCR. Intradermorreação de Montenegro não é mais utilizada de rotina.",
+      "2. Dada a procedência (rotas no Norte/regiões amazônicas) e exposição contínua, as espécies possíveis incluem L. braziliensis e L. amazonensis. Se L. braziliensis estiver envolvida, existe risco tardio de acometimento mucoso (leishmaniose mucocutânea), que surge meses a anos após a resolução da lesão cutânea, acometendo cavidades nasais, faringe, laringe e cavidade oral, com lesões destrutivas. Esse risco justifica o acompanhamento prolongado e a orientação ao paciente sobre sintomas sugestivos (obstrução nasal crônica, epistaxe, disfonia).",
+      "3. (a) Tratamento com antimoniato de meglumina (ou anfotericina B em situações específicas — gravidez, nefropatia, cardiopatia, falha terapêutica); (b) evitar automedicação com pomadas que mascarem a lesão; (c) uso de proteção contra picada de flebotomíneo em áreas endêmicas (repelentes, roupas de manga comprida, mosquiteiros impregnados); (d) acompanhamento ambulatorial de longo prazo (mínimo 12 meses) para detecção precoce de eventual acometimento mucoso; (e) informar sobre o risco de reinfecção e a ausência de imunidade protetora; (f) orientação laboral para minimizar exposição."
+    ]},
+
+  // ============ DISS 6 — AULA 6 ============
+  {id:"d9", aula:"a6", title:"Hepatite C descoberta em doação de sangue",
+    caso:"Mulher de 59 anos, doadora regular de sangue, tem anti-HCV reagente em triagem do hemocentro. Nega sintomas. Teve transfusão de hemoderivados em 1988 por acidente automobilístico. Nega uso de drogas injetáveis ou tatuagens. Casada, uma única parceria sexual há 35 anos.",
+    perguntas:[
+      "1. Qual a provável via de transmissão e por que a sorologia foi descoberta tardiamente?",
+      "2. Qual exame deve ser solicitado a seguir? E por que a sorologia anti-HCV, sozinha, não basta para confirmar infecção ativa?",
+      "3. Se o HCV-RNA vier positivo, qual a conduta terapêutica, qual a taxa esperada de cura e qual o tempo de tratamento previsto, sabendo que a elastografia evidencia F0 (sem fibrose)?",
+      "4. Após a 'cura' virológica, o que a paciente precisa saber sobre: (a) sorologia futura, (b) risco de reinfecção, (c) vigilância de hepatocarcinoma?"
+    ],
+    modelo:[
+      "1. Provável transmissão por transfusão recebida em 1988. Até 1993, não havia testagem sistemática de VHC nos bancos de sangue. A hepatite C cursa com evolução silenciosa — 80% dos casos agudos são assintomáticos, e a fase crônica permanece assintomática por décadas. Por isso, a doença é frequentemente descoberta em triagens de rotina (doação de sangue, check-up) já na fase crônica.",
+      "2. HCV-RNA por PCR (teste molecular quantitativo). A sorologia anti-HCV apenas indica contato prévio com o vírus — pode refletir infecção ativa, infecção curada (espontânea ou tratada) ou infecção passada. Em torno de 25–50% dos pacientes que se infectam têm clareamento espontâneo, e suas sorologias permanecem positivas indefinidamente. Apenas o HCV-RNA detectável confirma infecção ativa.",
+      "3. Conduta: iniciar tratamento com antiviral de ação direta pangenotípico (sofosbuvir + velpatasvir — Epclusa®). Pacientes não cirróticos (F0–F3) ou Child A (cirrose compensada): 12 semanas de tratamento. Taxa de cura (resposta virológica sustentada) acima de 97%. Genotipagem não é mais necessária para iniciar o tratamento, pois o esquema é pangenotípico.",
+      "4. (a) Sorologia: o anti-HCV provavelmente permanecerá positivo por tempo prolongado, mesmo após a cura — não é marcador de cura; o controle pós-tratamento é feito com HCV-RNA por PCR, realizado 12 semanas após o último comprimido (resposta virológica sustentada). (b) Reinfecção: como a cura é esterilizante (sem reservatório latente), não há reativação; mas não há memória imunológica protetora, então reinfecção é possível se houver nova exposição — atenção a práticas de risco. (c) Vigilância de hepatocarcinoma: como a paciente tem F0 (sem fibrose), o risco é muito baixo e a vigilância oncológica sistemática não se justifica nesse caso; em pacientes que alcançam RVS com cirrose já instalada (F4), a vigilância de hepatocarcinoma (ultrassom + AFP a cada 6 meses) deve ser mantida indefinidamente, pois o risco não é zerado pela cura viral."
+    ]},
+
+  {id:"d10", aula:"a6", title:"Hepatite C com cirrose — compreender prognóstico",
+    caso:"Homem de 64 anos, ex-usuário de drogas injetáveis (parou há 25 anos), diagnóstico recente de hepatite C crônica com HCV-RNA positivo. Elastografia hepática com valor correspondente a F4 (cirrose). Bilirrubina total 1,8; albumina 3,0 g/dL; INR 1,3; plaquetas 98.000; sem ascite, sem encefalopatia, sem varizes sangrantes em endoscopia recente (Child-Pugh A). Pergunta se 'vai ficar curado' ao tomar o tratamento.",
+    perguntas:[
+      "1. Qual o esquema terapêutico e duração para este paciente? Por que 24 e não 12 semanas?",
+      "2. Após o término do tratamento, como será confirmada a cura e quando?",
+      "3. Explique ao paciente, de forma didática mas tecnicamente correta, o que significa 'curar a hepatite C' em um paciente que já tem cirrose: o que muda e o que NÃO muda?"
+    ],
+    modelo:[
+      "1. O paciente tem cirrose compensada (Child-Pugh A) — portanto é elegível ao tratamento. Para Child A / não cirrótico, o esquema é sofosbuvir + velpatasvir por 12 semanas, SEM ribavirina. Esquemas com cirrose descompensada (Child B ou C) são diferentes: 12 semanas com ribavirina, ou 24 semanas sem ribavirina se houver contraindicação a ela. Portanto, neste paciente (Child A): 12 semanas apenas com sofosbuvir + velpatasvir.",
+      "2. A cura é confirmada pela resposta virológica sustentada (RVS): HCV-RNA indetectável 12 semanas após o último comprimido de tratamento (para esquemas sem interferon) ou 24 semanas (para esquemas com interferon). A espera é necessária porque o PCR detecta material genético, mas não distingue vírus viáveis de restos de vírus em eliminação pelo organismo; esperar 12 semanas assegura que o resultado indetectável reflete eliminação efetiva, não 'lixo biológico' em depuração.",
+      "3. O que MUDA: o tratamento elimina o vírus — a partir da RVS, não há mais vírus circulante, não há progressão adicional de dano hepático causada pela infecção, e ele não transmite mais a doença para outras pessoas. O que NÃO muda: ele já tem cirrose instalada. A cirrose é processo irreversível de substituição fibrosa. O risco de hepatocarcinoma (câncer primário de fígado) permanece, mesmo após a cura viral. O risco de descompensação hepática (ascite, encefalopatia, sangramento por varizes, síndrome hepatorrenal) também permanece, ainda que menor do que se continuasse infectado. Portanto, ele precisa manter vigilância indefinida: ultrassom de abdome + alfa-fetoproteína a cada 6 meses; endoscopia periódica conforme avaliação; controle de fatores agravantes (abstinência absoluta de álcool, controle de comorbidades metabólicas, vacinação contra VHA e VHB). 'Cura' aqui é cura da infecção, não cura da cirrose."
+    ]}
+];
+
+// topic → âncora do resumão
+const RESUMAO_BASE = "../resumao/index.html";
+const topicToResumo = {
+  "epi-mortalidade": {anchor:"#a1", label:"Indicadores de mortalidade", subtopics:"mortalidade geral, infantil, materna, proporcional, letalidade"},
+  "epi-morbidade": {anchor:"#a1", label:"Indicadores de morbidade", subtopics:"incidência, prevalência, coeficiente de morbidade"},
+  "epi-definicoes": {anchor:"#a1", label:"Surto, endemia, epidemia, pandemia", subtopics:"definições e distinções"},
+  "foi-fisiopat": {anchor:"#a2", label:"Fisiopatologia da febre", subtopics:"pirogênios, PGE2, set point, febre x hipertermia"},
+  "foi-conceito": {anchor:"#a2", label:"Definição e subclasses de FOI", subtopics:"≥ 38,3 °C, &gt; 3 semanas, nosocomial, HIV, imunodeficiência"},
+  "foi-etiologia": {anchor:"#a2", label:"Etiologias da FOI", subtopics:"infecções 30–50%, neoplasias, autoimunes, miscelânea"},
+  "foi-investigacao": {anchor:"#a2", label:"Investigação da FOI", subtopics:"anamnese dirigida, menos invasivo → mais invasivo"},
+  "foi-tratamento": {anchor:"#a2", label:"Tratamento em FOI", subtopics:"direcionado à causa; empírico só se deterioração"},
+  "foi-curva": {anchor:"#a2", label:"Curvas febris", subtopics:"intermitente (malária), vespertina (tuberculose)"},
+  "foi-exames": {anchor:"#a2", label:"Exames em FOI", subtopics:"ECO para endocardite, imagens, biópsias dirigidas"},
+  "hep-def": {anchor:"#a3", label:"Definição e classificação de hepatites", subtopics:"aguda × crônica, etiologias"},
+  "hep-etiologia": {anchor:"#a3", label:"Etiologias de hepatite", subtopics:"álcool, viral, autoimune, medicamentosa, NASH, parasitária"},
+  "transaminases": {anchor:"#a3", label:"Transaminases AST/ALT", subtopics:"ALT hepática específica; AST em músculo, coração"},
+  "cir-hipertensao-portal": {anchor:"#a3", label:"Hipertensão portal", subtopics:"colateral, esplenomegalia, varizes, ascite, PBE"},
+  "cir-insuficiencia": {anchor:"#a3", label:"Insuficiência hepática", subtopics:"encefalopatia, icterícia, albumina, TP; síndrome hepatorrenal"},
+  "cir-bilirrubina": {anchor:"#a3", label:"Bilirrubinas", subtopics:"direta vs indireta; hepatopatia vs hemólise"},
+  "cir-etiologia": {anchor:"#a3", label:"Causas especiais de cirrose", subtopics:"esquistossomose (Symmers), NASH, autoimune"},
+  "hepA-transmissao": {anchor:"#a4", label:"Transmissão da hepatite A", subtopics:"oro-fecal, frutos do mar, período de transmissibilidade"},
+  "hepA-virus": {anchor:"#a4", label:"Vírus da hepatite A", subtopics:"Picornavírus RNA, homem hospedeiro único"},
+  "hepA-clinica": {anchor:"#a4", label:"Quadro clínico da hepatite A", subtopics:"70% crianças assintomáticas; não cronifica; fulminância rara"},
+  "hepA-diag": {anchor:"#a4", label:"Diagnóstico da hepatite A", subtopics:"IgM anti-VHA por ELISA"},
+  "hepA-tratamento": {anchor:"#a4", label:"Tratamento da hepatite A", subtopics:"suporte, hidratação"},
+  "hepA-prevencao": {anchor:"#a4", label:"Prevenção da hepatite A", subtopics:"vacina 15 meses SUS, saneamento, higiene"},
+  "hepA-epidemiologia": {anchor:"#a4", label:"Epidemiologia da hepatite A no Brasil", subtopics:"Norte &gt; Sudeste; 75% adultos já tiveram contato"},
+  "hepA-fisiopat": {anchor:"#a4", label:"Fisiopatogenia da hepatite A", subtopics:"enterócito → hematogênico → hepatócito → bile → fezes"},
+  "leish-geral": {anchor:"#a5", label:"Leishmaniose — geral", subtopics:"zoonose; não contagiosa; sem imunidade protetora"},
+  "leish-vetor": {anchor:"#a5", label:"Vetor da leishmaniose", subtopics:"Lutzomyia (mosquito-palha), noturno, só fêmea pica"},
+  "leish-parasita": {anchor:"#a5", label:"Parasita Leishmania", subtopics:"promastigota (vetor) / amastigota (macrófago)"},
+  "leish-reservatorio": {anchor:"#a5", label:"Reservatórios", subtopics:"cão urbano, raposa/marsupial silvestre"},
+  "leish-lta-lesao": {anchor:"#a5", label:"Lesão clássica LTA", subtopics:"úlcera em moldura, parasito na borda"},
+  "leish-lta-mucocutanea": {anchor:"#a5", label:"Leishmaniose mucocutânea", subtopics:"secundária, tardia, mucosa nasal/faríngea, destrutiva"},
+  "leish-lta-ciclo": {anchor:"#a5", label:"Tropismo intracelular da Leishmania", subtopics:"macrófagos, Kupffer, reticulares do baço"},
+  "leish-imunidade": {anchor:"#a5", label:"Imunidade em leishmaniose", subtopics:"LTA = Th1; LV = Th2 (sorologia +, falência celular)"},
+  "leish-lv-clinica": {anchor:"#a5", label:"Leishmaniose visceral — clínica", subtopics:"hepatoesplenomegalia + pancitopenia + febre + emagrecimento"},
+  "leish-lv-orgaos": {anchor:"#a5", label:"Patologia visceral por órgão", subtopics:"fígado (Kupffer), baço (SRE), medula óssea (pancitopenia)"},
+  "leish-diag": {anchor:"#a5", label:"Diagnóstico de leishmaniose", subtopics:"direto: raspado, biópsia, aspirado MO; sorologia em LV"},
+  "leish-tratamento": {anchor:"#a5", label:"Tratamento", subtopics:"antimoniais pentavalentes; anfotericina B em graves"},
+  "leish-controle": {anchor:"#a5", label:"Controle de leishmaniose", subtopics:"4 eixos: vetor, reservatório, humano, educação"},
+  "hepC-virus": {anchor:"#a6", label:"Vírus da hepatite C", subtopics:"Flaviviridae RNA, replicação citoplasmática"},
+  "hepC-transmissao": {anchor:"#a6", label:"Transmissão da hepatite C", subtopics:"drogas injetáveis, biossegurança, transfusão pré-1993"},
+  "hepC-aguda": {anchor:"#a6", label:"Hepatite C aguda", subtopics:"80% assintomática, icterícia &lt; 10%, fulminante raro"},
+  "hepC-aguda-classif": {anchor:"#a6", label:"Definição de hepatite C aguda", subtopics:"soroconversão documentada, janela ≤ 90 dias"},
+  "hepC-cronica": {anchor:"#a6", label:"Hepatite C crônica", subtopics:"75% cronificam, 20% cirrose, 2–5% CHC"},
+  "hepC-cronica-riscos": {anchor:"#a6", label:"Fatores de risco para fibrose", subtopics:"idade &gt; 40 a, álcool, HIV, VHB, esteatose"},
+  "hepC-diag": {anchor:"#a6", label:"Diagnóstico da hepatite C", subtopics:"anti-HCV (triagem) → HCV-RNA (confirmação/ativo)"},
+  "hepC-tratamento": {anchor:"#a6", label:"Tratamento da hepatite C", subtopics:"sofosbuvir + velpatasvir, 12 ou 24 sem, cura &gt; 97%"},
+  "hepC-ciclo": {anchor:"#a6", label:"Ciclo e cura esterilizante", subtopics:"sem integração ao DNA; não reativa; reinfecta"},
+  "hepC-vigilancia": {anchor:"#a6", label:"Vigilância pós-cura", subtopics:"cirrótico mantém rastreio CHC; sorologia não é critério"}
+};
+
+const AULAS_INFO = {
+  a1: {num:1, titulo:"Epidemiologia"},
+  a2: {num:2, titulo:"FOI"},
+  a3: {num:3, titulo:"Hepatites e Cirrose"},
+  a4: {num:4, titulo:"Hepatite A"},
+  a5: {num:5, titulo:"Leishmaniose"},
+  a6: {num:6, titulo:"Hepatite C"}
+};
+
+// ========= RUNTIME =========
+let mode = 'estudo';
+let filter = 'todas';
+const answers = {}; // qid -> selected index
+
+function render() {
+  const qList = document.getElementById('questList');
+  const dList = document.getElementById('dissList');
+  const idx = document.getElementById('idxContent');
+  qList.innerHTML = ''; dList.innerHTML = ''; idx.innerHTML = '';
+
+  // Indexador
+  const byAula = {};
+  QUESTOES.forEach(q => { (byAula[q.aula] ||= []).push(q); });
+  Object.keys(AULAS_INFO).forEach(a => {
+    const info = AULAS_INFO[a];
+    const qs = byAula[a] || [];
+    const div = document.createElement('div');
+    div.style.marginBottom = '6px';
+    div.innerHTML = `<strong>Aula ${info.num} — ${info.titulo}</strong><br>`;
+    qs.forEach(q => {
+      const link = document.createElement('a');
+      link.href = '#q-' + q.id;
+      link.textContent = `Q${q.id}`;
+      div.appendChild(link);
+    });
+    idx.appendChild(div);
+  });
+
+  // Questões
+  let currentAula = null;
+  const qs = QUESTOES.filter(q => filter === 'todas' || q.aula === filter);
+  qs.forEach(q => {
+    if (q.aula !== currentAula) {
+      currentAula = q.aula;
+      const sep = document.createElement('h2');
+      sep.className = 'aula-sep';
+      sep.textContent = `Aula ${AULAS_INFO[q.aula].num} — ${AULAS_INFO[q.aula].titulo}`;
+      qList.appendChild(sep);
+    }
+    qList.appendChild(renderQuestao(q));
+  });
+
+  // Dissertativas
+  const ds = DISSERTATIVAS.filter(d => filter === 'todas' || d.aula === filter);
+  if (ds.length === 0) {
+    dList.innerHTML = '<p style="color:var(--text-muted);">Sem dissertativas para este filtro.</p>';
+  } else {
+    ds.forEach(d => dList.appendChild(renderDissertativa(d)));
+  }
+}
+
+function renderQuestao(q) {
+  const div = document.createElement('div');
+  div.className = 'quest';
+  div.id = 'q-' + q.id;
+  const difClass = q.dif;
+  const difLabel = {facil:'Fácil', medio:'Médio', dificil:'Difícil'}[q.dif];
+  const aulaLabel = `Aula ${AULAS_INFO[q.aula].num}`;
+  const alts = q.alts.map((a, i) => {
+    const letter = String.fromCharCode(65 + i);
+    return `<li><label data-idx="${i}"><input type="radio" name="q${q.id}" value="${i}"><span class="letter">${letter})</span><span>${a}</span></label></li>`;
+  }).join('');
+  const expWrongs = q.exp.wrongs.map((w, i) => {
+    const letter = String.fromCharCode(65 + i);
+    const cls = i === q.correct ? 'e-correct' : 'e-wrong';
+    return `<p><span class="${cls}">${letter})</span> ${w}</p>`;
+  }).join('');
+  div.innerHTML = `
+    <div class="qmeta">
+      <span><span class="num">Q${q.id}</span> · ${aulaLabel}</span>
+      <span class="dif ${difClass}">${difLabel}</span>
+    </div>
+    <div class="stem"><p>${q.stem}</p></div>
+    <ul class="alts">${alts}</ul>
+    <div class="explain">
+      <h4>Por que a correta é correta</h4>
+      <p>${q.exp.correct}</p>
+      <h4>Por que cada errada está errada</h4>
+      ${expWrongs}
+    </div>`;
+  const labels = div.querySelectorAll('.alts label');
+  labels.forEach(lbl => {
+    lbl.addEventListener('click', (e) => {
+      if (div.classList.contains('answered') && mode === 'estudo') return;
+      if (div.classList.contains('answered-sim') && mode === 'simulado') {} // allow change in simulado until submit
+      const idx = parseInt(lbl.dataset.idx);
+      answers[q.id] = idx;
+      lbl.querySelector('input').checked = true;
+      if (mode === 'estudo') markQuestao(div, q);
+      else {
+        // highlight chosen but no feedback
+        labels.forEach(l => l.classList.remove('chosen'));
+        lbl.classList.add('chosen');
+      }
+    });
+  });
+  return div;
+}
+
+function markQuestao(div, q) {
+  div.classList.add('answered');
+  const labels = div.querySelectorAll('.alts label');
+  const selIdx = answers[q.id];
+  labels.forEach((lbl, i) => {
+    lbl.classList.remove('chosen');
+    if (i === selIdx) lbl.classList.add('chosen');
+    if (i === q.correct) lbl.classList.add('correct');
+    else if (i === selIdx && i !== q.correct) lbl.classList.add('wrong');
+  });
+}
+
+function renderDissertativa(d) {
+  const div = document.createElement('div');
+  div.className = 'diss';
+  div.id = 'd-' + d.id;
+  const aulaLabel = `Aula ${AULAS_INFO[d.aula].num}`;
+  const perguntas = d.perguntas.map(p => `<li>${p}</li>`).join('');
+  const modeloItems = d.modelo.map(m => `<p>${m}</p>`).join('');
+  div.innerHTML = `
+    <div class="qmeta"><span class="num">${d.id.toUpperCase()}</span> · ${aulaLabel} · Dissertativa</div>
+    <h3 style="margin:2px 0 10px;">${d.title}</h3>
+    <div class="caso"><p>${d.caso}</p></div>
+    <ol class="perguntas">${perguntas}</ol>
+    <button class="reveal-btn" onclick="this.parentElement.classList.toggle('revealed'); this.textContent = this.parentElement.classList.contains('revealed') ? 'Ocultar gabarito' : 'Revelar gabarito modelo';">Revelar gabarito modelo</button>
+    <div class="gabarito">
+      <h4>Resposta modelo — pontos-chave esperados</h4>
+      ${modeloItems}
+    </div>`;
+  return div;
+}
+
+function setMode(m) {
+  mode = m;
+  const banner = document.getElementById('modeBanner');
+  const submitBtn = document.getElementById('submitBtn');
+  const resultsDiv = document.getElementById('simResults');
+  resultsDiv.classList.remove('show');
+  if (m === 'estudo') {
+    banner.textContent = 'Modo Estudo — responda cada questão e o feedback aparece na hora.';
+    submitBtn.classList.add('hidden');
+  } else {
+    banner.textContent = 'Modo Simulado — responda todas; ao final, clique em Finalizar para ver pontuação e painel de diagnóstico.';
+    submitBtn.classList.remove('hidden');
+  }
+  // reset visual
+  document.querySelectorAll('.quest').forEach(d => { d.classList.remove('answered'); d.querySelectorAll('label').forEach(l => l.classList.remove('chosen','correct','wrong')); });
+  // clear answers if changing mode (but keep selection for convenience)
+  if (m === 'estudo') {
+    // reaplica marcação das que já foram respondidas
+    Object.keys(answers).forEach(id => {
+      const q = QUESTOES.find(x => x.id === parseInt(id));
+      const div = document.getElementById('q-' + id);
+      if (div && q) markQuestao(div, q);
+    });
+  } else {
+    // mostrar apenas chosen, sem feedback
+    Object.keys(answers).forEach(id => {
+      const idx = answers[id];
+      const div = document.getElementById('q-' + id);
+      if (div) {
+        const lbl = div.querySelectorAll('.alts label')[idx];
+        if (lbl) lbl.classList.add('chosen');
+      }
+    });
+  }
+}
+
+function submitSim() {
+  const results = document.getElementById('simResults');
+  const totalQ = QUESTOES.length;
+  let correct = 0, answered = 0;
+  const byAula = {}; const byDif = {}; const byTopic = {};
+  QUESTOES.forEach(q => {
+    byAula[q.aula] = byAula[q.aula] || {c:0,t:0};
+    byDif[q.dif] = byDif[q.dif] || {c:0,t:0};
+    byTopic[q.topic] = byTopic[q.topic] || {c:0,t:0,errors:[]};
+    byAula[q.aula].t++; byDif[q.dif].t++; byTopic[q.topic].t++;
+    if (answers[q.id] !== undefined) {
+      answered++;
+      if (answers[q.id] === q.correct) {
+        correct++;
+        byAula[q.aula].c++; byDif[q.dif].c++; byTopic[q.topic].c++;
+      } else {
+        byTopic[q.topic].errors.push(q.id);
+      }
+    }
+  });
+  // marcar visualmente
+  QUESTOES.forEach(q => {
+    const div = document.getElementById('q-' + q.id);
+    if (div) markQuestao(div, q);
+  });
+
+  const pct = totalQ > 0 ? Math.round(correct*100/totalQ) : 0;
+  let aulaHtml = '';
+  Object.keys(byAula).forEach(a => {
+    const b = byAula[a];
+    const p = b.t > 0 ? Math.round(b.c*100/b.t) : 0;
+    aulaHtml += `<div class="box"><strong>Aula ${AULAS_INFO[a].num} — ${AULAS_INFO[a].titulo}</strong>${b.c}/${b.t} (${p}%)</div>`;
+  });
+  let difHtml = '';
+  Object.keys(byDif).forEach(d => {
+    const b = byDif[d];
+    const p = b.t > 0 ? Math.round(b.c*100/b.t) : 0;
+    difHtml += `<div class="box"><strong>${d.charAt(0).toUpperCase()+d.slice(1)}</strong>${b.c}/${b.t} (${p}%)</div>`;
+  });
+
+  // Painel de diagnóstico por tópico
+  const weak = [];
+  Object.keys(byTopic).forEach(t => {
+    const b = byTopic[t];
+    if (b.t === 0) return;
+    const p = Math.round(b.c*100/b.t);
+    if (p < 100) weak.push({topic:t, c:b.c, t:b.t, pct:p, errors:b.errors});
+  });
+  weak.sort((a, b) => a.pct - b.pct);
+  let diagHtml = '<p style="color:var(--text-muted);">Nenhuma lacuna identificada. Parabéns!</p>';
+  if (weak.length > 0) {
+    diagHtml = weak.map(w => {
+      const icon = w.pct < 50 ? '🔴' : '🟡';
+      const info = topicToResumo[w.topic] || {anchor:'', label:w.topic, subtopics:''};
+      const link = info.anchor ? `<a href="${RESUMAO_BASE}${info.anchor}" style="color:var(--accent);text-decoration:none;font-weight:600;">→ Revisar no resumão</a>` : '';
+      return `<div class="item"><div class="top"><b>${icon} ${info.label}</b><span>${w.c}/${w.t} (${w.pct}%)</span></div><div class="sub">${info.subtopics} ${link ? ' · ' + link : ''}</div></div>`;
+    }).join('');
+  }
+
+  results.innerHTML = `
+    <h2>Resultado do simulado</h2>
+    <div class="score">${correct}/${totalQ} (${pct}%)</div>
+    <p style="color:var(--text-dim);">Respondidas: ${answered} de ${totalQ}</p>
+    <h3 style="margin:16px 0 6px;font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;">Por aula</h3>
+    <div class="score-breakdown">${aulaHtml}</div>
+    <h3 style="margin:16px 0 6px;font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;">Por dificuldade</h3>
+    <div class="score-breakdown">${difHtml}</div>
+    <div class="diag-panel">
+      <h3>Painel de diagnóstico — tópicos a revisar</h3>
+      ${diagHtml}
+    </div>`;
+  results.classList.add('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function resetAll() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.quest').forEach(d => {
+    d.classList.remove('answered');
+    d.querySelectorAll('label').forEach(l => l.classList.remove('chosen','correct','wrong'));
+    d.querySelectorAll('input').forEach(i => i.checked = false);
+  });
+  document.getElementById('simResults').classList.remove('show');
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  const btn = document.getElementById('themeBtn');
+  if (cur === 'light') { root.removeAttribute('data-theme'); btn.textContent = '☾ Tema claro'; localStorage.setItem('theme','dark'); }
+  else { root.setAttribute('data-theme','light'); btn.textContent = '☀ Tema escuro'; localStorage.setItem('theme','light'); }
+}
+(function(){
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') { document.documentElement.setAttribute('data-theme','light'); document.getElementById('themeBtn').textContent = '☀ Tema escuro'; }
+})();
+
+document.getElementById('modeSel').addEventListener('change', e => setMode(e.target.value));
+document.getElementById('filterSel').addEventListener('change', e => { filter = e.target.value; render(); });
+document.getElementById('applyBtn').addEventListener('click', () => render());
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+document.getElementById('submitBtn').addEventListener('click', submitSim);
+
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geriatria — Prova 1 | Site de Estudo</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --surface: #161923;
+    --surface-2: #1e2231;
+    --text: #e8eaf2;
+    --muted: #9aa3b8;
+    --accent: #7aa2f7;
+    --accent-2: #bb9af7;
+    --highlight: #e0af68;
+    --border: #2a2f42;
+    --danger: #f7768e;
+    --ok: #9ece6a;
+  }
+  [data-theme="light"] {
+    --bg: #f7f7f4;
+    --surface: #ffffff;
+    --surface-2: #efefe8;
+    --text: #1b1b1f;
+    --muted: #555a6a;
+    --accent: #2f5bd6;
+    --accent-2: #7b3fb0;
+    --highlight: #b8730a;
+    --border: #d8d6cd;
+    --danger: #c33b57;
+    --ok: #3d7a12;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav.sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 280px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 1.5rem 1rem;
+    z-index: 10;
+  }
+  nav.sidebar h2 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 1.2rem 0 0.5rem;
+  }
+  nav.sidebar ul { list-style: none; padding: 0; margin: 0; }
+  nav.sidebar li a {
+    display: block;
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.92rem;
+  }
+  nav.sidebar li a:hover { background: var(--surface-2); text-decoration: none; }
+  nav.sidebar li.sub a { padding-left: 1.4rem; color: var(--muted); font-size: 0.88rem; }
+  main {
+    margin-left: 280px;
+    padding: 3rem clamp(1rem, 4vw, 3rem);
+    max-width: 840px;
+  }
+  header.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  header.top h1 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+  button.theme {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  h1.aula {
+    font-size: 2rem;
+    margin-top: 3rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  h2 {
+    color: var(--accent);
+    margin-top: 2.2rem;
+    font-size: 1.35rem;
+  }
+  h3 {
+    color: var(--accent-2);
+    font-size: 1.08rem;
+    margin-top: 1.5rem;
+  }
+  p { margin: 0.7rem 0; }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin: 0.3rem 0; }
+  strong { color: var(--text); }
+  em.termo {
+    font-style: normal;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  blockquote.destaque {
+    border-left: 4px solid var(--highlight);
+    background: var(--surface);
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+  blockquote.destaque::before {
+    content: "🎯 ";
+    color: var(--highlight);
+    font-weight: 700;
+  }
+  blockquote.destaque p { margin: 0.3rem 0; }
+  div.caso {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+  }
+  div.caso::before {
+    content: "🩺 Caso clínico";
+    display: block;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+  div.conexao {
+    background: var(--surface-2);
+    border-left: 4px solid var(--accent-2);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8rem 1.1rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  div.conexao::before {
+    content: "🔗 Conexão entre temas";
+    display: block;
+    color: var(--accent-2);
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  div.resumo-final {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+    margin-top: 2rem;
+  }
+  div.resumo-final h3 {
+    margin-top: 0;
+    color: var(--ok);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--surface-2); }
+  code.inline {
+    background: var(--surface-2);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  .top-btn {
+    position: fixed;
+    bottom: 1rem; right: 1rem;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 50%;
+    width: 44px; height: 44px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 700;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    z-index: 20;
+  }
+  @media (max-width: 900px) {
+    nav.sidebar {
+      position: static; width: 100%; border-right: none;
+      border-bottom: 1px solid var(--border);
+      max-height: 300px;
+    }
+    main { margin-left: 0; padding: 1.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <strong>Geriatria P1</strong>
+    <button class="theme" id="themeToggle" title="Alternar tema">🌙</button>
+  </div>
+  <h2>Aulas</h2>
+  <ul>
+    <li><a href="#aula1">Aula 1 — Epidemiologia</a></li>
+    <li class="sub"><a href="#a1-conceitos">Conceitos centrais</a></li>
+    <li class="sub"><a href="#a1-epidem">Dados demográficos</a></li>
+    <li class="sub"><a href="#a1-transicao">Transições</a></li>
+
+    <li><a href="#aula2">Aula 2 — Senescência</a></li>
+    <li class="sub"><a href="#a2-pele">Pele e fâneros</a></li>
+    <li class="sub"><a href="#a2-cv">Cardiovascular</a></li>
+    <li class="sub"><a href="#a2-resp">Respiratório</a></li>
+    <li class="sub"><a href="#a2-snc">Nervoso</a></li>
+    <li class="sub"><a href="#a2-renal">Renal</a></li>
+    <li class="sub"><a href="#a2-imune">Imunossenescência</a></li>
+    <li class="sub"><a href="#a2-sentidos">Sentidos</a></li>
+
+    <li><a href="#aula3">Aula 3 — Anamnese</a></li>
+    <li class="sub"><a href="#a3-atipica">Apresentações atípicas</a></li>
+    <li class="sub"><a href="#a3-sindromes">Síndromes (5 Is)</a></li>
+    <li class="sub"><a href="#a3-escalas">Escalas iniciais</a></li>
+
+    <li><a href="#aula4">Aula 4 — AGA 1</a></li>
+    <li class="sub"><a href="#a4-multi">Multimorbidade</a></li>
+    <li class="sub"><a href="#a4-sindgeriatrica">Síndrome geriátrica</a></li>
+    <li class="sub"><a href="#a4-aga">AGA — 4 dimensões</a></li>
+
+    <li><a href="#aula5">Aula 5 — AGA 2</a></li>
+    <li class="sub"><a href="#a5-funcional">S. Funcional</a></li>
+    <li class="sub"><a href="#a5-mental">S. Mental</a></li>
+    <li class="sub"><a href="#a5-fisica">S. Física</a></li>
+    <li class="sub"><a href="#a5-caso">Caso clínico</a></li>
+
+    <li><a href="#aula6">Aula 6 — Farmacologia</a></li>
+    <li class="sub"><a href="#a6-pk">Farmacocinética</a></li>
+    <li class="sub"><a href="#a6-pd">Farmacodinâmica</a></li>
+    <li class="sub"><a href="#a6-grupos">Classes críticas</a></li>
+    <li class="sub"><a href="#a6-interacoes">Interações</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<header class="top">
+  <h1>Geriatria — Prova 1</h1>
+</header>
+
+<p style="color:var(--muted); margin-top:-1rem;">
+Material consolidado das 6 aulas ministradas pelos Profs. Cláudia Batagin Armelin e Mario Mosca Neto. Conteúdo didático completo, pensado para substituir a leitura dos slides e da transcrição.
+</p>
+
+<!-- ============================================================ AULA 1 -->
+<h1 class="aula" id="aula1">Aula 1 — Apresentação e Epidemiologia do Envelhecimento</h1>
+
+<h2 id="a1-contexto">Por que estudar envelhecimento agora?</h2>
+<p>
+O Brasil deixou de ser um "país jovem". Em 1991 apenas 7,3% da população era idosa; em 2022 são <strong>31,3 milhões de idosos</strong> (≈15% dos 203 milhões de brasileiros), e em 2060 a projeção é de <strong>25,5%</strong>. Em poucas décadas o perfil de morbidade deslocou-se de doenças infectocontagiosas para doenças crônico-degenerativas, que exigem um modelo de <strong>compensação</strong> (não mais de cura/morte). O médico que se forma hoje vai trabalhar, na prática, cuidando de idosos — e o idoso não é um adulto "mais velho": é um paciente com fisiologia, apresentação de doença e objetivos terapêuticos próprios.
+</p>
+
+<h2 id="a1-conceitos">Conceitos centrais</h2>
+
+<h3>Quem é idoso?</h3>
+<ul>
+  <li><strong>OMS:</strong> 65 anos ou mais (países desenvolvidos).</li>
+  <li><strong>Brasil (Estatuto do Idoso, Lei 10.741/2003):</strong> ≥ 60 anos.</li>
+  <li><strong>Classificação cronológica (Riley, 1998):</strong>
+    <ul>
+      <li>Idosos jovens: 65–74 anos</li>
+      <li>Idosos velhos: 75–84 anos</li>
+      <li>Muito idosos: ≥ 85 anos</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Envelhecimento</h3>
+<p>
+Processo <em class="termo">dinâmico, intrínseco, inevitável, progressivo e irreversível</em> associado à idade, que traz modificações morfológicas, fisiológicas, bioquímicas e psicológicas — acompanhado de perda de vitalidade e aumento da vulnerabilidade (TGG, 2016).
+</p>
+
+<h3>Geriatria × Gerontologia</h3>
+<ul>
+  <li><strong>Geriatria</strong> — especialidade <em>médica</em> que cuida da saúde do idoso.</li>
+  <li><strong>Gerontologia</strong> — estudo <em>multiprofissional</em> e interdisciplinar do envelhecimento (psicologia, serviço social, fisioterapia, nutrição, enfermagem, direito etc.). Atua de forma <strong>interdisciplinar</strong> e <strong>descentralizada integrada</strong>, vendo o indivíduo em sua integridade física, psíquica e social.</li>
+</ul>
+
+<h3>Senescência × Senilidade <span style="color:var(--highlight); font-size:0.9rem;">— conceito de prova</span></h3>
+<table>
+  <tr><th>Senescência</th><th>Senilidade</th></tr>
+  <tr>
+    <td>Alterações <strong>fisiológicas</strong> produzidas pelo envelhecimento, sem mecanismo de doença. Incômodos, mas <strong>não</strong> encurtam a vida nem causam alteração funcional.</td>
+    <td>Condições que surgem no idoso com mecanismo <strong>fisiopatológico</strong> — não são normais da idade e não acometem todos os idosos. Exigem diagnóstico e tratamento.</td>
+  </tr>
+</table>
+<blockquote class="destaque"><p>Quando o paciente ou o próprio médico atribuem todo sintoma "à idade", corre-se o risco de <strong>perder diagnóstico de senilidade</strong>. A regra prática: não existe "é da idade" — existe alteração fisiológica esperada <em>ou</em> doença. Ponto.</p></blockquote>
+
+<h3>Independência × Autonomia</h3>
+<ul>
+  <li><strong>Independência</strong> = capacidade de <em>executar</em> atividades sem auxílio (função motora/física).</li>
+  <li><strong>Autonomia</strong> = capacidade de <em>gerir a própria vida</em> e tomar decisões (função cognitiva/ética).</li>
+</ul>
+
+<div class="caso">
+<p><strong>Sr. João</strong>, 80 anos, AVE há 1 ano com sequela motora (hemiplegia): depende de auxílio para se vestir e locomover — perdeu <strong>independência</strong>, mas sua autonomia está preservada (decide sobre sua vida).</p>
+<p><strong>Sr. José</strong>, 80 anos, AVE há 1 ano com demência vascular: anda sozinho, mas não consegue decidir sobre finanças ou tratamento — perdeu <strong>autonomia</strong>, ainda que tenha independência motora.</p>
+</div>
+
+<h3>Envelhecimento bem-sucedido × fragilidade</h3>
+<ul>
+  <li><strong>Bem-sucedido</strong>: baixa suscetibilidade a doenças, alta capacidade funcional (física e cognitiva), postura ativa. Foco em <em>promoção de saúde</em>.</li>
+  <li><strong>Frágil</strong>: falência em ser bem-sucedido, suscetibilidade aumentada a doenças, vulnerabilidade a desfechos adversos.</li>
+</ul>
+
+<h3>Saúde do idoso — novo paradigma</h3>
+<p>
+Como ausência de doença é rara, a <strong>capacidade funcional</strong> passa a ser o paradigma de saúde geriátrica: interação multidimensional entre saúde física, saúde mental (cognitiva e emocional), autonomia, integração social, suporte familiar e independência econômica.
+</p>
+
+<h2 id="a1-epidem">Epidemiologia — Censo 2022 e projeções</h2>
+
+<h3>Transição demográfica: números-chave</h3>
+<table>
+  <tr><th>Ano</th><th>% idosos</th><th>Observação</th></tr>
+  <tr><td>1991</td><td>7,3%</td><td>População jovem</td></tr>
+  <tr><td>2010</td><td>10,8%</td><td>&nbsp;</td></tr>
+  <tr><td>2018</td><td>13% (28 mi)</td><td>&nbsp;</td></tr>
+  <tr><td>2022</td><td>~15% (31,3 mi)</td><td>Censo IBGE</td></tr>
+  <tr><td>2034</td><td>15% projeção antiga</td><td>&nbsp;</td></tr>
+  <tr><td>2060</td><td>25,5%</td><td>1 a cada 4 brasileiros idoso</td></tr>
+</table>
+
+<h3>Esperança de vida</h3>
+<ul>
+  <li>Ao nascer: passou de 66,9 → <strong>73,4 anos</strong>.</li>
+  <li>Aos 60 anos: passou de 18,7 → <strong>21,4 anos</strong> adicionais.</li>
+</ul>
+
+<h3>Taxa de fecundidade (filhos/mulher)</h3>
+<ul>
+  <li>1940: 6,2 → 1980: 4,4 → 1991: 2,9 → 2010: 2,0 → 2017: 1,77 → 2060: 1,66 → 2100: 1,2</li>
+</ul>
+
+<h3>Índice de envelhecimento</h3>
+<p>
+Razão entre % de idosos e % de jovens. Saiu de 43,19% (2018) e deve atingir <strong>173,47% em 2060</strong> — ou seja, haverá <em>mais idosos do que crianças</em>. Em 2039, 100 idosos para cada 100 menores de 15 (inversão).
+</p>
+
+<h3>Mundo envelhecendo (OMS)</h3>
+<ul>
+  <li>2000: 600 milhões de idosos</li>
+  <li>2025: deve dobrar (1,2 bi)</li>
+  <li>2050: deve triplicar (1,8 bi)</li>
+</ul>
+
+<h3>Perfil do idoso brasileiro (PNAD 2017)</h3>
+<ul>
+  <li><strong>Feminização:</strong> 59,7% da população &gt;74 anos é feminina.</li>
+  <li><strong>Viuvez:</strong> 3,6/1 (mulheres/homens).</li>
+  <li><strong>Renda:</strong> 40% têm renda per capita familiar &lt; 1 SM.</li>
+  <li><strong>Baixa escolaridade:</strong> 28,5% analfabetos &gt;75 anos; média de 4,6 anos de estudo.</li>
+  <li><strong>Domicílio multigeracional:</strong> 86,8%.</li>
+  <li><strong>Limitação para AIVD:</strong> 17,3% (sobe para 39,2% &gt;75 anos).</li>
+  <li><strong>Atividade econômica:</strong> 15% dos &gt;65 anos ativos; só 5% dos &gt;75 anos.</li>
+  <li>Alta prevalência de DCNT (HAS, DM, DLP, depressão, demência) e de hospitalização.</li>
+</ul>
+
+<h2 id="a1-transicao">Transição demográfica e epidemiológica</h2>
+
+<h3>Demográfica — 3 estágios (Lebrão, 2007)</h3>
+<ol>
+  <li><strong>Séc. XIX até 1940:</strong> alta natalidade + alta mortalidade → população estável, muitos jovens.</li>
+  <li><strong>1940 – início dos anos 70:</strong> alta natalidade + queda da mortalidade → crescimento populacional, aumento de jovens.</li>
+  <li><strong>A partir de 1960:</strong> queda da natalidade + mortalidade ainda em queda → redução do crescimento, aumento de adultos jovens e idosos.</li>
+</ol>
+
+<h3>Epidemiológica</h3>
+<p>
+Mudança nos padrões de morbi-mortalidade: de <strong>país jovem</strong> (doença infectocontagiosa → cura/morte) para <strong>país idoso</strong> (DCNT → compensação/não compensação). Mortalidade proporcional por causas (2013):
+</p>
+<ul>
+  <li><strong>Idoso jovem (60–79):</strong> 30% circulatório, 25% neoplasia, 10% respiratório. Causas externas: trânsito e agressão.</li>
+  <li><strong>Octogenário (≥80):</strong> 30% circulatório, 20% respiratório, 13% neoplasia. Causas externas: <strong>quedas</strong>.</li>
+</ul>
+
+<blockquote class="destaque"><p>"Comprimir a morbidade" — o desafio é adiar o início das doenças e sua incapacidade. Os maiores riscos à saúde do idoso ainda são escolhas de vida: HAS, DLP, obesidade, sedentarismo, baixo consumo de frutas/legumes, etilismo e tabagismo.</p></blockquote>
+
+<h2 id="a1-desafios">Desafios do cuidado geriátrico</h2>
+<ul>
+  <li>Decisão terapêutica baseada na <strong>expectativa de vida</strong>, não na idade cronológica.</li>
+  <li>Envelhecimento ativo pressupõe independência — mas ausência de doença é rara.</li>
+  <li>Aumento da incapacidade funcional e de demências.</li>
+  <li>Famílias menos disponíveis para cuidar (menor número de filhos, mulheres no mercado).</li>
+  <li>Pressão sobre a Previdência Social.</li>
+</ul>
+
+<div class="resumo-final">
+<h3>📌 Resumo rápido — Aula 1</h3>
+<ul>
+  <li>Idoso no Brasil: ≥60 anos (Estatuto); 65 na OMS.</li>
+  <li><strong>Senescência</strong> = fisiológica; <strong>senilidade</strong> = patológica (do envelhecimento).</li>
+  <li><strong>Independência</strong> (executar) ≠ <strong>autonomia</strong> (decidir).</li>
+  <li>Bem-sucedido × Frágil — foco do geriatra é funcionalidade.</li>
+  <li>Brasil 2022: 31,3 mi idosos (~15%). Projeção 2060: 25,5%.</li>
+  <li>Esperança de vida ao nascer 73,4 anos; fecundidade em 1,77 filhos/mulher.</li>
+  <li>Causa 1 de óbito: circulatórias. Octogenário: ↑ respiratório; causa externa = queda.</li>
+  <li>Desafio: comprimir morbidade pela mudança de estilo de vida.</li>
+</ul>
+</div>
+
+<!-- ============================================================ AULA 2 -->
+<h1 class="aula" id="aula2">Aula 2 — Senescência (Aspectos fisiológicos do envelhecimento)</h1>
+
+<h2 id="a2-contexto">Por que estudar senescência?</h2>
+<p>
+Todo cuidado geriátrico parte de uma pergunta simples: <em>esse achado é senescência (normal) ou senilidade (doença)?</em> Sem dominar as alterações fisiológicas do envelhecimento, o médico ou medica demais (tratando normalidade) ou medica de menos (banalizando doença). As alterações descritas a seguir também explicam por que o idoso <strong>responde diferente a fármacos</strong> (Aula 6), <strong>adoece de forma atípica</strong> (Aula 3) e é mais vulnerável a iatrogenia e quedas.
+</p>
+
+<blockquote class="destaque"><p>A "curva funcional" do envelhecimento: em algum ponto da idade, a reserva funcional começa a cair. No envelhecimento <strong>fisiológico</strong> essa queda é lenta e o idoso se mantém acima do limiar de incapacidade. No envelhecimento <strong>patológico</strong> (doenças, maus hábitos), a queda é acelerada e cruza o limiar — aparece dependência.</p></blockquote>
+
+<h2 id="a2-composicao">Composição corporal e pele</h2>
+<ul>
+  <li><strong>Água intracelular</strong> ↓ 15–20% (explica por que fármacos <em>hidrossolúveis</em> atingem concentração mais alta).</li>
+  <li><strong>Gordura corporal</strong> ↑ 20–40% (predominância pélvica). Fármacos <em>lipossolúveis</em> têm maior volume de distribuição e meia-vida prolongada.</li>
+  <li><strong>Massa magra/muscular</strong> ↓ (sarcopenia).</li>
+</ul>
+
+<h3 id="a2-pele">Pele e fâneros</h3>
+<ul>
+  <li>↓ secreção sebácea → pele seca.</li>
+  <li>Pele menos espessa, papilas dérmicas menos profundas → <strong>fragilidade da junção dermo-epidérmica</strong>.</li>
+  <li>↓ melanócitos (8–20%/década após 30 anos) → palidez, manchas.</li>
+  <li><strong>Fragilidade capilar → púrpura senil.</strong></li>
+  <li>↓ células de Langerhans (imunidade cutânea); ↓ fibras elásticas/colágenas → rugas; ↓ vascularização → baixa temperatura.</li>
+  <li>↓ glândulas sudoríparas → prejuízo na termorregulação (risco de hipertermia).</li>
+  <li>↓ melanócitos no bulbo capilar → canície (cabelos brancos).</li>
+  <li>↓ corpúsculos de Pacini e Meissner → ↓ sensação de pressão e tato leve.</li>
+  <li>Unhas mais frágeis, quebradiças, espessadas — <strong>onicogrifose</strong>.</li>
+</ul>
+
+<h3>Pálpebras</h3>
+<ul>
+  <li>Flacidez da pálpebra superior → ↓ campo visual lateral.</li>
+  <li>Flacidez da pálpebra inferior → deslocamento do canal lacrimal → lacrimejamento contínuo.</li>
+  <li>Atrofia do músculo elevador → <strong>ptose senil</strong>.</li>
+</ul>
+
+<blockquote class="destaque"><p>"Todo sinal da prega é positivo em idosos" — o sinal da prega cutânea não serve para diagnosticar desidratação no idoso. Use outros parâmetros (mucosas, axila, diurese, PA postural). Além disso, o turgor pode causar lesões por manipulação excessiva.</p></blockquote>
+
+<h2 id="a2-mus">Sistema osteoarticular e muscular</h2>
+<ul>
+  <li>Massa óssea ↓ <strong>1–2%/ano</strong>.</li>
+  <li>Sarcopenia: ↓ 15% de massa/força muscular por década após os 50, preferencialmente <strong>fibras tipo II (contração rápida)</strong> → por isso o idoso tem dificuldade em reagir a um desequilíbrio.</li>
+  <li>Discos intervertebrais mais delgados; corpos vertebrais colapsados → ↓ 1 cm/década após 40 anos.</li>
+  <li>Perda de força nas panturrilhas.</li>
+  <li>Flexão fixa de joelhos e quadris; cifose; ↑ diâmetro ântero-posterior do tórax.</li>
+</ul>
+
+<h2 id="a2-cv">Sistema cardiovascular</h2>
+<ul>
+  <li>↑ espessura do ventrículo esquerdo.</li>
+  <li>↓ velocidade de enchimento diastólico (até 50%) → <strong>disfunção diastólica</strong>.</li>
+  <li>Contração prolongada; hipertrofia atrial.</li>
+  <li>Perda importante de células do nó sinusal e do nó AV (estimativas variam; alguns textos citam até 90% de redução em indivíduos muito idosos), somada à perda de fibras no feixe de His → ↑ risco de arritmias.</li>
+  <li>↓ resposta β-adrenérgica → FC máxima limitada. A regra prática <code class="inline">FC máx ≈ 220 − idade</code> (Fox, 1971) é amplamente citada — fórmulas mais acuradas (Tanaka: 208 − 0,7×idade; Gellish) reduzem o viés em idosos. Idoso não taquicardiza adequadamente em estresse.</li>
+  <li>Função sistólica (FE) preservada em condições basais.</li>
+  <li>Espessamento/endurecimento de válvulas (mitral e aórtica); dilatação da aorta proximal.</li>
+  <li>Calcificação da camada média arterial → ↓ elasticidade → <strong>↑ resistência periférica</strong>.</li>
+  <li>Perfil de PA: <strong>↑ PA sistólica, ↓ PA diastólica, ↑ pressão de pulso</strong> (HAS sistólica isolada é o padrão do idoso).</li>
+</ul>
+
+<blockquote class="destaque"><p>Antes de introduzir anti-hipertensivo no idoso, <strong>sempre</strong> avalie hipotensão postural. A ↓ da resposta barorreflexa e venosa torna o idoso especialmente suscetível a quedas se a PA cair ao levantar.</p></blockquote>
+
+<h2 id="a2-resp">Sistema respiratório</h2>
+<ul>
+  <li>↓ elasticidade pulmonar; enrijecimento da parede torácica.</li>
+  <li>↓ volume expirado; pulmão volumoso com ↑ volume residual (até 50%).</li>
+  <li>Ductos e bronquíolos se alargam; sacos alveolares se achatam → piora da relação V/Q.</li>
+  <li>↓ sensibilidade dos quimiorreceptores a PO₂, PCO₂ e pH → pior resposta ventilatória a estresses.</li>
+  <li>↓ capacidade vital (até 75% do valor do jovem); <strong>PaO₂ ≈ 109 − (0,43 × idade)</strong>. PCO₂ inalterada.</li>
+  <li>↓ surfactante → <em>↑ permeabilidade alveolar → ↑ risco de edema pulmonar</em>.</li>
+  <li>↓ reflexo de tosse e função ciliar → acúmulo de secreções, ↑ risco de pneumonia aspirativa.</li>
+</ul>
+
+<h2 id="a2-snc">Sistema nervoso</h2>
+<ul>
+  <li>↓ volume cerebral 2–3% por década após 50 anos.</li>
+  <li>↓ número de neurônios do córtex; acúmulo de lipofuscina; depósitos de β-amiloide nos vasos; placas senis em hipocampo.</li>
+  <li>↓ acetilcolina e dopamina (bases da vulnerabilidade a Alzheimer e Parkinson, respectivamente).</li>
+  <li>↑ células gliais; perda de axônios e ↓ mielina → <strong>rarefação da substância branca periventricular (leucoaraiose)</strong>.</li>
+  <li>↑ permeabilidade da barreira hematoencefálica.</li>
+  <li>↓ células do corno anterior da medula; ↓ mielina em nervos sensoriais → ↓ sensação vibratória, tátil e dolorosa.</li>
+  <li>Disfunção autonômica → reatividade pupilar lentificada, ↓ controle vascular, termorregulação prejudicada.</li>
+</ul>
+
+<div class="conexao"><p>A queda da acetilcolina explica por que drogas <strong>anticolinérgicas</strong> são tão deletérias no idoso (Aula 6) — precipitam delirium, constipação, retenção urinária e confusão 5–12× mais do que no jovem.</p></div>
+
+<h3>Marcha, postura e equilíbrio</h3>
+<ul>
+  <li>Hesitação, menor balanço dos braços, <strong>passos menores, mudança em bloco</strong>.</li>
+  <li>Postura: base alargada, retificação cervical, cifose torácica, flexão de quadril/joelhos.</li>
+</ul>
+
+<h3>Sono</h3>
+<ul>
+  <li>Insônia, despertares noturnos, sono não reparador.</li>
+  <li>Sono <strong>REM preservado</strong>; NREM com ↑ estágios 1 e 2 (sono superficial, fácil despertar) e ↓ estágios 3 e 4 (sono profundo).</li>
+  <li>↑ apneias — 50× mais no sono REM; ↑ ronco (60% H / 45% M).</li>
+  <li>↓ melatonina — a suplementação pode ajudar em casos selecionados, mas a eficácia é modesta.</li>
+</ul>
+
+<h2 id="a2-hemato">Sistema hematopoiético</h2>
+<ul>
+  <li>Substituição parcial da medula óssea por tecido adiposo; celularidade do ilíaco 30% menor que no adulto.</li>
+  <li>Eritropoese basal preservada — porém <strong>menor capacidade de resposta a aumentos de demanda</strong> (perda sanguínea, infecção).</li>
+  <li>↑ IL-6 (pró-inflamatória) reduz resposta das células-tronco → <strong>inflamação crônica de baixo grau ("inflammaging")</strong>.</li>
+</ul>
+
+<h2 id="a2-renal">Sistema urinário</h2>
+<ul>
+  <li>↓ massa renal (perda cortical), ↓ número de néfrons.</li>
+  <li>Função renal cai progressivamente a partir dos 30 anos; ClCr ↓ <strong>8–10 mL/min por década</strong> após os 50.</li>
+  <li>↓ fluxo sanguíneo renal (~1%/ano).</li>
+  <li>↓ capacidade de concentrar urina; ↓ conservação de Na⁺ e K⁺.</li>
+  <li>↓ produção/excreção de ADH → <strong>poliúria noturna</strong>.</li>
+  <li>↑ volume residual vesical; atrofia vaginal/uretral; hipertrofia prostática → ↑ risco de incontinência, ITU, disfunção erétil, dispareunia.</li>
+</ul>
+
+<div class="conexao"><p>A queda do ClCr é a base para o ajuste de dose de TODO fármaco de excreção renal (Aula 6). A fórmula útil: <code class="inline">ClCr = [(140 − idade) × peso]/(72 × Cr)</code>, × 0,85 se mulher.</p></div>
+
+<h2 id="a2-endocrino">Sistema endócrino</h2>
+<ul>
+  <li>↓ GH → ↓ força muscular, adelgaçamento de ossos e pele, ↑ gordura abdominal.</li>
+  <li>↓ liberação de insulina + ↑ resistência → tendência à intolerância à glicose.</li>
+  <li>Secreção de glucagon preservada.</li>
+  <li>Atrofia de tireoide e de ovários; testosterona pode diminuir (produção de sêmen preservada).</li>
+  <li>Função sexual preservada, com ↑ período refratário e de excitação.</li>
+</ul>
+
+<h2 id="a2-tgi">Trato gastrointestinal</h2>
+<ul>
+  <li><strong>Boca:</strong> cáries radiculares e coronais; retração gengival; perda dentária; ↓ arcada.</li>
+  <li><strong>Mucosa oral:</strong> fina, seca, perda de papilas linguais, queimação, alterações de paladar.</li>
+  <li>↓ eficácia mastigatória + ↑ resistência no esfíncter esofágico superior → <strong>risco de aspiração</strong>.</li>
+  <li><strong>Esôfago:</strong> motilidade diminuída, contrações terciárias, refluxo ácido.</li>
+  <li><strong>Estômago:</strong> ↓ HCl e pepsina; ruptura da barreira mucosa; ↓ prostaglandinas; esvaziamento lento; sensação falsa de saciedade.</li>
+  <li><strong>Delgado:</strong> ↓ absorção; angiodisplasia, malformação AV, ectasia vascular.</li>
+  <li><strong>Grosso:</strong> divertículos em 30–40% dos idosos; ↓ tônus do esfíncter anal + ↓ complacência retal → incontinência fecal.</li>
+  <li><strong>Pâncreas:</strong> ↓ tamanho, fibrose, deposição de lipofuscina; amilase constante; lipase e tripsina ↓.</li>
+  <li><strong>Fígado:</strong> ↓ volume 37% e ↓ fluxo sanguíneo 35%; ↓ metabolismo de primeira passagem; síntese proteica mantida; provas de função hepática <strong>não</strong> se alteram pela senescência.</li>
+</ul>
+
+<h2 id="a2-imune">Sistema imune (imunossenescência)</h2>
+<ul>
+  <li>Menor integração entre resposta inata e adquirida.</li>
+  <li>↑ propensão a infecções, autoimunidade e neoplasias.</li>
+  <li>Neutrófilos: ↓ potencial microbicida e quimiotaxia; ↓ fagocitose; bactérias se multiplicam por mais tempo → ↑ dano tecidual.</li>
+  <li>Células dendríticas: ↓ eficiência na apresentação de antígeno.</li>
+  <li>Monócitos/macrófagos/NK: ↑ número, ↓ função.</li>
+  <li>Linfócitos T: ↑ número, ↓ função; ↓ IL-2.</li>
+  <li>Linfócitos B: número preservado, mas <strong>qualidade dos anticorpos prejudicada</strong> → resposta vacinal reduzida.</li>
+  <li>↑ IL-6 → inflamação crônica de baixo grau.</li>
+</ul>
+
+<div class="conexao"><p>É esse estado pró-inflamatório basal que faz o idoso <strong>responder menos às vacinas</strong> (motivo pelo qual há vacinas adaptadas, como a influenza dose alta e a herpes-zoster recombinante) — justificando o calendário específico revisto na Aula 3.</p></div>
+
+<h2 id="a2-sentidos">Órgãos dos sentidos</h2>
+<ul>
+  <li><strong>Paladar:</strong> ↓ células sensoriais; perda maior para <em>salgado</em>; boca seca comum.</li>
+  <li><strong>Olfato:</strong> mais comprometido que o paladar; ↓ muco nasal; substituição do epitélio sensorial.</li>
+  <li><strong>Visão:</strong> ↓ diâmetro pupilar; reação à luz lentificada; perda de gordura retro-ocular → olhos encovados; <strong>presbiopia</strong> (perda da elasticidade do cristalino — &gt;90% dos idosos usam lentes corretivas); ↓ adaptação ao escuro/brilho, discriminação de cores e processamento rápido. <em>Catarata senil</em> é frequente.</li>
+  <li><strong>Audição:</strong> <strong>presbiacusia</strong> — perda inicialmente em altas frequências; dificuldade em discriminar a fala em ambiente com ruído; perda de células sensoriais e de neurônios da cóclea; zumbidos comuns.</li>
+  <li><strong>Tato:</strong> ↓ microcirculação periférica; ↓ sensações de dor, vibração, frio, calor, pressão.</li>
+</ul>
+
+<div class="resumo-final">
+<h3>📌 Resumo rápido — Aula 2</h3>
+<ul>
+  <li>↓ água intracelular e ↑ gordura → muda cinética de fármacos (Aula 6).</li>
+  <li>PA: <strong>↑ sistólica, ↓ diastólica, ↑ pressão de pulso</strong>. Função sistólica preservada; disfunção diastólica.</li>
+  <li>FC máx = 220 − idade; ↓ resposta β-adrenérgica.</li>
+  <li>Pulmão: ↑ volume residual, ↓ capacidade vital. PaO₂ = 109 − 0,43×idade.</li>
+  <li>Cérebro: ↓ ACh e dopamina → base da toxicidade anticolinérgica.</li>
+  <li>Renal: ClCr cai 8–10 mL/min por década após os 50.</li>
+  <li>Imunossenescência: ↑ IL-6 ("inflammaging") e ↓ resposta vacinal.</li>
+  <li>Sentidos: presbiopia, presbiacusia; perda maior de salgado.</li>
+  <li>Regra de prova: <strong>sinal da prega não vale para avaliar desidratação no idoso</strong>.</li>
+</ul>
+</div>
+
+<!-- ============================================================ AULA 3 -->
+<h1 class="aula" id="aula3">Aula 3 — Anamnese do Idoso e Apresentações Atípicas</h1>
+
+<h2 id="a3-contexto">Por que a anamnese muda no idoso?</h2>
+<p>
+A anamnese convencional (queixa → HPMA → antecedentes) <strong>não basta</strong> no idoso. É preciso somar à abordagem clássica (doença + deficiência) uma atenção aos <em>aspectos funcionais</em> — incapacidade e desvantagem. Exemplo clássico: um paciente com DPOC cuja dispneia o impede de ir ao clube — a doença gerou deficiência (dispneia), que gerou incapacidade (não subir escada), que gerou <strong>desvantagem social</strong> (isolamento). Se o médico só trata a DPOC, perde a metade do problema.
+</p>
+
+<blockquote class="destaque"><p>"Se a história clínica e o exame clínico não sugerirem o diagnóstico — refaça-os." (Jairo Ramos). No idoso isso é ainda mais verdadeiro, porque a apresentação é atípica.</p></blockquote>
+
+<h3>Desafios próprios da anamnese geriátrica</h3>
+<ul>
+  <li>História longa, com múltiplas comorbidades e evolução arrastada.</li>
+  <li><strong>Apresentações atípicas</strong> — veja a seguir.</li>
+  <li>Barreiras de comunicação: déficit sensorial (presbiacusia, presbiopia), déficit cognitivo, diferenças culturais e geracionais.</li>
+  <li>Relação <strong>médico-paciente-cuidador</strong> (triangulação) — nunca culpar o paciente.</li>
+</ul>
+
+<h3>Postura do geriatra</h3>
+<ul>
+  <li>Adaptar o ambiente (luz, ruído, posicionamento de cadeira).</li>
+  <li>Ajustar conteúdo e ritmo da consulta.</li>
+  <li>Valorizar a história e a pessoa — dirigir, conduzir e, sobretudo, <strong>saber ouvir</strong>.</li>
+  <li>Meta: melhorar qualidade de vida e manter independência.</li>
+</ul>
+
+<h2 id="a3-estrutura">Estrutura da anamnese</h2>
+
+<h3>Identificação</h3>
+<p>Nome, idade, sexo, naturalidade, estado civil, religião, profissão, escolaridade (em anos — influencia pontos de corte do MEEM/MoCA), moradia, <strong>cuidadores</strong>.</p>
+
+<h3>HPMA</h3>
+<p>Patologias presentes, início dos sintomas, perdas funcionais, complicações, agudizações. Dependência × independência. Locais de acompanhamento.</p>
+
+<h3>Interrogatório complementar</h3>
+<ul>
+  <li><strong>Geral:</strong> visão, audição, dentição, mastigação, próteses, pele.</li>
+  <li><strong>Cardiorrespiratório:</strong> dispneia, palpitações, dor, tosse, sibilos.</li>
+  <li><strong>TGI:</strong> hábito intestinal.</li>
+  <li><strong>Geniturinário.</strong></li>
+  <li><strong>Músculo-esquelético.</strong></li>
+  <li><strong>Neuropsíquico:</strong> depressão, ansiedade, dores, padrão de sono.</li>
+  <li>Dieta/nutrição; hábitos de vida; tabagismo/etilismo; drogas; sexualidade.</li>
+</ul>
+
+<h3>Antecedentes pessoais</h3>
+<ul>
+  <li>Infância: tuberculose, DSTs, cirurgias.</li>
+  <li>Juventude: condições de vida da época.</li>
+  <li>HAS, DM, AVC, IAM, DLP, fraturas.</li>
+  <li><strong>Vacinação:</strong> influenza, pneumocócica, dupla adulto, herpes-zoster (detalhe abaixo).</li>
+  <li><strong>Rastreamentos</strong> (detalhe abaixo).</li>
+</ul>
+
+<h3>Antecedentes familiares</h3>
+<p>Pais, irmãos, tios, primos, filhos (DCV, DM, AVC, câncer, fraturas).</p>
+
+<h3>Medicamentos — obrigatório!</h3>
+<blockquote class="destaque"><p>11% dos idosos usam ≥4 drogas/dia. No estudo EPIDOSO (SP), 72% usavam pelo menos um medicamento (54% DCV, 21% TGI, 18% SNC) e <strong>32% preenchiam critério de polimedicação (≥5 drogas)</strong>. É preciso ativamente "fazer a sacola de remédios" (Aula 5).</p></blockquote>
+
+<h2 id="a3-atipica">Apresentações atípicas — a marca do idoso</h2>
+<p>
+No idoso as manifestações clínicas são <strong>atenuadas ou ausentes</strong>: infecção grave sem febre, IAM sem dor torácica, abdome agudo com exame pobre, TEP com apenas confusão. Valorize achados inespecíficos — especialmente <strong>"mudança de estado"</strong> relatada pela família ("está diferente, mais parado", "não é dele").
+</p>
+
+<div class="caso">
+<p>Idosa de 84 anos, previamente lúcida, passou a "falar coisas desconexas" há 2 dias. A família não percebeu febre nem queixas urinárias. Na UPA: Tax 37,2, PA 110×60, FC 98. Urina II: piúria. <strong>ITU com delirium</strong> — diagnóstico diferencial obrigatório em toda mudança súbita de estado mental no idoso.</p>
+</div>
+
+<h2 id="a3-sindromes">Síndromes geriátricas — os "5 Is" (Bernard Issacs, 1976)</h2>
+<ol>
+  <li><strong>Insuficiência cognitiva</strong> (ou incapacidade intelectual)</li>
+  <li><strong>Imobilidade</strong></li>
+  <li><strong>Instabilidade postural e quedas</strong></li>
+  <li><strong>Incontinência</strong> (urinária e fecal)</li>
+  <li><strong>Iatrogenia</strong></li>
+</ol>
+<p>Ampliações modernas incluem: insuficiência familiar, sarcopenia/fragilidade, problemas nutricionais, transtornos do humor e do sono, alterações sensoriais.</p>
+
+<h3>Insuficiência cognitiva — o que perguntar</h3>
+<ul>
+  <li>Alteração de memória + alteração de pelo menos outra função cognitiva (linguagem, praxia, gnosia ou executiva).</li>
+  <li>Repercussão nas atividades diárias — sem isso é queixa, não doença.</li>
+  <li>Investigar: idade, modo de instalação (agudo/subagudo/crônico), progressão, sinais de depressão, antecedentes, história familiar.</li>
+</ul>
+
+<h2 id="a3-escalas">Escalas iniciais (as do dia a dia)</h2>
+
+<h3>MEEM — Mini Exame do Estado Mental</h3>
+<p>Avalia 5 domínios em 30 pontos:</p>
+<ol>
+  <li><strong>Orientação temporal (5)</strong> — dia da semana, mês, dia do mês, ano, hora.</li>
+  <li><strong>Orientação espacial (5)</strong> — local, instituição, bairro, cidade, estado.</li>
+  <li><strong>Registro (3)</strong> — repetir 3 palavras (vaso, carro, tijolo).</li>
+  <li><strong>Atenção e cálculo (5)</strong> — 100 menos 7 (5 vezes) ou soletrar MUNDO de trás para frente.</li>
+  <li><strong>Evocação (3)</strong> — relembrar as 3 palavras.</li>
+  <li><strong>Linguagem (8)</strong> — nomear 2 objetos; repetir "nem aqui, nem ali, nem lá"; comando de 3 estágios; ler "FECHE OS OLHOS"; escrever frase com sujeito e objeto.</li>
+  <li><strong>Praxia (1)</strong> — copiar dois pentágonos cruzados (interseção formando quadrilátero).</li>
+</ol>
+<p><em>Notas de corte ajustadas à escolaridade (Brucki et al., 2003) — ver Aula 5.</em></p>
+
+<h3>Teste do relógio</h3>
+<p>
+Pede-se para desenhar um relógio com os números e os ponteiros marcando, por exemplo, 11h10. Pontuação simplificada (4 pontos): círculo correto (1), números na posição (1), todos os 12 números (1), ponteiros corretos (1). <strong>&lt;4 pontos = investigar.</strong> Sensível no diagnóstico precoce de Alzheimer.
+</p>
+
+<h3>Teste de fluência verbal</h3>
+<p>
+"Diga o maior número possível de animais em 1 minuto." Considerar: &lt;8 anos de escolaridade ≥9 animais; ≥8 anos ≥13. Não pontuar flexão de gênero (gato/gata) nem subcategoria repetida (passarinho/canário/beija-flor).
+</p>
+
+<h3>Índice de Katz (ABVDs)</h3>
+<p>6 itens, cada um sim/não (banho, vestir, toalete, mobilidade, continência, alimentação). <strong>6 = independente; 4 = parcialmente dependente; 2 = muito dependente.</strong></p>
+
+<h3>Escala de Lawton (AIVDs)</h3>
+<p>7 itens (prepara refeições, faz compras, toma medicação, tarefas domésticas, usa transporte, administra finanças, usa telefone).</p>
+
+<h3>GDS-15 (Escala de Depressão Geriátrica)</h3>
+<p>15 perguntas sim/não. &gt;5 pontos sugere depressão. Duas perguntas-gatilho (PHQ-2): "Nas últimas 2 semanas, você se sentiu deprimido ou desamparado?" e "Teve pouco interesse ou prazer?"</p>
+
+<h3>Perda ponderal (Najas et al., 2011)</h3>
+<table>
+  <tr><th>Período</th><th>Significativa</th><th>Grave</th></tr>
+  <tr><td>1 semana</td><td>1–2%</td><td>&gt;2%</td></tr>
+  <tr><td>1 mês</td><td>3–5%</td><td>&gt;5%</td></tr>
+  <tr><td>3 meses</td><td>5–7%</td><td>&gt;7%</td></tr>
+  <tr><td>6 meses</td><td>7–10%</td><td>&gt;10%</td></tr>
+</table>
+
+<h2 id="a3-dor">Dor</h2>
+<ul>
+  <li><strong>Dor aguda:</strong> início bem definido, patologia óbvia, curta duração (pós-cirúrgico, trauma, cefaleia).</li>
+  <li><strong>Dor persistente:</strong> &gt;3 meses, comprometimento psicológico ou funcional, flutuação (artrite, câncer, vascular).</li>
+</ul>
+
+<h2 id="a3-fragil">Fragilidade</h2>
+<ul>
+  <li>Perda de massa muscular, ↓ energia, intolerância a esforço, ↓ reserva fisiológica.</li>
+  <li>Critérios de Fried: perda ponderal involuntária, ↓ velocidade de marcha, exaustão relatada, gasto energético baixo, fraqueza muscular. ≥3 = frágil; 1–2 = pré-frágil.</li>
+</ul>
+
+<h2 id="a3-imuniz">Imunizações no idoso</h2>
+<ul>
+  <li><strong>Influenza:</strong> anual a partir dos 50 anos (aula); no PNI brasileiro atual, é universal para ≥60 anos.</li>
+  <li><strong>Pneumocócica:</strong> dose única a partir dos 65 anos (aula). <em>Nota atual:</em> a prática vigente (SBIm/MS) recomenda esquema sequencial VPC13/VPC15 + VPP23.</li>
+  <li><strong>Herpes-zóster:</strong> dose única a partir dos 60 anos (aula). <em>Nota atual:</em> a vacina recombinante (Shingrix) é feita em 2 doses com intervalo de 2-6 meses, sendo hoje a preferencial onde disponível.</li>
+  <li><strong>Tétano/difteria (dupla adulto):</strong> reforço a cada 10 anos.</li>
+</ul>
+
+<h2 id="a3-rastre">Rastreamentos — controverso nos muito idosos</h2>
+<p>Avaliar expectativa de vida, risco × benefício e a vontade do paciente.</p>
+<p><strong>American Geriatrics Society:</strong></p>
+<ul>
+  <li>Mamografia a cada 2 anos (50–74).</li>
+  <li>Papanicolau anual até 65 anos.</li>
+  <li>Colonoscopia a cada 10 anos (50–75).</li>
+  <li>PSA/toque retal <strong>não recomendado</strong> após 75 anos.</li>
+</ul>
+
+<h2 id="a3-fim">Decisões de final de vida</h2>
+<ul>
+  <li>~25% dos idosos necessitam de procurador.</li>
+  <li>Planejamento antecipado (diretivas).</li>
+  <li>Preferência em relação a medidas invasivas.</li>
+  <li>Respeito e escuta — ponto ético central.</li>
+</ul>
+
+<h2 id="a3-conclusao">Conclusão da anamnese geriátrica</h2>
+<ul>
+  <li>Definir lista de problemas (não apenas um diagnóstico).</li>
+  <li>Selecionar medidas (farmacológicas e não-farmacológicas).</li>
+  <li>Planejar e coordenar intervenções.</li>
+  <li>Equipe interdisciplinar.</li>
+</ul>
+
+<div class="resumo-final">
+<h3>📌 Resumo rápido — Aula 3</h3>
+<ul>
+  <li>Anamnese geriátrica = clínica convencional + funcionalidade + cuidador.</li>
+  <li>Apresentação atípica: valorize "mudança de estado"; delirium pode ser a primeira manifestação de infecção, IAM, TEP.</li>
+  <li><strong>5 Is de Issacs</strong>: cognição, imobilidade, instabilidade, incontinência, iatrogenia.</li>
+  <li>Escalas básicas: MEEM, relógio, fluência verbal, Katz, Lawton, GDS-15.</li>
+  <li>Vacinas do idoso: influenza anual, pneumocócica (65), zóster (60), dT a cada 10 anos.</li>
+  <li>AGS: mamografia bienal 50–74; Papanicolau até 65; colonoscopia 10/10 anos 50–75; PSA não após 75.</li>
+  <li>Perda de peso ≥5% em 1 mês é grave.</li>
+</ul>
+</div>
+
+<!-- ============================================================ AULA 4 -->
+<h1 class="aula" id="aula4">Aula 4 — Avaliação Geriátrica Ampla (AGA) — Parte 1</h1>
+
+<h2 id="a4-contexto">Por que existe AGA?</h2>
+<p>
+A AGA (Avaliação Geriátrica Ampla, também chamada Global, Multidimensional ou Abrangente) tem origem no trabalho de <strong>Marjory Warren</strong> — "a mãe da geriatria" — que a partir de 1935 assumiu a chefia de um hospital londrino de doenças crônicas. (O slide do professor registra a data como 1993, mas historicamente o marco é 1935, quando Warren começou a avaliar os doentes "incuráveis" de forma sistemática.) Ela percebeu que pacientes rotulados como "incuráveis" voltavam a andar se avaliados de forma <em>estruturada e interdisciplinar</em> e se submetidos a reabilitação focada em funcionalidade. O princípio: o idoso complexo não cabe na anamnese tradicional. Em 1964, Willianson descreveu o <em>fenômeno do iceberg</em>: o médico identifica só a "ponta" do problema (o motivo da consulta), enquanto a base (problemas prevalentes que limitam independência) permanece oculta, frequentemente atribuída "à idade".
+</p>
+
+<blockquote class="destaque"><p>Marca registrada da AGA: <strong>equipe interdisciplinar</strong> + <strong>instrumentos padronizados</strong> + <strong>plano de cuidado de longo prazo</strong>. Sem um dos três, não é AGA — é só anamnese longa.</p></blockquote>
+
+<h2 id="a4-complex">Complexidade do idoso</h2>
+<ul>
+  <li>Multimorbidade (coexistência de múltiplas doenças crônicas).</li>
+  <li>Polifarmácia.</li>
+  <li>Incapacidade e perda funcional.</li>
+  <li>Maior risco de complicações agudas; apresentações atípicas.</li>
+  <li>Maior probabilidade de proximidade da morte ou de doença sem perspectiva de cura.</li>
+</ul>
+
+<h2 id="a4-multi">Multimorbidade</h2>
+<p>
+Definição: <strong>coexistência, em um mesmo indivíduo, de duas ou mais doenças crônicas, sem relação de causa e efeito</strong> entre si e sem que nenhuma delas seja o "problema principal".
+</p>
+<ul>
+  <li>The Lancet (Barnett, 2012): 65% dos idosos entre 65 e 84 anos têm multimorbidade; 82% acima de 85.</li>
+  <li>Associa-se a mortalidade elevada, declínio funcional e alta utilização de serviços.</li>
+  <li>Idosos procuram ajuda médica para <em>vários</em> problemas, não para "uma doença".</li>
+</ul>
+
+<div class="conexao"><p>Multimorbidade alimenta <strong>polifarmácia</strong>: várias doenças → vários prescritores → várias drogas → problemas de prescrição, dispensação, administração, orientação e monitoração. O resultado é iatrogenia — um dos 5 Is.</p></div>
+
+<h3>Reserva funcional</h3>
+<p>Capacidade do organismo de responder a estresses (doença, cirurgia, lesão) sem perder o equilíbrio fisiológico. É o que separa um idoso que atravessa uma pneumonia em casa daquele que cai em falência múltipla de órgãos.</p>
+
+<h2 id="a4-incap">Incapacidade funcional</h2>
+<p>
+Dificuldade para realizar atividades <em>típicas e pessoalmente desejadas</em> na sociedade. Significa pior qualidade de vida e pode denunciar doenças ainda não diagnosticadas. <strong>Incapacidade funcional prévia é fator preditor independente de desfecho desfavorável em idosos com doenças agudas</strong> — ou seja, quem já estava dependente antes, piora mais.
+</p>
+
+<h2 id="a4-sindgeriatrica">Síndrome geriátrica — o conceito que muda tudo</h2>
+<table>
+  <tr>
+    <th>Síndrome clínica tradicional (adulto jovem)</th>
+    <th>Síndrome geriátrica</th>
+  </tr>
+  <tr>
+    <td>Uma única alteração causa múltiplos fenômenos clínicos. Ex.: anemia ferropriva causa palidez, fadiga, taquicardia.</td>
+    <td><strong>Múltiplas</strong> alterações concorrem <strong>simultaneamente</strong> para <strong>um único</strong> fenômeno clínico (queda, delirium, incontinência). Etiologias múltiplas.</td>
+  </tr>
+</table>
+<p>Características:</p>
+<ul>
+  <li>Não são, em geral, de risco de vida iminente — <em>mas</em> associam-se a maior mortalidade.</li>
+  <li>Levam a perda funcional e comprometem qualidade de vida.</li>
+  <li>De extrema complexidade terapêutica.</li>
+</ul>
+
+<h3>Os "Gigantes da Geriatria" (Issacs, 1976) — e adições modernas</h3>
+<ul>
+  <li>Insuficiência cognitiva</li>
+  <li>Incontinência urinária e fecal</li>
+  <li>Instabilidade postural e quedas</li>
+  <li>Imobilidade</li>
+  <li>Iatrogenia</li>
+  <li>(modernos) Insuficiência familiar, sarcopenia/fragilidade, problemas nutricionais, transtornos do humor/sono, alterações sensoriais.</li>
+</ul>
+
+<h2 id="a4-aga">AGA — 4 dimensões primárias</h2>
+<ol>
+  <li><strong>Saúde Física</strong> — anamnese e exame físico tradicionais; exames complementares; indicadores específicos de doença; lista de problemas; comorbidades; gravidade; <em>inventário de medicações</em>; deficiências sensoriais; avaliação nutricional (MAN); vacinação.</li>
+  <li><strong>Saúde Funcional</strong> — ABVDs e AIVDs; escalas de marcha e equilíbrio; sarcopenia/fragilidade.</li>
+  <li><strong>Saúde Mental</strong> — MEEM, fluência verbal, teste do relógio, GDS.</li>
+  <li><strong>Parâmetros Sócio-Ambientais</strong> — rede social e de suporte, adequação econômica, segurança ambiental, APGAR familiar.</li>
+</ol>
+
+<h2 id="a4-benef">Benefícios da AGA</h2>
+<h3>Individuais</h3>
+<ul>
+  <li>Melhora a acurácia do exame clínico tradicional.</li>
+  <li>Estabelece grau e extensão da incapacidade.</li>
+  <li>Identifica idosos em risco de declínio funcional.</li>
+</ul>
+<h3>Populacionais</h3>
+<ul>
+  <li>Instrumento de pesquisa clínica (capacidade funcional, QV).</li>
+  <li>Identifica populações de risco.</li>
+  <li>Base para políticas públicas sobre envelhecimento.</li>
+</ul>
+
+<h2 id="a4-eficacia">Quando a AGA realmente funciona?</h2>
+<p>Três condições (Wieland, 2003; Ellis &amp; Langhorne, 2005):</p>
+<ol>
+  <li>Existir um <strong>processo de seleção</strong> dos idosos que se beneficiam — não é para todos.</li>
+  <li>A avaliação <strong>resultar em um plano de cuidado</strong>.</li>
+  <li>O plano ser <strong>implementado</strong>, preferencialmente por equipe interdisciplinar.</li>
+</ol>
+
+<h3>Quem se beneficia da AGA</h3>
+<ul>
+  <li>Muito idosos (≥80)</li>
+  <li>Frágeis</li>
+  <li>Com incapacidade funcional</li>
+  <li>Com multimorbidade</li>
+  <li>Portadores de síndromes geriátricas</li>
+  <li>Portadores de neoplasias malignas</li>
+  <li>Portadores de insuficiência cardíaca ou outras insuficiências orgânicas</li>
+  <li>Hospitalizados com doenças agudas</li>
+</ul>
+
+<h2 id="a4-pontos">Pontos críticos na avaliação</h2>
+<ul>
+  <li><strong>Deficiência sensorial</strong> — sempre checar antes de afirmar déficit cognitivo.</li>
+  <li><strong>Hipotensão ortostática</strong> — <em>queda de ≥20 mmHg na PAS</em> (ou ≥10 mmHg na PAD) ao assumir a posição ortostática em 3 min. Causa muito comum de tontura, queda e síncope no idoso.</li>
+  <li>Manifestações clínicas atenuadas ou ausentes — valorize achados inespecíficos, especialmente "mudança de estado".</li>
+</ul>
+
+<blockquote class="destaque"><p>"Não se gerencia o que não se mede, não se mede o que não se define, não se define o que não se entende, e não há sucesso no que não se gerencia." — W. Edwards Deming. É a lógica da AGA: padronizar para poder cuidar.</p></blockquote>
+
+<div class="resumo-final">
+<h3>📌 Resumo rápido — Aula 4</h3>
+<ul>
+  <li>AGA: Marjory Warren (1935) — equipe interdisciplinar + instrumentos padronizados + plano de cuidado.</li>
+  <li>Fenômeno do iceberg (Willianson, 1964): problemas funcionais permanecem submersos.</li>
+  <li>Multimorbidade: ≥2 doenças crônicas, sem relação causal, nenhuma principal. 65% dos 65–84; 82% dos ≥85.</li>
+  <li>Síndrome geriátrica: <em>múltiplas</em> causas → <em>um</em> fenômeno (queda, delirium, incontinência).</li>
+  <li>5 Is: Insuficiência cognitiva, Imobilidade, Instabilidade, Incontinência, Iatrogenia.</li>
+  <li>4 dimensões da AGA: física / funcional / mental / sócio-ambiental.</li>
+  <li>AGA funciona se houver seleção + plano + implementação.</li>
+  <li>Hipotensão ortostática = ↓ 20 mmHg na PAS ao levantar.</li>
+</ul>
+</div>
+
+<!-- ============================================================ AULA 5 -->
+<h1 class="aula" id="aula5">Aula 5 — AGA (Parte 2): Instrumentos de Avaliação</h1>
+
+<h2 id="a5-contexto">Por que instrumentos padronizados?</h2>
+<p>
+Padronizar a avaliação permite (a) comparar o mesmo paciente ao longo do tempo, (b) comparar pacientes entre si, (c) construir planos terapêuticos mensuráveis e (d) identificar "ponto de virada" funcional. A Sociedade Brasileira de Geriatria e Gerontologia (SBGG) mantém um formulário único de AGA que integra os instrumentos principais das 4 dimensões.
+</p>
+
+<h2 id="a5-fisica">Dimensão Saúde Física</h2>
+
+<h3>Avaliação nutricional — MAN (Mini Nutritional Assessment)</h3>
+<ul>
+  <li><strong>Triagem:</strong> ≤11 pts = risco, fazer avaliação completa.</li>
+  <li><strong>Avaliação global:</strong>
+    <ul>
+      <li>&lt;17 pts: <strong>desnutrido</strong></li>
+      <li>17–23,5 pts: <strong>risco de desnutrição</strong></li>
+      <li>≥24 pts: <strong>nutrido</strong></li>
+    </ul>
+  </li>
+</ul>
+<p>Complementar com IMC, recordatório alimentar, bioimpedância e DEXA quando indicado.</p>
+
+<h3>Polifarmácia — teste da sacola de remédios</h3>
+<p>Pedir ao paciente (ou acompanhante) que traga <strong>todos</strong> os medicamentos em uma sacola. Para cada um:</p>
+<ul>
+  <li>Mostrar e perguntar: <em>posologia, tempo de uso, para que foi indicado</em>.</li>
+  <li>Perguntar sobre outras medicações usadas recentemente (último mês) e sobre suspensão/mudança de dose.</li>
+  <li>Perguntar especificamente: injetáveis, tópicos, aerossóis, remédios "naturais", fitoterápicos, vitaminas, automedicação.</li>
+  <li>Insistir em: analgésicos, AINH, sedativos/hipnóticos, antivertiginosos, antigripais e antialérgicos.</li>
+  <li>Relacionar a introdução/retirada de fármacos com eventos clínicos: declínio funcional, confusão mental, quedas, incontinência.</li>
+</ul>
+
+<h3>Deficiências sensoriais</h3>
+<ul>
+  <li><strong>Audição:</strong> teste do sussurro — examinador a 50 cm, atrás do paciente, sussurra 3 números ou 3 palavras curtas enquanto oclui um ouvido do paciente.</li>
+  <li><strong>Visão:</strong> tabela de Snellen.</li>
+  <li>Avaliação especializada por oftalmologia e otorrinolaringologia conforme necessidade.</li>
+</ul>
+
+<h3>Vacinação</h3>
+<p>Atualizar conforme calendário (Aula 3): influenza, pneumocócica, herpes-zóster, dupla adulto, hepatite B, febre amarela, COVID.</p>
+
+<h2 id="a5-funcional">Dimensão Saúde Funcional</h2>
+
+<h3>Índice de Katz — ABVDs</h3>
+<p>Banho, vestir, toalete, mobilidade, continência, alimentação. Pontuação:</p>
+<ul>
+  <li><strong>0 pts:</strong> independente para AVDs (observação: convenção invertida — ver a versão da SBGG em que <strong>6 pts</strong> = independente).</li>
+  <li>2–5 pts: dependência parcial.</li>
+  <li>6 pts: dependência importante.</li>
+</ul>
+
+<h3>Escala de Lawton — AIVDs</h3>
+<p>Telefone, transporte, compras, preparo de refeições, tarefas domésticas, lavagem de roupa, responsabilidade pela medicação, finanças.</p>
+<ul>
+  <li>9 pts: totalmente dependente.</li>
+  <li>10–15 pts: dependência grave.</li>
+  <li>16–20 pts: dependência moderada.</li>
+  <li>21–25 pts: dependência leve.</li>
+  <li>25–27 pts: independente.</li>
+</ul>
+
+<h3>Índice de Barthel (dimensão funcional mais ampla)</h3>
+<ul>
+  <li>0–35: dependência grave</li>
+  <li>40–55: dependência moderada</li>
+  <li>80–95: dependência leve</li>
+  <li>100–105: independente</li>
+</ul>
+
+<h3>Questionário de Pfeffer (atividades funcionais)</h3>
+<ul>
+  <li>&lt;6 pts: normal</li>
+  <li>≥6 pts: comprometido</li>
+</ul>
+
+<h3>Marcha, equilíbrio e mobilidade — Timed Up and Go</h3>
+<p>Paciente sentado em cadeira sem braços, costas apoiadas, usando calçado habitual. Ao comando "vá", <strong>levanta, anda 3 metros em linha reta, volta e senta</strong>.</p>
+<ul>
+  <li>&lt;10 s: normal.</li>
+  <li>10–20 s: alterado.</li>
+  <li>&gt;20 s: <strong>risco aumentado de queda</strong>.</li>
+</ul>
+
+<h3>SPPB — Short Physical Performance Battery</h3>
+<p>Combina três testes de 0 a 4 pontos cada (total 0–12):</p>
+<ul>
+  <li><strong>Equilíbrio</strong> (pés juntos, semi-tandem e tandem).</li>
+  <li><strong>Velocidade de marcha</strong> (4 metros).</li>
+  <li><strong>Força de membros inferiores</strong> (sit-to-stand 5 vezes).</li>
+</ul>
+
+<h3>SARC-F — rastreio de sarcopenia</h3>
+<p>5 itens, cada um 0–2 pts (total 0–10). ≥4 sugere sarcopenia:</p>
+<ul>
+  <li><strong>S</strong>trength — levantar/carregar 5 kg.</li>
+  <li><strong>A</strong>ssistance in walking — atravessar um cômodo.</li>
+  <li><strong>R</strong>ise from a chair — levantar de cama/cadeira.</li>
+  <li><strong>C</strong>limb stairs — subir 10 degraus.</li>
+  <li><strong>F</strong>alls — quedas no último ano (0 / 1–3 / ≥4).</li>
+</ul>
+
+<h2 id="a5-mental">Dimensão Saúde Mental</h2>
+
+<h3>MEEM — pontos de corte por escolaridade (Brucki et al., 2003)</h3>
+<table>
+  <tr><th>Escolaridade</th><th>Ponto de corte</th></tr>
+  <tr><td>Analfabeto</td><td>20</td></tr>
+  <tr><td>1–4 anos</td><td>25</td></tr>
+  <tr><td>5–8 anos</td><td>26</td></tr>
+  <tr><td>9–11 anos</td><td>28</td></tr>
+  <tr><td>≥12 anos</td><td>29</td></tr>
+</table>
+
+<h3>Teste do relógio — pontuação de Okamoto (0–15)</h3>
+<ul>
+  <li><strong>Contorno (2):</strong> aceitável, tamanho médio.</li>
+  <li><strong>Números (6):</strong> 1–12 sem omissão, arábicos ou romanos, ordem correta, papel não rodado, posição correta, dentro do contorno.</li>
+  <li><strong>Ponteiros (6):</strong> 2 ponteiros/marcas, hora indicada, minutos indicados, proporção correta, sem marcas supérfluas, ligados.</li>
+  <li><strong>Centro (1):</strong> no encontro dos ponteiros.</li>
+</ul>
+
+<h3>Fluência verbal semântica</h3>
+<ul>
+  <li>Analfabeto: ≥9 animais</li>
+  <li>1–7 anos de escolaridade: ≥12</li>
+  <li>≥8 anos: ≥13</li>
+</ul>
+
+<h3>MoCA / MoCA-Basic</h3>
+<p>Bateria mais sensível que o MEEM para comprometimento cognitivo leve (CCL). Avalia visuoespacial/executivo, nomeação, memória, atenção, linguagem, abstração, evocação tardia, orientação. Soma-se 1 ponto se escolaridade ≤4 anos.</p>
+
+<h3>GDS-15</h3>
+<ul>
+  <li>≤5 pts: <strong>normal</strong></li>
+  <li>6–10 pts: <strong>depressão</strong></li>
+  <li>≥11 pts: <strong>depressão moderada a grave</strong></li>
+</ul>
+
+<h3>CDR — Clinical Dementia Rating (Morris, 1993)</h3>
+<p>Gradua gravidade da demência em 6 domínios (memória, orientação, julgamento, comunidade, lar/hobbies, cuidado pessoal): <strong>0 sem demência, 0,5 questionável, 1 leve, 2 moderada, 3 grave.</strong></p>
+
+<h3>FAST (Functional Assessment Staging Tool)</h3>
+<ul>
+  <li>1 — funções normais</li>
+  <li>2 — dificuldade subjetiva (idoso normal)</li>
+  <li>3 — dificuldades em atividades profissionais/sociais complexas (DA incipiente)</li>
+  <li>4 — dificuldades em tarefas cotidianas complexas (DA leve)</li>
+  <li>5 — dificuldades em tarefas simples, como escolher roupa; <strong>início da dependência</strong> (DA moderado)</li>
+  <li>6 A–E — precisa de ajuda para vestir, banho, toalete, incontinência urinária/fecal (moderado a grave)</li>
+  <li>7 A–F — fala restrita, perda de marcha, de sentar, de sorrir, de manter cabeça ereta (DA grave)</li>
+</ul>
+
+<p>Outros instrumentos usados em consultas especializadas: CAM (Confusion Assessment Method — delirium), Inventário Neuropsiquiátrico, BEHAVE-AD, Mini Sleep Questionnaire de Zomer, CERAD, Bateria Breve Nitrini.</p>
+
+<h2 id="a5-socio">Dimensão sócio-ambiental</h2>
+
+<h3>APGAR da família e dos amigos</h3>
+<p>Cinco domínios (Adaptação, Participação, Growth/crescimento, Afeto, Resolução), cada um pontuado 0 (raramente), 1 (às vezes), 2 (quase sempre).</p>
+<ul>
+  <li>&lt;3 pts: disfunção acentuada</li>
+  <li>4–6 pts: disfunção moderada</li>
+  <li>&gt;6 pts: disfunção leve ou ausente</li>
+</ul>
+
+<h2 id="a5-caso">Caso clínico integrador</h2>
+
+<div class="caso">
+<p><strong>Identificação.</strong> Mulher, 82 anos, SP, católica, 4 anos de escolaridade, do lar, 4 filhos, viúva há 5 anos, reside sozinha. Acompanhada pela filha.</p>
+<p><strong>Queixa.</strong> Recusa em se alimentar.</p>
+<p><strong>ISDA.</strong> Humor deprimido de longa data, abandonou atividades diárias, passa o dia no sofá — família acreditava ser "da idade", sem tratamento. Insônia em uso crônico de clonazepam. Sem déficit cognitivo relatado pela família.</p>
+<p><strong>Antecedentes.</strong> Epilepsia controlada há 10 anos; HAS com lesão de órgão-alvo (coronariopatia com stent em CD); FA crônica; DM com lesão macro (stent) e microvascular (retinopatia); quedas recorrentes (TCE com drenagem de hematoma subdural há 5 anos, fratura de fêmur E há 2 anos); osteoporose sem tratamento; incontinência urinária de urgência; hipoacusia bilateral.</p>
+<p><strong>Medicações em uso.</strong> Clonazepam 2 mg/noite, fenobarbital 100 mg/noite, captopril 25 mg 2×/d, AAS 100 mg, sinvastatina 20 mg, mononitrato de isossorbida 20 mg 3×/d, varfarina 5 mg conforme RNI, amiodarona 200 mg 1×/d, metformina 500 mg 2×/d.</p>
+<p><strong>Exame.</strong> PA 130×70, FC 70 (ritmo irregular), sem quedas posturais, marcha de pequenos passos, arrastada, hipotrofia de quadríceps, instabilidade postural.</p>
+</div>
+
+<h3>Resultado da AGA</h3>
+<ul>
+  <li><strong>MAN:</strong> triagem 7 pts, global 15,5 pts → <strong>desnutrida</strong>. IMC 23 (eutrofia).</li>
+  <li><strong>Katz:</strong> 1/6 — dependente para a maioria das ABVDs.</li>
+  <li><strong>Lawton:</strong> 10/27 — dependência grave nas AIVDs.</li>
+  <li><strong>Timed Up &amp; Go:</strong> 30 s — <strong>risco alto de queda</strong>.</li>
+  <li><strong>SPPB:</strong> equilíbrio 1 pt, velocidade 1 pt, força 0 pt — extremamente comprometida.</li>
+  <li><strong>SARC-F:</strong> 5 pts — rastreio positivo para sarcopenia.</li>
+  <li><strong>MEEM:</strong> 21/30 (perde 3 em orientação temporal, 2 em espacial, 3 em evocação, 1 no pentágono).</li>
+  <li><strong>Relógio:</strong> 3/15 (só contorno e centro).</li>
+  <li><strong>Fluência verbal:</strong> 5/12.</li>
+  <li><strong>GDS-15:</strong> 10/15 — <strong>depressão</strong>.</li>
+</ul>
+
+<h3>Investigação complementar</h3>
+<p>Hemograma, função renal, hepática, tireoidiana, íons, B12, folato, VDRL normais. Glicemia 98, HbA1c 6,8%. Urina I/cultura sem alterações. ECG sem ondas P, ritmo irregular. Ecocardiograma FE 65%. Rx tórax ndn. TC de crânio: redução volumétrica encefálica difusa, infartos lacunares. US abdome ndn.</p>
+
+<h3>Planejamento terapêutico</h3>
+<ol>
+  <li><strong>Depressão maior</strong> → antidepressivo dual (ex.: venlafaxina ou duloxetina).</li>
+  <li><strong>Redução gradual do benzodiazepínico</strong> até suspender (Aula 6).</li>
+  <li><strong>Déficit cognitivo a esclarecer</strong> — hipótese de <em>pseudodemência depressiva</em>, reavaliar após controle do humor.</li>
+  <li>Completar investigação de sarcopenia/fragilidade.</li>
+  <li>Alteração da marcha e equilíbrio → fisioterapia motora.</li>
+  <li><strong>Osteoporose</strong> → iniciar alendronato (bifosfonato).</li>
+  <li>Incontinência urinária de urgência → regime de toalete, higiene do hábito miccional.</li>
+  <li>Encaminhar à otorrinolaringologia (hipoacusia).</li>
+</ol>
+
+<blockquote class="destaque"><p>"Tão importante quanto conhecer a doença que o homem tem é conhecer o homem que tem a doença." — William Osler (1878). A AGA é a tradução prática desse aforismo.</p></blockquote>
+
+<div class="resumo-final">
+<h3>📌 Resumo rápido — Aula 5</h3>
+<ul>
+  <li><strong>Física:</strong> MAN, sacola de remédios, sussurro, Snellen, vacinação.</li>
+  <li><strong>Funcional:</strong> Katz (ABVD), Lawton (AIVD), Barthel, Pfeffer, Timed Up &amp; Go (&gt;20 s = queda), SPPB, SARC-F.</li>
+  <li><strong>Mental:</strong> MEEM (escolaridade), relógio (Okamoto), fluência verbal, MoCA, GDS-15 (&gt;5 = depressão), CDR, FAST.</li>
+  <li><strong>Sócio-ambiental:</strong> APGAR familiar e dos amigos.</li>
+  <li>Avaliação final: independente × dependente, frágil × não frágil, risco nutricional, suporte social adequado.</li>
+  <li>Caso-chave: pseudodemência depressiva em idosa polimedicada — AGA desmontou o "é da idade".</li>
+</ul>
+</div>
+
+<!-- ============================================================ AULA 6 -->
+<h1 class="aula" id="aula6">Aula 6 — Farmacologia no Idoso</h1>
+
+<h2 id="a6-contexto">Por que o idoso é farmacologicamente "diferente"?</h2>
+<p>
+Há três motivos que andam juntos: <strong>(1) prevalência altíssima de doenças crônicas</strong> — em SP, 76% dos idosos tomam ao menos um medicamento; nos EUA, 85% tomam 3–4; <strong>20–50% preenchem critérios de polifarmácia</strong> (≥5 drogas) — <strong>(2) alterações fisiológicas</strong> em farmacocinética (PK) e farmacodinâmica (PD) que modificam dose, efeito e toxicidade; e <strong>(3) maior ocorrência de iatrogenia</strong>, especialmente quando se ignoram (1) e (2).
+</p>
+
+<blockquote class="destaque"><p>Medicamentos servem para <em>melhorar qualidade de vida</em>, <em>curar</em> ou <em>confortar</em>. No idoso, frequentemente o objetivo é conforto e manutenção funcional — não heroísmo terapêutico.</p></blockquote>
+
+<h2 id="a6-variaveis">Variáveis-chave da farmacocinética</h2>
+<ul>
+  <li><strong>Meia-vida (t½):</strong> tempo para reduzir o nível sérico pela metade. <em>Proporcional</em> ao volume de distribuição; <em>inversamente proporcional</em> ao clearance.</li>
+  <li><strong>Volume de distribuição (Vd):</strong> relação entre droga total no corpo e concentração plasmática.</li>
+  <li><strong>Depuração (clearance):</strong> soma das eliminações (hepática + renal).</li>
+  <li><strong>Biodisponibilidade:</strong> fração da dose administrada que atinge a circulação sistêmica.</li>
+</ul>
+
+<h2 id="a6-pk">Farmacocinética — o que muda com a idade</h2>
+
+<h3>1. Absorção</h3>
+<ul>
+  <li>Via oral é a principal; absorção por difusão passiva no intestino delgado proximal.</li>
+  <li>Alterações fisiológicas: ↓ células de absorção, ↑ pH gástrico, ↓ motilidade e fluxo do TGI.</li>
+  <li><strong>A absorção total não se reduz de forma clinicamente relevante</strong> — mas drogas que retardam motilidade (ADT, opioides, anti-histamínicos, antimuscarínicos) alteram muito o processo.</li>
+  <li>Transporte ativo fica mais lento: <em>ferro, cálcio, B12, glicose</em>.</li>
+  <li>Doenças que alteram integridade mucosa gástrica comprometem absorção: moléstia diverticular, gastrectomia, estenose pilórica, pancreatite, síndromes de má absorção.</li>
+  <li><strong>Via cutânea:</strong> pele atrofiada é pior barreira, menor fluxo sanguíneo → ↓ taxa de absorção.</li>
+</ul>
+
+<h3>2. Distribuição</h3>
+<ul>
+  <li><strong>↓ albumina sérica (15–20%)</strong> → ↑ fração livre de drogas ligadas à albumina → ↑ risco de intoxicação. Principais: <em>hormônios tireoidianos, AINH, varfarina, salicilatos, furosemida, fenitoína, sulfoniluréias, digoxina, diazepam</em>.</li>
+  <li>↑ α1-glicoproteína ácida (marcador de inflamação) → ↓ fração livre de <em>lidocaína, propranolol, meperidina</em>.</li>
+  <li><strong>↓ água corporal e ↓ massa magra</strong> → ↓ Vd → ↑ concentração plasmática de drogas <em>hidrossolúveis</em> (<em>digoxina, aminoglicosídeos, fenitoína, álcool, lítio</em>). <strong>Reduzir dose.</strong></li>
+  <li><strong>↑ gordura corpórea</strong> (18–36% em mulheres, 33–48% em homens) → ↑ Vd e ↑ t½ das <em>lipossolúveis</em>. Exemplo clássico: <strong>diazepam passa de t½ ~24 h no jovem para ~90 h no idoso</strong>, com acúmulo e toxicidade tardia.</li>
+</ul>
+
+<h3>3. Metabolismo</h3>
+<ul>
+  <li>Biotransformação no fígado (principal), rim, pulmão e parede intestinal.</li>
+  <li><strong>Fase I</strong> (oxidação/redução via CYP450): <strong>reduzida 30–40%</strong> no idoso. ↑ t½ de diazepam, sulfato de quinidina, teofilina, beta-bloqueadores, BCC, estatinas, varfarina, amitriptilina, fenitoína, AINHs, levodopa.</li>
+  <li><strong>Fase II</strong> (conjugação, glicuronidação, sulfatação): <strong>não sofre influência da senescência</strong>. Por isso o <em>lorazepam</em> é o benzodiazepínico preferido no idoso (só sofre fase II).</li>
+  <li>↓ <strong>fluxo sanguíneo hepático (35%)</strong> e ↓ massa hepática (20–30%) → ↓ metabolismo de primeira passagem → ↑ níveis plasmáticos de <em>esmolol, labetalol, propranolol, verapamil, diltiazem, espironolactona, furosemida, nitratos, lidocaína</em>.</li>
+</ul>
+
+<h3>4. Excreção</h3>
+<ul>
+  <li>↓ tamanho dos rins, ↓ fluxo plasmático renal, ↓ TFG (35–50%).</li>
+  <li>ClCr cai ~<strong>1%/ano a partir dos 40 anos</strong> — e 8–10 mL/min por década após 50 (Aula 2).</li>
+  <li>Fórmula de Cockcroft-Gault: <code class="inline">ClCr = [(140 − idade) × peso]/(72 × Cr sérica)</code>, multiplique por 0,85 se mulher.</li>
+  <li>Ajuste obrigatório em: <em>aminoglicosídeos, ampicilina, quinolonas, ceftriaxone, penicilina, vancomicina, doxiciclina, digoxina</em>.</li>
+</ul>
+
+<h2 id="a6-pd">Farmacodinâmica no idoso</h2>
+<p>
+A PD estuda o efeito bioquímico/fisiológico e o mecanismo da droga no órgão-alvo. Alterações principais: número e afinidade dos receptores, função dos segundos mensageiros, resposta celular e nuclear.
+</p>
+<ul>
+  <li><strong>Maior sensibilidade</strong> a: antidepressivos, benzodiazepínicos, opioides (efeito central mais intenso com doses menores).</li>
+  <li><strong>Menor sensibilidade</strong> a: beta-bloqueadores e beta-adrenérgicos.</li>
+</ul>
+
+<h2 id="a6-grupos">Grupos farmacológicos críticos no idoso</h2>
+
+<h3>AINH</h3>
+<ul>
+  <li>Insuficiência renal: 13% desenvolvem uremia em curto período (especialmente com doses altas e uso concomitante de diuréticos de alça).</li>
+  <li>Sangramento gastrointestinal.</li>
+  <li>Piora função cognitiva após 1 ano de uso; potencializa confusão.</li>
+  <li>40% das prescrições de AINH são para idosos. <strong>Limitar uso, diminuir dose e tempo.</strong></li>
+</ul>
+
+<h3>Anticoagulantes</h3>
+<ul>
+  <li>Maior sensibilidade hepática à inibição de fatores da coagulação pela <strong>varfarina</strong> → <strong>doses menores</strong>.</li>
+</ul>
+
+<h3>Digoxina</h3>
+<ul>
+  <li>↓ Vd (hidrossolúvel) + ↓ clearance renal → ↑ nível sérico e ↑ t½ → <strong>reduzir nível terapêutico alvo</strong>.</li>
+</ul>
+
+<h3>Anti-hipertensivos</h3>
+<ul>
+  <li>↑ probabilidade de <strong>hipotensão ortostática</strong> (↓ tônus venoso, pior compensação do barorreceptor — Aula 2).</li>
+  <li><strong>IECA:</strong> tolerância a aumento de até 30% da creatinina. Iniciar com cautela quando Cr entre 1,5 e 2,0 mg/dL.</li>
+</ul>
+
+<h3>Hipoglicemiantes</h3>
+<ul>
+  <li><strong>Clorpropamida</strong>: t½ muito prolongada (até 72 h) → risco de <strong>hipoglicemia grave e prolongada</strong>. Evitar no idoso.</li>
+</ul>
+
+<h3>Antibióticos</h3>
+<ul>
+  <li><strong>Aminoglicosídeos</strong> e <strong>eritromicina</strong> — ↓ clearance → nefro e ototoxicidade. Ajustar ou preferir alternativas.</li>
+</ul>
+
+<h3>Benzodiazepínicos</h3>
+<ul>
+  <li>↑ t½ (diazepam); ↑ sensibilidade; doses efetivas menores.</li>
+  <li>Ligação clara com <strong>quedas</strong> e fraturas.</li>
+  <li><strong>Iniciar sempre por tratamento não farmacológico da insônia</strong>; se necessário BZD, preferir os de fase II (lorazepam) em doses menores.</li>
+</ul>
+
+<h3>Anticolinérgicos</h3>
+<ul>
+  <li>↑ sensibilidade aos efeitos colaterais (↓ ACh central — Aula 2): visão embaçada, boca seca, constipação, retenção urinária, hipotensão ortostática, <strong>delirium (5–12× mais)</strong>.</li>
+  <li><strong>Amitriptilina</strong>: antidepressivo tricíclico com alto efeito anticolinérgico — evitar.</li>
+</ul>
+
+<h3>Bloqueadores H2</h3>
+<ul>
+  <li><strong>Ranitidina</strong> interfere com metabolismo hepático, aumentando toxicidade de <em>propranolol, varfarina, fenitoína</em>. Pode causar confusão mental — usar doses menores.</li>
+</ul>
+
+<h2 id="a6-interacoes">Interações medicamentosas</h2>
+
+<h3>Sinergismo</h3>
+<ul>
+  <li><strong>Por adição:</strong> duas drogas com mesmo mecanismo.</li>
+  <li><strong>Por somação:</strong> efeito final = soma dos efeitos isolados (mecanismos distintos).</li>
+  <li><strong>Por potencialização:</strong> efeito final &gt; soma dos efeitos isolados.</li>
+</ul>
+
+<h3>Antagonismo</h3>
+<ul>
+  <li><strong>Farmacológico competitivo</strong> — antagonista ocupa o mesmo receptor do agonista.</li>
+  <li><strong>Farmacológico não-competitivo</strong> — antagonista age em sítio próximo ao receptor.</li>
+  <li><strong>Fisiológico</strong> — duas drogas, mecanismos diferentes, efeitos opostos (adrenalina × acetilcolina).</li>
+</ul>
+
+<h3>Interações farmacocinéticas</h3>
+<ul>
+  <li><strong>Absorção:</strong> modificação da motilidade TGI, pH gástrico, fluxo intestinal (ADT por efeito anticolinérgico retarda esvaziamento gástrico e ↓ absorção de outros medicamentos).</li>
+  <li><strong>Distribuição:</strong> deslocamento da ligação proteica (fenilbutazona desloca tolbutamida → hipoglicemia).</li>
+  <li><strong>Metabolismo:</strong> indução ou inibição enzimática (CYP450).</li>
+  <li><strong>Excreção:</strong> filtração, secreção tubular, reabsorção (tiazídicos predispõem intoxicação digitálica por perda de K⁺).</li>
+</ul>
+
+<h3>Interações farmacodinâmicas</h3>
+<p>Ocorrem no mesmo receptor. Exemplo: <strong>atropina</strong> tem atividade aumentada quando associada a outras drogas anticolinérgicas — a soma explica quadros de delirium em idosos polimedicados.</p>
+
+<h2 id="a6-final">Recomendações finais</h2>
+<ul>
+  <li><strong>"Start low, go slow"</strong> — iniciar com doses menores.</li>
+  <li>Aumento progressivo conforme resposta e tolerância.</li>
+  <li>Evitar introduzir ou aumentar mais de um fármaco por consulta.</li>
+  <li>Reavaliar sempre a necessidade (desprescrição sistemática).</li>
+  <li>Preferir, quando possível: drogas de fase II (lorazepam), drogas sem acumulação renal significativa, ISRS sobre ADT, paracetamol sobre AINH.</li>
+</ul>
+
+<div class="conexao"><p>A regra operacional que amarra todo o curso: <strong>toda mudança de estado</strong> em idoso polimedicado deve levantar hipótese de <em>iatrogenia</em> antes de hipótese de nova doença. É o 5º dos "Is" de Issacs (Aula 3) e a ponte lógica entre a Aula 4 (AGA) e a Aula 5 (teste da sacola de remédios).</p></div>
+
+<div class="resumo-final">
+<h3>📌 Resumo rápido — Aula 6</h3>
+<ul>
+  <li>Polifarmácia ≥ 5 drogas atinge 20–50% dos idosos.</li>
+  <li><strong>PK:</strong> ↓ água e massa magra → ↑ concentração de hidrossolúveis; ↑ gordura → ↑ t½ de lipossolúveis (diazepam 24→90 h).</li>
+  <li>Fase I ↓ 30–40%; fase II preservada (<strong>prefira lorazepam</strong>).</li>
+  <li>↓ TFG → ajustar aminoglicosídeos, digoxina, vancomicina etc. (Cockcroft-Gault).</li>
+  <li><strong>PD:</strong> ↑ sensibilidade a antidepressivos, BZD, opioides; ↓ a betabloqueadores.</li>
+  <li>Evitar/ajustar: AINH, varfarina (doses menores), digoxina, clorpropamida, amitriptilina, BZDs de ação longa, ranitidina.</li>
+  <li><strong>Hipotensão ortostática</strong> é o efeito adverso mais frequente dos anti-hipertensivos no idoso.</li>
+  <li>Anticolinérgicos → delirium 5–12×.</li>
+  <li>"Start low, go slow" e uma droga por consulta.</li>
+</ul>
+</div>
+
+</main>
+
+<button class="top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Voltar ao topo">↑</button>
+
+<script>
+(function() {
+  var btn = document.getElementById('themeToggle');
+  var stored = localStorage.getItem('geriatria-theme');
+  if (stored === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  btn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+  btn.addEventListener('click', function() {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (cur === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('geriatria-theme', 'dark');
+      btn.textContent = '🌙';
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('geriatria-theme', 'light');
+      btn.textContent = '☀️';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

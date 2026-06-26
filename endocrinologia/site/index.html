@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrinologia - Site de Estudo | Cate DM</title>
+<style>
+:root {
+  --bg: #0f1419;
+  --bg-elevated: #1a2028;
+  --bg-card: #1e2530;
+  --text: #e4e6eb;
+  --text-muted: #9ca3af;
+  --accent: #5eead4;
+  --accent-soft: rgba(94, 234, 212, 0.12);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.12);
+  --danger: #f87171;
+  --border: #2d3748;
+  --link: #7dd3fc;
+}
+[data-theme="light"] {
+  --bg: #fafafa;
+  --bg-elevated: #fff;
+  --bg-card: #fff;
+  --text: #1f2937;
+  --text-muted: #6b7280;
+  --accent: #0891b2;
+  --accent-soft: rgba(8, 145, 178, 0.1);
+  --warn: #d97706;
+  --warn-soft: rgba(217, 119, 6, 0.1);
+  --danger: #dc2626;
+  --border: #e5e7eb;
+  --link: #0369a1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 17px;
+  display: flex;
+  min-height: 100vh;
+}
+aside {
+  width: 260px;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  padding: 24px 18px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+aside h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+aside nav ul { list-style: none; }
+aside nav li { margin-bottom: 4px; }
+aside nav a {
+  color: var(--text);
+  text-decoration: none;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background 0.15s;
+}
+aside nav a:hover { background: var(--accent-soft); color: var(--accent); }
+aside nav .topic { padding-left: 24px; font-size: 13px; color: var(--text-muted); }
+aside nav .aula-title { font-weight: 600; margin-top: 12px; color: var(--accent); }
+main {
+  flex: 1;
+  max-width: 800px;
+  padding: 40px 48px 80px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 8px;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 14px;
+  margin-top: 40px;
+  color: var(--accent);
+}
+h1:first-child { margin-top: 0; }
+h2 {
+  font-size: 1.6em;
+  margin-top: 40px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+h3 {
+  font-size: 1.25em;
+  margin-top: 28px;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+h4 {
+  font-size: 1.08em;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+p { margin-bottom: 14px; }
+ul, ol { margin: 12px 0 16px 24px; }
+li { margin-bottom: 6px; }
+strong { color: var(--accent); font-weight: 600; }
+em { font-style: italic; color: var(--text-muted); }
+code {
+  background: var(--bg-card);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+.destaque {
+  background: var(--warn-soft);
+  border-left: 4px solid var(--warn);
+  padding: 14px 18px;
+  margin: 18px 0;
+  border-radius: 4px;
+}
+.destaque::before {
+  content: "🎯 Destaque do professor";
+  display: block;
+  font-weight: 700;
+  color: var(--warn);
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.caso {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent);
+  padding: 14px 18px;
+  margin: 18px 0;
+  border-radius: 4px;
+}
+.caso::before {
+  content: "🩺 Caso clínico";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.conexao {
+  background: rgba(125, 211, 252, 0.08);
+  border-left: 4px solid var(--link);
+  padding: 12px 16px;
+  margin: 16px 0;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+.conexao::before {
+  content: "🔗 Conexão";
+  display: block;
+  font-weight: 700;
+  color: var(--link);
+  font-size: 0.82em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.resumo-aula {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+  margin-top: 32px;
+  border-radius: 8px;
+}
+.resumo-aula h3 {
+  margin-top: 0;
+  color: var(--accent);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  background: var(--bg-card);
+  border-radius: 6px;
+  overflow: hidden;
+}
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95em;
+}
+th {
+  background: var(--bg-elevated);
+  color: var(--accent);
+  font-weight: 600;
+}
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 100;
+}
+.top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: none;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.top-btn.show { display: block; }
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  aside { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--border); }
+  main { padding: 24px 20px 80px; }
+  h1 { font-size: 1.7em; }
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">☀️ Tema</button>
+<button class="top-btn" id="topBtn" onclick="scrollTo(0,0)">↑</button>
+
+<aside>
+  <h2>Endocrinologia</h2>
+  <nav>
+    <ul>
+      <li><a href="#inicio"><strong>📚 Início</strong></a></li>
+      <li class="aula-title"><a href="#acromegalia">Aula 1 — Acromegalia</a></li>
+      <li class="topic"><a href="#acro-contexto">Contexto</a></li>
+      <li class="topic"><a href="#acro-eixo">Eixo GH/IGF-1</a></li>
+      <li class="topic"><a href="#acro-etiologia">Etiologia</a></li>
+      <li class="topic"><a href="#acro-clinica">Quadro clínico</a></li>
+      <li class="topic"><a href="#acro-diagnostico">Diagnóstico</a></li>
+      <li class="topic"><a href="#acro-tratamento">Tratamento</a></li>
+      <li class="aula-title"><a href="#dm2">Aula 2 — Diabetes Mellitus 2</a></li>
+      <li class="topic"><a href="#dm2-conceito">Conceito</a></li>
+      <li class="topic"><a href="#dm2-fisiopato">Fisiopatologia</a></li>
+      <li class="topic"><a href="#dm2-classificacao">Classificação</a></li>
+      <li class="topic"><a href="#dm2-clinica">Quadro clínico</a></li>
+      <li class="topic"><a href="#dm2-diagnostico">Diagnóstico</a></li>
+      <li class="topic"><a href="#dm2-tratamento">Tratamento</a></li>
+      <li class="topic"><a href="#dm2-insulinas">Insulinas</a></li>
+      <li class="aula-title"><a href="#di">Aula 3 — Diabetes Insípidus</a></li>
+      <li class="topic"><a href="#di-adh">Fisiologia do ADH</a></li>
+      <li class="topic"><a href="#di-tipos">Tipos de DI</a></li>
+      <li class="topic"><a href="#di-clinica">Quadro clínico</a></li>
+      <li class="topic"><a href="#di-diagnostico">Diagnóstico</a></li>
+      <li class="topic"><a href="#di-tratamento">Tratamento</a></li>
+      <li class="aula-title"><a href="#hipopituitarismo">Aula 4 — Hipopituitarismo</a></li>
+      <li class="topic"><a href="#hp-conceito">Conceito</a></li>
+      <li class="topic"><a href="#hp-etiologia">8 Is + 1 L</a></li>
+      <li class="topic"><a href="#hp-sheehan">Sheehan e Apoplexia</a></li>
+      <li class="topic"><a href="#hp-deficiencias">Deficiências isoladas</a></li>
+      <li class="topic"><a href="#hp-diagnostico">Diagnóstico</a></li>
+      <li class="topic"><a href="#hp-tratamento">Tratamento</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<main>
+
+<section id="inicio">
+<h1>Endocrinologia — Cate DM</h1>
+<p style="font-size:1.1em;color:var(--text-muted)">Site de estudo consolidado das aulas da Prof. Paula Normando (FASM): Acromegalia, Diabetes Mellitus tipo 2, Deficiência do hormônio antidiurético e Hipopituitarismo. Desenhado para substituir a necessidade de reler slides ou assistir a aula novamente.</p>
+<p style="margin-top:18px">Navegue pelo menu lateral para ir direto ao tópico. Destaques em amarelo (🎯) são pontos que a professora enfatizou como prováveis cobranças de prova.</p>
+</section>
+
+<!-- ==================== AULA 1 — ACROMEGALIA ==================== -->
+
+<section id="acromegalia">
+<h1>Aula 1 — Acromegalia</h1>
+
+<h2 id="acro-contexto">Contexto e motivação</h2>
+<p>A acromegalia é uma doença rara, mas visualmente marcante e com <strong>alta mortalidade quando não tratada</strong>. Os pacientes típicos passam em média 4 a 10 anos com a doença antes do diagnóstico porque as alterações são lentas — ninguém nota que as mãos estão aumentando de 1 mm por ano, mas em uma década a diferença é brutal. O aluno de medicina precisa reconhecer o fenótipo (mandíbula aumentada, mãos grandes, sobrancelhas proeminentes) porque esse é exatamente o tipo de quadro que aparece em prova pedindo diagnóstico imediato: "paciente com aumento do número do calçado, sudorese, diabetes e cefaleia".</p>
+
+<p>Importa também porque é o exemplo didático perfeito do eixo hipotálamo-hipófise-órgão alvo: entendendo o funcionamento do GH você entende de quebra como se investiga qualquer outro eixo hipofisário (dosa hormônio hipofisário + hormônio periférico, faz teste de supressão se suspeita de excesso, faz teste de estímulo se suspeita de deficiência).</p>
+
+<h2 id="acro-eixo">O eixo GH/IGF-1 em 1 página</h2>
+<p>Antes de entender a doença, é preciso entender o eixo normal:</p>
+
+<ol>
+<li><strong>Hipotálamo</strong> produz dois sinais opostos para a adeno-hipófise:
+  <ul>
+    <li><strong>GHRH</strong> (<em>GH-releasing hormone</em>) — <strong>estimula</strong> a liberação de GH</li>
+    <li><strong>Somatostatina</strong> — <strong>inibe</strong> a liberação de GH</li>
+  </ul>
+</li>
+<li><strong>Adeno-hipófise</strong>: as células <strong>somatotróficas</strong> integram esses dois sinais e liberam GH na circulação. Cerca de 50% do GH circulante está ligado a uma proteína (GHBP) que é o próprio domínio extracelular do receptor do GH.</li>
+<li><strong>Fígado (principalmente)</strong>: o GH estimula a produção de <strong>IGF-1</strong> (fator de crescimento semelhante à insulina tipo 1), que medeia boa parte dos efeitos de crescimento somático do GH.</li>
+</ol>
+
+<p><strong>Uma nuance importante que a professora destacou:</strong> apesar do nome, o IGF-1 tem <em>ação antagonista à da insulina</em>. E o GH, em si, também é contra-regulador: ele aumenta a glicemia, o que leva secundariamente ao aumento da insulina. Isso explica por que <strong>50% dos acromegálicos têm diabetes ou intolerância à glicose</strong> — vai cair em prova.</p>
+
+<div class="destaque">
+A <strong>somatostatina</strong> não é produzida só no hipotálamo. As <strong>células delta do pâncreas</strong> também a produzem, agindo indiretamente na regulação da glicemia (porque inibe tanto insulina quanto glucagon). Esse fato é a base farmacológica do tratamento com análogos de somatostatina (octreotide, pasireotide) — você está usando algo que o corpo já fabrica para inibir o GH.
+</div>
+
+<h2 id="acro-gigantismo">Gigantismo vs Acromegalia — é a mesma doença?</h2>
+<p>É a mesma causa (excesso de GH) em momentos diferentes da vida:</p>
+<ul>
+<li><strong>Se acontece antes do fechamento das epífises</strong> (criança/adolescente) → <strong>gigantismo</strong>: crescimento linear exagerado, pacientes passam de 2m facilmente.</li>
+<li><strong>Se acontece depois do fechamento das epífises</strong> (adulto) → <strong>acromegalia</strong>: os ossos longos não crescem mais, mas as extremidades e ossos chatos (mandíbula, crânio, mãos, pés) continuam se remodelando e alargando.</li>
+</ul>
+
+<h2 id="acro-etiologia">Etiologia</h2>
+<ul>
+<li><strong>Causa quase sempre é um adenoma hipofisário secretor de GH</strong> (somatotropinoma)</li>
+<li><strong>90% são macroadenomas</strong> (>10 mm) — ou seja, quando você faz o diagnóstico, o tumor já é grande. Isso acontece porque a doença é insidiosa.</li>
+<li>30 a 40% dos tumores são mistos: secretam GH <em>e</em> prolactina (por isso algumas pacientes apresentam também galactorreia e alterações menstruais).</li>
+<li>Pode fazer parte de síndromes genéticas: <strong>NEM 1</strong> (neoplasia endócrina múltipla tipo 1 — adenomas de paratireoide, tumor de pâncreas e adenoma hipofisário), McCune-Albright, acromegalia familiar, Carney.</li>
+<li>Causas raras ("não-adeno-hipofisárias"):
+  <ul>
+    <li>Tumor ectópico produzindo <strong>GHRH</strong> (tipicamente carcinoide brônquico ou tumor de ilhota pancreática) — nesses casos a RM mostra <em>hiperplasia</em> hipofisária difusa, não um adenoma.</li>
+    <li>Tumor ectópico produzindo <strong>GH diretamente</strong> (tumor de ilhota, linfoma) — raríssimo.</li>
+  </ul>
+</li>
+</ul>
+
+<h3>Epidemiologia</h3>
+<ul>
+<li>Incidência: 3 a 4 casos / milhão / ano</li>
+<li>Prevalência: 40 a 60 por milhão de pessoas</li>
+<li>Idade média de início: 32 anos</li>
+<li>Idade média ao diagnóstico: 40 a 45 anos (note o atraso de ~10 anos)</li>
+<li>Homens = mulheres</li>
+<li>Prognóstico com mortalidade elevada se não tratada (tipicamente por causa cardiovascular)</li>
+</ul>
+
+<h2 id="acro-clinica">Quadro clínico — pensando em prova</h2>
+<p>A tabela abaixo está em ordem de frequência. Note que <strong>aumento das extremidades aparece em 100% dos casos</strong> — é o que define a palavra "acromegalia" (acro = extremidades, megalia = aumento).</p>
+
+<table>
+<thead><tr><th>Manifestação</th><th>%</th></tr></thead>
+<tbody>
+<tr><td>Aumento das extremidades</td><td>100%</td></tr>
+<tr><td>Alterações crânio-faciais</td><td>80%</td></tr>
+<tr><td>Artralgias</td><td>70%</td></tr>
+<tr><td>Hiperidrose (suor excessivo)</td><td>70%</td></tr>
+<tr><td>Cefaleia</td><td>54%</td></tr>
+<tr><td>Diabetes/intolerância à glicose</td><td>50%</td></tr>
+<tr><td>Skin tags (acrocórdons)</td><td>40%</td></tr>
+<tr><td>HAS</td><td>32%</td></tr>
+<tr><td>Alterações visuais</td><td>32%</td></tr>
+<tr><td>Pólipos intestinais</td><td>31%</td></tr>
+</tbody>
+</table>
+
+<p>A combinação de síndromes associadas inclui: edema de tecidos moles, espaçamento dentário (diastema), apneia do sono, cardiopatia e hipertensão, neoplasias e pólipos intestinais, artralgia/artrite, síndrome do túnel do carpo (por espessamento do tecido sinovial que comprime o mediano), alterações sexuais (por co-secreção de PRL ou compressão do eixo gonadotrófico), e o clássico <strong>aumento do número do calçado na vida adulta</strong>.</p>
+
+<h3>Sistema ósseo e articular</h3>
+<ul>
+<li>Em crianças: aumento estatural (gigantismo)</li>
+<li>Alargamento do tecido sinovial e da cartilagem articular</li>
+<li>Artropatia de joelho, tornozelo, coxo-femoral, coluna — artralgia é queixa frequente e permanece mesmo após tratamento bem-sucedido (dano estrutural já ocorreu)</li>
+</ul>
+
+<h3>Tireoide</h3>
+<ul>
+<li>Aumento do volume (bócio difuso ou multinodular)</li>
+<li>Na maioria das vezes eutireoidismo</li>
+<li>Pode haver hipertireoidismo subclínico ou hipotireoidismo central (se o adenoma comprimir a produção de TSH)</li>
+</ul>
+
+<div class="caso">
+<strong>Homem, 48 anos,</strong> procura ortopedista por "bursite nos ombros e dor no joelho que não melhora". Conta que nos últimos 5 anos trocou os sapatos de 40 para 44, a aliança não fecha mais, e a esposa comenta que ele "ronca muito alto". HAS diagnosticada há 2 anos, glicemia de jejum 138 mg/dL há 6 meses. Ao exame: face alargada, mandíbula proeminente, mãos em "pá". Antes de tratar a bursite, esse paciente precisa dosar <strong>IGF-1</strong>. A armadilha aqui é a doença passar batida por anos porque cada sintoma isolado parece banal (obesidade, diabetes, apneia, artrose). O <em>gestalt</em> é que chama atenção.
+</div>
+
+<h2 id="acro-diagnostico">Diagnóstico</h2>
+<p>O princípio geral é simples mas o aluno confunde frequentemente: <strong>dosar GH isolado NÃO faz diagnóstico</strong> (o GH é secretado em pulsos, então uma dosagem aleatória pode pegar um pico ou um vale normal). O GH isolado só tem valor no prognóstico/seguimento.</p>
+
+<h3>Passo 1 — Dosar IGF-1</h3>
+<ul>
+<li>IGF-1 tem <strong>meia-vida longa</strong>, por isso flutua pouco — é o marcador ideal de "média" de secreção de GH.</li>
+<li>Está aumentado em <strong>quase 100% dos acromegálicos</strong>.</li>
+<li>O valor é comparado ao esperado para idade e sexo.</li>
+<li>Atenção: há pico fisiológico na puberdade com queda gradual depois — por isso o resultado sempre é corrigido por idade.</li>
+<li><strong>Critério:</strong> IGF-1 > 1,3× o limite superior da normalidade sugere acromegalia.</li>
+</ul>
+
+<h3>Passo 2 (se IGF-1 elevado ou dúvida) — Teste de tolerância oral à glicose com GH (GTTO-GH)</h3>
+<p>Por que funciona: a glicose oral normalmente <strong>suprime</strong> o GH (em pessoa normal, o GH cai para quase zero após 75 g de glicose). Em quem tem um tumor secretor de GH, o tumor é <em>autônomo</em> — não responde à supressão fisiológica, então o GH <em>não cai</em>.</p>
+
+<ul>
+<li><strong>Exclui acromegalia</strong> (paciente normal): GH ao acaso &lt; 0,4 μg/L em paciente com IMC normal, <em>ou</em> GH no GTTO &lt; 0,2 μg/L em paciente com sobrepeso/obesidade.</li>
+<li>Se a supressão é inadequada → seguir para imagem.</li>
+</ul>
+
+<h3>Passo 3 — Ressonância magnética de hipófise</h3>
+<ul>
+<li>Detecta tumores de até 2 mm (sensibilidade alta).</li>
+<li>Em 75% dos somatotropinomas encontra-se um <strong>macroadenoma</strong> (lembre: 90% da literatura geral, 75% neste slide).</li>
+<li>O tumor pode ter extensão <strong>paraselar</strong> (para os seios cavernosos) ou <strong>supraselar</strong> (comprimindo o quiasma óptico — por isso 32% têm alteração visual).</li>
+<li>Se a RM está normal mas o quadro bioquímico é clássico → <strong>suspeitar de fonte ectópica de GH ou GHRH</strong>. Nesse caso, fazer TC de tórax e abdome + dosagem de GHRH sérico.</li>
+<li>Se a RM mostra <strong>hiperplasia</strong> hipofisária difusa (em vez de um nódulo), pensar em <strong>GHRH ectópico</strong> (carcinoide brônquico).</li>
+</ul>
+
+<h3>Campimetria</h3>
+<p>Indicada sempre que houver macroadenoma com extensão supraselar — documenta se já houve compressão do quiasma (clássica hemianopsia bitemporal).</p>
+
+<div class="destaque">
+Sequência prática de prova: (1) suspeita clínica → (2) dosa IGF-1 → (3) se elevado, GTTO-GH → (4) se não suprime, RM de hipófise. NÃO faça RM antes do bioquímico — você pode encontrar um incidentaloma e confundir tudo.
+</div>
+
+<h2 id="acro-tratamento">Tratamento</h2>
+<p>Princípio: <strong>todos devem ser tratados</strong>, porque acromegalia não tratada tem mortalidade elevada. Os objetivos são três — remover ou destruir o tumor, reverter a hipersecreção de GH, e normalizar o IGF-1.</p>
+
+<h3>1) Cirurgia — padrão-ouro</h3>
+<ul>
+<li><strong>Indicações:</strong> microadenoma; macroadenoma ressecável; macroadenoma comprometendo a visão.</li>
+<li><strong>Via preferencial: transesfenoidal</strong> (entrada pela cavidade nasal, através do seio esfenoidal). Transcraniana só se extensão supraselar extensa impedir acesso.</li>
+<li>Com cirurgiões experientes: os níveis de GH caem 80-90% em microadenomas, preservando a função hipofisária.</li>
+<li>Recidiva: 3 a 10% após seguimento. Quando há pequena elevação residual do GH pós-cirúrgica no GTTO, a taxa de recidiva é maior.</li>
+<li>Complicações: rinoliquorreia (&lt;5%), meningite, sinusite, hematoma, paralisia de nervos cranianos (&lt;1%), diabetes insípidus transitório (30% — ver Aula 3!), hipopituitarismo, recidiva tumoral. Mortalidade em cirurgias para macroadenomas invasivos é &lt;1%.</li>
+</ul>
+
+<div class="conexao">
+Note que uma complicação aguda relativamente comum da cirurgia transesfenoidal é o <strong>diabetes insípidus transitório</strong> (30% dos casos). Isso conecta diretamente com a Aula 3 — o trauma cirúrgico ao trajeto do ADH (hipotálamo → neuro-hipófise) gera uma fase inicial de poliúria. Frequentemente segue a <em>resposta trifásica clássica</em>: poliúria → antidiurese (liberação de ADH por neurônios lesados) → DI central definitivo ou recuperação.
+</div>
+
+<h3>2) Radioterapia</h3>
+<ul>
+<li><strong>Modalidades:</strong> convencional (4-5 sessões/semana por 4 semanas) ou estereotáxica (sessão única).</li>
+<li><strong>Início de ação é LENTO:</strong> controle da hipersecreção começa em 6 a 24 meses, gradualmente. Por isso não é primeira escolha em quem precisa de controle rápido.</li>
+<li><strong>Efeitos adversos importantes:</strong>
+  <ul>
+    <li>Alto risco de hipopituitarismo — 50% em 5 anos (mais comum: hipogonadismo)</li>
+    <li>Distúrbios visuais por lesão do II par craniano</li>
+    <li>Isquemia/necrose cerebral, atrofia cerebral, disfunção neurocognitiva</li>
+    <li>Carcinogênese cerebral secundária (2% em 20 anos)</li>
+    <li>Aumento de até 4,4% de morte por causa cerebrovascular</li>
+  </ul>
+</li>
+</ul>
+
+<h3>3) Tratamento medicamentoso</h3>
+<p>Indicado em: (a) macroadenomas com pouca chance cirúrgica que <em>não</em> comprometem o quiasma (pode-se esperar) e (b) hipersecreção residual após cirurgia.</p>
+
+<h4>Análogos da somatostatina (primeira escolha)</h4>
+<ul>
+<li>Ligam-se a receptores de somatostatina e inibem a liberação de GH — maior efeito se o tumor tem mais receptores.</li>
+<li>Podem <strong>reduzir o tamanho do tumor</strong>: redução média de 42%, maioria &lt;50% do tamanho.</li>
+<li>Drogas: <strong>Octreotide</strong> (forma de depósito: Octreotide LAR) e <strong>Pasireotide</strong> (2ª geração).</li>
+<li>A retirada parcial do tumor (cirurgia de <em>debulking</em>) pode melhorar a eficácia em pacientes previamente resistentes aos análogos de somatostatina.</li>
+<li>Custo elevado, uso por tempo indefinido.</li>
+<li>Cerca de 50% dos pacientes recidivam em 12-16 semanas se suspender a medicação após 4 anos de tratamento.</li>
+<li><strong>Efeitos colaterais:</strong>
+  <ul>
+    <li>Diarreia, náuseas, dor abdominal (precoces e transitórios — 8 a 10 semanas)</li>
+    <li><strong>Cálculos biliares</strong> em até 20% dos casos nos primeiros 18 meses (porque a somatostatina reduz a motilidade da vesícula)</li>
+    <li>Dor/desconforto no local da injeção</li>
+    <li>Deterioração do controle glicêmico (pode causar tanto hipo quanto hiperglicemia) — o pasireotide é especialmente conhecido por piorar diabetes</li>
+  </ul>
+</li>
+</ul>
+
+<h4>Agonistas dopaminérgicos</h4>
+<ul>
+<li><strong>Cabergolina</strong> (Dostinex): suprime a liberação de GH.</li>
+<li>Indicada para casos <em>pouco responsivos</em> aos análogos de somatostatina, ou para pacientes em uso de anticoagulantes (nos quais se quer evitar injeções SC profundas ou IM).</li>
+<li>Vantagem: via oral.</li>
+<li>Efeitos colaterais: tonturas, náuseas, cefaleia, constipação intestinal, congestão nasal, distúrbios do humor.</li>
+</ul>
+
+<h4>Antagonista do receptor de GH</h4>
+<ul>
+<li><strong>Pegvisomanto</strong> (Somavert), 10 a 30 mg SC.</li>
+<li>Bloqueia o receptor de GH no fígado — então o GH pode até estar alto no sangue, mas o IGF-1 cai.</li>
+<li>É a droga <strong>mais eficiente em normalizar o IGF-1</strong>.</li>
+<li>Pode ser usado combinado com análogo de somatostatina.</li>
+<li>Efeito colateral principal: <strong>hepatotoxicidade</strong> — monitorar enzimas hepáticas.</li>
+<li>Atenção: o pegvisomanto não reduz o tumor (só bloqueia a ação periférica). Se há risco de crescimento tumoral, não é a melhor escolha isolada.</li>
+</ul>
+
+<div class="destaque">
+<strong>Critério de controle da doença (Consenso 2023):</strong> IGF-1 normal para idade e sexo após 3 meses de tratamento cirúrgico ou com análogo de somatostatina. Quando o IGF-1 está normal, os acromegálicos têm <strong>a mesma expectativa de vida</strong> que a população saudável — é o desfecho que o tratamento busca.
+</div>
+
+<div class="resumo-aula">
+<h3>Resumo rápido — Acromegalia</h3>
+<ul>
+<li><strong>Eixo:</strong> GHRH estimula, somatostatina inibe → GH → IGF-1 (fígado). GH e IGF-1 antagonizam a insulina.</li>
+<li><strong>Causa quase sempre:</strong> somatotropinoma hipofisário (90% macroadenomas).</li>
+<li><strong>Clínica:</strong> aumento de extremidades (100%), alterações faciais (80%), artralgia, hiperidrose, diabetes (50%), HAS, túnel do carpo, apneia, pólipos intestinais.</li>
+<li><strong>Diagnóstico:</strong> IGF-1 → se elevado, GTTO-GH (GH &lt; 0,4 normal, não suprime em doente) → RM hipófise. GH isolado não serve.</li>
+<li><strong>Tratamento:</strong> cirurgia transesfenoidal (padrão-ouro) → análogos de somatostatina (octreotide LAR, pasireotide) → cabergolina → pegvisomanto (melhor em normalizar IGF-1) → radioterapia (último recurso).</li>
+<li><strong>Meta:</strong> IGF-1 normal para idade/sexo → expectativa de vida normal.</li>
+<li><strong>Pegadinha:</strong> o pegvisomanto bloqueia o <em>receptor</em> de GH, então o GH sérico <em>sobe</em> (não serve para monitorar); use IGF-1.</li>
+</ul>
+</div>
+</section>
+
+<!-- ==================== AULA 2 — DM2 ==================== -->
+
+<section id="dm2">
+<h1>Aula 2 — Diabetes Mellitus tipo 2</h1>
+
+<h2 id="dm2-conceito">Contexto e conceito</h2>
+<p>O DM2 não é uma doença "de velho gordo" — é a endocrinopatia mais prevalente do planeta e a principal causa de morte cardiovascular entre pessoas com diabetes. O aluno precisa dominar DM2 porque, independentemente da especialidade escolhida, vai atender pacientes com DM todos os dias. O Brasil ocupa a 6ª posição no ranking mundial, com 15,7 milhões de pessoas vivendo com a doença; projeção global: 643 milhões de casos em 2030 e 783 milhões em 2045.</p>
+
+<p><strong>Definição formal (SBD/ADA/OMS):</strong> Diabetes Mellitus é um grupo heterogêneo de distúrbios metabólicos que apresentam em comum a <strong>hiperglicemia</strong>, resultante de defeitos na <em>ação</em> da insulina, na <em>secreção</em> de insulina, ou em ambas.</p>
+
+<p>O termo "mellitus" (melito) significa "adocicado" em latim — historicamente os médicos diagnosticavam provando a urina (doce porque vazava glicose). Guarde esse contraste para a Aula 3: "insipidus" = sem sabor (a urina do diabético insípido é aguada, não doce).</p>
+
+<h2 id="dm2-secrecao">Como a insulina é secretada normalmente</h2>
+<ul>
+<li>O pâncreas humano secreta cerca de <strong>30 U de insulina por dia</strong>.</li>
+<li>Níveis de glicose entre 80 e 100 mg/dL <em>não</em> estimulam liberação — há secreção basal mínima.</li>
+<li>Quando a glicose sobe bruscamente (ex: após refeição), a secreção acontece em <strong>duas fases</strong>:
+  <ol>
+    <li><strong>Primeira fase</strong> (hiperinsulinêmica): liberação inicial de curta duração, rápida, do estoque pré-formado nos grânulos das células beta.</li>
+    <li><strong>Segunda fase</strong>: se a hiperglicemia persistir, há uma queda momentânea seguida de liberação sustentada, crescente, até um nível constante (síntese de nova insulina).</li>
+  </ol>
+</li>
+</ul>
+<p>No DM2, a primeira perda característica é justamente a <strong>primeira fase</strong> — por isso o paciente tem glicemia pós-prandial alta muito antes da glicemia de jejum subir.</p>
+
+<h2 id="dm2-fisiopato">Fisiopatologia — o "Octeto Sinistro" (DeFronzo)</h2>
+<p>DM2 não é uma doença de um órgão só. São oito mecanismos concorrendo (imagem clássica):</p>
+<ol>
+<li><strong>Resistência à insulina no músculo esquelético</strong> (captação de glicose prejudicada)</li>
+<li><strong>Deficiência na secreção de insulina pela célula β pancreática</strong></li>
+<li><strong>Hiperprodução hepática de glicose</strong> (gliconeogênese + glicogenólise aumentadas)</li>
+<li><strong>Aumento da secreção de glucagon</strong> pela célula α</li>
+<li><strong>Diminuição do efeito das incretinas</strong> (GLP-1, GIP)</li>
+<li><strong>Lipotoxicidade</strong> — gordura visceral → adipocinas pró-inflamatórias → piora resistência</li>
+<li><strong>Aumento da reabsorção renal de glicose</strong> pelos transportadores SGLT2</li>
+<li><strong>Disfunção hipotalâmica</strong> (resistência central à insulina, desregulação de fome/saciedade)</li>
+</ol>
+<p>Cada um desses "oito pecados" corresponde a uma classe de droga moderna. Você vai ver isso voltando quando falarmos de tratamento.</p>
+
+<h3>Inflamação e resistência insulínica</h3>
+<ul>
+<li>A presença aumentada de marcadores inflamatórios no sistema imune <strong>induz</strong> resistência insulínica.</li>
+<li>O TNF-α aumentado em células adiposas é um mediador central — os adipócitos produzem hormônios chamados <strong>adipocinas</strong> que se relacionam com a piora da resistência à insulina.</li>
+<li>A associação exata inflamação ⇔ DM ainda não está totalmente esclarecida, mas clinicamente isso explica por que obesidade visceral e DM andam juntos: a gordura abdominal é um órgão endócrino inflamatório.</li>
+</ul>
+
+<div class="destaque">
+<strong>Glicotoxicidade</strong> (hiperglicemia crônica piora a resistência insulínica) e <strong>lipotoxicidade</strong> (ácidos graxos livres prejudicam a célula β e o músculo) formam um ciclo vicioso. Isso justifica por que o tratamento agressivo precoce funciona: se você "limpa" a glicose, a célula β melhora ("glucose toxicity" é reversível nos primeiros anos).
+</div>
+
+<h3>Resistência à insulina — mecanismo celular</h3>
+<ul>
+<li>Diminuição da responsividade tecidual à insulina — a mesma quantidade de insulina gera menos efeito.</li>
+<li>Aumento de gordura visceral → redução da sensibilidade corporal total à insulina.</li>
+<li>Causas moleculares: anormalidades dos receptores de insulina e, mais frequentemente, defeitos na sinalização intracelular pós-receptor (via IRS/PI3K/Akt).</li>
+<li>A resistência à insulina <strong>antecede o DM2 em 10 a 20 anos</strong>. Enquanto a célula β consegue compensar produzindo mais insulina, a glicemia fica normal (fase de hiperinsulinismo compensatório). Quando a célula β falha, a glicose sobe.</li>
+</ul>
+
+<h2 id="dm2-classificacao">Classificação (ADA/OMS)</h2>
+<p>A classificação é <strong>etiológica</strong>, não baseada em tratamento. Um paciente DM2 que usa insulina continua sendo DM2.</p>
+<ol>
+<li><strong>DM tipo 1</strong> — autoimune ou idiopático</li>
+<li><strong>DM tipo 2</strong> — 80-90% dos casos</li>
+<li><strong>Outros tipos específicos</strong></li>
+<li><strong>DM gestacional</strong></li>
+</ol>
+
+<h3>DM 2 — características</h3>
+<ul>
+<li>Antigamente chamado "DM não insulino-dependente" ou "do adulto" — nomes obsoletos.</li>
+<li>Há <strong>deficiência relativa</strong> de insulina (o pâncreas produz, mas não o suficiente para compensar a resistência).</li>
+<li>80-90% dos casos totais de DM.</li>
+<li>Hiperglicemia se desenvolve gradualmente.</li>
+<li>Obesidade presente em 60-80% (EUA, Europa) — variando entre grupos raciais.</li>
+<li>80-90% têm resistência à insulina demonstrável.</li>
+</ul>
+
+<h3>Outros tipos específicos (entram em prova!)</h3>
+<h4>Defeitos genéticos na célula β</h4>
+<ul>
+<li><strong>MODY (Maturity Onset Diabetes of the Young):</strong> diabetes familiar de aparecimento precoce (infância, adolescência, adulto jovem). 1 a 5% dos casos de DM. Herança <strong>autossômica dominante</strong>. Início da doença tipicamente aos 25 anos. Em prova: paciente jovem, magro, com forte história familiar de DM em várias gerações, sem autoanticorpos → pensar MODY.</li>
+<li><strong>Diabetes neonatal:</strong> aparece nos primeiros 6 meses de vida. 50% são transitórios. Frequentemente causado por mutações nos genes que codificam o canal de potássio sensível a ATP (Kir6.2/SUR1). Pode recidivar na puberdade.</li>
+</ul>
+
+<h4>Defeitos genéticos na ação da insulina</h4>
+<ul>
+<li>Mutações no gene do receptor de insulina → Síndrome de resistência à insulina tipo A, Leprechaunismo, Síndrome de Rabson-Mendenhall, Diabetes lipoatrófico.</li>
+</ul>
+
+<h4>Doenças do pâncreas exócrino</h4>
+<p>Pancreatite crônica, trauma ou pancreatectomia, neoplasia pancreática, fibrose cística, hemocromatose, pancreatopatia fibrocalculosa.</p>
+
+<h4>Endocrinopatias associadas ao DM</h4>
+<ul>
+<li><strong>Acromegalia</strong> (vide Aula 1 — o GH é contra-regulador)</li>
+<li>Síndrome de Cushing (cortisol é contra-regulador)</li>
+<li>Glucagonoma</li>
+<li>Feocromocitoma</li>
+<li>Hipertireoidismo</li>
+<li>Somatostatinoma</li>
+<li>Aldosteronoma</li>
+</ul>
+
+<h4>DM quimicamente induzido</h4>
+<p>Vacor (raticida Piriminil — destrói célula β), pentamidina, ácido nicotínico, <strong>glicocorticoides</strong> (causa mais comum iatrogênica), hormônio tireoidiano, diazóxido, agonistas β-adrenérgicos, <strong>tiazídicos</strong>, difenilhidantoína, interferon-γ.</p>
+
+<h4>Infecções</h4>
+<p>Rubéola congênita, citomegalovírus.</p>
+
+<h4>Síndromes genéticas associadas</h4>
+<p>Síndrome de Down, Turner, Klinefelter, Prader-Willi.</p>
+
+<h3>Diabetes Gestacional</h3>
+<ul>
+<li>Acomete 1 a 14% das gestações dependendo da população estudada.</li>
+<li>No Brasil: cerca de 7%.</li>
+<li><strong>Evolução pós-parto:</strong>
+  <ul>
+    <li>Realizar GTTO após 4 a 6 semanas do parto (para reclassificar).</li>
+    <li>10 a 63% das mulheres desenvolvem DM dentro de 5 a 16 anos — por isso o seguimento é obrigatório.</li>
+  </ul>
+</li>
+</ul>
+
+<h3>Pré-diabetes</h3>
+<p>Condição que identifica risco aumentado de progredir para DM2:</p>
+<ul>
+<li><strong>Glicemia de jejum alterada</strong>: entre 100 e 125 mg/dL (jejum ≥8h)</li>
+<li><strong>Tolerância à glicose diminuída</strong>: após GTTO com 75g, glicemia de 2 h entre 140 e 199 mg/dL</li>
+<li><strong>HbA1c entre 5,7 e 6,4%</strong></li>
+</ul>
+
+<h3>Apresentações atípicas — cuidado!</h3>
+<ul>
+<li>Criança/adolescente com início insidioso, acantose nigricans, obesidade e disglicemia leve → DM2 em jovem.</li>
+<li>Adulto com apresentação <em>abrupta</em>, sem hiperglicemia prévia, sem fator desencadeante, sem obesidade e/ou com história de autoimunidade → pensar em DM1 "tardio" (LADA).</li>
+<li>Adulto que começa com hipoglicemiante oral e precisa de insulina nos primeiros anos para manter controle adequado → reconsiderar se é realmente DM2.</li>
+<li>Cetoacidose diabética ao diagnóstico em adulto obeso, evoluindo depois com baixas doses de insulina → "DM2 propenso a cetose" (ketosis-prone DM2).</li>
+</ul>
+
+<h3>Quem deve ser rastreado para DM</h3>
+<ul>
+<li>Parentes de 1º grau com DM</li>
+<li>Raça/etnia de alto risco (afro-americanos, latinos, asiático-americanos)</li>
+<li>História de DVC</li>
+<li>HAS</li>
+<li>SOP (síndrome dos ovários policísticos)</li>
+<li>HDL &lt; 35 mg/dL ou triglicerídeos &gt; 250 mg/dL</li>
+<li>História de DMG</li>
+<li>HIV</li>
+<li>Uso de medicamentos que elevam a glicose (corticoides, tiazídicos)</li>
+</ul>
+
+<h2 id="dm2-clinica">Quadro clínico</h2>
+<p>Os "4 Ps" clássicos são mais característicos de DM1, mas aparecem em DM2 descompensado:</p>
+<ul>
+<li><strong>Poliúria</strong> — diurese osmótica: a glicose ultrapassa o limiar renal (~180 mg/dL) e arrasta água</li>
+<li><strong>Polidipsia</strong> — sede por perda hídrica</li>
+<li><strong>Polifagia</strong> — fome apesar de comer (a glicose "não entra" nas células)</li>
+<li><strong>Perda de peso</strong> — catabolismo (mais típica de DM1, mas ocorre em DM2 grave)</li>
+</ul>
+<p>A maioria dos DM2 é <strong>assintomática no diagnóstico</strong> e é descoberta em exames de rotina ou já nas complicações (infarto, AVC, retinopatia).</p>
+
+<h2 id="dm2-diagnostico">Diagnóstico</h2>
+<p>Qualquer um dos critérios abaixo faz diagnóstico (precisa confirmar em segunda amostra, exceto o primeiro):</p>
+<table>
+<thead><tr><th>Critério</th><th>Valor</th></tr></thead>
+<tbody>
+<tr><td>Sintomas de hiperglicemia + glicemia casual</td><td>≥ 200 mg/dL</td></tr>
+<tr><td>Glicemia de jejum (≥8 h)</td><td>≥ 126 mg/dL</td></tr>
+<tr><td>GTTO 75g — glicemia de 2 h</td><td>≥ 200 mg/dL</td></tr>
+<tr><td>Glicemia de 1 h no GTTO (critério mais recente)</td><td>≥ 209 mg/dL</td></tr>
+<tr><td>HbA1c (ADA 2010)</td><td>≥ 6,5% (confirmar em outra amostra)</td></tr>
+</tbody>
+</table>
+
+<h3>Hemoglobina glicada (HbA1c)</h3>
+<ul>
+<li>Reflete a média glicêmica dos <strong>últimos ~3 meses</strong> (vida útil da hemácia).</li>
+<li>Diagnóstico: ≥ 6,5% (confirmar)</li>
+<li>Pré-DM / alto risco para DM: 5,7 a 6,4%</li>
+<li><strong>Fatores que interferem na HbA1c:</strong>
+  <ul>
+    <li>Anemia hemolítica ou estados hemorrágicos → diminuem o tempo de vida das hemácias → HbA1c <em>falsamente baixa</em></li>
+    <li>Vitamina C e E em altas doses → podem inibir a glicação → falsamente baixa</li>
+    <li>Hipertrigliceridemia &gt; 2000 mg/dL → interferência analítica</li>
+  </ul>
+</li>
+</ul>
+
+<h3>Frutosamina</h3>
+<ul>
+<li>Proteína glicada, constituída principalmente de albumina.</li>
+<li>Reflete controle glicêmico nos <strong>últimos 7 a 14 dias</strong> (vida da albumina é mais curta que a da hemácia).</li>
+<li>Usada em pacientes com hemoglobinopatias, onde a HbA1c não é confiável.</li>
+</ul>
+
+<h3>Peptídeo C</h3>
+<ul>
+<li>Analisa a <strong>capacidade de secreção de insulina pelo pâncreas</strong> (é liberado junto com a insulina em proporção 1:1, a partir da proinsulina).</li>
+<li>&gt; 0,9 ng/mL indica reserva de insulina preservada — útil para diferenciar DM1 (peptídeo C baixo, célula β destruída) de DM2 (peptídeo C normal ou alto).</li>
+</ul>
+
+<div class="caso">
+<strong>Mulher, 54 anos,</strong> obesa (IMC 32), HAS em tratamento, rastreamento de rotina no posto: glicemia de jejum 142 mg/dL. Assintomática. Conduta: repetir a glicemia em outra amostra <em>ou</em> pedir HbA1c. Se a segunda glicemia também vier ≥ 126, ou se a HbA1c vier ≥ 6,5%, fecha diagnóstico de DM2. Note que sintomas não são obrigatórios — a maioria dos DM2 é assintomática no diagnóstico.
+</div>
+
+<h2 id="dm2-avaliacao">Avaliação clínica no diagnóstico</h2>
+<p>História: início do quadro, sintomas de hiperglicemia, fatores de risco cardiovascular, história familiar.</p>
+<p>Exame físico:</p>
+<ul>
+<li>Peso, altura, IMC</li>
+<li>PA em diferentes posições (buscar hipotensão postural — neuropatia autonômica)</li>
+<li>Circunferência abdominal: homem ≤ 105 cm, mulher ≤ 88 cm (valores usados nesta aula)</li>
+<li>Palpação de pulsos em membros inferiores (DAOP)</li>
+<li>Exame da pele (locais de aplicação de insulina, acantose nigricans)</li>
+<li>Exame da cabeça e pescoço (sopros em carótidas, palpação de tireoide)</li>
+<li>Exame neurológico (marcha, reflexos, sensibilidade com monofilamento)</li>
+<li><strong>Exame dos pés</strong> — toda consulta (prevenção de pé diabético)</li>
+</ul>
+
+<h2 id="dm2-tratamento">Tratamento</h2>
+
+<h3>Dieta — 4 objetivos</h3>
+<ol>
+<li>Manter glicemia de jejum normal ou próxima do normal</li>
+<li>Controle lipídico</li>
+<li>Manutenção ou adequação do peso</li>
+<li>Prevenção de hipoglicemias, complicações agudas e crônicas</li>
+</ol>
+
+<p>Recomendações específicas da SBD:</p>
+<ul>
+<li>Em pré-DM com sobrepeso/obesidade: <strong>restrição calórica + atividade física</strong> para perda de peso e redução do risco de progressão para DM2.</li>
+<li><strong>Reduzir bebidas com açúcares</strong> (naturais ou adicionados) — associadas a maior risco de DM2.</li>
+<li>Pessoas com DM2 e sobrepeso/obesidade: perda de, no mínimo, <strong>5% do peso corporal inicial</strong> para melhora do controle glicêmico.</li>
+<li>Fórmulas nutricionais especializadas para diabetes (oral ou enteral) podem ser consideradas como adjuvantes.</li>
+</ul>
+
+<h3>Bases fisiopatológicas do tratamento farmacológico</h3>
+<p>Os três pilares históricos são:</p>
+<ol>
+<li>Resistência insulínica periférica (adipócito e músculo)</li>
+<li>Deficiente secreção de insulina pelo pâncreas</li>
+<li>Excessiva produção hepática de glicose</li>
+</ol>
+<p>Cada classe de droga age em um ponto. É recomendado avaliar em todos: risco cardiovascular, IMC, HbA1c e função renal <em>antes</em> de escolher a estratégia.</p>
+
+<h3>Classes de antidiabéticos</h3>
+<ol>
+<li>Secretagogos de insulina (sulfonilureias, glinidas)</li>
+<li>Sensibilizadores de insulina com ação primária no fígado (biguanidas — metformina)</li>
+<li>Sensibilizadores de insulina com ação periférica (glitazonas)</li>
+<li>Retardadores da absorção de carboidratos (acarbose)</li>
+<li>Potenciadores de incretinas: inibidores de DPP-4, agonistas de GLP-1/GIP</li>
+<li>Inibidores de SGLT2 (bloqueiam reabsorção renal de glicose)</li>
+</ol>
+
+<h4>Sulfonilureias</h4>
+<ul>
+<li>Drogas: <strong>glibenclamida (Daonil) 5 mg</strong>; <strong>gliclazida (Diamicron MR) 60 mg</strong> (estudo ADVANCE mostrou segurança cardiovascular); <strong>glimepirida (Amaryl) 1/2/4/8 mg</strong>.</li>
+<li>Mecanismo: fecham os canais de K+-ATP na célula β → despolarização → entrada de Ca²⁺ → liberação de insulina.</li>
+<li><strong>Efeitos colaterais:</strong> ganho de peso e <strong>hipoglicemia</strong> (a principal limitação, especialmente com glibenclamida).</li>
+<li><strong>Contra-indicações:</strong> insuficiência renal e hepática grave, gravidez e amamentação.</li>
+</ul>
+
+<h4>Glinidas</h4>
+<ul>
+<li>Drogas: repaglinida (Prandin), nateglinida (Starlix).</li>
+<li>Fecham canais de K+ em sítios e afinidade diferentes das sulfonilureias.</li>
+<li>Melhoram principalmente a glicemia <strong>pós-prandial</strong> (ação rápida, curta).</li>
+<li>Também causam hipoglicemia e ganho de peso, mas menos que sulfonilureias.</li>
+</ul>
+
+<h4>Tiazolidinedionas (Glitazonas)</h4>
+<ul>
+<li>Aumentam a sensibilidade à insulina no músculo, adipócito e hepatócito — "sensibilizadores".</li>
+<li><strong>Pioglitazona (Actos) 15 ou 30 mg</strong> — única disponível no Brasil.</li>
+<li>Vantagens: ação na prevenção do DM, melhora do perfil lipídico, redução da gordura hepática (esteatose).</li>
+<li><strong>Efeitos colaterais:</strong> hepatotoxicidade, ganho de peso, retenção hídrica (cuidado em ICC).</li>
+</ul>
+
+<h4>Biguanidas — metformina</h4>
+<ul>
+<li>Mecanismo: inibe a neoglicogênese hepática e melhora a sensibilidade periférica à insulina.</li>
+<li>Apresentações: <strong>Metformina 500, 850, 1000 mg</strong> (comum) e <strong>Metformina XR 500, 750, 850 mg</strong> (liberação prolongada, melhor tolerância GI).</li>
+<li><strong>Vantagens:</strong> não causa hipoglicemia isolada; diminui eventos cardiovasculares; ação na prevenção do DM; reduz peso; <strong>é a primeira escolha no DM2 (piloto do tratamento)</strong>.</li>
+<li><strong>Contra-indicações:</strong> insuficiência renal (a aula apresenta o critério clássico por creatinina: &gt; 1,4 mulher / &gt; 1,5 homem; as diretrizes atuais ADA/SBD/KDIGO usam <strong>TFGe</strong>: sem ajuste se ≥ 45 mL/min, reduzir dose entre 30-44, contraindicada se &lt; 30); ICC descompensada.</li>
+<li><strong>Gravidez:</strong> historicamente proscrita, atualmente <em>liberada</em> (reavaliada).</li>
+<li>Efeito colateral mais comum: sintomas gastrointestinais (náusea, diarreia), que melhoram com dose fracionada e forma XR.</li>
+</ul>
+
+<h4>Inibidores da α-glicosidase</h4>
+<ul>
+<li><strong>Acarbose (Glucobay) 50 mg.</strong></li>
+<li>Reduzem a glicemia pós-prandial retardando a digestão dos carboidratos no intestino.</li>
+<li>Efeitos colaterais: dor abdominal, gases, diarreia (por fermentação bacteriana).</li>
+<li>Contra-indicações: distúrbios gastrointestinais.</li>
+</ul>
+
+<h4>Incretinas — conceito</h4>
+<p>Incretinas são hormônios intestinais que <strong>amplificam a secreção de insulina pós-prandial</strong>:</p>
+<ul>
+<li><strong>GLP-1</strong> (glucagon-like peptide 1): estimula secreção de insulina e inibe a de glucagon</li>
+<li><strong>GIP</strong> (polipeptídeo insulinotrófico dependente de glicose)</li>
+</ul>
+
+<h4>Inibidores de DPP-4 (Gliptinas)</h4>
+<ul>
+<li>O GLP-1 é degradado pela enzima DPP-4. Inibindo a enzima, o GLP-1 endógeno dura mais.</li>
+<li>Estimulam a secreção de insulina <strong>somente no estado de hiperglicemia</strong> (daí baixo risco de hipoglicemia).</li>
+<li>Reduzem o esvaziamento gástrico e controlam a secreção de glucagon pelas células α.</li>
+<li>Drogas: sitagliptina (Januvia 50/100 mg), vildagliptina (Galvus 50 mg), saxagliptina (Onglysa), alogliptina (Nesina 12,5/25 mg), linagliptina (Tryenta 2,5/5 mg).</li>
+</ul>
+
+<h4>Agonistas de GLP-1 e GIP</h4>
+<p>São moléculas injetáveis (ou semaglutida oral) que imitam o GLP-1 de forma mais potente e resistente à degradação:</p>
+<ul>
+<li>Exenatida (Byetta)</li>
+<li>Liraglutida (Victoza)</li>
+<li>Lixisenatida (Lyxumia)</li>
+<li><strong>Semaglutida (Ozempic)</strong> — versão oral disponível desde 2020 (Rybelsus)</li>
+<li><strong>Tirzepatida (Mounjaro)</strong> — <em>dual</em> GLP-1 + GIP, muito potente para peso e glicose</li>
+<li>Retatrutida — triplo agonista GIP/GLP-1/Glucagon (em estudo)</li>
+</ul>
+
+<h4>Inibidores de SGLT2</h4>
+<ul>
+<li>Bloqueiam o cotransportador sódio-glicose tipo 2 no túbulo proximal → diminuem a reabsorção renal de glicose → glicosúria terapêutica.</li>
+<li>Drogas: <strong>dapagliflozina (Forxiga) 10 mg</strong>, <strong>canagliflozina (Invokana) 300 mg</strong>, <strong>empagliflozina (Jardiance) 10/25 mg</strong>.</li>
+<li><strong>Efeitos colaterais:</strong> ITU, infecções genitais/vaginais (cândida — porque você está jogando glicose na urina), perda de peso.</li>
+<li>Vantagens enormes: reduzem mortalidade cardiovascular, hospitalização por ICC e progressão de doença renal — por isso estão entrando em diretrizes como drogas preferenciais em alto risco.</li>
+</ul>
+
+<h3>Escolha do hipoglicemiante</h3>
+<p>Considerar: peso, idade, glicemia de jejum, HbA1c, doenças associadas, contraindicações, interações medicamentosas.</p>
+<p><strong>Lógica clínica resumida (abordagem SBD):</strong></p>
+<ul>
+<li><strong>Manifestações leves</strong> — glicemia &lt; 200 mg/dL, HbA1c &lt; 7,5%, sintomas leves ou ausentes: mudança de estilo de vida (MEV) + metformina. Reavaliar em 4-6 semanas; se não atingir metas, associar segunda droga.</li>
+<li><strong>Manifestações moderadas</strong> — glicemia 200-300 mg/dL, HbA1c 7,5-9,0%, sem critérios graves: MEV + metformina + <em>outro antidiabético oral</em>.</li>
+<li><strong>Manifestações severas</strong> — glicemia &gt; 300 mg/dL, HbA1c &gt; 9%, sintomas importantes (perda de peso, cetonúria): <strong>insulinoterapia imediata</strong>.</li>
+</ul>
+
+<div class="destaque">
+<strong>Ponto fino da SBD (idosos):</strong>
+<ul>
+<li>Em idosos frágeis com DM2, baixo peso (IMC &lt; 22) e HbA1c &lt; 10%: considerar inibidores de DPP-4 em monoterapia (não causam hipoglicemia nem perda de peso); ou gliclazida MR / metformina XR em doses baixas.</li>
+<li>Em idosos eutróficos ou com excesso de peso: considerar inibidores de SGLT2 (redução de hospitalização por IC, morte CV e progressão de doença renal).</li>
+<li>Meta de HbA1c &lt; 8,0% em idosos frágeis (em vez do &lt; 7,0% padrão), para evitar hipoglicemia.</li>
+</ul>
+</div>
+
+<h2 id="dm2-insulinas">Insulinoterapia</h2>
+<ul>
+<li><strong>Dose de início em DM2 combinado com HO:</strong> 10-15 U/dia ou 0,2 U/kg/dia em obesos (insulina basal noturna).</li>
+<li><strong>Dose cheia (pleno esquema basal-bolus):</strong> 0,3 a 0,7 U/kg/dia, fracionada como:
+  <ul>
+    <li>50% basal (NPH, glargina, detemir, degludeca)</li>
+    <li>50% em ações rápida ou ultrarrápida (regular, lispro, asparte, glulisina) distribuída nas refeições</li>
+  </ul>
+</li>
+</ul>
+
+<h3>Insulinas modernas destacadas na aula</h3>
+<ul>
+<li><strong>Tresiba (degludeca):</strong> basal ultralonga, maior redução de HbA1c, menor risco de hipoglicemia.</li>
+<li><strong>Toujeo (glargina 300 U):</strong> menos hipoglicemia, menor ganho de peso que glargina 100.</li>
+<li><strong>Xultophy:</strong> combinação fixa de degludeca + liraglutida (insulina basal + GLP-1).</li>
+<li><strong>Soliqua:</strong> combinação glargina + lixisenatida.</li>
+<li><strong>Fiasp:</strong> aspart ultrarrápida.</li>
+<li><strong>Afrezza:</strong> insulina inalatória (em desuso).</li>
+<li><strong>Awiqli / Icodec:</strong> insulina basal de aplicação <strong>semanal</strong> — novidade.</li>
+</ul>
+
+<h3>Tecnologias em DM</h3>
+<ul>
+<li><strong>Freestyle Libre:</strong> sensor de glicose contínuo subcutâneo, leitura por aproximação, dispensa picada do dedo.</li>
+<li><strong>Smart Pens (ex: NovoPen Echo):</strong> canetas inteligentes com registro de doses, permitem doses mais fracionadas.</li>
+<li><strong>i-Port Advance:</strong> dispositivo para administração direta de insulina, reduz perfurações cutâneas — pode ficar por até 72 h / 75 aplicações. Se o paciente aplica 5×/dia, reduz de 150 para 10 picadas por mês (93% menos).</li>
+<li><strong>Bomba de insulina.</strong></li>
+<li><strong>Pâncreas artificial:</strong> sistema que integra sensor contínuo + bomba + algoritmo, libera insulina automaticamente quando detecta glicose fora da faixa alvo.</li>
+</ul>
+
+<h3>Metas glicêmicas (conforme apresentadas na aula)</h3>
+<table>
+<thead><tr><th>Parâmetro</th><th>Meta (aula)</th></tr></thead>
+<tbody>
+<tr><td>Glicemia capilar de jejum</td><td>&lt; 110 mg/dL</td></tr>
+<tr><td>Glicemia capilar 2 h pós-prandial</td><td>&lt; 130-140 mg/dL</td></tr>
+<tr><td>Glicemia capilar pré-prandial</td><td>&lt; 110 mg/dL</td></tr>
+<tr><td>HbA1c (geral)</td><td>&lt; 7,0%</td></tr>
+<tr><td>HbA1c (idoso frágil)</td><td>&lt; 8,0%</td></tr>
+</tbody>
+</table>
+<p style="font-size:0.9em;color:var(--text-muted);margin-top:6px"><em>Nota de atualização:</em> as metas capilares acima seguem o que foi apresentado em aula. As diretrizes atuais ADA/SBD 2024 são ligeiramente mais permissivas para a maioria dos adultos: <strong>glicemia de jejum/pré-prandial 80-130 mg/dL</strong> e <strong>pós-prandial &lt; 180 mg/dL</strong> (1-2 h após início da refeição), buscando equilíbrio entre controle e risco de hipoglicemia. A meta de HbA1c &lt; 7% permanece.</p>
+
+<div class="conexao">
+<strong>Triagem de DM2 em jovens:</strong> crianças e adolescentes &lt; 18 anos com excesso de peso ou obesidade (IMC &gt; percentil 85 para idade e sexo) e pelo menos um fator de risco adicional: história materna de DM ou DMG na gestação, DM tipo 2 em parentes de 1º ou 2º grau, raça/etnia de alto risco, ou sinais de resistência à insulina (acantose nigricans, HAS, dislipidemia, SOP, peso baixo ao nascimento).
+</div>
+
+<div class="resumo-aula">
+<h3>Resumo rápido — DM2</h3>
+<ul>
+<li><strong>Definição:</strong> hiperglicemia por defeito de secreção, ação ou ambos. DM2 = deficiência relativa + resistência insulínica.</li>
+<li><strong>Octeto sinistro:</strong> resistência muscular, déficit β, glicogênese hepática, glucagon ↑, incretinas ↓, lipotoxicidade, reabsorção renal, disfunção hipotalâmica.</li>
+<li><strong>Diagnóstico:</strong> glicemia jejum ≥126, 2h-GTTO ≥200, casual ≥200 c/ sintomas, HbA1c ≥6,5% (confirmar todos em 2ª amostra, exceto o 1º).</li>
+<li><strong>Pré-DM:</strong> glicemia 100-125 jejum, 140-199 GTTO, HbA1c 5,7-6,4%.</li>
+<li><strong>Primeira escolha:</strong> metformina + MEV. Se grave ou HbA1c &gt;9% c/ sintomas → insulina.</li>
+<li><strong>Drogas-pilar:</strong> metformina, sulfonilureias (hipoglicemia), glitazonas (Pio), iDPP4 (Januvia), <strong>aGLP-1 (Ozempic, Mounjaro — benefício CV e peso)</strong>, iSGLT2 (Jardiance, Forxiga — benefício CV, renal, IC), insulinas.</li>
+<li><strong>Meta geral:</strong> HbA1c &lt; 7%. Idoso frágil: &lt; 8%.</li>
+<li><strong>Rastreio infantil:</strong> obesos c/ fator de risco.</li>
+</ul>
+</div>
+</section>
+
+<!-- ==================== AULA 3 — DI ==================== -->
+
+<section id="di">
+<h1>Aula 3 — Diabetes Insípidus (Deficiência do ADH)</h1>
+
+<h2 id="di-adh">Contexto: por que a fisiologia do ADH importa</h2>
+<p>Diabetes insípidus é uma das doenças mais confundidas por aluno porque o nome lembra DM, mas não tem nada a ver com glicose — tem a ver com <strong>água</strong>. "Insipidus" em latim significa "sem sabor": a urina é tanta e tão diluída que é praticamente água. Em prova, ele aparece tipicamente depois de: cirurgia de hipófise (como você viu na Aula 1), traumatismo craniano, em paciente psiquiátrico com "sede insaciável", ou em quadro genético (raro).</p>
+
+<p>O motivo fisiológico: o corpo mantém a osmolaridade plasmática normal em torno de <strong>285-295 mOsm/kg</strong>. O <strong>limiar osmótico para liberação do ADH</strong> é mais baixo, em torno de <strong>280-285 mOsm/kg</strong> — basta um pequeno aumento (1-2%) acima desse limiar para que o ADH seja liberado e retenha água. Se cai (água em excesso), o rim elimina água. Se sobe (desidratação), o corpo faz duas coisas: (1) sente sede (entrada de água) e (2) libera ADH (retém água no rim).</p>
+
+<h2 id="di-fisio">ADH: síntese, liberação e ação</h2>
+
+<h3>Síntese</h3>
+<p>Sintetizado nos neurônios magnocelulares do hipotálamo (núcleos supraóptico e paraventricular) a partir de um precursor: <strong>pré-pró-vasopressina → pró-vasopressina</strong> (que contém vasopressina + neurofisina II + copeptina) → <strong>vasopressina (ADH)</strong>. É transportado ao longo dos axônios pelo trato hipotálamo-hipofisário até a neuro-hipófise, onde é armazenado e liberado na circulação. Essa origem é importante porque explica por que trauma da haste hipofisária quase sempre causa DI central: o trajeto dos axônios é interrompido.</p>
+
+<h3>Liberação — estímulos osmóticos e não osmóticos</h3>
+<ul>
+<li><strong>Principal estímulo (osmótico):</strong> osmorreceptores no hipotálamo anterior. Um aumento de apenas <strong>1 a 2%</strong> na osmolaridade plasmática já dispara a liberação de ADH — sensibilidade enorme.</li>
+<li><strong>Estímulos não osmóticos:</strong>
+  <ul>
+    <li>Barorregulação (hipovolemia grave → libera ADH mesmo sem hiperosmolaridade)</li>
+    <li>Náuseas e vômitos (potentes estimuladores)</li>
+    <li>Drogas: lítio e carbamazepina (modulam o sistema)</li>
+    <li>Álcool — <strong>inibe</strong> o ADH (por isso álcool dá vontade de urinar e causa desidratação)</li>
+    <li>Frio</li>
+  </ul>
+</li>
+</ul>
+
+<h3>Ações do ADH</h3>
+<ul>
+<li><strong>Ação antidiurética</strong> — principal e o que interessa nesta aula: conservação de água pelo rim.</li>
+<li><strong>Ação vasoconstritora (pressora)</strong> — em altas concentrações, age sobre a <strong>musculatura lisa vascular</strong> via receptor V1a, causando vasoconstrição. Daí o nome antigo "vasopressina". Pode também estimular contração da musculatura lisa do trato gastrointestinal.</li>
+</ul>
+
+<h3>Mecanismo renal — as aquaporinas</h3>
+<p>Este é o coração da aula:</p>
+<ul>
+<li>O aumento da permeabilidade à água, mediado pelo ADH, ocorre pela inserção de <strong>canais específicos de água chamados aquaporinas</strong> na membrana das células do túbulo coletor.</li>
+<li>As aquaporinas são <strong>seletivas para água</strong> — excluem ureia e sódio.</li>
+<li>A aquaporina relevante no túbulo coletor é a <strong>AQP2</strong>.</li>
+<li>Existem três receptores de vasopressina: V1, V2 e V3. O que interessa aqui é o <strong>V2</strong>: é ele que produz as ações renais do ADH.</li>
+<li>Os receptores V2 estão nas superfícies <strong>basolaterais</strong> do epitélio renal e são responsáveis pela ação antidiurética do ADH no túbulo coletor e na porção ascendente da alça de Henle.</li>
+<li>O gene que codifica o receptor V2 está localizado no <strong>braço longo do cromossomo X</strong>. Por isso o <strong>DI nefrogênico hereditário é recessivo ligado ao X</strong> — afeta predominantemente homens.</li>
+</ul>
+
+<p>Em termos de circuito: ADH se liga ao V2 (basolateral) → aumenta AMPc intracelular → vesículas contendo AQP2 são inseridas na membrana apical → a água do lúmen tubular é reabsorvida pelo gradiente osmótico. Sem ADH funcionante, o túbulo coletor é impermeável à água: a urina sai com a osmolaridade do filtrado (muito diluída) e o paciente urina volumes enormes.</p>
+
+<h2 id="di-tipos">Definição e tipos</h2>
+<p><strong>Diabetes insípidus:</strong> distúrbio do metabolismo da água decorrente do não-funcionamento da cascata metabólica do ADH, caracterizado por <strong>poliúria hipotônica</strong> (urina diluída).</p>
+
+<p>Critérios práticos: <strong>volume urinário de 24 h &gt; 50 mL/kg com osmolaridade urinária &lt; 300 mOsm/kg</strong>. Se a diurese é aumentada <em>sem</em> aumento real do volume urinário, suspeitar de anormalidade urológica (ex: bexiga hiperativa).</p>
+
+<h3>Os quatro tipos</h3>
+<ol>
+<li><strong>DI central (neurogênico)</strong> — deficiência na <em>síntese</em> de ADH (problema no hipotálamo/haste/neuro-hipófise)</li>
+<li><strong>DI nefrogênico</strong> — insensibilidade <em>renal</em> ao ADH (problema no receptor V2 ou AQP2)</li>
+<li><strong>DI gestacional</strong> — <em>degradação</em> aumentada do ADH por uma enzima placentária (vasopressinase). Muito raro.</li>
+<li><strong>Polidipsia primária</strong> — ingestão primária excessiva de água (o ADH está normal, mas o paciente bebe demais)</li>
+</ol>
+
+<h3>DI central — causas</h3>
+<h4>Genético: DI central familiar</h4>
+<ul>
+<li><strong>DI central familiar autossômico dominante</strong> — forma mais comum, início entre 1 e 6 anos de idade, mutação no gene AVP.</li>
+<li><strong>Síndrome de Wolfram / DIDMOAD</strong>: DM + atrofia óptica + DI neurogênico + surdez (acrônimo: <em>Diabetes Insipidus, Diabetes Mellitus, Optic Atrophy, Deafness</em>). Autossômica <strong>recessiva</strong> (gene WFS1). É uma síndrome distinta do DI familiar isolado.</li>
+</ul>
+
+<h4>Congênitas</h4>
+<p>Associado a doenças congênitas como displasia septo-óptica, lábio leporino, agenesia ou hipogenesia de hipófise.</p>
+
+<h4>Adquirido</h4>
+<ul>
+<li><strong>Trauma:</strong> cirúrgico (pós-cirurgia de hipófise) ou TCE</li>
+<li><strong>Neoplasias:</strong> craniofaringiomas, lesões metastáticas (mama em mulher, pulmão em homem)</li>
+<li><strong>Infecciosas:</strong> meningites</li>
+<li><strong>Granulomatosas:</strong> histiocitose, sarcoidose</li>
+<li><strong>Hematológicas:</strong> linfomas</li>
+<li><strong>Autoimune</strong> — associado a outras doenças como LES</li>
+<li><strong>Vascular</strong></li>
+<li><strong>Idiopático</strong> (aproximadamente 50% dos DI neurogênicos; predomínio masculino; diagnóstico por exclusão)</li>
+</ul>
+
+<div class="destaque">
+<strong>Resposta trifásica clássica ao trauma/cirurgia hipofisária:</strong>
+<ol>
+<li><strong>1ª fase:</strong> diminuição/parada da produção de ADH → poliúria e polidipsia acentuadas (começa em horas)</li>
+<li><strong>2ª fase:</strong> redução progressiva do volume urinário por descarga de ADH pelos neurônios lesados morrendo (pode simular SIADH — <em>cuidado com a hiponatremia iatrogênica se o paciente estiver recebendo DDAVP/fluidos</em>)</li>
+<li><strong>3ª fase:</strong> retorno ao DI central definitivo (ou recuperação, se lesão parcial)</li>
+</ol>
+Prova gosta muito desse padrão — é o porquê de o pós-operatório de neurocirurgia hipofisária ser tão perigoso.
+</div>
+
+<h3>DI nefrogênico — causas</h3>
+<h4>Genético/congênito</h4>
+<ul>
+<li>Recessivo ligado ao X (defeito no gene do receptor V2, no braço longo do X)</li>
+<li>Doença renal rara em que os rins não conseguem concentrar urina apesar de ADH normal/aumentado</li>
+<li>Início na infância, história familiar positiva</li>
+</ul>
+
+<h4>Adquirido</h4>
+<ul>
+<li><strong>Drogas:</strong> <strong>lítio</strong> (causa clássica), contrastes radiológicos — ambas reduzem a expressão de AQP2</li>
+<li><strong>Distúrbios metabólicos:</strong> hipocalemia, hipercalcemia</li>
+<li><strong>Doenças renais crônicas:</strong> rins policísticos, pielonefrite crônica</li>
+<li><strong>Doenças sistêmicas:</strong> anemia falciforme, hemocromatose</li>
+<li>Gravidez</li>
+<li>Idiopático</li>
+</ul>
+
+<h3>DI gestacional</h3>
+<p>Raro. Ocorre pela degradação aumentada do ADH por uma <strong>vasopressinase placentária</strong>. O achado clássico é que responde a DDAVP (análogo sintético resistente à enzima) mas não ao ADH natural.</p>
+
+<h3>Polidipsia primária</h3>
+<h4>Polidipsia dipsogênica (DI dipsogênico)</h4>
+<ul>
+<li>Mecanismo defeituoso da sede ou aumento da sensação de sede — o limiar da sede está "bagunçado", o paciente bebe mesmo sem necessidade osmótica.</li>
+<li>Idiopático em 75%</li>
+<li>Drogas: lítio, carbamazepina</li>
+<li>Doenças envolvendo a base do crânio</li>
+</ul>
+
+<h4>Polidipsia psicogênica</h4>
+<ul>
+<li>Distúrbio psiquiátrico — paciente bebe água compulsivamente como comportamento ("limpeza corporal")</li>
+<li>Esquizofrenia e transtorno bipolar são as associações mais comuns</li>
+<li><strong>Pista clínica importante:</strong> a polidipsia psicogênica tipicamente <strong>não tem nictúria</strong> (o paciente dorme) — enquanto DI verdadeiro urina tanto de dia quanto à noite</li>
+</ul>
+
+<h2 id="di-clinica">Quadro clínico</h2>
+<ul>
+<li><strong>Poliúria:</strong> pode chegar a <strong>18 L/dia</strong> em casos graves</li>
+<li><strong>Polidipsia:</strong> sede persistente, preferência por água gelada</li>
+<li><strong>Nictúria:</strong> presente no DI central e nefrogênico; <em>ausente</em> na polidipsia psicogênica</li>
+<li><strong>Alterações da hiperosmolaridade plasmática</strong> (se o paciente não conseguir beber o suficiente): confusão mental, irritabilidade, coma, convulsões</li>
+</ul>
+
+<div class="caso">
+<strong>Homem, 34 anos,</strong> internado por TCE grave após acidente de moto há 4 dias. Nas últimas 12 h, o enfermeiro nota diurese de 350-400 mL/hora, com urina clara como água. Na gasometria: Na⁺ 156 mEq/L, osmolaridade plasmática 315 mOsm/kg. Densidade urinária 1.002, osmolaridade urinária 85 mOsm/kg. <strong>Diagnóstico:</strong> DI central pós-traumático. Conduta: repor água livre (oral se consciente, 5% dextrose EV se não) + DDAVP. Atenção à possível evolução trifásica nas próximas 48-72 h.
+</div>
+
+<h2 id="di-diagnostico">Diagnóstico laboratorial</h2>
+<ul>
+<li><strong>Hipostenúria persistente</strong> (urina "clara como água"), densidade urinária &lt; 1.010, osmolaridade urinária &lt; 300 mOsm/kg</li>
+<li><strong>Sódio sérico discretamente elevado</strong> (porque o paciente "perde água livre")</li>
+<li>Dosagem de ADH (copeptina é o marcador moderno)</li>
+</ul>
+
+<h3>Teste terapêutico com desmopressina</h3>
+<p>Administra-se DDAVP (desmopressina) por 2 a 3 dias e observa:</p>
+<ul>
+<li><strong>Redução da polidipsia e poliúria, com concentração da urina, sem hiponatremia</strong> → <strong>DI central</strong> (o paciente reage bem porque só lhe faltava o hormônio).</li>
+<li><strong>Poliúria reduzida, mas a polidipsia persiste</strong> → <strong>polidipsia primária</strong> (o problema é comportamental, não hormonal).</li>
+<li><strong>Sem resposta nenhuma</strong> → DI nefrogênico (o rim não escuta o hormônio).</li>
+</ul>
+
+<h3>Teste de privação hídrica (desidratação)</h3>
+<p>Teste padrão-ouro, feito em ambiente hospitalar monitorado:</p>
+<ol>
+<li>Restringe líquidos por ~4 horas (mais, se necessário, até perder 3-5% do peso ou osmolaridade plasmática subir acima de 295)</li>
+<li>Mede peso corporal, osmolaridade plasmática e urinária seriadas (fórmula prática: <code>2 × (Na + K) + glicemia/18</code>)</li>
+<li>Em pessoa normal: a urina concentra (osm urinária > 600-800 mOsm/kg)</li>
+<li>Em DI: a urina <em>não</em> concentra apesar da privação</li>
+<li>Ao final, administra DDAVP: se a urina finalmente concentrar → DI central. Se não concentrar nada → DI nefrogênico.</li>
+</ol>
+<p>Exames de imagem (RM de hipófise) são importantes para investigar a causa do DI central — procurar tumor, sarcoidose, metástase, espessamento da haste.</p>
+
+<h2 id="di-tratamento">Tratamento</h2>
+
+<h3>Urgência</h3>
+<ul>
+<li>Correção da hipernatremia com cálculo do <strong>déficit de água livre</strong>:
+<br><code>Déficit H₂O = Peso × 0,6 × [(Na atual / 140) − 1]</code>
+</li>
+<li>Reposição lenta para evitar edema cerebral (não corrigir mais rápido que 0,5 mEq/L/h ou 10-12 mEq/L/dia)</li>
+<li>Tratar a doença de base</li>
+</ul>
+
+<h3>DI central — reposição de vasopressina</h3>
+<p>Droga padrão: <strong>DDAVP (desmopressina)</strong>, análogo sintético com atividade antidiurética pura (sem ação pressora) e meia-vida longa. Apresentações:</p>
+<ul>
+<li>Solução intranasal (10 μg/puff)</li>
+<li>Comprimidos 0,1 e 0,2 mg</li>
+<li>Ampolas 4 μg/mL (uso parenteral)</li>
+</ul>
+
+<h3>DI nefrogênico</h3>
+<p>Não adianta dar ADH (o rim não responde). Estratégia:</p>
+<ul>
+<li><strong>Ingestão adequada de líquidos</strong> (muita, sempre)</li>
+<li><strong>Dieta hipossódica</strong> (reduz a carga de soluto que o rim precisa excretar e, portanto, a obrigação de urinar volume)</li>
+<li><strong>Anti-inflamatórios</strong> (AINEs): aumentam indiretamente a expressão de AQP2 e reduzem a poliúria</li>
+<li>Diuréticos tiazídicos (paradoxal, mas funcionam): induzem leve depleção volêmica → aumenta reabsorção proximal de água</li>
+</ul>
+
+<div class="conexao">
+Conectando com a Aula 1: se o paciente fez cirurgia transesfenoidal para acromegalia, pode desenvolver DI central transitório em 30% dos casos (às vezes, com a resposta trifásica). Você já conhece a cascata: perda do estímulo do ADH → água livre → hipernatremia. Tratamento agudo: DDAVP + reposição hídrica cuidadosa.
+</div>
+
+<div class="resumo-aula">
+<h3>Resumo rápido — Diabetes Insípidus</h3>
+<ul>
+<li><strong>ADH</strong> é sintetizado no hipotálamo, armazenado na neuro-hipófise. Age via receptor <strong>V2</strong> no túbulo coletor renal, inserindo aquaporinas (<strong>AQP2</strong>) → reabsorção de água livre.</li>
+<li><strong>DI central:</strong> deficiência de síntese. Causas: trauma, cirurgia, tumor, sarcoidose, idiopático, genético (Wolfram = DIDMOAD). Trata com DDAVP.</li>
+<li><strong>DI nefrogênico:</strong> resistência ao ADH. Causas: lítio, hipercalcemia/hipocalemia, hereditário ligado ao X, IRC. Trata com hidratação, dieta hipossódica, AINEs/tiazídicos.</li>
+<li><strong>DI gestacional:</strong> vasopressinase placentária.</li>
+<li><strong>Polidipsia primária:</strong> psicogênica (esquizofrenia/bipolar, sem nictúria) ou dipsogênica.</li>
+<li><strong>Diagnóstico:</strong> poliúria hipotônica (&gt;50 mL/kg/24h, osm urinária &lt;300) + Na⁺ discretamente ↑ → teste de privação hídrica + DDAVP.</li>
+<li><strong>Resposta trifásica</strong> após trauma/cirurgia hipofisária: poliúria → antidiurese → DI definitivo.</li>
+<li><strong>Pegadinha:</strong> polidipsia psicogênica não tem nictúria (o paciente dorme).</li>
+</ul>
+</div>
+</section>
+
+<!-- ==================== AULA 4 — HIPOPITUITARISMO ==================== -->
+
+<section id="hipopituitarismo">
+<h1>Aula 4 — Hipopituitarismo</h1>
+
+<h2 id="hp-conceito">Contexto e definição</h2>
+<p>Hipopituitarismo é a situação oposta à da Aula 1 (acromegalia, que é <em>excesso</em> de um hormônio hipofisário): aqui há <strong>deficiência de um ou mais hormônios hipofisários</strong>. Se todos estão deficientes, chama-se <strong>panhipopituitarismo</strong>.</p>
+
+<p>Por que é tão traiçoeiro clinicamente: o desenvolvimento dos sintomas é <strong>lento e insidioso</strong>, dependendo da taxa de instalação e da magnitude da lesão hipofisária. As manifestações tornam-se evidentes apenas quando há comprometimento de <strong>75% do parênquima hipofisário</strong>. Então o paciente passa anos com cansaço inespecífico e libido baixa, vai no clínico, é tratado como depressão ou hipotireoidismo "banal", e só quando um exame pede cortisol ou quando aparece uma crise adrenal é que o diagnóstico é feito.</p>
+
+<p>O quadro clínico e as complicações dependem de três variáveis: a <strong>etiologia</strong>, o <strong>tipo</strong> (quais hormônios estão em falta) e a <strong>gravidade</strong> da insuficiência.</p>
+
+<h2 id="hp-eixo">Revisão rápida dos eixos hipofisários</h2>
+<p>A hipófise é dividida em duas partes anatômica e funcionalmente distintas:</p>
+
+<table>
+<thead><tr><th>Região</th><th>Hormônio</th><th>Órgão-alvo</th></tr></thead>
+<tbody>
+<tr><td rowspan="6"><strong>Adeno-hipófise</strong> (anterior)</td><td>GH</td><td>Osso, músculo, fígado (IGF-1)</td></tr>
+<tr><td>TSH</td><td>Tireoide</td></tr>
+<tr><td>ACTH</td><td>Córtex suprarrenal (cortisol, androgênios)</td></tr>
+<tr><td>LH / FSH</td><td>Gônadas</td></tr>
+<tr><td>PRL</td><td>Glândulas mamárias</td></tr>
+<tr><td>MSH</td><td>Pele</td></tr>
+<tr><td rowspan="2"><strong>Neuro-hipófise</strong> (posterior)</td><td>ADH</td><td>Rins (ver Aula 3)</td></tr>
+<tr><td>Ocitocina</td><td>Glândulas mamárias, útero</td></tr>
+</tbody>
+</table>
+
+<p>Estruturas adjacentes críticas (por isso adenomas podem comprometer sem destruir a hipófise): haste hipofisária, quiasma óptico, seios cavernosos, artérias carótidas internas, seio esfenoidal.</p>
+
+<h3>Classificação</h3>
+<ul>
+<li><strong>Primário:</strong> alteração na própria hipófise</li>
+<li><strong>Secundário:</strong> deficiência dos fatores hipotalâmicos estimuladores (GHRH, TRH, CRH, GnRH, dopamina)</li>
+</ul>
+
+<h3>Sequência de perda hormonal</h3>
+<p>Quando a hipófise é gradualmente destruída (p.ex. por um adenoma comprimindo), os hormônios são perdidos em uma ordem característica, que é frequente em prova:</p>
+<p><strong>GH → LH/FSH → TSH → ACTH → PRL</strong></p>
+<p>A PRL é quase sempre a <em>última</em> a ser perdida. Na verdade, em lesões da haste hipofisária a PRL frequentemente <em>sobe</em> ("desconexão") porque a dopamina hipotalâmica (inibidora) não chega mais.</p>
+
+<div class="caso">
+<strong>Homem, 52 anos,</strong> refere cefaleia progressiva, fadiga intensa, diminuição da libido e disfunção erétil há 1 ano. Evoluiu com perda de pelos corporais e intolerância ao frio; tontura ao se levantar subitamente. Ao exame: PA 90/60 mmHg, FC 58 bpm. Exames laboratoriais: T4 livre ↓, TSH discretamente diminuído, cortisol basal ↓, ACTH ↓, LH e FSH ↓, testosterona total ↓. <strong>Interpretação:</strong> todos os hormônios periféricos estão baixos mas os hormônios hipofisários estão baixos ou inapropriadamente normais (não sobem como deveriam frente à deficiência do órgão-alvo) → <strong>deficiência central</strong> = <em>panhipopituitarismo</em>. Próximo passo: RM de hipófise para investigar a causa (tumor? infiltração? infarto?).
+</div>
+
+<h2 id="hp-congenito">Hipopituitarismo congênito</h2>
+<p>Pode ser por mutações nos genes que codificam fatores de transcrição da hipófise → deficiência isolada ou combinada de hormônios. Ou por anomalias estruturais (raras): aplasia, hipoplasia parcial, tecido hipofisário rudimentar ectópico. Às vezes acompanha: anencefalia, hipoplasia do nervo óptico, lábio leporino, palato em ogiva.</p>
+
+<h2 id="hp-etiologia">Hipopituitarismo adquirido — Etiologia: "8 Is + 1 L"</h2>
+<p>Mnemônico da aula:</p>
+<ol>
+<li><strong>I</strong>nvasiva</li>
+<li><strong>I</strong>nfarto</li>
+<li><strong>I</strong>nfiltrativa</li>
+<li><strong>I</strong>munológica</li>
+<li><strong>I</strong>atrogênica</li>
+<li><strong>I</strong>nfecciosa</li>
+<li><strong>I</strong>diopática</li>
+<li><strong>I</strong>solada</li>
+<li><strong>L</strong>esão</li>
+</ol>
+
+<h3>1. Invasiva</h3>
+<p>Lesões que comprometem o hipotálamo, a hipófise ou o sistema venoso portal hipotálamo-hipofisário.</p>
+<ul>
+<li><strong>Craniofaringiomas:</strong> neoplasia benigna, 1 a 3% dos tumores intracranianos. Derivados de restos de células escamosas ao longo do ducto craniofaríngeo e da adeno-hipófise. A <strong>deficiência de GH é a manifestação mais frequente</strong>. Tratamento cirúrgico, porém com recidivas frequentes.</li>
+<li>Tumores primários do SNC (adenoma hipofisário, meningeomas da região selar, gliomas)</li>
+<li>Lesões metastáticas (mama e pulmão são as mais comuns)</li>
+</ul>
+
+<h3 id="hp-sheehan">2. Infarto</h3>
+<h4>2.1 Síndrome de Sheehan</h4>
+<p>Evento clássico: <strong>hemorragia obstétrica grave pós-parto</strong>. Mecanismo:</p>
+<ol>
+<li>Durante a gravidez, a hipófise aumenta (hiperplasia dos lactótrofos).</li>
+<li>Hemorragia pós-parto → hipotensão grave → vasoespasmo da artéria hipofisária.</li>
+<li>A hipófise hipertrofiada, extremamente vascularizada, sofre <strong>infarto isquêmico</strong>.</li>
+<li>Resultado: necrose da hipófise → Síndrome da sela vazia (em imagem tardia).</li>
+</ol>
+<p>Consequências: diminuição ou déficit na secreção de TSH, ACTH, prolactina e gonadotrofinas. Manifestações clássicas:</p>
+<ul>
+<li><strong>Agalactia</strong> (falha na lactação pós-parto — muitas vezes a primeira pista)</li>
+<li><strong>Amenorreia</strong> (não volta a menstruar)</li>
+<li><strong>Panhipopituitarismo</strong> progressivo: fadiga, intolerância ao frio, hipotensão, perda de pelos púbicos e axilares, insuficiência adrenal secundária</li>
+<li>Achado radiológico: síndrome da sela vazia (glândula colapsada)</li>
+</ul>
+
+<div class="caso">
+<strong>Mulher, 42 anos, G4P4A0,</strong> encaminhada com queixas de amenorreia, queda de cabelo, sonolência e fraqueza. Antecedente importante: o último parto (há 15 anos) teve sangramento importante pós-parto. <em>Negou lactação no último parto.</em> Isso é Sheehan até que se prove o contrário — a agalactia pós-hemorragia obstétrica grave é quase patognomônica. Investigar: cortisol matinal, T4L, TSH, LH, FSH, PRL e RM de hipófise.
+</div>
+
+<h4>2.2 Apoplexia Hipofisária (Acidente Vascular Agudo da Hipófise)</h4>
+<p>Urgência endocrinológica. Definição: <strong>infarto hemorrágico espontâneo de um tumor hipofisário</strong>, ou em decorrência do tratamento do tumor.</p>
+
+<ul>
+<li><strong>Fatores predisponentes:</strong> diabetes, angiografia das carótidas, trauma, uso de cocaína, HAS, meningite</li>
+<li><strong>Quadro clínico:</strong>
+  <ul>
+    <li>Cefaleia súbita e intensa ("a pior cefaleia da vida")</li>
+    <li>Distúrbio visual (por compressão do quiasma)</li>
+    <li><strong>Ptose palpebral</strong> — por acometimento do III nervo craniano (oculomotor) no seio cavernoso</li>
+    <li>Alteração do nível de consciência — sinal de gravidade</li>
+    <li>Sinais de hipoadrenalismo agudo (hipotensão, hipoglicemia, náuseas)</li>
+  </ul>
+</li>
+<li><strong>Diagnóstico diferencial crítico:</strong> hemorragia subaracnoide por aneurisma — clinicamente parecido, mas o manejo é diferente. A imagem (TC → RM) define.</li>
+<li><strong>Tratamento:</strong> corticoide EV em dose de estresse IMEDIATAMENTE (hidrocortisona) + avaliação neurocirúrgica para descompressão. É uma das urgências endocrinológicas clássicas. Se não trata, o paciente morre de insuficiência adrenal aguda.</li>
+</ul>
+
+<h3>3. Infiltrativa</h3>
+<h4>3.1 Sarcoidose</h4>
+<p>Doença granulomatosa multicêntrica de etiologia desconhecida. Afeta o SNC em 3-5% dos casos. A lesão hipotalâmica pode regredir com uso de corticoide. <strong>Complicação característica: diabetes insípidus</strong> (por lesão da haste hipofisária — conecta com Aula 3).</p>
+
+<h4>3.2 Hemocromatose</h4>
+<p>Depósito tissular de ferro. <strong>Hipogonadismo é a manifestação hipofisária mais frequente</strong>. Reversão parcial após depleção de ferro (flebotomia).</p>
+
+<h4>3.3 Histiocitose de Langerhans</h4>
+<p>Infiltração por histiócitos e mononucleares. Doença fibrótica com comprometimento pulmonar importante. Causa deficiência hormonal combinada, tipicamente envolvendo o DI central também.</p>
+
+<h3>4. Imunológica</h3>
+<p><strong>Hipofisite linfocitária.</strong> Classicamente associada a gestação ou pós-parto. Massa na região selar com infiltração de linfócitos — pode simular um adenoma. Frequentemente associada a outras doenças endócrinas autoimunes (tireoidite, Addison). Pode ser secundária ao uso de imunoterapia oncológica (anti-CTLA4, anti-PD1).</p>
+
+<h3>5. Iatrogênica</h3>
+<p>Tratamento cirúrgico e radioterápico da hipófise. Lembre: a radioterapia causa hipopituitarismo em 50% em 5 anos (como vimos na Aula 1, tratamento da acromegalia).</p>
+
+<h3>6. Infecciosa</h3>
+<p>Raro: infecções por fungos, abscesso hipofisário, tuberculose. Evolução típica: necrose → hemorragia → fibrose.</p>
+
+<h3>7. Idiopática — síndromes genéticas importantes</h3>
+
+<h4>Síndrome de Prader-Willi</h4>
+<ul>
+<li>Doença genética por translocação ou deleção do cromossomo 15 (região paterna)</li>
+<li>Clínica: obesidade mórbida, retardo mental, hiperfagia ("apetite voraz"), hipotonia muscular, deficiência de GH, hipogonadismo</li>
+<li>No recém-nascido: criptorquidismo bilateral, ausência de pregas escrotais, micrognatia</li>
+<li>Secreção atenuada de GnRH; tratamento crônico com GnRH pode restaurar FSH e LH</li>
+<li>Adultos: fraqueza, depressão, osteoporose, diminuição da massa magra, aumento da massa gorda</li>
+<li>Afeta 1 em 20.000 pessoas. Diagnóstico precoce é fundamental para controlar a dieta e iniciar tratamento.</li>
+</ul>
+
+<h4>Síndrome de Kallmann</h4>
+<ul>
+<li><strong>Tipo mais comum de hipogonadismo hipogonadotrófico</strong></li>
+<li>Incidência: 1:10.000 homens e 1:50.000 mulheres</li>
+<li><strong>Mecanismo:</strong> migração inadequada dos neurônios produtores de GnRH e dos neurônios olfatórios durante a embriogênese — os neurônios do GnRH ficam presos na dura-máter próximo à lâmina cribriforme, em vez de chegar ao hipotálamo</li>
+<li>Ligado ao X (mais comumente), genes envolvidos: KAL1, FGFR1, FGF8, PROKR2, PROK2</li>
+<li><strong>Tríade clínica:</strong> hipogonadismo hipogonadotrófico + anosmia/hiposmia ± malformações craniofaciais</li>
+<li>Esteroides sexuais baixos desde o nascimento</li>
+<li>Mulheres: estatura alta, amenorreia primária, ausência de desenvolvimento sexual secundário</li>
+<li>Homens: puberdade atrasada, micropênis, hábito eunucoide (pernas desproporcionalmente longas, envergadura braços maior que a altura)</li>
+</ul>
+
+<h4>Síndrome CHARGE</h4>
+<p>Acrônimo das manifestações:</p>
+<ul>
+<li><strong>C</strong>oloboma ocular (defeito no fechamento da fissura embrionária do olho)</li>
+<li><strong>H</strong>eart: defeitos cardíacos congênitos</li>
+<li><strong>A</strong>tresia de coanas</li>
+<li><strong>R</strong>etardo de crescimento e desenvolvimento</li>
+<li><strong>G</strong>enital hipoplasia</li>
+<li><strong>E</strong>ar: anomalias da orelha e surdez</li>
+</ul>
+
+<h3 id="hp-deficiencias">8. Isolada — quadros clínicos por hormônio</h3>
+
+<h4>8.1 Deficiência de GH (somatotrofina)</h4>
+<ul>
+<li><strong>Causas:</strong> idiopática, iatrogênica (radioterapia), tumores</li>
+<li><strong>Crianças:</strong> déficit de crescimento (baixa estatura), micropênis, hipoglicemia, hipotrofia muscular</li>
+<li><strong>Adultos:</strong> fraqueza, depressão, osteoporose, diminuição da massa magra, aumento da massa gorda, dislipidemia, redução da qualidade de vida</li>
+</ul>
+
+<h4>8.2 Deficiência de Tirotrofina (TSH)</h4>
+<ul>
+<li>Redução da secreção hipotalâmica de TRH → <strong>hipotireoidismo terciário</strong></li>
+<li>Redução da secreção hipofisária de TSH → <strong>hipotireoidismo secundário</strong></li>
+<li>Manifestação lenta; assintomáticos ou oligossintomáticos (em comparação com hipotireoidismo primário)</li>
+<li><strong>Detalhe de prova:</strong> no hipotireoidismo central, o T4 está baixo e o TSH é baixo <em>ou normal</em> (inapropriadamente normal). Por isso você não pode confiar no TSH isolado — sempre peça T4L também.</li>
+</ul>
+
+<h4>8.3 Deficiência de Corticotrofina (ACTH)</h4>
+<ul>
+<li>A perda do estímulo das camadas fasciculada e reticular do córtex adrenal prejudica a secreção de glicocorticoides (<strong>cortisol</strong>) e androgênios.</li>
+<li>A zona glomerulosa (aldosterona) <em>não</em> depende de ACTH — depende do sistema renina-angiotensina. Por isso, ao contrário da insuficiência adrenal primária (Addison), no ACTH baixo <strong>não há hipoaldosteronismo</strong>, não há hipercalemia, não há perda de sal tão severa.</li>
+<li><strong>Clínica:</strong> fraqueza, anorexia, perda ponderal, hipotensão postural leve, hipoglicemia.</li>
+<li>Também não há hiperpigmentação (a hiperpigmentação de Addison é causada pelo ACTH e MSH altos).</li>
+</ul>
+
+<h4>8.4 Deficiência de Prolactina (PRL)</h4>
+<ul>
+<li>Ocorre apenas quando a hipófise anterior é totalmente destruída, ou em deficiência congênita de PRL</li>
+<li>Única manifestação relevante: <strong>ausência de galactação</strong> pós-parto (agalactia)</li>
+<li>Lembre-se: na maioria dos danos hipofisários, a PRL está <em>normal ou elevada</em>, não baixa</li>
+</ul>
+
+<h4>8.5 Deficiência de Gonadotrofinas (LH/FSH)</h4>
+<ul>
+<li><strong>Pré-puberdade:</strong> não desenvolve caracteres sexuais secundários</li>
+<li><strong>Após a puberdade:</strong>
+  <ul>
+    <li><strong>Mulheres:</strong> amenorreia secundária, perda da libido, atrofia de mamas, dispareunia, osteoporose e infertilidade</li>
+    <li><strong>Homens:</strong> perda de massa muscular, astenia, atrofia testicular, ginecomastia, redução no volume ejaculado e azoospermia</li>
+  </ul>
+</li>
+</ul>
+
+<h3>9. Lesões</h3>
+<p>Lesões traumáticas ou vasculares da região hipotálamo-hipofisária. Inclui TCE grave (causa subestimada — muitos pacientes de TCE desenvolvem deficiência hormonal meses ou anos depois sem ninguém pedir os hormônios).</p>
+
+<h2 id="hp-diagnostico">Diagnóstico</h2>
+<ul>
+<li><strong>Objetivo:</strong> (1) avaliar a função da glândula-alvo e diferenciá-la da insuficiência primária (primária do órgão alvo), (2) determinar o tipo e o grau da deficiência hormonal, (3) descobrir a etiologia, (4) avaliar alterações visuais (campimetria).</li>
+</ul>
+
+<h3>Avaliação laboratorial</h3>
+<ul>
+<li>Dosagens basais dos hormônios hipofisários + dos hormônios das células-alvo. Exemplos de pares:
+  <ul>
+    <li>TSH + T4 livre</li>
+    <li>ACTH + cortisol matinal (8h)</li>
+    <li>LH/FSH + testosterona (homem) ou estradiol (mulher)</li>
+    <li>GH + IGF-1</li>
+    <li>Prolactina</li>
+  </ul>
+</li>
+<li>Se os resultados forem <strong>inconclusivos ou subnormais</strong>, parte-se para testes dinâmicos.</li>
+</ul>
+
+<h3>Mega teste ou Teste Combinado da Hipófise Anterior</h3>
+<ul>
+<li>Injeção simultânea de <strong>GnRH, TRH e insulina</strong> (hipoglicemia insulínica estimula GH e cortisol; GnRH estimula LH/FSH; TRH estimula TSH e PRL)</li>
+<li>Possibilita avaliação global da reserva funcional hipofisária</li>
+<li><strong>Problemas:</strong> é caro; complicações incluem apoplexia hipofisária e hipoglicemia grave</li>
+<li>Atualmente em desuso → testes dinâmicos isolados (para o eixo em questão) têm preferência</li>
+</ul>
+
+<h2 id="hp-tratamento">Tratamento — reposição hormonal por eixo</h2>
+<p>Regra geral: <strong>sempre repor glicocorticoide ANTES de repor hormônio tireoidiano</strong>, porque iniciar levotiroxina em paciente com insuficiência adrenal pode desencadear crise adrenal (acelera o metabolismo do pouco cortisol que restava).</p>
+
+<h3>Deficiência de glicocorticoides (ACTH baixo)</h3>
+<ul>
+<li><strong>Prednisona</strong> 15 a 20 mg/dia? <em>Aviso: a dose usual de prednisona na reposição é muito menor — da ordem de 5-7,5 mg/dia. A dose de 15-20 mg/dia normalmente se refere à hidrocortisona, não prednisona. O slide aparenta misturar valores. Na prática: hidrocortisona 15-25 mg/dia divididos (2/3 manhã, 1/3 tarde) é o padrão.</em></li>
+<li>Crianças: hidrocortisona 15-20 mg/m² SC/dia</li>
+<li><strong>Bracelete ou cartão de alerta</strong> para situações de estresse (cirurgia, infecção grave, trauma) — doses de reposição precisam ser triplicadas em estresse agudo para evitar crise adrenal. Isso salva vida.</li>
+</ul>
+
+<h3>Deficiência Tireotrófica (TSH baixo)</h3>
+<ul>
+<li><strong>Levotiroxina</strong> — a dose usual em adultos é aproximadamente <strong>1,6 μg/kg/dia</strong> (o slide da aula apresenta 0,7 a 1,2 mg/kg/dia, mas isso parece erro de unidade — o correto clinicamente são <em>microgramas</em>, não miligramas).</li>
+<li><strong>Monitoramento pela dosagem de T4L</strong>, <em>não</em> pelo TSH — porque o TSH está comprometido na origem, nunca vai "subir" para indicar dose insuficiente. Essa é a diferença-chave no monitoramento em relação ao hipotireoidismo primário.</li>
+</ul>
+
+<h3>Deficiência Gonadotrófica (LH/FSH baixos)</h3>
+<p>Objetivos: induzir menarca e puberdade (adolescentes), restaurar ciclos menstruais e fertilidade (mulheres em idade reprodutiva), evitar perda óssea, manter libido e caracteres sexuais.</p>
+
+<h4>Reposição androgênica em homens</h4>
+<ul>
+<li>Ésteres de testosterona (Durateston®, Deposteron®): 200 a 250 mg IM a cada 14 dias</li>
+<li>Undecanoato de testosterona (Nebido®): 1.000 mg IM a cada 3 meses</li>
+<li>Gel transdérmico: 5 a 10 mg/dia</li>
+</ul>
+
+<h4>Reposição estrogênio + progestágeno em mulheres</h4>
+<ul>
+<li>Estradiol (1-2 mg/dia) + noretindrona ou progesterona natural micronizada nos últimos 10 dias do ciclo (regime cíclico)</li>
+</ul>
+
+<p>Para induzir fertilidade: usar gonadotrofinas exógenas (hMG + hCG) ou GnRH pulsátil, dependendo da causa.</p>
+
+<h3>Deficiência Somatotrófica (GH baixo)</h3>
+<ul>
+<li><strong>rhGH</strong> (hormônio de crescimento humano recombinante), aplicação subcutânea à noite</li>
+<li>Crianças: 0,1 U/kg/dia (3 U = 1 mg)</li>
+<li>Adultos: 0,5 a 3 U/dia</li>
+<li><strong>Acompanhamento</strong> pela velocidade de crescimento (VC) até o fim da puberdade em crianças; medidas antropométricas, perfil lipídico e densitometria mineral óssea (DMO) em adultos</li>
+</ul>
+
+<h3>Deficiência de ADH</h3>
+<p>Ver Aula 3 — DDAVP (intranasal, oral ou parenteral).</p>
+
+<div class="resumo-aula">
+<h3>Resumo rápido — Hipopituitarismo</h3>
+<ul>
+<li><strong>Definição:</strong> deficiência parcial ou total de ≥1 hormônio hipofisário. Panhipopituitarismo = todos.</li>
+<li><strong>Sintomas aparecem com 75% de comprometimento</strong>. Instalação lenta e insidiosa.</li>
+<li><strong>Sequência de perda:</strong> GH → LH/FSH → TSH → ACTH → PRL.</li>
+<li><strong>Etiologia (8 Is + 1 L):</strong> Invasiva (craniofaringioma), Infarto (Sheehan, Apoplexia), Infiltrativa (sarcoidose, hemocromatose, histiocitose), Imunológica (hipofisite linfocitária), Iatrogênica (cirurgia/RT), Infecciosa, Idiopática (Prader-Willi, Kallmann, CHARGE), Isolada, Lesão.</li>
+<li><strong>Síndrome de Sheehan:</strong> hemorragia pós-parto → infarto hipofisário → agalactia + amenorreia + panhipopit.</li>
+<li><strong>Apoplexia hipofisária:</strong> urgência endocrinológica — cefaleia súbita, distúrbio visual, ptose (III), alteração de consciência. Trata com corticoide EV + cirurgia.</li>
+<li><strong>Síndrome de Kallmann:</strong> hipogonadismo hipogonadotrófico + anosmia.</li>
+<li><strong>Diagnóstico:</strong> hormônio hipofisário + hormônio periférico pareados; se inconclusivo, teste dinâmico. RM para etiologia.</li>
+<li><strong>Tratamento:</strong> repor tudo que falta. REGRA DE OURO: cortisol ANTES de levotiroxina. Monitorar hipotireoidismo central por T4L (não TSH).</li>
+<li><strong>Prova:</strong> pacientes com deficiência de ACTH em estresse agudo (cirurgia, infecção) precisam dose extra — bracelete/cartão de alerta salva vidas.</li>
+</ul>
+</div>
+
+</section>
+
+</main>
+
+<script>
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  document.documentElement.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('topBtn').classList.toggle('show', window.scrollY > 400);
+});
+</script>
+
+</body>
+</html>

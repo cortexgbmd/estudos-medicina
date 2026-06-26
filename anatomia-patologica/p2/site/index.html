@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomia Patológica P2 — Site de Estudo</title>
+<style>
+/* === RESET & BASE === */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;
+  --fg:#c9d1d9;--fg2:#8b949e;--fg3:#484f58;
+  --accent:#58a6ff;--accent2:#1f6feb;
+  --green:#3fb950;--red:#f85149;--yellow:#d29922;--purple:#bc8cff;
+  --border:#30363d;
+  --max-w:740px;--font:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'SF Mono','Fira Code',monospace;
+}
+[data-theme="light"]{
+  --bg:#fff;--bg2:#f6f8fa;--bg3:#eaeef2;
+  --fg:#1f2328;--fg2:#656d76;--fg3:#8b949e;
+  --accent:#0969da;--accent2:#0550ae;
+  --green:#1a7f37;--red:#cf222e;--yellow:#9a6700;--purple:#8250df;
+  --border:#d0d7de;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s}
+
+/* === LAYOUT === */
+.container{max-width:var(--max-w);margin:0 auto;padding:2rem 1.5rem}
+.sidebar{position:fixed;top:0;left:0;width:280px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:1.5rem 1rem;z-index:100;transform:translateX(-100%);transition:transform .3s}
+.sidebar.open{transform:translateX(0)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+.sidebar.open+.sidebar-overlay{display:block}
+@media(min-width:1100px){
+  .sidebar{transform:translateX(0)}
+  .sidebar-overlay{display:none!important}
+  .main-content{margin-left:280px}
+  .menu-toggle{display:none!important}
+}
+
+/* === NAV === */
+.sidebar h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--fg2);margin:1.2rem 0 .5rem;padding-left:.5rem}
+.sidebar a{display:block;padding:.4rem .8rem;color:var(--fg);text-decoration:none;border-radius:6px;font-size:.9rem;transition:background .15s}
+.sidebar a:hover{background:var(--bg3)}
+.sidebar a.active{background:var(--accent2);color:#fff}
+.sidebar .nav-aula{font-weight:600;margin-top:.8rem;font-size:.95rem}
+.sidebar .nav-topic{padding-left:1.4rem;font-size:.85rem;color:var(--fg2)}
+
+/* === HEADER === */
+.site-header{position:sticky;top:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:.8rem 1.5rem;display:flex;align-items:center;gap:1rem;z-index:50}
+.menu-toggle{background:none;border:none;color:var(--fg);font-size:1.4rem;cursor:pointer;padding:.3rem}
+.site-title{font-size:1.1rem;font-weight:700;color:var(--accent)}
+.theme-toggle{margin-left:auto;background:none;border:1px solid var(--border);color:var(--fg);padding:.3rem .7rem;border-radius:6px;cursor:pointer;font-size:.85rem}
+
+/* === CONTENT === */
+.aula{margin-bottom:4rem;padding-bottom:2rem;border-bottom:2px solid var(--border)}
+h1{font-size:1.8rem;margin:2rem 0 .5rem;color:var(--accent);border-bottom:2px solid var(--accent2);padding-bottom:.5rem}
+h2{font-size:1.4rem;margin:2rem 0 .8rem;color:var(--fg);padding-top:1rem}
+h3{font-size:1.15rem;margin:1.5rem 0 .5rem;color:var(--fg)}
+h4{font-size:1rem;margin:1rem 0 .4rem;color:var(--fg2)}
+p{margin-bottom:.8rem}
+ul,ol{margin:0 0 1rem 1.5rem}
+li{margin-bottom:.3rem}
+strong{color:var(--fg)}
+em{color:var(--fg2);font-style:italic}
+.aula-meta{color:var(--fg2);font-size:.9rem;margin-bottom:1.5rem}
+
+/* === TABLES === */
+table{width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.9rem}
+th,td{padding:.6rem .8rem;border:1px solid var(--border);text-align:left}
+th{background:var(--bg3);font-weight:600;color:var(--fg)}
+td{background:var(--bg2)}
+
+/* === DESTAQUES === */
+.destaque-professor{background:var(--bg2);border-left:4px solid var(--yellow);padding:1rem 1.2rem;margin:1.2rem 0;border-radius:0 8px 8px 0}
+.destaque-professor .destaque-icon{font-size:1.2rem;margin-right:.4rem}
+.destaque-professor p{margin-bottom:.5rem}
+.destaque-professor p:last-child{margin-bottom:0}
+
+.exemplo-clinico{background:var(--bg2);border-left:4px solid var(--accent);padding:1rem 1.2rem;margin:1.2rem 0;border-radius:0 8px 8px 0}
+.exemplo-clinico h4{color:var(--accent);margin-top:0}
+
+.resumo-aula{background:var(--bg3);border:1px solid var(--border);padding:1.2rem 1.5rem;margin:2rem 0;border-radius:8px}
+.resumo-aula h2{margin-top:.5rem;font-size:1.2rem}
+.resumo-aula ul{margin:1rem 0 0 1.2rem}
+.resumo-aula li{margin-bottom:.5rem}
+
+/* === BACK TO TOP === */
+.back-top{position:fixed;bottom:2rem;right:2rem;background:var(--accent2);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.back-top.visible{display:flex}
+
+/* === INDEX PAGE === */
+.index-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin:1.5rem 0}
+.index-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .2s}
+.index-card:hover{border-color:var(--accent)}
+.index-card h3{margin:0 0 .3rem;color:var(--accent)}
+.index-card p{margin:0;color:var(--fg2);font-size:.9rem}
+.index-card a{text-decoration:none;color:inherit}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .container{padding:1rem}
+  h1{font-size:1.5rem}
+  h2{font-size:1.2rem}
+  table{font-size:.8rem}
+  th,td{padding:.4rem .5rem}
+}
+
+/* === PRINT === */
+@media print{
+  .sidebar,.site-header,.back-top,.menu-toggle,.theme-toggle,.sidebar-overlay{display:none!important}
+  .main-content{margin-left:0!important}
+  body{background:#fff;color:#000}
+  .destaque-professor{border-left:3px solid #d29922;background:#f9f9f0}
+  .exemplo-clinico{border-left:3px solid #0969da;background:#f0f6ff}
+  .resumo-aula{background:#f6f8fa;border:1px solid #d0d7de}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <span class="site-title">Anatomia Patológica P2</span>
+  <button class="theme-toggle" onclick="toggleTheme()">&#9790; / &#9788;</button>
+</header>
+
+<!-- SIDEBAR NAV -->
+<nav class="sidebar" id="sidebar">
+  <h2>Aulas</h2>
+  <a href="#index" class="nav-aula">Início</a>
+  
+  <a href="#aula1" class="nav-aula">1. Inflamação Aguda</a>
+  <a href="#aula1-contexto" class="nav-topic">Contexto</a>
+  <a href="#aula1-definicao" class="nav-topic">Definição</a>
+  <a href="#aula1-sinais" class="nav-topic">Sinais Cardinais</a>
+  <a href="#aula1-pamps-damps" class="nav-topic">PAMPs e DAMPs</a>
+  <a href="#aula1-mecanismos" class="nav-topic">Mecanismos</a>
+  <a href="#aula1-celulas" class="nav-topic">Células</a>
+  <a href="#aula1-mediadores" class="nav-topic">Mediadores</a>
+  <a href="#aula1-padroes" class="nav-topic">Padrões Morfológicos</a>
+  
+  <a href="#aula2" class="nav-aula">2. Inflamação Crônica</a>
+  <a href="#aula2-definicao" class="nav-topic">Definição</a>
+  <a href="#aula2-agentes" class="nav-topic">Agentes</a>
+  <a href="#aula2-mecanismos" class="nav-topic">Mecanismos</a>
+  <a href="#aula2-celulas" class="nav-topic">Células (M1 vs M2)</a>
+  <a href="#aula2-fibrose" class="nav-topic">Fibrose</a>
+  
+  <a href="#aula3" class="nav-aula">3. Inflam. Granulomatosa</a>
+  <a href="#aula4" class="nav-aula">4. Necrose e Infarto</a>
+  <a href="#aula5" class="nav-aula">5. Apoptose</a>
+  <a href="#aula6" class="nav-aula">6. Hemostasia</a>
+</nav>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- MAIN -->
+<main class="main-content">
+<div class="container">
+
+<!-- INDEX -->
+<section id="index">
+<h1 style="border-bottom:none">Anatomia Patológica — P2</h1>
+<p style="color:var(--fg2);font-size:1.05rem">Material de estudo completo gerado a partir das transcrições de aula e slides.<br>Profa. Dra. Veronica Yujra &amp; Profa. Regiane Mathias — FASM 2026.1</p>
+
+<div class="index-grid">
+  <div class="index-card"><a href="#aula1"><h3>Aula 1 — Inflamação Aguda</h3><p>Sinais cardinais, PAMPs/DAMPs, fenômenos vasculares e celulares, padrões morfológicos, efeitos sistêmicos</p></a></div>
+  <div class="index-card"><a href="#aula2"><h3>Aula 2 — Inflamação Crônica</h3><p>Mononucleares, M1 vs M2, fibrose, agentes persistentes, doenças autoimunes</p></a></div>
+  <div class="index-card"><a href="#aula3"><h3>Aula 3 — Inflamação Granulomatosa</h3><p>Granulomas imunogênicos vs corpo estranho, células gigantes, tuberculose, sarcoidose</p></a></div>
+  <div class="index-card"><a href="#aula4"><h3>Aula 4 — Necrose e Infarto</h3><p>Tipos de necrose (coagulativa, liquefativa, caseosa, gordurosa, gangrenosa), infartos branco vs vermelho</p></a></div>
+  <div class="index-card"><a href="#aula5"><h3>Aula 5 — Apoptose e Lesão Celular</h3><p>Via intrínseca e extrínseca, BCL-2, caspases, p53, apoptose fisiológica vs patológica</p></a></div>
+  <div class="index-card"><a href="#aula6"><h3>Aula 6 — Hemostasia e Trombose</h3><p>Hemostasia primária e secundária, fibrinólise, tríade de Virchow, embolia, CID</p></a></div>
+</div>
+</section>
+
+<!-- AULA 1 — INFLAMAÇÃO AGUDA (03-04) -->
+<section id="aula1" class="aula">
+<h1>Aula 1 — Inflamação Aguda</h1>
+<p class="aula-meta">Profa. Dra. Veronica Yujra · 04/03/2026</p>
+
+<!-- CONTEXTO E MOTIVAÇÃO -->
+<h2 id="aula1-contexto">Por que estudar inflamação aguda?</h2>
+<p>A inflamação é o mecanismo mais fundamental de defesa do organismo. Sem ela, infecções passariam despercebidas, feridas jamais cicatrizariam e tecidos necróticos se acumulariam. Uma parcela significativa da demanda fisiológica do organismo envolve processos inflamatórios — entender inflamação é pré-requisito para entender praticamente toda a medicina clínica.</p>
+<p>Na prática, o médico precisa saber reconhecer se um tecido está em inflamação aguda ou crônica, interpretar leucogramas com desvio à esquerda, diferenciar exsudatos de transudatos em punções, e compreender por que — e quando — modular a resposta inflamatória ao invés de simplesmente "combatê-la".</p>
+
+<!-- DEFINIÇÃO -->
+<h2 id="aula1-definicao">Definição de Inflamação</h2>
+<p>A inflamação é uma <strong>reação biológica complexa</strong> que ocorre nos tecidos vivos, envolvendo respostas coordenadas de:</p>
+<ul>
+  <li><strong>Vasos sanguíneos</strong> (vasodilatação, aumento de permeabilidade)</li>
+  <li><strong>Leucócitos</strong> (neutrófilos, eosinófilos, monócitos, linfócitos)</li>
+  <li><strong>Proteínas plasmáticas</strong> (albumina, fibrinogênio, complemento)</li>
+  <li><strong>Mediadores químicos</strong> (histamina, TNF-α, IL-1, prostaglandinas)</li>
+</ul>
+<p>O objetivo é <strong>eliminar agentes agressores</strong>, debelar injúrias e restabelecer a homeostase tecidual. A inflamação é a "expressão morfológica" da resposta imune — inata e adaptativa.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Ponto-chave:</strong> Inflamação é uma resposta <em>adaptativa e protetora</em>, essencial à sobrevivência. O problema surge quando ela é ativada erroneamente, de forma exacerbada ou descontrolada — aí causa mais dano que benefício. Por isso, o conceito moderno é de <strong>modulação inflamatória</strong>, não simplesmente "anti-inflamação".</p>
+</div>
+
+<p>Toda resposta inflamatória envolve obrigatoriamente tecido vivo. Isso tem implicação forense: um ferimento pré-morte apresenta sinais inflamatórios (edema, rubor, coagulação), enquanto um ferimento pós-morte não — é apenas uma abertura mecânica, sem resposta biológica.</p>
+
+<!-- SINAIS CARDINAIS -->
+<h2 id="aula1-sinais">Sinais Cardinais da Inflamação</h2>
+<p>Os cinco sinais clássicos (descritos por Celsus e o quinto por Virchow em 1858):</p>
+<table>
+  <thead><tr><th>Sinal</th><th>Mecanismo</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Calor</strong></td><td>Aumento do fluxo sanguíneo local (vasodilatação) → mais células → mais metabolismo → mais liberação de energia</td></tr>
+    <tr><td><strong>Rubor</strong> (hiperemia)</td><td>Vasodilatação → mais sangue na região. Hiperemia = aumento de sangue por vasodilatação</td></tr>
+    <tr><td><strong>Edema</strong> (tumor)</td><td>Extravasamento de líquido e proteínas para o interstício (exsudato) → acúmulo de água → inchaço. "Tumor" nos livros antigos referia-se a aumento de volume, não neoplasia</td></tr>
+    <tr><td><strong>Dor</strong></td><td>Bradicinina e cininas estimulam terminações nervosas; compressão mecânica pelo edema; lesão direta de nervos</td></tr>
+    <tr><td><strong>Perda de função</strong>*</td><td>Consequência conjunta dos demais sinais — o tecido inflamado não consegue funcionar normalmente. <em>(*5º sinal descrito por Virchow, discutido na Aula 3 pela Profa. Regiane)</em></td></tr>
+  </tbody>
+</table>
+
+<!-- TIPOS DE INFLAMAÇÃO -->
+<h2 id="aula1-tipos">Inflamação Aguda vs. Crônica — Visão Geral</h2>
+<table>
+  <thead><tr><th>Característica</th><th>Aguda</th><th>Crônica</th></tr></thead>
+  <tbody>
+    <tr><td>Duração</td><td>Horas a dias (máximo ~7 dias)</td><td>Semanas, meses, anos</td></tr>
+    <tr><td>Início</td><td>Rápido (segundos/minutos)</td><td>Pode seguir uma aguda ou ser insidiosa</td></tr>
+    <tr><td>Fenômenos principais</td><td>Vasculares e celulares</td><td>Proliferativos (ativação macrofágica, angiogênese, fibrogênese)</td></tr>
+    <tr><td>Infiltrado predominante</td><td>PMN (polimorfonucleares — neutrófilos)</td><td>Mononucleares (linfócitos, macrófagos)</td></tr>
+    <tr><td>Célula característica</td><td>Neutrófilo</td><td>Linfócito</td></tr>
+  </tbody>
+</table>
+
+<!-- ESTÍMULOS -->
+<h2 id="aula1-estimulos">Estímulos para a Inflamação Aguda</h2>
+<p>Quatro categorias principais de agentes inflamatórios:</p>
+
+<h3>1. Infecções</h3>
+<p>Bacterianas (Estreptococos), virais (Herpes), fúngicas (Candida) e parasitárias. A patogênese inclui toxinas microbianas como LPS (lipopolissacarídeo). Exemplo: amigdalite bacteriana — infecção + inflamação coexistem.</p>
+
+<h3>2. Corpos estranhos</h3>
+<p>Causam injúria tecidual traumática e podem transportar micróbios. Exemplo clássico de ação conjunta de DAMPs e PAMPs.</p>
+
+<h3>3. Necrose tecidual</h3>
+<p>De qualquer causa — isquemia/hipóxia, trauma, injúria biológica ou química. Moléculas liberadas por células necróticas funcionam como DAMPs. A hipóxia também é um indutor direto de inflamação, mediada pela proteína HIF-1α que ativa transcrição de genes inflamatórios (ex: VEGF).</p>
+
+<h3>4. Reações imunes (hipersensibilidade)</h3>
+<p>O sistema imune causa dano direcionado contra autoantígenos (autoimunidade) ou respostas exacerbadas a antígenos externos (alergias). Exemplo: angioedema (edema de Quincke) — edema intenso do tecido subcutâneo causado por exposição a alérgenos.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Atenção:</strong> Nem toda inflamação é infecção, mas toda infecção envolve inflamação. A professora enfatizou essa distinção: existem inflamações isoladas (sem agente infeccioso) e inflamações infecciosas. Na prática clínica, diferenciar é fundamental — uma gastrite aguda por sonda nasogástrica é inflamação isolada; uma gastrite crônica por <em>H. pylori</em> é infecciosa.</p>
+</div>
+
+<!-- PAMPs E DAMPs -->
+<h2 id="aula1-pamps-damps">PAMPs e DAMPs — O Fenômeno Irritativo Inicial</h2>
+<p>Toda resposta inflamatória começa com o <strong>fenômeno irritativo</strong> — a etapa inicial em que o organismo reconhece que algo está errado. Esse reconhecimento acontece por dois tipos de padrões moleculares:</p>
+
+<h3>PAMPs (Pathogen-Associated Molecular Patterns)</h3>
+<ul>
+  <li>Moléculas de agentes <strong>exógenos</strong> (patógenos)</li>
+  <li>Exemplos: LPS (lipopolissacarídeo da parede bacteriana), glicoproteínas virais</li>
+  <li>Reconhecidos por <strong>receptores de reconhecimento de padrão</strong>, principalmente a família <strong>Toll-like (TLRs)</strong></li>
+  <li>Quando esses receptores são "ligados", disparam vias de sinalização e produção de mediadores inflamatórios</li>
+</ul>
+
+<h3>DAMPs (Damage-Associated Molecular Patterns) = Alarminas</h3>
+<ul>
+  <li>Moléculas de células <strong>endógenas lesadas</strong></li>
+  <li>Exemplos: ADP (ao invés de ATP — célula não está respirando direito), histonas expostas, fragmentos de DNA, membrana celular fragmentada</li>
+  <li>São reconhecidos quando a célula está danificada, com alterações que sinalizam que ela não é mais "normal"</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Conceito fundamental:</strong> PAMPs → agentes exógenos (infecciosos). DAMPs → agentes endógenos (células lesadas). Uma inflamação só por DAMPs (ex: cirurgia com material estéril) é mais branda que uma com PAMPs + DAMPs (ex: cirurgia com contaminação). Por isso é tão importante fazer antissepsia antes de procedimentos cirúrgicos — reduzir PAMPs.</p>
+</div>
+
+<div class="exemplo-clinico">
+  <h4>Exemplo Clínico</h4>
+  <p>Paciente submetido a exodontia de terceiro molar (siso). Com bochechos de clorexidina pré-cirúrgica e material estéril, a resposta inflamatória é predominantemente por DAMPs (trauma tecidual). Sem antissepsia adequada, soma-se a resposta por PAMPs (bactérias orais). A primeira situação terá edema e dor controláveis; a segunda pode evoluir para infecção com abscessos.</p>
+</div>
+
+<p>No câncer, as células neoplásicas conseguem "mascarar" seus DAMPs — evitam ser reconhecidas como danificadas e escapam da vigilância imunológica. Isso será detalhado em aulas futuras.</p>
+
+<!-- MECANISMOS DA INFLAMAÇÃO AGUDA -->
+<h2 id="aula1-mecanismos">Mecanismos da Inflamação Aguda</h2>
+<p>A inflamação aguda bem-sucedida tem <strong>3 etapas básicas</strong> sequenciais:</p>
+
+<h3 id="aula1-vasc">1. Fenômenos Vasculares e Exsudativos</h3>
+<p>São os primeiros eventos — acontecem em segundos a minutos:</p>
+<ol>
+  <li><strong>Vasoconstrição transitória</strong> (segundos) — reflexo imediato à lesão para reduzir perda sanguínea</li>
+  <li><strong>Vasodilatação arteriolar</strong> — predominante e sustentada. Aumenta o fluxo sanguíneo local
+    <ul>
+      <li>Mediadores: histamina (liberada por mastócitos — degranulação imediata), prostaglandinas</li>
+      <li>Resultado macroscópico: <strong>calor</strong> e <strong>rubor</strong> (hiperemia)</li>
+    </ul>
+  </li>
+  <li><strong>Aumento da pressão hidrostática</strong> dentro do vaso → sangue flui mais lento (<strong>estase</strong>)
+    <ul>
+      <li>O fluxo laminar normal é quebrado — hemácias se concentram, viscosidade aumenta</li>
+      <li>Microscopicamente: <strong>congestão vascular</strong> (vasos dilatados repletos de hemácias)</li>
+    </ul>
+  </li>
+  <li><strong>Transudato</strong> — fase inicial: saída de líquido <em>pobre em proteínas</em> do vaso para o interstício (espaços entre células endoteliais abrem minimamente)</li>
+  <li><strong>Exsudato</strong> — fase seguinte: as células endoteliais se retraem mais (ação de citocinas vasoativas), os poros aumentam, e agora sai líquido <strong>rico em proteínas</strong>:
+    <ul>
+      <li><strong>Fibrinogênio</strong> — sai do vaso e forma "trilhas" na matriz extracelular, guiando leucócitos até o local da lesão. Não forma rede de coagulação neste contexto — tem função de orientação</li>
+      <li>Proteínas do complemento</li>
+      <li>Albumina</li>
+    </ul>
+  </li>
+  <li><strong>Edema intersticial</strong> — com proteínas fora do vaso, a pressão coloidosmótica se inverte: aumenta no interstício e diminui no vaso → puxa água dos tecidos vizinhos → edema difuso</li>
+</ol>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Fibrinogênio na inflamação:</strong> A professora enfatizou que o fibrinogênio tem outras funções além de formar a rede de fibrina da coagulação. Na inflamação, ele migra do vaso, sofre polimerização em fibrina, e forma como um "tapete" por onde as células inflamatórias caminham até o local da lesão. Funciona como uma trilha de orientação.</p>
+</div>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Pico de edema = dia 1-2.</strong> No pós-cirúrgico (ex: exodontia), o pico de inchaço é entre 24-48 horas — o período de fenômenos vasculares mais intensos. Após isso, deve começar a regredir. Por isso se indica gelo nas primeiras 24-48h: para estimular vasoconstrição e contrabalançar a vasodilatação.</p>
+</div>
+
+<div class="exemplo-clinico">
+  <h4>Correlação Clínica — Transudato vs. Exsudato</h4>
+  <p>Na drenagem de um derrame pleural: se o líquido é praticamente água (transudato), provavelmente não há agente infeccioso e a inflamação está em fase aguda inicial. Se é mais espesso, leitoso (exsudato com proteínas), há agente infeccioso e fase mais avançada. Se é pus franco, há destruição celular maciça (piócitos) — fase avançada com bactéria altamente tóxica.</p>
+</div>
+
+<h3 id="aula1-cel">2. Fenômenos Celulares</h3>
+<p>Objetivo: transportar leucócitos ao local da lesão e ativá-los para destruir agentes agressores e eliminar tecido necrótico.</p>
+<p>A sequência de eventos envolve 3 momentos:</p>
+
+<h4>a) Marginação e Rolagem</h4>
+<ol>
+  <li>No fluxo laminar normal, leucócitos circulam no centro do vaso, sem contato com o endotélio</li>
+  <li>Com a estase (vasodilatação), o fluxo laminar se desfaz → leucócitos migram para a periferia = <strong>marginação</strong></li>
+  <li>Leucócitos expressam <strong>selectinas</strong> (proteínas de membrana) que interagem com selectinas das células endoteliais → adesão fraca e transitória = <strong>rolagem</strong></li>
+  <li>E-selectinas são hiper-reguladas por citocinas (IL-1, TNF-α, histamina, trombina)</li>
+</ol>
+
+<h4>b) Adesão e Transmigração</h4>
+<ol>
+  <li>Durante a rolagem, quimiocinas (citocinas quimioatraentes) ativam as <strong>integrinas</strong> dos leucócitos — glicoproteínas transmembrana muito mais fortes que selectinas</li>
+  <li>Integrinas ligam-se a moléculas de adesão endoteliais (ICAM-1, VCAM-1, CD31) → <strong>adesão estável</strong></li>
+  <li>Leucócitos modificam seu citoesqueleto, achatam-se (<strong>pavimentação</strong>) e migram entre as junções das células endoteliais = <strong>transmigração ou diapedese</strong></li>
+</ol>
+
+<h4>c) Quimiotaxia</h4>
+<p>Após a diapedese, o leucócito precisa chegar ao local da lesão. Isso acontece por <strong>quimiotaxia</strong> — migração guiada por um gradiente de concentração de substâncias quimiotáticas:</p>
+<ul>
+  <li>Produtos bacterianos</li>
+  <li>Componentes do complemento (C5a)</li>
+  <li>Leucotrienos (produtos da lipoxigenase / ácido araquidônico)</li>
+</ul>
+<p>Essas moléculas elevam o Ca²⁺ citosólico, aumentam a contratilidade do citoesqueleto e levam à formação de pseudópodes para movimentação pela matriz extracelular.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Sequência completa:</strong> Vasodilatação → quebra do fluxo laminar → marginação → rolagem (selectinas) → adesão estável (integrinas/ICAM) → pavimentação → diapedese → quimiotaxia até o foco. Tudo isso acontece em segundos a minutos. A professora comparou a "Missão Impossível" — é uma operação complexa orquestrada pelos mediadores inflamatórios (a "trilha sonora").</p>
+</div>
+
+<h3 id="aula1-ativ">3. Ativação Leucocitária e Fagocitose</h3>
+<p>Leucócitos circulantes não estão ativados — precisam ser "ligados" para exercer fagocitose. A ativação depende de:</p>
+<ul>
+  <li>Substâncias microbianas (PAMPs)</li>
+  <li>Moléculas necróticas (DAMPs)</li>
+  <li>Mediadores inflamatórios</li>
+</ul>
+<p>Principais receptores de ativação: TLRs (Toll-like receptors), receptores acoplados a proteína G, receptores para opsoninas, receptores para citocinas.</p>
+<p>Uma vez ativado, o leucócito (neutrófilo) realiza <strong>fagocitose</strong>:</p>
+<ol>
+  <li>Reconhecimento e ligação ao agente</li>
+  <li>Englobamento (pseudópodes → fagossomo)</li>
+  <li>Destruição: produção de <strong>EROs (espécies reativas de oxigênio)</strong> e <strong>NO (óxido nítrico)</strong></li>
+</ol>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Dano colateral:</strong> Durante a fagocitose, EROs e NO podem extravazar e lesar o tecido ao redor. É a própria resposta inflamatória causando dano — como na afta, onde a necrose central (centro branco coberto de fibrina) é causada pela resposta inflamatória, não por um agente infeccioso. Esse é o motivo principal para modular a inflamação.</p>
+</div>
+
+<!-- CÉLULAS -->
+<h2 id="aula1-celulas">Células da Inflamação Aguda</h2>
+
+<h3>Neutrófilo (PMN) — Protagonista da Inflamação Aguda</h3>
+<ul>
+  <li>Leucócito mais abundante: ~50% do leucograma</li>
+  <li>Núcleo lobulado/segmentado → chamado de <strong>polimorfonuclear (PMN)</strong></li>
+  <li>Fagócito — mas, diferente do macrófago, <strong>fagocitou → morreu</strong> (células "kamikaze")</li>
+  <li>Neutrófilo morto = <strong>piócito</strong> (pio = pus). Pus é composto de piócitos + células necróticas + líquido proteico</li>
+  <li>Permanece ~8 horas na circulação, máximo 2 dias no tecido</li>
+  <li>Grânulos: gelatinases, elastases, RNAses, DNAses, lactoferrina</li>
+  <li>TNF-α e IL-1 estimulam sua produção na medula óssea</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Desvio à esquerda:</strong> Se a inflamação exige muitos neutrófilos por tempo prolongado, a medula óssea não consegue maturar todos. Começa a liberar neutrófilos imaturos — bastonetes, metamielócitos, mielócitos. No leucograma, isso aparece como <strong>desvio à esquerda</strong>. É sinal de que a inflamação está sobrecarregando a medula.</p>
+  <p>Contagem < 1.000 neutrófilos → paciente <strong>imunocomprometido</strong> (não consegue se defender). Contagens extremas (100.000-200.000) → investigar leucemia = <strong>reação leucemoide</strong>.</p>
+</div>
+
+<h3>Eosinófilo</h3>
+<ul>
+  <li>1-5% do leucograma; núcleo bilobulado, grânulos acidófilos (rosa)</li>
+  <li>Respostas a <strong>parasitoses</strong> (são os primeiros recrutados) e <strong>alergias</strong> (mediadas por IgE e IgG)</li>
+  <li>Produz eotaxina (quimiocina de recrutamento)</li>
+  <li>Grânulos: proteína básica principal (tóxica para parasitos), peróxido de hidrogênio, superóxidos</li>
+  <li>Baixa capacidade fagocitária, mas essencial contra helmintos: IL-5 + adesão + degranulação → morte do parasito</li>
+  <li>No laudo AP: "infiltrado eosinofílico"</li>
+</ul>
+
+<h3>Monócito → Macrófago</h3>
+<ul>
+  <li>Monócito no sangue (~10% do leucograma); no tecido vira <strong>macrófago</strong></li>
+  <li>Funções: fagocitose (mais potente que neutrófilo) + apresentação de antígenos</li>
+  <li>Fagocita e <strong>sobrevive</strong> (diferente do neutrófilo)</li>
+  <li>Especializações por tecido:
+    <ul>
+      <li>Fígado → Células de Kupffer</li>
+      <li>Osso → Osteoclastos</li>
+      <li>Pulmão → Macrófagos alveolares</li>
+      <li>SNC → Micróglia</li>
+      <li>Pele/mucosas → Células dendríticas (derivadas de macrófagos)</li>
+    </ul>
+  </li>
+  <li>Entram em ação a partir do 2º-3º dia da inflamação, assumindo quando neutrófilos morrem</li>
+</ul>
+
+<h3>Mastócito</h3>
+<ul>
+  <li>Fagócito residente no tecido conjuntivo</li>
+  <li><strong>Primeira célula a responder</strong>: sofre degranulação imediata liberando <strong>histamina</strong> (amina vasoativa) → vasodilatação imediata</li>
+  <li>Também libera TNF, IL-1, PAF (fator ativador de plaquetas)</li>
+</ul>
+
+<h3>Linfócito</h3>
+<ul>
+  <li>Segundo leucócito mais frequente no hemograma</li>
+  <li>Permanece linfócito no sangue e no tecido (T e B)</li>
+  <li>Linfócito B diferenciado → <strong>plasmócito</strong> (produz IgG, IgM, IgE)</li>
+  <li>Na inflamação aguda, não é protagonista — exceto em infecções virais</li>
+</ul>
+
+<!-- MEDIADORES -->
+<h2 id="aula1-mediadores">Mediadores Inflamatórios</h2>
+<p>São substâncias liberadas na área tecidual lesada que coordenam todo o processo inflamatório. Têm <strong>meia-vida curta</strong> e são degradados após sua liberação.</p>
+
+<h3>TNF-α (Fator de Necrose Tumoral) e IL-1 (Interleucina-1)</h3>
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Os dois mediadores mais importantes da inflamação aguda — tem que lembrar!</strong></p>
+</div>
+<ul>
+  <li>Produzidos por: macrófagos ativados, células dendríticas (TNF também por linfócitos T e mastócitos; IL-1 também por células epiteliais)</li>
+  <li><strong>Funções locais:</strong>
+    <ul>
+      <li>Ativação endotelial (expressão de selectinas e integrinas)</li>
+      <li>Ativação leucocitária (TNF aumenta resposta de neutrófilos, estimula atividade microbicida de macrófagos, induz produção de NO)</li>
+      <li>Estimulam a medula óssea a produzir mais neutrófilos</li>
+    </ul>
+  </li>
+  <li><strong>Efeitos sistêmicos:</strong> febre, astenia/fadiga, mobilização de lipídios e proteínas, aumento da temperatura corpórea</li>
+  <li>IL-1 ativa síntese de fibroblastos e células mesenquimais</li>
+</ul>
+
+<h3>Histamina</h3>
+<ul>
+  <li>Amina vasoativa liberada por mastócitos (degranulação imediata)</li>
+  <li>Primeira resposta: vasodilatação instantânea</li>
+</ul>
+
+<h3>Bradicinina</h3>
+<ul>
+  <li>Mediador relacionado à <strong>dor</strong></li>
+</ul>
+
+<h3>EROs (Espécies Reativas de Oxigênio)</h3>
+<ul>
+  <li>Produzidas por todos os leucócitos durante fagocitose</li>
+  <li>Destroem microrganismos mas podem lesar tecido adjacente → estresse oxidativo</li>
+</ul>
+
+<h3>Prostaglandinas (PGs)</h3>
+<ul>
+  <li>Produzidas por mastócitos, macrófagos, células endoteliais</li>
+  <li>Geradas pela ação da <strong>COX-1 e COX-2</strong> sobre o ácido araquidônico</li>
+  <li>Envolvidas em reações vasculares e sistêmicas</li>
+  <li><strong>AINES</strong> (anti-inflamatórios não esteroidais) inibem COX → modulam inflamação</li>
+  <li><strong>AIES</strong> (corticoides) inibem a fosfolipase A2 → bloqueio mais amplo</li>
+</ul>
+
+<h3>Células endoteliais como amplificadoras</h3>
+<p>Respondem secretando: histamina, trombina, IL-1/TNF, PAF, quimiocinas, ácido hialurônico. A inflamação aguda lesa células endoteliais e expõe o subendotélio, favorecendo formação de trombos.</p>
+
+<!-- CINÉTICA -->
+<h2 id="aula1-cinetica">Cinética da Inflamação Aguda</h2>
+<table>
+  <thead><tr><th>Tempo</th><th>Evento</th></tr></thead>
+  <tbody>
+    <tr><td>Dia 1</td><td><strong>Pico de edema</strong> — fenômenos vasculares e exsudativos predominantes</td></tr>
+    <tr><td>Dia 1-2</td><td>Neutrófilos intensamente recrutados — predominam nas primeiras 24h</td></tr>
+    <tr><td>Dia 2-3</td><td>Monócitos/macrófagos começam a participar (neutrófilos sofrem apoptose)</td></tr>
+    <tr><td>Dia 3-7</td><td>Resolução se bem-sucedida; se não, progressão para crônica</td></tr>
+  </tbody>
+</table>
+
+<!-- EXCEÇÕES -->
+<h2 id="aula1-excecoes">Exceções ao Padrão Neutrofílico</h2>
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Três exceções importantes:</strong></p>
+</div>
+<table>
+  <thead><tr><th>Situação</th><th>Célula predominante</th><th>Motivo</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Infecções virais</strong></td><td>Linfócitos (linfocitose)</td><td>Vírus são intracelulares — neutrófilos não conseguem fagocitá-los. Precisa de resposta imune adaptativa (linfócitos T)</td></tr>
+    <tr><td><strong>Reações alérgicas / hipersensibilidade</strong></td><td>Eosinófilos (eosinofilia)</td><td>Não há microrganismo para fagocitar. Resposta mediada por IgE/IgG requer eosinófilos</td></tr>
+    <tr><td><strong>Pseudomonas e bactérias resistentes</strong></td><td>Neutrófilos contínuos (não declina)</td><td>Difícil erradicação — neutrófilos são recrutados continuamente por dias, com desvio à esquerda</td></tr>
+  </tbody>
+</table>
+
+<div class="exemplo-clinico">
+  <h4>Dica de leucograma</h4>
+  <p>Paciente com sinais inflamatórios + leucograma com linfocitose (sem neutrofilia) → pensar em infecção viral. Paciente com eosinofilia → pensar em alergia ou parasitose (correlacionar com história clínica).</p>
+</div>
+
+<!-- PADRÕES MORFOLÓGICOS -->
+<h2 id="aula1-padroes">Padrões Morfológicos da Inflamação Aguda</h2>
+<p>Todas as reações inflamatórias agudas compartilham duas características microscópicas comuns:</p>
+<ol>
+  <li>Dilatação de vasos + exsudato no tecido extravascular</li>
+  <li>Acúmulo/aglomeração de leucócitos = infiltrado inflamatório agudo (PMN)</li>
+</ol>
+<p>Dependendo do agente agressor, intensidade e tecido, manifestam-se em <strong>4 padrões principais</strong>:</p>
+
+<h3>1. Inflamação Serosa</h3>
+<ul>
+  <li>Extravasamento exuberante de fluido aquoso, relativamente <strong>pobre em proteínas</strong> comparado ao exsudato fibrinoso/purulento (exsudato seroso)</li>
+  <li>Originado do plasma/soro sanguíneo ou secreções celulares mesoteliais</li>
+  <li>Resulta em efusões ou formação de bolhas</li>
+  <li>Comum em epitélios e membranas cavitárias: dermatites, peritonites, pleurites, pericardites</li>
+  <li>Exemplos: queimaduras de pele, traumas químico-físicos, infecções virais/bacterianas leves</li>
+</ul>
+
+<h3>2. Inflamação Fibrinosa</h3>
+<ul>
+  <li>Lesões mais graves → maior permeabilidade → extravasamento de <strong>fibrinogênio → exsudato fibrinoso</strong></li>
+  <li>Fibrina extravascular aparece como rede eosinofílica na microscopia</li>
+  <li>Acomete cavidades corporais: meninges, pericárdio, pleura</li>
+  <li>Resolução: macrófagos removem restos. Se persistir → cicatrização por fibroblastos (redução de função)</li>
+  <li>Exemplos: pneumonia lobar, pericardite fibrinosa</li>
+</ul>
+
+<h3>3. Inflamação Supurativa (Purulenta)</h3>
+<ul>
+  <li>Abundante exsudato purulento: <strong>pus = piócitos + células necróticas + líquido proteico</strong></li>
+  <li>Associado a microrganismos <strong>piogênicos</strong> (ex: estafilococos)</li>
+  <li><strong>Abscesso</strong> = coleção localizada de pus (região central necrótica + neutrófilos viáveis ao redor + vasos/fibroblastos em proliferação)</li>
+  <li><strong>Empiema</strong> = coleção de pus em cavidade natural (ex: piotórax, pioperitôneo)</li>
+  <li>Exemplo: meningite supurativa</li>
+</ul>
+
+<h3>4. Inflamação Ulcerativa</h3>
+<ul>
+  <li><strong>Úlcera</strong> = perda completa da superfície de revestimento, com exposição do conjuntivo subjacente</li>
+  <li>Resultado de necrose tecidual + desprendimento do epitélio</li>
+  <li>Microscopicamente: tecido necrótico superficial com fibrina + piócitos + conjuntivo inflamatório adjacente (vasodilatação, congestão, infiltrado PMN ou misto)</li>
+  <li>Exemplos: úlceras gastrointestinais, genitourinárias, MMII (pós-isquemia), aftas</li>
+</ul>
+
+<h3>Padrão adicional: Catarral/Mucoso</h3>
+<ul>
+  <li>Acomete mucosas respiratórias</li>
+  <li>Muco + leucócitos + lesão de epitélio</li>
+  <li>Aspecto: viscoso, claro/turvo/róseo com celularidade variável</li>
+  <li>Exemplos: gripes, faringites, laringites</li>
+</ul>
+
+<!-- EFEITOS SISTÊMICOS -->
+<h2 id="aula1-sistemicos">Efeitos Sistêmicos da Inflamação Aguda</h2>
+<ul>
+  <li><strong>Leucocitose:</strong> contagem sobe para 15.000-20.000/µL (pode chegar a 100.000 = reação leucemoide). Estímulo: TNF e IL-1 ativam liberação pela medula óssea</li>
+  <li><strong>Desvio à esquerda:</strong> neutrófilos imaturos no sangue</li>
+  <li><strong>Febre:</strong> TNF-α regula centro termorregulador + aumento do metabolismo</li>
+  <li><strong>Astenia/fadiga:</strong> excesso de gasto energético pela resposta inflamatória</li>
+  <li><strong>Proteínas de fase aguda:</strong> aumento de PCR (proteína C-reativa) e outras</li>
+  <li><strong>Sepse:</strong> quando a inflamação é generalizada, TNF-α circulante em níveis elevados → vasodilatação sistêmica, febre alta, instabilidade hemodinâmica</li>
+</ul>
+
+<!-- DESFECHOS -->
+<h2 id="aula1-desfechos">Desfechos da Inflamação Aguda</h2>
+<p>Três possíveis evoluções, dependendo do agente, intensidade, tecido e resposta do hospedeiro:</p>
+<table>
+  <thead><tr><th>Desfecho</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1. Resolução</strong></td><td>IA bem-sucedida, pouca destruição → tecido regenera células lesadas. Neutrófilos sofrem apoptose (24-48h), mediadores são degradados, macrófagos fazem limpeza</td></tr>
+    <tr><td><strong>2. Progressão para crônica</strong></td><td>Cascata inflamatória não resolvida → novos elementos celulares (mononucleares) são recrutados</td></tr>
+    <tr><td><strong>3. Cicatrização/Fibrose</strong></td><td>Destruição substancial em tecidos que não se regeneram → substituição por tecido cicatricial fibroso</td></tr>
+  </tbody>
+</table>
+
+<h3>Término da Inflamação Aguda (na resolução)</h3>
+<ol>
+  <li>Neutrófilos sofrem apoptose em poucas horas (24-48h)</li>
+  <li>Mediadores têm meia-vida curta — são produzidos em rápidas "explosões" enquanto o estímulo persiste</li>
+  <li>Mudança no tipo de metabólito: menos leucotrienos pró-inflamatórios → mais <strong>lipoxinas</strong> anti-inflamatórias</li>
+  <li>Produção de mediadores lipídicos anti-inflamatórios: <strong>resolvinas</strong> e <strong>protectinas</strong></li>
+  <li>Macrófagos liberam citocinas anti-inflamatórias: <strong>TGF-β</strong> e <strong>IL-10</strong></li>
+  <li>Progressivamente: menos receptores pró-inflamatórios e mais receptores anti-inflamatórios</li>
+</ol>
+
+<!-- NOMENCLATURA -->
+<h2 id="aula1-nomenclatura">Nomenclatura Inflamatória</h2>
+<p>Regra geral: <strong>tecido afetado + sufixo "-ite"</strong></p>
+<table>
+  <thead><tr><th>Tecido/Órgão</th><th>Terminologia</th></tr></thead>
+  <tbody>
+    <tr><td>Estômago</td><td>Gastrite</td></tr>
+    <tr><td>Esôfago</td><td>Esofagite</td></tr>
+    <tr><td>Pele</td><td>Dermatite</td></tr>
+    <tr><td>Articulação</td><td>Artrite</td></tr>
+    <tr><td>Cápsula sinovial</td><td>Sinovite</td></tr>
+    <tr><td>Músculo</td><td>Miosite</td></tr>
+    <tr><td>Meninges</td><td>Meningite</td></tr>
+    <tr><td>Pulmão</td><td>Pneumonite / Pneumonia</td></tr>
+    <tr><td>Apêndice</td><td>Apendicite</td></tr>
+    <tr><td>Linfonodo</td><td>Linfadenite</td></tr>
+  </tbody>
+</table>
+
+<!-- GLOSSÁRIO -->
+<h2 id="aula1-glossario">Glossário Essencial</h2>
+<table>
+  <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+  <tbody>
+    <tr><td>Exsudato</td><td>Líquido rico em proteínas extravasado por processo inflamatório</td></tr>
+    <tr><td>Transudato</td><td>Líquido pobre em proteínas que sai do vaso por aumento de pressão</td></tr>
+    <tr><td>Piócito</td><td>Neutrófilo morto (apoptótico), encontrado no pus</td></tr>
+    <tr><td>Abscesso</td><td>Coleção localizada de pus em espaço tecidual</td></tr>
+    <tr><td>Empiema</td><td>Coleção de pus em cavidade natural (ex: piotórax)</td></tr>
+    <tr><td>Sepse</td><td>Infecção grave com disseminação sistêmica + resposta inflamatória generalizada</td></tr>
+    <tr><td>Linfonodos reacionais</td><td>Linfonodos ativados devido a infecção em andamento</td></tr>
+    <tr><td>Desvio à esquerda</td><td>Presença de neutrófilos imaturos no sangue (bastonetes, metamielócitos)</td></tr>
+  </tbody>
+</table>
+
+<!-- RESUMO -->
+<div class="resumo-aula">
+  <h2>Resumo — Pontos Essenciais da Aula 1</h2>
+  <ul>
+    <li>Inflamação = resposta protetora dos tecidos vivos, essencial à sobrevivência; modulação > anti-inflamação</li>
+    <li>5 sinais cardinais: calor, rubor, edema, dor, perda de função</li>
+    <li>PAMPs (exógenos/patógenos) e DAMPs (endógenos/células lesadas) iniciam a resposta via TLRs</li>
+    <li>Fenômenos vasculares: vasodilatação → transudato → exsudato → edema; fibrinogênio guia leucócitos</li>
+    <li>Fenômenos celulares: marginação → rolagem (selectinas) → adesão (integrinas) → diapedese → quimiotaxia</li>
+    <li>Neutrófilo é a célula-chave da IA; fagocita e morre (piócito). TNF-α e IL-1 são os mediadores centrais</li>
+    <li>Exceções: vírus → linfocitose; alergia/parasitose → eosinofilia; Pseudomonas → neutrofilia sustentada</li>
+    <li>4 padrões morfológicos: seroso, fibrinoso, supurativo, ulcerativo (+ catarral)</li>
+  </ul>
+</div>
+
+</section>
+
+
+<!-- AULA 2 — INFLAMAÇÃO CRÔNICA (03-13) -->
+<section id="aula2" class="aula">
+<h1>Aula 2 — Inflamação Crônica</h1>
+<p class="aula-meta">Profa. Dra. Veronica Yujra · 13/03/2026</p>
+
+<!-- CONTEXTO -->
+<h2 id="aula2-contexto">Por que estudar inflamação crônica?</h2>
+<p>A maioria das doenças que acompanham o paciente ao longo da vida — artrite reumatoide, hepatites B e C, DPOC, doenças autoimunes — são processos inflamatórios crônicos. Diferente da inflamação aguda (que resolve em dias), a crônica envolve um ciclo simultâneo de destruição tecidual e tentativa de reparo que pode durar meses, anos ou toda a vida, frequentemente levando a perda funcional irreversível (fibrose). Além disso, o microambiente de doenças crônicas é mais favorável para o surgimento de cânceres.</p>
+
+<!-- DEFINIÇÃO -->
+<h2 id="aula2-definicao">Definição e Conceito</h2>
+<p>A inflamação crônica (IC) é uma <strong>resposta inflamatória persistente</strong> de longa duração (semanas, meses, anos) em que três processos coexistem simultaneamente:</p>
+<ol>
+  <li><strong>Infiltração por células mononucleares</strong> (macrófagos, linfócitos, plasmócitos)</li>
+  <li><strong>Destruição tecidual</strong> — fenômenos alterativos (degeneração e necrose)</li>
+  <li><strong>Tentativas de reparo</strong> — fenômenos reparativos (angiogênese e fibrose)</li>
+</ol>
+<p>Pode ocorrer de duas formas:</p>
+<ul>
+  <li><strong>Após inflamação aguda não resolvida</strong> — a IA falhou em eliminar o agente e progrediu</li>
+  <li><strong>Modo insidioso/latente</strong> — sem reação aguda prévia visível; resposta indolente de baixo grau desde o início</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Diferença fundamental IA vs. IC:</strong> Na IA → fenômenos vasculares e exsudativos + infiltrado de PMN (neutrófilos). Na IC → fenômenos alterativos e reparativos + infiltrado de mononucleares (macrófagos, linfócitos). A IA busca eliminar; a IC é um ciclo de destruição e reparo simultâneos.</p>
+</div>
+
+<!-- AGENTES -->
+<h2 id="aula2-agentes">Principais Agentes de Inflamação Crônica</h2>
+
+<h3>1. Infecções persistentes</h3>
+<p>Microrganismos difíceis de erradicar pela imunidade inata:</p>
+<table>
+  <thead><tr><th>Tipo</th><th>Exemplos</th></tr></thead>
+  <tbody>
+    <tr><td>Micobactérias</td><td>Tuberculose (TB), Hanseníase (Hansen)</td></tr>
+    <tr><td>Vírus</td><td>HIV, HPV (alto risco), Hepatite B e C, Herpes zóster</td></tr>
+    <tr><td>Fungos</td><td>Paracoccidioidomicose (PCCM)</td></tr>
+    <tr><td>Parasitas</td><td>Endocardite chagásica (Chagas)</td></tr>
+  </tbody>
+</table>
+<p><em>ℹ️ Informação complementar (não discutida diretamente em aula):</em> Hepatite A = aguda. Hepatite B e C = crônica. Herpes simples = aguda (mas recorrente). Herpes zóster = crônica.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>TB e inflamação:</strong> A tuberculose provoca uma resposta aguda no primeiro contato com o bacilo, mas o organismo não consegue erradicar a micobactéria, então obrigatoriamente evolui para inflamação crônica. Algumas infecções persistentes causam um padrão específico chamado <strong>inflamação granulomatosa</strong> (tema da próxima aula).</p>
+</div>
+
+<h3>2. Exposição prolongada a agentes tóxicos</h3>
+<ul>
+  <li><strong>Exógenos:</strong> tabagismo (inflamações insidiosas de repetição → DPOC), silicose (exposição a sílica na mineração/indústria de vidro)</li>
+  <li><strong>Endógenos:</strong> doença do refluxo gastroesofágico (contato constante do esôfago com suco gástrico ácido → esofagite crônica)</li>
+</ul>
+
+<h3>3. Substâncias ambientais (respostas alérgicas)</h3>
+<p>Asma brônquica: resposta imune contínua a alérgenos ambientais. Mostra padrões mistos de IA e IC — agudizações intercaladas com fibrose progressiva nos estágios tardios.</p>
+
+<h3>4. Doenças autoimunes</h3>
+<p>Autoantígenos evocam reação imune autoperpetuada → inflamação e dano tecidual crônico:</p>
+<ul>
+  <li><strong>Tireoidite de Hashimoto</strong> — autoantígenos contra folículos tireoidianos → destruição progressiva → inicialmente hipertireoidismo (proliferação compensatória), depois hipotireoidismo (fibrose)</li>
+  <li>Artrite reumatoide, esclerose múltipla, diabetes tipo 1 (autoimune)</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Gastrite crônica:</strong> 90% das gastrites crônicas são causadas por <em>Helicobacter pylori</em>. O tratamento envolve antibiótico para erradicar a bactéria (não apenas mudança alimentar). O padrão ouro é repetir endoscopia e teste para confirmar erradicação.</p>
+</div>
+
+<!-- MECANISMOS -->
+<h2 id="aula2-mecanismos">Mecanismos da Inflamação Crônica</h2>
+
+<h3 id="aula2-celular">1. Recrutamento e Infiltração Mononuclear</h3>
+<p>A partir de 48h de inflamação, se o agente não foi eliminado, o perfil celular muda:</p>
+<ul>
+  <li>PMN (neutrófilos) → <strong>mononucleares</strong> (macrófagos + linfócitos)</li>
+  <li>O mecanismo de migração é o mesmo: marginação → rolagem → adesão → diapedese</li>
+  <li>Diferença: essas células duram muito mais e podem se multiplicar no tecido</li>
+</ul>
+
+<h3 id="aula2-alterativo">2. Fenômenos Alterativos (Destruição Tecidual)</h3>
+<p>Degeneração e necrose induzidas pelo agente persistente OU pela ação prolongada das próprias células inflamatórias. Na IA, a destruição era limitada; na IC, é contínua e progressiva.</p>
+
+<h3 id="aula2-reparativo">3. Fenômenos Reparativos</h3>
+<p>Tentativas de cura que ocorrem <strong>simultaneamente</strong> à destruição:</p>
+<ul>
+  <li><strong>Angiogênese</strong> (angio = vasos, gênese = origem): proliferação de novos vasos sanguíneos para nutrir o tecido em reparo. Neo-vasos com endotélio cúbico (diferente dos vasos normais)</li>
+  <li><strong>Fibrose</strong>: substituição do tecido danificado por tecido conjuntivo fibroso (fibras colágenas depositadas por fibroblastos)</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Atenção — não confundir:</strong></p>
+  <ul>
+    <li><strong>Fibrina</strong> = proteína plasmática (vem do fibrinogênio, está no sangue) → presente na inflamação aguda (exsudato fibrinoso)</li>
+    <li><strong>Fibrose</strong> = excesso de colágeno (produzido por fibroblastos) → presente na inflamação crônica (reparo)</li>
+    <li><strong>Fibroso</strong> = relativo a fibras colágenas (tecido conjuntivo fibroso)</li>
+  </ul>
+  <p>Fibrinoso ≠ fibroso! A professora enfatizou que essa é uma confusão muito comum.</p>
+</div>
+
+<!-- CÉLULAS -->
+<h2 id="aula2-celulas">Células da Inflamação Crônica</h2>
+
+<h3>Macrófago — A Célula Dominante da IC</h3>
+<ul>
+  <li>Originado do monócito sanguíneo (~10% do leucograma)</li>
+  <li>Recrutado a partir de 48h; persiste o tempo necessário (dias a meses)</li>
+  <li>Meia-vida do monócito: ~1 dia; macrófago tecidual ativado: dias a meses</li>
+  <li>Especializações teciduais: Kupffer (fígado), micróglia (SNC), osteoclasto (osso), macrófago alveolar (pulmão)</li>
+  <li>Funções: fagocitose, apresentação de antígenos, produção de citocinas, reparo tecidual</li>
+</ul>
+
+<h4>Macrófago M1 vs. M2 — Duas faces da mesma célula</h4>
+<table>
+  <thead><tr><th>Característica</th><th>M1 (Pró-inflamatório)</th><th>M2 (Anti-inflamatório)</th></tr></thead>
+  <tbody>
+    <tr><td>Ativado por</td><td>IFN-γ (de linfócitos T)</td><td>Outras vias (IL-4, IL-10, IL-13)</td></tr>
+    <tr><td>Função principal</td><td>Fagocitose ativa, destruição de micróbios e células senescentes</td><td>Término da inflamação, reparo tecidual, crescimento</td></tr>
+    <tr><td>Produz</td><td>EROs, NO, enzimas lisossômicas, TNF, IL-1</td><td>Fatores de crescimento (FGF, VEGF, EGF, TGF-β)</td></tr>
+    <tr><td>Consequência</td><td>Tóxico a micróbios MAS também ao tecido e MEC</td><td>Proliferação de fibroblastos, deposição de colágeno, angiogênese</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>O problema da IC:</strong> M1 e M2 coexistem no mesmo tecido. M1 destrói, M2 repara. A cada agudização da doença, M1 predomina; na fase de remissão, M2 assume. Esse balanço perpétuo entre destruição (M1) e fibrose (M2) é o que define a inflamação crônica e explica por que o tecido vai progressivamente perdendo função.</p>
+</div>
+
+<h3>Linfócitos (~30% do leucograma)</h3>
+<ul>
+  <li><strong>Linfócitos T</strong> (efetores): constituem o exsudato de infecções virais; ativados após diapedese</li>
+  <li><strong>Linfócitos B</strong> (memória): exsudam e diferenciam-se em <strong>plasmócitos</strong> → produzem anticorpos específicos (imunoglobulinas) contra antígenos persistentes ou contra componentes teciduais alterados (autoimunidade)</li>
+  <li>Ambos são capazes de sofrer <strong>mitose no tecido</strong> → podem formar folículos linfoides ectópicos</li>
+</ul>
+
+<h4>Interação Macrófago ↔ Linfócito (amplificação bidirecional)</h4>
+<ol>
+  <li>Macrófago apresenta antígenos ao linfócito T + produz IL-12 → ativa linfócito</li>
+  <li>Linfócito T ativado produz IFN-γ → ativa macrófagos (via M1) → recruta mais monócitos</li>
+  <li>Ciclo se amplifica: mais destruição → mais reparo → mais fibrose</li>
+</ol>
+<p>Quando a reação é intensa, acúmulos de linfócitos, macrófagos e plasmócitos assumem <strong>morfologia de órgão linfoide</strong> (folículos linfoides ectópicos). Exemplo: sinóvia na artrite reumatoide.</p>
+
+<h3>Morfologia celular no tecido</h3>
+<table>
+  <thead><tr><th>Célula</th><th>Como reconhecer na lâmina</th></tr></thead>
+  <tbody>
+    <tr><td>Neutrófilo (IA)</td><td>Núcleo <strong>segmentado</strong> (lobulado) — polimorfnuclear</td></tr>
+    <tr><td>Linfócito (IC)</td><td>Núcleo <strong>esférico único</strong> ocupando quase toda a célula, citoplasma quase transparente</td></tr>
+    <tr><td>Plasmócito</td><td>Linfócito com citoplasma mais evidente (armazena anticorpos); núcleo excêntrico, "relógio"</td></tr>
+    <tr><td>Macrófago</td><td>Citoplasma amplo, núcleo oval, pode ter fagossomos visíveis; difícil de ver individualmente</td></tr>
+  </tbody>
+</table>
+
+<h3>Outros componentes (menos importantes)</h3>
+<ul>
+  <li><strong>Basófilos</strong> (máx 1% do leucograma): recrutados por quimiotáticos de linfócitos T</li>
+  <li><strong>Mastócitos</strong>: análogos teciduais dos basófilos; participam de IA e IC de perfil imunitário; receptor FcRI liga IgE</li>
+  <li><strong>Plaquetas</strong>: podem estar presentes em respostas crônicas</li>
+</ul>
+
+<!-- FIBROSE EM EXEMPLOS -->
+<h2 id="aula2-fibrose">Fibrose — A Marca da Inflamação Crônica</h2>
+
+<h3>Exemplo 1: Cirrose Hepática</h3>
+<p>Hepatite B ou C crônica → inflamação contínua do fígado → destruição de hepatócitos + fibrose progressiva entre os lóbulos hepáticos. O tecido conjuntivo (traves fibróticas) aumenta, deformando os lóbulos. A fibrose hepática é classicamente considerada <strong>irreversível</strong> (diferente da degeneração, que é reversível). <em>(Adendo: evidência recente demonstra que a fibrose pode ser parcialmente reversível em estágios iniciais/intermediários quando a causa é eliminada — ex: erradicação do HCV com antivirais. Em cirrose avançada, a reversibilidade é mais limitada.)</em> Ao longo de anos (30-40 anos sem tratamento), evolui para cirrose com perda funcional do fígado.</p>
+
+<div class="exemplo-clinico">
+  <h4>Exemplo Clínico — Hepatite crônica</h4>
+  <p>Jovem com hepatite B não tratada: aos 35-40 anos, o fígado pode ainda manter função razoável compensatoriamente. Mas conforme o tecido hepático é substituído por fibrose, o fígado vai perdendo capacidade até a insuficiência hepática/cirrose. Na lâmina: infiltrado mononuclear + áreas de degeneração + traves de fibrose entre lóbulos deformados + neo-vasos.</p>
+</div>
+
+<h3>Exemplo 2: Silicose Pulmonar</h3>
+<p>Exposição prolongada à sílica (mineração, indústria de vidro) → partículas de sílica se depositam nos alvéolos → resposta inflamatória crônica com tentativa de encapsulamento → fibrose difusa → substituição de espaços alveolares por massas fibróticas. Função pulmonar progressivamente comprometida. Irreversível — tratamento é de suporte.</p>
+
+<h3>Exemplo 3: DPOC / Asma</h3>
+<p>Inflamação crônica das vias aéreas com episódios de agudização. A alternância IA/IC vai causando espessamento progressivo da parede brônquica por fibrose. Padrões mistos: componente agudo (neutrofílico) nos surtos + componente crônico (mononuclear + fibrose) de base.</p>
+
+<!-- EFEITOS SISTÊMICOS -->
+<h2 id="aula2-sistemicos">Marcadores Sistêmicos da Inflamação</h2>
+<ul>
+  <li><strong>PCR (Proteína C-Reativa):</strong> Produzida pelo fígado em resposta a citocinas (IL-1, TNF). Valor normal próximo de zero (< 0,5 mg/dL ou < 5 mg/L). PCR elevada = atividade inflamatória ativa. Indicador de que "alguma coisa está acontecendo". Função principal: opsonização — liga-se à superfície de células danificadas e bactérias, ativando o complemento (via clássica) e facilitando a fagocitose</li>
+  <li><strong>Leucocitose com neutrofilia + desvio à esquerda</strong> (na fase aguda)</li>
+  <li><strong>Febre</strong>: TNF-α e prostaglandinas atuam no centro termorregulador</li>
+  <li><strong>Dor</strong>: prostaglandinas, bradicininas, neuropeptídeos</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Dica clínica da professora:</strong> "Quando ninguém descobre a causa, chama o pessoal do abdômen, porque a PCR não baixa." Infecções ocultas (ex: infecções fúngicas orais) podem manter a PCR elevada sem causa aparente. Sempre investigar quando PCR não normaliza.</p>
+</div>
+
+<!-- HIPERATIVAÇÃO -->
+<h2 id="aula2-hiperativacao">Complicações da Hiperativação Inflamatória</h2>
+<p>A resposta inflamatória excessiva pode causar mais dano que a doença original:</p>
+<ul>
+  <li><strong>SARA (Síndrome da Angústia Respiratória Aguda):</strong> Hiperativação de neutrófilos no pulmão → vasodilatação excessiva → exsudato encharca os alvéolos → paciente "se afoga" em líquido inflamatório</li>
+  <li><strong>Glomerulonefrite:</strong> Inflamação renal por depósito de imunocomplexos</li>
+  <li><strong>Vasculite:</strong> Inflamação dos vasos → vasodilatação sistêmica → queda de pressão → choque</li>
+  <li><strong>Sepse:</strong> Resposta inflamatória generalizada — exemplo extremo de hiperativação</li>
+</ul>
+
+<!-- DESFECHOS REVISITADOS -->
+<h2 id="aula2-desfechos">Desfechos da Inflamação Aguda (Revisão Aprofundada)</h2>
+<table>
+  <thead><tr><th>Desfecho</th><th>O que acontece</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1. Resolução</strong></td><td>Pouca destruição; tecido regenera completamente. Mediadores são degradados, neutrófilos sofrem apoptose, linfáticos drenam exsudato. "Lavou como se nunca tivesse acontecido."</td><td>Herpes simples que resolve em 7-10 dias sem cicatriz</td></tr>
+    <tr><td><strong>2. Cicatrização/Fibrose</strong></td><td>Destruição tecidual mais intensa → reparo com cicatriz. Regenera quase 100%, mas fica marca.</td><td>Herpes com infecção secundária → cicatriz residual</td></tr>
+    <tr><td><strong>3. Progressão para IC</strong></td><td>Organismo não consegue eliminar o agente → inflamação persistente → ciclo destruição/reparo</td><td>Hepatite B crônica → cirrose</td></tr>
+  </tbody>
+</table>
+
+<h3>Sinais de Parada da Inflamação (Resolução)</h3>
+<ol>
+  <li>Mudança no metabolismo do ácido araquidônico → produção de <strong>lipoxinas</strong> (anti-inflamatórias) ao invés de leucotrienos (pró-inflamatórios)</li>
+  <li>Produção de mediadores lipídicos anti-inflamatórios: <strong>resolvinas</strong> e <strong>protectinas</strong></li>
+  <li>Macrófagos (após 48h) liberam <strong>TGF-β</strong> e <strong>IL-10</strong> → citocinas anti-inflamatórias</li>
+  <li>Neutrófilos ativam apoptose (ciclo de vida curto = auto-limitação natural)</li>
+  <li>Vasos linfáticos drenam o exsudato residual</li>
+</ol>
+
+<!-- ABSCESSO -->
+<h2 id="aula2-abscesso">Abscesso — Manejo Clínico</h2>
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>"Abscesso se trata drenando."</strong> A professora enfatizou que antibiótico sozinho não funciona para abscesso. Por quê? O abscesso é uma coleção de tecido necrótico e piócitos. Os vasos dentro do abscesso também morreram — portanto, antibiótico administrado por via sistêmica <em>não chega</em> ao interior do abscesso. É necessário drenar cirurgicamente para remover o tecido necrótico e dar espaço para o reparo.</p>
+</div>
+
+<!-- RESUMO -->
+<div class="resumo-aula">
+  <h2>Resumo — Pontos Essenciais da Aula 2</h2>
+  <ul>
+    <li>IC = inflamação + destruição + reparo coexistindo; pode seguir IA ou ser insidiosa</li>
+    <li>Infiltrado mononuclear: macrófagos (dominantes), linfócitos T e B (plasmócitos)</li>
+    <li>Macrófago M1 = pró-inflamatório (destrói); M2 = anti-inflamatório (repara/fibrosa). Ambos coexistem na IC</li>
+    <li>Interação macrófago ↔ linfócito é bidirecional e amplifica a resposta</li>
+    <li>Três fenômenos: celular (mononuclear), alterativo (necrose/degeneração), reparativo (angiogênese + fibrose)</li>
+    <li>Fibrina (proteína plasmática) ≠ fibrose (colágeno). Fibrose é IRREVERSÍVEL</li>
+    <li>Agentes: infecções persistentes (TB, hepatite B/C, fungos), tóxicos (sílica, tabaco), autoimunidade</li>
+    <li>PCR é marcador de atividade inflamatória; produzida pelo fígado em resposta a citocinas</li>
+  </ul>
+</div>
+
+</section>
+
+
+<!-- AULA 3 — INFLAMAÇÃO GRANULOMATOSA (03-25) -->
+<section id="aula3" class="aula">
+<h1>Aula 3 — Inflamação Granulomatosa</h1>
+<p class="aula-meta">Profa. Dra. Regiane Mathias · 25/03/2026</p>
+
+<!-- CONTEXTO -->
+<h2 id="aula3-contexto">Por que estudar inflamação granulomatosa?</h2>
+<p>A inflamação granulomatosa é o padrão inflamatório de doenças que estão entre as mais prevalentes do mundo — tuberculose, hanseníase, esquistossomose, paracoccidioidomicose — além de doenças de etiologia desconhecida como sarcoidose e doença de Crohn. No Brasil, essas doenças são particularmente relevantes: tuberculose é endêmica, esquistossomose atinge milhões na região Nordeste, e paracoccidioidomicose é a micose sistêmica mais frequente em áreas rurais. Saber reconhecer um granuloma no microscópio e classificá-lo corretamente (imunogênico ou de corpo estranho) permite ao médico direcionar a investigação etiológica — e, muitas vezes, fechar um diagnóstico apenas pela histopatologia.</p>
+
+<!-- DEFINIÇÃO -->
+<h2 id="aula3-definicao">Definição e Conceitos Fundamentais</h2>
+<p>A inflamação granulomatosa é uma <strong>forma distinta de inflamação crônica específica</strong>. Ela recebe o nome de "específica" porque a morfologia e a disposição das células inflamatórias permitem sugerir (ou confirmar) a etiologia — diferente da inflamação crônica inespecífica, onde o infiltrado mononuclear não aponta para um agente causador em particular.</p>
+
+<p>O nome "granuloma" vem do latim <em>granun</em> (grão) + grego <em>oma</em> (tumor, massa). Em termos práticos:</p>
+
+<div class="conceito-chave" style="background:#f0f7ff; border-left:4px solid #2c5aa0; padding:15px; margin:15px 0;">
+<p><strong>Granuloma</strong> = agregação microscópica de <strong>macrófagos transformados em células epitelioides</strong>, rodeada por um halo (colar) de <strong>leucócitos mononucleares</strong> (linfócitos e plasmócitos), organizados em torno de um agente agressor ou corpo estranho.</p>
+</div>
+
+<p>A inflamação granulomatosa se estabelece quando a <strong>fagocitose pelos neutrófilos é inadequada para neutralizar o agente causal</strong>. O organismo, então, monta uma estratégia diferente: em vez de tentar destruir o agente (o que não está conseguindo), ele o <strong>cerca e isola</strong> — como se construísse uma prisão celular ao redor do invasor, mantendo-o o mais inerte possível.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Hierarquia da classificação (a professora cobrou):</strong> Processo patológico geral = Inflamação Crônica Específica. Processo patológico específico = Granulomatosa. E dentro de granulomatosa: imunogênica ou não imunogênica (corpo estranho). Decorar essa sequência.</p>
+</div>
+
+<!-- CLASSIFICAÇÃO -->
+<h2 id="aula3-classificacao">Classificação dos Granulomas</h2>
+<p>Existem dois grandes tipos de granuloma, e a diferença fundamental está na <strong>presença ou ausência de resposta imune mediada por linfócitos T</strong>:</p>
+
+<table>
+  <thead>
+    <tr><th>Característica</th><th>Granuloma Epitelioide (Imunogênico)</th><th>Granuloma de Corpo Estranho (Não Imunogênico)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Agente</strong></td><td>Agentes infecciosos (bactérias, fungos, parasitos, vírus)</td><td>Materiais inertes de difícil digestão (talco, fio de sutura, sílica, silicone, queratina)</td></tr>
+    <tr><td><strong>Resposta imune mediada por linfócitos T</strong></td><td>SIM — sempre presente</td><td>NÃO — ausente</td></tr>
+    <tr><td><strong>Arquitetura</strong></td><td>Específica: estrutura circular, organizada, "bem bonitinha"</td><td>Inespecífica: segue o formato do corpo estranho</td></tr>
+    <tr><td><strong>Células gigantes</strong></td><td>Tipo <strong>Langhans</strong> (núcleos na periferia, em paliçada)</td><td>Tipo <strong>corpo estranho</strong> (núcleos distribuídos irregularmente pelo citoplasma)</td></tr>
+    <tr><td><strong>Halo linfocitário</strong></td><td>Proeminente (halo linfoplasmocitário denso)</td><td>Escasso (poucos linfócitos "perdidos")</td></tr>
+    <tr><td><strong>Cápsula fibrosa</strong></td><td>Presente (mais espessa quanto mais antigo)</td><td>Menos evidente</td></tr>
+    <tr><td><strong>Tamanho/organização</strong></td><td>Maior, bem estruturado e concêntrico</td><td>Menor, mais frouxo</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Regra absoluta que a professora repetiu várias vezes:</strong> Se o agente etiológico for <strong>infeccioso</strong> (bactéria, vírus, fungo, parasito) → o granuloma é <strong>SEMPRE imunogênico</strong>, SEMPRE ativa linfócitos T. Se for corpo estranho inerte (talco, sutura, sílica, silicone) → granuloma <strong>não imunogênico</strong>, sem ativação de linfócitos T.</p>
+</div>
+
+<!-- ETIOLOGIA -->
+<h2 id="aula3-etiologia">Etiologia — O que Causa Inflamação Granulomatosa</h2>
+
+<h3>1. Causas infecciosas (→ granuloma imunogênico)</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Exemplos</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Bacteriana</strong></td><td>Tuberculose (<em>Mycobacterium tuberculosis</em>), Hanseníase (<em>M. leprae</em>), Sífilis (<em>Treponema pallidum</em>), Doença da arranhadura do gato <em>(nos slides, não discutida oralmente)</em></td></tr>
+    <tr><td><strong>Verminótica</strong></td><td>Esquistossomose (<em>Schistosoma mansoni</em>)</td></tr>
+    <tr><td><strong>Micoses profundas</strong></td><td>Paracoccidioidomicose (<em>Paracoccidioides</em> spp), Cromomicose, Esporotricose, Histoplasmose (<em>Histoplasma capsulatum</em>), Coccidioidomicose, Aspergilose</td></tr>
+  </tbody>
+</table>
+
+<h3>2. Corpo estranho (→ granuloma não imunogênico)</h3>
+<ul>
+  <li>Fios de sutura (especialmente os antigos, não biodegradáveis)</li>
+  <li>Talco — associado ao uso de drogas endovenosas (cocaína, heroína contêm talco) e luvas cirúrgicas estéreis (que possuem talco internamente)</li>
+  <li>Óleo mineral, Botox (substância botulínica)</li>
+  <li>Silicone — próteses mamárias que não são trocadas; com o tempo, micro-fissuras liberam silicone que causa reação granulomatosa de corpo estranho</li>
+  <li>Tatuagem, queratina, sílica, piercing, amálgama dentário</li>
+  <li>Cristais de colesterol, gotículas lipídicas</li>
+</ul>
+
+<h3>3. Etiologia desconhecida</h3>
+<ul>
+  <li><strong>Sarcoidose</strong> — granulomas não caseosos com muitos macrófagos ativados</li>
+  <li><strong>Doença de Crohn</strong> — doença inflamatória intestinal; granulomas não caseosos na parede intestinal</li>
+  <li><strong>Cirrose biliar primária</strong></li>
+  <li><strong>Tireoidite granulomatosa</strong></li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Sobre silicone:</strong> A professora alertou que prótese de silicone mamário tem prazo de validade e precisa ser trocada. Se não for trocada, com o tempo surgem micro-erosões na prótese, o silicone extravasa e o organismo reage formando granuloma de corpo estranho. Já houve casos de mastectomia total por essa complicação. Também mencionou a "doença ASIA" associada a implantes de silicone.</p>
+</div>
+
+<!-- MECANISMO/FISIOPATOLOGIA -->
+<h2 id="aula3-mecanismo">Mecanismo e Fisiopatologia — Passo a Passo</h2>
+
+<h3>Formação do Granuloma Imunogênico</h3>
+<ol>
+  <li><strong>Injúria persistente</strong> — o agente infeccioso (ex: <em>M. tuberculosis</em>) não é eliminado pela fagocitose neutrofílica convencional (é de baixa patogenicidade mas difícil erradicação)</li>
+  <li><strong>Recrutamento de monócitos</strong> — monócitos migram do sangue para o tecido e se transformam em <strong>macrófagos</strong></li>
+  <li><strong>Ativação macrofágica</strong> — macrófagos englobam os antígenos, processam e apresentam peptídeos aos <strong>linfócitos T antígeno-específicos</strong>, ativando-os</li>
+  <li><strong>Produção de citocinas</strong> — linfócitos T ativados produzem <strong>IL-2</strong> (ativa outros linfócitos T, perpetuando a resposta) e <strong>IFN-γ</strong> (ativa macrófagos). Também participam IL-12, IL-4, IL-10 e IL-13</li>
+  <li><strong>Transformação em célula epitelioide</strong> — o macrófago ativado modifica sua morfologia: o núcleo se alonga, a cromatina fica frouxa e bem distribuída, o citoplasma fica abundante e rosado com limites imprecisos → passa a ser chamado de <strong>célula epitelioide</strong></li>
+  <li><strong>Fusão em células gigantes</strong> — células epitelioides se fundem, formando <strong>células gigantes multinucleadas</strong> (40-50 μm de diâmetro). No granuloma imunogênico, os núcleos ficam dispostos na periferia da célula → <strong>célula gigante de Langhans</strong></li>
+  <li><strong>Organização concêntrica</strong> — as células se organizam em camadas concêntricas ao redor do agente: agente no centro → células epitelioides e gigantes → halo linfoplasmocitário → cápsula de fibras colágenas (produzida por fibroblastos)</li>
+  <li><strong>Possível necrose central</strong> — dependendo do agente, pode haver necrose no centro do granuloma (caseosa na TB, gomosa na sífilis, granular na esquistossomose aguda)</li>
+</ol>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Sequência que a professora pediu para decorar:</strong> Monócito → Macrófago → (ativação por citocinas) → <strong>Célula Epitelioide</strong> (= macrófago ativado) → (fusão) → <strong>Célula Gigante</strong>. "Se eu perguntar o que é uma célula epitelioide: é macrófago ativado." Essa cadeia foi repetida múltiplas vezes na aula.</p>
+</div>
+
+<h3>Formação do Granuloma de Corpo Estranho</h3>
+<ol>
+  <li>O material inerte (talco, sutura, sílica) é grande demais para ser fagocitado por um único macrófago</li>
+  <li>Macrófagos se acumulam ao redor do material e se transformam em células epitelioides</li>
+  <li>Células epitelioides se fundem formando <strong>células gigantes de corpo estranho</strong> (núcleos irregulares pelo citoplasma)</li>
+  <li>Não há ativação de linfócitos T → halo linfocitário escasso</li>
+  <li>O granuloma assume o formato do corpo estranho (se for um fio, é alongado; se for uma gota lipídica, é arredondado)</li>
+  <li>O material estranho pode ser visualizado no centro do granuloma, especialmente sob <strong>microscopia de luz polarizada</strong> (aparece refratário/brilhante)</li>
+</ol>
+
+<!-- TIPOS CELULARES -->
+<h2 id="aula3-celulas">Tipos Celulares do Granuloma</h2>
+
+<h3>Célula Epitelioide</h3>
+<ul>
+  <li>= <strong>macrófago ativado</strong></li>
+  <li>Núcleo <strong>alongado</strong>, cromatina frouxa e bem distribuída (mais roxa que a do fibroblasto)</li>
+  <li>Citoplasma <strong>abundante e rosado</strong>, com limites imprecisos</li>
+  <li>Diferença do fibroblasto: o fibroblasto tem núcleo mais arredondado e nucléolo mais evidente</li>
+</ul>
+
+<h3>Células Gigantes Multinucleadas</h3>
+<p>Formadas pela <strong>fusão de células epitelioides</strong>. Podem ter diâmetro de 40 a 50 μm. Dois tipos principais:</p>
+
+<table>
+  <thead><tr><th>Célula Gigante de Langhans</th><th>Célula Gigante de Corpo Estranho</th></tr></thead>
+  <tbody>
+    <tr><td>Granuloma <strong>imunogênico</strong></td><td>Granuloma <strong>não imunogênico</strong></td></tr>
+    <tr><td>20 ou mais núcleos dispostos <strong>na periferia</strong> da célula</td><td>Núcleos distribuídos <strong>irregularmente</strong> no citoplasma</td></tr>
+    <tr><td>Formato em <strong>ferradura, letra C, letra U ou anel</strong> (paliçada)</td><td>Sem padrão de distribuição definido</td></tr>
+    <tr><td>Associada a: TB, hanseníase, esquistossomose, micoses profundas</td><td>Associada a: fios de sutura, talco, sílica, silicone</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>"Langhans, não Langerhans!" — a professora enfatizou essa diferença:</strong> Célula gigante de <strong>Langhans</strong> = célula gigante imunogênica do granuloma (núcleos na periferia). <strong>Langerhans</strong> = outro contexto (ilhotas pancreáticas de Langerhans, células de Langerhans da pele). "É outro carro", nas palavras da professora. Não confundir.</p>
+</div>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Paliçada:</strong> A professora explicou o conceito usando a analogia de cercas de madeira que impedem animais de passar de um lado para o outro. Os núcleos das células epitelioides ficam dispostos "um atrás do outro" na periferia da célula gigante de Langhans, formando essa estrutura em paliçada — como uma cerca que mantém o agente preso.</p>
+</div>
+
+<!-- COMPONENTES DO GRANULOMA -->
+<h2 id="aula3-componentes">Componentes Morfológicos do Granuloma</h2>
+<p>Ao olhar um granuloma ao microscópio, de dentro para fora:</p>
+<ol>
+  <li><strong>Centro:</strong> agente etiológico (microrganismo ou corpo estranho) ± área de necrose</li>
+  <li><strong>Células epitelioides:</strong> organizadas concentricamente ao redor (no imunogênico) ou soltas (no corpo estranho)</li>
+  <li><strong>Células gigantes multinucleadas:</strong> de Langhans ou de corpo estranho, dependendo do tipo</li>
+  <li><strong>Halo linfoplasmocitário:</strong> linfócitos T, linfócitos B, plasmócitos (proeminente no imunogênico; escasso no corpo estranho)</li>
+  <li><strong>Fibroblastos e fibras colágenas:</strong> formam a cápsula fibrosa externa</li>
+  <li><strong>Outros:</strong> eventualmente eosinófilos (se reação parasitária/alérgica), basófilos, macrófagos não ativados</li>
+</ol>
+
+<!-- NECROSE -->
+<h2 id="aula3-necrose">Necrose Central nos Granulomas</h2>
+<p>Nem todo granuloma apresenta necrose central — isso depende do agente etiológico e de sua virulência. Quando há necrose:</p>
+
+<table>
+  <thead><tr><th>Doença</th><th>Tipo de necrose</th><th>Características</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Tuberculose</strong></td><td>Necrose caseosa</td><td>Mistura de necrose de coagulação + necrose de liquefação. Aspecto de "queijo fresco" (<em>caseus</em> = queijo). A parte sólida/branca = coagulação; o soro/líquido = liquefação. Deve-se à apoptose de macrófagos + ação de TNF e enzimas</td></tr>
+    <tr><td><strong>Sífilis</strong></td><td>Necrose gomosa</td><td>Parede de histiócitos, infiltrado de plasmócitos, células centrais necróticas sem perda dos contornos celulares</td></tr>
+    <tr><td><strong>Esquistossomose (fase aguda)</strong></td><td>Necrose granular e acidófila</td><td>Relacionada a substâncias dos grânulos de eosinófilos e macrófagos</td></tr>
+    <tr><td><strong>Paracoccidioidomicose</strong></td><td>Semelhante à caseosa + necrose lítica</td><td>Pode ter fusão purulenta com exsudato de PMN</td></tr>
+    <tr><td>Sarcoidose, Doença de Crohn</td><td><strong>SEM necrose caseosa</strong></td><td>Granulomas não caseosos</td></tr>
+    <tr><td>Hanseníase</td><td><strong>SEM necrose caseosa</strong></td><td>Granulomas não caseosos</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Tubérculo:</strong> A professora enfatizou que o granuloma imunogênico da tuberculose recebe o nome especial de <strong>tubérculo</strong>. "Se você vir nos laudos clínicos 'presença de tubérculos no estroma pulmonar', entenda que é granuloma imunogênico causado por <em>Mycobacterium tuberculosis</em>." Pode usar esse termo na prova.</p>
+</div>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Analogia da necrose caseosa (a professora deu exemplo prático):</strong> Pense num queijo branco fresco. A massinha branca do queijo = necrose de coagulação (material mumificado, mais denso). O sorinho que escorre se você deixar na geladeira por 2-3 dias = necrose de liquefação (parte liquefeita, aspecto meio amarelado/purulento). A necrose caseosa é exatamente essa mistura.</p>
+</div>
+
+<!-- DICA DE IDADE DO GRANULOMA -->
+<h2 id="aula3-idade">Como Avaliar a Idade de um Granuloma</h2>
+<p>A professora ensinou uma dica prática para a microscopia:</p>
+<ul>
+  <li><strong>Granuloma mais antigo</strong> → mais fibras colágenas ao redor, cápsula fibrosa mais espessa, mais "voltas" de fibras colágenas concêntricas</li>
+  <li><strong>Granuloma mais recente</strong> → pouca cápsula fibrosa, menos colágeno, poucas voltas</li>
+  <li>Quanto mais "bonitinho" e encapsulado o granuloma, mais tempo ele tem</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Forma de identificar na prova prática:</strong> Granuloma imunogênico = estruturas arredondadas bem definidas ao microscópio. "Não precisa nem aumentar muito — o formato circular organizado já indica imunogênico." Granuloma de corpo estranho = não tem essa forma circular; segue o formato do material. A professora disse que colocaria na prova uma imagem para confundir — como uma célula gigante de corpo estranho dentro de um tecido com granulomas imunogênicos ("no mesmo fragmento a gente pode encontrar células não imunogênicas também").</p>
+</div>
+
+<!-- EXEMPLOS CLÍNICOS -->
+<h2 id="aula3-exemplos">Exemplos Clínicos Concretos</h2>
+
+<div class="exemplo-clinico">
+<h4>Exemplo Clínico 1 — Tuberculose Pulmonar</h4>
+<p>Homem de 70 anos, morador de rua, sem documentação, levado ao hospital por PMs. Faleceu minutos após chegada por insuficiência respiratória após crise de hemoptise. Na autópsia: pulmão repleto de granulomas (macroscopicamente parecem "pipocas branquinhas"), com células gigantes de Langhans e área central de necrose caseosa. Alguns granulomas apresentavam cavitações (buracos) no centro — resultado da digestão completa do centro necrótico (cavernas tuberculosas). Na radiografia, manchas brancas difusas bilaterais. Diagnóstico: tuberculose pulmonar avançada com granulomas caseosos (tubérculos).</p>
+</div>
+
+<div class="exemplo-clinico">
+<h4>Exemplo Clínico 2 — Granuloma de Corpo Estranho por Fio de Sutura</h4>
+<p>Mulher submetida a cirurgia prévia para correção de hérnia abdominal. Retorna com nódulo indolor próximo à cicatriz cirúrgica. Biópsia mostra: granuloma frouxo, com células gigantes de corpo estranho (núcleos irregulares pelo citoplasma), poucas células epitelioides soltas, escasso infiltrado linfocitário. No centro do granuloma: material birrefringente (fio de sutura) visível sob microscopia de luz polarizada. Diagnóstico: inflamação crônica específica granulomatosa não imunogênica (corpo estranho — fio de sutura).</p>
+</div>
+
+<div class="exemplo-clinico">
+<h4>Exemplo Clínico 3 — Granuloma por Talco em Usuário de Drogas Intravenosas</h4>
+<p>Homem de 28 anos, usuário de drogas intravenosas, encontrado morto em casa. Na autópsia, microscopia pulmonar sob luz polarizada revela depósitos de cristais brancos brilhantes (talco) no parênquima pulmonar, com células gigantes de corpo estranho ao redor. Diagnóstico: inflamação crônica específica granulomatosa não imunogênica por depósito de talco (componente das drogas injetáveis).</p>
+</div>
+
+<div class="exemplo-clinico">
+<h4>Exemplo Clínico 4 — Piercing e Reação Granulomatosa</h4>
+<p>Paciente com piercing apresenta região hiperêmica (vermelha), quente, com sinais flogísticos de inflamação. Biópsia mostra células gigantes de corpo estranho ao redor do material metálico do piercing. Diagnóstico: inflamação crônica específica granulomatosa de corpo estranho.</p>
+</div>
+
+<div class="exemplo-clinico">
+<h4>Exemplo Clínico 5 — Aspergilose Pulmonar (Bola Fúngica)</h4>
+<p>Imagem macroscópica mostra formação esférica dentro do parênquima pulmonar ("bola fúngica"). Na microscopia com coloração especial, observam-se hifas de <em>Aspergillus</em> no centro, com granuloma imunogênico ao redor — células gigantes de Langhans, halo linfocitário e cápsula fibrosa. Diagnóstico: aspergilose pulmonar com granuloma imunogênico.</p>
+</div>
+
+<!-- RELEVÂNCIA CLÍNICA -->
+<h2 id="aula3-relevancia">Relevância Clínica</h2>
+<ul>
+  <li><strong>Diagnóstico histopatológico:</strong> a presença de granulomas em biópsia é achado-chave que direciona a investigação. Granuloma caseoso → pensar em TB. Granuloma não caseoso → pensar em sarcoidose, Crohn, hanseníase</li>
+  <li><strong>Tuberculose:</strong> granulomas pulmonares que cavitam (centro necrótico digerido) formam as "cavernas tuberculosas" — paciente tem hemoptise (tosse com sangue) e alto risco de disseminação</li>
+  <li><strong>Uso de drogas EV:</strong> talco presente nas drogas se deposita no pulmão → granuloma de corpo estranho → identificado na autópsia sob luz polarizada</li>
+  <li><strong>Cirurgias:</strong> fios de sutura antigos (não biodegradáveis) causam nódulos granulomatosos palpáveis anos depois da cirurgia</li>
+  <li><strong>Próteses de silicone:</strong> necessidade de troca periódica para evitar reação granulomatosa por extravasamento</li>
+  <li><strong>Doença da arranhadura do gato:</strong> granuloma arredondado ou estrelado com restos granulares centrais e neutrófilos reconhecíveis — causada por bacilos gram-negativos</li>
+</ul>
+
+<!-- NOTA SOBRE DIVERGÊNCIA -->
+<div class="destaque-professor">
+  <span class="destaque-icon">⚠️</span>
+  <p><strong>Divergência entre professoras — célula principal da IC:</strong> A Profa. Veronica (Aula 2) ensina que o <strong>macrófago</strong> é a célula dominante da inflamação crônica. A Profa. Regiane (esta aula) diz que a célula principal é o <strong>linfócito</strong>. Ambas as perspectivas são defensáveis — macrófagos dominam funcionalmente (fagocitose, M1/M2) enquanto linfócitos podem predominar numericamente no infiltrado. Na prova, considerar o contexto da questão e qual professora a elaborou.</p>
+</div>
+
+<!-- CONEXÕES -->
+<h2 id="aula3-conexoes">Conexões com Outras Aulas</h2>
+<table>
+  <thead><tr><th>Conceito desta aula</th><th>Conexão</th></tr></thead>
+  <tbody>
+    <tr><td>Infiltrado mononuclear do granuloma</td><td><strong>Aula 2 (IC):</strong> O granuloma tem infiltrado mononuclear porque é uma forma de IC. A IC tem fenômenos alterativos/reparativos — o granuloma reflete isso (necrose central = alterativo; cápsula fibrosa = reparativo)</td></tr>
+    <tr><td>Eventos vasculares e celulares revisados no início da aula</td><td><strong>Aula 1 (IA):</strong> Vasoconstrição → vasodilatação → aumento permeabilidade → extravasamento → edema. Eventos celulares: marginação → rolamento → adesão → diapedese → fagocitose. Sinais flogísticos (calor, rubor, dor, edema, perda de função). O granuloma surge quando esses mecanismos da IA falham em eliminar o agente</td></tr>
+    <tr><td>Necrose caseosa</td><td><strong>Aulas futuras (Necrose):</strong> Necrose caseosa = coagulativa + liquefativa. A tuberculose será revisitada quando estudar tipos de necrose</td></tr>
+    <tr><td>Ativação macrofágica, angiogênese, fibrogênese</td><td><strong>Aula 2 (IC):</strong> Eventos proliferativos da IC — o granuloma é a expressão máxima desses processos</td></tr>
+    <tr><td>Fibroblastos e fibras colágenas</td><td><strong>Aula futura (Reparo):</strong> A cápsula fibrosa do granuloma é produzida por fibroblastos que depositam colágeno — mesmo processo de cicatrização/fibrose</td></tr>
+  </tbody>
+</table>
+
+<!-- RESUMO -->
+<div class="resumo-aula">
+<h3>Resumo Rápido — Aula 3</h3>
+<ul>
+  <li><strong>Inflamação granulomatosa</strong> = inflamação crônica específica que surge quando neutrófilos não conseguem eliminar o agente → organismo isola o agente formando um <strong>granuloma</strong></li>
+  <li><strong>Granuloma</strong> = agregado de macrófagos ativados (células epitelioides) rodeados por halo de mononucleares, ao redor de agente agressor ou corpo estranho</li>
+  <li><strong>Cadeia celular:</strong> Monócito → Macrófago → (ativação) → Célula Epitelioide → (fusão) → Célula Gigante</li>
+  <li><strong>Granuloma imunogênico</strong> (epitelioide): agente infeccioso, resposta imune com linfócitos T, arquitetura circular organizada, célula gigante de <strong>Langhans</strong> (núcleos na periferia em paliçada)</li>
+  <li><strong>Granuloma não imunogênico</strong> (corpo estranho): material inerte, sem resposta imune mediada por linfócitos T, arquitetura que segue o corpo estranho, célula gigante de <strong>corpo estranho</strong> (núcleos irregulares pelo citoplasma)</li>
+  <li><strong>Necrose central</strong> depende do agente: caseosa (TB), gomosa (sífilis), granular (esquistossomose); ausente em sarcoidose, Crohn, hanseníase</li>
+  <li><strong>Tubérculo</strong> = nome específico do granuloma imunogênico da tuberculose (granuloma caseoso)</li>
+  <li><strong>Idade do granuloma:</strong> mais fibras colágenas/cápsula espessa = mais antigo; pouca cápsula = mais recente</li>
+</ul>
+</div>
+
+</section>
+
+<!-- AULA 4 — NECROSE CELULAR E TIPOS DE INFARTO (03-18) -->
+<section id="aula4" class="aula">
+<h1>Aula 4 — Necrose Celular e Tipos de Infarto</h1>
+<p class="aula-meta">Profa. Dra. Fernanda Giudice · 18/03/2026</p>
+
+<!-- CONTEXTO -->
+<h2 id="aula4-contexto">Por que estudar necrose e infarto?</h2>
+<p>Necrose e infarto estao entre os processos patologicos mais frequentes na pratica medica. Quando voce atende um paciente com infarto agudo do miocardio, um AVC isquemico, uma gangrena diabetica ou uma pancreatite aguda, voce esta lidando diretamente com necrose. Entender os diferentes tipos de necrose, seus mecanismos moleculares e como se apresentam macro e microscopicamente e essencial para: (1) fazer o diagnostico anatomopatologico correto, (2) compreender por que cada orgao responde de forma diferente a isquemia, e (3) tomar decisoes clinicas como indicar reperfusao (angioplastia, trombólise) sabendo dos riscos da lesao de reperfusao. Alem disso, necrose sempre gera inflamacao — ou seja, este tema conecta diretamente com tudo que voce estudou nas Aulas 1 a 3 sobre inflamacao aguda e cronica.</p>
+
+<!-- DEFINICAO E CONCEITOS FUNDAMENTAIS -->
+<h2 id="aula4-definicao">Definicao e Conceitos Fundamentais</h2>
+
+<h3>O que e necrose?</h3>
+<p><strong>Necrose e a morte de parte de um organismo vivo.</strong> Pode atingir celulas isoladas, areas de um tecido ou orgaos inteiros. O tecido necrotico = tecido morto. Mais formalmente: e a morte celular e tecidual em um organismo viavel, em consequencia de lesao "acidental" a celula.</p>
+
+<p>Causas de necrose incluem:</p>
+<ul>
+  <li><strong>Isquemia</strong> — deficiencia no suprimento de sangue de um determinado tecido/orgao (causa mais comum)</li>
+  <li><strong>Agressoes ambientais</strong> — calor, frio, forcas fisicas</li>
+  <li><strong>Destruicao da membrana celular</strong> por agentes quimicos ou biologicos</li>
+</ul>
+
+<p>Caracteristicas fundamentais da necrose:</p>
+<ul>
+  <li>Associada a <strong>perda da integridade da membrana</strong> celular</li>
+  <li><strong>Extravasamento dos conteudos celulares</strong> para o meio extracelular</li>
+  <li>Acao degradativa de enzimas nas celulas lesadas letalmente — enzimas derivadas dos lisossomos das proprias celulas (autolise) e dos leucocitos recrutados (heterolise)</li>
+  <li>O conteudo celular que escapa <strong>sempre inicia uma reacao inflamatoria</strong> no hospedeiro, para eliminar as celulas mortas e iniciar o reparo</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Tres regras absolutas da necrose:</strong> (1) Necrose e SEMPRE patologica. (2) Necrose SEMPRE gera processo inflamatorio. (3) Necrose e LESAO IRREVERSIVEL — a celula nao volta. A professora enfatizou repetidamente esses tres pontos como base para todo o raciocinio da aula.</p>
+</div>
+
+<h3>Necrose vs. Apoptose — Diferenca Fundamental</h3>
+<table>
+  <thead><tr><th>Caracteristica</th><th>Necrose</th><th>Apoptose</th></tr></thead>
+  <tbody>
+    <tr><td>Tipo de morte</td><td>Morte "acidental", nao programada</td><td>Morte celular programada, com gatilhos moleculares especificos</td></tr>
+    <tr><td>Membrana</td><td>Rompe — conteudo celular extravasa</td><td>Intacta — celula se fragmenta em corpos apoptoticos com membrana preservada</td></tr>
+    <tr><td>Nucleo</td><td>Picnose → Cariorrexe → Cariolise</td><td>Fragmentacao ordenada com ativacao de caspases</td></tr>
+    <tr><td>Inflamacao</td><td>SEMPRE gera inflamacao (conteudo celular extravasa e atrai leucocitos)</td><td>Nao gera inflamacao (corpos apoptoticos sao fagocitados sem extravasamento)</td></tr>
+    <tr><td>Carater</td><td>Sempre PATOLOGICO</td><td>Pode ser fisiologica ou patologica</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Pegadinha classica de prova:</strong> Necrose e apoptose sao apresentadas como processos mutuamente exclusivos, mas na realidade seus mecanismos podem se sobrepor. Existem formas "hibridas" de morte celular, como a <strong>piroptose</strong> e a <strong>necroptose</strong>. A professora alertou para esse detalhe.</p>
+</div>
+
+<h3>Piroptose e Necroptose — Formas Hibridas</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Mecanismo</th><th>Exemplo clinico</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Piroptose</strong></td>
+      <td>Depende da ativacao da caspase 1, que cliva gasdermina D → formacao de poros na membrana → edema celular, lise e reacao inflamatoria intensa. E um "combo" — tem ativacao de caspase (como apoptose) mas resultado e necrotico (lise + inflamacao).</td>
+      <td>Pneumonia por <em>Klebsiella pneumoniae</em>, <em>Salmonella</em>, <em>Shigella</em></td>
+    </tr>
+    <tr>
+      <td><strong>Necroptose</strong></td>
+      <td>Morte celular programada SEM caspase. Ativacao de receptor de morte com inibicao da caspase 8. Via RIPK1 → RIPK3 → MLKL. Celula incha e rompe, semelhante a necrose classica.</td>
+      <td>HIV-1 causa necroptose de celulas T CD4+</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- CONCEITOS IMPORTANTES -->
+<h2 id="aula4-conceitos">Conceitos Importantes — Terminologia</h2>
+
+<table>
+  <thead><tr><th>Termo</th><th>Definicao</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Autolise</strong></td><td>Digestao do tecido morto por suas proprias enzimas (lisossomais). Vale para tecido necrotico em organismo vivo E para decomposicao pos-morte.</td></tr>
+    <tr><td><strong>Heterolise</strong></td><td>Digestao das celulas necroticas por enzimas derivadas dos leucocitos (neutrofilos, macrofagos) e desnaturacao proteica.</td></tr>
+    <tr><td><strong>Necrofanerose</strong></td><td>Aparecimento das caracteristicas morfologicas da necrose no tecido (picnose nuclear, eosinofilia do citoplasma). Tempo varia com o tipo de tecido. No microscopio optico: tipicamente 6 horas. No microscopio eletronico: alteracoes irreversiveis (ruptura de membrana, degeneracao mitocondrial) ja em minutos apos a necrose.</td></tr>
+    <tr><td><strong>Necrose</strong></td><td>E o evento da parada de funcionamento da celula como maquina organizada.</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Necrofanerose e tempo:</strong> A professora enfatizou que o paciente pode ter morrido, mas ao microscopio optico, se fizerem a biopsia/necropsia muito rapido, voce pode nao ver as alteracoes morfologicas de necrose ainda — porque a necrofanerose demora cerca de 6 horas no MO. Isso e diferente da necrose em si (que ja aconteceu). "A celula morreu, mas eu ainda nao consigo ver tao rapido."</p>
+</div>
+
+<!-- QUATRO VIAS CELULARES -->
+<h2 id="aula4-mecanismos">Mecanismos Moleculares da Necrose</h2>
+
+<h3>As Quatro Vias Celulares Prejudicadas</h3>
+<p>Todos os agentes prejudiciais atuam interrompendo uma das quatro vias celulares fundamentais:</p>
+<ol>
+  <li><strong>Respiracao aerobia</strong> — fosforilacao oxidativa mitocondrial e producao de ATP</li>
+  <li><strong>Sintese proteica</strong></li>
+  <li><strong>Manutencao da integridade da membrana celular</strong></li>
+  <li><strong>Manutencao da integridade do genoma</strong> (incluindo replicacao e reparo do DNA)</li>
+</ol>
+<p><strong>Importante:</strong> Essas quatro vias estao inter-relacionadas — a falha em qualquer uma delas levara, em ultima analise, a falha das outras.</p>
+
+<h3>Sequencia de Eventos: Da Isquemia a Necrose</h3>
+<p>Vamos usar o exemplo classico das <strong>celulas tubulares renais</strong> (que a professora detalhou):</p>
+<ol>
+  <li>Traumatismo + hemorragia → queda subita da pressao arterial → reducao da perfusao dos tubulos renais → <strong>isquemia local</strong></li>
+  <li>Celulas tubulares renais dependem do metabolismo oxidativo: o ATP produzido mantem a <strong>bomba Na+/K+-ATPase</strong> funcionando (mantendo baixa concentracao intracelular de Na+ e alta de K+)</li>
+  <li><strong>Perda de ATP</strong> → falha da bomba Na+/K+ → influxo de Na+ e agua para dentro das celulas → <strong>edema celular (degeneracao hidropica)</strong> — isso ainda e reversivel se a perfusao for rapidamente restaurada e o citoesqueleto estiver intacto</li>
+  <li>Se a isquemia persiste → <strong>perda ou dano ao nucleo</strong> = sinal de lesao celular irreversivel → morte celular (necrose)</li>
+</ol>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Antes de morrer, a celula tenta se salvar:</strong> A professora fez questao de lembrar que, antes da necrose, ha tentativas de adaptacao (hipertrofia, por exemplo, no musculo cardiaco) e degeneracao reversivel (degeneracao hidropica). "Voce adaptar a celula, tentou fazer algum tipo de degeneracao — antes da celula morrer, ela acumula agua como mecanismo de defesa. E uma lesao, mas ainda e reversivel." So quando ultrapassa o ponto de nao retorno, a celula morre.</p>
+</div>
+
+<h3>Papel do Calcio Intracelular</h3>
+<p>Com a queda de ATP, o calcio intracelular aumenta descontroladamente. Consequencias:</p>
+<ol>
+  <li><strong>Ativacao da calpaína</strong> — enzima que estava quieta no citoplasma; quando ativada, destroi membranas lisossomais → liberacao de <strong>catepsinas lisossomais</strong> → lise celular</li>
+  <li><strong>Fosfolipases</strong> hidrolisam fosfolipideos, afetando a estabilidade das membranas das celulas e organelas</li>
+  <li><strong>Niveis excessivos de Ca++</strong> levam a lesao mitocondrial mediada por <strong>transicao de permeabilidade mitocondrial (mPTP)</strong> — a membrana mitocondrial interna forma poros, levando a despolarizacao, desacoplamento do transporte de eletrons, falha na producao de ATP, edema mitocondrial e lise</li>
+</ol>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Calpaína e marcadores cardiacos:</strong> A professora explicou a conexao clinica: quando ha infarto do miocardio, a calpaína destroi lisossomos, as enzimas intracelulares sao liberadas e a membrana celular se rompe. Por isso conseguimos <strong>dosar troponinas e CK-MB no sangue</strong> — essas enzimas so aparecem no sangue porque a celula rompeu. "Quando voce dosa troponina, quer dizer o que? Os miocardiocitos romperam. Essas enzimas so aparecem por que? Porque a celula morreu e rompeu."</p>
+</div>
+
+<h3>Lesao de Reperfusao</h3>
+<p>Um conceito fundamental para a pratica clinica:</p>
+<ul>
+  <li>Celulas relativamente resistentes a isquemia (como miocardiocitos) podem sofrer <strong>lesao adicional e necrose apos o reinicio da perfusao</strong></li>
+  <li>Durante a isquemia, o ATP residual (produzido por glicolise) e o baixo pH intracelular estabilizam as mitocondrias e retardam a transicao de permeabilidade mitocondrial</li>
+  <li>Na <strong>reperfusao</strong>, quando o fluxo sanguineo retorna, ocorrem mudancas abruptas:
+    <ul>
+      <li>Macico influxo de calcio para dentro da celula</li>
+      <li>Mitocondrias liberam quantidades elevadas de <strong>especies reativas de oxigenio (ROS)</strong></li>
+      <li>pH volta ao normal → abertura do mPTP</li>
+    </ul>
+  </li>
+  <li><strong>Resultado final:</strong> A celula que sobreviveu a isquemia inicial pode morrer apos o retorno do fluxo</li>
+</ul>
+
+<p>Mesmo assim, a <strong>reperfusao e necessaria e salva grande parte do tecido</strong>. Exemplos clinicos:</p>
+<ul>
+  <li>Infarto do miocardio → angioplastia ou trombolise</li>
+  <li>AVC isquemico → trombolise</li>
+  <li>Isquemia intestinal ou renal</li>
+</ul>
+
+<!-- CARACTERISTICAS MORFOLOGICAS -->
+<h2 id="aula4-morfologia">Caracteristicas Morfologicas da Lesao Irreversivel</h2>
+
+<h3>Alteracoes na Membrana Celular</h3>
+<ul>
+  <li>Formacao de <strong>bolhas na superficie</strong> (destacamento da membrana do citoesqueleto)</li>
+  <li>Juncoes intercelulares frouxas ou desaparecem</li>
+  <li>Descontinuidades nas membranas plasmaticas e organelares → ruptura</li>
+  <li>Enfraquecimento por reducao da sintese proteica e alteracao nos acidos graxos dos fosfolipideos</li>
+</ul>
+
+<h3>Alteracoes nas Mitocondrias</h3>
+<ul>
+  <li><strong>Condensacao da matriz mitocondrial</strong> (por deficiencia de O2)</li>
+  <li><strong>Tumefacao mitocondrial</strong> — expansao da camara interna, reducao do numero de cristas (cristolise)</li>
+  <li><strong>Tumefacao mitocondrial conservando cristas</strong> = lesao reversivel</li>
+  <li><strong>Perda das cristas + estruturas amorfas</strong> = lesao irreversivel</li>
+</ul>
+
+<h3>Alteracoes Citoplasmaticas</h3>
+<ul>
+  <li><strong>Aumento da acidofilia (eosinofilia)</strong> — perda do RNA citoplasmatico (que se liga a hematoxilina, corante azul) e desnaturacao de proteinas (que se ligam a eosina, corante vermelho). Resultado: citoplasma fica mais rosa/vermelho ("quando a celula morre, aumenta a eosina")</li>
+  <li><strong>Granulacao citoplasmatica</strong> — tumefacao e ruptura de organelas (mitocondrias e REL)</li>
+  <li><strong>Homogeneizacao citoplasmatica</strong> — lise das organelas + coagulacao de proteinas → massa opaca e acidofila (especialmente nas necroses coagulativas)</li>
+</ul>
+
+<h3>Alteracoes Nucleares — As Tres Fases</h3>
+<table>
+  <thead><tr><th>Fase</th><th>Descricao</th><th>Analogia</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Picnose</strong></td><td>Contracao e condensacao da cromatina, com perda da individualidade dos granulos. Nucleo fica compactado, pequeno e escuro.</td><td>CONTRACAO</td></tr>
+    <tr><td><strong>Cariorrexe</strong></td><td>Fragmentacao do nucleo picnotico. Ruptura em varios fragmentos com distribuicao irregular da cromatina, acumulo de grumos em torno da carioteca e posterior desintegracao em grupos amorfos.</td><td>FRAGMENTACAO</td></tr>
+    <tr><td><strong>Cariolise (Cromatolise)</strong></td><td>Dissolucao da cromatina e perda da coloracao do nucleo, que desaparece completamente. Coloracao nuclear palida e fraca.</td><td>LISE</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Sequencia obrigatoria:</strong> Picnose → Cariorrexe → Cariolise. E nessa ordem. A professora contou que ate deu o nome "Cariorrexe" ao cachorro de uma parente para lembrar! "Quando condensa, e picnose. Depois que condensa, fragmenta — cariorrexe. Depois, some — cariolise." Em prova, quando um infarto de miocardio mostra area sem nucleos visiveis, isso ja e cariolise.</p>
+</div>
+
+<!-- TIPOS DE NECROSE -->
+<h2 id="aula4-tipos">Tipos de Necrose — Padroes Morfologicos</h2>
+
+<h3 id="aula4-coagulativa">1. Necrose Coagulativa (Necrose Isquemica)</h3>
+<p><strong>E o tipo mais comum de necrose.</strong> Tambem chamada de necrose isquemica ("isquemia" vem do grego: iskho = reter, haima = sangue).</p>
+
+<p><strong>Mecanismo:</strong></p>
+<ul>
+  <li>Causada por <strong>isquemia</strong> (interrupcao do fluxo sanguineo)</li>
+  <li>A digestao/liquefacao enzimatica do tecido por autolise e <strong>retardada</strong></li>
+  <li>A <strong>coagulacao (desnaturacao proteica) predomina</strong></li>
+  <li>Resultado: <strong>arquitetura basica do tecido e preservada por alguns dias</strong> — as celulas morrem mas mantem seu contorno ("celulas fantasma")</li>
+</ul>
+
+<p><strong>Microscopicamente:</strong></p>
+<ul>
+  <li>Preservacao do contorno basico da celula coagulada por pelo menos alguns dias</li>
+  <li>Aumento da acidofilia intracelular (desnatura proteinas estruturais e enzimaticas, acelera proteolise)</li>
+  <li>Celulas necroticas ficam como <strong>"restos fantasmas"</strong> — removidas lentamente por fagocitose a partir da periferia</li>
+</ul>
+
+<p><strong>Macroscopicamente:</strong></p>
+<ul>
+  <li>Area <strong>firme e palida</strong> (por ausencia de circulacao), bem delimitada do tecido normal</li>
+  <li>Quando a causa e isquemica (infarto): <strong>forma em cunha</strong>, com o angulo voltado para o centro do orgao (para o vaso ocluido)</li>
+  <li>Ao redor da area necrotica: <strong>halo de hiperemia</strong> (aumento do fluxo sanguineo na regiao vizinha) — a professora chamou de "halo hiperemiado"</li>
+</ul>
+
+<p><strong>Orgaos afetados:</strong> Coracao, rim, baco, figado, pulmao. <strong>Nao ocorre no cerebro</strong> (no cerebro, a necrose e liquefativa).</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>"Sempre que eu falo necrose coagulativa, vem na minha cabeca infarto."</strong> Todo infarto gera necrose, e o tipo e coagulativo (exceto no cerebro). Infarto = necrose que se instala apos interrupcao do fluxo sanguineo = area de necrose tecidual causada por isquemia prolongada. A professora repetiu varias vezes essa associacao.</p>
+</div>
+
+<h4>Isquemia Glomerular — Excecao Importante</h4>
+<p>No rim, os <strong>glomérulos são relativamente mais resistentes à necrose isquêmica</strong> que os túbulos renais, por terem metabolismo oxidativo menor. A professora mostrou lâminas onde, em meio à necrose coagulativa dos túbulos renais, os glomérulos ainda mantêm seu contorno. Porém, em isquemia cortical severa e prolongada (ex: CIVD obstétrica, choque profundo), glomérulos também podem necrosar (necrose cortical renal bilateral).</p>
+
+<h3 id="aula4-liquefativa">2. Necrose Liquefativa</h3>
+<p><strong>Mecanismo:</strong></p>
+<ul>
+  <li>Causada por <strong>interrupcao vascular</strong> ou <strong>infeccao bacteriana</strong></li>
+  <li><strong>Liquefacao enzimatica</strong> do tecido necrotico — dissolucao enzimatica rapida e total</li>
+  <li>Liberacao de grande quantidade de enzimas lisossomicas</li>
+  <li>Lise por acao de bacterias ou por acao de proteases de leucocitos</li>
+  <li>Zona de necrose adquire consistencia <strong>mole, semifluida ou liquefeita</strong></li>
+</ul>
+
+<p><strong>Macroscopicamente:</strong> amolecimento do tecido necrotico, que fica transformado em "papa" — dai o nome necrose <strong>liquefativa</strong>.</p>
+
+<p><strong>Ocorre em:</strong></p>
+<ol>
+  <li><strong>Sistema nervoso central (cérebro)</strong> — tecido rico em lipídios, onde a necrose assume padrão liquefativo</li>
+  <li><strong>Abscessos</strong> — areas de infeccao bacteriana purulenta que produzem uma cavidade no tecido. Resulta da necrose liquefativa por acao das enzimas proteoliticas das proprias bacterias e dos neutrofilos atraidos para combate-las. O parenquima sofre necrose liquefativa → no local onde havia tecido, constitui-se uma cavidade cheia de pus = <strong>abscesso</strong>.</li>
+</ol>
+
+<p><strong>Diferenca da coagulativa:</strong> Na liquefativa, nao costuma haver parada completa da circulacao, e sim uma reducao acentuada que nao impede a chegada de celulas sanguineas ao local da lesao. As celulas necroticas sao removidas rapidamente por fagocitose.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Cerebro = sempre liquefativa:</strong> Mesmo quando a causa e isquemica (AVC), no cerebro a necrose e liquefativa, nao coagulativa. Isso porque o tecido nervoso e rico em lipidios e pobre em proteinas coagulaveis — entao a liquefacao predomina sobre a coagulacao. A professora mostrou pecas de infarto cerebral recente (arteria cerebral media) e antigo, ambos com aspecto liquefeito. No infarto antigo, o tecido liquefeito e reabsorvido e resta uma cavidade (encistamento).</p>
+</div>
+
+<h3 id="aula4-caseosa">3. Necrose Caseosa</h3>
+<p><strong>E um tipo especial de necrose coagulativa</strong> que se instala no meio da reacao inflamatoria provocada por certas doencas, principalmente a <strong>tuberculose</strong>.</p>
+
+<p><strong>Mecanismo:</strong></p>
+<ul>
+  <li>Degradacao progressiva e irreversivel por enzimas em tecidos lesionados</li>
+  <li>O material necrotico e uma mistura de <strong>proteinas coaguladas + lipidios</strong> (a parede celular do <em>Mycobacterium tuberculosis</em> e rica em lipidios — acidos micolicos — e tuberculoproteina)</li>
+  <li>Resposta inflamatoria por <strong>hipersensibilidade tipo IV</strong></li>
+  <li>Perda total de detalhes celulares — e uma <strong>combinacao de coagulacao e liquefacao</strong></li>
+</ul>
+
+<p><strong>Microscopicamente:</strong></p>
+<ul>
+  <li>Aspecto roseo, <strong>amorfo, finamente granuloso</strong></li>
+  <li>Localiza-se no <strong>centro do granuloma</strong></li>
+  <li>Calcificacao e frequente</li>
+  <li>O principal constituinte dos granulomas e a <strong>celula epitelioide</strong> (constituinte obrigatorio)</li>
+</ul>
+
+<p><strong>Macroscopicamente:</strong></p>
+<ul>
+  <li>Estrutura semelhante a <strong>"caseum" (queijo branco e fresco)</strong> — lembra mais queijo mineiro ou ricota</li>
+  <li>Substancia pastosa esbranquicada ou amarela</li>
+  <li>Areas de caseificacao apresentam-se como <strong>massas circunscritas, amarelas, secas e friaveis</strong></li>
+  <li>No caseum recente e no caseum liquidificado, encontram-se numerosos bacilos tuberculosos</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Conexao com inflamacao granulomatosa:</strong> A necrose caseosa ocorre dentro do <strong>granuloma</strong> — que e a reacao inflamatoria em que macrofagos sofrem modificacoes estruturais e funcionais para aumentar a eficiencia da fagocitose (celulas epitelioides, celulas gigantes). Tuberculose pulmonar pode drenar o caseum pela arvore bronquica e formar cavernas. O baco tambem pode apresentar necrose caseosa na tuberculose.</p>
+</div>
+
+<h3 id="aula4-esteatonecrose">4. Esteatonecrose (Necrose Gordurosa)</h3>
+<p><strong>E um tipo especial de necrose coagulativa do tecido adiposo.</strong></p>
+
+<p><strong>Mecanismo:</strong></p>
+<ul>
+  <li>Lesoes traumaticas, isquemicas ou quimicas podem levar a ruptura de celulas adiposas</li>
+  <li>O exemplo mais observado e na <strong>pancreatite aguda</strong>:
+    <ol>
+      <li>Acao de <strong>lipases pancreaticas</strong> libera acidos graxos dos triglicerides</li>
+      <li>Acidos graxos reagem com ions Ca++ dos liquidos intersticiais</li>
+      <li>Formam <strong>saboes insoluveis de calcio</strong> = aspecto semelhante a <strong>cera de vela</strong> (reacao de <strong>saponificacao</strong>)</li>
+    </ol>
+  </li>
+</ul>
+
+<p><strong>Localizacao:</strong></p>
+<ul>
+  <li>Tecido peripancreatico (pancreatite aguda) — mais comum</li>
+  <li>Tecido gorduroso da glandula mamaria</li>
+  <li>Qualquer regiao com tecido gorduroso abundante sujeito a trauma intenso</li>
+  <li>Mesentério</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Aspecto de cera de vela:</strong> Na pancreatite aguda, quando voce abre o abdome (cirurgia ou necropsia), voce ve pingos esbranquicados na gordura peripancreatica que parecem gotas de cera de vela — isso e a saponificacao pela reacao dos acidos graxos com calcio. E um achado patognomonico de esteatonecrose pancreatica.</p>
+</div>
+
+<h3 id="aula4-gangrena">5. Gangrena</h3>
+<p>Termo comumente usado na pratica clinica. E uma <strong>forma especial de necrose isquemica (coagulativa)</strong> que envolve varias camadas de tecido — aplicado a um membro (comumente a perna) que perdeu seu suprimento sanguineo. Quando ha combinacao de necrose com infeccao por agentes bacterianos, temos diferentes subtipos:</p>
+
+<h4>Gangrena Seca</h4>
+<ul>
+  <li>Necrose coagulativa do tecido isquemico por suprimento sanguineo inadequado (disturbios de arterias perifericas)</li>
+  <li>Baixo nivel de oxigenio local provoca putrefacao sem crescimento bacteriano</li>
+  <li>Area necrotica perde agua para o ambiente → fica <strong>seca, retraida, preta, com aspecto mumificado</strong></li>
+  <li>Cor varia de amarelo esverdeado ao pardo enegrecido (decomposicao da hemoglobina)</li>
+  <li><strong>Linha demarcatoria nitida</strong> entre area normal e tecido necrosado</li>
+  <li>Localizacao: extremidades (nariz, orelha, membros, dedos dos pes)</li>
+  <li>Etiologia: congelamento, vasoconstrição; pacientes com <strong>aterosclerose, diabetes mellitus</strong> (especialmente fumantes); gesso e bandagens muito apertadas; fisiologicamente no cordao umbilical</li>
+  <li>Nao e tao emergente quanto a gangrena umida</li>
+  <li>Pode evoluir para gangrena umida se houver infeccao secundaria</li>
+</ul>
+
+<h4>Gangrena Umida</h4>
+<ul>
+  <li>Tecido necrotico se contamina com <strong>bacterias que digerem o tecido, amolecendo-o</strong></li>
+  <li>Infeccao secundaria de cocos Gram-positivos e comum; bacterias saprogenicas (anaerobicas) causam <strong>mau cheiro</strong></li>
+  <li>Parte afetada torna-se <strong>edemaciada, mole, podre e escura</strong>; bolhas cheias de liquido turvo na pele descolorida e fria</li>
+  <li>Prognostico ruim — <strong>taxa de mortalidade alta</strong>; amputacao de emergencia geralmente necessaria</li>
+  <li>Infeccao disseminada (sepse) pode levar a morte</li>
+  <li>Fatores predisponentes: <strong>diabetes mellitus</strong> (fator mais importante), arteriosclerose obliterante, calcifilaxia/arteriolopatia uremica calcificada</li>
+</ul>
+
+<h4>Gangrena Gasosa</h4>
+<ul>
+  <li>Bacterias contaminantes pertencem ao genero <strong><em>Clostridium</em></strong></li>
+  <li>Produção de gases → crepitação ao palpar o tecido</li>
+  <li>Crepitacao ao toque</li>
+  <li>Tambem chamada de gangrena enfisematosa, crepitante ou bolhosa</li>
+</ul>
+
+<h4>Gangrena de Orgaos Internos</h4>
+<p>Pode ocorrer em orgaos como: <strong>apendice vermiforme</strong> (apendicite gangrenosa), vesicula biliar, ducto biliar, pancreas, pulmao, rim. Quando patogenos anaerobios produzem gas = condicao grave de inflamacao "enfisematosa".</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Diabetes mellitus e gangrena:</strong> A professora destacou que diabetes e o <strong>fator de risco mais importante</strong> para gangrena, tanto seca quanto umida. Pacientes diabeticos com doenca vascular periferica grave sao os mais suscetíveis. A combinacao de aterosclerose + neuropatia + hiperglicemia (favorece crescimento bacteriano) cria o cenario perfeito para gangrena de extremidades inferiores.</p>
+</div>
+
+<!-- TIPOS DE INFARTO -->
+<h2 id="aula4-infarto">Tipos de Infarto</h2>
+<p><strong>Infarto</strong> = necrose que se instala apos interrupcao do fluxo sanguineo = area de necrose tecidual causada por isquemia prolongada. Existem dois tipos, que dependem do tipo de circulacao do orgao:</p>
+
+<h3 id="aula4-infarto-branco">Infarto Branco (Anêmico / Isquêmico)</h3>
+<ul>
+  <li>Ocorre tumefacao e <strong>palidez local</strong></li>
+  <li>Area de necrose de coagulacao (isquemica) ocasionada por hipoxia letal local, em territorio com <strong>circulacao do tipo terminal</strong></li>
+  <li>Causa e <strong>sempre arterial</strong> (oclusao tromboembolica, compressiva)</li>
+  <li>Orgaos mais comumente lesados: <strong>rins, baco, coracao</strong></li>
+  <li>Obstrucao arterial em orgaos solidos com circulacao terminal</li>
+</ul>
+
+<p><strong>Por que e branco?</strong> Porque em orgaos com circulacao terminal, quando a arteria e obstruida, nao ha outra via para o sangue chegar. A area fica totalmente anemiada — sem sangue, portanto palida/branca.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Circulacao terminal:</strong> A professora explicou com o exemplo do rim: "A arteria renal vai dar varios raminhos — arteria arqueada, perfurante — e uma circulacao terminal. Se obstruir, vai gerar um infarto renal branco. Porque nao tem de onde vir mais sangue. Essa area vai ficar bem anemica." O mesmo vale para baco e coracao.</p>
+</div>
+
+<h3 id="aula4-infarto-vermelho">Infarto Vermelho (Hemorrágico)</h3>
+<ul>
+  <li>Area de necrose <strong>edematosa e hemorragica</strong></li>
+  <li>Ocorre em orgaos que tem <strong>circulacao dupla</strong> ou <strong>circulacao colateral exuberante</strong>:
+    <ul>
+      <li><strong>Pulmao</strong> — arteria pulmonar E arteria bronquica</li>
+      <li><strong>Figado</strong> — arteria hepatica E veia porta</li>
+      <li><strong>Intestino</strong> — circulacao colateral exuberante</li>
+    </ul>
+  </li>
+  <li>A interrupcao do fluxo em um vaso leva a necrose coagulativa, e quando o sangue chega pelo outro vaso ou colateralmente, ha <strong>hemorragia na regiao de necrose</strong> → aspecto avermelhado (a fresco) ou enegrecido (fixado em formol)</li>
+  <li><strong>Tanto a oclusao arterial como a venosa podem causar infartos vermelhos</strong></li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Logica da cor do infarto:</strong> A professora usou o seguinte raciocinio: "No pulmao, sangue entra por duas vias — arteria pulmonar e bronquica. Bloqueei a arteria pulmonar? A bronquica continua mandando sangue. Necrosou aqui, mas sangue chega pelo outro lado. Vai ficar vermelho. Agora, no rim, bloqueei — nao tem de onde vir mais sangue. Fica branco." A mesma logica vale para o figado (arteria hepatica + veia porta).</p>
+</div>
+
+<h3>Halo Hiperemiado</h3>
+<p>Ao redor da area de infarto (branco ou vermelho), observa-se macroscopicamente um <strong>halo hiperemiado</strong> — area de congestão vascular + infiltrado inflamatorio (hiperemia + hemorragia + celulas inflamatorias). Na microscopia, esse halo mostra vasos dilatados e neutrofilos, representando a <strong>reacao inflamatoria aguda</strong> que a necrose desencadeia.</p>
+
+<!-- CONEXAO COM ORGAOS ESPECIFICOS -->
+<h2 id="aula4-orgaos">Exemplos Clinicos por Orgao</h2>
+
+<table>
+  <thead><tr><th>Orgao</th><th>Tipo de Necrose</th><th>Tipo de Infarto</th><th>Circulacao</th><th>Detalhes</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Rim</strong></td><td>Coagulativa</td><td>Branco (anêmico)</td><td>Terminal</td><td>Forma em cunha, firme e palido. Glomerulos resistem a necrose (conjuntivos, metabolismo baixo). Tubulos sao mais vulneraveis.</td></tr>
+    <tr><td><strong>Baco</strong></td><td>Coagulativa</td><td>Branco (anêmico)</td><td>Terminal</td><td>Area palida e bem delimitada.</td></tr>
+    <tr><td><strong>Coracao</strong></td><td>Coagulativa</td><td>Branco (anêmico)</td><td>Terminal (coronarias)</td><td>Miocardiocitos: celulas permanentes. Apos infarto, reparo por fibrose (cicatriz). Liberacao de troponina e CK-MB.</td></tr>
+    <tr><td><strong>Cerebro</strong></td><td>Liquefativa</td><td>— (liquefacao)</td><td>—</td><td>Rico em lipidios, pobre em proteinas coagulaveis. AVC isquemico → necrose liquefativa. Infarto antigo → cavidade (encistamento).</td></tr>
+    <tr><td><strong>Pulmao</strong></td><td>Coagulativa</td><td>Vermelho (hemorrágico)</td><td>Dupla (a. pulmonar + a. bronquica)</td><td>Necrose coagulativa + hemorragia. Aspecto avermelhado ou enegrecido.</td></tr>
+    <tr><td><strong>Figado</strong></td><td>Coagulativa</td><td>Vermelho (hemorrágico)</td><td>Dupla (a. hepatica + v. porta)</td><td>Area mista branca e vermelha. A professora mostrou figado com lobulos centralizados pela veia central.</td></tr>
+    <tr><td><strong>Intestino</strong></td><td>Coagulativa</td><td>Vermelho (hemorrágico)</td><td>Colateral exuberante</td><td>Necrose da mucosa, perda de vilosidades.</td></tr>
+    <tr><td><strong>Adenohipofise</strong></td><td>Coagulativa</td><td>— </td><td>—</td><td>A professora mostrou lamina A.24/29 com necrose coagulativa da adenohipofise.</td></tr>
+  </tbody>
+</table>
+
+<!-- EVOLUCAO DAS NECROSES -->
+<h2 id="aula4-evolucao">Evolucao das Necroses — O que Acontece Depois?</h2>
+<ul>
+  <li><strong>Absorcao</strong> pelos tecidos vivos circundantes, principalmente por fagocitose por macrofagos</li>
+  <li><strong>Drenagem (eliminacao)</strong> pelas vias excretoras normais — como a necrose caseosa da tuberculose, onde o tecido pulmonar morto e drenado pela arvore bronquica → formacao de <strong>cavernas</strong></li>
+  <li><strong>Substituicao por cicatriz fibrosa</strong> — como nos infartos (necrose isquemica). Exemplo: infarto do miocardio → area de fibrose (cicatriz)</li>
+  <li><strong>Calcificacao distrofica</strong> — deposito de sais de calcio no tecido morto</li>
+  <li><strong>Encistamento</strong> — ocorre no tecido nervoso, que tem pouca capacidade de absorver o produto necrotico e nao ha como drena-lo → area necrosada se torna cavidade cheia de liquido revestida por tecido vivo (como no infarto cerebral antigo)</li>
+  <li><strong>Ulceracao</strong> — quando o material necrotico esta em uma superficie como pele ou mucosas</li>
+</ul>
+
+<!-- CONEXAO COM INFLAMACAO -->
+<h2 id="aula4-conexao">Conexao com Inflamacao (Aulas 1-3)</h2>
+<p>A necrose nao existe isolada — ela <strong>obrigatoriamente desencadeia uma reacao inflamatoria</strong>:</p>
+<ul>
+  <li>O conteudo celular que extravasa funciona como <strong>sinal de alarme</strong> para o sistema imune</li>
+  <li>Na fase inicial: <strong>inflamacao aguda</strong> (infiltrado neutrofilico) ao redor da area necrotica — e o que vemos no halo hiperemiado dos infartos</li>
+  <li>Posteriormente: <strong>macrofagos</strong> sao recrutados para fagocitar restos celulares (heterolise)</li>
+  <li>O <strong>reparo</strong> (regeneracao ou fibrose) depende do orgao e da extensao da necrose:
+    <ul>
+      <li>Celulas lábeis/estaveis com necrose limitada → <strong>regeneracao</strong> possivel</li>
+      <li>Celulas permanentes (miocardiocitos, neuronios) ou necrose extensa → <strong>fibrose/cicatriz</strong></li>
+    </ul>
+  </li>
+  <li>A necrose caseosa ocorre <strong>dentro do granuloma</strong> — conecta diretamente com inflamacao granulomatosa (Aula 3)</li>
+  <li>Abscessos sao necrose liquefativa causada por <strong>infeccao bacteriana + infiltrado neutrofilico</strong> — conecta com inflamacao aguda supurativa (Aula 1)</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>O cardiomiocito e celula permanente:</strong> A professora lembrou que celulas permanentes, estaveis e labeis (conceito da fase 1) determinam se o orgao vai regenerar ou cicatrizar apos necrose. O coracao tem celulas permanentes — apos infarto, a area necrotica sera substituida por cicatriz fibrosa. "Se alguma celula sobreviver, ela nao consegue se dividir. Vai ter que ser fibrose."</p>
+</div>
+
+<!-- RESUMO RAPIDO -->
+<div class="resumo-aula">
+<h2>Resumo Rapido — Aula 4</h2>
+<ul>
+  <li><strong>Necrose</strong> = morte celular em organismo vivo, sempre patologica, sempre gera inflamacao, sempre irreversivel. Membrana rompe → conteudo extravasa → inflamacao.</li>
+  <li><strong>Apoptose</strong> = morte programada, pode ser fisiologica, nao gera inflamacao. Membrana intacta → corpos apoptoticos → fagocitose silenciosa.</li>
+  <li><strong>Alteracoes nucleares:</strong> Picnose (contracao) → Cariorrexe (fragmentacao) → Cariolise (lise/desaparecimento).</li>
+  <li><strong>Necrose coagulativa</strong> = mais comum, isquemica, preserva arquitetura tecidual. Orgaos: coracao, rim, baco, figado, pulmao. Nao ocorre no cerebro.</li>
+  <li><strong>Necrose liquefativa</strong> = dissolucao enzimatica rapida, tecido vira "papa". Ocorre no cerebro (rico em lipidios) e em abscessos (infeccao bacteriana).</li>
+  <li><strong>Necrose caseosa</strong> = subtipo de coagulativa, dentro do granuloma, associada a tuberculose. Aspecto de queijo fresco.</li>
+  <li><strong>Esteatonecrose</strong> = necrose do tecido adiposo, classica na pancreatite aguda. Saponificacao com aspecto de cera de vela.</li>
+  <li><strong>Infarto branco</strong> = circulacao terminal (rim, baco, coracao). <strong>Infarto vermelho</strong> = circulacao dupla/colateral (pulmao, figado, intestino).</li>
+</ul>
+</div>
+
+</section>
+
+<!-- AULA 5 — APOPTOSE E LESÃO CELULAR (03-20) -->
+<section id="aula5" class="aula">
+<h1>Aula 5 — Apoptose e Lesão Celular</h1>
+<p class="aula-meta">Profa. Dra. Regiane Mathias · 20/03/2026</p>
+
+<!-- CONTEXTO E MOTIVAÇÃO -->
+<h2 id="aula5-contexto">Por que estudar apoptose?</h2>
+<p>A morte celular é um fenômeno tão importante quanto a proliferação para a manutenção da homeostase tecidual. Sem apoptose, não haveria embriogênese normal, renovação de epitélios, eliminação de linfócitos autorreativos nem defesa contra células infectadas por vírus. A falha nos mecanismos apoptóticos está diretamente ligada ao desenvolvimento de neoplasias (evasão de apoptose é um dos hallmarks do câncer), doenças autoimunes e doenças neurodegenerativas.</p>
+<p>Compreender a apoptose — suas vias de sinalização (BCL-2, caspases, p53), seus estímulos fisiológicos e patológicos, e suas diferenças em relação à necrose — é essencial para o raciocínio diagnóstico em Anatomia Patológica e para entender a farmacologia de drogas anticâncer.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Metas de compreensão (definidas pela professora):</strong> (1) Compreender a morte celular por meio dos mecanismos de apoptose; (2) Descrever as características morfológicas das células em apoptose.</p>
+</div>
+
+<!-- LESÃO CELULAR — PANORAMA GERAL -->
+<h2 id="aula5-lesao">Lesão Celular — Panorama Geral</h2>
+<p>A lesão celular resulta de um agente nocivo que ultrapassa a capacidade adaptativa da célula. O desfecho depende da <strong>intensidade</strong>, da <strong>qualidade</strong> da agressão e do <strong>tipo celular</strong> envolvido:</p>
+<ul>
+  <li><strong>Lesão reversível:</strong> degenerações (hidrópica, gordurosa, hialina, mucoide, glicogênica) — a célula sofre alterações mas consegue se recuperar</li>
+  <li><strong>Lesão irreversível:</strong> necrose (coagulativa, liquefativa, caseosa, gomosa, gangrenosa, hemorrágica, fibrinoide, gordurosa) e <strong>apoptose</strong></li>
+</ul>
+<p>O ponto de não retorno da lesão celular envolve dois eventos críticos: <strong>disfunção mitocondrial</strong> (perda de produção de ATP) e <strong>dano às biomembranas</strong> (não apenas a membrana plasmática, mas também as membranas de organelas).</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora enfatizou:</strong> A decisão da célula de entrar em apoptose ou de sobreviver depende da <strong>intensidade e da qualidade da agressão</strong> e dos receptores acionados. O tipo de proteína que vai agir (pró-apoptótica ou antiapoptótica) é determinado pela intensidade, qualidade e tipo de agressão.</p>
+</div>
+
+<!-- NECROSE vs APOPTOSE -->
+<h2 id="aula5-necrose-apoptose">Necrose vs. Apoptose — Diferenças Fundamentais</h2>
+<p>A professora utilizou a analogia de <strong>explosão vs. implosão</strong>: a necrose é como uma explosão — a célula incha, rompe a membrana e derrama seu conteúdo, causando inflamação ao redor. A apoptose é como uma implosão — a célula se retrai, se fragmenta ordenadamente e é fagocitada sem deixar vestígios nem gerar inflamação.</p>
+
+<table>
+  <thead><tr><th>Característica</th><th>Necrose</th><th>Apoptose</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Tamanho celular</strong></td><td>Aumentado (tumefação)</td><td>Reduzido (retração)</td></tr>
+    <tr><td><strong>Núcleo</strong></td><td>Picnose (retraído), cariorrexe (fragmentado), cariólise (dissolvido)</td><td>Fragmentação em partículas (corpos apoptóticos)</td></tr>
+    <tr><td><strong>Membrana plasmática</strong></td><td>Danificada, rompida</td><td>Intacta (com alteração de fosfolipídeos)</td></tr>
+    <tr><td><strong>Conteúdo celular</strong></td><td>Digestão enzimática; pode extravasar para fora da célula</td><td>Intacto; liberado na forma de corpos apoptóticos</td></tr>
+    <tr><td><strong>Inflamação adjacente</strong></td><td>Frequente (infiltrado inflamatório)</td><td>Não há</td></tr>
+    <tr><td><strong>Papel fisiológico ou patológico</strong></td><td>Invariavelmente patológica</td><td>Fisiológica ou patológica — forma de eliminar células indesejadas/velhas</td></tr>
+    <tr><td><strong>Dependência de energia</strong></td><td>Processo passivo</td><td>Processo ativo, dependente de ATP</td></tr>
+    <tr><td><strong>Mecanismo molecular</strong></td><td>Dano direto</td><td>Ativação sequencial de caspases</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora destacou:</strong> Necrose <strong>nunca</strong> é fisiológica — necrose será <strong>sempre</strong> patológica. Já a apoptose pode ser tanto fisiológica quanto patológica. Além disso, a apoptose é sempre um processo <strong>ativo e dependente de energia (ATP)</strong>. No mesmo fragmento de tecido, é possível encontrar áreas de necrose e células em apoptose — isso foi visto em lâmina prática.</p>
+</div>
+
+<!-- DEFINIÇÃO DE APOPTOSE -->
+<h2 id="aula5-definicao">Definição de Apoptose</h2>
+<p>A apoptose é um <strong>processo ativo, dependente de energia (ATP)</strong>, desencadeado por causas fisiológicas e patológicas, envolvendo a <strong>ativação sequencial de enzimas (proteases) intracitoplasmáticas</strong>, especialmente as <strong>caspases</strong>.</p>
+<p>Diferentemente da necrose, a apoptose é uma morte celular "limpa" e "silenciosa": a célula implode, seus fragmentos são rapidamente fagocitados e <strong>não há reação inflamatória local</strong>.</p>
+
+<!-- APOPTOSE FISIOLÓGICA vs PATOLÓGICA -->
+<h2 id="aula5-fisiologica-patologica">Apoptose Fisiológica vs. Patológica</h2>
+
+<h3>Situações Fisiológicas</h3>
+<table>
+  <thead><tr><th>Condição</th><th>Mecanismo</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Embriogênese</strong> — eliminação de membranas interdigitais, formação de dedos; desenvolvimento de gônadas; remodelamento de órgãos</td><td>Perda de sinalização de fator de crescimento (mecanismo presumido)</td></tr>
+    <tr><td><strong>Renovação de tecidos proliferativos</strong> — epitélio intestinal (~3-5 dias), células epidérmicas (~28 dias), linfócitos na medula óssea e timo</td><td>Perda de sinalização de fator de crescimento</td></tr>
+    <tr><td><strong>Involução de tecidos dependentes de hormônio</strong> — endométrio (ciclo menstrual), mama (após lactação: células dos ácinos entram em apoptose, restando apenas células dos ductos)</td><td>Diminuição dos níveis hormonais leva a sinais de sobrevivência reduzidos</td></tr>
+    <tr><td><strong>Involução do timo</strong> — atinge o máximo na puberdade e depois involui</td><td>Apoptose fisiológica programada</td></tr>
+    <tr><td><strong>Declínio de leucócitos no final da resposta inflamatória/imune</strong></td><td>Perda de sinais de sobrevivência como estímulo para ativação de leucócitos</td></tr>
+    <tr><td><strong>Eliminação de linfócitos autorreativos</strong> — seleção no timo (linfócitos T)</td><td>Reconhecimento intenso de autoantígenos induz apoptose tanto pela via mitocondrial como pela via do receptor de morte</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora enfatizou exemplos práticos:</strong> (1) Hemácias têm "idade determinada" (~120 dias) — tecnicamente, a morte programada da hemácia é chamada <strong>eriptose</strong> (dependente de Ca²⁺, independente de caspases), não apoptose clássica, pois hemácias são anucleadas; eritroblasto até hemácia madura leva cerca de 70 dias; (2) O timo — linfócitos T (o "T" vem de timo) se diferenciam lá; o timo involui por apoptose após a puberdade; (3) As membranas interdigitais: a sindactilia (dedos "grudados") ocorre quando a apoptose fisiológica falha na eliminação dessas membranas durante o desenvolvimento embrionário; (4) Na mama pós-lactação, as células dos ácinos (produtoras de leite) entram em apoptose, restando somente as células dos ductos mamários.</p>
+</div>
+
+<h3>Situações Patológicas</h3>
+<table>
+  <thead><tr><th>Condição</th><th>Mecanismo</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Dano ao DNA</strong> — radiação, drogas anticâncer, extremos de temperatura, hipóxia. Os mecanismos lesionais vencem os de reparo, tornando necessária a apoptose para impedir mutações</td><td>Ativação de proteínas pró-apoptóticas pelos sensores BH3-only</td></tr>
+    <tr><td><strong>Acúmulo de proteínas anormalmente dobradas</strong> — estresse do retículo endoplasmático (RE)</td><td>Ativação de proteínas pró-apoptóticas pelos sensores BH3-only, possivelmente ativação direta de caspases</td></tr>
+    <tr><td><strong>Infecções, especialmente virais</strong> — destruição de células infectadas pelo próprio vírus ou por linfócitos T citotóxicos</td><td>Ativação de vias mitocondriais por proteínas virais; morte por linfócitos T com ativação de caspases</td></tr>
+    <tr><td><strong>Apoptose de fibras musculares lisas arteriais</strong> — aterosclerose ou hipertensão arterial</td><td>Lesão crônica da parede arterial</td></tr>
+    <tr><td><strong>Apoptose de células miocárdicas</strong> — miocardite chagásica (Doença de Chagas)</td><td>Lesão direta e resposta imune</td></tr>
+  </tbody>
+</table>
+
+<!-- CHAPERONAS -->
+<h2 id="aula5-chaperonas">Chaperonas e Estresse do Retículo Endoplasmático</h2>
+<p>As <strong>chaperonas</strong> (proteínas de choque térmico ou Hsp — <em>heat shock proteins</em>), conhecidas como "guardiãs das proteínas", auxiliam no <strong>enovelamento correto</strong> das proteínas. Quando mutações gênicas, infecções virais, agentes químicos ou radicais livres alteram o processo de enovelamento, proteínas mal dobradas se acumulam no RE, gerando estresse.</p>
+
+<p><strong>Três grupos de chaperonas:</strong></p>
+<ul>
+  <li><strong>Hsp 60:</strong> agem sobre proteínas já prontas com erro na configuração terciária (erro na cabeça hidrofóbica)</li>
+  <li><strong>Hsp 70:</strong> ajudam o enovelamento e impedem que proteínas malformadas formem agregados. Exemplo: <strong>BIP</strong> — chaperona que mora dentro do RE, considerada marcadora do RE</li>
+  <li><strong>Hsp 90:</strong> as menos compreendidas; acredita-se que se ligam ao substrato ao se ligar com ATP</li>
+</ul>
+<p>As chaperonas são encontradas no <strong>citosol</strong>, nas <strong>mitocôndrias</strong> e no <strong>retículo endoplasmático</strong>. Se o enovelamento falha apesar do aumento compensatório de chaperonas, a célula entra em apoptose.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora pediu para guardar:</strong> Chaperonas são responsáveis pelo enovelamento correto das proteínas. O RE tenta compensar aumentando a produção de chaperonas; se essa tentativa falha, ocorre apoptose. O acúmulo de proteínas mal dobradas está associado a doenças como Parkinson e câncer.</p>
+</div>
+
+<!-- MECANISMOS DA APOPTOSE -->
+<h2 id="aula5-mecanismos">Mecanismos da Apoptose — Vias de Sinalização</h2>
+<p>"Todas as células têm mecanismos intrínsecos que sinalizam morte ou sobrevivência e a apoptose resulta de um <strong>desequilíbrio nesses sinais</strong>."</p>
+
+<p>O processo pode ser dividido em duas fases:</p>
+<ol>
+  <li><strong>Iniciação:</strong> algumas caspases tornam-se cataliticamente ativas (caspases iniciadoras)</li>
+  <li><strong>Execução:</strong> outras caspases desencadeiam a degradação de componentes celulares (caspases executoras)</li>
+</ol>
+
+<p>Na fase de iniciação, existem duas vias distintas que convergem para ativar as caspases:</p>
+
+<!-- VIA INTRÍNSECA -->
+<h3 id="aula5-via-intrinseca">Via Intrínseca (Mitocondrial) — Caspase 9</h3>
+<p>É desencadeada por <strong>estresse ou dano interno à célula</strong>: danos ao DNA, privação de oxigênio, radicais livres, acúmulo de proteínas mal dobradas e outras tensões que prejudicam o funcionamento celular.</p>
+
+<p><strong>Sequência de eventos:</strong></p>
+<ol>
+  <li>A agressão ativa <strong>sensores da família BCL-2</strong>, conhecidos como proteínas <strong>BH3-only</strong></li>
+  <li>Esses sensores ativam as proteínas pró-apoptóticas <strong>BAX</strong> e <strong>BAK</strong></li>
+  <li>BAX e BAK formam <strong>oligômeros</strong> que se inserem na membrana mitocondrial externa, criando <strong>canais</strong> (poros)</li>
+  <li>Os canais permitem o vazamento de proteínas do espaço intermembranoso para o citoplasma:
+    <ul>
+      <li><strong>Citocromo C</strong> (normalmente envolvido na respiração mitocondrial)</li>
+      <li><strong>SMAC</strong> (Segundo Ativador Mitocondrial de Caspases) — inibe as IAPs (proteínas inibidoras de apoptose)</li>
+    </ul>
+  </li>
+  <li>O citocromo C, uma vez no citosol, se liga à proteína <strong>APAF-1</strong> (Fator de Ativação de Apoptose 1), formando um hexâmero semelhante a uma roda chamado <strong>apoptossoma</strong></li>
+  <li>O apoptossoma se liga à <strong>caspase 9</strong> (iniciadora), clivando caspases 9 adjacentes — configurando uma <strong>autoamplificação</strong> do processo</li>
+  <li>A caspase 9 ativa as caspases executoras (3, 6 e 7) → morte celular</li>
+</ol>
+
+<p>Além disso, os sensores BH3-only também <strong>inibem as proteínas antiapoptóticas BCL-2 e BCL-xL</strong>, removendo o "freio" que impedia a apoptose.</p>
+
+<h4>A Família BCL-2</h4>
+<p>A família BCL-2 possui cerca de <strong>23 membros</strong> e é a reguladora central da via intrínseca. Seus membros residem no citoplasma e nas membranas mitocondriais, onde controlam a permeabilidade:</p>
+<table>
+  <thead><tr><th>Grupo</th><th>Membros</th><th>Função</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Antiapoptóticas</strong></td><td>BCL-2, BCL-xL, MCL-1</td><td>Evitam o vazamento de proteínas de morte celular; controlam a permeabilidade da membrana mitocondrial</td></tr>
+    <tr><td><strong>Pró-apoptóticas (efetores)</strong></td><td>BAX, BAK</td><td>Formam canais na membrana mitocondrial externa → liberam citocromo C e SMAC</td></tr>
+    <tr><td><strong>Sensores (BH3-only)</strong></td><td>BIM, BID, BAD e outros</td><td>Detectam dano celular → ativam BAX/BAK e inibem BCL-2/BCL-xL</td></tr>
+  </tbody>
+</table>
+
+<h4>Papel do p53</h4>
+<p>O <strong>p53</strong> é o "gene guardião do genoma" (<em>guardian of the genome</em>). Quando o DNA sofre lesão, o p53 é ativado e estimula as proteínas <strong>pró-apoptóticas</strong> da família BCL-2 (os sensores BH3-only), desencadeando a via intrínseca. Assim, p53 garante que células com DNA irreparavelmente danificado sejam eliminadas, prevenindo mutações e desenvolvimento tumoral.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora enfatizou:</strong> Gene TP53 codifica a proteína p53, o "guardião do DNA". Quando o DNA é lesado → ativa p53 → p53 estimula proteínas pró-apoptóticas da família BCL-2 → desencadeia via intrínseca. A perda de função do p53 (mutação) é um dos eventos mais frequentes no câncer humano — sem p53, a célula não consegue eliminar células com DNA danificado.</p>
+</div>
+
+<!-- VIA EXTRÍNSECA -->
+<h3 id="aula5-via-extrinseca">Via Extrínseca (Receptor de Morte) — Caspases 8 e 10</h3>
+<p>Um sinal é recebido <strong>de fora da célula</strong>, instruindo-a a morrer. Isso ocorre quando a célula não é mais necessária ou está doente.</p>
+
+<p><strong>Sequência de eventos:</strong></p>
+<ol>
+  <li>Muitas células expressam <strong>receptores de morte</strong> na membrana — a maioria membros da família do <strong>TNF</strong> (fator de necrose tumoral), que possuem um "domínio de morte" conservado</li>
+  <li>O receptor mais envolvido é o <strong>Fas</strong>, ativado pelo seu ligante <strong>FasL</strong> (Fas-Ligante). FasL é expresso principalmente na membrana de <strong>linfócitos T ativados</strong></li>
+  <li>Quando linfócitos T reconhecem a célula-alvo, o FasL liga-se ao Fas → recrutamento e ativação da <strong>caspase 8</strong></li>
+  <li>A caspase 8 (e a caspase 10), agora ativas, clivam e ativam as caspases executoras (<strong>3, 6 e 7</strong>)</li>
+  <li>As caspases executoras degradam proteínas nucleares, DNA e citoesqueleto → formação de corpos apoptóticos</li>
+</ol>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora destacou:</strong> O receptor Fas na membrana da célula-alvo + o ligante FasL na membrana do linfócito T = sinal de morte. "FasL" = Fas + Ligante, por isso a nomenclatura. As vias intrínseca e extrínseca podem acontecer <strong>simultaneamente</strong> e se "cruzar" — isso é didaticamente separado, mas na prática ambas podem ser ativadas ao mesmo tempo. A caspase 8 (extrínseca) pode também ativar a via intrínseca.</p>
+</div>
+
+<!-- CONVERGÊNCIA -->
+<h3 id="aula5-convergencia">Convergência das Vias — Fase de Execução</h3>
+<p>Ambas as vias convergem para a ativação das <strong>caspases executoras (3, 6 e 7)</strong>:</p>
+<ul>
+  <li>Via intrínseca → caspase 9 → ativa caspases 3, 6 e 7</li>
+  <li>Via extrínseca → caspases 8 e 10 → ativam caspases 3, 6 e 7</li>
+</ul>
+<p>As caspases executoras (especialmente 3 e 6) atuam em diversos componentes celulares:</p>
+<ul>
+  <li>Clivam um <strong>inibidor de DNAse citoplasmática</strong>, tornando-a ativa → clivagem do DNA em fragmentos semelhantes a nucleossomos</li>
+  <li>Degradam <strong>componentes da matriz nuclear</strong> e do citoesqueleto</li>
+  <li>Promovem a <strong>fragmentação nuclear</strong></li>
+  <li>Geram a divisão da célula em pequenos fragmentos: os <strong>corpos apoptóticos</strong></li>
+</ul>
+
+<!-- CASPASES -->
+<h2 id="aula5-caspases">As Caspases — Enzimas Centrais da Apoptose</h2>
+<p>A apoptose tem como principal mecanismo a <strong>ativação das caspases</strong>. A nomenclatura reflete duas propriedades:</p>
+<ul>
+  <li><strong>"C"</strong> = protease de <strong>cisteína</strong> (possui cisteína no sítio ativo)</li>
+  <li><strong>"ASPASE"</strong> = capacidade de clivar resíduos de <strong>ácido aspártico</strong></li>
+</ul>
+
+<p>A família possui <strong>12 membros</strong> nos seres humanos, divididos em dois grupos funcionais:</p>
+<table>
+  <thead><tr><th>Grupo</th><th>Caspases</th><th>Função</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Iniciadoras (ativadoras)</strong></td><td>8, 9 e 10</td><td>São ativadas pelas vias intrínseca ou extrínseca; ativam as executoras</td></tr>
+    <tr><td><strong>Executoras (efetoras)</strong></td><td>3, 6 e 7</td><td>Degradam DNA, proteínas nucleares e citoesqueleto → morte celular</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Importante:</strong> As caspases são sintetizadas como <strong>pró-caspases (pró-enzimas inativas)</strong>. Precisam passar por <strong>clivagem enzimática</strong> para se tornarem ativas. A detecção de caspases clivadas (ativas) — especialmente caspase-3 — é um <strong>marcador de apoptose</strong> em técnicas laboratoriais (imuno-histoquímica).</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora enfatizou:</strong> "Vocês têm que saber bem quem ativa a apoptose." As caspases <strong>precisam</strong> estar na forma ativa (clivada) para funcionar. A cascata de caspases funciona como uma "cascata de ativação": uma caspase iniciadora cliva e ativa outra, que ativa mais caspases executoras — não necessariamente na sequência numérica. A ativação é uma cascata amplificadora.</p>
+</div>
+
+<!-- ALTERAÇÕES BIOQUÍMICAS -->
+<h2 id="aula5-bioquimica">Alterações Bioquímicas da Apoptose</h2>
+<p>"Mudanças bioquímicas são a base das alterações estruturais."</p>
+
+<h3>1. Ativação das caspases</h3>
+<p>Iniciadoras (8, 9, 10) → Executoras (3, 6, 7) — já descrito acima.</p>
+
+<h3>2. Decomposição do DNA e das proteínas</h3>
+<p>As células apoptóticas sofrem decomposição característica do DNA em grandes peças de <strong>quilobases (50-300)</strong>, posteriormente clivadas por <strong>Ca²+ e Mg²+</strong> em fragmentos menores. Esses fragmentos são visualizados por eletroforese como <strong>"escadas" de DNA</strong> (<em>DNA laddering</em>). A atividade de endonuclease forma a base para técnicas citoquímicas de detecção de morte celular (quebras do duplo filamento — TUNEL).</p>
+
+<h3>3. Alterações da membrana e reconhecimento por fagócitos</h3>
+<p>Ocorre o movimento de <strong>fosfatidilserina</strong> (fosfolipídeo) da camada interna para a camada externa da membrana bilipídica. Isso faz com que fagócitos reconheçam esses receptores. A <strong>Anexina V</strong> é uma proteína laboratorial com alta afinidade pela fosfatidilserina exposta, sendo utilizada como marcador de apoptose em citometria de fluxo (não é produzida pela célula apoptótica).</p>
+
+<!-- REMOÇÃO DE RESTOS CELULARES -->
+<h2 id="aula5-remocao">Remoção dos Restos Celulares</h2>
+<p>A fagocitose rápida e eficiente dos corpos apoptóticos é essencial para o caráter "silencioso" da apoptose. Múltiplos mecanismos garantem essa limpeza:</p>
+<ul>
+  <li>A <strong>fosfatidilserina</strong> na camada externa da membrana é reconhecida por receptores de macrófagos</li>
+  <li>Células em apoptose <strong>secretam fatores solúveis</strong> que recrutam fagócitos</li>
+  <li>Alguns corpos apoptóticos expressam <strong>trombospondina</strong>, glicoproteína adesiva reconhecida por fagócitos</li>
+</ul>
+<p>Resultado: fagocitose rápida, eficiente, sem vestígios e <strong>sem processo inflamatório local</strong>.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>A professora destacou:</strong> Os corpos apoptóticos são "comestíveis" para os fagócitos — a fosfatidilserina, a trombospondina e fatores solúveis atraem e facilitam a fagocitose. É por ser um processo rápido e ativo que a apoptose não gera inflamação, diferentemente da necrose.</p>
+</div>
+
+<!-- MORFOLOGIA -->
+<h2 id="aula5-morfologia">Características Morfológicas da Apoptose</h2>
+<p>As alterações morfológicas visíveis ao microscópio incluem:</p>
+<ul>
+  <li><strong>Retração celular:</strong> célula menor, citoplasma denso e eosinófilo (róseo brilhante)</li>
+  <li><strong>Condensação da cromatina:</strong> a cromatina se agrega na periferia do núcleo (crescentes periféricos), podendo ficar uniformemente densa</li>
+  <li><strong>Fragmentação nuclear:</strong> cariorrexe — o núcleo se fragmenta em múltiplas partículas</li>
+  <li><strong>Formação de corpos apoptóticos:</strong> vesículas contendo organelas e fragmentos nucleares, envoltas por membrana íntegra</li>
+  <li><strong>Fagocitose dos corpos apoptóticos</strong> — sem inflamação ao redor</li>
+</ul>
+
+<h3>Exemplos Histopatológicos</h3>
+<ul>
+  <li><strong>Hepatite viral:</strong> hepatócitos individuais morrendo — células encarquilhadas, citoplasma muito condensado e acidófilo, conhecidos como <strong>corpúsculos de Councilman-Rocha Lima</strong></li>
+  <li><strong>Linfoma difuso de células B:</strong> células apoptóticas com cromatina condensada, cariorrexe e retração dos corpos celulares</li>
+  <li><strong>Carcinoma de plexo coroide:</strong> células com núcleos fragmentados e corpos celulares retraídos; células divididas em corpos apoptóticos</li>
+  <li><strong>Reação imunológica da pele:</strong> célula epidérmica reduzida, com citoplasma eosinófilo brilhante e núcleo condensado</li>
+</ul>
+
+<!-- CONEXÃO COM CÂNCER -->
+<h2 id="aula5-cancer">Conexão com Câncer — Evasão de Apoptose</h2>
+<p>Quando a apoptose é <strong>inibida</strong> (as proteínas antiapoptóticas ou as IAPs ganham), diversas doenças podem surgir:</p>
+<ul>
+  <li><strong>Linfomas foliculares:</strong> superexpressão de BCL-2 impede a apoptose dos linfócitos → acúmulo de células tumorais</li>
+  <li><strong>Carcinomas:</strong> mutação de p53 → célula não consegue ativar a via intrínseca → células com DNA danificado sobrevivem e proliferam</li>
+  <li><strong>Tumores dependentes de hormônio:</strong> como tumores de mama e próstata</li>
+</ul>
+
+<p>Quando a apoptose é <strong>excessiva</strong>, podem ocorrer:</p>
+<ul>
+  <li><strong>Doenças neurodegenerativas:</strong> esclerose lateral amiotrófica, retinite pigmentosa</li>
+  <li><strong>Síndromes mielodisplásicas</strong></li>
+  <li><strong>Doenças autoimunes:</strong> lúpus eritematoso sistêmico, glomerulonefrite</li>
+  <li><strong>Infecções virais:</strong> HIV/AIDS (apoptose excessiva de linfócitos T CD4+)</li>
+</ul>
+<p><em>⚠️ A lista acima é baseada em livro-texto (Robbins) e não foi discutida diretamente pela professora nesta aula.</em></p>
+<ul style="display:none">
+</ul>
+
+<!-- OUTRAS FORMAS DE MORTE CELULAR -->
+<h2 id="aula5-outras-mortes">Outras Formas de Morte Celular</h2>
+<p>Os slides apresentam formas adicionais de morte celular que diferem da apoptose clássica:</p>
+<ul>
+  <li><strong>Necroptose (necrose regulada):</strong> aspecto de necrose, mas sem ativação de caspases; envolve ativação de RIPK e MLKL. Ocorre em esteato-hepatites, pancreatite aguda, doenças neurodegenerativas</li>
+  <li><strong>Piroptose:</strong> morte em macrófagos infectados (ex: salmonelas); ativação da caspase 1 ou 4 por inflamassomos</li>
+  <li><strong>Autofagia:</strong> células morrem sem ativar caspases e sem autólise; encontrada em neurônios</li>
+</ul>
+
+<!-- RESUMO -->
+<div class="resumo-aula">
+<h2>Resumo da Aula 5</h2>
+<ol>
+  <li><strong>Apoptose</strong> = morte celular programada, ativa, dependente de ATP, mediada por caspases, sem inflamação local</li>
+  <li><strong>Necrose</strong> = morte celular passiva, sempre patológica, com ruptura de membrana e inflamação</li>
+  <li><strong>A decisão morte/sobrevivência</strong> depende do equilíbrio entre proteínas pró e antiapoptóticas da família BCL-2</li>
+  <li><strong>Via intrínseca (mitocondrial):</strong> estresse celular → sensores BH3-only → BAX/BAK → poros na mitocôndria → liberação de citocromo C → APAF-1 → apoptossoma → caspase 9 → caspases executoras (3, 6, 7)</li>
+  <li><strong>Via extrínseca (receptor de morte):</strong> sinal externo → Fas/FasL (ou TNF/TRAIL) → caspases 8 e 10 → caspases executoras (3, 6, 7)</li>
+  <li><strong>p53</strong> = "guardião do genoma"; ativa proteínas pró-apoptóticas quando o DNA está danificado</li>
+  <li><strong>Caspases</strong>: proteases de cisteína que clivam resíduos de ácido aspártico; iniciadoras (8, 9, 10) e executoras (3, 6, 7); sintetizadas como pró-enzimas inativas</li>
+  <li><strong>Alterações bioquímicas:</strong> ativação de caspases, escadas de DNA (fragmentação em quilobases), fosfatidilserina na face externa da membrana</li>
+  <li><strong>Corpos apoptóticos</strong> são rapidamente fagocitados (fosfatidilserina + trombospondina + fatores solúveis) → sem vestígios, sem inflamação</li>
+  <li><strong>Inibição da apoptose</strong> → câncer (linfomas, carcinomas). <strong>Excesso de apoptose</strong> → doenças neurodegenerativas, autoimunes, AIDS</li>
+  <li><strong>Chaperonas (Hsp)</strong>: proteínas de choque térmico que auxiliam o enovelamento proteico; falha → acúmulo no RE → apoptose</li>
+  <li><strong>Corpúsculos de Councilman-Rocha Lima:</strong> achado histopatológico clássico de apoptose na hepatite viral</li>
+</ol>
+</div>
+
+</section>
+
+<!-- AULA 6 — HEMOSTASIA, TROMBOSE E EMBOLIA (03-27) -->
+<section id="aula6" class="aula">
+<h1>Aula 6 — Hemostasia, Trombose e Embolia</h1>
+<p class="aula-meta">Profa. Dra. Janaína Toreli · 27/03/2026</p>
+
+<!-- CONTEXTO E MOTIVAÇÃO -->
+<h2 id="aula6-contexto">Por que estudar hemostasia e trombose?</h2>
+<p>O sistema hemostático é o que nos permite sobreviver a lesões vasculares cotidianas sem sequer percebê-las. Microlesões acontecem o tempo todo — e são estancadas com tamanha eficácia que passam despercebidas. A condição hemostática, ou seja, o equilíbrio pleno na capacidade de estancar sangramentos, é o estado fisiológico. A condição hemorrágica surge quando um ou mais dos elementos envolvidos na hemostasia falham.</p>
+<p>Na prática clínica, o médico precisa entender os mecanismos normais de coagulação para reconhecer quando algo sai do controle — seja por sangramento patológico, seja pela formação de trombos indevidos. Pacientes com hipertensão, aterosclerose, imobilismo, câncer, varizes ou em uso de anticoncepcionais orais combinados são populações em que o risco tromboembólico precisa ser ativamente avaliado.</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "A natureza faz com que o sangue seja um tecido líquido, porque o papel desse sangue é conseguir perfundir os vasos dos mais variados calibres. Então é natural que a viscosidade e a fluidez do sangue, quando tudo vai bem, permita que a gente seja capaz de perfundir todos os tecidos, independente do diâmetro dos vasos."</p>
+</div>
+
+<p>Para que o sistema circulatório funcione normalmente, três condições devem ser mantidas:</p>
+<ol>
+  <li><strong>Fluxo sanguíneo dinâmico</strong> — circulação contínua e eficiente, sem estase</li>
+  <li><strong>Sangue fluido</strong> — permanece em estado líquido, sem formação de coágulos intravasculares (sem trombose)</li>
+  <li><strong>Integridade vascular</strong> — sem extravasamento de sangue para fora dos vasos (sem hemorragia)</li>
+</ol>
+
+<!-- INTEGRIDADE VASCULAR -->
+<h2 id="aula6-integridade">Integridade Vascular e a Importância do Endotélio</h2>
+<p>O vaso sanguíneo é composto por <strong>três túnicas</strong>:</p>
+<ul>
+  <li><strong>Túnica íntima</strong> — composta pelo endotélio (epitélio pavimentoso simples, camada única, vulnerável a lesões) + <strong>camada subendotelial</strong> (rica em colágeno, contém o <strong>fator de von Willebrand (vWF)</strong> e possui <strong>carga elétrica negativa</strong>)</li>
+  <li><strong>Túnica média</strong> — composta por células musculares lisas produtoras de fibras elásticas, reticulares e colágenas</li>
+  <li><strong>Túnica adventícia</strong> — camada externa de tecido conjuntivo</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "O endotélio é um epitélio pavimentoso simples — só tem uma camada. Preservar o revestimento interno do vaso é de suma importância, ao mesmo tempo que estamos expostos a um extremo risco diante das doenças vasculares mais comuns, como a hipertensão." A hipertensão exerce força de cisalhamento sobre o endotélio, podendo arrancar células endoteliais e expor a camada subendotelial.</p>
+</div>
+
+<p>A <strong>camada subendotelial</strong> possui dois elementos cruciais para a hemostasia:</p>
+<ol>
+  <li><strong>Fator de von Willebrand (vWF)</strong> — proteína constitutiva da subendotelial que atrai e ancora plaquetas</li>
+  <li><strong>Carga elétrica negativa</strong> — capaz de ativar o fator XII e disparar a via intrínseca da coagulação</li>
+</ol>
+
+<!-- FONTES DO vWF -->
+<h2 id="aula6-vwf">Fator de von Willebrand (vWF) — Fontes e Função</h2>
+<table>
+  <thead><tr><th>Fonte</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Células endoteliais</strong></td><td>Principal fonte de vWF. Sintetizado e armazenado nos <strong>corpos de Weibel-Palade</strong>. Quando a célula endotelial morre, libera vWF</td></tr>
+    <tr><td><strong>Megacariócitos e plaquetas</strong></td><td>Produzem vWF armazenado nos <strong>grânulos alfa</strong> das plaquetas, liberado durante a ativação plaquetária</td></tr>
+    <tr><td><strong>Tecido subendotelial</strong></td><td>Contém vWF ligado à matriz extracelular — essencial para adesão plaquetária após lesão vascular</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "Se eu tiver a lesão do endotélio, automaticamente eu tenho a exposição da subendotelial e o volume de vWF que vai ficar liberado nesse local será suficiente para atrair uma população plaquetária significativa. Então são dois locais de liberação do vWF: a própria célula endotelial que morreu, e a subendotelial que estava coberta."</p>
+</div>
+
+<!-- HEMOSTASIA PRIMÁRIA -->
+<h2 id="aula6-primaria">Hemostasia Primária</h2>
+<p>A hemostasia primária compreende as respostas imediatas à lesão vascular — vasoconstrição reflexa e formação do tampão plaquetário. É avaliada clinicamente pelo <strong>tempo de sangramento</strong> (normal: 3 a 5 segundos).</p>
+
+<h3 id="aula6-vasoconstr">1. Fase Vascular — Vasoconstrição Reflexa</h3>
+<ul>
+  <li>Resposta <strong>imediata e reflexa</strong> à lesão vascular</li>
+  <li>O vaso contrai no local da lesão para <strong>reduzir o fluxo sanguíneo</strong> e limitar a perda de sangue</li>
+  <li>Dura milésimos de segundo inicialmente; é prolongada pela <strong>serotonina</strong> e <strong>tromboxano A2</strong> liberados pelas plaquetas</li>
+  <li>Eficaz para vasos de <strong>pequeno e médio calibre</strong>; em vasos de grande calibre, ajuda a reduzir o sangramento, mas não é resolutiva</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "Às vezes a gente tem certeza que está no vaso — vem o sanguinho ali na ponta da seringa —, mas a vasoconstrição reflexa pode ganhar uma intensidade que, mesmo estando na veia, eu não consigo puxar sangue. Às vezes a gente segura ali um tempinho, dá um time, porque essa vasoconstrição dura alguns segundos, podendo o vaso relaxar."</p>
+</div>
+
+<h3 id="aula6-plaquetas">2. Fase Plaquetária — Adesão, Ativação e Agregação</h3>
+
+<h4>As Plaquetas</h4>
+<table>
+  <thead><tr><th>Parâmetro</th><th>Valor</th></tr></thead>
+  <tbody>
+    <tr><td>Diâmetro</td><td>3 a 5 micrômetros</td></tr>
+    <tr><td>Origem</td><td>Fragmentos citoplasmáticos de <strong>megacariócitos</strong> (linhagem mieloide da medula óssea)</td></tr>
+    <tr><td>Rendimento</td><td>Cada megacariócito origina 2.000 a 3.000 plaquetas</td></tr>
+    <tr><td>Contagem normal</td><td>150.000 a 400.000/mm³</td></tr>
+    <tr><td>Vida média</td><td>~10 dias (medula repõe continuamente)</td></tr>
+    <tr><td>Regulação</td><td><strong>Trombopoietina</strong> (produzida principalmente pelo fígado; também pelo rim)</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína sobre dengue:</strong> "O vírus da dengue tem tropismo hepático. O fígado doente deixa de sinalizar para a medula, e ela para de estimular a linhagem do megacariócito. Como as plaquetas morrem a cada 10 dias, a contagem cai. Então o fígado está relacionado de novo com a contagem plaquetária."</p>
+</div>
+
+<h4>Proteínas de Superfície das Plaquetas</h4>
+<table>
+  <thead><tr><th>Receptor</th><th>Ligante</th><th>Função</th></tr></thead>
+  <tbody>
+    <tr><td><strong>GP Ib-V-IX</strong></td><td>Fator de von Willebrand (vWF)</td><td>Adesão inicial ao local da lesão</td></tr>
+    <tr><td><strong>GP Ia/IIa</strong></td><td>Colágeno subendotelial</td><td>Reforça a adesão — dupla ligação para fixação forte</td></tr>
+    <tr><td><strong>GP IIb/IIIa</strong></td><td>Fibrinogênio</td><td>Agregação plaqueta-plaqueta e ligação à rede de fibrina</td></tr>
+  </tbody>
+</table>
+
+<h4>Conteúdo dos Grânulos Plaquetários</h4>
+<table>
+  <thead><tr><th>Componente</th><th>Grânulo</th><th>Função</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ADP</strong></td><td>Denso</td><td>Fonte de energia para a mudança de forma (espiculação) e recrutamento/ativação de plaquetas vizinhas</td></tr>
+    <tr><td><strong>Serotonina</strong></td><td>Denso</td><td>Potencializa e prolonga a vasoconstrição reflexa</td></tr>
+    <tr><td><strong>Cálcio</strong></td><td>Denso</td><td>Cofator essencial para ativação dos fatores da cascata de coagulação (fatores X e II são cálcio-dependentes)</td></tr>
+    <tr><td><strong>Trombospondina</strong></td><td>Alfa</td><td>Facilita a agregação plaquetária e estabiliza o trombo</td></tr>
+    <tr><td><strong>PDGF</strong> (Fator de Crescimento Derivado de Plaquetas)</td><td>Alfa</td><td>Estimula reparo tecidual e proliferação de células musculares lisas na regeneração vascular</td></tr>
+    <tr><td><strong>Fator Plaquetário 4</strong></td><td>—</td><td><strong>Anti-heparina</strong> — neutraliza a heparina circulante no local da lesão, impedindo que ela atrapalhe a formação do tampão</td></tr>
+    <tr><td><strong>Tromboxano A2</strong></td><td>—</td><td>Vasoconstritor e pró-agregante plaquetário</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "A plaqueta, quando ela adere ao vWF e ao colágeno, emite espículas — sai de um formato redondo para um formato espiculado. Para quê? Para poder se entranhar uma na outra, facilitando a formação do tampão. Como isso acontece? Às custas de energia doada pelo ADP que está dentro dos grânulos densos."</p>
+</div>
+
+<h4>Etapas Sequenciais da Hemostasia Primária</h4>
+<ol>
+  <li><strong>Lesão vascular</strong> — exposição da matriz subendotelial e liberação do vWF</li>
+  <li><strong>Vasoconstrição reflexa</strong> — contração imediata que reduz o fluxo sanguíneo local</li>
+  <li><strong>Exposição do colágeno e vWF</strong> — adesão plaquetária via GP Ia/IIa (colágeno) e GP Ib-V-IX (vWF)</li>
+  <li><strong>Ativação plaquetária</strong> — liberação de ADP → mudança de forma (espiculação), aumento da adesividade</li>
+  <li><strong>Liberação de grânulos</strong> — serotonina e tromboxano A2 (vasoconstrição mantida), fator plaquetário 4 (anti-heparina), cálcio (cofator), PDGF (reparo tecidual / proliferação muscular lisa)</li>
+  <li><strong>Agregação plaquetária</strong> — interação plaqueta-plaqueta mediada por fibrinogênio via GP IIb/IIIa → formação do <strong>tampão plaquetário primário</strong></li>
+</ol>
+
+<!-- HEMOSTASIA SECUNDÁRIA -->
+<h2 id="aula6-secundaria">Hemostasia Secundária — Cascata de Coagulação</h2>
+<p>O tampão plaquetário primário é frágil e pode ser arrastado pelo fluxo sanguíneo. A hemostasia secundária estabiliza esse tampão através da formação de uma <strong>rede de fibrina</strong>. Os fatores da coagulação são proteínas produzidas pelo <strong>fígado</strong> que circulam inativas como <strong>zimogênios</strong> (pró-enzimas). Para se tornarem enzimas ativas, precisam ser clivadas em cadeia (ativação em cascata).</p>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "Todos os fatores da coagulação são produzidos pelo fígado. Então, se eu tenho um problema hepático, eu nem os tenho, ou os tenho em quantitativos ruins. Paciente hepatopata com muita hematoma, equimose, petéquias, sangra ou crônicas — isso está relacionado com competência hepática na fábrica dos fatores."</p>
+</div>
+
+<h3 id="aula6-intrinseca">Via Intrínseca</h3>
+<ul>
+  <li><strong>Ativação:</strong> contato dos fatores de coagulação circulantes com a <strong>carga elétrica negativa</strong> da camada subendotelial exposta</li>
+  <li><strong>Fator iniciador:</strong> Fator XII (Fator de Hageman) — ativado pelo contato com superfícies carregadas negativamente</li>
+  <li><strong>Sequência de ativação:</strong> XII → XIIa → XIa → IXa (+VIIIa) → Xa</li>
+  <li><strong>Velocidade:</strong> mais lenta — caminho mais longo de ativações</li>
+  <li><strong>Quando predomina:</strong> lesões de pequeno tamanho (ex: corte no dedo, coleta de sangue)</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína sobre dispositivos intravasculares:</strong> "Catéteres e cânulas, mesmo quando desenvolvidos com materiais que minimizam esse efeito, geram desordem de carga elétrica diferente das nossas estruturas biológicas. Por isso, pacientes com catéter por tempo prolongado recebem heparinização — para evitar ativação indevida da cascata."</p>
+</div>
+
+<h3 id="aula6-extrinseca">Via Extrínseca</h3>
+<ul>
+  <li><strong>Ativação:</strong> liberação de <strong>fator tecidual</strong> (tromboplastina, Fator III) por células lesadas — endotélio, macrófagos, células perivasculares e epiteliais</li>
+  <li><strong>Sequência de ativação:</strong> Fator tecidual + VII → VIIa → Xa (caminho mais curto — pula várias etapas)</li>
+  <li><strong>Velocidade:</strong> mais rápida</li>
+  <li><strong>Quando predomina:</strong> lesões extensas com grande destruição tecidual (ex: amputação traumática, fraturas expostas, desabamentos)</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "Se eu tenho uma liberação de fator tecidual muito grande, significa que o dano foi grande e que o sangramento será da mesma grandeza. Produzir fibrina o mais rápido possível é vital. Nas grandes lesões, ativam-se as duas vias ao mesmo tempo — a intrínseca pela exposição da subendotelial e a extrínseca pela liberação massiva de fator tecidual."</p>
+</div>
+
+<div class="exemplo-clinico">
+  <h4>Caso Clínico — Amputação Traumática</h4>
+  <p>A professora relatou o caso de uma jovem que perdeu a perna em acidente de trânsito. Esperava-se que ela chegasse ao hospital jorrando sangue, mas não era isso que acontecia. A paciente ativou ambas as vias da coagulação simultaneamente — intrínseca (exposição da subendotelial) e extrínseca (liberação massiva de fator tecidual pela destruição de músculo, osso, vasos e conjuntivo). Essa dupla ativação permitiu a formação rápida de fibrina suficiente para controlar significativamente o sangramento, provavelmente evitando o choque hipovolêmico nos primeiros minutos.</p>
+</div>
+
+<h3 id="aula6-viacomum">Via Comum</h3>
+<p>As vias intrínseca e extrínseca convergem no <strong>Fator X ativado (Xa)</strong>:</p>
+<ol>
+  <li>Fator Xa (+ Va, cálcio, fosfolipídeos plaquetários) → converte <strong>Fator II (protrombina) → Fator IIa (trombina)</strong></li>
+  <li>Trombina converte <strong>Fator I (fibrinogênio) → Fator Ia (fibrina)</strong></li>
+  <li><strong>Fator XIII</strong> (estabilizador da fibrina, cálcio-dependente) → polimeriza a fibrina em rede estável</li>
+</ol>
+
+<table>
+  <thead><tr><th>Fator</th><th>Nome</th><th>Origem</th><th>Papel</th></tr></thead>
+  <tbody>
+    <tr><td>I</td><td>Fibrinogênio</td><td>Fígado</td><td>Convertido em fibrina (produto final)</td></tr>
+    <tr><td>II</td><td>Protrombina</td><td>Fígado (vitamina K-dependente)</td><td>Convertido em trombina</td></tr>
+    <tr><td>III</td><td>Fator tecidual / tromboplastina</td><td>Tecidos lesados</td><td>Inicia a via extrínseca</td></tr>
+    <tr><td>VII</td><td>Proconvertina</td><td>Fígado</td><td>Primeiro fator ativado na via extrínseca</td></tr>
+    <tr><td>VIII</td><td>Fator anti-hemofílico (AHF)</td><td>Fígado</td><td>Cofator na via intrínseca (deficiente na hemofilia A)</td></tr>
+    <tr><td>IX</td><td>Fator de Christmas</td><td>Fígado</td><td>Via intrínseca (deficiente na hemofilia B)</td></tr>
+    <tr><td>X</td><td>Fator de Stuart</td><td>Fígado</td><td>Convergência das duas vias (via comum)</td></tr>
+    <tr><td>XI</td><td>Fator anti-hemofílico C</td><td>Fígado</td><td>Via intrínseca</td></tr>
+    <tr><td>XII</td><td>Fator de Hageman</td><td>Fígado</td><td>Inicia a via intrínseca (ativado por carga negativa)</td></tr>
+    <tr><td>XIII</td><td>Fator estabilizador da fibrina</td><td>Fígado e plaquetas</td><td>Polimeriza a fibrina em rede estável</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "A numeração da cascata é toda trocada porque a gente descobriu a fibrina primeiro — ela é visível, é proteína polimerizada. Numeramos de proteína número 1 e descobrimos, por fim, que ela é a última. Conforme fomos descobrindo os outros fatores, fomos numerando fora de ordem."</p>
+</div>
+
+<!-- FIBRINÓLISE -->
+<h2 id="aula6-fibrinolise">Fibrinólise</h2>
+<p>O trombo hemostático é <strong>temporário</strong>. Após o reparo da lesão vascular por mitose endotelial, o trombo precisa ser removido para restabelecer o fluxo sanguíneo normal. Esse processo é a fibrinólise.</p>
+
+<table>
+  <thead><tr><th>Componente</th><th>Origem / Mecanismo</th><th>Função</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Plasminogênio</strong></td><td>Glicoproteína sintetizada pelo fígado, presente no plasma em forma inativa</td><td>Precursor da plasmina</td></tr>
+    <tr><td><strong>t-PA</strong> (ativador tecidual do plasminogênio)</td><td>Produzido pelas células endoteliais refeitas no local da lesão; ativado na presença de fibrina</td><td>Converte plasminogênio em plasmina. Usado terapeuticamente como trombolítico (alteplase, tenecteplase)</td></tr>
+    <tr><td><strong>Plasmina</strong></td><td>Forma ativa do plasminogênio</td><td>Degrada a rede de fibrina — "quebra de dois em dois aminoácidos"</td></tr>
+    <tr><td><strong>Dímero D</strong></td><td>Fragmento resultante da degradação da fibrina estabilizada pela plasmina</td><td>Marcador clínico de trombose ativa e CID. Dosado no sangue</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína sobre Dímero D:</strong> "O Dímero D positivo em um pós-operatório faz parte do esperado. Tem significado patológico quando a pessoa está aparentemente normal — não tem um motivo para ter formado trombo — mas tem clínica sugestiva: edema, vermelhidão, taquipneia, taquicardia, dor tipo angina. A clínica é soberana — mas não solitária."</p>
+</div>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>COVID-19 e trombose:</strong> Uma das complicações mais temidas da COVID foi a formação de múltiplos trombos — pacientes infartavam e tinham AVC estando doentes de COVID. A infecção pelo SARS-CoV-2 causa lesão endotelial, expondo vWF e ativando a cascata de coagulação. <em>(ℹ️ O mecanismo detalhado via ACE2 é informação complementar; os slides apenas listam COVID como fator de alto risco para estados hipercoaguláveis.)</em></p>
+</div>
+
+<!-- TRÍADE DE VIRCHOW -->
+<h2 id="aula6-virchow">Tríade de Virchow — Fatores de Risco para Trombose</h2>
+<p>Virchow organizou os três pilares que aumentam o risco de formação de trombos:</p>
+
+<table>
+  <thead><tr><th>Pilar</th><th>Significado</th><th>Exemplos Clínicos</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Injúria/Lesão endotelial</strong></td>
+      <td>Dano ao revestimento interno do vaso expõe subendotelial (vWF + carga negativa)</td>
+      <td>Hipertensão (força de cisalhamento), aterosclerose, vasculites, infecções endoteliais (COVID-19), catéteres intravasculares, cirurgias</td>
+    </tr>
+    <tr>
+      <td><strong>2. Hipercoagulabilidade</strong></td>
+      <td>Estado em que o sangue apresenta maior tendência à coagulação</td>
+      <td>Mutação do Fator V de Leiden, mutação do Fator II (protrombina), aumento de fatores VIII/IX/XI/fibrinogênio, anticoncepcionais orais combinados (estrógeno + progesterona), câncer, plaquetose</td>
+    </tr>
+    <tr>
+      <td><strong>3. Anormalidade do fluxo sanguíneo</strong> (estase ou turbulência)</td>
+      <td>Fluxo lento ou turbulento favorece contato prolongado de plaquetas e fatores com a parede vascular</td>
+      <td>Varizes, imobilismo prolongado (gesso, sedentarismo, viagens longas), obesidade, gestação avançada (compressão venosa pelo útero), pós-operatório</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "Na hora em que o médico está conversando com o paciente, ele tem que tentar enquadrar na Tríade de Virchow. Tem hipertensão? Sim. Colesterol alto? Sim. Obeso? Sim. Faz exercício? Não. Quanto mais fatores somados, maior o risco. Hoje, o protocolo cardiológico diz que paciente com colesterol alto e picos hipertensivos deve receber estatina, anti-hipertensivo E anticoagulante."</p>
+</div>
+
+
+<!-- ESTADOS HIPERCOAGULÁVEIS -->
+<h2 id="aula6-hipercoag">Estados Hipercoaguláveis — Fatores de Risco</h2>
+
+<h3>Fatores Genéticos (Congênitos)</h3>
+<ul>
+  <li>Mutação do <strong>Fator V de Leiden</strong> (resistência à proteína C ativada)</li>
+  <li>Mutação do <strong>Fator II</strong> (protrombina)</li>
+  <li>Aumento dos níveis de fatores VIII, IX, XI e fibrinogênio</li>
+</ul>
+
+<h3>Fatores Adquiridos (Alto Risco)</h3>
+<ul>
+  <li><strong>Imobilismo</strong> (gesso, repouso prolongado, pós-operatório)</li>
+  <li><strong>Cirurgias</strong> (quanto maior a cirurgia, maior o risco)</li>
+  <li><strong>Câncer</strong> (angiogênese tumoral + inflamação = risco de lesão endotelial)</li>
+  <li><strong>Fraturas</strong> (dano tecidual extenso + imobilização + risco de embolia gordurosa)</li>
+  <li><strong>Infecções</strong> (COVID-19, sepse, bacteremias — lesão endotelial direta)</li>
+  <li><strong>Varizes</strong> (retorno venoso insuficiente → estase)</li>
+  <li><strong>Danos endoteliais crônicos</strong> (hipertensão, aterosclerose)</li>
+  <li><strong>Anticoncepcionais orais combinados</strong> (estrógeno + progesterona) — exercem efeito pró-agregante plaquetário; risco baixo isoladamente, mas somado a outros fatores (varizes, obesidade, mutações desconhecidas) pode potencializar significativamente</li>
+  <li><strong>Obesidade e sedentarismo</strong></li>
+  <li><strong>Gestação</strong> (compressão venosa, alterações hormonais)</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína sobre anticoncepcionais:</strong> "O índice de gravidade é baixo nas mulheres 100% saudáveis. Mas uma mulher que já tem varizes, ou uma mutação que desconhece, ou contagem plaquetária aumentada — somados a outros fatores, o risco muda. A gente vê indicação de anticoncepcional com pouca pergunta. Ninguém pergunta: tem caso de doença vascular na família? Alguém já teve trombo? Tem varizes?"</p>
+</div>
+
+<!-- ESTADOS HEMORRÁGICOS -->
+<h2 id="aula6-hemorragicos">Estados Hemorrágicos</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>Condição</th><th>Mecanismo</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="3"><strong>Congênitas</strong></td><td>Hemofilia A</td><td>Deficiência do Fator VIII</td></tr>
+    <tr><td>Hemofilia B</td><td>Deficiência do Fator IX (Fator de Christmas)</td></tr>
+    <tr><td>Doença de von Willebrand</td><td>Deficiência do vWF (prejudica adesão plaquetária e estabilidade do Fator VIII)</td></tr>
+    <tr><td rowspan="3"><strong>Adquiridas</strong></td><td>Doenças hepáticas</td><td>Redução na produção dos fatores de coagulação e trombopoietina</td></tr>
+    <tr><td>Doenças medulares</td><td>Comprometimento da produção de plaquetas (ex: leucemias mieloides)</td></tr>
+    <tr><td>Deficiência de vitamina K</td><td>Vitamina K é cofator para produção de fatores II, VII, IX e X. Encontrada em vegetais de folhas verde-escuras (couve, espinafre)</td></tr>
+  </tbody>
+</table>
+
+<div class="exemplo-clinico">
+  <h4>Caso Clínico — Leucemia e Plaquetopenia</h4>
+  <p>Jovem de 19 anos com terceira amigdalite purulenta em três meses. Nas duas primeiras, foi tratada com antibiótico convencional sem investigação complementar. Na terceira vez, a médica pediu hemograma: 163 mil leucócitos/mm³ (referência: até 10 mil), com blastos muito imaturos, e apenas 9 mil plaquetas. Diagnóstico: leucemia mieloide com plaquetopenia severa. A paciente internou em UTI e apresentou AVC hemorrágico na mesma noite — consequência direta da plaquetopenia. A professora enfatizou: se na primeira infecção houvesse sido feito um hemograma (que custa cerca de 3 reais ao convênio), a leucemia teria sido diagnosticada antes da plaquetopenia atingir níveis críticos.</p>
+</div>
+
+<!-- NOMENCLATURA HEMORRÁGICA -->
+<h2 id="aula6-nomenclatura">Nomenclatura dos Sangramentos</h2>
+<table>
+  <thead><tr><th>Termo</th><th>Localização</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Petéquia</strong></td><td>Pele, mucosas, serosas</td><td>Pequenos pontos hemorrágicos (&lt;2 mm), comuns em trombocitopenias. Podem ocorrer por esforço (vômito) ou espontaneamente</td></tr>
+    <tr><td><strong>Púrpura</strong></td><td>Pele e mucosas</td><td>Áreas arroxeadas maiores, por coalescência de petéquias</td></tr>
+    <tr><td><strong>Equimose</strong></td><td>Tecido subcutâneo</td><td>Manchas extensas por extravasamento sanguíneo, sem trauma reconhecido (indolor)</td></tr>
+    <tr><td><strong>Hematoma</strong></td><td>Subcutâneo ou órgão interno</td><td>Acúmulo localizado de sangue coagulado nos tecidos, <strong>associado a trauma</strong> (doloroso)</td></tr>
+    <tr><td><strong>Epistaxe</strong></td><td>Cavidade nasal</td><td>Sangramento pelas fossas nasais</td></tr>
+    <tr><td><strong>Hemoptise</strong></td><td>Vias respiratórias</td><td>Sangue pela tosse, geralmente espumoso e avermelhado</td></tr>
+    <tr><td><strong>Hematêmese</strong></td><td>TGI superior</td><td>Vômito com sangue digerido, escuro (úlcera, varizes esofágicas)</td></tr>
+    <tr><td><strong>Melena</strong></td><td>TGI inferior</td><td>Fezes negras e pastosas — sangramento digestivo alto</td></tr>
+    <tr><td><strong>Hematoquezia</strong></td><td>Cólon, reto, ânus</td><td>Sangue vermelho vivo nas fezes (hemorroidas, neoplasias)</td></tr>
+    <tr><td><strong>Hematúria</strong></td><td>Trato urinário</td><td>Sangue na urina (micro ou macroscópica)</td></tr>
+    <tr><td><strong>Menorragia</strong></td><td>Útero</td><td>Menstruação prolongada ou em excesso</td></tr>
+    <tr><td><strong>Metrorragia</strong></td><td>Útero</td><td>Sangramento uterino fora do período menstrual</td></tr>
+    <tr><td><strong>Hemartrose</strong></td><td>Cavidade articular</td><td>Sangue dentro de articulação (ex: hemofilia)</td></tr>
+    <tr><td><strong>Hemopericárdio</strong></td><td>Cavidade pericárdica</td><td>Sangue no espaço pericárdico</td></tr>
+    <tr><td><strong>Hemotórax</strong></td><td>Cavidade pleural</td><td>Sangue na cavidade torácica</td></tr>
+    <tr><td><strong>Hemoperitônio</strong></td><td>Cavidade abdominal</td><td>Sangue na cavidade peritoneal (ruptura esplênica, trauma hepático)</td></tr>
+    <tr><td><strong>Hemorragia intracerebral</strong></td><td>Parênquima cerebral</td><td>AVC hemorrágico</td></tr>
+  </tbody>
+</table>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína — diferença entre equimose e hematoma:</strong> "Hematoma está relacionado a trauma, a pancada — vem acompanhado de dor. Equimose é a mancha sem trauma reconhecido, indolor. Se dói, bateu. Se não dói, não bateu — e isso começa a chamar atenção para falha na coagulação."</p>
+</div>
+
+<!-- EXAMES DE AVALIAÇÃO -->
+<h2 id="aula6-exames">Exames de Avaliação da Hemostasia</h2>
+<table>
+  <thead><tr><th>Exame</th><th>O que avalia</th><th>Fase</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Tempo de sangramento</strong></td><td>Vasoconstrição reflexa + adesão plaquetária (lanceta no lóbulo da orelha, normal: 3-5 segundos)</td><td>Hemostasia primária</td></tr>
+    <tr><td><strong>Contagem de plaquetas</strong></td><td>Quantidade de plaquetas circulantes (150.000-400.000/mm³)</td><td>Hemostasia primária</td></tr>
+    <tr><td><strong>Tempo de protrombina (TP)</strong></td><td>Funcionamento da via extrínseca e via comum</td><td>Hemostasia secundária</td></tr>
+    <tr><td><strong>Prova de coagulação</strong></td><td>Funcionamento da cascata de coagulação</td><td>Hemostasia secundária</td></tr>
+    <tr><td><strong>Dímero D</strong></td><td>Presença de produtos de degradação da fibrina — indica que houve trombose e fibrinólise</td><td>Fibrinólise (trombo já formado)</td></tr>
+  </tbody>
+</table>
+
+<!-- ACHADO MICROSCÓPICO -->
+<h2 id="aula6-micro">Identificação Microscópica do Trombo</h2>
+<p>Na macroscopia e microscopia patológica, é fundamental diferenciar um <strong>trombo ante-mortem</strong> (causa da morte) de um <strong>coágulo post-mortem</strong> (consequência da parada circulatória):</p>
+<ul>
+  <li><strong>Trombo</strong> — presença de <strong>fibrina polimerizada</strong> (filamentos róseos visíveis ao HE) entre as hemácias. Ao toque, é mais firme. Indica que se formou com o paciente vivo</li>
+  <li><strong>Coágulo post-mortem</strong> — apenas sangue parado; sem rede de fibrina polimerizada. Mais mole ao toque</li>
+  <li>Em caso de dúvida, usa-se a coloração <strong>tricrômico de Masson</strong>: proteínas (fibrina) coram em <strong>azul</strong> e hemácias em <strong>marrom</strong> — contraste claro</li>
+</ul>
+
+<div class="destaque-professor">
+  <span class="destaque-icon">🎯</span>
+  <p><strong>Professora Janaína:</strong> "Uma coisa é 'morreu porque o sangue parou' (trombo) — outra é 'o sangue parou porque morreu' (coágulo post-mortem). No microscópio, se eu vir fios de fibrina polimerizada entre as hemácias, é trombo. Se não tiver fibrina, é apenas sangue parado após a morte."</p>
+</div>
+
+<!-- TERAPIA ANTICOAGULANTE -->
+<h2 id="aula6-anticoag">Terapia Anticoagulante e Trombolítica (Noções)</h2>
+<ul>
+  <li><strong>Heparina</strong> — anticoagulante natural presente na circulação; versão terapêutica usada em pacientes com catéteres e alto risco trombótico. A plaqueta libera Fator Plaquetário 4 como anti-heparina no local da lesão</li>
+  <li><strong>AAS (ácido acetilsalicílico)</strong> — historicamente usado como anti-agregante plaquetário em pacientes de risco cardiovascular; hoje menos utilizado</li>
+  <li><strong>Rivaroxabana (Xarelto)</strong> — anticoagulante oral moderno, atualmente mais acessível após queda de patente; amplamente utilizado em pacientes com múltiplos fatores de risco</li>
+  <li><strong>Trombolíticos</strong> (alteplase, tenecteplase) — ativadores do plasminogênio usados para dissolver trombos já formados. Risco: ao quebrar o trombo, podem soltar fragmentos que embolizam para outros órgãos</li>
+  <li><strong>Sinvastatina e estatinas</strong> — controlam o colesterol, reduzindo a progressão da aterosclerose e, indiretamente, o risco de lesão endotelial</li>
+</ul>
+
+<!-- RESUMO -->
+<div class="resumo-aula">
+<h2>Resumo da Aula 6</h2>
+<ol>
+  <li><strong>Hemostasia primária</strong> = vasoconstrição reflexa + adesão/ativação/agregação plaquetária → tampão plaquetário (avaliada pelo tempo de sangramento, 3-5s)</li>
+  <li><strong>Hemostasia secundária</strong> = cascata de coagulação (via intrínseca por carga negativa + via extrínseca por fator tecidual) → convergem na via comum → formação da rede de fibrina estável</li>
+  <li><strong>Fibrinólise</strong> = plasmina (derivada do plasminogênio via t-PA) degrada a fibrina → libera Dímero D (marcador clínico de trombose)</li>
+  <li><strong>Fígado</strong> é central: produz fatores de coagulação (zimogênios), fibrinogênio, plasminogênio e trombopoietina. Doença hepática = risco hemorrágico</li>
+  <li><strong>Plaquetas</strong> não são simples fragmentos: possuem receptores específicos (GP Ib, GP Ia/IIa, GP IIb/IIIa) e grânulos com substâncias vasoativas (ADP, serotonina, tromboxano A2), cálcio, PDGF e fator plaquetário 4</li>
+  <li><strong>Tríade de Virchow</strong>: lesão endotelial + hipercoagulabilidade + estase/turbulência = risco de trombose</li>
+  <li><strong>Fatores de risco clínicos</strong>: hipertensão, aterosclerose, imobilismo, câncer, cirurgias, fraturas, varizes, COVID-19, anticoncepcionais orais combinados, obesidade, sedentarismo</li>
+  <li><strong>Estados hemorrágicos congênitos</strong>: hemofilia A (fator VIII), hemofilia B (fator IX), doença de von Willebrand</li>
+  <li><strong>Estados hemorrágicos adquiridos</strong>: hepatopatias, doenças medulares (leucemias), deficiência de vitamina K</li>
+  <li><strong>Dímero D</strong>: marcador de fibrinólise ativa; significado patológico quando positivo em paciente sem motivo aparente para trombo + clínica sugestiva</li>
+  <li>Na microscopia: fibrina polimerizada entre hemácias = trombo ante-mortem; ausência de fibrina = coágulo post-mortem. Coloração tricrômico de Masson resolve dúvidas</li>
+</ol>
+</div>
+
+</section>
+
+
+</div>
+</main>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">&#8593;</button>
+
+<script>
+// Theme toggle
+function toggleTheme(){
+  const html=document.documentElement;
+  html.dataset.theme=html.dataset.theme==='dark'?'light':'dark';
+  localStorage.setItem('theme',html.dataset.theme);
+}
+(function(){const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t})();
+
+// Sidebar toggle
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Back to top
+window.addEventListener('scroll',()=>{
+  document.getElementById('backTop').classList.toggle('visible',window.scrollY>400);
+});
+
+// Close sidebar on nav click (mobile)
+document.querySelectorAll('.sidebar a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    if(window.innerWidth<1100)document.getElementById('sidebar').classList.remove('open');
+  });
+});
+
+// Active nav highlighting
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.sidebar a').forEach(a=>a.classList.remove('active'));
+      const link=document.querySelector('.sidebar a[href="#'+e.target.id+'"]');
+      if(link)link.classList.add('active');
+    }
+  });
+},{threshold:0.1,rootMargin:'-80px 0px -60% 0px'});
+document.querySelectorAll('section[id],h2[id]').forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

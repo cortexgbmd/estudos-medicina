@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyGen — Dermatologia Neonatal · Questões</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg-0: #08090d;
+    --bg-1: #0e1017;
+    --bg-2: #151822;
+    --bg-3: #1c2030;
+    --bg-glass: rgba(14, 16, 23, 0.75);
+    --text-0: #f0f2f7;
+    --text-1: #c4c8d8;
+    --text-2: #7c819a;
+    --text-3: #4a4f66;
+    --accent-1: #7c6aff;
+    --accent-2: #a78bfa;
+    --accent-glow: rgba(124, 106, 255, 0.15);
+    --aula: #3b82f6;
+    --aula-soft: rgba(59, 130, 246, 0.08);
+    --externo: #10b981;
+    --destaque: #f59e0b;
+    --correct: #22c55e;
+    --wrong: #ef4444;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.12);
+    --grad-1: linear-gradient(135deg, #7c6aff 0%, #4f46e5 100%);
+    --grad-hero: linear-gradient(160deg, #0e1017 0%, #1a1040 40%, #0e1017 100%);
+  }
+
+  [data-theme="light"] {
+    --bg-0: #f8f9fc;
+    --bg-1: #ffffff;
+    --bg-2: #f0f1f5;
+    --bg-3: #e5e7ed;
+    --text-0: #111318;
+    --text-1: #3a3f52;
+    --text-2: #6b7089;
+    --text-3: #a0a4b8;
+    --border: rgba(0,0,0,0.08);
+    --border-hover: rgba(0,0,0,0.15);
+    --accent-glow: rgba(124, 106, 255, 0.08);
+    --grad-hero: linear-gradient(160deg, #f8f9fc 0%, #ede8ff 40%, #f8f9fc 100%);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg-0);
+    color: var(--text-0);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent-1); color: white; }
+
+  /* HERO */
+  .hero {
+    background: var(--grad-hero);
+    padding: 48px 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(124, 106, 255, 0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .dossie-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    background: var(--accent-glow);
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(124, 106, 255, 0.2);
+  }
+
+  .hero-controls { display: flex; gap: 8px; align-items: center; }
+
+  .ctrl-btn {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ctrl-btn:hover { border-color: var(--border-hover); color: var(--text-1); }
+
+  .kbd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    background: var(--bg-3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-3);
+  }
+
+  .hero-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .hero-title .highlight {
+    background: var(--grad-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 18px;
+    font-size: 0.82rem;
+    color: var(--text-2);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  .hero-meta .dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-3);
+  }
+
+  /* TABS */
+  .tabs-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tab {
+    padding: 14px 28px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-3);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+    user-select: none;
+  }
+
+  .tab:hover { color: var(--text-1); }
+
+  .tab.active {
+    color: var(--accent-1);
+    border-bottom-color: var(--accent-1);
+  }
+
+  .tab-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    background: var(--bg-3);
+    color: var(--text-3);
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .tab.active .tab-count {
+    background: var(--accent-glow);
+    color: var(--accent-2);
+  }
+
+  .tab.disabled { opacity: 0.4; cursor: not-allowed; }
+  .tab.disabled:hover { color: var(--text-3); }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  /* QUIZ HEADER */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .quiz-stats {
+    display: flex;
+    gap: 28px;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-0);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .mode-pills {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-2);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .pill {
+    padding: 7px 18px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-2);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .pill.active {
+    background: var(--accent-1);
+    color: white;
+    box-shadow: 0 2px 8px rgba(124, 106, 255, 0.3);
+  }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .filter-chip {
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-1);
+    border-radius: 16px;
+    font-size: 0.74rem;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .filter-chip:hover { border-color: var(--accent-1); color: var(--text-1); }
+  .filter-chip.active { background: var(--accent-glow); border-color: var(--accent-1); color: var(--accent-2); }
+
+  .search-box {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px 10px;
+    min-width: 220px;
+  }
+
+  .search-box input {
+    background: transparent;
+    border: none;
+    color: var(--text-1);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    outline: none;
+    flex: 1;
+  }
+
+  /* Q CARD */
+  .q-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin-bottom: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .q-card:hover { border-color: var(--border-hover); }
+  .q-card.answered { border-color: rgba(124,106,255,0.25); }
+
+  .q-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .q-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 6px;
+  }
+
+  .badge-easy { background: rgba(34,197,94,0.10); color: var(--correct); }
+  .badge-medium { background: rgba(245,158,11,0.10); color: var(--destaque); }
+  .badge-hard { background: rgba(239,68,68,0.10); color: var(--wrong); }
+  .badge-topic { background: var(--accent-glow); color: var(--accent-2); }
+  .badge-essay { background: rgba(16,185,129,0.10); color: var(--externo); }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-3);
+    font-weight: 500;
+  }
+
+  .q-text {
+    font-size: 0.95rem;
+    color: var(--text-1);
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+
+  /* CONFIDENCE */
+  .confidence {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    align-items: center;
+  }
+
+  .confidence-label {
+    font-size: 0.72rem;
+    color: var(--text-3);
+    font-weight: 500;
+    margin-right: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .conf-btn {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+
+  .conf-btn:hover { border-color: var(--accent-1); color: var(--accent-1); }
+  .conf-btn.selected { background: var(--accent-glow); border-color: var(--accent-1); color: var(--accent-1); }
+
+  /* ALTS */
+  .alts { list-style: none; }
+
+  .alt {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 16px;
+    margin-bottom: 6px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.9rem;
+    color: var(--text-1);
+    line-height: 1.55;
+    background: transparent;
+  }
+
+  .alt:hover { border-color: var(--border-hover); background: var(--bg-2); }
+
+  .alt-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text-3);
+    min-width: 18px;
+    padding-top: 1px;
+  }
+
+  .alt.selected { border-color: var(--accent-1); background: var(--accent-glow); }
+  .alt.selected .alt-letter { color: var(--accent-1); }
+
+  .alt.correct { border-color: var(--correct); background: rgba(34,197,94,0.07); }
+  .alt.correct .alt-letter { color: var(--correct); }
+
+  .alt.wrong { border-color: var(--wrong); background: rgba(239,68,68,0.07); }
+  .alt.wrong .alt-letter { color: var(--wrong); }
+
+  .alt.disabled { cursor: not-allowed; }
+
+  /* EXPLANATION */
+  .explanation {
+    display: none;
+    margin-top: 18px;
+    padding: 20px 22px;
+    background: var(--bg-2);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text-1);
+  }
+
+  .explanation.show { display: block; animation: fadeIn 0.25s ease; }
+
+  .expl-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 10px;
+  }
+
+  .expl-correct {
+    color: var(--correct);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .expl-correct-body { color: var(--text-1); margin-bottom: 14px; }
+
+  .expl-source {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 6px 12px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(124, 106, 255, 0.25);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    color: var(--accent-2);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .expl-wrong-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-2);
+    margin-top: 12px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .expl-wrong {
+    font-size: 0.84rem;
+    color: var(--text-2);
+    padding: 6px 0 6px 12px;
+    border-left: 2px solid var(--border);
+    margin-bottom: 4px;
+    line-height: 1.6;
+  }
+  .expl-wrong b { color: var(--text-1); margin-right: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+
+  .reveal-btn {
+    margin-top: 6px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--accent-1);
+    color: var(--accent-1);
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .reveal-btn:hover { background: var(--accent-glow); }
+
+  /* ESSAY */
+  .essay-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 30px;
+    margin-bottom: 18px;
+  }
+
+  .essay-card .case {
+    background: var(--aula-soft);
+    border-left: 3px solid var(--aula);
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 14px 0 18px;
+    font-size: 0.92rem;
+    color: var(--text-1);
+    line-height: 1.7;
+  }
+
+  .essay-card .case-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--aula);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .essay-q {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: var(--bg-2);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .essay-q .q-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-3);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .essay-q .q-statement {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-0);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .essay-q textarea {
+    width: 100%;
+    min-height: 90px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text-1);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  .essay-q textarea:focus {
+    outline: none;
+    border-color: var(--accent-1);
+  }
+
+  .essay-model {
+    display: none;
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: rgba(34, 197, 94, 0.06);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: 8px;
+    font-size: 0.86rem;
+    color: var(--text-1);
+    line-height: 1.65;
+  }
+
+  .essay-model.show { display: block; animation: fadeIn 0.2s ease; }
+
+  .essay-model strong {
+    color: var(--correct);
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* DIAGNOSTIC */
+  .diagnostic {
+    display: none;
+    margin: 32px 0;
+    padding: 28px;
+    background: var(--bg-1);
+    border: 1px solid var(--accent-1);
+    border-radius: 14px;
+  }
+
+  .diagnostic.show { display: block; }
+
+  .diagnostic h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-0);
+  }
+
+  .diagnostic .diag-summary {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-2);
+    font-size: 0.85rem;
+    margin-bottom: 22px;
+  }
+
+  .diag-topic {
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: var(--bg-2);
+    border-radius: 10px;
+    border-left: 3px solid var(--text-3);
+  }
+
+  .diag-topic.weak { border-left-color: var(--wrong); }
+  .diag-topic.medium { border-left-color: var(--destaque); }
+
+  .diag-topic-title {
+    font-weight: 600;
+    color: var(--text-0);
+    margin-bottom: 4px;
+    font-size: 0.96rem;
+  }
+
+  .diag-topic-stats {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+
+  .diag-topic-sub {
+    font-size: 0.84rem;
+    color: var(--text-2);
+    margin-top: 2px;
+  }
+
+  /* FLASHCARDS */
+  .fc-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-top: 48px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .fc-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .fc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 720px) {
+    .fc-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: 1.9rem; }
+    .container { padding: 24px 18px 60px; }
+    .q-card, .essay-card { padding: 18px 20px; }
+  }
+
+  .fc {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .fc:hover {
+    border-color: var(--accent-1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .fc-front {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-0);
+    line-height: 1.55;
+  }
+
+  .fc-back {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--text-1);
+    line-height: 1.65;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .fc.flipped .fc-back { display: block; animation: fadeIn 0.25s ease; }
+  .fc.flipped { border-color: var(--accent-1); background: var(--accent-glow); }
+
+  .fc-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-3);
+    margin-top: 10px;
+  }
+  .fc.flipped .fc-hint { display: none; }
+
+  /* SUBMIT BUTTON */
+  .submit-row {
+    display: flex;
+    justify-content: center;
+    margin: 36px 0;
+  }
+
+  .submit-btn {
+    background: var(--grad-1);
+    border: none;
+    color: white;
+    padding: 14px 36px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 14px rgba(124, 106, 255, 0.35);
+    letter-spacing: 0.02em;
+  }
+
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(124, 106, 255, 0.45); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* OFFLINE NOTE */
+  .footer-note {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-3);
+    font-size: 0.78rem;
+    line-height: 1.7;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* PRINT */
+  @media print {
+    .hero-controls, .filters, .submit-row, .confidence, .reveal-btn, .mode-pills { display: none !important; }
+    .explanation, .essay-model { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="dossie-badge">DOSSIÊ CLÍNICO Nº 001 · ABRIL 2026</div>
+      <div class="hero-controls">
+        <button class="ctrl-btn" id="theme-toggle" title="Alternar tema (T)">☀ Tema <span class="kbd">T</span></button>
+        <button class="ctrl-btn" id="card-mode" title="Modo card (C)">▦ Modo Card <span class="kbd">C</span></button>
+      </div>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="highlight">Dermatologia</span> Neonatal
+      <br>· Banco de Questões
+    </h1>
+
+    <div class="hero-meta">
+      <span>Pediatria</span>
+      <span class="dot"></span>
+      <span>1 aula · 60 slides</span>
+      <span class="dot"></span>
+      <span><b id="meta-mcq">30</b> objetivas</span>
+      <span class="dot"></span>
+      <span><b id="meta-essay">10</b> dissertativas</span>
+      <span class="dot"></span>
+      <span><b id="meta-fc">12</b> flashcards</span>
+    </div>
+
+    <nav class="tabs-bar">
+      <div class="tab disabled" title="Não gerado nesta sessão (apenas questões)">Estudo Completo</div>
+      <div class="tab active">Questões <span class="tab-count" id="count-q">40</span></div>
+      <div class="tab disabled" title="Não gerado nesta sessão (apenas questões)">Resumão</div>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="quiz-header">
+    <div class="quiz-stats">
+      <div class="stat"><span class="stat-val" id="stat-answered">0</span><div class="stat-label">Respondidas</div></div>
+      <div class="stat"><span class="stat-val" id="stat-correct">0</span><div class="stat-label">Acertos</div></div>
+      <div class="stat"><span class="stat-val" id="stat-streak">0</span><div class="stat-label">Streak</div></div>
+      <div class="stat"><span class="stat-val" id="stat-pct">0%</span><div class="stat-label">% Acerto</div></div>
+    </div>
+
+    <div class="mode-pills" role="tablist">
+      <button class="pill active" data-mode="estudo">Modo Estudo</button>
+      <button class="pill" data-mode="simulado">Simulado</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-chip active" data-filter="todas">Todas</button>
+    <button class="filter-chip" data-filter="mcq">Objetivas</button>
+    <button class="filter-chip" data-filter="essay">Dissertativas</button>
+    <button class="filter-chip" data-filter="facil">Fácil</button>
+    <button class="filter-chip" data-filter="medio">Médio</button>
+    <button class="filter-chip" data-filter="dificil">Difícil</button>
+    <button class="filter-chip" data-filter="fisiologicas">Fisiológicas</button>
+    <button class="filter-chip" data-filter="pustulosas">Pustulosas</button>
+    <button class="filter-chip" data-filter="bolhosas">Bolhosas</button>
+    <button class="filter-chip" data-filter="fralda">Fralda/Candidíase</button>
+    <button class="filter-chip" data-filter="atopica">Atópica</button>
+    <button class="filter-chip" data-filter="manchas">Manchas</button>
+    <button class="filter-chip" data-filter="cuidados">Cuidados</button>
+    <div class="search-box">
+      🔎 <input id="search" type="text" placeholder="Buscar enunciado…  (⌘K)">
+    </div>
+  </div>
+
+  <div id="questoes-list"></div>
+
+  <div class="submit-row" id="submit-row" style="display:none">
+    <button class="submit-btn" id="submit-btn">Finalizar simulado &nbsp;→</button>
+  </div>
+
+  <div class="diagnostic" id="diagnostic">
+    <h2>Painel diagnóstico</h2>
+    <div class="diag-summary" id="diag-summary"></div>
+    <div id="diag-topics"></div>
+  </div>
+
+  <h3 class="fc-section-title">Flashcards de revisão</h3>
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <div class="footer-note">
+    StudyGen · Gerado a partir do PDF "Foto.pdf" (60 slides) — aula de Karisa Garcia · 27 abr 2026<br>
+    Conteúdo restrito ao material da aula. Auditado por <i>source-auditor</i> e <i>science-reviewer</i>.<br>
+    Atalhos: T tema · C modo card · 1-5 responder · R revelar · ⌘K buscar
+  </div>
+</main>
+
+<script>
+// ==========================================================
+// BANCO DE QUESTÕES (inline)
+// ==========================================================
+// Banco de questões - Dermatologia Neonatal
+// Aula: Karisa Garcia (apresentando)
+// Tópicos baseados EXCLUSIVAMENTE no conteúdo dos slides
+
+const RESUMAO_BASE = "#"; // Sem resumão externo nesta versão
+
+const topicToResumo = {
+  fisiologicas: {
+    anchor: "#fisiologicas",
+    label: "Alterações fisiológicas da pele do RN",
+    subtopics: "Vérnix caseoso, descamação fisiológica, milio, hiperplasia sebácea, Bohn/Epstein, bolhas de sucção, cutis marmorata, acrocianose, alteração em arlequim, eflúvio telógeno"
+  },
+  pustulosas: {
+    anchor: "#pustulosas",
+    label: "Dermatoses pustulosas neonatais",
+    subtopics: "Miliária, eritema tóxico, melanose pustulosa, acne neonatal, escabiose"
+  },
+  bolhosas: {
+    anchor: "#bolhosas",
+    label: "Doenças bolhosas neonatais (HSV)",
+    subtopics: "Herpes vírus simples (formas, vias, PCR-RT, aciclovir), SSSS, epidermólise bolhosa"
+  },
+  fralda: {
+    anchor: "#fralda",
+    label: "Dermatite de fraldas e candidíase",
+    subtopics: "Tratamento escalonado da dermatite de fraldas, candidíase congênita vs neonatal, lesões satélites"
+  },
+  atopica: {
+    anchor: "#atopica",
+    label: "Dermatite atópica",
+    subtopics: "3 desregulações (barreira, imune, microbioma), localização flexural, hidratação intensiva, corticoide nas crises"
+  },
+  cuidados: {
+    anchor: "#cuidados",
+    label: "Cuidados com a pele e anamnese",
+    subtopics: "Hidratantes (alergênicos: fragrâncias, betaínas, MCI, lanolina), anamnese (HIV, LES maternos)"
+  },
+  manchas: {
+    anchor: "#manchas",
+    label: "Manchas neonatais",
+    subtopics: "Hemangioma, mancha salmão, vinho do porto, mongólica, localizações"
+  }
+};
+
+const questoes = [
+  // === BLOCO 1 — Alterações fisiológicas ===
+  {
+    id: 1,
+    fonte: "PDF Foto.pdf · p. 29",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "facil",
+    enunciado: "RN a termo, 4 horas de vida, é examinado pela enfermagem e apresenta cianose discreta limitada aos lábios, palmas das mãos e plantas dos pés. O restante do exame é normal. Esse achado é melhor explicado por:",
+    alternativas: {
+      A: "Persistência do canal arterial com shunt direita-esquerda exigindo ecocardiograma de urgência.",
+      B: "Acrocianose fisiológica por hipertonia das arteríolas periféricas e congestão venosa que melhora com aquecimento.",
+      C: "Hipoxemia central por imaturidade pulmonar que necessita oxigênio suplementar imediato.",
+      D: "Cianose periférica por septicemia precoce, sendo indicada coleta de hemocultura no momento.",
+      E: "Cutis marmorata por dilatação reativa de capilares ao frio que se resolve com vasodilatadores."
+    },
+    correta: "B",
+    explicacao: {
+      correta: "A acrocianose é fenômeno peculiar do RN de termo, devido à hipertonia das arteríolas periféricas com consequente congestão venosa, manifestando-se em lábios, palmas e plantas, sendo NORMAL nas primeiras 4 horas de vida e melhorando com aquecimento.",
+      A: "PCA com shunt direita-esquerda cursa com cianose central diferencial (membros inferiores mais cianóticos que superiores), e não com cianose isolada de extremidades em RN clinicamente estável.",
+      C: "Hipoxemia central produz cianose generalizada, incluindo região central (mucosas, lábios em todo o contorno) e não apenas extremidades distais.",
+      D: "Sepse neonatal precoce raramente se manifesta com cianose acral isolada como achado único; a apresentação típica envolve instabilidade térmica, hemodinâmica e respiratória.",
+      E: "Cutis marmorata produz coloração arroxeada e reticulada (em rede) por dilatação capilar ao frio; não é localizada apenas em palmas e plantas e o tratamento é aquecimento, não vasodilatadores."
+    }
+  },
+  {
+    id: 2,
+    fonte: "PDF Foto.pdf · p. 30",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    enunciado: "Pediatra examina RN prematuro, 32 semanas, em decúbito lateral direito na incubadora. Observa que o hemicorpo apoiado fica eritematoso enquanto o lado oposto se mantém pálido, com linha de demarcação nítida ao longo da linha média. O fenômeno descrito é decorrente de:",
+    alternativas: {
+      A: "Disautonomia transitória secundária à hemorragia intraventricular grau I, sendo necessária ultrassonografia transfontanela.",
+      B: "Trombose da veia cava inferior por uso de cateter umbilical, exigindo retirada imediata e anticoagulação.",
+      C: "Reação alérgica de contato ao tecido sintético da incubadora, devendo-se substituir por algodão hipoalergênico.",
+      D: "Imaturidade do centro hipotalâmico que controla o tônus dos vasos sanguíneos periféricos do RN prematuro.",
+      E: "Hipertonia simpática reativa ao estresse térmico que cursa com vasoconstrição generalizada e descamação posterior."
+    },
+    correta: "D",
+    explicacao: {
+      correta: "A alteração de coloração em arlequim ocorre tipicamente no RN prematuro em decúbito lateral, sendo decorrente da imaturidade do centro hipotalâmico que controla o tônus dos vasos sanguíneos periféricos, resultando em assimetria de coloração entre os hemicorpos.",
+      A: "A disautonomia por HIV grau I não produz padrão de assimetria por hemicorpo definido pela posição do RN; o achado seria neurológico, com alterações de tônus e crises.",
+      B: "Trombose de veia cava cursa com edema e cianose persistente abaixo da obstrução, não com mudança de coloração que segue a posição do RN no leito.",
+      C: "Reação alérgica de contato gera lesões eczematosas (eritema, vesículas, descamação) e não muda lateralidade conforme o decúbito.",
+      E: "Vasoconstrição generalizada por estresse térmico produz palidez global e não a divisão exata pela linha média característica do fenômeno em arlequim."
+    }
+  },
+  {
+    id: 3,
+    fonte: "PDF Foto.pdf · p. 22",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "facil",
+    enunciado: "Mãe de RN de 5 dias procura emergência preocupada com pápulas amareladas e numerosas no nariz e malar do bebê, que estão presentes desde o nascimento e não causam prurido. Ao exame, são pequenas, na abertura do folículo pilossebáceo. A conduta correta é:",
+    alternativas: {
+      A: "Tranquilizar a mãe — trata-se de hiperplasia sebácea, manifestação de estímulo hormonal materno que não requer tratamento.",
+      B: "Iniciar antifúngico tópico imidazólico, pois o quadro sugere candidíase neonatal precoce com lesões satélites em face.",
+      C: "Coletar pesquisa de Sarcoptes scabiei e tratar a família com permetrina, dada a elevada prevalência de escabiose facial neonatal.",
+      D: "Encaminhar à dermatologia para drenagem cirúrgica das lesões para evitar cicatrizes residuais permanentes na face.",
+      E: "Solicitar dosagem hormonal materna e do RN para investigar tumor produtor de andrógenos e disfunção adrenal congênita."
+    },
+    correta: "A",
+    explicacao: {
+      correta: "Hiperplasia sebácea é manifestação fisiológica de estímulo hormonal materno, com pápulas amareladas decorrentes da dilatação do infundíbulo folicular com tamponamento de queratina, localizadas em nariz, malar e lábio superior. NÃO necessita tratamento.",
+      B: "Candidíase neonatal manifesta-se em região da fralda e pregas, com placas vermelhas brilhantes e lesões satélites pustulosas, não como pápulas amareladas em face.",
+      C: "Escabiose neonatal apresenta vesículo-pústulas em couro cabeludo, palmas e plantas (não face), com prurido intenso e antecedente epidemiológico familiar.",
+      D: "A drenagem cirúrgica não está indicada — as lesões regridem espontaneamente e a abordagem invasiva geraria cicatrizes desnecessárias.",
+      E: "A hiperplasia sebácea é fenômeno fisiológico autolimitado decorrente de hormônios maternos, sem indicação de investigação endocrinológica do RN."
+    }
+  },
+  {
+    id: 4,
+    fonte: "PDF Foto.pdf · p. 19",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    enunciado: "Sobre a descamação cutânea no período neonatal, qual das afirmações abaixo é CORRETA?",
+    alternativas: {
+      A: "Inicia-se sempre nas primeiras 6 horas de vida e desaparece completamente em até 48 horas, raramente persistindo após esse período.",
+      B: "É achado patognomônico de ictiose lamelar quando aparece após a primeira semana de vida, exigindo encaminhamento dermatológico.",
+      C: "Quando muito intensa indica desidratação grave com necessidade de hidratação venosa imediata e suspensão da alimentação enteral.",
+      D: "É restrita a RNs de pais com pele seca, com forte componente hereditário, e exige uso obrigatório de cremes corticosteroides tópicos.",
+      E: "É fisiológica quando inicia entre 24-36 horas de vida e dura até a 3ª semana; presente desde o nascimento sugere pós-maturidade, anoxia ou ictiose."
+    },
+    correta: "E",
+    explicacao: {
+      correta: "A descamação fisiológica do RN inicia-se mais comumente entre 24-36 horas de vida e pode durar até a 3ª semana. Quando presente já AO NASCIMENTO deve ser considerada anormal e levanta hipóteses de pós-maturidade, anoxia intrauterina ou ictiose.",
+      A: "O início típico é entre 24-36h, não nas primeiras 6h, e a duração pode estender-se à 3ª semana de vida.",
+      B: "A descamação após a 1ª semana ainda pode ser fisiológica; é a presença ao nascimento (e não tardia) que sugere ictiose.",
+      C: "A descamação fisiológica não traduz desidratação grave, e a conduta é lubrificação com óleos vegetais (girassol, amêndoas, coco, oliva), sem indicação de hidratação venosa.",
+      D: "Não há determinismo hereditário simples, e o tratamento de primeira linha é hidratação com óleos vegetais — corticoides tópicos NÃO são indicados em descamação fisiológica.",
+      E: "Padrão temporal correto e diferenciais corretos para descamação ao nascimento."
+    }
+  },
+  {
+    id: 5,
+    fonte: "PDF Foto.pdf · p. 26",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    enunciado: "Pediatra observa, ao exame da cavidade oral de RN, nódulos brancos pequenos no palato duro. A mãe relata também ter visto pequenas elevações na gengiva. Quanto à nomenclatura e à conduta, é CORRETO afirmar:",
+    alternativas: {
+      A: "Resultam de infecção pelo herpes vírus simples adquirida no canal de parto e são tratadas com aciclovir endovenoso por 14 dias na forma localizada.",
+      B: "Nódulos no palato duro são nódulos de Bohn e na gengiva são pérolas de Epstein; têm origem em ductos sudoríparos écrinos e exigem drenagem cirúrgica.",
+      C: "Ambos são denominados pérolas de Epstein e correspondem a cistos de inclusão por sucção materna; tratam-se com antifúngico tópico durante 14 dias.",
+      D: "São lesões pré-malignas derivadas de restos da lâmina dental e devem ser removidas para biópsia para excluir carcinoma odontogênico congênito.",
+      E: "Nódulos no palato duro são pérolas de Epstein e na gengiva são nódulos de Bohn; são lesões benignas derivadas de restos epiteliais em desenvolvimento, com regressão espontânea."
+    },
+    correta: "E",
+    explicacao: {
+      correta: "Pérolas de Epstein localizam-se no palato duro e nódulos de Bohn na gengiva. Conforme a aula, são considerados nódulos benignos derivados de restos epiteliais em desenvolvimento, com regressão espontânea. (Observação: na literatura embriológica clássica, descrevem-se origens distintas — Epstein costuma ser atribuído a inclusões epiteliais da fusão palatina, e Bohn a remanescentes de lâmina dental ou glândulas mucosas — mas a aula trata os dois em bloco como derivados de restos epiteliais.)",
+      B: "A nomenclatura está invertida (Bohn=gengiva; Epstein=palato duro) e a origem não é em ductos sudoríparos. Drenagem é desnecessária.",
+      C: "Não são causadas por sucção e não são pérolas de Epstein de forma genérica — Bohn e Epstein têm localização distinta. Não respondem nem requerem antifúngico.",
+      D: "Não são lesões pré-malignas; são fenômenos benignos que regridem espontaneamente. Biópsia é desnecessária e pode causar trauma local.",
+      A: "Herpes neonatal cursa com vesículas em pele, olhos, boca, com possível disseminação ou SNC, e não com nódulos brancos isolados em palato e gengiva como achado único."
+    }
+  },
+  {
+    id: 6,
+    fonte: "PDF Foto.pdf · p. 28",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "facil",
+    enunciado: "Mãe de RN de 7 dias relata que, ao trocar o bebê em ambiente frio, a pele apresenta padrão arroxeado e reticulado em rede, que melhora ao colocá-lo no colo coberto. O quadro descrito corresponde a:",
+    alternativas: {
+      A: "Acrocianose do RN a termo por congestão venosa periférica de extremidades, resolvida em 4 horas pós-parto, sem relação com temperatura.",
+      B: "Eritema tóxico neonatal por reação inflamatória à colonização microbiana, com pústulas estéreis em halo eritematoso de 1 a 2 cm.",
+      C: "Cutis marmorata, resposta fisiológica normal ao frio com dilatação reativa de capilares; coloração arroxeada e reticulada que desaparece com aquecimento.",
+      D: "Alteração em arlequim por imaturidade do centro hipotalâmico, típica do prematuro em decúbito lateral, com hemicorpos de cores distintas.",
+      E: "Eflúvio telógeno do neonato com vasodilatação compensatória em territórios cutâneos, evoluindo para descamação reticulada em couro cabeludo."
+    },
+    correta: "C",
+    explicacao: {
+      correta: "Cutis marmorata é a resposta fisiológica ao frio, caracterizada por dilatação reativa de capilares com coloração arroxeada e padrão reticulado. Desaparece com o aquecimento e não requer tratamento específico.",
+      A: "A acrocianose ocorre nas primeiras 4 horas de vida em RN de termo, com cianose limitada a lábios, palmas e plantas, e não tem padrão reticulado em rede.",
+      B: "Eritema tóxico apresenta pápulas/pústulas com halo eritematoso e não padrão reticulado generalizado que muda com a temperatura ambiente.",
+      D: "Em arlequim ocorre em prematuro em decúbito lateral com divisão de cor pelo eixo médio, não padrão reticulado por todo o corpo.",
+      E: "Eflúvio telógeno é perda sincrônica de cabelos da fronte para a região occipital — não envolve coloração da pele."
+    }
+  },
+  {
+    id: 7,
+    fonte: "PDF Foto.pdf · p. 23",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    enunciado: "Quanto ao milio (milium) no RN, qual das afirmativas abaixo é CORRETA?",
+    alternativas: {
+      A: "Acomete 40-50% dos RNs como pápulas brancas ou amareladas de 1-3 mm em nariz, malar, mento e fronte, desaparecendo no primeiro mês de vida.",
+      B: "Trata-se de manifestação de candidíase congênita exclusiva do RN, exigindo nistatina sistêmica até resolução completa das lesões cutâneas.",
+      C: "Resulta de obstrução de ductos sudoríparos écrinos por imaturidade glandular, surgindo a partir da 2ª semana e podendo evoluir para forma pustulosa.",
+      D: "Aparece como vesico-pústulas estéreis com halo eritematoso de 1 a 2 cm em tronco e extremidades, desaparecendo entre 5 e 14 dias.",
+      E: "É observado em 100% dos RNs prematuros como pápulas pigmentadas que persistem indefinidamente e necessitam acompanhamento dermatológico anual."
+    },
+    correta: "A",
+    explicacao: {
+      correta: "Milio acomete 40-50% dos RNs e corresponde a pápulas brancas ou amareladas de 1-3 mm, isoladas ou agrupadas, por retenção de queratina e material sebáceo no folículo pilossebáceo. Localiza-se em nariz, malar, mento e fronte, e desaparece sem tratamento no 1º mês de vida.",
+      B: "Milio não é candidíase — esta envolve a região da fralda com lesões satélites pustulosas e responde a antifúngico tópico, não sistêmico.",
+      C: "A descrição corresponde a miliária (obstrução de ductos écrinos por imaturidade, a partir da 2ª semana) e não a milio (retenção de queratina/sebo no folículo pilossebáceo).",
+      D: "Vesico-pústulas estéreis com halo eritematoso de 1-2 cm em tronco/extremidades correspondem a eritema tóxico, não a milio.",
+      E: "A prevalência é de 40-50% dos RNs (não 100%) e as lesões regridem espontaneamente no 1º mês — não persistem indefinidamente."
+    }
+  },
+  {
+    id: 8,
+    fonte: "PDF Foto.pdf · p. 18",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    enunciado: "Sobre o vérnix caseoso, é CORRETO afirmar que:",
+    alternativas: {
+      A: "É um produto cosmético aplicado pela equipe de enfermagem após o banho do RN para reposição da camada lipídica perdida no parto.",
+      B: "Trata-se de exsudato inflamatório por infecção intra-amniótica, e sua presença ao nascimento exige investigação de corioamnionite materna.",
+      C: "Substitui a barreira cutânea ao nascimento, lubrifica a pele facilitando a passagem pelo canal de parto e atua como barreira mecânica à colonização bacteriana.",
+      D: "É composto exclusivamente por células descamadas do estrato córneo do feto, sem qualquer função protetora ou mecânica em relação ao parto vaginal.",
+      E: "Deve ser removido com sabonetes degermantes nas primeiras horas de vida para prevenir colonização por Staphylococcus aureus na pele do RN."
+    },
+    correta: "C",
+    explicacao: {
+      correta: "O vérnix caseoso substitui a barreira cutânea ao nascimento, lubrifica a pele facilitando a passagem pelo canal de parto e atua como barreira mecânica à colonização bacteriana.",
+      A: "É produzido pelo próprio feto — não é um produto aplicado externamente.",
+      B: "Não é exsudato inflamatório nem indica infecção; sua presença é fisiológica e protetora.",
+      D: "Tem composição mais ampla e exerce função de lubrificação no parto e barreira mecânica antibacteriana — função protetora claramente descrita.",
+      E: "Sua remoção precoce com degermantes não é recomendada; ele atua como barreira protetora antibacteriana e contra perda de água."
+    }
+  },
+  {
+    id: 9,
+    fonte: "PDF Foto.pdf · p. 31",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "facil",
+    enunciado: "RN de 14 dias é trazido pela mãe que percebeu queda de cabelo predominantemente da fronte para a região occipital, sem áreas de eritema, descamação ou crostas. O quadro mais provável é:",
+    alternativas: {
+      A: "Tinea capitis por dermatofitose neonatal precoce, que requer tratamento antifúngico oral por seis a oito semanas e isolamento de contato.",
+      B: "Eflúvio telógeno do neonato, fenômeno fisiológico em que ocorre perda sincrônica dos cabelos da fronte para a região occipital em alguns RNs.",
+      C: "Alopecia por tração materna durante a amamentação por contato repetido com o cabelo da região frontal e parietal do RN.",
+      D: "Síndrome do cabelo impenteável de início neonatal, devida à mutação no gene PADI3, com necessidade de avaliação genética imediata.",
+      E: "Alopecia areata neonatal de etiologia autoimune, com indicação de corticoide tópico de alta potência por quatro a seis semanas no couro cabeludo."
+    },
+    correta: "B",
+    explicacao: {
+      correta: "O eflúvio telógeno do neonato é a perda sincrônica de cabelos que ocorre em alguns RNs, da fronte para a região occipital, sem caráter patológico.",
+      A: "Tinea capitis manifesta-se com áreas de alopecia descamativa e tonsura dos pelos com inflamação, achados ausentes no eflúvio fisiológico.",
+      C: "Alopecia por tração não tem o padrão sincrônico da fronte para occipital descrito como eflúvio telógeno.",
+      D: "A síndrome do cabelo impenteável apresenta cabelo seco, áspero e em ângulo anormal — não corresponde à queda sincrônica frontal-occipital.",
+      E: "Alopecia areata exibe placas circunscritas de alopecia sem inflamação aparente, padrão distinto da queda sincrônica fisiológica."
+    }
+  },
+  {
+    id: 10,
+    fonte: "PDF Foto.pdf · p. 14",
+    type: "mcq",
+    topic: "fisiologicas",
+    difficulty: "dificil",
+    enunciado: "Qual conjunto abaixo lista corretamente diagnósticos cutâneos descritos em estudos brasileiros como achados frequentes nas primeiras 72 horas de vida do RN?",
+    alternativas: {
+      A: "Pênfigo foliáceo neonatal, líquen plano congênito, psoríase pustulosa generalizada, síndrome SAPHO, esclerodermia linear da infância.",
+      B: "Acrodermatite enteropática, Netherton, ictiose lamelar autossômica recessiva, displasia ectodérmica hipohidrótica, EB distrófica grave.",
+      C: "Xeroderma pigmentoso, eritrodermia ictiosiforme não bolhosa, síndrome de Gorlin, melanose neurocutânea, NEVUS sebáceo gigante.",
+      D: "Síndrome de Stevens-Johnson neonatal, necrólise epidérmica tóxica, eritema multiforme major, dermatite herpetiforme, mastocitose sistêmica.",
+      E: "Lanugo, hiperplasia de glândulas sebáceas, mancha mongólica, descamação fisiológica, eritema tóxico neonatal, mancha salmão, cisto de milia."
+    },
+    correta: "E",
+    explicacao: {
+      correta: "Em estudos realizados no Brasil, descrevem-se como achados frequentes nas primeiras 72 horas de vida: lanugo, hiperplasia de glândulas sebáceas, mancha mongólica, descamação fisiológica, eritema tóxico neonatal, mancha salmão, eritema cutâneo e cisto de milia.",
+      A: "Pênfigo foliáceo, psoríase pustulosa, SAPHO e esclerodermia não são achados típicos das primeiras 72h e configuram doenças bem mais raras.",
+      B: "São genodermatoses raras e graves, não achados habituais nas primeiras 72h de vida em estudos brasileiros.",
+      C: "Síndromes raras e malignidades que não compõem o conjunto frequente das primeiras 72h.",
+      D: "SSJ/NET neonatal e dermatite herpetiforme não são achados típicos do período de 72h, sendo eventos raros e graves."
+    }
+  },
+
+  // === BLOCO 2 — Pustulosas ===
+  {
+    id: 11,
+    fonte: "PDF Foto.pdf · p. 36",
+    type: "mcq",
+    topic: "pustulosas",
+    difficulty: "medio",
+    enunciado: "RN de 4 dias apresenta pápulas eritematosas e pústulas com halo eritematoso medindo cerca de 1 a 2 cm, distribuídas no tronco, extremidades e face, poupando palmas e plantas. As lesões iniciaram no 2º dia de vida. O diagnóstico mais provável é:",
+    alternativas: {
+      A: "Escabiose neonatal por Sarcoptes scabiei, com vesículo-pústulas em couro cabeludo, palmas e plantas, exigindo permetrina familiar imediata.",
+      B: "Candidíase congênita com lesões em pregas e fralda, plaças vermelhas brilhantes e satélites pustulosas, indicando antifúngico imidazólico.",
+      C: "Sífilis congênita com lesões cutâneas iniciais incluindo descamação palmoplantar e exigindo penicilina cristalina endovenosa por dez dias.",
+      D: "Eritema tóxico neonatal, com pústulas estéreis em halo eritematoso surgindo no 2º dia de vida e regredindo espontaneamente em 5 a 14 dias.",
+      E: "Acne neonatal, com comedões e pústulas de início no 1º mês, mais frequente em meninos, regressão espontânea em 1 a 3 meses sem tratamento."
+    },
+    correta: "D",
+    explicacao: {
+      correta: "Eritema tóxico surge no 2º dia de vida e regride em 5-14 dias, com pápulas eritematosas e pústulas estéreis rodeadas por halo eritematoso (1-2 cm) em tronco, extremidades e face, com raro envolvimento palmoplantar.",
+      A: "Escabiose tem incubação de 2 a 6 semanas, lesões mais polimorfas com nódulos e túneis, e antecedente familiar — período pós-natal precoce e poupar palmas/plantas não é característico.",
+      B: "Candidíase tem distribuição em pregas e região da fralda com lesões satélites, não em tronco, extremidades e face com halo eritematoso clássico.",
+      C: "Sífilis cursa com lesões palmoplantares, ósseas, hepatoesplenomegalia e outros sinais sistêmicos — quadro distinto.",
+      E: "Acne neonatal apresenta comedões, sem o halo eritematoso típico do eritema tóxico, e tende a aparecer mais tardiamente."
+    }
+  },
+  {
+    id: 12,
+    fonte: "PDF Foto.pdf · p. 34",
+    type: "mcq",
+    topic: "pustulosas",
+    difficulty: "medio",
+    enunciado: "Mãe leva RN de 18 dias à consulta queixando-se de pequenas bolhas claras e pápulas em pescoço, axilas e tronco, surgidas após uso de touca grossa em ambiente aquecido. O mecanismo fisiopatológico mais provável é:",
+    alternativas: {
+      A: "Infecção neonatal pelo HSV adquirida durante o periparto, com lesões em pele, olho e boca em 45% dos casos, exigindo aciclovir endovenoso por 14 dias.",
+      B: "Estímulo hormonal materno com dilatação do infundíbulo folicular pilossebáceo e tamponamento queratínico, sem relação com temperatura ambiente.",
+      C: "Reação inflamatória da pele à colonização microbiana após o nascimento, com pústulas estéreis em halo eritematoso de 1 a 2 cm em todo o corpo.",
+      D: "Infestação parasitária do estrato córneo por Sarcoptes scabiei var. hominis, com prurido importante e antecedente familiar epidemiológico positivo.",
+      E: "Obstrução parcial dos ductos das glândulas sudoríparas écrinas por imaturidade, com resposta ao estresse térmico, surgindo a partir da 2ª semana de vida."
+    },
+    correta: "E",
+    explicacao: {
+      correta: "Miliária resulta da obstrução parcial dos ductos das glândulas sudoríparas écrinas em função da imaturidade dessas estruturas, sendo resposta ao estresse térmico e surgindo a partir da 2ª semana de vida; pode ser cristalina, rubra ou pustulosa.",
+      B: "Esse mecanismo descreve hiperplasia sebácea (estímulo materno em folículo pilossebáceo) e não miliária.",
+      C: "Mecanismo de eritema tóxico — reação à colonização microbiana ao nascimento — quadro clínico e cronologia distintos.",
+      D: "Escabiose: parasitismo por Sarcoptes scabiei com prurido e antecedente familiar; mecanismo distinto da miliária.",
+      A: "HSV neonatal envolve infecção viral, não obstrução de ductos écrinos por estresse térmico."
+    }
+  },
+  {
+    id: 13,
+    fonte: "PDF Foto.pdf · p. 38",
+    type: "mcq",
+    topic: "pustulosas",
+    difficulty: "facil",
+    enunciado: "Lactente de 7 meses é levado ao pronto-socorro com prurido intenso noturno, lesões vesículo-pustulosas no couro cabeludo, palmas e plantas, irritabilidade e anorexia. A mãe relata que outras crianças da casa apresentam quadro similar. O diagnóstico mais provável e sua característica mais relevante é:",
+    alternativas: {
+      A: "Eritema tóxico neonatal — pápulas e pústulas estéreis com halo eritematoso, regredindo espontaneamente em 5 a 14 dias após o início do quadro.",
+      B: "Escabiose por Sarcoptes scabiei var. hominis, transmissão por contato direto, incubação 2-6 semanas, lesões em couro cabeludo/palmas/plantas em lactentes.",
+      C: "Candidíase neonatal por Candida albicans, com placas vermelhas brilhantes em região da fralda e lesões satélites pustulosas e vesiculares em periferia.",
+      D: "Herpes neonatal disseminado com lesões em pele, olho, boca e SNC, exigindo aciclovir endovenoso 60 mg/kg/dia em três doses por 21 dias.",
+      E: "Miliária pustulosa por imaturidade dos ductos écrinos, surgindo a partir da 2ª semana e respondendo ao afastamento do estresse térmico ambiente."
+    },
+    correta: "B",
+    explicacao: {
+      correta: "Escabiose é infestação parasitária do estrato córneo pelo Sarcoptes scabiei var. hominis, transmitida por contato direto, com incubação de 2 a 6 semanas. Em lactentes e crianças, as lesões são generalizadas e predominam em couro cabeludo, palmas, plantas e pregas. O antecedente familiar é dado epidemiológico crucial; prurido leva a irritabilidade e anorexia.",
+      A: "Eritema tóxico cursa com pústulas estéreis em halo eritematoso em tronco/extremidades, com pico no 2º dia de vida em RN, sem antecedente familiar e sem prurido intenso noturno.",
+      C: "Candidíase tem distribuição em região da fralda e pregas, não no couro cabeludo e extremidades distais como descrito.",
+      D: "Herpes disseminado é quadro grave neonatal precoce; em lactente de 7 meses com cluster familiar e quadro pruriginoso, escabiose é muito mais provável.",
+      E: "Miliária ocorre em pescoço, axilas, tronco, ligada ao estresse térmico, sem prurido intenso noturno e sem cluster familiar."
+    }
+  },
+  {
+    id: 14,
+    fonte: "PDF Foto.pdf · p. 37",
+    type: "mcq",
+    topic: "pustulosas",
+    difficulty: "medio",
+    enunciado: "Pediatra avalia RN com pápulas eritematosas, pústulas e comedões fechados e abertos em face, surgidas no fim do primeiro mês. Mãe nega outros sintomas. Quanto à acne neonatal, é CORRETO afirmar:",
+    alternativas: {
+      A: "Acomete 80% dos RNs e tem regressão lenta apenas após o segundo ano, sendo considerada universal nessa faixa etária.",
+      B: "Está associada exclusivamente ao sexo feminino por estímulo hormonal materno via amamentação prolongada e exclusiva.",
+      C: "Início após os 6 meses de vida classifica como acne neonatal típica e dispensa investigação mesmo na presença de sinais de virilização.",
+      D: "Necessita sempre antibioticoterapia oral com macrolídeo por quatro semanas para evitar evolução para acne conglobata.",
+      E: "Patogênese envolve andrógenos maternos e endógenos; é mais frequente no sexo masculino, com regressão espontânea em 1 a 3 meses."
+    },
+    correta: "E",
+    explicacao: {
+      correta: "Acne neonatal acomete cerca de 20% dos RNs, é mais frequente no sexo masculino e sua patogênese envolve andrógenos maternos e endógenos. Apresenta regressão espontânea em 1 a 3 meses. Início após 3 meses configura acne infantil, em que pode ser necessário ampliar investigação.",
+      A: "Prevalência citada é 20%, não 80%, e a regressão é em 1 a 3 meses, não após 2 anos.",
+      B: "É mais frequente no SEXO MASCULINO; não há relação descrita com amamentação exclusiva.",
+      D: "Não há indicação rotineira de antibiótico sistêmico — a regressão é espontânea na grande maioria dos casos.",
+      C: "Início após 3 meses (não 6) define acne infantil, situação em que justamente PODE ser necessária investigação ampliada. Independente da idade, sinais associados de virilização (clitoromegalia, pelos pubianos, axilares, aumento de massa muscular, crescimento acelerado) sempre indicam pesquisa de hiperandrogenismo (HAC, tumor adrenal/gonadal)."
+    }
+  },
+  {
+    id: 15,
+    fonte: "PDF Foto.pdf · p. 33",
+    type: "mcq",
+    topic: "pustulosas",
+    difficulty: "dificil",
+    enunciado: "Quanto às doenças pustulosas no período neonatal, identifique o agrupamento CORRETO segundo a classificação apresentada:",
+    alternativas: {
+      A: "Benignas: herpes simples, síndrome da pele escaldada e epidermólise bolhosa. Incomuns: miliária, eritema tóxico e melanose pustulosa transitória.",
+      B: "Benignas: hemangioma, mancha salmão e mancha em vinho do porto. Incomuns: dermatite atópica, impetigo e molusco contagioso.",
+      C: "Benignas: dermatite de fralda irritativa, candidíase neonatal e dermatite seborreica. Incomuns: cutis marmorata, acrocianose e arlequim.",
+      D: "Benignas: eflúvio telógeno, milio e hiperplasia sebácea. Incomuns: nódulos de Bohn, pérolas de Epstein e bolhas de sucção.",
+      E: "Benignas: miliária, eritema tóxico e melanose pustulosa transitória. Incomuns: acne neonatal e infantil, escabiose e acrodermatite."
+    },
+    correta: "E",
+    explicacao: {
+      correta: "Conforme a classificação apresentada, as dermatoses pustulosas BENIGNAS do RN incluem miliária, eritema tóxico e melanose pustulosa transitória, enquanto as INCOMUNS abrangem acne neonatal/infantil, escabiose e acrodermatite.",
+      A: "Herpes simples, SSSS e epidermólise bolhosa são doenças BOLHOSAS, não pustulosas benignas.",
+      B: "Hemangioma e manchas correspondem a manchas neonatais; dermatite atópica, impetigo e molusco são doenças mais comuns na infância — não classificações de pustulosas.",
+      C: "Dermatite de fralda e candidíase não estão entre as pustulosas benignas; cutis marmorata, acrocianose e arlequim são alterações fisiológicas, não pustulosas.",
+      D: "Eflúvio, milio, hiperplasia sebácea, Bohn, Epstein e bolhas de sucção são alterações fisiológicas, não pustulosas."
+    }
+  },
+  {
+    id: 16,
+    fonte: "PDF Foto.pdf · p. 36",
+    type: "mcq",
+    topic: "pustulosas",
+    difficulty: "medio",
+    enunciado: "Sobre o eritema tóxico neonatal, qual proposição reflete corretamente os achados clínicos descritos na aula?",
+    alternativas: {
+      A: "Pápulas eritematosas e pústulas estéreis com halo eritematoso de 1 a 2 cm em tronco, extremidades e face, raro envolvimento palmoplantar; surge no 2º dia.",
+      B: "Vesico-pústulas hemorrágicas em palmas e plantas com prurido intenso, antecedente familiar e incubação de 2 a 6 semanas após contato com infestados.",
+      C: "Pápulas amareladas no nariz, malar e lábio superior, decorrentes de estímulo hormonal materno e dilatação de infundíbulo folicular pilossebáceo.",
+      D: "Bolhas pequenas e claras decorrentes da obstrução de ductos sudoríparos écrinos por imaturidade, surgindo após a 2ª semana, em axilas e pescoço.",
+      E: "Lesões em região da fralda com placas vermelhas brilhantes, lesões satélites pustulosas e vesiculares na periferia, respondendo a derivados azólicos."
+    },
+    correta: "A",
+    explicacao: {
+      correta: "Eritema tóxico cursa com pápulas eritematosas e pústulas estéreis em halo eritematoso de 1-2 cm que acometem tronco, extremidades e face do RN, com raro envolvimento palmoplantar; surge no 2º dia de vida e regride em 5-14 dias.",
+      B: "Quadro descrito é de escabiose, com incubação 2-6 semanas e antecedente familiar; não corresponde ao eritema tóxico.",
+      C: "Quadro descrito é de hiperplasia sebácea — pápulas amareladas em nariz, malar, lábio superior por estímulo hormonal materno.",
+      D: "Quadro descrito é de miliária — obstrução de ductos écrinos por imaturidade, axilas/pescoço, após 2ª semana.",
+      E: "Quadro descrito é de candidíase de área de fralda — placas vermelhas brilhantes com lesões satélites na periferia."
+    }
+  },
+
+  // === BLOCO 3 — Bolhosas (HSV principalmente) ===
+  {
+    id: 17,
+    fonte: "PDF Foto.pdf · p. 42",
+    type: "mcq",
+    topic: "bolhosas",
+    difficulty: "medio",
+    enunciado: "Sobre a infecção neonatal pelo herpes vírus simples (HSV), qual a distribuição correta das vias de aquisição segundo a aula?",
+    alternativas: {
+      A: "In útero 45%, periparto 30%, pós-parto 25% — refletindo predomínio da infecção transplacentária no primeiro trimestre da gestação.",
+      B: "In útero 5%, periparto 85%, pós-parto 10% — predomínio da transmissão durante a passagem pelo canal de parto contaminado por lesões maternas.",
+      C: "In útero 50%, periparto 50%, sem casos descritos pós-parto — porque a infecção pós-natal não tem relevância clínica documentada na população neonatal.",
+      D: "In útero 25%, periparto 25%, pós-parto 50% — com predomínio em RNs amamentados por mães com lesões herpéticas peripapilares ativas durante a lactação.",
+      E: "In útero 85%, periparto 10%, pós-parto 5% — com predomínio absoluto pela via hematogênica transplacentária durante a fase de viremia materna."
+    },
+    correta: "B",
+    explicacao: {
+      correta: "A aquisição do HSV neonatal divide-se em: in útero 5% dos casos, periparto 85% (predominante) e pós-parto 10%. Essa distribuição justifica a investigação cuidadosa de lesões em vulva e genitália materna na suspeita.",
+      A: "Inverte os percentuais — in útero é minoria (5%) e o periparto é majoritário (85%).",
+      C: "Pós-parto representa 10% dos casos, sendo via descrita e relevante; não há ausência de casos.",
+      D: "Distribuição incorreta — periparto representa 85%, não 25%.",
+      E: "Inverte completamente as proporções — predomínio é periparto, não in útero."
+    }
+  },
+  {
+    id: 18,
+    fonte: "PDF Foto.pdf · p. 42",
+    type: "mcq",
+    topic: "bolhosas",
+    difficulty: "medio",
+    enunciado: "Quanto às formas clínicas da infecção neonatal pelo HSV adquirida no periparto/pós-parto e seus respectivos percentuais aproximados:",
+    alternativas: {
+      A: "Forma localizada (pele/olho/boca): 75%; envolvimento do SNC: 15%; forma disseminada: 10% — predomínio no quadro mucocutâneo.",
+      B: "Forma localizada (pele/olho/boca): 30%; envolvimento do SNC: 25%; forma disseminada: 45% — predomínio no quadro disseminado.",
+      C: "Forma localizada (pele/olho/boca): 10%; envolvimento do SNC: 60%; forma disseminada: 30% — predomínio do envolvimento do SNC.",
+      D: "Forma localizada (pele/olho/boca): 45%; envolvimento do SNC: 30%; forma disseminada: 25% — predomínio do quadro mucocutâneo.",
+      E: "Forma localizada (pele/olho/boca): 50%; envolvimento do SNC: 50%; sem registro de forma disseminada na população neonatal."
+    },
+    correta: "D",
+    explicacao: {
+      correta: "A infecção neonatal pelo HSV adquirida no periparto/pós-parto manifesta-se em três formas: localizada com lesões em pele, olho e boca em 45% dos casos; com envolvimento do SNC em 30%; e disseminada em 25%.",
+      A: "Percentuais incorretos — a forma localizada não atinge 75%.",
+      B: "Distribuição incorreta — disseminada não é a forma majoritária.",
+      C: "Forma localizada é a mais frequente (45%), não a menos frequente.",
+      E: "A forma disseminada existe e responde por 25% dos casos."
+    }
+  },
+  {
+    id: 19,
+    fonte: "PDF Foto.pdf · p. 42",
+    type: "mcq",
+    topic: "bolhosas",
+    difficulty: "dificil",
+    enunciado: "RN de 12 dias é internado com vesículas em pele, conjuntivite com lesões corneanas e crises convulsivas. PCR-RT positiva para HSV. Qual o esquema terapêutico CORRETO conforme apresentado em aula?",
+    alternativas: {
+      A: "Aciclovir oral 80 mg/kg/dia por 7 dias na forma mucocutânea exclusiva, sem necessidade de internação ou hidratação venosa concomitante.",
+      B: "Aciclovir endovenoso 30 mg/kg/dia em duas doses por 7 dias, suficiente para a forma localizada e prolongado para 10 dias na disseminada.",
+      C: "Aciclovir endovenoso 60 mg/kg/dia em três doses, por 21 dias na forma disseminada e do SNC, ou 14 dias na forma localizada.",
+      D: "Valaciclovir oral 100 mg/kg/dia em duas doses por 14 dias na forma do SNC, com retorno ambulatorial em 30 dias para reavaliação.",
+      E: "Foscarnet endovenoso 90 mg/kg/dia em três doses por 21 dias como primeira escolha, evitando aciclovir pela alta resistência neonatal."
+    },
+    correta: "C",
+    explicacao: {
+      correta: "O tratamento é aciclovir endovenoso 60 mg/kg/dia em três doses divididas, por 14 dias na forma localizada e 21 dias na forma disseminada e do SNC. (Observação: a aula trata da fase aguda EV; na prática neonatal atual, formas com SNC frequentemente recebem terapia supressiva oral pós-aguda com aciclovir por meses para reduzir recorrências e melhorar desfecho neurológico — esquema fora do escopo do slide.)",
+      A: "A via é endovenosa, não oral, e a duração e dose são distintas; aciclovir oral não é adequado como tratamento da fase aguda do HSV neonatal.",
+      B: "Dose e fracionamento incorretos — são 60 mg/kg/dia em três doses, não 30 em duas doses.",
+      D: "Valaciclovir oral não é a opção preconizada na fase aguda; o padrão é aciclovir EV 60 mg/kg/dia.",
+      E: "Aciclovir é primeira escolha; foscarnet só seria considerado em resistência demonstrada — não é o protocolo apresentado."
+    }
+  },
+  {
+    id: 20,
+    fonte: "PDF Foto.pdf · p. 42",
+    type: "mcq",
+    topic: "bolhosas",
+    difficulty: "medio",
+    enunciado: "Frente à suspeita de infecção neonatal pelo HSV, qual conduta diagnóstica é apresentada como preconizada na aula?",
+    alternativas: {
+      A: "Biópsia cutânea com histopatologia padrão acompanhada de cultura do material para vírus em meio especial em laboratório de virologia.",
+      B: "Sorologia IgM materna no soro, considerando positividade isolada como critério suficiente para iniciar aciclovir endovenoso empiricamente em todos os RNs.",
+      C: "Realizar exame da vulva e genitália da mãe em busca de lesões e pesquisar HSV tipo 1 e 2 por detecção de DNA viral por PCR em tempo real (PCR-RT).",
+      D: "Esfregaço cervical materno apenas com Papanicolau, valorizando-se células gigantes multinucleadas como marcador suficiente para o diagnóstico do RN.",
+      E: "Cultura nasofaríngea seriada do RN durante quatro semanas, sem necessidade de exame da mãe ou pesquisa do DNA viral por técnicas moleculares."
+    },
+    correta: "C",
+    explicacao: {
+      correta: "Na suspeita de infecção pelo HSV, vulva e genitália da mãe devem ser examinadas para detectar lesões. O laboratório envolve pesquisa de HSV tipo 1 e 2 por detecção de DNA viral via PCR em tempo real (PCR-RT).",
+      A: "A confirmação diagnóstica preconizada é por PCR-RT, não por biópsia/cultura como métodos primários.",
+      B: "IgM materna não é critério adequado nem único; é necessária pesquisa direta do DNA viral por PCR-RT no RN/lesões.",
+      D: "Achado em Papanicolau é inespecífico e insuficiente; a confirmação se faz por PCR-RT específico para HSV 1 e 2.",
+      E: "Não se preconiza cultura seriada nasofaríngea isolada — combinação exame materno e PCR-RT é o caminho descrito."
+    }
+  },
+
+  // === BLOCO 4 — Fralda e candidíase ===
+  {
+    id: 21,
+    fonte: "PDF Foto.pdf · p. 45",
+    type: "mcq",
+    topic: "fralda",
+    difficulty: "facil",
+    enunciado: "Lactente de 3 meses apresenta dermatite de fraldas LEVE com eritema discreto em superfícies convexas das nádegas e coxas. Conforme a tabela de tratamento apresentada, a conduta de PRIMEIRA linha é:",
+    alternativas: {
+      A: "Mupirocina 2% tópica em toda área eritematosa, três vezes ao dia por 14 dias, mesmo na ausência de sinais clínicos de infecção bacteriana secundária.",
+      B: "Trocas muito frequentes de fraldas, limpeza com agentes brandos e água morna, e uso de cremes de barreira na região acometida.",
+      C: "Corticoide tópico de média potência por 7 dias contínuos seguidos de mupirocina por mais 7 dias, mesmo em quadros sem evidência de infecção.",
+      D: "Antifúngico imidazólico (miconazol 1%) duas vezes ao dia por 10 dias, com reavaliação semanal para ajuste do esquema terapêutico.",
+      E: "Alcatrões em compressas duas vezes ao dia por 14 dias, considerando ser opção mais consagrada e segura em crianças nos casos leves."
+    },
+    correta: "B",
+    explicacao: {
+      correta: "Para dermatite de fraldas LEVE, a tabela apresentada indica: trocas muito frequentes de fraldas, limpeza com agentes brandos e água morna, e cremes de barreira.",
+      A: "Mupirocina é reservada à infecção bacteriana secundária (eritema intenso + pústulas + infecção secundária), não para quadros leves.",
+      C: "Corticoide tópico de baixa potência é indicado em eritema intenso (não em quadro leve); 'média potência' não é o padrão descrito.",
+      D: "Antifúngico é indicado quando se suspeita de infecção por Candida (eritema + pústulas), não no quadro leve sem pústulas.",
+      E: "Alcatrões em compressas são reservados a quadros graves e prolongados — e na própria tabela é descrito como controverso."
+    }
+  },
+  {
+    id: 22,
+    fonte: "PDF Foto.pdf · p. 45",
+    type: "mcq",
+    topic: "fralda",
+    difficulty: "medio",
+    enunciado: "Lactente com eritema intenso na região da fralda associado a pústulas satélites, sem sinais de infecção bacteriana secundária. Conforme a tabela de tratamento apresentada, a conduta indicada é:",
+    alternativas: {
+      A: "Hidrocortisona 1% tópica por 14 dias, reservando antifúngico apenas se houver erosões francas ou febre persistente associada.",
+      B: "Mupirocina 2% tópica como primeira escolha, reservando antifúngico para os casos refratários após 10 dias de uso contínuo.",
+      C: "Aciclovir endovenoso 60 mg/kg/dia em três doses por 14 dias considerando o risco elevado de herpes neonatal recorrente.",
+      D: "Suspeitar de infecção por Candida e iniciar antifúngico (nistatina ou miconazol 1%), 2x ao dia, por 7 a 10 dias.",
+      E: "Alcatrões em compressas como primeira opção considerando segurança e eficácia bem estabelecidas em quadros leves no lactente."
+    },
+    correta: "D",
+    explicacao: {
+      correta: "Eritema intenso + pústulas devem levar à suspeita de infecção por Candida na dermatite de fralda, com tratamento antifúngico (nistatina ou miconazol 1%) 2x/dia por 7-10 dias.",
+      A: "Hidrocortisona por 14 dias contínuos sem antifúngico não é o protocolo — pústulas indicam suspeição de Candida.",
+      B: "Mupirocina entra quando há sinais de infecção bacteriana secundária — não como primeira escolha em pústulas com suspeita de Candida.",
+      C: "Aciclovir não é tratamento da candidíase de fralda; é específico para HSV.",
+      E: "Alcatrões em compressas se aplicam a quadros graves e prolongados, sendo descrito como controverso."
+    }
+  },
+  {
+    id: 23,
+    fonte: "PDF Foto.pdf · p. 46",
+    type: "mcq",
+    topic: "fralda",
+    difficulty: "medio",
+    enunciado: "Quanto à candidíase do RN apresentada em aula, é CORRETO afirmar:",
+    alternativas: {
+      A: "A forma congênita apresenta-se ao nascimento ou nos primeiros 6 dias de vida e é rara; a forma neonatal manifesta-se após o 7º dia de vida.",
+      B: "A candidíase neonatal aparece exclusivamente em couro cabeludo, palmas e plantas, com prurido intenso e antecedente epidemiológico familiar.",
+      C: "A forma congênita é a mais frequente e o tratamento de primeira escolha é mupirocina 2% por 7 dias com cobertura adicional para Candida.",
+      D: "Manifesta-se com pápulas amareladas em nariz, malar e lábio superior por estímulo hormonal materno, sem necessidade de terapia.",
+      E: "É exclusivamente sistêmica no RN e seu tratamento padrão é aciclovir endovenoso por 14 dias na forma localizada e 21 dias na disseminada."
+    },
+    correta: "A",
+    explicacao: {
+      correta: "A candidíase congênita apresenta-se ao nascimento ou nos primeiros 6 dias de vida e é rara. A forma neonatal manifesta-se após o 7º dia de vida.",
+      B: "Localização típica é região da fralda, pregas interplicas/cervicais, períneo, genitália, nádegas e parte interna das coxas — não couro cabeludo/palmas/plantas isolados.",
+      C: "Congênita é RARA, não frequente. Tratamento padrão é nistatina e derivados azólicos, não mupirocina.",
+      D: "Esse quadro descreve hiperplasia sebácea, não candidíase.",
+      E: "Aciclovir é tratamento de HSV; candidíase responde a antifúngicos (nistatina e derivados azólicos)."
+    }
+  },
+  {
+    id: 24,
+    fonte: "PDF Foto.pdf · p. 46",
+    type: "mcq",
+    topic: "fralda",
+    difficulty: "medio",
+    enunciado: "Sobre a apresentação clínica da candidíase neonatal na região da fralda, é CORRETO afirmar:",
+    alternativas: {
+      A: "Lesões pápulo-vesiculares com halo eritematoso de 1 a 2 cm com predomínio em tronco e extremidades, raro envolvimento palmoplantar, autolimitadas em 5 a 14 dias.",
+      B: "Erupção cristalina bolhosa transparente em tronco e cervical por imaturidade dos ductos sudoríparos écrinos com resolução pelo simples afastamento térmico.",
+      C: "Pequenas pápulas amareladas com 1 a 3 mm em nariz, malar, mento e fronte, retenção de queratina no folículo pilossebáceo, regressão no 1º mês.",
+      D: "Pápulas e vesículas com lesões satélites confluindo na região da fralda, evolução para placas vermelhas brilhantes com satélites pustulosas/vesiculares na periferia.",
+      E: "Áreas circulares de alopecia com tonsura dos pelos, descamação fina e sinais de inflamação, com necessidade de antifúngico oral por 6 a 8 semanas."
+    },
+    correta: "D",
+    explicacao: {
+      correta: "Candidíase neonatal manifesta-se como pápulas e vesículas com lesões satélites confluindo na região da fralda, com envolvimento das pregas interplicas/cervicais, períneo, genitália, nádegas e parte interna das coxas. Evolui para escamas e placas vermelhas brilhantes com lesões satélites pustulosas e vesiculares distintas na periferia.",
+      A: "Descrição corresponde a eritema tóxico neonatal, não à candidíase em região da fralda.",
+      B: "Descrição corresponde a miliária cristalina, não à candidíase.",
+      C: "Descrição corresponde a milio, não à candidíase.",
+      E: "Descrição corresponde a tinea capitis, não à candidíase de fralda."
+    }
+  },
+
+  // === BLOCO 5 — Atópica e outros ===
+  {
+    id: 25,
+    fonte: "PDF Foto.pdf · p. 55",
+    type: "mcq",
+    topic: "atopica",
+    difficulty: "medio",
+    enunciado: "Sobre a fisiopatologia da dermatite atópica conforme apresentada em aula, é CORRETO afirmar que ela resulta de TRÊS desregulações principais. Aponte o agrupamento correto:",
+    alternativas: {
+      A: "Hiperatividade neutrofílica direta + deficiência de complemento C3 + hiperprodução de IgM contra antígenos cutâneos como tríade fisiopatológica central.",
+      B: "Hipersensibilidade do tipo IV exclusiva por linfócitos Th17 + perda funcional do receptor TLR-2 + deficiência seletiva de IgA secretora associada.",
+      C: "Disfunção da barreira cutânea + resposta imunológica desregulada com inflamação crônica + alterações no microbioma da pele.",
+      D: "Aumento da produção sebácea + obstrução de ductos sudoríparos écrinos + colonização cutânea fisiológica imediatamente após o nascimento.",
+      E: "Espasmo arteriolar periférico + congestão venosa + imaturidade do centro hipotalâmico de termorregulação periférica como tríade central."
+    },
+    correta: "C",
+    explicacao: {
+      correta: "Conforme a aula, a dermatite atópica resulta de três desregulações principais: disfunção da barreira cutânea, resposta imunológica desregulada (gerando inflamação crônica) e alterações no microbioma da pele.",
+      A: "Não é a tríade descrita — não há proeminência de hiperatividade neutrofílica/complemento/IgM como modelo central.",
+      B: "Não é o modelo apresentado em aula — embora Th2 tenha papel relevante, a tríade descrita refere-se a barreira, imunidade e microbioma.",
+      D: "Mistura mecanismos da hiperplasia sebácea, miliária e eritema tóxico — não corresponde à dermatite atópica.",
+      E: "Mecanismo descreve acrocianose/arlequim — não dermatite atópica."
+    }
+  },
+  {
+    id: 26,
+    fonte: "PDF Foto.pdf · p. 55",
+    type: "mcq",
+    topic: "atopica",
+    difficulty: "facil",
+    enunciado: "Quanto ao manejo da dermatite atópica conforme apresentado em aula, é CORRETO afirmar que:",
+    alternativas: {
+      A: "O pilar fundamental é uso contínuo de corticoide tópico de alta potência por períodos prolongados sem necessidade de hidratação cutânea associada.",
+      B: "A hidratação intensiva e mudanças no estilo de vida são pilares; corticoides tópicos devem ser reservados para as crises do quadro clínico.",
+      C: "Imunobiológicos são primeira linha em todos os pacientes pediátricos, mesmo em formas leves, dispensando tacrolimos e outras opções tópicas.",
+      D: "Fototerapia está formalmente contraindicada em todos os casos pediátricos pelo risco aumentado de fotoenvelhecimento e câncer de pele cutâneo.",
+      E: "Tacrolimos tópico é proibido em qualquer faixa pediátrica, sendo seu uso restrito apenas a indivíduos acima de 18 anos com formas refratárias."
+    },
+    correta: "B",
+    explicacao: {
+      correta: "Os pilares apresentados são hidratação intensiva e mudanças no estilo de vida; corticoides tópicos devem ser reservados para as crises. Tacrolimos, fototerapia, imunobiológicos e demais sistêmicos são opções adicionais.",
+      A: "Corticoides tópicos não são uso contínuo de alta potência — são reservados às crises e a hidratação é pilar essencial.",
+      C: "Imunobiológicos não são primeira linha universal — entram na escada terapêutica após medidas mais simples.",
+      D: "Fototerapia consta como opção terapêutica e não como contraindicação universal.",
+      E: "Tacrolimos é apresentado como opção terapêutica na dermatite atópica, não vetado para pediátricos."
+    }
+  },
+  {
+    id: 27,
+    fonte: "PDF Foto.pdf · p. 55",
+    type: "mcq",
+    topic: "atopica",
+    difficulty: "medio",
+    enunciado: "Quanto à apresentação clínica típica da dermatite atópica em crianças conforme exposto em aula, é CORRETO afirmar:",
+    alternativas: {
+      A: "Lesões características aparecem especialmente em áreas flexurais (cubitais e poplíteas), mãos, pescoço e face, sendo o prurido crônico característica obrigatória.",
+      B: "Manifesta-se exclusivamente como pápulas amareladas em nariz e malar e regride espontaneamente até o primeiro mês de vida sem intervenção.",
+      C: "Quadro caracteriza-se por bolhas grandes e tensas em pele sã com formação de crostas melicéricas e necessidade obrigatória de antibiótico endovenoso.",
+      D: "Surge no 2º dia de vida com pústulas estéreis em halo eritematoso, regredindo espontaneamente em 5 a 14 dias sem prurido relevante.",
+      E: "Lesões aparecem somente em couro cabeludo, palmas e plantas, com antecedente epidemiológico familiar positivo e incubação de 2 a 6 semanas."
+    },
+    correta: "A",
+    explicacao: {
+      correta: "Lesões características da dermatite atópica aparecem especialmente em áreas flexurais (fossa cubital e poplítea), mãos, pescoço e face. Prurido crônico é característica obrigatória.",
+      B: "Descrição corresponde a hiperplasia sebácea — não dermatite atópica.",
+      C: "Descrição compatível com impetigo bolhoso, não dermatite atópica.",
+      D: "Descrição corresponde a eritema tóxico, não dermatite atópica.",
+      E: "Descrição corresponde a escabiose, não dermatite atópica."
+    }
+  },
+
+  // === BLOCO 6 — Manchas e cuidados ===
+  {
+    id: 28,
+    fonte: "PDF Foto.pdf · p. 48",
+    type: "mcq",
+    topic: "manchas",
+    difficulty: "facil",
+    enunciado: "Conforme apresentado em aula, qual conjunto a seguir corresponde corretamente a 'manchas neonatais'?",
+    alternativas: {
+      A: "Mancha vinho do porto, mancha mongólica, mancha salmão e hemangioma — todas categorizadas no grupo das manchas neonatais.",
+      B: "Cisto de milia, hiperplasia sebácea, pérolas de Epstein e nódulos de Bohn — agrupadas como manchas neonatais clássicas com regressão espontânea.",
+      C: "Cutis marmorata, acrocianose, alteração em arlequim e eflúvio telógeno — todas descritas como manchas neonatais segundo a classificação apresentada.",
+      D: "Eritema tóxico, miliária, melanose pustulosa transitória e acne neonatal — como subgrupos das manchas neonatais segundo a aula.",
+      E: "Herpes vírus simples, síndrome da pele escaldada, candidíase e dermatite atópica — todas dentro do grupo das manchas neonatais clássicas."
+    },
+    correta: "A",
+    explicacao: {
+      correta: "Em aula, as manchas neonatais incluem hemangioma, mancha salmão, mancha em vinho do porto, mancha mongólica e manchas de nascença.",
+      B: "São alterações fisiológicas da pele do RN, não manchas neonatais.",
+      C: "São alterações fisiológicas (vasculares ou capilares) do RN, não manchas neonatais.",
+      D: "São dermatoses pustulosas neonatais, não manchas.",
+      E: "São doenças bolhosas neonatais e outras categorias, não manchas neonatais."
+    }
+  },
+  {
+    id: 29,
+    fonte: "PDF Foto.pdf · p. 51",
+    type: "mcq",
+    topic: "manchas",
+    difficulty: "medio",
+    enunciado: "Quanto às localizações típicas das manchas neonatais apresentadas em aula, qual conjunto está CORRETO?",
+    alternativas: {
+      A: "Apenas em palmas, plantas e couro cabeludo, áreas em que a derme é mais fina e responsiva a estímulos vasoativos durante o nascimento.",
+      B: "Restritas a tronco e abdome, evitando face e nuca, e exclusivamente em prematuros com peso inferior a 1.500g ao nascimento como descrito.",
+      C: "Localizam-se em região occipital, glabela, fronte, pálpebras superiores, regiões nasolabiais e sacro segundo o quadro apresentado em aula.",
+      D: "Aparecem somente em áreas flexurais e dorso, e são patognomônicas de dermatite atópica neonatal precoce em RNs com história familiar.",
+      E: "Restritas a região da fralda e pregas, indicando colonização por Candida e tratadas obrigatoriamente com antifúngico imidazólico tópico ou oral."
+    },
+    correta: "C",
+    explicacao: {
+      correta: "Conforme a aula, as manchas neonatais podem localizar-se em região occipital, glabela, fronte, pálpebras superiores, regiões nasolabiais e sacro.",
+      A: "Não é a distribuição descrita; manchas neonatais não se restringem a palmas, plantas e couro cabeludo.",
+      B: "Não há descrição limitando a tronco/abdome ou exclusiva de prematuros <1500g.",
+      D: "Não correspondem à apresentação típica de dermatite atópica.",
+      E: "A distribuição em fralda e pregas é da candidíase, não das manchas neonatais."
+    }
+  },
+  {
+    id: 30,
+    fonte: "PDF Foto.pdf · p. 13",
+    type: "mcq",
+    topic: "cuidados",
+    difficulty: "medio",
+    enunciado: "Sobre o uso de hidratantes na pele do RN, qual conjunto de ingredientes é apresentado em aula como AUMENTANDO a chance de sensibilização e devendo ser EVITADO em produtos para a pele do bebê?",
+    alternativas: {
+      A: "Glicerina vegetal, manteiga de karité, ceramidas e ácido hialurônico — descritos como principais alergênicos relevantes em hidratantes neonatais.",
+      B: "Óleos vegetais como girassol, amêndoas, coco e oliva — agentes apontados como aumentadores de sensibilização e proibidos no RN segundo a aula.",
+      C: "Vaselina sólida, lanolina anidra, petrolatum e parafina líquida — todos descritos como principais alergênicos a evitar segundo o slide apresentado.",
+      D: "Fragrâncias, betaínas, metilcloroisotiazolinona e lanolina — apontados como ingredientes que aumentam a chance de sensibilização e devem ser evitados.",
+      E: "Polietilenoglicol, ureia 10%, zinco coloidal e dimeticona — todos descritos como principais alergênicos do hidratante pediátrico segundo a aula."
+    },
+    correta: "D",
+    explicacao: {
+      correta: "Conforme a aula, fragrâncias, betaínas, metilcloroisotiazolinona e lanolina são apontadas como ingredientes que aumentam a chance de sensibilização em hidratantes para RNs.",
+      A: "Esses ingredientes não foram apontados na aula como alergênicos a evitar; ceramidas e ácido hialurônico, em particular, são bem tolerados.",
+      B: "Óleos vegetais (girassol, amêndoas, coco, oliva) são justamente os RECOMENDADOS para lubrificar a pele do RN na descamação fisiológica.",
+      C: "Petrolatum/vaselina não foram listados como agentes a evitar; lanolina figura como alergênico, mas o conjunto está incorreto.",
+      E: "Esses ingredientes não foram apontados na aula como alergênicos prioritários a evitar."
+    }
+  }
+];
+
+// Questões dissertativas - estrutura compatível para renderização
+const questoesDissertativas = [
+  {
+    id: 31,
+    fonte: "PDF Foto.pdf · p. 29",
+    type: "essay",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    titulo: "RN com cianose acral nas primeiras horas de vida",
+    caso: "Pediatra de plantão é chamado pela enfermagem para avaliar RN a termo, 39+2 semanas, parto vaginal sem intercorrências, peso 3.250 g, Apgar 8/9, agora com 3 horas de vida em alojamento conjunto. À inspeção, RN está em decúbito dorsal, calmo, ativo, com choro forte ao manuseio. Mãe relata estar preocupada porque os lábios e as palmas das mãos do bebê estão arroxeados, embora o restante do corpo esteja rosado. Sat O2 96% em ar ambiente, FC 142 bpm, respiração eupneica. Temperatura axilar 36,4 °C. Sem sinais de desconforto respiratório. Berço aquecido foi providenciado.",
+    perguntas: [
+      {
+        pergunta: "1) Qual a hipótese diagnóstica mais provável para o achado cutâneo descrito? Justifique com base no mecanismo fisiopatológico.",
+        respostaModelo: "A hipótese é acrocianose do RN. Trata-se de fenômeno peculiar do RN de termo, decorrente de hipertonia das arteríolas periféricas com consequente congestão venosa. Manifesta-se em lábios, palmas das mãos e plantas dos pés."
+      },
+      {
+        pergunta: "2) A acrocianose tem janela temporal típica de normalidade. Qual é, e como diferenciar dessa janela uma cianose patológica?",
+        respostaModelo: "A acrocianose é considerada normal nas primeiras 4 horas de vida e melhora com aquecimento. Cianose persistente após esse período, central (incluindo mucosas e tronco), associada a desconforto respiratório, queda de saturação ou sinais sistêmicos sugere causa patológica (cardiopatia cianótica, hipoxemia central, sepse) e exige investigação."
+      },
+      {
+        pergunta: "3) Que conduta deve ser tomada nesse RN, considerando as informações apresentadas?",
+        respostaModelo: "Tranquilizar a família, manter o RN aquecido (berço aquecido, pele a pele), reavaliar em algumas horas. Como o achado é compatível com acrocianose fisiológica em RN sem sinais de gravidade, a melhora com aquecimento e o tempo é esperada. Não é necessária investigação adicional se o achado regredir."
+      }
+    ]
+  },
+  {
+    id: 32,
+    fonte: "PDF Foto.pdf · p. 26",
+    type: "essay",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    titulo: "Lesões orais em RN - diagnóstico diferencial",
+    caso: "Mãe de RN de 10 dias procura pediatra preocupada porque, ao tentar amamentar, observou pequenos pontos brancos na boca do bebê. Ao exame, identificam-se nódulos brancos, pequenos, alguns no palato duro e outros sobre a gengiva, todos não dolorosos à palpação leve, sem eritema circundante. RN mama bem, ganhou peso, sem febre.",
+    perguntas: [
+      {
+        pergunta: "1) Como nomear corretamente os nódulos no palato duro e na gengiva, e o que diferencia uns dos outros?",
+        respostaModelo: "Os nódulos no palato duro são as Pérolas de Epstein. Os nódulos na gengiva são os Nódulos de Bohn. Ambos são nódulos brancos ou amarelados derivados dos restos epiteliais das glândulas palatais em desenvolvimento."
+      },
+      {
+        pergunta: "2) Qual a evolução natural esperada e a conduta recomendada?",
+        respostaModelo: "Regridem espontaneamente. Não requerem tratamento específico. A conduta é tranquilizar a família, orientar sobre o caráter benigno e autolimitado, e manter os cuidados habituais com higiene oral leve e amamentação."
+      },
+      {
+        pergunta: "3) Como distinguir essas lesões de candidíase oral (sapinho)?",
+        respostaModelo: "Candidíase oral cursa com placas brancas aderidas à mucosa que sangram ao raspar, podem se localizar em língua, mucosa jugal e gengiva e podem causar desconforto à amamentação. Pérolas de Epstein e nódulos de Bohn são nódulos pontuais, brancos/amarelados, não removíveis por raspagem suave, sem inflamação ou dor, com localizações específicas (palato duro e gengiva, respectivamente)."
+      }
+    ]
+  },
+  {
+    id: 33,
+    fonte: "PDF Foto.pdf · p. 38",
+    type: "essay",
+    topic: "pustulosas",
+    difficulty: "dificil",
+    titulo: "Lactente com prurido noturno e contato familiar",
+    caso: "Lactente de 8 meses chega ao ambulatório com história de 3 semanas de prurido intenso, principalmente noturno, irritabilidade crescente, anorexia e despertares frequentes. Ao exame, vesículo-pústulas e algumas escoriações em couro cabeludo, palmas das mãos, plantas dos pés e nas pregas inguinais. A mãe e a irmã mais velha (5 anos) também apresentam prurido nas mãos e nos punhos há cerca de 1 mês.",
+    perguntas: [
+      {
+        pergunta: "1) Qual a hipótese diagnóstica mais provável e qual o agente etiológico envolvido?",
+        respostaModelo: "Hipótese: escabiose (sarna). Agente: Sarcoptes scabiei var. hominis, infestação parasitária do estrato córneo."
+      },
+      {
+        pergunta: "2) Por que o antecedente familiar é considerado tão relevante e qual o período de incubação típico?",
+        respostaModelo: "O antecedente familiar epidemiológico é muito importante (direto), pois a transmissão se dá por contato direto. O período de incubação é de 2 a 6 semanas, o que explica o intervalo entre o contato e o aparecimento de sintomas. Cluster familiar com prurido aumenta fortemente a probabilidade pré-teste do diagnóstico."
+      },
+      {
+        pergunta: "3) Quais as diferenças de distribuição das lesões entre RN/lactentes e crianças versus adultos, e por que isso é relevante para o exame físico?",
+        respostaModelo: "RN: vesículo-pústulas e ocasionalmente nódulos e túneis, observados principalmente em couro cabeludo, palmas e plantas. Lactentes e crianças: lesões generalizadas que predominam em couro cabeludo, palmas, plantas e pregas. Adultos: quase nunca afeta cabeça, pernas nem pés — linhas de Hebra (círculo de Hebra) — linha imaginária ombro-ombro e joelho-joelho. Isso é relevante porque, em lactentes, a inspeção do couro cabeludo, das palmas e plantas é essencial — localizações que podem ser negligenciadas se o examinador focar somente em padrão adulto."
+      },
+      {
+        pergunta: "4) Que sintomas/sinais sistêmicos secundários ao prurido podem aparecer na criança?",
+        respostaModelo: "A criança pode apresentar irritabilidade e anorexia secundárias ao prurido intenso, com impacto adicional em sono e ingesta alimentar."
+      }
+    ]
+  },
+  {
+    id: 34,
+    fonte: "PDF Foto.pdf · p. 36",
+    type: "essay",
+    topic: "pustulosas",
+    difficulty: "medio",
+    titulo: "RN com pápulas e pústulas de início precoce",
+    caso: "RN de 3 dias é avaliado em alojamento conjunto. Apresenta pápulas eritematosas e pústulas com halo eritematoso de aproximadamente 1 a 2 cm distribuídas em tronco, parte interna dos braços e face. Palmas e plantas estão poupadas. RN está em bom estado geral, mamando bem, eutérmico. Mãe está preocupada por relatar antecedente de impetigo em sobrinho da família.",
+    perguntas: [
+      {
+        pergunta: "1) Qual a hipótese diagnóstica mais provável? Justifique com base na cronologia, distribuição e caracterização das lesões.",
+        respostaModelo: "Hipótese: eritema tóxico neonatal. Surge no 2º dia de vida e regride em 5 a 14 dias. Apresenta pápulas eritematosas e pústulas estéreis rodeadas por halo eritematoso de 1 a 2 cm que acometem tronco, extremidades e face do RN. Raro envolvimento da região palmoplantar - característica chave que ajuda a diferenciar de outras pustuloses."
+      },
+      {
+        pergunta: "2) Qual o mecanismo fisiopatológico aventado para o eritema tóxico, conforme a aula?",
+        respostaModelo: "Alguns estudos têm mostrado ativação da resposta imune nas lesões, sugerindo que o quadro possa corresponder a uma reação inflamatória da pele à colonização microbiana que ocorre ao nascimento."
+      },
+      {
+        pergunta: "3) Como diferenciar de quadros que requerem intervenção (ex.: HSV neonatal, candidíase, infecção bacteriana)?",
+        respostaModelo: "Eritema tóxico cursa com pústulas estéreis (pesquisa microbiológica negativa), em RN em bom estado geral, regredindo espontaneamente em 5 a 14 dias. HSV neonatal apresenta lesões vesico-pustulosas que podem envolver pele/olho/boca, ou ter envolvimento sistêmico/SNC, com possíveis sinais de gravidade e exige PCR-RT para HSV 1/2 e tratamento com aciclovir EV. Candidíase predomina em região da fralda com placas brilhantes e satélites pustulosas/vesiculares na periferia. Infecção bacteriana cursa com pústulas com conteúdo purulento, sinais inflamatórios mais intensos, podendo associar-se a sinais sistêmicos."
+      }
+    ]
+  },
+  {
+    id: 35,
+    fonte: "PDF Foto.pdf · p. 42",
+    type: "essay",
+    topic: "bolhosas",
+    difficulty: "dificil",
+    titulo: "RN com vesículas e crises convulsivas",
+    caso: "RN de 14 dias de vida é trazido à emergência com história de irritabilidade, recusa alimentar nas últimas 24h e início de crises convulsivas focais. Ao exame, lesões vesiculares agrupadas em couro cabeludo e na conjuntiva, com hiperemia conjuntival importante. Mãe relata episódio de lesões genitais discretas próximo ao parto, não investigadas. Parto vaginal a termo. Equipe coleta sangue, líquor e amostras de lesão para PCR-RT.",
+    perguntas: [
+      {
+        pergunta: "1) Qual a hipótese diagnóstica e quais os possíveis padrões clínicos da infecção neonatal por HSV?",
+        respostaModelo: "Hipótese: infecção neonatal pelo herpes vírus simples (HSV). Os padrões clínicos da infecção adquirida no periparto/pós-parto são: forma localizada com lesões em pele/olho/boca (45% dos casos), forma com envolvimento do SNC (30%) e forma disseminada (25%). Esse RN tem manifestações cutâneas (pele e mucosa ocular) e neurológicas (crises convulsivas), compatíveis com envolvimento do SNC."
+      },
+      {
+        pergunta: "2) Qual a distribuição das vias de aquisição do HSV neonatal e por que o exame da mãe é importante na suspeita?",
+        respostaModelo: "Vias de aquisição: in útero 5%, periparto 85% e pós-parto 10%. O periparto é responsável pela maioria dos casos, justamente o cenário deste paciente cuja mãe teve lesões genitais próximo ao parto. Por isso, na suspeita de infecção pelo HSV, a vulva e a genitália da mãe devem ser examinadas para detectar lesões."
+      },
+      {
+        pergunta: "3) Qual o método laboratorial de escolha para confirmar HSV neonatal?",
+        respostaModelo: "Pesquisa de HSV tipo 1 e 2 por detecção de DNA viral por PCR em tempo real (PCR-RT), em amostras pertinentes (líquor, sangue, raspado de lesão)."
+      },
+      {
+        pergunta: "4) Qual o esquema de tratamento (fármaco, dose, fracionamento e duração) preconizado em aula para esse paciente?",
+        respostaModelo: "Aciclovir endovenoso na dose de 60 mg/kg/dia, fracionado em três doses diárias. Duração: 14 dias na forma localizada e 21 dias na forma disseminada e do SNC. Como esse RN tem provável envolvimento do SNC (crises convulsivas), a duração indicada é de 21 dias. (Observação adicional fora do escopo do slide: na prática neonatal atual, após a fase aguda, formas com envolvimento do SNC costumam receber terapia supressiva oral com aciclovir por meses, com objetivo de reduzir recorrências cutâneas e melhorar o desfecho neurológico — não detalhada na aula.)"
+      }
+    ]
+  },
+  {
+    id: 36,
+    fonte: "PDF Foto.pdf · pp. 45-46",
+    type: "essay",
+    topic: "fralda",
+    difficulty: "medio",
+    titulo: "Dermatite de fraldas - escalonamento terapêutico",
+    caso: "Lactente de 5 meses, em uso de fraldas descartáveis, apresenta na consulta eritema na área da fralda há cerca de 1 semana, com piora nos últimos 2 dias. Inicialmente o eritema era discreto, e agora há áreas mais intensamente eritematosas com surgimento de pequenas pústulas satélites em pregas inguinais. Sem febre, mama bem, ganha peso. Mãe relata troca de fraldas a cada 4-5 horas e uso esporádico de creme de barreira.",
+    perguntas: [
+      {
+        pergunta: "1) Quais as hipóteses diagnósticas e qual o agente que deve ser suspeitado nessa evolução?",
+        respostaModelo: "Hipóteses: dermatite de área de fraldas (de contato irritativa) com infecção secundária por Candida (sugerida pelas pústulas satélites e eritema intenso)."
+      },
+      {
+        pergunta: "2) Conforme a tabela apresentada em aula, qual seria a conduta para essa fase do quadro (eritema intenso + pústulas)?",
+        respostaModelo: "Suspeitar infecção por Candida e iniciar antifúngico (nistatina ou miconazol 1%) duas vezes ao dia por 7 a 10 dias, mantendo as medidas de base (trocas frequentes de fraldas, limpeza com agentes brandos e água morna, e cremes de barreira)."
+      },
+      {
+        pergunta: "3) Caso a mãe trouxesse esse mesmo bebê em fase muito precoce (apenas eritema discreto), qual seria a recomendação inicial?",
+        respostaModelo: "Para o grau leve, recomenda-se: trocas muito frequentes de fraldas, limpeza com agentes brandos e água morna, e uso de cremes de barreira. Não há indicação de corticoide nem antifúngico nessa fase."
+      },
+      {
+        pergunta: "4) Caso evoluísse com infecção bacteriana secundária (pústulas com conteúdo purulento, crostas amareladas, eritema intenso), qual a conduta tópica adicional?",
+        respostaModelo: "Em eritema intenso + pústulas com infecção secundária, indica-se mupirocina 2% tópica, mantendo as medidas de base e considerando o controle do componente fúngico, se presente."
+      }
+    ]
+  },
+  {
+    id: 37,
+    fonte: "PDF Foto.pdf · p. 30",
+    type: "essay",
+    topic: "fisiologicas",
+    difficulty: "medio",
+    titulo: "RN prematuro com mudança de coloração corporal",
+    caso: "RN prematuro de 31 semanas, 1.450 g, em incubadora na UTI neonatal, em decúbito lateral direito. A enfermagem chama o pediatra porque a criança está com o hemicorpo direito (apoiado) eritematoso e o esquerdo pálido, com nítida linha divisória pela linha média. RN está estável, sem sinais de instabilidade hemodinâmica.",
+    perguntas: [
+      {
+        pergunta: "1) Qual o achado descrito e por que ele é mais comum em prematuros?",
+        respostaModelo: "Achado: alteração de coloração em arlequim. RN prematuro quando colocado em decúbito lateral apresenta o hemicorpo em contato com o leito eritematoso, enquanto o lado oposto se torna pálido. É mais comum em prematuros porque ocorre devido à imaturidade do centro hipotalâmico que controla o tônus dos vasos sanguíneos periféricos."
+      },
+      {
+        pergunta: "2) É um achado patológico? Qual a conduta?",
+        respostaModelo: "Não é patológico - é um fenômeno transitório por imaturidade autonômica. A conduta é tranquilizar a equipe e a família, mudar o decúbito, manter aquecimento e observar a regressão. Não exige intervenção medicamentosa nem investigação adicional se o RN está estável."
+      },
+      {
+        pergunta: "3) Como diferenciar essa alteração de outros distúrbios circulatórios neonatais que cursam com coloração assimétrica?",
+        respostaModelo: "Em arlequim: muda com posição (decúbito lateral define o padrão), é transitória e desaparece com mudança de decúbito. Cianose por cardiopatia: cianose central, persistente, com sinais de baixa saturação e desconforto. Cutis marmorata: padrão reticulado em rede pelo corpo, ligado ao frio, melhora com aquecimento. Acrocianose: limitada a lábios, palmas e plantas, próprio do RN a termo nas primeiras 4h."
+      }
+    ]
+  },
+  {
+    id: 38,
+    fonte: "PDF Foto.pdf · p. 55",
+    type: "essay",
+    topic: "atopica",
+    difficulty: "medio",
+    titulo: "Lactente com lesões pruriginosas em flexuras",
+    caso: "Lactente de 14 meses chega ao ambulatório com lesões eritematosas, escoriadas e secas em fossas cubitais, fossas poplíteas, pescoço e face. Mãe relata prurido importante há 4 meses, com despertares noturnos por coceira e episódios de piora após contato com poeira e tecidos sintéticos. Antecedente: mãe asmática e pai com rinite. Quadro melhora parcialmente com hidratante simples, mas piora ciclicamente.",
+    perguntas: [
+      {
+        pergunta: "1) Qual a hipótese diagnóstica mais provável e quais as três desregulações principais que estão por trás dela?",
+        respostaModelo: "Hipótese: dermatite atópica. Resulta de três desregulações principais: disfunção da barreira cutânea, resposta imunológica desregulada (gerando inflamação crônica) e alterações no microbioma da pele."
+      },
+      {
+        pergunta: "2) Como confirmar a hipótese baseada apenas na clínica (sem exames laboratoriais)?",
+        respostaModelo: "Pelo padrão clínico: lesões características em áreas flexurais (cubitais e poplíteas), mãos, pescoço e face, com prurido crônico característico (obrigatório). Existência de fatores desencadeantes/agravantes. Antecedente familiar de atopia (asma, rinite) reforça a hipótese."
+      },
+      {
+        pergunta: "3) Quais os pilares do tratamento e qual o papel dos corticoides tópicos?",
+        respostaModelo: "Pilares: hidratação intensiva e mudanças no estilo de vida. Corticoides tópicos devem ser RESERVADOS para as crises - não são uso contínuo. Outras opções terapêuticas mencionadas: tacrolimos, fototerapia, imunobiológicos e demais tratamentos sistêmicos."
+      },
+      {
+        pergunta: "4) Por que o prurido é característica obrigatória no diagnóstico?",
+        respostaModelo: "O prurido crônico é apresentado como característica obrigatória da dermatite atópica. Esse prurido tem impacto em qualidade de vida, sono, alimentação e desenvolvimento, e justifica o tratamento intensivo focado em hidratação e controle do componente inflamatório (corticoides tópicos nas crises, tacrolimos, fototerapia e demais sistêmicos quando necessário)."
+      }
+    ]
+  },
+  {
+    id: 39,
+    fonte: "PDF Foto.pdf · pp. 22-23",
+    type: "essay",
+    topic: "fisiologicas",
+    difficulty: "facil",
+    titulo: "RN com pápulas amareladas em face",
+    caso: "Mãe de RN de 4 dias chega à puericultura preocupada com pequenas pápulas amareladas no nariz, malar e lábio superior do bebê, percebidas nos primeiros dias de vida. RN está bem, mama, sem outras alterações. Mãe não conseguiu entender o que era e tem medo de ser 'alguma infecção'.",
+    perguntas: [
+      {
+        pergunta: "1) Quais as duas principais hipóteses diagnósticas para pápulas brancas/amareladas em face de RN segundo a aula? Como diferenciá-las?",
+        respostaModelo: "Hipóteses: hiperplasia sebácea e milio. Diferenças: hiperplasia sebácea é manifestação do estímulo hormonal materno, com pequenas pápulas numerosas amareladas localizadas em nariz, malar e lábio superior, decorrente da dilatação do infundíbulo folicular com tamponamento de queratina. Milio acomete 40 a 50% dos RNs, são pápulas brancas ou amareladas isoladas ou agrupadas, 1 a 3 mm, decorrentes de retenção de queratina e material sebáceo no folículo pilossebáceo, localizadas em nariz, malar, mento e fronte. Ambas regridem espontaneamente."
+      },
+      {
+        pergunta: "2) Qual a conduta?",
+        respostaModelo: "Tranquilizar a mãe. Tanto hiperplasia sebácea quanto milio são fisiológicas e regridem espontaneamente (milio desaparece sem tratamento no primeiro mês de vida). Não há necessidade de tratamento medicamentoso nem de procedimentos. Manter higiene habitual."
+      },
+      {
+        pergunta: "3) Que aspecto da aula reforça a importância da anamnese cuidadosa nesses casos?",
+        respostaModelo: "Em aula é reforçado que distúrbios da pele em bebês são diferentes dos adultos e a anamnese deve incluir período pré-natal, gravidez e parto. Conhecer essas variantes fisiológicas evita ansiedade familiar, diagnósticos errados e tratamentos desnecessários, além de ajudar a diferenciar quadros benignos de doenças que precisam de manejo (HSV, candidíase, infecções bacterianas)."
+      }
+    ]
+  },
+  {
+    id: 40,
+    fonte: "PDF Foto.pdf · pp. 13, 15, 19, 59",
+    type: "essay",
+    topic: "cuidados",
+    difficulty: "medio",
+    titulo: "Orientação familiar sobre hidratantes e cuidados com a pele do RN",
+    caso: "Casal de primeira gestação chega à puericultura do RN de 7 dias trazendo várias amostras de hidratantes e produtos para o bebê. Eles querem saber: o que é seguro usar? Pode passar todo dia? Têm produto que aumenta alergia?",
+    perguntas: [
+      {
+        pergunta: "1) Quais ingredientes apresentados em aula AUMENTAM a chance de sensibilização e devem ser evitados em hidratantes do RN?",
+        respostaModelo: "Conforme apresentado: fragrâncias, betaínas, metilcloroisotiazolinona e lanolina são ingredientes que aumentam a chance de sensibilização."
+      },
+      {
+        pergunta: "2) Quais produtos são apresentados como adequados para lubrificar a pele do RN, especialmente em descamação fisiológica?",
+        respostaModelo: "Lubrificar a pele especialmente com óleos vegetais: óleo de girassol, amêndoas, coco e azeite de oliva."
+      },
+      {
+        pergunta: "3) Como orientar a anamnese e o exame físico cutâneo nessa primeira consulta, considerando o que foi apresentado em aula?",
+        respostaModelo: "Distúrbios da pele em bebês são diferentes dos adultos. A história do RN deve incluir o período pré-natal, gravidez e parto. A história materna pode levar rapidamente ao diagnóstico em alguns casos (por exemplo, HIV materno ou lúpus eritematoso sistêmico). O diagnóstico de distúrbios cutâneos em bebês e crianças requer inspeção cuidadosa da pele, cabelos e unhas. As membranas mucosas também devem ser examinadas, procurando especificamente por úlceras, manchas brancas ou lesões pigmentadas que possam refletir um distúrbio primário da pele."
+      },
+      {
+        pergunta: "4) Por que a orientação a esse casal é tão importante do ponto de vista clínico geral, conforme reforçado no fechamento da aula?",
+        respostaModelo: "Lesões cutâneas na infância não são apenas achados estéticos. Podem causar dor, prurido intenso, distúrbios do sono, infecções secundárias e impacto psicossocial significativo. O diagnóstico precoce e o manejo adequado reduzem complicações, evitam cronificação e melhoram a qualidade de vida. Orientar bem desde o início (cuidados, ingredientes a evitar, sinais de alarme) faz parte da prevenção."
+      }
+    ]
+  }
+];
+
+</script>
+<script>
+// ==========================================================
+// RUNTIME
+// ==========================================================
+const allItems = [...questoes, ...questoesDissertativas].sort((a,b)=>a.id-b.id);
+const state = {
+  mode: 'estudo',           // 'estudo' | 'simulado'
+  filter: 'todas',
+  search: '',
+  cardMode: false,
+  answers: {},              // id -> {selected, correct, confidence}
+  essayShown: {},           // id-pergIdx -> bool
+  reveal: {},               // id -> bool
+  streak: 0,
+  bestStreak: 0,
+};
+
+// Update meta counts
+document.getElementById('meta-mcq').textContent = questoes.length;
+document.getElementById('meta-essay').textContent = questoesDissertativas.length;
+document.getElementById('count-q').textContent = allItems.length;
+
+// ============= RENDER =============
+function render() {
+  const list = document.getElementById('questoes-list');
+  list.innerHTML = '';
+  let visible = 0;
+  for (const q of allItems) {
+    if (!matchesFilter(q)) continue;
+    visible++;
+    list.appendChild(q.type === 'mcq' ? renderMcq(q) : renderEssay(q));
+  }
+  if (visible === 0) {
+    list.innerHTML = '<div style="text-align:center;color:var(--text-3);padding:60px 20px;font-family:JetBrains Mono,monospace;font-size:0.85rem">Nenhuma questão para o filtro atual.</div>';
+  }
+  document.getElementById('submit-row').style.display = state.mode === 'simulado' ? 'flex' : 'none';
+}
+
+function matchesFilter(q) {
+  const f = state.filter;
+  const s = state.search.toLowerCase().trim();
+  if (s) {
+    const haystack = (q.enunciado || q.caso || q.titulo || '').toLowerCase();
+    if (!haystack.includes(s)) return false;
+  }
+  if (f === 'todas') return true;
+  if (f === 'mcq') return q.type === 'mcq';
+  if (f === 'essay') return q.type === 'essay';
+  if (['facil','medio','dificil'].includes(f)) return q.difficulty === f;
+  return q.topic === f;
+}
+
+function topicLabel(t) {
+  return (topicToResumo[t] && topicToResumo[t].label) || t;
+}
+
+function renderMcq(q) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.dataset.id = q.id;
+  if (state.answers[q.id]) card.classList.add('answered');
+
+  const diffClass = {facil:'badge-easy', medio:'badge-medium', dificil:'badge-hard'}[q.difficulty] || 'badge-medium';
+  const diffLabel = {facil:'Fácil', medio:'Médio', dificil:'Difícil'}[q.difficulty];
+
+  let html = `
+    <div class="q-top">
+      <div class="q-badges">
+        <span class="badge ${diffClass}">${diffLabel}</span>
+        <span class="badge badge-topic">${topicLabel(q.topic)}</span>
+      </div>
+      <span class="q-num">Q${String(q.id).padStart(2,'0')} · objetiva</span>
+    </div>
+    <p class="q-text">${q.enunciado}</p>
+  `;
+
+  // Confidence
+  if (state.mode === 'estudo' && !state.answers[q.id]) {
+    const conf = (state.answers[q.id]||{}).confidence;
+    html += `<div class="confidence">
+      <span class="confidence-label">CONFIANÇA</span>
+      <button class="conf-btn ${conf==='Alta'?'selected':''}" data-conf="Alta" data-id="${q.id}">Alta</button>
+      <button class="conf-btn ${conf==='Média'?'selected':''}" data-conf="Média" data-id="${q.id}">Média</button>
+      <button class="conf-btn ${conf==='Baixa'?'selected':''}" data-conf="Baixa" data-id="${q.id}">Baixa</button>
+    </div>`;
+  }
+
+  // Alternatives
+  html += '<ul class="alts">';
+  for (const letter of ['A','B','C','D','E']) {
+    const ans = state.answers[q.id];
+    const showResult = ans && state.mode === 'estudo';
+    let cls = 'alt';
+    if (ans && ans.selected === letter) cls += ' selected';
+    if (showResult) {
+      if (letter === q.correta) cls += ' correct';
+      else if (ans.selected === letter) cls += ' wrong';
+    }
+    if (ans) cls += ' disabled';
+    html += `<li class="${cls}" data-id="${q.id}" data-letter="${letter}">
+      <span class="alt-letter">${letter}</span>
+      <span>${q.alternativas[letter]}</span>
+    </li>`;
+  }
+  html += '</ul>';
+
+  // Explanation (only in estudo, after answer)
+  const ans = state.answers[q.id];
+  if (state.mode === 'estudo' && ans) {
+    html += renderExplanation(q);
+  }
+
+  card.innerHTML = html;
+  return card;
+}
+
+function renderExplanation(q) {
+  const expl = q.explicacao;
+  let html = '<div class="explanation show">';
+  html += '<div class="expl-header">EXPLICAÇÃO</div>';
+  html += `<div class="expl-correct">✓ Correta — ${q.correta}</div>`;
+  html += `<div class="expl-correct-body">${expl.correta}</div>`;
+  if (q.fonte) html += `<div class="expl-source">📄 Fonte: ${q.fonte}</div>`;
+  html += '<div class="expl-wrong-title">Por que as outras estão erradas</div>';
+  for (const letter of ['A','B','C','D','E']) {
+    if (letter === q.correta) continue;
+    if (!expl[letter]) continue;
+    html += `<div class="expl-wrong"><b>${letter}</b> ${expl[letter]}</div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderEssay(q) {
+  const card = document.createElement('div');
+  card.className = 'essay-card';
+  card.dataset.id = q.id;
+
+  let html = `
+    <div class="q-top">
+      <div class="q-badges">
+        <span class="badge badge-essay">Dissertativa</span>
+        <span class="badge badge-${q.difficulty==='facil'?'easy':q.difficulty==='medio'?'medium':'hard'}">${q.difficulty==='facil'?'Fácil':q.difficulty==='medio'?'Médio':'Difícil'}</span>
+        <span class="badge badge-topic">${topicLabel(q.topic)}</span>
+      </div>
+      <span class="q-num">Q${String(q.id).padStart(2,'0')} · ${q.titulo || 'caso clínico'}</span>
+    </div>
+    <div class="case">
+      <span class="case-tag">CASO CLÍNICO</span>
+      ${q.caso}
+    </div>
+  `;
+
+  q.perguntas.forEach((p, idx) => {
+    const key = `${q.id}-${idx}`;
+    const shown = state.essayShown[key];
+    html += `<div class="essay-q">
+      <div class="q-label">PERGUNTA ${idx+1}</div>
+      <div class="q-statement">${p.pergunta}</div>
+      <textarea placeholder="Escreva sua resposta..."></textarea>
+      <button class="reveal-btn" style="margin-top:10px" data-essay-key="${key}">${shown ? 'Ocultar resposta-modelo' : 'Revelar resposta-modelo'}</button>
+      <div class="essay-model ${shown?'show':''}">
+        <strong>RESPOSTA-MODELO</strong>
+        ${p.respostaModelo}
+        ${idx === 0 && q.fonte ? `<div class="expl-source" style="margin-top:10px">📄 Fonte: ${q.fonte}</div>` : ''}
+      </div>
+    </div>`;
+  });
+
+  card.innerHTML = html;
+  return card;
+}
+
+// ============= EVENTS =============
+document.addEventListener('click', (e) => {
+  // Alt selection
+  const alt = e.target.closest('.alt');
+  if (alt && !alt.classList.contains('disabled')) {
+    const id = parseInt(alt.dataset.id);
+    const letter = alt.dataset.letter;
+    answerMcq(id, letter);
+    return;
+  }
+
+  // Confidence
+  const conf = e.target.closest('.conf-btn');
+  if (conf) {
+    const id = parseInt(conf.dataset.id);
+    const value = conf.dataset.conf;
+    const cur = state.answers[id] || {};
+    state.answers[id] = {...cur, confidence: value};
+    render();
+    return;
+  }
+
+  // Reveal essay model
+  if (e.target.dataset.essayKey) {
+    const key = e.target.dataset.essayKey;
+    state.essayShown[key] = !state.essayShown[key];
+    render();
+    return;
+  }
+
+  // Filter
+  const chip = e.target.closest('.filter-chip');
+  if (chip) {
+    state.filter = chip.dataset.filter;
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c === chip));
+    render();
+    return;
+  }
+
+  // Mode
+  const pill = e.target.closest('.pill');
+  if (pill) {
+    const m = pill.dataset.mode;
+    if (m && m !== state.mode) {
+      state.mode = m;
+      // when switching to simulado, clear answers visually but keep results until submit
+      document.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p === pill));
+      document.getElementById('diagnostic').classList.remove('show');
+      render();
+    }
+    return;
+  }
+
+  // Theme
+  if (e.target.id === 'theme-toggle' || e.target.closest('#theme-toggle')) {
+    toggleTheme();
+    return;
+  }
+  if (e.target.id === 'card-mode' || e.target.closest('#card-mode')) {
+    state.cardMode = !state.cardMode;
+    document.body.classList.toggle('card-mode', state.cardMode);
+    return;
+  }
+
+  // Flashcard flip
+  const fc = e.target.closest('.fc');
+  if (fc) {
+    fc.classList.toggle('flipped');
+    return;
+  }
+
+  // Submit simulado
+  if (e.target.id === 'submit-btn') {
+    submitSimulado();
+    return;
+  }
+});
+
+function answerMcq(id, letter) {
+  if (state.answers[id]) return;
+  const q = questoes.find(q => q.id === id);
+  const correct = letter === q.correta;
+  state.answers[id] = {selected: letter, correct, confidence: (state.answers[id]||{}).confidence || null};
+
+  if (state.mode === 'estudo') {
+    if (correct) state.streak++;
+    else state.streak = 0;
+    if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+  }
+  updateStats();
+  render();
+}
+
+function updateStats() {
+  const answered = Object.keys(state.answers).length;
+  const correct = Object.values(state.answers).filter(a => a.correct).length;
+  document.getElementById('stat-answered').textContent = answered;
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-streak').textContent = state.streak;
+  document.getElementById('stat-pct').textContent = answered ? Math.round(100*correct/answered) + '%' : '0%';
+}
+
+// ============= SIMULADO =============
+function submitSimulado() {
+  const mcqs = questoes;
+  // Aggregate by topic
+  const byTopic = {};
+  for (const q of mcqs) {
+    const t = q.topic;
+    byTopic[t] = byTopic[t] || {total: 0, correct: 0, wrongIds: []};
+    byTopic[t].total++;
+    const a = state.answers[q.id];
+    if (a && a.correct) byTopic[t].correct++;
+    else if (a && !a.correct) byTopic[t].wrongIds.push(q.id);
+    else byTopic[t].wrongIds.push(q.id); // não respondida = errada
+  }
+
+  // build diagnostic
+  const arr = Object.entries(byTopic).map(([t, s]) => ({
+    topic: t,
+    pct: s.total ? s.correct / s.total : 0,
+    total: s.total,
+    correct: s.correct,
+    wrongIds: s.wrongIds,
+    label: topicLabel(t),
+    sub: (topicToResumo[t]||{}).subtopics || ''
+  }));
+  arr.sort((a,b) => a.pct - b.pct);
+
+  const totalQ = mcqs.length;
+  const totalCorrect = arr.reduce((s,a)=>s+a.correct,0);
+  const overall = Math.round(100 * totalCorrect / totalQ);
+
+  const summary = `${totalCorrect}/${totalQ} acertos · ${overall}% · ${arr.length} tópicos avaliados`;
+  document.getElementById('diag-summary').textContent = summary;
+
+  const cont = document.getElementById('diag-topics');
+  cont.innerHTML = '';
+  let allCorrect = true;
+  for (const a of arr) {
+    if (a.correct < a.total) allCorrect = false;
+    const pct = Math.round(a.pct*100);
+    const cls = a.pct < 0.5 ? 'weak' : a.pct < 1 ? 'medium' : '';
+    const icon = a.pct < 0.5 ? '🔴' : a.pct < 1 ? '🟡' : '🟢';
+    const div = document.createElement('div');
+    div.className = 'diag-topic ' + cls;
+    div.innerHTML = `
+      <div class="diag-topic-title">${icon} ${a.label} — ${a.correct}/${a.total} (${pct}%)</div>
+      <div class="diag-topic-stats">${a.wrongIds.length ? 'Questões a revisar: ' + a.wrongIds.map(x=>'Q'+String(x).padStart(2,'0')).join(', ') : 'Sem erros nesse tópico'}</div>
+      ${a.pct < 1 && a.sub ? `<div class="diag-topic-sub">Subtópicos a revisar: ${a.sub}</div>` : ''}
+    `;
+    cont.appendChild(div);
+  }
+
+  if (allCorrect) {
+    cont.innerHTML = '<div class="diag-topic" style="border-left-color: var(--correct); background: rgba(34,197,94,0.06);"><div class="diag-topic-title">🎉 Parabéns — você acertou todas!</div><div class="diag-topic-stats">Domínio sólido em todos os tópicos avaliados.</div></div>';
+  }
+
+  document.getElementById('diagnostic').classList.add('show');
+  document.getElementById('diagnostic').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============= THEME =============
+function toggleTheme() {
+  const html = document.documentElement;
+  const cur = html.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch(_){}
+}
+(function loadTheme() {
+  try {
+    const t = localStorage.getItem('theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  } catch(_){}
+})();
+
+// ============= SEARCH =============
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', () => { state.search = searchInput.value; render(); });
+
+// ============= KEYBOARD =============
+document.addEventListener('keydown', (e) => {
+  // Skip if typing in input/textarea
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+    if ((e.metaKey||e.ctrlKey) && e.key === 'k') {
+      e.preventDefault(); searchInput.focus(); searchInput.select();
+    }
+    return;
+  }
+  const k = e.key.toLowerCase();
+  if (k === 't') { toggleTheme(); }
+  else if (k === 'c') { state.cardMode = !state.cardMode; document.body.classList.toggle('card-mode', state.cardMode); }
+  else if (k === 'r') {
+    // reveal first essay model in viewport
+    const candidates = document.querySelectorAll('.reveal-btn[data-essay-key]');
+    for (const c of candidates) {
+      const r = c.getBoundingClientRect();
+      if (r.top > 0 && r.top < innerHeight) { c.click(); break; }
+    }
+  }
+  else if ((e.metaKey||e.ctrlKey) && k === 'k') {
+    e.preventDefault(); searchInput.focus(); searchInput.select();
+  }
+});
+
+// ============= FLASHCARDS (auto-derived) =============
+const flashcardSeeds = [
+  {front: "Vias de aquisição do HSV neonatal", back: "In útero 5% · Periparto 85% (predominante) · Pós-parto 10%."},
+  {front: "Esquema de aciclovir no HSV neonatal", back: "60 mg/kg/dia EV em 3 doses · 14 dias na forma localizada · 21 dias na forma disseminada e do SNC."},
+  {front: "Formas clínicas do HSV neonatal", back: "Localizada (pele/olho/boca) 45% · SNC 30% · Disseminada 25%."},
+  {front: "Acne neonatal — prevalência e curso", back: "20% dos RNs · mais frequente em meninos · andrógenos maternos+endógenos · regressão espontânea em 1-3 meses (após 3 meses = acne infantil)."},
+  {front: "Bohn vs Epstein", back: "Nódulos de Bohn → gengiva. Pérolas de Epstein → palato duro. Lesões benignas que regridem espontaneamente."},
+  {front: "Eritema tóxico — distribuição", back: "Pápulas e pústulas estéreis em halo eritematoso de 1-2 cm em tronco, extremidades e face. RARO envolvimento palmoplantar. Surge no 2º dia, regride em 5-14 dias."},
+  {front: "Acrocianose — janela de normalidade", back: "RN de termo · lábios, palmas e plantas · normal nas primeiras 4 horas · melhora com aquecimento."},
+  {front: "Alteração em arlequim", back: "RN PREMATURO em decúbito lateral: hemicorpo apoiado eritematoso, lado oposto pálido. Causa: imaturidade do centro hipotalâmico de tônus vascular."},
+  {front: "Escabiose — distribuição em lactentes vs adultos", back: "Lactentes: lesões generalizadas em couro cabeludo, palmas, plantas e pregas. Adultos: NÃO afeta cabeça, pernas nem pés (linhas de Hebra)."},
+  {front: "Candidíase — congênita vs neonatal", back: "Congênita: ao nascimento ou ≤6 dias (rara). Neonatal: após o 7º dia. Lesões satélites pustulosas e vesiculares na periferia. Tratamento: nistatina ou azólicos."},
+  {front: "Dermatite atópica — 3 desregulações", back: "Disfunção da barreira cutânea · Resposta imunológica desregulada (inflamação crônica) · Alterações no microbioma da pele."},
+  {front: "Hidratantes a EVITAR no RN", back: "Fragrâncias · Betaínas · Metilcloroisotiazolinona · Lanolina (aumentam chance de sensibilização). Lubrificar com óleos vegetais (girassol, amêndoas, coco, oliva)."},
+];
+
+const fcGrid = document.getElementById('fc-grid');
+flashcardSeeds.forEach(c => {
+  const el = document.createElement('div');
+  el.className = 'fc';
+  el.innerHTML = `
+    <div class="fc-front">${c.front}</div>
+    <div class="fc-back">${c.back}</div>
+    <div class="fc-hint">↻ clique para revelar</div>
+  `;
+  fcGrid.appendChild(el);
+});
+document.getElementById('meta-fc').textContent = flashcardSeeds.length;
+
+// initial render
+render();
+updateStats();
+</script>
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumao Pre-Prova — Anatomia Patologica P2</title>
+<style>
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d;
+  --fg:#c9d1d9; --fg2:#8b949e;
+  --accent:#58a6ff; --accent2:#1f6feb;
+  --green:#3fb950; --red:#f85149; --yellow:#d29922; --purple:#bc8cff;
+  --border:#30363d;
+}
+[data-theme="light"] {
+  --bg:#ffffff; --bg2:#f6f8fa; --bg3:#e1e4e8;
+  --fg:#24292f; --fg2:#57606a;
+  --accent:#0969da; --accent2:#0550ae;
+  --green:#1a7f37; --red:#cf222e; --yellow:#9a6700; --purple:#8250df;
+  --border:#d0d7de;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:56px}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}
+
+/* NAV FIXA */
+nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+nav a{color:var(--accent);text-decoration:none;font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap}
+nav a:hover{background:var(--bg3)}
+.nav-title{color:var(--fg);font-weight:700;font-size:13px;margin-right:auto}
+#theme-btn{background:none;border:1px solid var(--border);color:var(--fg2);cursor:pointer;font-size:12px;padding:3px 8px;border-radius:4px}
+
+/* CONTAINER */
+.container{max-width:900px;margin:0 auto;padding:12px 16px 60px}
+
+/* SECAO */
+.aula-section{margin-bottom:24px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.aula-header{background:var(--bg2);padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:8px}
+.aula-header h2{font-size:15px;color:var(--accent);margin:0}
+.aula-header .badge{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;background:var(--accent2);color:#fff}
+.aula-body{padding:10px 14px}
+
+/* LISTAS */
+ul,ol{padding-left:20px;margin:4px 0}
+li{margin-bottom:3px}
+li::marker{color:var(--accent)}
+
+/* TABELAS */
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
+th,td{padding:5px 8px;border:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:var(--bg3);color:var(--fg);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+td{background:var(--bg2)}
+
+/* TABELA COMPARATIVA */
+.tabela-comp{border-left:3px solid var(--purple)}
+.tabela-comp th{background:var(--accent2);color:#fff}
+
+/* NAO CONFUNDIR */
+.nao-confundir{background:var(--bg2);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0}
+.nao-confundir::before{content:"NAO CONFUNDIR";display:block;font-size:10px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:4px}
+
+/* DESTAQUE PROVA */
+.destaque-prova{background:var(--bg2);border:1px solid var(--yellow);border-left:4px solid var(--yellow);border-radius:6px;padding:8px 12px;margin:8px 0}
+.destaque-prova::before{content:"DESTAQUE DE PROVA";display:block;font-size:10px;font-weight:700;color:var(--yellow);letter-spacing:1px;margin-bottom:4px}
+
+/* PALAVRA-CHAVE */
+.kw{color:var(--yellow);font-weight:700}
+.kw-green{color:var(--green);font-weight:700}
+.kw-red{color:var(--red);font-weight:700}
+.kw-purple{color:var(--purple);font-weight:700}
+
+/* SEQUENCIA / FLUXO */
+.flow{background:var(--bg3);border-radius:6px;padding:8px 12px;margin:8px 0;font-family:monospace;font-size:13px;color:var(--green);line-height:1.7}
+
+/* SUBTITULO */
+h3{font-size:13px;color:var(--purple);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+h4{font-size:13px;color:var(--fg);margin:8px 0 4px;font-weight:600}
+
+strong{color:var(--fg)}
+b{color:var(--yellow)}
+
+/* PRINT */
+@media print {
+  body{background:#fff;color:#000;font-size:10px;line-height:1.3}
+  nav{display:none}
+  .container{max-width:100%;padding:0}
+  .aula-section{break-inside:avoid;border:1px solid #999;margin-bottom:8px}
+  .aula-header{background:#eee;padding:4px 8px}
+  .aula-header h2{color:#000;font-size:12px}
+  .aula-body{padding:4px 8px}
+  table{font-size:9px}
+  th,td{padding:2px 4px;border-color:#999}
+  th{background:#ddd;color:#000}
+  td{background:#fff}
+  .nao-confundir,.destaque-prova{border-width:2px;padding:4px 8px}
+  .nao-confundir::before,.destaque-prova::before{font-size:8px}
+  .flow{background:#eee;color:#000;font-size:9px;padding:4px 8px}
+  ul,ol{padding-left:14px}
+  li{margin-bottom:1px}
+  h3{font-size:10px;margin:6px 0 2px}
+  .kw,.kw-green,.kw-red,.kw-purple{color:#000;font-weight:700}
+  strong,b{color:#000}
+  [data-theme] {--bg:#fff;--bg2:#f6f8fa;--bg3:#e1e4e8;--fg:#000;--fg2:#444;--border:#999}
+}
+
+@media(max-width:600px){
+  nav{padding:4px 8px}
+  nav a{font-size:11px;padding:2px 6px}
+  .container{padding:8px}
+  .aula-body{padding:8px 10px}
+  table{font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-title">RESUMAO P2 — Anatopato</span>
+  <a href="#a1">1-IA</a>
+  <a href="#a2">2-IC</a>
+  <a href="#a3">3-Granul</a>
+  <a href="#a4">4-Necrose</a>
+  <a href="#a5">5-Apoptose</a>
+  <a href="#a6">6-Hemostasia</a>
+  <button id="theme-btn" onclick="toggleTheme()">Claro/Escuro</button>
+</nav>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- AULA 1 -->
+<!-- ============================================================ -->
+<section id="a1" class="aula-section">
+<div class="aula-header"><span class="badge">A1</span><h2>Inflamacao Aguda</h2></div>
+<div class="aula-body">
+
+<h3>5 Sinais Cardinais</h3>
+<ul>
+  <li><span class="kw">Calor</span> e <span class="kw">Rubor</span> — vasodilatacao (hiperemia)</li>
+  <li><span class="kw">Edema</span> (tumor) — extravasamento de exsudato</li>
+  <li><span class="kw">Dor</span> — bradicinina + compressao pelo edema</li>
+  <li><span class="kw">Perda de funcao</span> — consequencia conjunta</li>
+</ul>
+
+<h3>PAMPs vs DAMPs</h3>
+<table class="tabela-comp">
+<tr><th>PAMPs</th><th>DAMPs</th></tr>
+<tr><td>Exogenos (patogenos) — LPS, glicoproteinas virais</td><td>Endogenos (celulas lesadas) — ADP, histonas, fragmentos de DNA</td></tr>
+<tr><td>Reconhecidos por <span class="kw">TLRs</span></td><td>Reconhecidos quando celula esta danificada</td></tr>
+</table>
+<div class="destaque-prova">PAMPs + DAMPs = inflamacao intensa. So DAMPs (cirurgia esteril) = branda. Por isso se faz antissepsia.</div>
+
+<h3>Sequencia dos Fenomenos Vasculares</h3>
+<div class="flow">Vasoconstrição (seg) → Vasodilatação arteriolar → ↑Pressão hidrostática → Estase → Transudato (pobre em ptn) → Exsudato (rico em ptn: fibrinogênio, complemento, albumina) → Edema</div>
+<div class="destaque-prova"><span class="kw">Pico de edema = 24-48h.</span> Gelo nas primeiras 24-48h pós-cirúrgico. Fibrinogênio forma "tapete/trilha" que guia leucócitos.</div>
+
+<h3>Sequencia dos Fenomenos Celulares</h3>
+<div class="flow">Marginação → Rolagem (selectinas) → Adesão estável (integrinas/ICAM) → Pavimentação → Diapedese → Quimiotaxia (C5a, leucotrienos)</div>
+
+<h3>Celulas-Chave</h3>
+<ul>
+  <li><span class="kw">Neutrofilo (PMN)</span> — protagonista; ~50% leucograma; fagocitou → morreu = <span class="kw">piocito</span> (pus)</li>
+  <li><span class="kw">Mastocito</span> — 1a celula a responder; degranulacao de histamina → vasodilatacao imediata</li>
+  <li>Eosinofilo — parasitoses e alergias (IgE)</li>
+  <li>Monocito → Macrofago a partir do 2o-3o dia</li>
+</ul>
+
+<div class="destaque-prova">
+<span class="kw">TNF-alfa e IL-1</span> = os 2 mediadores mais importantes da IA. Funcoes: ativacao endotelial, recrutamento leucocitario, febre, estimulo medular.
+</div>
+
+<div class="destaque-prova">
+<span class="kw">Desvio a esquerda</span> = neutrofilos imaturos (bastonetes) no sangue. &lt;1.000 neutrofilos = imunocomprometido. Contagem extrema (100-200 mil) = reacao leucemoide → investigar leucemia.
+</div>
+
+<h3>Excecoes ao Padrao Neutrofilico</h3>
+<table class="tabela-comp">
+<tr><th>Situacao</th><th>Celula Predominante</th></tr>
+<tr><td>Infeccoes virais</td><td><span class="kw">Linfocitos</span> (linfocitose)</td></tr>
+<tr><td>Alergias / Parasitoses</td><td><span class="kw">Eosinofilos</span> (eosinofilia)</td></tr>
+<tr><td>Pseudomonas</td><td>Neutrofilia sustentada + desvio a esquerda</td></tr>
+</table>
+
+<h3>4 Padroes Morfologicos</h3>
+<table>
+<tr><th>Padrao</th><th>Marca</th><th>Exemplo</th></tr>
+<tr><td><b>Seroso</b></td><td>Fluido aquoso pobre em ptn</td><td>Queimaduras, bolhas</td></tr>
+<tr><td><b>Fibrinoso</b></td><td>Exsudato com fibrinogenio</td><td>Pericardite, pneumonia lobar</td></tr>
+<tr><td><b>Supurativo</b></td><td>Pus (piocitos + necrose)</td><td>Abscesso, empiema, meningite</td></tr>
+<tr><td><b>Ulcerativo</b></td><td>Perda completa do epitélio</td><td>Ulcera gastrica, afta</td></tr>
+</table>
+
+<div class="destaque-prova"><span class="kw-red">Abscesso se trata DRENANDO.</span> Antibiotico sozinho nao funciona — vasos dentro do abscesso morreram; ATB nao chega.</div>
+
+<h3>Desfechos da IA</h3>
+<div class="flow">1. Resolucao (pouca destruicao, regenera) → 2. Cicatrizacao/Fibrose (destruicao substancial) → 3. Progressao para IC (agente persiste)</div>
+<ul>
+  <li>Resolucao: lipoxinas + resolvinas + protectinas + TGF-beta + IL-10 (anti-inflamatorias)</li>
+</ul>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- AULA 2 -->
+<!-- ============================================================ -->
+<section id="a2" class="aula-section">
+<div class="aula-header"><span class="badge">A2</span><h2>Inflamacao Cronica</h2></div>
+<div class="aula-body">
+
+<h3>IA vs IC</h3>
+<table class="tabela-comp">
+<tr><th>IA</th><th>IC</th></tr>
+<tr><td>Horas a dias (max ~7d)</td><td>Semanas, meses, anos</td></tr>
+<tr><td>Fenomenos <span class="kw">vasculares e exsudativos</span></td><td>Fenomenos <span class="kw">alterativos e reparativos</span></td></tr>
+<tr><td>Infiltrado <span class="kw">PMN (neutrofilos)</span></td><td>Infiltrado <span class="kw">mononuclear</span> (macrofagos, linfocitos, plasmocitos)</td></tr>
+<tr><td>Busca eliminar o agente</td><td>Ciclo destruicao + reparo simultaneos</td></tr>
+</table>
+
+<h3>3 Fenomenos da IC coexistentes</h3>
+<ol>
+  <li><span class="kw">Celular</span> — infiltracao mononuclear</li>
+  <li><span class="kw">Alterativo</span> — degeneracao e necrose (destruicao)</li>
+  <li><span class="kw">Reparativo</span> — angiogenese + <span class="kw">fibrose</span> (colageno por fibroblastos)</li>
+</ol>
+
+<div class="nao-confundir">
+  <ul>
+    <li><span class="kw-red">Fibrina</span> = proteina plasmatica (do fibrinogenio) → presente na IA (exsudato fibrinoso)</li>
+    <li><span class="kw-green">Fibrose</span> = excesso de colageno (por fibroblastos) → presente na IC (reparo). IRREVERSIVEL</li>
+    <li><b>Fibrinoso ≠ Fibroso!</b></li>
+  </ul>
+</div>
+
+<h3>Macrofago M1 vs M2</h3>
+<table class="tabela-comp">
+<tr><th>M1 (Pro-inflamatorio)</th><th>M2 (Anti-inflamatorio)</th></tr>
+<tr><td>Ativado por IFN-gamma</td><td>Ativado por IL-4, IL-10</td></tr>
+<tr><td>Fagocitose, destruicao</td><td>Reparo, fibrose</td></tr>
+<tr><td>Produz EROs, NO, TNF</td><td>Produz FGF, VEGF, TGF-beta</td></tr>
+<tr><td>Toxico a microbios E ao tecido</td><td>Proliferacao de fibroblastos, colageno</td></tr>
+</table>
+<div class="destaque-prova">M1 e M2 coexistem. Agudizacao → M1. Remissao → M2. Esse balanço perpetuo = perda progressiva de funcao.</div>
+
+<h3>Agentes de IC</h3>
+<ul>
+  <li><b>Infeccoes persistentes:</b> TB, hepatite B/C (A=aguda), Hansen, PCCM, Chagas</li>
+  <li><b>Toxicos:</b> tabaco (DPOC), silica (silicose), refluxo gastroesofagico</li>
+  <li><b>Autoimunidade:</b> Hashimoto, artrite reumatoide, DM tipo 1</li>
+</ul>
+
+<div class="destaque-prova"><span class="kw">Gastrite cronica</span>: 90% por <em>H. pylori</em>. Trata com ATB. Padrao ouro: repetir endoscopia + teste para confirmar erradicacao.</div>
+
+<div class="destaque-prova"><span class="kw">PCR (Proteina C-Reativa)</span>: marcador de atividade inflamatoria. Produzida pelo figado (IL-1, TNF). Normal &lt;0,5-1 mg/dL. Se nao baixa → investigar infeccao oculta.</div>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- AULA 3 -->
+<!-- ============================================================ -->
+<section id="a3" class="aula-section">
+<div class="aula-header"><span class="badge">A3</span><h2>Inflamacao Granulomatosa</h2></div>
+<div class="aula-body">
+
+<div class="destaque-prova">
+Hierarquia: Inflamacao Cronica Especifica → <span class="kw">Granulomatosa</span> → Imunogenica ou Nao Imunogenica (corpo estranho). Decorar essa sequencia.
+</div>
+
+<h3>Granuloma Imunogenico vs Corpo Estranho</h3>
+<table class="tabela-comp">
+<tr><th></th><th>Imunogenico (Epitelioide)</th><th>Corpo Estranho (Nao Imunogenico)</th></tr>
+<tr><td><b>Agente</b></td><td>Infeccioso (bacterias, fungos, parasitos)</td><td>Inerte (talco, sutura, silica, silicone)</td></tr>
+<tr><td><b>Linfocitos T</b></td><td><span class="kw-green">SIM — sempre</span></td><td><span class="kw-red">NAO</span></td></tr>
+<tr><td><b>Arquitetura</b></td><td>Circular, organizada, concentrica</td><td>Segue o formato do corpo estranho</td></tr>
+<tr><td><b>Celula gigante</b></td><td><span class="kw">Langhans</span> (nucleos na periferia, paliçada)</td><td>Corpo estranho (nucleos irregulares no centro)</td></tr>
+<tr><td><b>Halo linfocitario</b></td><td>Proeminente</td><td>Escasso</td></tr>
+<tr><td><b>Capsula fibrosa</b></td><td>Presente (mais espessa = mais antigo)</td><td>Menos evidente</td></tr>
+</table>
+
+<div class="destaque-prova">
+Regra absoluta: agente <b>infeccioso</b> → granuloma <span class="kw-green">SEMPRE imunogenico</span>. Corpo estranho inerte → <span class="kw-red">nao imunogenico</span>.
+</div>
+
+<div class="nao-confundir">
+<span class="kw-red">Langhans ≠ Langerhans!</span><br>
+<b>Langhans</b> = celula gigante do granuloma imunogenico (nucleos na periferia).<br>
+<b>Langerhans</b> = ilhotas pancreaticas / celulas dendriticas da pele. "Outro carro."
+</div>
+
+<h3>Cadeia Celular (decorar)</h3>
+<div class="flow">Monocito → Macrofago → (ativacao por citocinas) → Celula Epitelioide (= macrofago ativado) → (fusao) → Celula Gigante</div>
+<div class="destaque-prova">"Se eu perguntar o que e uma celula epitelioide: <span class="kw">e macrofago ativado</span>."</div>
+
+<h3>Necrose Central por Doenca</h3>
+<table>
+<tr><th>Doenca</th><th>Tipo de Necrose</th></tr>
+<tr><td>Tuberculose</td><td><span class="kw">Caseosa</span> (coagulacao + liquefacao = "queijo fresco")</td></tr>
+<tr><td>Sifilis</td><td>Gomosa</td></tr>
+<tr><td>Esquistossomose aguda</td><td>Granular e acidofila</td></tr>
+<tr><td>Sarcoidose / Crohn / Hanseniase</td><td><span class="kw-red">SEM necrose caseosa</span> (granulomas nao caseosos)</td></tr>
+</table>
+
+<div class="destaque-prova"><span class="kw">Tuberculo</span> = nome especifico do granuloma imunogenico da TB. Cavernas tuberculosas = centro necrotico digerido + drenagem bronquica.</div>
+
+<div class="destaque-prova">Corpo estranho sob <span class="kw">luz polarizada</span> aparece refratario/brilhante (talco em drogas EV, fio de sutura).</div>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- AULA 4 -->
+<!-- ============================================================ -->
+<section id="a4" class="aula-section">
+<div class="aula-header"><span class="badge">A4</span><h2>Necrose e Infarto</h2></div>
+<div class="aula-body">
+
+<div class="destaque-prova">
+3 regras absolutas da necrose: (1) <span class="kw-red">SEMPRE patologica</span>. (2) <span class="kw-red">SEMPRE gera inflamacao</span>. (3) <span class="kw-red">IRREVERSIVEL</span>.
+</div>
+
+<h3>Alteracoes Nucleares (sequencia obrigatoria)</h3>
+<div class="flow">Picnose (contracao/condensacao) → Cariorrexe (fragmentacao) → Cariolise (dissolucao/desaparece)</div>
+
+<h3>Terminologia Essencial</h3>
+<ul>
+  <li><span class="kw">Autolise</span> = digestao por enzimas proprias (lisossomais)</li>
+  <li><span class="kw">Heterolise</span> = digestao por enzimas de leucocitos</li>
+  <li><span class="kw">Necrofanerose</span> = aparecimento das alteracoes morfologicas (~6h no MO). A celula ja morreu, mas voce ainda nao "ve".</li>
+</ul>
+
+<h3>Tipos de Necrose</h3>
+<table class="tabela-comp">
+<tr><th>Tipo</th><th>Mecanismo/Marca</th><th>Onde</th></tr>
+<tr><td><b>Coagulativa</b></td><td>Isquemica. Desnaturacao predomina. Preserva arquitetura ("celulas fantasma"). Area firme e palida.</td><td>Coracao, rim, baco, figado, pulmao. <span class="kw-red">NAO no cerebro</span></td></tr>
+<tr><td><b>Liquefativa</b></td><td>Liquefacao enzimatica rapida. Tecido vira "papa".</td><td><span class="kw">Cerebro</span> (rico em lipidios) + Abscessos (infeccao bacteriana)</td></tr>
+<tr><td><b>Caseosa</b></td><td>Coagulacao + liquefacao. "Queijo fresco". Centro do granuloma.</td><td><span class="kw">Tuberculose</span></td></tr>
+<tr><td><b>Esteatonecrose</b></td><td>Lipases → ac. graxos + Ca++ → saponificacao = <span class="kw">aspecto de cera de vela</span></td><td><span class="kw">Pancreatite aguda</span>, gordura peripancreatica</td></tr>
+</table>
+
+<div class="destaque-prova">"Sempre que falo necrose coagulativa, vem na cabeca <span class="kw">infarto</span>." Todo infarto gera necrose (coagulativa, exceto cerebro).</div>
+
+<h3>Gangrena</h3>
+<table>
+<tr><th>Seca</th><th>Umida</th><th>Gasosa</th></tr>
+<tr><td>Mumificada, preta, seca. Linha demarcatoria nitida.</td><td>Edemaciada, mole, podre. Mortalidade alta. Amputacao de emergencia.</td><td><em>Clostridium</em>. Crepitacao. Odor de manteiga rancosa.</td></tr>
+</table>
+<div class="destaque-prova"><span class="kw">Diabetes mellitus</span> = fator de risco mais importante para gangrena (seca e umida).</div>
+
+<h3>Infarto Branco vs Vermelho</h3>
+<table class="tabela-comp">
+<tr><th>Branco (Anemico)</th><th>Vermelho (Hemorragico)</th></tr>
+<tr><td>Circulacao <span class="kw">terminal</span></td><td>Circulacao <span class="kw">dupla ou colateral</span></td></tr>
+<tr><td>Causa <b>sempre arterial</b></td><td>Arterial ou venosa</td></tr>
+<tr><td><span class="kw">Rim, baco, coracao</span></td><td><span class="kw">Pulmao</span> (a. pulmonar + bronquica), <span class="kw">figado</span> (a. hepatica + v. porta), <span class="kw">intestino</span></td></tr>
+<tr><td>Palido — sem sangue chegando</td><td>Avermelhado — sangue chega pelo outro vaso</td></tr>
+</table>
+
+<h3>Mecanismo Isquemia → Necrose</h3>
+<div class="flow">Isquemia → ↓ATP → Falha bomba Na+/K+ → Influxo Na+/H2O → Edema celular (reversivel) → ↑Ca++ → Calpaína ativa → Destroi lisossomos → Catepsinas → Lise celular (irreversivel)</div>
+
+<div class="destaque-prova"><span class="kw">Troponina e CK-MB</span> no sangue = miocardiocitos romperam. Calpaína destroi lisossomos → enzimas intracelulares extravasam → dosagem no sangue confirma necrose miocardica.</div>
+
+<div class="destaque-prova"><span class="kw">Lesao de reperfusao:</span> celula que sobreviveu a isquemia pode morrer apos retorno do fluxo (influxo de Ca++, ROS, abertura mPTP). Mesmo assim, reperfusao e necessaria e salva tecido.</div>
+
+<h3>Celulas e Reparo pos-Necrose</h3>
+<ul>
+  <li>Celulas <b>permanentes</b> (miocardiocitos, neuronios) → <span class="kw-red">fibrose/cicatriz</span></li>
+  <li>Celulas <b>labeis/estaveis</b> com necrose limitada → <span class="kw-green">regeneracao possivel</span></li>
+</ul>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- AULA 5 -->
+<!-- ============================================================ -->
+<section id="a5" class="aula-section">
+<div class="aula-header"><span class="badge">A5</span><h2>Apoptose e Lesao Celular</h2></div>
+<div class="aula-body">
+
+<h3>Necrose vs Apoptose</h3>
+<table class="tabela-comp">
+<tr><th></th><th>Necrose ("explosao")</th><th>Apoptose ("implosao")</th></tr>
+<tr><td><b>Tamanho</b></td><td>Aumentado (tumefacao)</td><td>Reduzido (retracao)</td></tr>
+<tr><td><b>Membrana</b></td><td>Rompida → conteudo extravasa</td><td>Intacta → corpos apoptoticos</td></tr>
+<tr><td><b>Inflamacao</b></td><td><span class="kw-red">SEMPRE</span></td><td><span class="kw-green">NUNCA</span></td></tr>
+<tr><td><b>Carater</b></td><td>Sempre patologica</td><td>Fisiologica OU patologica</td></tr>
+<tr><td><b>Energia</b></td><td>Processo passivo</td><td>Ativo, dependente de ATP</td></tr>
+<tr><td><b>Mecanismo</b></td><td>Dano direto</td><td>Ativacao de <span class="kw">caspases</span></td></tr>
+</table>
+
+<div class="destaque-prova">Necrose <span class="kw-red">NUNCA e fisiologica</span>. Apoptose pode ser ambos. Num mesmo fragmento de tecido, podem coexistir necrose e apoptose.</div>
+
+<h3>Apoptose Fisiologica — Exemplos de Prova</h3>
+<ul>
+  <li><span class="kw">Embriogenese</span> — membranas interdigitais (falha = sindactilia)</li>
+  <li><span class="kw">Renovacao</span> — epitélio intestinal (~3-5d), epiderme (~28d)</li>
+  <li><span class="kw">Involucao hormonal</span> — endometrio (ciclo), mama pos-lactacao (ácinos → apoptose, ductos ficam)</li>
+  <li><span class="kw">Timo</span> — involui apos puberdade; selecao de linfocitos autorreativos</li>
+</ul>
+
+<h3>Duas Vias da Apoptose</h3>
+
+<h4>Via Intrinseca (Mitocondrial) — Caspase 9</h4>
+<div class="flow">Estresse celular → Sensores BH3-only → Ativam BAX/BAK + Inibem BCL-2/BCL-xL → Poros na mitocondria → Citocromo C + SMAC → APAF-1 → Apoptossoma → Caspase 9 → Caspases executoras (3, 6, 7)</div>
+
+<h4>Via Extrinseca (Receptor de Morte) — Caspases 8 e 10</h4>
+<div class="flow">Linfocito T ativado (FasL) + Celula-alvo (Fas) → Caspase 8 → Caspases executoras (3, 6, 7)</div>
+
+<div class="destaque-prova">Vias intrinseca e extrinseca podem ser ativadas <span class="kw">simultaneamente</span>. Caspase 8 (extrinseca) pode ativar a via intrinseca.</div>
+
+<h3>Familia BCL-2</h3>
+<table>
+<tr><th>Grupo</th><th>Membros</th><th>Funcao</th></tr>
+<tr><td><span class="kw-green">Antiapoptoticas</span></td><td>BCL-2, BCL-xL, MCL-1</td><td>Impedem vazamento mitocondrial</td></tr>
+<tr><td><span class="kw-red">Pro-apoptoticas</span></td><td>BAX, BAK</td><td>Formam poros → liberam citocromo C</td></tr>
+<tr><td><span class="kw-purple">Sensores</span></td><td>BIM, BID, BAD</td><td>Detectam dano → ativam BAX/BAK e inibem BCL-2</td></tr>
+</table>
+
+<div class="destaque-prova"><span class="kw">p53</span> = "guardiao do genoma". DNA lesado → ativa p53 → estimula proteinas pro-apoptoticas → via intrinseca. <span class="kw-red">Mutacao de p53 = evento mais frequente no cancer.</span></div>
+
+<h3>Caspases</h3>
+<ul>
+  <li><b>C</b> = protease de cisteina; <b>aspase</b> = cliva acido aspartico</li>
+  <li><span class="kw">Iniciadoras:</span> 8, 9, 10</li>
+  <li><span class="kw">Executoras:</span> 3, 6, 7</li>
+  <li>Sintetizadas como <span class="kw">pro-caspases inativas</span> → clivagem para ativar</li>
+  <li>Deteccao de caspase-3 clivada = <span class="kw">marcador de apoptose</span></li>
+</ul>
+
+<h3>Sinais de Reconhecimento por Fagocitos</h3>
+<ul>
+  <li><span class="kw">Fosfatidilserina</span> na face externa da membrana</li>
+  <li>Trombospondina, Anexina V</li>
+  <li>Fagocitose rapida → sem vestigios → sem inflamacao</li>
+</ul>
+
+<div class="destaque-prova"><span class="kw">Corpusculos de Councilman-Rocha Lima</span> = achado classico de apoptose na hepatite viral (hepatocitos encarquilhados, citoplasma acidofilo condensado).</div>
+
+<h3>Consequencias Clinicas</h3>
+<ul>
+  <li>Apoptose <b>inibida</b> → cancer (linfomas foliculares: superexpressao BCL-2; carcinomas: mutacao p53)</li>
+  <li>Apoptose <b>excessiva</b> → neurodegenerativas, autoimunes, AIDS (apoptose de T CD4+)</li>
+</ul>
+
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- AULA 6 -->
+<!-- ============================================================ -->
+<section id="a6" class="aula-section">
+<div class="aula-header"><span class="badge">A6</span><h2>Hemostasia, Trombose e Embolia</h2></div>
+<div class="aula-body">
+
+<h3>3 Condicoes do Sistema Circulatorio Normal</h3>
+<ol>
+  <li>Fluxo sanguineo dinamico (sem estase)</li>
+  <li>Sangue fluido (sem trombose)</li>
+  <li>Integridade vascular (sem hemorragia)</li>
+</ol>
+
+<h3>Hemostasia Primaria</h3>
+<div class="flow">Lesao vascular → Vasoconstrição reflexa → Exposicao colágeno + vWF → Adesao plaquetaria (GP Ib-V-IX ao vWF; GP Ia/IIa ao colageno) → Ativacao (ADP → espiculação) → Liberacao de granulos → Agregacao (GP IIb/IIIa + fibrinogenio) → Tampao plaquetario</div>
+
+<h4>Receptores Plaquetarios (decorar)</h4>
+<table>
+<tr><th>Receptor</th><th>Liga</th><th>Funcao</th></tr>
+<tr><td><span class="kw">GP Ib-V-IX</span></td><td>vWF</td><td>Adesao inicial</td></tr>
+<tr><td><span class="kw">GP Ia/IIa</span></td><td>Colageno</td><td>Reforço da adesao</td></tr>
+<tr><td><span class="kw">GP IIb/IIIa</span></td><td>Fibrinogenio</td><td>Agregacao plaqueta-plaqueta</td></tr>
+</table>
+
+<h4>Granulos Plaquetarios</h4>
+<ul>
+  <li><b>Densos:</b> ADP (energia/espiculacao), serotonina (vasoconstrição mantida), calcio (cofator cascata)</li>
+  <li><b>Alfa:</b> trombospondina (agregacao), PDGF (reparo endotelial), vWF</li>
+  <li><span class="kw">Fator Plaquetario 4</span> = anti-heparina (neutraliza heparina no local da lesao)</li>
+  <li><span class="kw">Tromboxano A2</span> = vasoconstritor + pro-agregante</li>
+</ul>
+
+<div class="destaque-prova">
+<span class="kw">vWF</span> vem de 3 fontes: celulas endoteliais (corpos de Weibel-Palade), plaquetas (granulos alfa) e subendotelial (matriz). Lesao endotelial → exposicao dupla de vWF.
+</div>
+
+<div class="destaque-prova">
+Plaquetas: <span class="kw">150.000-400.000/mm3</span>. Vida: ~10 dias. Regulacao: <span class="kw">trombopoietina</span> (figado). Dengue → tropismo hepatico → ↓trombopoietina → ↓plaquetas.
+</div>
+
+<h3>Hemostasia Secundaria — Cascata</h3>
+<table class="tabela-comp">
+<tr><th>Via Intrinseca</th><th>Via Extrinseca</th></tr>
+<tr><td>Ativada por <span class="kw">carga negativa</span> da subendotelial</td><td>Ativada por <span class="kw">fator tecidual</span> (tromboplastina, FIII) de celulas lesadas</td></tr>
+<tr><td>Fator XII (Hageman) → XIIa → XIa → IXa (+VIIIa) → <b>Xa</b></td><td>FIII + VII → VIIa → <b>Xa</b></td></tr>
+<tr><td>Mais lenta, caminho longo</td><td>Mais rapida, caminho curto</td></tr>
+<tr><td>Lesoes pequenas</td><td>Lesoes extensas</td></tr>
+</table>
+
+<h4>Via Comum</h4>
+<div class="flow">Xa + Va + Ca++ → Protrombina (FII) → Trombina (FIIa) → Fibrinogenio (FI) → Fibrina (FIa) → FXIII (estabilizador) → Rede de fibrina estável</div>
+
+<div class="destaque-prova"><span class="kw">Todos os fatores da coagulacao sao produzidos pelo figado.</span> Hepatopata = risco hemorragico (hematomas, equimoses, petequias). Figado e central: fatores, fibrinogenio, plasminogenio e trombopoietina.</div>
+
+<h3>Fibrinolise</h3>
+<div class="flow">Lesao reparada → Endotelio refaz → t-PA → Plasminogenio → Plasmina → Degrada fibrina → Dimero D</div>
+<div class="destaque-prova"><span class="kw">Dimero D</span> = marcador de trombose ativa. Normal no pos-operatorio. Patologico quando positivo + clinica sugestiva (edema, taquipneia, dor) sem motivo aparente. "A clinica e soberana — mas nao solitaria."</div>
+
+<h3>Triade de Virchow (fatores de risco para trombose)</h3>
+<table class="tabela-comp">
+<tr><th>Pilar</th><th>Exemplos</th></tr>
+<tr><td><span class="kw">1. Lesao endotelial</span></td><td>Hipertensao, aterosclerose, vasculites, COVID-19, cateteres</td></tr>
+<tr><td><span class="kw">2. Hipercoagulabilidade</span></td><td>Fator V Leiden, mutacao FII, ACO (estrogeno+progesterona), cancer, plaquetose</td></tr>
+<tr><td><span class="kw">3. Estase/Turbulencia</span></td><td>Varizes, imobilismo, obesidade, gestacao, pos-operatorio, viagens longas</td></tr>
+</table>
+
+<div class="destaque-prova"><span class="kw">COVID-19:</span> SARS-CoV-2 usa ACE2 do endotelio → mata celulas endoteliais → expoe vWF → trombos multiplos → infarto, AVC em pacientes com COVID.</div>
+
+<h3>Estados Hemorragicos</h3>
+<table>
+<tr><th>Congenitos</th><th>Adquiridos</th></tr>
+<tr><td>Hemofilia A (FVIII), Hemofilia B (FIX), Doenca de von Willebrand (vWF)</td><td>Hepatopatias, doencas medulares (leucemias), deficiencia de vitamina K (cofator para FII, VII, IX, X)</td></tr>
+</table>
+
+<div class="nao-confundir">
+<ul>
+  <li><span class="kw-red">Hematoma</span> = trauma → doi</li>
+  <li><span class="kw-purple">Equimose</span> = sem trauma → nao doi → suspeitar falha de coagulacao</li>
+</ul>
+</div>
+
+<h3>Trombo vs Coagulo Post-Mortem</h3>
+<table class="tabela-comp">
+<tr><th>Trombo (ante-mortem)</th><th>Coagulo post-mortem</th></tr>
+<tr><td>Fibrina polimerizada entre hemacias</td><td>Sem rede de fibrina</td></tr>
+<tr><td>Firme ao toque</td><td>Mole ao toque</td></tr>
+<tr><td colspan="2">Duvida? <span class="kw">Tricromico de Masson</span>: fibrina = azul, hemacias = marrom</td></tr>
+</table>
+
+<h3>Exames</h3>
+<table>
+<tr><th>Exame</th><th>Avalia</th></tr>
+<tr><td>Tempo de sangramento (3-5s)</td><td>Hemostasia primaria</td></tr>
+<tr><td>Contagem de plaquetas (150-400 mil)</td><td>Hemostasia primaria</td></tr>
+<tr><td>Tempo de protrombina (TP)</td><td>Via extrinseca + via comum</td></tr>
+<tr><td>Dimero D</td><td>Fibrinolise (trombo ja formado)</td></tr>
+</table>
+
+</div>
+</section>
+
+<!-- FIM -->
+<div style="text-align:center;padding:20px 0;color:var(--fg2);font-size:12px">
+  Anatomia Patologica P2 — Resumao Pre-Prova<br>
+  Gerado em 05/04/2026
+</div>
+
+</div><!-- /container -->
+
+<script>
+function toggleTheme(){
+  const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';
+  localStorage.setItem('theme',h.dataset.theme);
+}
+(function(){
+  const s=localStorage.getItem('theme');
+  if(s)document.documentElement.dataset.theme=s;
+})();
+</script>
+
+</body>
+</html>

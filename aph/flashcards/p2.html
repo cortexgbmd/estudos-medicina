@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards APH — P2</title>
+<style>
+:root{--bg:#0f1419;--bg2:#161b22;--bg3:#1c2330;--txt:#e6edf3;--txt2:#9aa7b4;--acc:#4ea1ff;--acc2:#7ee787;--warn:#ffb454;--dang:#ff7b72;--border:#2a313c;}
+[data-theme="light"]{--bg:#f7f9fc;--bg2:#fff;--bg3:#eef2f7;--txt:#1a2330;--txt2:#55636f;--acc:#1666c7;--acc2:#1a7f37;--warn:#9a6700;--dang:#cf222e;--border:#d6dee7;}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#top{width:100%;max-width:780px;padding:14px 16px 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.brand{flex-basis:100%;display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.brand h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.2px}
+.brand span{font-size:12px;color:var(--txt2)}
+select,button{background:var(--bg3);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+button:hover{border-color:var(--acc)}
+.topline{display:flex;align-items:center;justify-content:center;gap:8px}
+.eyebtn{background:none;border:none;padding:2px 4px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;color:var(--txt2);opacity:.5;transition:opacity .15s}
+.eyebtn:hover{opacity:.95;border:none}
+.eyelbl{font-size:11px;letter-spacing:.02em}
+.eyebtn .eye-closed{display:none}
+.eyebtn.closed .eye-open{display:none}
+.eyebtn.closed .eye-closed{display:inline-block}
+#count{margin-left:auto;color:var(--txt2);font-size:13px}
+#saveNote{flex-basis:100%;color:var(--txt2);font-size:12px;margin-top:2px}
+#wrap{width:100%;max-width:780px;padding:6px 16px 16px;flex:1;display:flex;flex-direction:column}
+#card{perspective:1800px;height:62vh;min-height:360px;margin:8px 0;cursor:pointer}
+#inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+#card.flip #inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:18px;background:var(--bg2);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto}
+.back{transform:rotateY(180deg)}
+.area{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--txt2)}
+.qfront{font-size:23px;font-weight:600;color:var(--txt);margin:auto 0;line-height:1.4}
+.hint{text-align:center;color:var(--txt2);font-size:13px;margin-top:auto}
+.backq{font-size:16px;font-weight:600;color:var(--acc);border-bottom:1px solid var(--border);padding-bottom:10px;line-height:1.35}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--acc2);margin:14px 0 4px}
+.answer{font-size:17px;line-height:1.55}
+.answer b{color:var(--acc2)}
+[data-theme="light"] .answer b{color:var(--acc)}
+.obs{font-size:15px;color:var(--txt2);line-height:1.5}
+.obs b{color:var(--warn)}
+.streak{font-size:13px;color:var(--warn);margin-top:14px;min-height:18px}
+#rate{display:none;gap:8px;justify-content:center}
+#rate.show{display:flex}
+#rate button{flex:1;max-width:160px;padding:11px 6px;font-weight:700;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:1px}
+#rate small{font-size:11px;font-weight:400;color:var(--txt2)}
+.r-again{border-color:var(--dang)!important;color:var(--dang)}
+.r-hard{border-color:var(--warn)!important;color:var(--warn)}
+.r-good{border-color:var(--acc)!important;color:var(--acc)}
+.r-easy{border-color:var(--acc2)!important;color:var(--acc2)}
+#prompt{text-align:center;color:var(--txt2);font-size:13px;padding:10px}
+#prompt.hide{display:none}
+kbd{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px}
+#done{text-align:center;padding:40px;color:var(--txt2);font-size:17px}
+#done button{margin-top:8px}
+#filterPanel{display:none;width:100%;max-width:780px;padding:2px 16px 10px}
+#filterPanel.open{display:block;max-height:56vh;overflow-y:auto}
+.fgroup{margin-top:10px}
+.fgroup h4{margin:4px 0 7px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--txt2);cursor:pointer;display:flex;align-items:center;gap:8px}
+.fgroup h4 .blktog{font-size:10px;border:1px solid var(--border);border-radius:6px;padding:1px 7px;color:var(--txt2);text-transform:none;letter-spacing:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--bg3);border:1px solid var(--border);color:var(--txt2);border-radius:999px;padding:6px 11px;font-size:13px;cursor:pointer;user-select:none;line-height:1.2}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#0b1320;font-weight:600}
+[data-theme="light"] .chip.on{color:#fff}
+.factions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center;position:sticky;bottom:0;background:var(--bg);padding:8px 0 4px}
+.factions .sp{flex:1}
+#trainBtn{background:var(--acc2);border-color:var(--acc2);color:#0b1320;font-weight:700}
+[data-theme="light"] #trainBtn{color:#fff}
+.deck-switch{margin-left:auto;display:flex;gap:6px;align-self:center}
+.deck-switch a{text-decoration:none;background:var(--bg3);border:1px solid var(--border);color:var(--txt2);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;line-height:1.2;transition:border-color .15s,color .15s}
+.deck-switch a:hover{border-color:var(--acc);color:var(--txt)}
+.deck-switch a.ds-on{background:var(--acc);border-color:var(--acc);color:#0b1320}
+[data-theme="light"] .deck-switch a.ds-on{color:#fff}
+@media(max-width:520px){.deck-switch{margin-left:0;flex-basis:100%;margin-top:8px}}
+</style>
+</head>
+<body>
+<div id="top">
+<div class="brand"><h1>Flashcards APH · P2</h1><span>Atendimento Pré-Hospitalar — revisão estilo Anki</span><nav class="deck-switch"><a href="index.html" title="Página inicial">🏠 Início</a><a href="p1.html">P1</a><a class="ds-on" href="p2.html">P2</a></nav></div>
+<button id="filterBtn" onclick="togPanel()">🎯 Temas <span id="selSummary"></span> ▾</button>
+<button onclick="restart()">↺ Reiniciar sessão</button>
+<button onclick="th()">☀︎/☾</button>
+<span id="count"></span>
+<span id="saveNote">✓ Progresso salvo automaticamente neste navegador — pode fechar e voltar depois (até offline). Marque vários temas e treine só os que tem mais dificuldade.</span>
+</div>
+<div id="filterPanel"></div>
+<div id="wrap">
+<div id="card" onclick="flip()">
+<div id="inner">
+<div class="face front">
+<div class="topline"><span class="area" id="fArea"></span><button id="eyeBtn" class="eyebtn" onclick="event.stopPropagation();togArea()"><svg class="eye-open" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-closed" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4 5 10 5 10-5 10-5"/><line x1="5" y1="15" x2="4" y2="17"/><line x1="12" y1="17" x2="12" y2="19"/><line x1="19" y1="15" x2="20" y2="17"/></svg><span class="eyelbl">esconder tema</span></button></div>
+<div class="qfront" id="fQ"></div>
+<div class="hint">tente responder em voz alta · clique no card ou <kbd>espaço</kbd> para ver</div>
+</div>
+<div class="face back" id="backFace">
+<div class="backq" id="bQ"></div>
+<div class="lbl">Resposta</div><div class="answer" id="bA"></div>
+<div id="bPwrap"><div class="lbl">Dica / Observação</div><div class="answer obs" id="bP"></div></div>
+<div class="streak" id="streak"></div>
+</div>
+</div>
+</div>
+<div id="rate">
+<button class="r-again" onclick="rate(0)">Errei<small>1 · volta logo</small></button>
+<button class="r-hard" onclick="rate(1)">Difícil<small>2 · em breve</small></button>
+<button class="r-good" onclick="rate(2)">Bom<small>3 · mais tarde</small></button>
+<button class="r-easy" onclick="rate(3)">Fácil<small>4 · 2× = sai</small></button>
+</div>
+<div id="prompt">Clique no card ou <kbd>espaço</kbd> para ver a resposta · notas <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></div>
+<div id="done" style="display:none"></div>
+</div>
+<script>
+const META={
+ cinem:["Cinemática do trauma","Trauma & Emergência"],
+ poli:["Politraumatizado","Trauma & Emergência"],
+ pcr:["PCR & RCP","Trauma & Emergência"],
+ dea:["DEA","Trauma & Emergência"],
+ afog:["Afogamento","Agravos ambientais & tóxicos"],
+ rad:["Desastres radiológicos","Agravos ambientais & tóxicos"],
+ pecon:["Animais peçonhentos","Agravos ambientais & tóxicos"],
+ intox:["Intoxicação & envenenamento","Agravos ambientais & tóxicos"]
+};
+const BLOCKS=[["Trauma & Emergência","Bloco 1 · Trauma & Emergência"],["Agravos ambientais & tóxicos","Bloco 2 · Agravos ambientais & tóxicos"]];
+const CARDS=[
+{t:"cinem",q:"Quais os dados epidemiológicos do trauma?",a:"Mata em média <b>9 pessoas por minuto</b> (5,8 milhões/ano); é a morte mais comum entre <b>1 e 44 anos</b>; consome <b>12% dos gastos em saúde</b>. Um estudo na Califórnia mostrou que ~<b>50% morrem no local</b> do acidente ou na primeira hora."},
+{t:"cinem",q:"Quais os 3 picos da distribuição da mortalidade por trauma (e as lesões de cada)?",a:"<b>1º pico</b> (segundos a minutos): lacerações de cérebro, aorta, medula e coração. <b>2º pico</b> (minutos a horas): hematoma epidural/subdural, hemopneumotórax, fraturas pélvicas e de ossos longos, lesões abdominais. <b>3º pico</b> (dias a semanas): sepse e IMOS (insuficiência de múltiplos órgãos)."},
+{t:"cinem",q:"O que é a cinemática do trauma?",a:"Interação de <b>energia</b> entre o hospedeiro (vítima) e o agente (energia) em um ambiente."},
+{t:"cinem",q:"Quais as 5 formas de manifestação da energia (a mais comum primeiro)?",a:"1) <b>Mecânica/cinética</b> (mais comum); 2) térmica; 3) química; 4) elétrica; 5) radiação."},
+{t:"cinem",q:"Na colisão, como ocorre a 'tripla colisão'?",a:"Ex.: carro colide com poste → o <b>veículo</b> sofre a colisão → o <b>corpo</b> do motorista/passageiro colide → os <b>órgãos</b> internos também colidem entre si."},
+{t:"cinem",q:"Quais as lesões da colisão frontal e o papel do cinto?",a:"Lesões ventrais. O <b>cinto</b> evita a ejeção, mas ainda causa equimoses e compressão de órgãos internos. O tórax bate no painel/volante; a cabeça segue e bate no para-brisa → TCE e lesão de coluna cervical. <b>Sem cinto</b> → vítima ejetada. Acima de <b>90 km/h</b> → lesão de coluna cervical por lançamento."},
+{t:"cinem",q:"Quais as lesões típicas da colisão lateral?",a:"Fratura de <b>clavícula, costelas</b> e/ou cabeça do fêmur. No motorista, lesão do lado esquerdo; no passageiro, do lado direito."},
+{t:"cinem",q:"O que caracteriza a colisão traseira?",a:"<b>Efeito chicote</b> — desaceleração rápida (frenagem súbita ou colisão) → <b>hiperextensão da coluna cervical</b> com dano medular."},
+{t:"cinem",q:"O que são a colisão angular e o capotamento?",a:"<b>Angular</b>: impacto dianteiro ou traseiro que produz lesões das variáveis <b>frontal-lateral</b> ou <b>posterior-lateral</b>. <b>Capotamento</b>: a vítima é debatida em <b>várias posições</b> dentro do carro → lesões variáveis."},
+{t:"cinem",q:"Por que a ejeção da vítima é tão grave?",a:"↑ a probabilidade de lesões em mais de <b>300%</b>; responsável por <b>25%</b> das mortes em acidentes de automóvel; <b>75%</b> dos totalmente ejetados morrem; 1 em 13 sofre fratura de coluna vertebral. As lesões da ejeção podem ser maiores que as do impacto com o solo."},
+{t:"cinem",q:"Qual a lesão típica do acidente motociclístico?",a:"<b>Fratura bilateral do fêmur</b>."},
+{t:"cinem",q:"Diferencie o atropelamento em adulto e em criança.",a:"<b>Adulto</b>: arremessado para cima; o agravo varia conforme a queda (longe, sobre o capô e depois ao chão, ou direto ao chão). <b>Criança</b>: mais vulnerável — pelo peso/altura é projetada para frente (capô) e cai para trás, batendo a <b>cabeça no solo</b> → frequente morte instantânea."},
+{t:"cinem",q:"Quedas — relevância e o que determina a gravidade?",a:"<b>1ª causa de traumatismo não fatal</b> (EUA) e <b>2ª causa de lesão de medula/cérebro</b>. A gravidade depende de: <b>desaceleração vertical, elasticidade/viscosidade do corpo e superfície de impacto</b>."},
+{t:"cinem",q:"Quais os 2 fatores de influência na queda (altura e ponto de impacto)?",a:"<b>Altura</b>: quanto maior, maior o potencial de lesão (relação não absoluta — há óbito em queda da própria altura e sobrevida em grandes alturas). <b>Ponto de impacto</b>: densidade (concreto × serragem) e irregularidade da superfície; superfícies que se deformam <b>dissipam</b> a energia cinética."},
+{t:"cinem",q:"O que é balística e como o projétil de arma de fogo lesa?",a:"Ciência do movimento do projétil pelo cano, sua trajetória no ar e após atingir o alvo. O projétil é impulsionado pela <b>expansão dos gases</b> da queima do propulsor; ao atingir o corpo, a <b>energia cinética</b> afasta os tecidos. Ao redor do orifício de entrada pode haver <b>tatuagem de pólvora, queimadura e abrasão</b>."},
+{t:"cinem",q:"Como são as lesões por arma branca?",a:"As armas são reconhecidas pelas <b>marcas que deixam</b> na lesão; geralmente causam grandes <b>hemorragias externas</b>."},
+{t:"cinem",q:"Quais os 3 agentes/fases da explosão e seus efeitos?",a:"<b>Luz</b> (1º agente → dano ocular); <b>calor</b> (combustão do explosivo; alcança longas distâncias — barreiras: roupas e paredes); <b>ondas de choque</b> (arremessam objetos e a própria vítima; lesam órgãos sensíveis: <b>ouvido</b> → ruptura timpânica; <b>pulmão</b> → pneumotórax). Pode lesar até 70% das pessoas próximas."},
+{t:"cinem",q:"Como avaliar a cena em uma emergência?",a:"Comece com 'O que aconteceu?'. Reconstrua mentalmente o acidente, o tipo de energia e as forças que atuaram; saiba qual parte do corpo e em que direção a força agiu (se atingiu cavidades); verifique ferimentos de penetração e sinais de lesão de órgãos internos."},
+
+{t:"afog",q:"O que é afogamento?",a:"Processo traumático em que há <b>passagem de líquido para as vias aéreas</b> em razão da submersão, provocando ou não a morte por <b>hipóxia</b>."},
+{t:"afog",q:"Quais os 3 desfechos possíveis do afogamento e os tipos (submersão × imersão)?",a:"Desfechos: 1) volta à sociedade; 2) volta com <b>sequelas</b>; 3) <b>morre</b>. Tipos: <b>submersão</b> (corpo e vias aéreas abaixo da superfície) e <b>imersão</b> (vias aéreas comprometidas pela água)."},
+{t:"afog",q:"Epidemiologia do afogamento (faixas etárias e sexo)?",a:"Mais de 5500 mortes/ano no Brasil. <b>Crianças 1–4 anos</b>: maior risco em casa (vaso sanitário, tanque, piscina). <b>Jovens 15–29 anos</b>: maior número absoluto de óbitos e maior risco recreativo. <b>Sexo masculino (80–90%)</b> por comportamento de risco, álcool/drogas e maior exposição à água."},
+{t:"afog",q:"Quais os fatores de risco do afogamento?",a:"Consumo de álcool, falta de supervisão (crianças), baixa habilidade de natação e não uso de colete salva-vidas. O <b>PHTLS</b> cita: habilidade de nadar, imersão acidental, idade, sexo masculino, localização e uso de drogas."},
+{t:"afog",q:"Qual o mecanismo do afogamento (4 etapas)?",a:"1) Água entra na orofaringe → reflexo de proteção; 2) <b>laringoespasmo</b> (a glote fecha e impede a entrada de água inicialmente); 3) perda do laringoespasmo → água chega à traqueia/pulmões → retenção de CO₂ (colapso alveolar, shunt pulmonar, edema pulmonar); 4) <b>hipóxia</b>. Consequências: perda de consciência, acidose respiratória e metabólica, PCR."},
+{t:"afog",q:"Quais os passos da avaliação primária (XABCDE) no afogamento?",a:"<b>X</b>: hemorragia externa exsanguinante; <b>A</b>: vias aéreas + imobilização cervical; <b>B</b>: respiração (O₂ tecidual) e ventilação; <b>C</b>: circulação e controle de hemorragia; <b>D</b>: incapacidade/avaliação neurológica; <b>E</b>: exposição e ambiente. <b>Nunca passe ao item seguinte sem resolver o anterior.</b>"},
+{t:"afog",q:"Quando a vítima é classificada como RESGATE (e a conduta)?",a:"Retirada da água <b>sem sinais</b> de aspiração ou comprometimento: consciente, sem tosse, sem dispneia, ausculta normal, sem hipóxia. Intervenção: nenhuma; reavaliar ou liberar do local se não houver comorbidades. Sobrevida 100%."},
+{t:"afog",q:"Quais os 6 graus de afogamento (Szpilman)?",a:"<b>1</b>: tosse leve. <b>2</b>: ausculta normal, responsivo, O₂ em baixo fluxo (dispneia leve). <b>3</b>: ausculta anormal, responsivo, normotenso, O₂ alto fluxo, edema pulmonar. <b>4</b>: ausculta anormal, responsivo, <b>hipotenso</b>, O₂ alto fluxo, drogas vasoativas, edema + instabilidade. <b>5</b>: arresponsivo, pulso presente, ventilações artificiais, parada respiratória. <b>6</b>: parada cardiorrespiratória."},
+{t:"afog",q:"Vítima que NÃO responde: qual a conduta inicial?",a:"Abrir a via aérea e verificar a ventilação. Se respira → ausculta pulmonar. Se não respira → administrar <b>5 respirações iniciais</b> e verificar o <b>pulso carotídeo</b>."},
+{t:"afog",q:"Não responde, com pulso presente (Grau 5): conduta e sobrevida?",a:"Iniciar <b>ventilação artificial</b> (a parada respiratória costuma reverter); após o retorno da ventilação espontânea, seguir a conduta do <b>Grau 4</b>. Manejo: UTI. Sobrevida <b>56–69%</b>."},
+{t:"afog",q:"Não responde, pulso ausente: quando é 'morto' e quando é Grau 6?",a:"<b>Submersão > 1h ou evidência clara de morte</b> → 'morto' (nenhuma intervenção; avaliação forense; sobrevida 0%). <b>Submersão ≤ 1h sem evidência de morte</b> → <b>Grau 6</b>: iniciar RCP (sequência ABC); após retorno espontâneo, seguir Grau 4; UTI; sobrevida 7–12%."},
+{t:"afog",q:"Vítima responde com ausculta anormal (Graus 3 e 4): conduta e sobrevida?",a:"Estertores em todos os focos (edema agudo): hipotensão/choque → <b>Grau 4</b>; PA anormal → <b>Grau 3</b>. Conduta: O₂ alto fluxo (máscara ou tubo) + ventilação mecânica; no Grau 4, monitorar (risco de parada), cristaloides e avaliar vasopressores. Sobrevida: Grau 4 (78–82%), Grau 3 (95–96%)."},
+{t:"afog",q:"Vítima responde com poucos estertores ou ausculta normal: que graus e sobrevida?",a:"Estertores em alguns focos → <b>Grau 2</b> (O₂ baixo fluxo; emergência; 99%). Ausculta normal com tosse → <b>Grau 1</b> (geralmente sem O₂; 100%). Sem tosse → <b>Resgate</b> (100%)."},
+{t:"afog",q:"Qual a posição de segurança no afogamento e o conceito de prevenção?",a:"Posição de segurança em <b>decúbito lateral</b> (lateral <b>direita</b> — o primeiro pulmão comprometido é o direito). Prevenção = qualquer medida para evitar o afogamento <b>sem contato físico</b> entre vítima e socorrista."},
+
+{t:"rad",q:"O que é radiação?",a:"Processo físico de <b>emissão</b> (saída) e <b>propagação</b> (deslocamento) de energia por partículas ou ondas eletromagnéticas em movimento; pode ocorrer em meio material ou no vácuo."},
+{t:"rad",q:"Qual a distribuição mundial de exposição à radiação (ordem)?",a:"1) <b>Radônio (42%)</b>; 2) medicina (20%); 3) solo (16%); 4) cósmica (13%); 5) alimentos (9%)."},
+{t:"rad",q:"O que é radiação ionizante e quais seus tipos?",a:"Radiação com energia suficiente para <b>ionizar</b> átomos/moléculas (arrancar elétrons e criar partículas carregadas) — ondas de alta frequência e comprimento reduzido. Partículas: <b>alfa, beta, nêutrons</b>; ondas eletromagnéticas: <b>gama e raios-X</b>."},
+{t:"rad",q:"Quais as fontes naturais e humanas de radiação ionizante?",a:"<b>Naturais</b>: urânio, rádio, tório, polônio (solo/água/ar); o <b>radônio</b> (gás natural da rocha/solo) é a principal fonte natural e a <b>2ª maior causa de câncer de pulmão</b>. <b>Humanas</b>: usina nuclear, usos médicos (radiografia, densitometria óssea, mamografia, TC, radioterapia) e eventos terroristas."},
+{t:"rad",q:"Diferencie Gray (Gy) de Sievert (Sv).",a:"<b>Gray (Gy)</b>: dose <b>absorvida</b> de radiação. <b>Sievert (Sv)</b>: mede a radiação pelo <b>potencial de causar dano</b>, levando em conta o tipo de radiação e a sensibilidade dos tecidos/órgãos."},
+{t:"rad",q:"Quais lesões tumorais por tipo de radiação?",a:"<b>Raios-X e gama</b>: glândula salivar, esôfago, estômago, cólon, pulmão, ossos, mama, bexiga, rim, pele, SNC, tireoide e leucemia. <b>Alfa</b>: pulmão e leucemia. <b>Beta</b>: tireoide, leucemia, glândula salivar, osso e sarcoma."},
+{t:"rad",q:"Como se classificam as exposições à radiação ionizante?",a:"<b>Planejadas</b> (introdução deliberada de fontes — uso médico/industrial); <b>existentes</b> (a exposição já existe — ex.: radônio em residências/trabalho); <b>de emergência</b> (eventos inesperados — acidentes nucleares)."},
+{t:"rad",q:"Diferencie exposição interna de externa.",a:"<b>Interna</b>: o radionuclídeo é inalado, ingerido ou entra na corrente sanguínea. <b>Externa</b>: material radioativo depositado na pele ou roupas (removido ao lavar)."},
+{t:"rad",q:"Quais as fases/síndromes da síndrome aguda da radiação?",a:"1) <b>Prodrômica</b> (min–horas): náuseas, <b>vômitos (principal marcador de gravidade)</b>, diarreia, anorexia, fadiga, febre. 2) <b>Hematopoiética</b> (mais comum): leucopenia, trombocitopenia, anemia, infecções, sangramentos. 3) <b>Gastrointestinal</b>: diarreia intensa, vômitos persistentes, dor abdominal, desidratação grave. 4) <b>Neurovascular (SNC)</b>: confusão, ataxia, convulsões, coma."},
+{t:"rad",q:"Quais os efeitos por faixa de dose (Gy)?",a:"<b>1 Gy</b>: náuseas, diarreia, depressão do sistema sanguíneo. <b>1–3 Gy</b>: + infecções fortes. <b>3–5 Gy</b>: hemorragia, perda de pelos, esterilidade. <b>≥ 10 Gy</b>: inflamação dos pulmões, danos ao SNC e cardiovascular, morte em poucos dias."},
+
+{t:"pecon",q:"Diferencie animal peçonhento de venenoso.",a:"<b>Peçonhento</b>: produz/modifica veneno em glândulas e tem <b>aparato para inocular</b> (presas, ferrão). <b>Venenoso</b>: possui o veneno, mas <b>não tem mecanismo para inoculá-lo</b>."},
+{t:"pecon",q:"Quais as características epidemiológicas dos acidentes por animais peçonhentos?",a:"Mais em <b>homens, adultos jovens (20–49 anos)</b>; procedência predominantemente <b>rural (80,3%)</b>; meses mais quentes e chuvosos; atinge mais os <b>pés, pernas e mãos</b>."},
+{t:"pecon",q:"Quais as serpentes mais peçonhentas do planeta (topo da lista)?",a:"1) <b>Taipan</b> (Austrália/Nova Guiné); 2) Marrom (Austrália); 3) Cascavel (América do Sul); 4) Cobra-da-morte; 5) Víboras; 6) Krait; 7) Naja; 8) Mamba-preta."},
+{t:"pecon",q:"Cascavel (Crotalus) — letalidade no Brasil e ações do veneno?",a:"<b>1ª espécie mais letal no Brasil (OMS)</b>; vive em regiões abertas e de clima seco. Veneno: <b>A) neurotóxica</b> (afeta o SNC); <b>B) coagulante</b> (↑ tempo de coagulação/incoagulabilidade); <b>C) miotóxica</b> (lesão de fibras musculares → rabdomiólise)."},
+{t:"pecon",q:"Qual o quadro clínico do acidente crotálico (cascavel)?",a:"<b>Fácies miastênica</b> ('cara de ressaca'), turvação visual/diplopia/miose-midríase, <b>urina escura (mioglobinúria)</b>, mialgia generalizada, <b>insuficiência renal aguda</b> (rabdomiólise) e <b>insuficiência respiratória</b> (paralisia dos músculos da caixa torácica)."},
+{t:"pecon",q:"Surucucu (Lachesis) — letalidade e ações do veneno?",a:"<b>2ª mais letal no Brasil</b>; vive em matas fechadas da Amazônia/Mata Atlântica. Ações: <b>proteolítica</b> (destrói proteínas locais), <b>coagulante</b> (↑ tempo de coagulação), <b>hemorrágica</b> (lesa a parede dos vasos) e <b>neurotóxica</b> (SNC). Quadro: dor, edema, eritema, equimose, bolhas."},
+{t:"pecon",q:"Quais as complicações sistêmicas do acidente laquético (na ordem)?",a:"1) Alteração da coagulação; 2) hipotensão; 3) <b>bradicardia</b>; 4) cólica abdominal; 5) diarreia; 6) necrose / síndrome compartimental (→ fasciotomia)."},
+{t:"pecon",q:"Coral (Micrurus) — letalidade, ação e quadro clínico?",a:"<b>3ª mais letal no Brasil</b>; vive em todos os ambientes (todo o território). Ação <b>neurotóxica</b> (SNC). Quadro: <b>fácies miastênica</b>, vômitos, turvação visual/diplopia/miose-midríase e <b>insuficiência respiratória aguda</b>."},
+{t:"pecon",q:"Jararaca (Bothrops) — letalidade e ações do veneno?",a:"<b>4ª maior em letalidade no Brasil</b>; vive de florestas fechadas a áreas secas e urbanas (70%). Ações: <b>proteolítica</b> (edema, bolhas, necrose, abscessos) e <b>coagulante/hemorrágica</b> (equimoses, epistaxe, gengivorragia)."},
+{t:"pecon",q:"Qual o quadro clínico e as complicações sistêmicas do acidente botrópico (jararaca)?",a:"Quadro: dor, hemorragia, processo inflamatório agudo, necrose/bolhas/abscesso, <b>síndrome compartimental</b> (→ fasciotomia) e limitação dos movimentos; pode levar a amputação. Complicações sistêmicas: <b>incoagulabilidade</b>, sangramentos (gengivorragia, equimoses, hematúria), hipotensão, choque hemorrágico, insuficiência renal, edema generalizado."},
+{t:"pecon",q:"Quais as principais serpentes NÃO peçonhentas (e como matam)?",a:"<b>Píton</b> (constrição); <b>sucuri</b> (rios/lagos, maior serpente brasileira); <b>jiboia</b> (árvores, constrição, noturna); <b>falsa-coral</b> (imita o colorido das corais; cobra pequena)."},
+{t:"pecon",q:"Escorpiões — generalidades e conduta com o soro.",a:"Habitam locais escondidos/escuros, hábitos noturnos. A picada geralmente <b>não é grave</b>, mas em <b>crianças e idosos</b> pode ser fatal. O <b>soro antiescorpiônico</b> deve ser iniciado o mais rápido possível, principalmente em crianças e idosos."},
+{t:"pecon",q:"Qual o escorpião que mais causa acidentes graves no Brasil e por quê?",a:"<b>Tityus serrulatus</b> (escorpião amarelo) — Sudeste, Centro-Oeste e Nordeste; <b>maior causa de acidentes graves e óbitos</b>; as fêmeas se reproduzem <b>sem macho</b> (partenogênese → alta proliferação, difícil de extinguir)."},
+{t:"pecon",q:"Armadeira (Phoneutria) — frequência, veneno e quadro clínico.",a:"<b>27% dos casos</b>; muito agressiva, salta até 40 cm, não constrói teia, caçadora noturna; veneno <b>neurotóxico</b>. Fica em troncos, bananeiras, sapatos, entulho. Quadro: leve (dor, eritema, edema, sudorese) → grave (priapismo, sialorreia, edema agudo de pulmão, choque)."},
+{t:"pecon",q:"Aranha-marrom (Loxosceles) — frequência, veneno e quadro clínico.",a:"<b>36,6% dos casos</b> (a mais frequente); 'aranha-violino', noturna, não agressiva, picada imperceptível (pica quando comprimida); teia em algodão. Veneno <b>proteolítico, hemolítico e coagulante</b>. Quadro: dor/edema, eritema, bolhas, prurido, febre, <b>necrose</b>, exantema."},
+{t:"pecon",q:"Viúva-negra (Latrodectus) e as aranhas de baixo risco (Lycosa, caranguejeira).",a:"<b>Latrodectus</b> (0,4% dos casos): em grupos, noturnas, não agressivas; veneno <b>neurotóxico</b>; quadro leve (dor, edema, parestesia, tremores) → grave (taqui/bradicardia, hipertensão, priapismo, retenção urinária). <b>Lycosa</b> (jardim): veneno proteolítico, dor discreta. <b>Caranguejeira</b>: pelos urticantes (irritação/alergia), sem risco de vida."},
+{t:"pecon",q:"Qual o tratamento (o que FAZER) no acidente com animal peçonhento?",a:"Manter a vítima em <b>repouso absoluto</b>; remover adornos (evitar compressão); lavar o local com água e sabão (evitar infecção); proteger com curativo de <b>gaze seca</b>; transportar ao hospital; e <b>elevar a região afetada acima do nível do coração</b>."},
+{t:"pecon",q:"O que NUNCA fazer no acidente com animal peçonhento?",a:"Nunca: <b>sugar o veneno</b>; fazer cortes no local; aplicar substâncias na picada; fazer <b>torniquetes</b>; dar álcool ou outras substâncias para a vítima ingerir."},
+
+{t:"poli",q:"O que é o atendimento ao politraumatizado?",a:"Assistência prestada à vítima no local do sinistro, visando ao <b>suporte básico de vida (SBV)</b> e à estabilização para transporte adequado a um centro hospitalar."},
+{t:"poli",q:"O que é a Golden Hour?",a:"A <b>primeira hora</b> após o acidente é de importância vital; a cada 1 minuto perdido, a chance de sobrevivência cai cerca de <b>1%</b>."},
+{t:"poli",q:"O que são os 'minutos platina'?",a:"Os <b>primeiros 10 minutos</b>, em que o APH se inicia; quanto mais precocemente a vítima for estabilizada, maiores as chances de recuperação."},
+{t:"poli",q:"Como começa a análise primária e o que se obtém da primeira pergunta?",a:"Começa com 'Você está bem?'. Respondeu = respira; respondeu adequadamente a perguntas simples = boa noção do estado neurológico e circulatório. Depois: identificar/tratar estados potencialmente letais e verificar necessidade de recursos adicionais (suporte avançado, aeronave)."},
+{t:"poli",q:"XABCDE — X (hemorragia exsanguinante): o que se faz?",a:"<b>Contenção de grandes hemorragias</b> com compressão local e <b>torniquete</b>."},
+{t:"poli",q:"XABCDE — A (vias aéreas e controle cervical): o que envolve?",a:"Abertura/desobstrução para manter a via aérea pérvia: retirar prótese; retirar sangue e secreções; <b>controle da coluna cervical</b> (alinhamento em bloco, cervical→sacral); <b>oxigenoterapia</b> (toda vítima politraumatizada recebe máscara de O₂)."},
+{t:"poli",q:"O que pode obstruir a via aérea e por que usar a tração da mandíbula?",a:"Vítima inconsciente → relaxamento muscular → a <b>língua</b> relaxa e obstrui (interpretada como corpo estranho). <b>Jamais elevar o mento</b> de politraumatizado (pode romper segmento da coluna); usar a <b>tração da mandíbula (jaw thrust)</b> para manter a coluna alinhada."},
+{t:"poli",q:"XABCDE — B (respiração e ventilação): como avaliar?",a:"A vítima respira? <b>Sim</b>: verificar se é efetiva (eupneico) e a frequência (bradipneia, normal ou taquipneia). <b>Não</b>: identificar <b>apneia</b> e iniciar ventilação assistida."},
+{t:"poli",q:"Pneumotórax aberto / ferimento soprante: o que é e qual o tratamento?",a:"O trauma perfura a pleura e o orifício passa a ser a via de entrada de ar → o pulmão colaba (ferimento soprante). <b>Pré-hospitalar: curativo de 3 pontos</b> (funciona como válvula — na inspiração tampa e o ar entra pela via aérea; na expiração o ar/secreção sai). <b>Intra-hospitalar: drenagem de tórax</b>."},
+{t:"poli",q:"Diferencie pneumotórax hipertensivo, hemotórax e contusão pulmonar (fechados).",a:"<b>Pneumotórax hipertensivo</b>: o ar entra na pleura mas <b>não consegue sair</b>. <b>Hemotórax</b>: acúmulo de sangue na cavidade pleural que comprime o órgão. <b>Contusão pulmonar</b>: hematoma no próprio tecido do pulmão (sangramento e inchaço nos alvéolos → dificulta a oxigenação)."},
+{t:"poli",q:"O que é o tórax instável?",a:"Fratura de <b>2 ou mais arcos costais consecutivos</b>, causando ventilações diferentes (um lado ventila mais que o outro)."},
+{t:"poli",q:"Quais outras lesões do tórax e o cuidado com o objeto transfixante?",a:"Contusão cardíaca, <b>tamponamento cardíaco</b>, ruptura traumática da aorta (grandes quedas), ruptura diafragmática, asfixia traumática (soterrados) e ferimento cardíaco — <b>nunca retirar o objeto transfixante</b>, sempre mantê-lo firme na região."},
+{t:"poli",q:"XABCDE — C (circulação): quais os indicadores de má perfusão?",a:"Controle de grandes hemorragias (evitar choque hipovolêmico) + avaliação da perfusão. Má perfusão: <b>pulso rápido e fraco</b>; pele pálida e fria; temperatura baixa; umidade baixa; <b>enchimento capilar prolongado</b>."},
+{t:"poli",q:"Diferencie pulsos centrais e periféricos.",a:"<b>Centrais</b> (saem direto da aorta): femoral, carotídeo e braquial (em crianças). <b>Periféricos</b> (ramificações da aorta): radial."},
+{t:"poli",q:"Quais os sinais de choque e de vasoconstrição periférica?",a:"Sudorese; pele fria, pálida e pegajosa; taquicardia; <b>hipotensão (< 90 mmHg)</b>; diminuição da pressão de pulso; confusão mental/obnubilação."},
+{t:"poli",q:"Quais as 4 classes de choque (perda de volemia)?",a:"<b>I</b>: até 15% — taquicardia sem hipotensão. <b>II</b>: 15–30% — taquicardia, taquipneia, ↓ pressão de pulso, sem hipotensão. <b>III</b>: 30–40% — + hipotensão, confusão mental, ↓ débito urinário. <b>IV</b>: > 40% — + anúria."},
+{t:"poli",q:"XABCDE — D (déficit neurológico): o que avaliar e as causas de queda de consciência?",a:"Doente agressivo/combativo deve ser considerado <b>hipóxico</b>. Queda do nível de consciência por: hipóxia/hipoperfusão cerebral, lesão do SNC, intoxicação por álcool ou drogas, distúrbio metabólico (hipoglicemia)."},
+{t:"poli",q:"Como o material define a avaliação das pupilas (miose, midríase, anisocoria)?",a:"<b>Miose</b>: pupilas dilatadas. <b>Midríase</b>: pupilas contraídas. <b>Anisocoria</b>: pupilas de tamanhos desiguais."},
+{t:"poli",q:"Quais os sinais de TCE (guaxinim/Battle)?",a:"<b>PANDA (sinal do guaxinim)</b>: equimoses ao redor dos olhos. <b>BATTLE</b>: equimoses atrás da orelha. Ambos sugerem fratura de base de crânio."},
+{t:"poli",q:"Escala de Coma de Glasgow — para que serve e como classifica o TCE?",a:"Método padronizado mundialmente para avaliar o nível de consciência após o TCE, de <b>3 a 15 pontos</b>. <b>TCE leve</b>: 15–13; <b>moderado</b>: 12–9; <b>grave</b>: < 9."},
+{t:"poli",q:"XABCDE — E (exposição e ambiente): o que se faz?",a:"Retirar toda a roupa da vítima (mulheres: manter coberta a parte superior do tórax e a cintura; homens: cobrir só a cintura) e <b>controle da hipotermia</b> (cobrir a vítima)."},
+{t:"poli",q:"O que é a análise secundária e o mnemônico AMPLA?",a:"Avaliação detalhada da cabeça aos pés + sinais vitais + <b>AMPLA</b> (anamnese pré-hospitalar): <b>A</b>lergias, <b>M</b>edicamentos, <b>P</b>assado médico/cirúrgico, <b>L</b>íquidos e alimentos ingeridos, <b>A</b>mbiente (fatores que levaram ao trauma)."},
+{t:"poli",q:"O que é um desastre e como é a triagem START (cores)?",a:"<b>Desastre</b>: o nº de pacientes excede a capacidade dos serviços sem auxílio externo. Triagem <b>START</b>: <b>verde</b> = conscientes (andam); <b>amarelo</b> = não conseguem andar; <b>vermelho</b> = inconscientes, sinais de choque, obstrução de via aérea; <b>cinza</b> = mortos ou perto de morrer."},
+
+{t:"pcr",q:"O que é a parada cardiorrespiratória (PCR)?",a:"Interrupção <b>súbita</b> dos batimentos cardíacos e da respiração, levando à <b>perda imediata da consciência</b>."},
+{t:"pcr",q:"O que é AESP (atividade elétrica sem pulso)?",a:"A vítima ainda tem <b>atividade eletrocardiográfica com ritmo</b>, mas <b>sem força contrátil suficiente</b> para impulsionar o sangue do coração para o resto do organismo."},
+{t:"pcr",q:"Diferencie parada cardíaca de parada respiratória (sinais).",a:"<b>Cardíaca</b>: interrupção do bombeamento → rompe o transporte de O₂. Sinais: ausência de batimentos, pulso ausente, cianose, dilatação das pupilas. <b>Respiratória</b>: interrupção da função respiratória → perda da captação de O₂. Sinais: ausência de movimentos, <b>taquicardia</b>, cianose, dilatação das pupilas."},
+{t:"pcr",q:"Quais as causas primárias e secundárias da PCR?",a:"<b>Primárias</b> (do coração): arritmia — <b>fibrilação ventricular</b> (principal) — e isquemia cardíaca. <b>Secundárias</b> (respiratória/externa): oxigenação deficiente (obstrução de via aérea, doença pulmonar), transporte inadequado de O₂ (hemorragia, choque, intoxicação por CO) e fatores externos (drogas, descargas elétricas)."},
+{t:"pcr",q:"Qual a relação entre o tempo até a RCP e a sobrevida?",a:"<b>1 min → 98%</b> de sobrevida; 3min30s → 25%; <b>5 min → 5%</b>. Obs.: vítimas em hipotermia toleram mais tempo sem O₂ (↓ consumo cerebral)."},
+{t:"pcr",q:"Por que no trauma a sequência muda de ABC para CAB?",a:"A RCP (compressões) deve ser a <b>primeira medida</b> logo após a parada, pois a maioria das PCR extra-hospitalares <b>não recebe nenhuma manobra</b> antes de chegar ao hospital."},
+{t:"pcr",q:"Como saber se é preciso fazer RCP (sinais)?",a:"1) <b>Ausência de pulso</b> em grande artéria (sinal mais importante); 2) apneia ou respiração <b>arquejante/gasping</b> (~30s após a PCR; o gasping dura ~4 min — informar que NÃO está respirando); 3) espasmos da laringe; 4) cianose; 5) inconsciência (achado inespecífico)."},
+{t:"pcr",q:"Qual a técnica de compressão no adulto?",a:"Ajoelhar ao lado, <b>braços em hiperextensão</b>; mãos na <b>metade inferior do esterno (linha dos mamilos)</b>; usar o peso do próprio corpo; <b>baixar o esterno 5 cm</b> a uma frequência de <b>100–120/min</b>; permitir o retorno total do tórax (sem retirar as mãos)."},
+{t:"pcr",q:"Qual a técnica de compressão em bebês (< 1 ano)?",a:"<b>2 dedos</b> no centro do tórax (logo abaixo da linha mamilar) ou <b>2 polegares</b>; baixar o esterno <b>4 cm</b> a uma frequência de 100–129/min."},
+{t:"pcr",q:"Quais as relações compressão-ventilação (30:2, 15:2, via aérea avançada)?",a:"<b>30:2</b> com 1 socorrista (ventilações ~1s; não cessar as massagens por mais de <b>10s</b>). <b>15:2</b> com 2 socorristas. Com <b>via aérea avançada</b>: compressões contínuas (100–120/min) + 1 ventilação a cada 6s (10/min)."},
+{t:"pcr",q:"Como fazer a ventilação boca a boca (não politraumatizado)?",a:"Inclinação da cabeça e elevação do mento: uma mão na testa (leve extensão do pescoço), a outra eleva o queixo; pinçar o nariz; vedar a boca e <b>ventilar 2×</b> (~1s cada) a cada <b>30 compressões</b>. Em bebês: selar boca+nariz, soprar ~1s, repetir 5× no total (1 respiração a cada 2–3s; 20–30/min)."},
+{t:"pcr",q:"Como é a reavaliação após os ciclos de RCP?",a:"<b>Pulso carotídeo positivo</b> → verificar respiração eficaz (eficaz: manter sob observação; ineficaz: manter compressões). <b>Pulso negativo</b> → reiniciar RCP pelas compressões e verificar o diâmetro das pupilas."},
+{t:"pcr",q:"Qual a Cadeia de Sobrevivência (ACE) do adulto?",a:"1) Reconhecimento imediato da PCR + acionamento do serviço de urgência; 2) <b>RCP precoce</b> (ênfase nas compressões); 3) <b>desfibrilação rápida</b>; 4) suporte avançado de vida eficaz; 5) cuidados pós-PCR."},
+{t:"pcr",q:"Diferencie PCR traumática de PCR clínica.",a:"<b>Traumática</b>: causada por exsanguinação (ou lesão cerebral/medular grave); não pode ser tratada no local → <b>transporte imediato</b> a hospital com cirurgia e sangue; <b>< 40%</b> dos traumatizados que precisam de RCP sobrevivem. <b>Clínica</b>: a maioria por problema respiratório/arritmia; pode ser tratada na cena (melhores resultados: remoção de corpo estranho, desfibrilação)."},
+{t:"pcr",q:"Quais os erros comuns e as complicações da massagem cardíaca?",a:"Erros: posição incorreta das mãos, profundidade/frequência inadequadas, dobrar cotovelos/joelhos. <b>Retorno incompleto</b> do tórax ↑ a pressão intratorácica e ↓ o retorno venoso. Profundidade ideal ~5 cm (> 6 cm = risco de lesão). Complicações: fraturas de costela/esterno, separação condrocostal, ruptura de vísceras, contusão miocárdica, ruptura ventricular."},
+
+{t:"dea",q:"O que é o DEA e para quais ritmos é indicado?",a:"Desfibrilador Externo Automático: equipamento que aplica um <b>pulso de corrente</b> de grande amplitude no coração em curto tempo, revertendo arritmias e restituindo o ritmo normal em pacientes com <b>Fibrilação Ventricular (FV)</b> ou <b>Taquicardia Ventricular (TV)</b>."},
+{t:"dea",q:"Qual o mecanismo de funcionamento do DEA?",a:"A corrente força uma <b>contração simultânea</b> das fibras cardíacas, permitindo restabelecer o ritmo normal. Se uma <b>massa crítica (75–90%)</b> das fibras responder simultaneamente, ao retornarem ao repouso podem responder ao marca-passo natural. A intensidade é regulável, podendo chegar a <b>360 joules</b>."},
+{t:"dea",q:"Diferencie DEA automático de semi-automático.",a:"<b>Automático</b>: o operador só posiciona os eletrodos e ativa; o aparelho analisa o ECG e, se necessário, efetua a descarga sozinho. <b>Semi-automático</b> (a maioria): analisa o ECG e <b>notifica</b> o operador, que efetua a descarga (mensagem visual, sonora ou voz)."},
+{t:"dea",q:"Qual a sequência CABD enfatizada no uso do DEA?",a:"<b>C</b>: confirmar ausência de pulso; <b>C</b>: realizar compressões; <b>A</b>: abrir via aérea; <b>B</b>: avaliar ausência de respiração; <b>B</b>: ventilar; <b>D</b>: desfibrilar FV/TV."},
+{t:"dea",q:"Quais os passos para usar o DEA?",a:"1) Remover roupas do tórax; 2) abrir e ligar; 3) colocar as pás nas posições corretas (não tocar na vítima durante a análise); 4) se o choque for apropriado, o aparelho carrega e pede para apertar o botão; 5) afastar todos (ninguém encosta — recebem a descarga pela pele); 6) aplicar o choque; 7) o aparelho avisa que é seguro tocar e orienta a reanimação; 8) após nova parada, reanalisa o ritmo."},
+{t:"dea",q:"Quais as medidas de segurança ao usar o DEA?",a:"1) Nenhum contato entre o pessoal e o paciente/leito/desfibrilador antes do choque; 2) <b>não</b> desfibrilar em local molhado/úmido; 3) nunca tocar a parte metálica das pás; 4) evitar que o gel una as duas pás; 5) garantir boa área de contato pás-pele (evita queimaduras)."},
+{t:"dea",q:"O que diz a lei sobre a obrigatoriedade do DEA?",a:"É obrigatória a manutenção de DEA em locais de grande movimentação. <b>Lei nº 14.621/2007</b>: locais de trabalho com concentração acima de <b>1.000 pessoas</b> ou circulação média diária de <b>3.000 ou mais</b> (ex.: clubes, academias, instituições educacionais e financeiras)."},
+
+{t:"intox",q:"Quais os fatores determinantes no processo de intoxicação?",a:"1) <b>Tempo de exposição</b>; 2) <b>concentração</b> do agente; 3) <b>toxicidade</b> do agente; 4) <b>natureza</b> da substância (gás, líquido, vapor — relação com a via de entrada); 5) <b>susceptibilidade individual</b>."},
+{t:"intox",q:"Quais as 3 zonas de controle em emergência com produtos tóxicos?",a:"<b>Quente</b>: área de perigo, contaminação ativa (só socorristas com EPI completo — ex.: bombeiros). <b>Morna</b>: transição/corredor de descontaminação (primeiros socorros, lavagem, remoção de roupas — ex.: médicos). <b>Fria</b>: zona segura, sem contaminação (onde ficam os curiosos)."},
+{t:"intox",q:"Quais as 4 vias de penetração do tóxico?",a:"<b>Inalação</b> (respiratória), <b>ingestão</b> (boca — a mais frequente), <b>contato</b> (pele/mucosa/olhos) e <b>injeção</b> (corrente sanguínea)."},
+{t:"intox",q:"Quais as formas de tóxicos por inalação?",a:"<b>Poeira</b> (partículas sólidas em suspensão), <b>fumaça</b> (gases/vapores/partículas da queima — CO e cianeto), <b>névoas/neblina</b> (nebulização de químicos, ex.: água sanitária) e <b>gás natural</b> (inodoro, incolor e muito tóxico)."},
+{t:"intox",q:"Quais misturas domésticas geram gases tóxicos?",a:"Água sanitária + desinfetante = <b>tricloramina</b> (queima a mucosa respiratória; asfixia em ambiente fechado). + vinagre = <b>cloro gasoso</b>. + álcool = <b>ácido muriático e clorofórmico</b> (lesa pulmão, fígado, rins, pele, olhos e SNC)."},
+{t:"intox",q:"Qual a conduta na intoxicação por inalação?",a:"1) Isolar a área; 2) remover a vítima para local ventilado; 3) solicitar atendimento especializado; 4) verificar/monitorar sinais vitais; 5) cabeça elevada e afrouxar roupas (consciente) ou posição lateral de segurança (inconsciente); 6) técnica de RCP se necessário. <b>NÃO fazer boca a boca</b> em intoxicação — usar máscara/dispositivo adequado."},
+{t:"intox",q:"Quais os sinais de intoxicação por CO conforme a porcentagem?",a:"<b>10–20%</b>: náuseas e cefaleia. <b>>20%</b>: tonturas, fraqueza, dificuldade de concentração/raciocínio. <b>>30%</b>: dispneia ao esforço, dor no peito, confusão. <b>30–60%</b>: síncope, convulsões. <b>>60%</b>: hipotensão, coma, insuficiência respiratória e morte."},
+{t:"intox",q:"Ingestão — por que é importante e quais as substâncias mais comuns?",a:"É a forma <b>mais frequente</b> de intoxicação (via: boca). Substâncias: alimentos estragados/contaminados, <b>medicamentos (1º lugar)</b>, bebidas alcoólicas, alucinógenos/narcóticos, produtos de limpeza, plantas venenosas, inseticidas/raticidas, soda cáustica, derivados de petróleo, ácidos/álcalis/fenóis."},
+{t:"intox",q:"Qual a conduta na intoxicação por ingestão?",a:"1) Monitorar sinais vitais; 2) assegurar que respira; 3) deitar a vítima sobre o <b>lado esquerdo</b> (retarda a absorção); 4) RCP se necessário (sem boca a boca); 5) <b>identificar o agente</b> (frascos/rótulos/bulas — antídotos); 6) observar (efeitos podem não ser imediatos); 7) manter aquecida; 8) transportar imediatamente."},
+{t:"intox",q:"Quais as posições de segurança (gestante/envenenamento e afogamento)?",a:"<b>Gestante/envenenamento</b>: posição lateral <b>esquerda</b>. <b>Afogamento</b>: posição lateral <b>direita</b> (o primeiro pulmão a ser comprometido é o direito)."},
+{t:"intox",q:"Qual a conduta na intoxicação por contato?",a:"As substâncias causam irritação ou queimadura química. Conduta: remover (com proteção) a substância sólida; <b>lavar com água corrente abundante</b>; remover roupas/calçados contaminados sob o mesmo fluxo de água e isolá-los; encaminhar com urgência ao atendimento especializado."},
+{t:"intox",q:"Intoxicação por injeção — vias e conduta.",a:"Via: corrente sanguínea (drogas ilícitas em músculo/pele/sangue, mordidas, picadas). Pode causar fraqueza, tontura, calafrios/febre, náuseas/vômitos, choque, morte. Conduta: solicitar atendimento; monitorar sinais vitais; cabeça elevada (consciente) ou posição lateral de segurança (inconsciente); RCP se necessário."},
+{t:"intox",q:"O que são domissanitários e quem mais se intoxica com eles?",a:"Substâncias para higienização/desinfecção de ambientes e tratamento de água (sabões/detergentes, desinfetantes, agentes de limpeza). A intoxicação é mais frequente em <b>crianças e mulheres</b>, em núcleos urbanos."},
+{t:"intox",q:"Plantas tóxicas, prevenção e para quem ligar em caso de dúvida?",a:"Podem alterar os sistemas GI, circulatório e SNC (~30s após a ingestão: sinais de colapso — taquicardia, ↓PA, sudorese, cianose, fraqueza). Prevenção: conhecer as plantas, mantê-las fora do alcance de crianças, não fazer chás caseiros sem orientação. Em dúvida, ligar para <b>CEATOX</b> (Centro de Assistência Toxicológica) ou <b>SINITOX</b>."},
+{t:"intox",q:"Diagnóstico da intoxicação por sistema (principais sinais).",a:"<b>SNC</b>: agitação, delírio, alucinações, sonolência, coma, ataxia, convulsões. <b>Visão</b>: ambliopia, daltonismo, <b>miose</b>, visão turva, cegueira. <b>Respiratório</b>: dispneia/apneia, depressão respiratória, edema pulmonar, cianose. <b>Digestório</b>: vômitos/diarreia, sialorreia, icterícia. <b>Cardiovascular</b>: hiper/hipotensão, bradi/taquicardia, palpitações."}
+];
+CARDS.forEach((c,i)=>c.id=i);
+const WORKING=20;
+const OFFSET=[2,4,9,15];
+let baseDeck=[],pool=[],q=[],st={},total=0,mastered=0,shown=false,hideArea=false;
+let selected=new Set(Object.keys(META));
+const SAVEKEY='aph-p2-flashcards-v1';
+function save(){try{localStorage.setItem(SAVEKEY,JSON.stringify({sel:[...selected],q:q.map(c=>c.id),pool:pool.map(c=>c.id),st:st,total:total,mastered:mastered,hideArea:hideArea}));}catch(e){}}
+function restoreSession(){
+ let d;try{d=JSON.parse(localStorage.getItem(SAVEKEY)||'null');}catch(e){return false;}
+ if(!d||!Array.isArray(d.q))return false;
+ q=d.q.map(id=>CARDS[id]).filter(Boolean);
+ pool=(d.pool||[]).map(id=>CARDS[id]).filter(Boolean);
+ if(q.length===0&&pool.length===0)return false;
+ st=d.st||{};total=d.total||0;mastered=d.mastered||0;hideArea=!!d.hideArea;
+ if(Array.isArray(d.sel))selected=new Set(d.sel.filter(k=>META[k]));
+ if(!selected.size)selected=new Set(Object.keys(META));
+ refreshChips();shown=false;render();return true;
+}
+function buildPanel(){
+ const p=document.getElementById('filterPanel');let h='';
+ for(const [blk,label] of BLOCKS){
+  const keys=Object.keys(META).filter(k=>META[k][1]===blk);if(!keys.length)continue;
+  h+='<div class="fgroup"><h4 onclick="togBlock(\''+blk+'\')">'+label+' <span class="blktog">marcar/desmarcar tudo</span></h4><div class="chips">';
+  for(const k of keys){const n=CARDS.filter(c=>c.t===k).length;h+='<button class="chip" data-k="'+k+'" onclick="togChip(\''+k+'\')">'+META[k][0]+' <span style="opacity:.55">'+n+'</span></button>';}
+  h+='</div></div>';
+ }
+ h+='<div class="factions"><button onclick="selAll()">Todos</button><button onclick="selNone()">Limpar</button><span class="sp"></span><button id="trainBtn" onclick="train()">Treinar <span id="trainN"></span></button></div>';
+ p.innerHTML=h;refreshChips();
+}
+function refreshChips(){
+ document.querySelectorAll('#filterPanel .chip').forEach(b=>b.classList.toggle('on',selected.has(b.dataset.k)));
+ const n=CARDS.filter(c=>selected.has(c.t)).length,tot=Object.keys(META).length;
+ const tn=document.getElementById('trainN');if(tn)tn.textContent='('+n+' cards)';
+ const ss=document.getElementById('selSummary');if(ss)ss.textContent=selected.size===0?'(nenhum)':selected.size===tot?'(todos)':'('+selected.size+' temas)';
+}
+function togChip(k){selected.has(k)?selected.delete(k):selected.add(k);refreshChips();}
+function togBlock(blk){const keys=Object.keys(META).filter(k=>META[k][1]===blk);const allOn=keys.every(k=>selected.has(k));keys.forEach(k=>allOn?selected.delete(k):selected.add(k));refreshChips();}
+function selAll(){selected=new Set(Object.keys(META));refreshChips();}
+function selNone(){selected=new Set();refreshChips();}
+function togPanel(){document.getElementById('filterPanel').classList.toggle('open');}
+function train(){if(!selected.size){alert('Escolha pelo menos um tema.');return;}document.getElementById('filterPanel').classList.remove('open');startSession();}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function startSession(){
+ const keys=selected.size?selected:new Set(Object.keys(META));
+ baseDeck=CARDS.filter(c=>keys.has(c.t));
+ if(!baseDeck.length)baseDeck=CARDS.slice();
+ baseDeck=shuffleArr(baseDeck.slice());
+ st={};baseDeck.forEach(c=>st[c.id]=0);
+ total=baseDeck.length;mastered=0;pool=baseDeck.slice();q=[];
+ while(q.length<WORKING&&pool.length)q.push(pool.shift());
+ shown=false;render();save();
+}
+function restart(){startSession();}
+function render(){
+ const card=document.getElementById('card'),done=document.getElementById('done');
+ const rate=document.getElementById('rate'),prompt=document.getElementById('prompt');
+ if(q.length===0){
+  card.style.display='none';rate.classList.remove('show');prompt.classList.add('hide');
+  done.style.display='block';
+  done.innerHTML=total?('✅ Sessão concluída — '+mastered+' de '+total+' cards dominados (2× Fácil seguidos).<br><button onclick="restart()">↺ Recomeçar</button>'):'Sem cards.';
+  document.getElementById('count').textContent='';return;
+ }
+ card.style.display='block';done.style.display='none';
+ const c=q[0];
+ document.getElementById('fArea').textContent=META[c.t][0];
+ document.getElementById('fArea').style.visibility=hideArea?'hidden':'visible';
+ var _eb=document.getElementById('eyeBtn');if(_eb){_eb.classList.toggle('closed',hideArea);_eb.querySelector('.eyelbl').textContent=hideArea?'mostrar tema':'esconder tema';}
+ document.getElementById('fQ').innerHTML=c.q;
+ document.getElementById('bQ').innerHTML=c.q;
+ document.getElementById('bA').innerHTML=c.a;
+ var pw=document.getElementById('bPwrap');
+ if(c.p){pw.style.display='block';document.getElementById('bP').innerHTML=c.p;}else{pw.style.display='none';}
+ const s=st[c.id]||0;
+ document.getElementById('streak').textContent=s>0?'Sequência Fácil: '+s+'/2 — mais 1 "Fácil" e ele sai de rotação':'';
+ card.classList.toggle('flip',shown);
+ rate.classList.toggle('show',shown);
+ prompt.classList.toggle('hide',shown);
+ document.getElementById('count').textContent='Dominados '+mastered+'/'+total+'  ·  Em rotação '+q.length+'  ·  Aguardando '+pool.length;
+}
+function flip(){if(!shown){shown=true;render();}}
+function rate(level){
+ if(!shown)return;
+ const c=q.shift();
+ if(level===3){st[c.id]=(st[c.id]||0)+1;}else{st[c.id]=0;}
+ if(level===3&&st[c.id]>=2){mastered++;if(pool.length)q.push(pool.shift());}
+ else{q.splice(Math.min(OFFSET[level],q.length),0,c);}
+ shown=false;render();save();
+}
+function th(){const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='light'?'':'light');}
+function togArea(){hideArea=!hideArea;save();render();}
+document.addEventListener('keydown',e=>{
+ if(e.target.tagName==='SELECT'||e.target.tagName==='BUTTON')return;
+ if(e.code==='Space'){e.preventDefault();if(!shown){shown=true;render();}return;}
+ if(shown&&['1','2','3','4'].includes(e.key))rate(parseInt(e.key)-1);
+});
+buildPanel();if(!restoreSession())startSession();
+</script>
+</body>
+</html>

@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPERAÇÃO · Esquistossomose Mansônica</title>
+<style>
+  /* =================================================================
+     OPERAÇÃO — study interface
+     Brutalist editorial. Mono UI chrome. Display serif headings.
+     Bone / Ink / Surgical Blue.
+     ================================================================= */
+
+  :root[data-theme="light"] {
+    --bone:    #f6f2e7;
+    --bone-2:  #ece7d7;
+    --bone-3:  #dcd6c3;
+    --ink:     #0a0908;
+    --ink-2:   #1c1a16;
+    --mute:    #6a655a;
+    --mute-2:  #8d8778;
+    --hair:    #0a0908;
+    --accent:  #0033ff;
+    --accent-2:#002bd9;
+    --ok:      #006a3a;
+    --danger:  #c8241e;
+    --warn:    #8a5a00;
+
+    --bg:      var(--bone);
+    --bg-2:    var(--bone-2);
+    --bg-3:    var(--bone-3);
+    --fg:      var(--ink);
+    --fg-2:    var(--ink-2);
+  }
+
+  :root[data-theme="dark"] {
+    --bone:    #0a0908;
+    --bone-2:  #141311;
+    --bone-3:  #1d1b18;
+    --ink:     #e8e4d7;
+    --ink-2:   #cfcab9;
+    --mute:    #8a8573;
+    --mute-2:  #6d6a5e;
+    --hair:    #e8e4d7;
+    --accent:  #4d7cff;
+    --accent-2:#6a91ff;
+    --ok:      #4fb47a;
+    --danger:  #ff5b55;
+    --warn:    #d4a84b;
+
+    --bg:      var(--bone);
+    --bg-2:    var(--bone-2);
+    --bg-3:    var(--bone-3);
+    --fg:      var(--ink);
+    --fg-2:    var(--ink-2);
+  }
+
+  /* ---------- Reset & base ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection { background: var(--accent); color: var(--bone); }
+
+  /* fontfaces / stacks */
+  .mono {
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-feature-settings: "zero", "ss01";
+  }
+  .display {
+    font-family: "Fraunces", ui-serif, "Iowan Old Style", "Source Serif Pro", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+
+  /* ---------- Topbar ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 14px 28px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--hair);
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .topbar .brand { display: flex; align-items: center; gap: 10px; }
+  .topbar .brand .logo {
+    width: 16px; height: 16px;
+    background: var(--fg);
+    position: relative;
+  }
+  .topbar .brand .logo::before,
+  .topbar .brand .logo::after {
+    content: "";
+    position: absolute;
+    background: var(--bg);
+  }
+  .topbar .brand .logo::before { left: 7px; top: 0; width: 2px; height: 16px; }
+  .topbar .brand .logo::after  { top: 7px; left: 0; width: 16px; height: 2px; }
+  .topbar .center {
+    text-align: center;
+    color: var(--mute);
+    font-weight: 500;
+  }
+  .topbar .right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+  }
+  .topbar button {
+    background: transparent;
+    border: 0;
+    color: var(--fg);
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+    letter-spacing: 0.1em;
+  }
+  .topbar button:hover { color: var(--accent); }
+  .topbar .kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid var(--hair);
+    border-radius: 2px;
+    margin-left: 6px;
+    font-size: 10px;
+  }
+
+  /* progress bar */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    z-index: 70;
+    pointer-events: none;
+  }
+  .scroll-progress .bar {
+    height: 100%;
+    width: 0;
+    background: var(--accent);
+    transition: width .05s linear;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 80px 28px 60px;
+    border-bottom: 1px solid var(--hair);
+    position: relative;
+  }
+  .hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+  }
+  .hero-meta .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    margin-right: 6px;
+    vertical-align: 2px;
+  }
+  .hero h1 {
+    font-family: "Fraunces", ui-serif, "Iowan Old Style", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(3rem, 11vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin: 0;
+    color: var(--fg);
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero-lede {
+    font-size: 1.15rem;
+    max-width: 58ch;
+    color: var(--fg-2);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--hair);
+    margin-top: 16px;
+  }
+  .hero-stats .cell {
+    padding: 20px 16px 0;
+    border-right: 1px solid var(--hair);
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  .hero-stats .cell:last-child { border-right: 0; }
+  .hero-stats .k {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    margin-bottom: 6px;
+  }
+  .hero-stats .v {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .hero-stats .v small {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    color: var(--mute);
+    margin-left: 4px;
+    font-weight: normal;
+  }
+
+  /* ---------- Layout body ---------- */
+  .doc {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr) 240px;
+    gap: 48px;
+  }
+
+  /* left rail: section indices */
+  .rail-left {
+    position: sticky;
+    top: 64px;
+    align-self: start;
+    padding-top: 72px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mute);
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+  }
+  .rail-left::-webkit-scrollbar { display: none; }
+  .rail-left ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rail-left li {
+    margin: 0 0 14px;
+    line-height: 1.3;
+  }
+  .rail-left a {
+    color: var(--mute);
+    text-decoration: none;
+    display: block;
+    padding: 2px 0;
+    border-left: 1px solid transparent;
+    padding-left: 10px;
+    margin-left: -10px;
+    transition: color .12s, border-color .12s;
+  }
+  .rail-left a:hover { color: var(--fg); }
+  .rail-left a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .rail-left a .n {
+    display: block;
+    font-size: 13px;
+    font-feature-settings: "tnum";
+    color: var(--fg);
+    margin-bottom: 2px;
+  }
+  .rail-left a.active .n { color: var(--accent); }
+
+  /* content */
+  main {
+    padding: 72px 0 120px;
+    max-width: 720px;
+  }
+
+  /* right rail: on-page nav within current section */
+  .rail-right {
+    position: sticky;
+    top: 64px;
+    align-self: start;
+    padding-top: 72px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mute);
+  }
+  .rail-right .label {
+    color: var(--fg);
+    font-weight: 600;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--hair);
+  }
+  .rail-right .item {
+    padding: 6px 0;
+    color: var(--mute);
+  }
+  .rail-right .item b {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    text-transform: none;
+  }
+  .rail-right .shortcut {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    color: var(--mute);
+  }
+  .rail-right .shortcut .k {
+    border: 1px solid var(--hair);
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+
+  /* ---------- Section headings ---------- */
+  .section-header {
+    position: relative;
+    margin: 88px 0 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hair);
+  }
+  .section-header:first-child { margin-top: 0; border-top: 0; padding-top: 0; }
+  .section-header .n {
+    position: absolute;
+    left: -148px;
+    top: 28px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mute);
+    width: 120px;
+  }
+  .section-header .n::before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 10px;
+  }
+  .section-header h2 {
+    font-family: "Fraunces", ui-serif, "Iowan Old Style", Georgia, serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+    margin: 0;
+    color: var(--fg);
+    scroll-margin-top: 80px;
+  }
+
+  h3 {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    font-weight: 500;
+    margin: 44px 0 12px;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+  h4 {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 28px 0 10px;
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  p { margin: 14px 0; color: var(--fg-2); }
+  strong { color: var(--fg); font-weight: 600; }
+  em { color: var(--fg); font-style: italic; }
+
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+  a:hover { background: var(--accent); color: var(--bone); }
+
+  code {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    background: var(--bg-2);
+    border: 1px solid var(--hair);
+    padding: 1px 6px;
+    font-size: 0.86em;
+    color: var(--accent);
+  }
+
+  ul, ol { padding-left: 22px; color: var(--fg-2); }
+  li { margin: 7px 0; }
+  li::marker { color: var(--mute-2); }
+
+  /* ---------- Callouts (brutalist) ---------- */
+  .callout {
+    position: relative;
+    margin: 28px 0;
+    padding: 20px 0 20px 24px;
+    border-left: 2px solid var(--fg);
+    color: var(--fg-2);
+  }
+  .callout .label {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--fg);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .callout .label::before {
+    content: "◎";
+    color: var(--accent);
+    margin-right: 8px;
+  }
+  .callout p:first-of-type { margin-top: 0; }
+  .callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+
+  .callout.warn     { border-left-color: var(--warn); }
+  .callout.warn .label::before     { content: "△"; color: var(--warn); }
+  .callout.danger   { border-left-color: var(--danger); }
+  .callout.danger .label::before   { content: "✕"; color: var(--danger); }
+  .callout.info     { border-left-color: var(--accent); }
+  .callout.info .label::before     { content: "ℹ"; color: var(--accent); }
+  .callout.clinical { border-left-color: var(--ok); }
+  .callout.clinical .label::before { content: "+"; color: var(--ok); }
+
+  /* ---------- Tables ---------- */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 24px -4px;
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+    background: transparent;
+  }
+  th, td {
+    padding: 14px 16px 14px 4px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--hair);
+  }
+  th {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    border-bottom: 1px solid var(--fg);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  tr:last-child td { border-bottom: 0; }
+  td { color: var(--fg-2); }
+
+  /* ---------- Tags ---------- */
+  .tag {
+    display: inline-block;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 9.5px;
+    padding: 2px 7px;
+    border: 1px solid var(--fg);
+    border-radius: 0;
+    margin-right: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    vertical-align: 2px;
+    background: transparent;
+    color: var(--fg);
+  }
+  .tag.aguda   { color: var(--warn);   border-color: var(--warn); }
+  .tag.cronica { color: var(--accent); border-color: var(--accent); }
+  .tag.grave   { color: var(--danger); border-color: var(--danger); }
+
+  /* ---------- Question bank ---------- */
+  .qbank {
+    margin-top: 32px;
+  }
+  .qbank-hud {
+    position: sticky;
+    top: 48px;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--hair);
+    margin-bottom: 20px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  .hud-stat {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+    line-height: 1.2;
+  }
+  .hud-stat b {
+    display: block;
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin-top: 2px;
+    font-feature-settings: "tnum";
+  }
+  .hud-stat .accent { color: var(--accent); }
+  .hud-stat .ok { color: var(--ok); }
+  .hud-stat .danger { color: var(--danger); }
+  .hud-controls {
+    justify-self: end;
+    display: flex;
+    gap: 8px;
+  }
+  .hud-btn {
+    font: inherit;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--fg);
+    padding: 7px 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+  .hud-btn:hover { background: var(--fg); color: var(--bg); }
+  .hud-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bone); }
+  .hud-btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2); }
+
+  .q {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--hair);
+    scroll-margin-top: 120px;
+  }
+  .q:first-of-type { border-top: 1px solid var(--hair); }
+  .q-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+  }
+  .q-num {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .q-num .pre {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    margin-right: 10px;
+    font-weight: 500;
+  }
+  .q-tag {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+  }
+  .q-stem {
+    font-size: 1.02rem;
+    color: var(--fg);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  /* confidence selector (shown BEFORE revealing answer) */
+  .q-confidence {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0 18px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mute);
+  }
+  .q-confidence .conf-btns { display: flex; gap: 6px; }
+  .conf-btn {
+    font: inherit;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--hair);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+  .conf-btn:hover { border-color: var(--fg); }
+  .conf-btn.active {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .q.conf-set .q-confidence { opacity: 0.5; }
+
+  .alts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .alts li {
+    position: relative;
+    padding: 14px 16px 14px 52px;
+    margin: 0;
+    border-top: 1px solid var(--hair);
+    cursor: pointer;
+    transition: background .12s;
+    color: var(--fg-2);
+  }
+  .alts li:last-child { border-bottom: 1px solid var(--hair); }
+  .alts li::before {
+    content: attr(data-letter);
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--fg);
+    display: grid;
+    place-items: center;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .alts li:hover:not(.correct):not(.wrong):not(.selected-wrong) {
+    background: var(--bg-2);
+  }
+  .alts li:hover:not(.correct):not(.wrong):not(.selected-wrong)::before {
+    background: var(--fg);
+    color: var(--bg);
+  }
+  .alts li.correct {
+    background: color-mix(in oklab, var(--ok) 12%, var(--bg));
+    color: var(--fg);
+  }
+  .alts li.correct::before {
+    background: var(--ok);
+    color: var(--bone);
+    border-color: var(--ok);
+  }
+  .alts li.wrong {
+    color: var(--mute);
+    opacity: 0.55;
+  }
+  .alts li.selected-wrong {
+    background: color-mix(in oklab, var(--danger) 12%, var(--bg));
+    color: var(--fg);
+    opacity: 1;
+  }
+  .alts li.selected-wrong::before {
+    background: var(--danger);
+    color: var(--bone);
+    border-color: var(--danger);
+  }
+  .q.answered .alts li { cursor: default; }
+
+  .reveal-btn {
+    margin-top: 16px;
+    font: inherit;
+    background: transparent;
+    color: var(--fg);
+    border: 0;
+    border-bottom: 1px solid var(--fg);
+    padding: 4px 0;
+    cursor: pointer;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .reveal-btn:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .explain {
+    display: none;
+    margin-top: 20px;
+    padding: 18px 20px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--accent);
+    font-size: 0.94rem;
+  }
+  .explain.open { display: block; }
+  .explain h5 {
+    margin: 0 0 10px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .explain p { margin: 8px 0; }
+  .explain ul { margin: 10px 0 4px; padding-left: 18px; }
+  .explain li { margin: 6px 0; font-size: 0.92rem; color: var(--fg-2); }
+  .explain .correct-exp { color: var(--ok); }
+  .explain .correct-exp strong { color: var(--ok); }
+  .explain .wrong-exp { color: var(--mute); }
+  .explain .wrong-exp strong { color: var(--fg-2); }
+
+  /* ---------- Command palette ---------- */
+  .palette-bg {
+    position: fixed;
+    inset: 0;
+    background: color-mix(in oklab, var(--bone) 60%, transparent);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: none;
+  }
+  .palette-bg.open { display: block; }
+  .palette {
+    position: fixed;
+    top: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(560px, 90vw);
+    background: var(--bg);
+    border: 1px solid var(--fg);
+    z-index: 101;
+    display: none;
+    box-shadow: 6px 6px 0 var(--fg);
+  }
+  .palette.open { display: block; }
+  .palette input {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid var(--hair);
+    padding: 18px 20px;
+    font: inherit;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    background: transparent;
+    color: var(--fg);
+    outline: none;
+    font-size: 14px;
+  }
+  .palette input::placeholder { color: var(--mute); }
+  .palette ul {
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+  .palette li {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    color: var(--fg-2);
+  }
+  .palette li.active { background: var(--accent); color: var(--bone); }
+  .palette li .n {
+    color: var(--mute);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .palette li.active .n { color: var(--bone); opacity: 0.8; }
+  .palette .hint {
+    padding: 10px 20px;
+    border-top: 1px solid var(--hair);
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    display: flex;
+    gap: 18px;
+  }
+  .palette .hint .k {
+    border: 1px solid var(--hair);
+    padding: 1px 5px;
+    margin-right: 4px;
+  }
+
+  /* ---------- Focus mode ---------- */
+  body.focus-mode main > *:not(.focus-active) {
+    opacity: 0.12;
+    transition: opacity .3s;
+  }
+  body.focus-mode main > .focus-active { opacity: 1; }
+  body.focus-mode .rail-left, body.focus-mode .rail-right { opacity: 0.2; }
+
+  /* ---------- Help overlay ---------- */
+  .help-bg {
+    position: fixed;
+    inset: 0;
+    background: color-mix(in oklab, var(--bone) 70%, transparent);
+    backdrop-filter: blur(8px);
+    z-index: 110;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .help-bg.open { display: flex; }
+  .help-card {
+    background: var(--bg);
+    border: 1px solid var(--fg);
+    padding: 32px 36px;
+    max-width: 480px;
+    width: 90vw;
+    box-shadow: 6px 6px 0 var(--fg);
+  }
+  .help-card h3 {
+    margin: 0 0 18px;
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-size: 1.5rem;
+  }
+  .help-card .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--hair);
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 12px;
+  }
+  .help-card .row:last-child { border-bottom: 0; }
+  .help-card .row .desc { color: var(--fg-2); }
+  .help-card .row .k {
+    border: 1px solid var(--hair);
+    padding: 1px 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg);
+  }
+  .help-card .close {
+    margin-top: 20px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    text-align: center;
+  }
+
+  /* ---------- Card mode (fullscreen flashcards) ---------- */
+  body.card-mode .topbar,
+  body.card-mode .hero,
+  body.card-mode .rail-left,
+  body.card-mode .rail-right,
+  body.card-mode main > *:not(.qbank),
+  body.card-mode .qbank-hud,
+  body.card-mode .qbank > p:first-of-type,
+  body.card-mode .q:not(.card-active) { display: none; }
+  body.card-mode .doc {
+    display: block;
+    padding: 0;
+    max-width: none;
+  }
+  body.card-mode main {
+    padding: 0;
+    max-width: none;
+  }
+  body.card-mode .qbank {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 40px 24px;
+    background: var(--bg);
+  }
+  body.card-mode .q.card-active {
+    display: block;
+    max-width: 720px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    animation: cardFade .18s ease;
+  }
+  @keyframes cardFade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-mode-hud {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mute);
+    background: var(--bg);
+    border: 1px solid var(--hair);
+    padding: 10px 18px;
+    display: none;
+    gap: 22px;
+    align-items: center;
+  }
+  body.card-mode .card-mode-hud { display: flex; }
+  .card-mode-hud .k {
+    border: 1px solid var(--hair);
+    padding: 1px 5px;
+    margin-right: 4px;
+  }
+  .card-mode-hud .exit {
+    background: none; border: 0; color: var(--danger); font: inherit;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 1040px) {
+    .doc { grid-template-columns: 1fr; gap: 0; padding: 0 24px; }
+    .rail-left, .rail-right { display: none; }
+    .section-header .n {
+      position: static;
+      width: auto;
+      margin-bottom: 10px;
+    }
+    main { padding: 40px 0 80px; }
+    .hero { padding: 48px 24px 36px; }
+    .hero h1 { font-size: clamp(2.4rem, 12vw, 5rem); }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats .cell { border-right: 1px solid var(--hair); }
+    .hero-stats .cell:nth-child(2n) { border-right: 0; }
+    .hero-stats .cell:nth-child(1), .hero-stats .cell:nth-child(2) {
+      border-bottom: 1px solid var(--hair);
+      padding-bottom: 20px;
+    }
+    .topbar { padding: 12px 20px; font-size: 10px; grid-template-columns: auto 1fr; }
+    .topbar .center { display: none; }
+    .qbank-hud { grid-template-columns: 1fr 1fr; row-gap: 12px; }
+    .hud-controls { grid-column: span 2; justify-self: stretch; justify-content: stretch; }
+    .hud-controls .hud-btn { flex: 1; }
+  }
+
+  /* ---------- Print ---------- */
+  @media print {
+    body { background: white; color: black; }
+    .topbar, .rail-left, .rail-right, .qbank-hud, .reveal-btn,
+    .palette, .palette-bg, .help-bg, .scroll-progress, .card-mode-hud { display: none !important; }
+    .doc { display: block; padding: 0; }
+    main { padding: 0; max-width: none; }
+    .section-header .n { position: static; }
+    .explain { display: block !important; }
+    .q { page-break-inside: avoid; }
+    h1, h2, h3 { page-break-after: avoid; }
+    a { color: black; border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress"><div class="bar" id="scrollBar"></div></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo"></div>
+    <span>OPERAÇÃO / ESQUISTOSSOMOSE</span>
+  </div>
+  <div class="center"><span>INFECTOLOGIA · SCHISTOSOMA MANSONI · 12 QUESTÕES</span></div>
+  <div class="right">
+    <button id="paletteBtn">COMANDOS <span class="kbd">⌘K</span></button>
+    <button id="helpBtn">ATALHOS <span class="kbd">?</span></button>
+    <button id="themeBtn">TEMA</button>
+  </div>
+</header>
+
+<!-- =============================== HERO ============================== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-meta">
+      <span><span class="dot"></span>DOSSIÊ CLÍNICO Nº 001</span>
+      <span>CLASSIFICAÇÃO / HELMINTOSE CRÔNICA</span>
+      <span>REVISÃO / ABR 2026</span>
+      <span>FONTE / FASM + MS BRASIL</span>
+    </div>
+    <h1>Esquistossomose<br>Mansônica<em>.</em></h1>
+    <p class="hero-lede">
+      Principal helmintose crônica negligenciada do Brasil. Do ciclo da cercária à fibrose de Symmers. Do viajante febril ao jovem com varizes esofágicas sangrantes. Ferramenta de estudo, não enciclopédia — feita pra ser usada com teclado e pressa.
+    </p>
+    <div class="hero-stats">
+      <div class="cell">
+        <div class="k">SEÇÕES</div>
+        <div class="v">13<small>/13</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">QUESTÕES</div>
+        <div class="v">12<small>COMENTADAS</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">LEITURA</div>
+        <div class="v">~25<small>MIN</small></div>
+      </div>
+      <div class="cell">
+        <div class="k">MODO CARD</div>
+        <div class="v" style="color: var(--accent);">C<small>PRESSIONE</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="doc">
+
+  <!-- ============================ LEFT RAIL ========================== -->
+  <nav class="rail-left" aria-label="Sumário">
+    <ol id="tocList">
+      <li><a href="#cl"><span class="n">01</span>Contexto clínico</a></li>
+      <li><a href="#agente"><span class="n">02</span>Agente · ciclo</a></li>
+      <li><a href="#epi"><span class="n">03</span>Epidemiologia</a></li>
+      <li><a href="#transm"><span class="n">04</span>Transmissão</a></li>
+      <li><a href="#fases"><span class="n">05</span>Fases clínicas</a></li>
+      <li><a href="#neuro"><span class="n">06</span>Ectópicas</a></li>
+      <li><a href="#dx"><span class="n">07</span>Diagnóstico</a></li>
+      <li><a href="#ddx"><span class="n">08</span>Dx diferencial</a></li>
+      <li><a href="#tx"><span class="n">09</span>Tratamento</a></li>
+      <li><a href="#complic"><span class="n">10</span>Complicações</a></li>
+      <li><a href="#prev"><span class="n">11</span>Prevenção</a></li>
+      <li><a href="#resumao"><span class="n">12</span>Resumão</a></li>
+      <li><a href="#questoes"><span class="n">13</span>Questões</a></li>
+    </ol>
+  </nav>
+
+  <!-- ============================== MAIN ============================= -->
+  <main>
+
+    <!-- §01 ================================================= -->
+    <div class="section-header" id="h-cl">
+      <div class="n">§ 01 / CONTEXTO</div>
+      <h2 id="cl">Contexto clínico — por que isso importa</h2>
+    </div>
+    <p>A esquistossomose mansônica é a <strong>principal helmintose crônica negligenciada do Brasil</strong>, com focos ativos no Nordeste, Minas Gerais, Espírito Santo e expansão para Sul/Sudeste. Para o clínico, ela importa em três cenários bem distintos:</p>
+    <ul>
+      <li><strong>Viajante/turista</strong> que teve contato com água doce em área endêmica e chega com febre, eosinofilia e hepatoesplenomegalia 3–7 semanas depois → <em>febre de Katayama</em>, frequentemente confundida com malária, febre tifoide ou mononucleose.</li>
+      <li><strong>Paciente de área endêmica</strong> com hemorragia digestiva alta por varizes esofágicas em idade jovem e função hepática preservada → <em>forma hepatoesplênica</em>. Este é o padrão que diferencia a doença da cirrose etílica/viral.</li>
+      <li><strong>Achado incidental</strong> em exame de fezes de rotina com ovos de <em>S. mansoni</em>, em paciente assintomático → decisão de tratar mesmo sem sintomas.</li>
+    </ul>
+    <div class="callout clinical">
+      <span class="label">Pegadinha central</span>
+      <p>A esquistossomose hepatoesplênica causa <strong>hipertensão portal com função hepática preservada</strong> (fibrose de Symmers é <em>pré-sinusoidal</em>). Paciente pode ter varizes sangrantes e ter albumina, TAP e bilirrubina normais — o oposto do cirrótico clássico. Isso muda conduta (melhor prognóstico após controle do sangramento).</p>
+    </div>
+
+    <!-- §02 ================================================= -->
+    <div class="section-header" id="h-agente">
+      <div class="n">§ 02 / BIOLOGIA</div>
+      <h2 id="agente">Agente etiológico e ciclo biológico</h2>
+    </div>
+
+    <h3>Agente</h3>
+    <ul>
+      <li><em>Schistosoma mansoni</em> — trematódeo (classe Trematoda), família Schistosomatidae.</li>
+      <li><strong>Vermes dioicos</strong> (sexos separados) — diferente da maioria dos trematódeos que são hermafroditas. A fêmea, mais longa e fina, aloja-se no <strong>canal ginecóforo</strong> do macho (fenda ventral).</li>
+      <li>Habitat final: <strong>plexo venoso mesentérico inferior</strong> (principalmente hemorroidário) do hospedeiro humano.</li>
+    </ul>
+
+    <h3>Hospedeiros</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tipo</th><th>Quem</th><th>Papel</th></tr></thead>
+      <tbody>
+        <tr><td>Definitivo</td><td>Homem (principal); primatas, roedores (reservatórios de importância menor)</td><td>Reprodução <strong>sexuada</strong>. Libera ovos nas fezes.</td></tr>
+        <tr><td>Intermediário</td><td>Caramujos do gênero <em>Biomphalaria</em> (família Planorbidae)</td><td>Reprodução <strong>assexuada</strong>. Liberam cercárias na água.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout info">
+      <span class="label">Memória rápida — espécies de Biomphalaria no Brasil</span>
+      <ul style="margin:8px 0 0;">
+        <li><strong>B. glabrata</strong> — a mais importante, maior transmissora, ampla distribuição.</li>
+        <li><strong>B. straminea</strong> — Nordeste.</li>
+        <li><strong>B. tenagophila</strong> — Sudeste (inclui SP).</li>
+      </ul>
+    </div>
+
+    <h3>Ciclo — visão clínica</h3>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Etapa</th><th>O que acontece</th><th>Onde</th></tr></thead>
+      <tbody>
+        <tr><td>1. Penetração</td><td><strong>Cercária</strong> penetra ativamente na pele íntegra (banho em água doce)</td><td>Pele humana</td></tr>
+        <tr><td>2. Esquistossômulo</td><td>Migra via sistema linfático/venoso → coração direito → pulmão → coração esquerdo → circulação sistêmica</td><td>Linfático → pulmão → sistêmico</td></tr>
+        <tr><td>3. Maturação</td><td>Chega ao fígado pelos sinusoides; amadurece em verme adulto</td><td>Veia porta intra-hepática</td></tr>
+        <tr><td>4. Acasalamento e postura</td><td>Migra contra o fluxo para <strong>vênulas mesentéricas</strong>; fêmea no canal ginecóforo do macho libera ovos</td><td>Plexo mesentérico inferior</td></tr>
+        <tr><td>5. Eliminação</td><td>Ovos atravessam parede intestinal → fezes → água doce</td><td>Intestino → ambiente</td></tr>
+        <tr><td>6. Miracídio</td><td>Ovo eclode na água → miracídio ciliado infecta <em>Biomphalaria</em></td><td>Coleção hídrica</td></tr>
+        <tr><td>7. Esporocistos e cercárias</td><td>Dentro do caramujo: reprodução assexuada → cercárias liberadas</td><td>Caramujo</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn">
+      <span class="label">Tempos que caem em prova</span>
+      <ul style="margin:8px 0 0;">
+        <li><strong>Período de incubação:</strong> 1 a 2 meses (da penetração à instalação adulta).</li>
+        <li><strong>Início da eliminação de ovos:</strong> ~5 semanas após infecção.</li>
+        <li><strong>Febre de Katayama:</strong> 3 a 7 semanas pós-exposição.</li>
+        <li><strong>Duração da eliminação:</strong> 6 a 10 anos (pode exceder 20 anos).</li>
+        <li><strong>Vida do caramujo infectado:</strong> ~1 ano, eliminando cercárias por toda a vida.</li>
+      </ul>
+    </div>
+
+    <!-- §03 ================================================= -->
+    <div class="section-header" id="h-epi">
+      <div class="n">§ 03 / EPIDEMIOLOGIA</div>
+      <h2 id="epi">Epidemiologia</h2>
+    </div>
+    <ul>
+      <li>Distribuição no Brasil: Nordeste (BA, PE, AL, SE, RN, PB, CE, MA), Sudeste (MG, ES, SP, RJ) e Centro-Oeste, com focos em PR e RS.</li>
+      <li><strong>Fatores de risco</strong>: contato com água doce parada/lenta (pesca, banho recreativo, plantio irrigado, lavagem de roupas), ausência de saneamento, residência ou viagem a áreas endêmicas.</li>
+      <li><strong>Resistência parcial adquirida</strong>: indivíduos continuamente expostos em áreas hiperendêmicas desenvolvem algum grau de resistência — explica por que a minoria dos infectados evolui para formas graves.</li>
+    </ul>
+
+    <!-- §04 ================================================= -->
+    <div class="section-header" id="h-transm">
+      <div class="n">§ 04 / TRANSMISSÃO</div>
+      <h2 id="transm">Transmissão — detalhe que vira pergunta</h2>
+    </div>
+    <p>A transmissão é <strong>exclusivamente por contato cutâneo com água doce contaminada por cercárias</strong>. Não há transmissão pessoa-pessoa, sexual, por ingestão de carne, por fômites ou por vetor artrópode.</p>
+    <p>A cercária precisa de <strong>água doce</strong>, relativamente parada, a temperaturas entre ~22–30°C para sobreviver. Água salgada e fervida são seguras.</p>
+
+    <!-- §05 ================================================= -->
+    <div class="section-header" id="h-fases">
+      <div class="n">§ 05 / FASES</div>
+      <h2 id="fases">Fases clínicas</h2>
+    </div>
+
+    <h3>Fase inicial (aguda)</h3>
+
+    <h4><span class="tag aguda">Aguda</span> Dermatite cercariana</h4>
+    <ul>
+      <li>Prurido, eritema, pápulas no local de penetração. Autolimitada, <strong>até 5 dias</strong>.</li>
+      <li>Mais intensa em reinfecções (sensibilização prévia).</li>
+      <li>DD: dermatite de contato, picada de inseto, larva migrans cutânea (esta é serpiginosa, migratória).</li>
+    </ul>
+
+    <h4><span class="tag aguda">Aguda</span> Febre de Katayama (esquistossomose aguda sistêmica)</h4>
+    <ul>
+      <li>Início <strong>3 a 7 semanas</strong> após exposição (coincide com oviposição).</li>
+      <li>Patogênese: reação de <strong>hipersensibilidade tipo III</strong> (imunocomplexos contra antígenos do verme e ovos).</li>
+      <li>Clínica: febre alta, cefaleia, mialgia, tosse seca, diarreia, dor abdominal, urticária, <strong>hepatoesplenomegalia dolorosa</strong>, linfadenopatia.</li>
+      <li>Laboratório: <strong>eosinofilia marcada</strong> (frequentemente &gt;1.000/mm³, pode superar 50% no diferencial), elevação modesta de transaminases.</li>
+      <li>Clássico: <strong>turista que nadou em rio/lagoa</strong> no Nordeste ou em safari africano.</li>
+    </ul>
+
+    <div class="callout danger">
+      <span class="label">Armadilha de prova</span>
+      <p>Na Katayama, o exame de fezes <strong>pode ser negativo</strong> nas primeiras semanas porque a oviposição ainda é incipiente. <em>Sorologia</em> e <em>eosinofilia + epidemiologia</em> dão o diagnóstico. Tratar com praziquantel <strong>isoladamente</strong> na fase aguda pode <strong>piorar os sintomas</strong> (liberação maciça de antígenos) — associar <strong>corticoide</strong>.</p>
+    </div>
+
+    <h3>Fase crônica (&gt; 6 meses)</h3>
+    <p>A maioria dos infectados crônicos é <strong>assintomática ou oligossintomática</strong>. Apenas cerca de 5–10% evoluem para formas graves. A patologia crônica decorre da reação granulomatosa aos <strong>ovos retidos</strong> nos tecidos (não dos vermes adultos, que vivem em equilíbrio imune no endotélio).</p>
+
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Forma clínica</th><th>Clínica dominante</th><th>Exame físico</th><th>Fisiopatologia</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tag cronica">Crônica</span> Hepatointestinal</td>
+          <td>Diarreia intermitente, epigastralgia, dispepsia</td>
+          <td>Fígado palpável, <strong>nodular</strong> (granulomas periportais)</td>
+          <td>Granulomas em mucosa intestinal + fígado; sem hipertensão portal ainda</td>
+        </tr>
+        <tr>
+          <td><span class="tag cronica">Crônica</span> Hepática</td>
+          <td>Assintomática ou semelhante à hepatointestinal</td>
+          <td>Hepatomegalia</td>
+          <td>Fibrose hepática inicial sem repercussão portal</td>
+        </tr>
+        <tr>
+          <td><span class="tag grave">Grave</span> Hepatoesplênica compensada</td>
+          <td>Inespecífica, descoberta por <strong>HDA por varizes</strong></td>
+          <td><strong>Hepatoesplenomegalia</strong>: fígado com lobo esquerdo aumentado; baço endurecido e indolor</td>
+          <td><strong>Fibrose de Symmers</strong> (fibrose periportal "em cachimbo de barro") → hipertensão portal <em>pré-sinusoidal</em>, função hepatocelular preservada</td>
+        </tr>
+        <tr>
+          <td><span class="tag grave">Grave</span> Hepatoesplênica descompensada</td>
+          <td>Ascite, icterícia, encefalopatia, HDA recorrente</td>
+          <td>Insuficiência hepática</td>
+          <td>Perda da função hepatocelular (geralmente com coinfecção — álcool, HBV, HCV)</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="callout clinical">
+      <span class="label">Aplicação clínica — Symmers em prova</span>
+      <p>A <strong>fibrose de Symmers</strong> é patognomônica à histologia: espessamento fibroso em torno dos ramos portais, descrito como "cachimbo de barro branco" ao corte. Causa hipertensão portal <strong>pré-sinusoidal</strong> (antes do sinusoide hepático). Consequência: <strong>varizes e esplenomegalia SEM insuficiência hepática</strong>. US abdominal mostra espessamento periportal — achado muito cobrado.</p>
+    </div>
+
+    <!-- §06 ================================================= -->
+    <div class="section-header" id="h-neuro">
+      <div class="n">§ 06 / ECTÓPICAS</div>
+      <h2 id="neuro">Formas ectópicas — cobradas em infectologia/neuro</h2>
+    </div>
+
+    <h4>Neuroesquistossomose (mielorradiculopatia)</h4>
+    <ul>
+      <li>Ovos migram ectopicamente para medula espinhal (mais comum nos níveis <strong>toracolombares baixos / cone medular</strong>).</li>
+      <li>Clínica: <strong>dor lombar aguda</strong> + paraparesia + bexiga neurogênica + nível sensitivo — quadro de <strong>mielite transversa</strong> em paciente com epidemiologia positiva.</li>
+      <li>RM: realce medular, frequentemente no cone. LCR: pleocitose com eosinófilos.</li>
+      <li>Tratamento: <strong>praziquantel + corticoide em alta dose</strong>. Emergência neurológica — reversível se tratada precocemente.</li>
+    </ul>
+
+    <h4>Forma pulmonar</h4>
+    <ul>
+      <li>Granulomas periarteriolares nos pulmões → <strong>hipertensão pulmonar</strong> e cor pulmonale nas formas hepatoesplênicas avançadas (shunts portopulmonares levam ovos ao pulmão).</li>
+    </ul>
+
+    <h4>Outras</h4>
+    <ul>
+      <li>Glomerulonefrite por imunocomplexos (proteinúria).</li>
+      <li>Associação com salmonelose prolongada (bactéria adere ao verme → bacteremia recorrente).</li>
+    </ul>
+
+    <!-- §07 ================================================= -->
+    <div class="section-header" id="h-dx">
+      <div class="n">§ 07 / DIAGNÓSTICO</div>
+      <h2 id="dx">Diagnóstico</h2>
+    </div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Método</th><th>Quando usar</th><th>Limitações</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Kato-Katz</strong> (EPF quantitativo)</td>
+          <td><em>Padrão-ouro</em> para fase crônica. Quantifica ovos/g de fezes → avalia carga parasitária e resposta terapêutica.</td>
+          <td>Baixa sensibilidade em cargas leves; requer <strong>mínimo 3 amostras</strong> em dias diferentes. Negativo nas primeiras 5–6 semanas (fase aguda).</td>
+        </tr>
+        <tr>
+          <td><strong>Sorologia</strong> (IgG/IgM por ELISA, IFI, HAI)</td>
+          <td>Suspeita de fase aguda; viajante com epidemiologia e EPF negativo; triagem populacional.</td>
+          <td>Não distingue infecção ativa de passada (permanece positiva após cura); reação cruzada com outros helmintos.</td>
+        </tr>
+        <tr>
+          <td><strong>Biópsia retal</strong></td>
+          <td>Suspeita clínica alta com EPF repetidamente negativo (baixa carga parasitária).</td>
+          <td>Invasivo; menos usado atualmente.</td>
+        </tr>
+        <tr>
+          <td><strong>Ultrassom abdominal</strong></td>
+          <td>Avaliação da forma crônica: fibrose periportal (Symmers), esplenomegalia, varizes.</td>
+          <td>Não faz diagnóstico etiológico isoladamente.</td>
+        </tr>
+        <tr>
+          <td><strong>EDA</strong></td>
+          <td>Rastreamento/manejo de varizes esofágicas na forma hepatoesplênica.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>Eosinofilia periférica</strong></td>
+          <td>Achado sugestivo na fase aguda (inespecífico mas muito útil com epidemiologia).</td>
+          <td>Pode estar ausente na forma crônica avançada.</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- §08 ================================================= -->
+    <div class="section-header" id="h-ddx">
+      <div class="n">§ 08 / DIFERENCIAL</div>
+      <h2 id="ddx">Diagnóstico diferencial</h2>
+    </div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Situação clínica</th><th>Principais diferenciais</th><th>Como diferenciar</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Dermatite cercariana</td>
+          <td>Dermatite de contato, picadas de inseto, larva migrans, escabiose</td>
+          <td>História de banho em água doce; resolução espontânea em 5 dias</td>
+        </tr>
+        <tr>
+          <td>Febre de Katayama</td>
+          <td>Malária, febre tifoide, hepatite viral aguda, mononucleose, leptospirose, triquinelose</td>
+          <td><strong>Eosinofilia marcada</strong> + epidemiologia de água doce + sorologia positiva</td>
+        </tr>
+        <tr>
+          <td>Hepatoesplenomegalia crônica</td>
+          <td>Calazar (leishmaniose visceral), malária crônica, cirrose, linfoma, mielofibrose</td>
+          <td>Função hepática preservada na forma compensada; US com Symmers; aspirado de medula no calazar</td>
+        </tr>
+        <tr>
+          <td>HDA em jovem com função hepática normal</td>
+          <td>Esquistossomose hepatoesplênica, trombose de veia porta, hipertensão portal idiopática</td>
+          <td>Epidemiologia; US periportal; sorologia; EPF</td>
+        </tr>
+        <tr>
+          <td>Mielite transversa com eosinofilia</td>
+          <td>Neuroesquistossomose, neurocisticercose, esclerose múltipla, NMO</td>
+          <td>Epidemiologia + eosinófilos no LCR + sorologia</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- §09 ================================================= -->
+    <div class="section-header" id="h-tx">
+      <div class="n">§ 09 / TRATAMENTO</div>
+      <h2 id="tx">Tratamento</h2>
+    </div>
+
+    <h3>Praziquantel — droga de escolha</h3>
+    <ul>
+      <li><strong>Adulto:</strong> 40 mg/kg via oral em <em>dose única</em>.</li>
+      <li><strong>Criança:</strong> 60 mg/kg VO em dose única (ou 40 mg/kg em crianças maiores — MS recomenda 60 mg/kg &lt;15 anos).</li>
+      <li>Mecanismo: aumenta permeabilidade ao cálcio na membrana do verme → paralisia tetânica e exposição de antígenos ao sistema imune.</li>
+      <li><strong>Atua apenas em vermes adultos</strong> — não é eficaz em esquistossômulos. Isso explica por que o tratamento pode "falhar" se administrado muito cedo (janela 4–6 semanas).</li>
+      <li>Contraindicações relativas: 1º trimestre de gestação (embora a OMS considere seguro após o 1º trimestre em áreas endêmicas), hepatopatia descompensada grave.</li>
+      <li>Efeitos adversos: náusea, tontura, dor abdominal, cefaleia — geralmente leves.</li>
+    </ul>
+
+    <h4>Alternativa · Oxamniquina</h4>
+    <ul>
+      <li>15 mg/kg adultos, 20 mg/kg crianças, VO dose única.</li>
+      <li>Ativa <strong>apenas contra <em>S. mansoni</em></strong> (praziquantel age em todas as espécies de <em>Schistosoma</em>).</li>
+      <li>Praticamente descontinuada no Brasil; manter como conhecimento teórico / opção de segunda linha.</li>
+    </ul>
+
+    <div class="callout warn">
+      <span class="label">Na fase aguda (Katayama) — não esquecer</span>
+      <ul style="margin:8px 0 0;">
+        <li>Iniciar <strong>corticoide</strong> (prednisona 20–60 mg/dia) junto ou antes do praziquantel → evita exacerbação da reação imune.</li>
+        <li>Alguns autores recomendam adiar o praziquantel para 6–12 semanas pós-exposição (atingir a fase adulta), cobrindo com corticoide nesse intervalo.</li>
+      </ul>
+    </div>
+
+    <h3>Controle de cura</h3>
+    <ul>
+      <li>Kato-Katz seriado (3 amostras) aos 4 e 6 meses pós-tratamento.</li>
+      <li>Sorologia <strong>não serve</strong> para controle de cura (permanece positiva).</li>
+    </ul>
+
+    <!-- §10 ================================================= -->
+    <div class="section-header" id="h-complic">
+      <div class="n">§ 10 / COMPLICAÇÕES</div>
+      <h2 id="complic">Manejo de complicações</h2>
+    </div>
+
+    <h4>Hemorragia digestiva alta por varizes esofágicas</h4>
+    <ol>
+      <li><strong>Estabilização</strong>: acesso venoso calibroso, reposição volêmica cautelosa, transfusão guiada (alvo Hb ~7 g/dL).</li>
+      <li><strong>Terlipressina / octreotida</strong> + <strong>antibiótico profilático</strong> (ceftriaxona).</li>
+      <li><strong>EDA em até 12h</strong>: ligadura elástica das varizes.</li>
+      <li>Profilaxia secundária: betabloqueador não-seletivo (propranolol) + ligadura elástica seriada.</li>
+      <li>Casos refratários: derivação cirúrgica (esplenectomia + desconexão ázigo-portal) — considerar antes do TIPS em esquistossomótico jovem com função hepática preservada.</li>
+    </ol>
+
+    <h4>Neuroesquistossomose</h4>
+    <ul>
+      <li>Corticoide em pulso (metilprednisolona) + praziquantel + suporte (cateterismo vesical, fisioterapia).</li>
+    </ul>
+
+    <!-- §11 ================================================= -->
+    <div class="section-header" id="h-prev">
+      <div class="n">§ 11 / PREVENÇÃO</div>
+      <h2 id="prev">Prevenção e vigilância</h2>
+    </div>
+    <ul>
+      <li><strong>Saneamento básico</strong> — esgoto tratado interrompe o ciclo (ovos não chegam à água).</li>
+      <li>Abastecimento de água tratada — elimina exposição doméstica.</li>
+      <li>Educação em saúde (evitar banho em córregos, lagoas de área endêmica).</li>
+      <li>Controle dos caramujos (moluscicidas como niclosamida — uso restrito por impacto ecológico).</li>
+      <li><strong>Notificação</strong>: doença de notificação compulsória em áreas NÃO-endêmicas; em áreas endêmicas, notificação de formas graves/óbitos.</li>
+      <li>Definição de caso confirmado: clínica + epidemiologia + <em>S. mansoni</em> em fezes, tecidos ou outro material orgânico.</li>
+    </ul>
+
+    <!-- §12 ================================================= -->
+    <div class="section-header" id="h-resumao">
+      <div class="n">§ 12 / RESUMÃO</div>
+      <h2 id="resumao">Resumão pré-prova</h2>
+    </div>
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tema</th><th>Tudo que precisa saber</th></tr></thead>
+      <tbody>
+        <tr><td>Agente</td><td><em>S. mansoni</em>, trematódeo dioico, vive em vênulas mesentéricas</td></tr>
+        <tr><td>Hospedeiro intermediário</td><td><em>Biomphalaria glabrata, straminea, tenagophila</em></td></tr>
+        <tr><td>Forma infectante (homem)</td><td><strong>Cercária</strong> — penetra pele íntegra</td></tr>
+        <tr><td>Forma infectante (caramujo)</td><td><strong>Miracídio</strong> — eclode do ovo na água</td></tr>
+        <tr><td>Incubação</td><td>1–2 meses</td></tr>
+        <tr><td>Katayama</td><td>3–7 sem pós-exposição; febre + eosinofilia + hepatoesplenomegalia + urticária</td></tr>
+        <tr><td>Dermatite cercariana</td><td>Prurido até 5 dias pós-exposição</td></tr>
+        <tr><td>Forma hepatoesplênica</td><td>HP pré-sinusoidal, função hepática preservada, fibrose de Symmers, varizes esofágicas</td></tr>
+        <tr><td>Patognomônico histológico</td><td>Fibrose de Symmers em "cachimbo de barro"</td></tr>
+        <tr><td>Neuroesquistossomose</td><td>Mielite em cone medular — dor lombar + paraparesia + bexiga neurogênica</td></tr>
+        <tr><td>Diagnóstico fase crônica</td><td>Kato-Katz (3 amostras, quantitativo)</td></tr>
+        <tr><td>Diagnóstico fase aguda</td><td>Sorologia + eosinofilia + epidemiologia (EPF pode ser negativo)</td></tr>
+        <tr><td>Tratamento</td><td><strong>Praziquantel 40 mg/kg (adulto) / 60 mg/kg (criança)</strong> VO dose única</td></tr>
+        <tr><td>Katayama: acrescentar</td><td><strong>Corticoide</strong> (prednisona) — evita piora pela lise antigênica</td></tr>
+        <tr><td>Praziquantel age em</td><td>Apenas <strong>vermes adultos</strong> (não esquistossômulos)</td></tr>
+        <tr><td>Controle de cura</td><td>Kato-Katz aos 4 e 6 meses (sorologia NÃO serve)</td></tr>
+        <tr><td>HDA em paciente jovem sem cirrose</td><td>Pensar em esquistossomose hepatoesplênica</td></tr>
+        <tr><td>Prevenção</td><td>Saneamento básico (quebra o ciclo)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- §13 ================================================= -->
+    <div class="section-header" id="h-questoes">
+      <div class="n">§ 13 / QUESTÕES</div>
+      <h2 id="questoes">Banco de questões</h2>
+    </div>
+
+    <p style="color: var(--mute); font-size: 0.95rem;">Declare sua <strong>confiança</strong> antes de escolher — metacognição é o maior preditor de retenção. Pressione <span class="mono" style="border:1px solid var(--hair); padding:0 5px;">C</span> pra modo card tela-cheia. <span class="mono" style="border:1px solid var(--hair); padding:0 5px;">1–5</span> escolhe alternativa. <span class="mono" style="border:1px solid var(--hair); padding:0 5px;">R</span> revela explicação. <span class="mono" style="border:1px solid var(--hair); padding:0 5px;">←/→</span> navega questões.</p>
+
+    <div class="qbank">
+      <div class="qbank-hud">
+        <div class="hud-stat">
+          Respondidas
+          <b><span id="hudAnswered">0</span><span style="color:var(--mute); font-size:1.1rem;">/12</span></b>
+        </div>
+        <div class="hud-stat">
+          Acertos
+          <b class="ok"><span id="hudCorrect">0</span></b>
+        </div>
+        <div class="hud-stat">
+          Streak
+          <b class="accent"><span id="hudStreak">0</span></b>
+        </div>
+        <div class="hud-controls">
+          <button class="hud-btn" id="cardModeBtn">Modo card · C</button>
+          <button class="hud-btn" id="revealAllBtn">Revelar tudo</button>
+          <button class="hud-btn primary" id="resetBtn">Reset</button>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <article class="q" data-answer="C" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>01</div>
+          <div class="q-tag">Katayama · viajante</div>
+        </div>
+        <div class="q-stem">
+          Mulher, 28 anos, retorna a São Paulo após 3 semanas de férias em Jaboatão dos Guararapes (PE), onde teve contato diário com água de um açude. Procura atendimento com febre de 39°C há 4 dias, mialgia, tosse seca, urticária no tronco e dor abdominal. Exame: fígado a 3 cm do rebordo costal, baço palpável, sem icterícia. Hemograma: leucócitos 12.800/mm³ com <strong>28% de eosinófilos</strong>. AST 68, ALT 74. Protoparasitológico de fezes negativo.<br><br>
+          A conduta inicial mais adequada é:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Iniciar praziquantel 40 mg/kg em dose única e liberar para observação domiciliar.</li>
+          <li data-letter="B">Solicitar novo EPF em 72 horas e aguardar para decisão terapêutica.</li>
+          <li data-letter="C">Solicitar sorologia para esquistossomose e iniciar corticoterapia; considerar praziquantel após melhora clínica.</li>
+          <li data-letter="D">Iniciar artemeter-lumefantrina empiricamente por alta suspeita de malária.</li>
+          <li data-letter="E">Solicitar biópsia retal para confirmação diagnóstica antes de qualquer tratamento.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · C</h5>
+          <p>Quadro clássico de <strong>febre de Katayama</strong>: viajante com contato em água doce em área endêmica, 3 semanas depois apresenta febre, tosse seca, urticária, hepatoesplenomegalia e <strong>eosinofilia marcada</strong>. EPF negativo é esperado nesta fase (oviposição ainda incipiente).</p>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> Praziquantel isolado na fase aguda pode <em>piorar</em> o quadro por liberação maciça de antígenos. Sempre associar corticoide.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> EPF seriado na fase aguda terá sensibilidade baixa porque o verme ainda não está em oviposição plena. O diagnóstico aqui é sorológico + epidemiológico + eosinofilia.</li>
+            <li class="correct-exp"><strong>C) Correta.</strong> Sorologia é o método adequado na fase aguda. Corticoide ameniza a reação de hipersensibilidade; praziquantel depois da estabilização (idealmente 6–12 sem após exposição).</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Malária é diferencial, mas a exposição foi em PE (baixa transmissão de malária, exceto em áreas específicas da Amazônia) e a <em>eosinofilia marcada</em> não é característica de malária — é pista-chave para helmintíase.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> Biópsia retal é invasiva e reservada para suspeita crônica com EPF repetidamente negativo, não para fase aguda.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q2 -->
+      <article class="q" data-answer="B" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>02</div>
+          <div class="q-tag">Fisiopatologia · Symmers</div>
+        </div>
+        <div class="q-stem">
+          Homem de 32 anos, natural de Minas Gerais, procura emergência por hematêmese volumosa. Nega etilismo, uso de drogas ilícitas ou medicações. Exames: Hb 7,2 g/dL; TAP 89%; albumina 3,8 g/dL; bilirrubina total 0,9 mg/dL; AST/ALT normais; anti-HCV e HBsAg negativos. Ultrassom: <em>espessamento periportal</em>, esplenomegalia, veia porta dilatada.<br><br>
+          O mecanismo da hipertensão portal neste paciente é melhor classificado como:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Pós-sinusoidal, por obstrução das veias supra-hepáticas.</li>
+          <li data-letter="B">Pré-sinusoidal intra-hepática, por fibrose periportal sem disfunção hepatocelular.</li>
+          <li data-letter="C">Sinusoidal, por substituição difusa do parênquima hepático por nódulos regenerativos.</li>
+          <li data-letter="D">Pré-hepática, por trombose crônica da veia porta.</li>
+          <li data-letter="E">Hiperdinâmica funcional, sem obstrução anatômica identificável.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · B</h5>
+          <p>Paciente jovem, de área endêmica, com HDA por varizes, <strong>função hepática preservada</strong> (TAP, albumina, bilirrubina normais) e US com <strong>espessamento periportal</strong>: padrão clássico de <strong>esquistossomose hepatoesplênica</strong> com fibrose de Symmers.</p>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> Pós-sinusoidal descreve síndrome de Budd-Chiari (obstrução de supra-hepáticas) — clínica diferente, com ascite dominante.</li>
+            <li class="correct-exp"><strong>B) Correta.</strong> A fibrose de Symmers ocorre <em>em torno dos ramos portais</em> antes de atingir o sinusoide → obstrução pré-sinusoidal. Como o sinusoide e o hepatócito estão preservados, a função hepática é mantida.</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> Padrão sinusoidal (cirrose) seria o esperado em etílico/hepatite viral — paciente nega ambos e os marcadores são negativos.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Trombose de porta daria padrão pré-hepático, mas o US não descreveu trombo — descreveu fibrose periportal.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> Há obstrução anatômica evidente (fibrose), não é padrão hiperdinâmico puro.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q3 -->
+      <article class="q" data-answer="D" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>03</div>
+          <div class="q-tag">Ciclo · epidemiologia</div>
+        </div>
+        <div class="q-stem">
+          Em um programa de vigilância em município endêmico, é identificada uma criança de 9 anos com ovos de <em>Schistosoma mansoni</em> no EPF. Sobre o ciclo do parasito e a cadeia de transmissão, assinale a alternativa correta:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">A criança adquiriu a infecção por ingestão de água contendo miracídios.</li>
+          <li data-letter="B">A eliminação de ovos viáveis nas fezes inicia-se imediatamente após a penetração cutânea da cercária.</li>
+          <li data-letter="C">O caramujo <em>Biomphalaria</em> libera miracídios na água, que penetram ativamente na pele humana.</li>
+          <li data-letter="D">A criança adquiriu a infecção por penetração cutânea de cercárias liberadas por caramujos do gênero <em>Biomphalaria</em>.</li>
+          <li data-letter="E">O ciclo dispensa o hospedeiro intermediário quando há contato direto entre pessoas infectadas.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · D</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> A infecção humana é por penetração cutânea da <em>cercária</em>, não por ingestão. Miracídios infectam o caramujo, não o homem.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> A eliminação de ovos viáveis inicia-se ~5 semanas após a infecção (tempo para maturação, acasalamento e oviposição).</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> O caramujo libera <em>cercárias</em>, não miracídios. O miracídio é a forma que <em>infecta</em> o caramujo.</li>
+            <li class="correct-exp"><strong>D) Correta.</strong> Cercárias são a forma infectante do homem; penetram pele íntegra durante contato com água doce contaminada.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> O ciclo é obrigatoriamente heteroxênico — não há transmissão pessoa-pessoa.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q4 -->
+      <article class="q" data-answer="A" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>04</div>
+          <div class="q-tag">Neuroesquistossomose</div>
+        </div>
+        <div class="q-stem">
+          Homem, 24 anos, procedente de Feira de Santana (BA), procura pronto-socorro com dor lombar aguda há 5 dias, evoluindo em 48h com paraparesia flácida, retenção urinária e nível sensitivo em T10. Hemograma: eosinofilia de 18%. RM mostra realce medular em cone. LCR: 80 células/mm³ com 40% de eosinófilos, proteína 95 mg/dL.<br><br>
+          A conduta mais adequada é:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Metilprednisolona em pulso associada a praziquantel.</li>
+          <li data-letter="B">Aciclovir endovenoso empiricamente por suspeita de mielite herpética.</li>
+          <li data-letter="C">Plasmaferese e metilprednisolona por suspeita de NMO (neuromielite óptica).</li>
+          <li data-letter="D">Albendazol em dose alta por suspeita de neurocisticercose.</li>
+          <li data-letter="E">Observação clínica com reavaliação neurológica em 24h antes de qualquer terapia específica.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · A</h5>
+          <p>Paciente jovem de área endêmica, mielite de cone com <strong>eosinofilia periférica e no LCR</strong>: quadro clássico de <strong>neuroesquistossomose mielorradicular</strong>. Emergência — diagnóstico clínico-epidemiológico permite terapia imediata.</p>
+          <ul>
+            <li class="correct-exp"><strong>A) Correta.</strong> Corticoide em pulso (metilprednisolona) é fundamental para controlar a reação granulomatosa; praziquantel mata o verme adulto. Iniciar cedo reverte o déficit neurológico.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> Mielite herpética não cursa com eosinofilia no LCR; o padrão LCR é mononuclear.</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> NMO é desmielinizante, não cursa com eosinofilia; requer anti-aquaporina-4.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Neurocisticercose é possível pensar, mas a apresentação típica é em parênquima cerebral com lesões císticas; o quadro medular + eosinofilia + epidemiologia aponta para esquistossomose.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> Paraparesia progressiva com mielite é emergência — atrasar tratamento leva a déficit irreversível.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q5 -->
+      <article class="q" data-answer="E" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>05</div>
+          <div class="q-tag">Tratamento · farmacologia</div>
+        </div>
+        <div class="q-stem">
+          Sobre o tratamento farmacológico da esquistossomose mansônica, é correto afirmar:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">O praziquantel é eficaz tanto contra vermes adultos quanto contra esquistossômulos, justificando seu uso logo após a exposição.</li>
+          <li data-letter="B">A oxamniquina é superior ao praziquantel por cobrir todas as espécies do gênero <em>Schistosoma</em>.</li>
+          <li data-letter="C">A sorologia negativa 3 meses após o tratamento confirma a cura parasitológica.</li>
+          <li data-letter="D">O praziquantel deve ser administrado em esquema de 3 doses diárias durante 7 dias.</li>
+          <li data-letter="E">O controle de cura é feito por Kato-Katz seriado aos 4 e 6 meses após o tratamento.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · E</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> Praziquantel age <em>apenas</em> em vermes adultos. Administrado muito cedo (antes de 4–6 semanas) pode falhar porque os esquistossômulos não respondem.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> É o contrário: o praziquantel cobre todas as espécies de <em>Schistosoma</em> (haematobium, japonicum, mansoni); a oxamniquina só cobre <em>S. mansoni</em>.</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> Sorologia permanece positiva após a cura e não serve para controle.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Praziquantel é em <em>dose única</em> (40 mg/kg adulto, 60 mg/kg criança).</li>
+            <li class="correct-exp"><strong>E) Correta.</strong> Controle de cura é parasitológico (Kato-Katz seriado aos 4 e 6 meses); três amostras negativas confirmam a cura.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q6 -->
+      <article class="q" data-answer="B" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>06</div>
+          <div class="q-tag">Aplicação clínica · formas</div>
+        </div>
+        <div class="q-stem">
+          Homem, 45 anos, natural de Pernambuco, em consulta de rotina. Assintomático. Exame físico: fígado palpável a 2 cm do rebordo costal, <strong>lobo esquerdo mais proeminente que o direito</strong>, baço palpável no rebordo, indolor. EPF: ovos de <em>S. mansoni</em>. US: espessamento periportal leve, sem sinais de hipertensão portal avançada. EDA: sem varizes.<br><br>
+          A forma clínica deste paciente e a conduta mais apropriada são:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Forma aguda; iniciar corticoide seguido de praziquantel.</li>
+          <li data-letter="B">Forma hepatoesplênica compensada; praziquantel e seguimento com EDA periódica.</li>
+          <li data-letter="C">Forma hepatoesplênica descompensada; contraindicar praziquantel e encaminhar para transplante.</li>
+          <li data-letter="D">Forma hepatointestinal; não tratar, pois o paciente é assintomático.</li>
+          <li data-letter="E">Achado incidental sem significado clínico; repetir EPF em 6 meses.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · B</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> Forma aguda tem quadro febril agudo com eosinofilia — este paciente é assintomático e crônico.</li>
+            <li class="correct-exp"><strong>B) Correta.</strong> Presença de <strong>hepatoesplenomegalia</strong> com hipertrofia do lobo hepático esquerdo é marco da forma hepatoesplênica. Função hepática preservada e ausência de descompensação indicam forma <em>compensada</em>. Conduta: tratar com praziquantel (reduz progressão) e monitorar com EDA (rastreio de varizes).</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> Não há critérios de descompensação (ascite, icterícia, encefalopatia). Praziquantel não é contraindicado em hepatopatia crônica compensada.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Forma hepatointestinal não cursa com esplenomegalia. Além disso, pacientes assintomáticos com EPF positivo devem ser tratados — a infecção evolui e pode progredir.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> EPF positivo em paciente com hepatoesplenomegalia e alteração ultrassonográfica tem significado clínico inequívoco.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q7 -->
+      <article class="q" data-answer="C" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>07</div>
+          <div class="q-tag">Diagnóstico · fase aguda</div>
+        </div>
+        <div class="q-stem">
+          Em relação ao exame parasitológico de fezes pelo método de Kato-Katz na esquistossomose, é correto afirmar:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">É o método de escolha para diagnóstico na fase aguda por sua alta sensibilidade precoce.</li>
+          <li data-letter="B">Tem sensibilidade máxima quando realizado em amostra única obtida pela manhã.</li>
+          <li data-letter="C">É método quantitativo que permite estimar a carga parasitária e avaliar a resposta ao tratamento.</li>
+          <li data-letter="D">Detecta anticorpos IgM específicos anti-<em>S. mansoni</em>.</li>
+          <li data-letter="E">Substitui a sorologia em todas as situações clínicas por sua superior especificidade.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · C</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> Kato-Katz <em>não é ideal na fase aguda</em> — a oviposição ainda é incipiente nas primeiras 5–6 semanas, o que gera falso-negativos frequentes.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> A sensibilidade aumenta com múltiplas amostras; o MS recomenda no mínimo 3 amostras em dias diferentes.</li>
+            <li class="correct-exp"><strong>C) Correta.</strong> Kato-Katz quantifica <em>ovos por grama de fezes</em> — fornece medida objetiva da carga parasitária e permite avaliar redução pós-tratamento.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Kato-Katz é método parasitológico (visualização direta de ovos), não sorológico.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> Na fase aguda e em baixas cargas parasitárias, a sorologia pode ser a única a dar diagnóstico positivo — os métodos são complementares.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q8 -->
+      <article class="q" data-answer="D" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>08</div>
+          <div class="q-tag">HDA · manejo</div>
+        </div>
+        <div class="q-stem">
+          Paciente de 29 anos com diagnóstico prévio de esquistossomose hepatoesplênica compensada chega à emergência com hematêmese volumosa, taquicardia (FC 118), PA 95×60 mmHg. Hb 6,4 g/dL. Sobre o manejo inicial, é INCORRETO afirmar:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Obter dois acessos venosos calibrosos e iniciar cristaloide, evitando ressuscitação agressiva com alvos pressóricos supranormais.</li>
+          <li data-letter="B">Iniciar terlipressina ou octreotida precocemente, antes mesmo da endoscopia.</li>
+          <li data-letter="C">Administrar ceftriaxona profilática, pois o sangramento por varizes associa-se a maior risco de infecção bacteriana.</li>
+          <li data-letter="D">Contraindicar endoscopia nas primeiras 48h até estabilização completa e resolução da hematêmese.</li>
+          <li data-letter="E">Considerar ligadura elástica das varizes na EDA como conduta terapêutica de primeira linha.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · D (afirmativa incorreta)</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Correta.</strong> Ressuscitação conservadora (alvo PAM ~65, Hb ~7) — reposição excessiva piora a hipertensão portal e aumenta ressangramento.</li>
+            <li class="wrong-exp"><strong>B) Correta.</strong> Vasoconstritor esplâncnico deve ser iniciado o quanto antes na suspeita de sangramento varicoso.</li>
+            <li class="wrong-exp"><strong>C) Correta.</strong> Antibiótico profilático (ceftriaxona 1g/dia por 7 dias) é padrão — reduz mortalidade e ressangramento.</li>
+            <li class="correct-exp"><strong>D) INCORRETA — alternativa a marcar.</strong> A EDA deve ser feita <em>em até 12 horas</em> após a estabilização inicial; adiar 48h é contrário à prática atual e aumenta mortalidade.</li>
+            <li class="wrong-exp"><strong>E) Correta.</strong> Ligadura elástica é terapia endoscópica de primeira linha para varizes esofágicas sangrantes.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q9 -->
+      <article class="q" data-answer="A" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>09</div>
+          <div class="q-tag">Epidemiologia · cadeia</div>
+        </div>
+        <div class="q-stem">
+          Em campanha de controle de esquistossomose em município endêmico, qual das seguintes medidas atua na <strong>quebra definitiva</strong> do ciclo de transmissão por remover a contaminação ambiental pelas fezes humanas?
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Implantação de rede de esgotamento sanitário adequada.</li>
+          <li data-letter="B">Tratamento em massa da população com praziquantel uma única vez.</li>
+          <li data-letter="C">Aplicação de moluscicida em todas as coleções hídricas da região.</li>
+          <li data-letter="D">Distribuição de repelentes tópicos à população exposta.</li>
+          <li data-letter="E">Vacinação em massa com imunizante disponível desde 2022.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · A</h5>
+          <ul>
+            <li class="correct-exp"><strong>A) Correta.</strong> O saneamento interrompe o ciclo no ponto-chave: ovos nas fezes não chegam mais à coleção hídrica → sem miracídios → sem infecção de caramujos → sem cercárias. É a única medida sustentável.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> Tratamento em massa reduz a carga parasitária mas não previne reinfecção — sem interromper a transmissão ambiental, o ciclo se restabelece.</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> Moluscicidas têm impacto ecológico e eficácia transitória; não são medida de longo prazo.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Repelentes não protegem contra cercárias (que penetram por contato aquático, não por vetor).</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> Não existe vacina licenciada contra esquistossomose até o momento (candidatos em fase de pesquisa).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q10 -->
+      <article class="q" data-answer="B" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>10</div>
+          <div class="q-tag">Diagnóstico diferencial</div>
+        </div>
+        <div class="q-stem">
+          Paciente de 50 anos, natural de Teresina (PI), procura atendimento por febre há 30 dias, perda de peso, hepatoesplenomegalia volumosa (baço a 10 cm do rebordo costal). Hemograma: pancitopenia. Função hepática preservada. Sorologia para <em>S. mansoni</em> negativa. EPF negativo. O próximo exame prioritário para esclarecer o diagnóstico é:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Endoscopia digestiva alta para pesquisa de varizes.</li>
+          <li data-letter="B">Aspirado de medula óssea para pesquisa de <em>Leishmania</em>.</li>
+          <li data-letter="C">Biópsia retal para pesquisa de ovos de <em>Schistosoma</em>.</li>
+          <li data-letter="D">Hemocultura para malária por microscopia.</li>
+          <li data-letter="E">PET-scan para pesquisa de linfoma.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · B</h5>
+          <p>Hepatoesplenomegalia volumosa + pancitopenia + febre prolongada + procedência do Piauí (área endêmica para leishmaniose visceral) → o quadro sugere <strong>calazar</strong>, principal diferencial da esquistossomose hepatoesplênica nesta região.</p>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> EDA seria importante em esquistossomose hepatoesplênica — mas a sorologia é negativa e a pancitopenia aponta para outra etiologia.</li>
+            <li class="correct-exp"><strong>B) Correta.</strong> Aspirado de medula (ou de baço) para pesquisa de amastigotas de <em>Leishmania</em> é o padrão-ouro na leishmaniose visceral. Sorologia (rK39) também pode ser solicitada.</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> Biópsia retal é invasiva e a suspeita de esquistossomose enfraquece com sorologia negativa e o padrão clínico de pancitopenia.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Malária seria hemoscopia (gota espessa), não hemocultura — e o Piauí tem baixa transmissão de malária; pancitopenia com baço tão volumoso não é apresentação típica.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> PET é exame caro, de segunda linha; investigação dirigida com aspirado de medula é mais rápida e custo-efetiva.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q11 -->
+      <article class="q" data-answer="E" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>11</div>
+          <div class="q-tag">Formas clínicas · fisiopatologia</div>
+        </div>
+        <div class="q-stem">
+          A patogênese da lesão tecidual crônica na esquistossomose mansônica deve-se principalmente a:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">Ação direta dos vermes adultos sobre o endotélio das veias mesentéricas.</li>
+          <li data-letter="B">Liberação de toxinas pelas cercárias durante a penetração cutânea.</li>
+          <li data-letter="C">Migração dos esquistossômulos pelos pulmões, causando fibrose pulmonar extensa.</li>
+          <li data-letter="D">Produção de hemolisinas pelos miracídios presentes na circulação sistêmica.</li>
+          <li data-letter="E">Reação granulomatosa imunomediada em torno dos ovos retidos nos tecidos.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · E</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> Os vermes adultos, paradoxalmente, causam pouca lesão direta — vivem em equilíbrio com o hospedeiro por anos.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> As cercárias causam dermatite transitória, mas não lesão crônica.</li>
+            <li class="wrong-exp"><strong>C) Errada.</strong> A migração pulmonar é transitória e assintomática na maioria dos casos; a lesão pulmonar crônica (hipertensão pulmonar) decorre de ovos que escapam via shunts portopulmonares, não da migração larval.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Miracídios não circulam no hospedeiro humano — eles eclodem dos ovos no meio ambiente aquático para infectar caramujos.</li>
+            <li class="correct-exp"><strong>E) Correta.</strong> Os <em>ovos retidos</em> nos tecidos (intestino, fígado, SNC, pulmão) liberam antígenos que induzem resposta Th2 com formação de granulomas. A fibrose progressiva desses granulomas é a base da patologia crônica (fibrose de Symmers, mielorradiculopatia, hipertensão pulmonar).</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q12 -->
+      <article class="q" data-answer="C" data-letters="A,B,C,D,E">
+        <div class="q-head">
+          <div class="q-num"><span class="pre">Questão</span>12</div>
+          <div class="q-tag">Integrada · epi + clínica</div>
+        </div>
+        <div class="q-stem">
+          Sobre a esquistossomose mansônica no Brasil, assinale a alternativa correta:
+        </div>
+        <div class="q-confidence">
+          <span>Confiança</span>
+          <div class="conf-btns">
+            <button class="conf-btn" data-conf="alta">Alta</button>
+            <button class="conf-btn" data-conf="media">Média</button>
+            <button class="conf-btn" data-conf="baixa">Baixa</button>
+          </div>
+        </div>
+        <ul class="alts">
+          <li data-letter="A">A transmissão ocorre exclusivamente pela ingestão de água contaminada por ovos do parasito.</li>
+          <li data-letter="B">Os caramujos do gênero <em>Biomphalaria</em> são hospedeiros definitivos e abrigam a forma adulta do verme.</li>
+          <li data-letter="C">A maioria dos indivíduos infectados em áreas endêmicas permanece assintomática ou com formas leves da doença.</li>
+          <li data-letter="D">A forma aguda (Katayama) representa a principal causa de morte pela doença no Brasil.</li>
+          <li data-letter="E">O tratamento com praziquantel está contraindicado em áreas endêmicas, pois a reinfecção é inevitável.</li>
+        </ul>
+        <button class="reveal-btn">Ver explicação →</button>
+        <div class="explain">
+          <h5>Gabarito · C</h5>
+          <ul>
+            <li class="wrong-exp"><strong>A) Errada.</strong> A transmissão é por penetração cutânea de cercárias, não por ingestão.</li>
+            <li class="wrong-exp"><strong>B) Errada.</strong> <em>Biomphalaria</em> é hospedeiro <em>intermediário</em>, abriga formas larvárias (reprodução assexuada). O hospedeiro definitivo é o homem.</li>
+            <li class="correct-exp"><strong>C) Correta.</strong> Graças à resistência parcial adquirida em áreas hiperendêmicas, a maioria dos infectados tem baixa carga parasitária e formas assintomáticas ou oligossintomáticas; apenas 5–10% evoluem para formas graves.</li>
+            <li class="wrong-exp"><strong>D) Errada.</strong> Mortalidade decorre predominantemente das formas <em>crônicas graves</em> (hepatoesplênica descompensada com HDA, neuroesquistossomose), não da fase aguda.</li>
+            <li class="wrong-exp"><strong>E) Errada.</strong> O tratamento é indicado mesmo com risco de reinfecção — reduz carga parasitária, previne progressão e reduz transmissão comunitária.</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <!-- =========================== RIGHT RAIL ========================== -->
+  <aside class="rail-right">
+    <div class="label">Atalhos</div>
+    <div class="shortcut"><span>Comandos</span><span class="k">⌘K</span></div>
+    <div class="shortcut"><span>Modo card</span><span class="k">C</span></div>
+    <div class="shortcut"><span>Modo foco</span><span class="k">F</span></div>
+    <div class="shortcut"><span>Tema</span><span class="k">T</span></div>
+    <div class="shortcut"><span>Ajuda</span><span class="k">?</span></div>
+    <div class="shortcut"><span>Próxima seção</span><span class="k">J</span></div>
+    <div class="shortcut"><span>Seção anterior</span><span class="k">K</span></div>
+  </aside>
+
+</div>
+
+<!-- ========================== COMMAND PALETTE ====================== -->
+<div class="palette-bg" id="paletteBg"></div>
+<div class="palette" id="palette">
+  <input type="text" id="paletteInput" placeholder="Pular para seção · questão · ação…" spellcheck="false" autocomplete="off">
+  <ul id="paletteList"></ul>
+  <div class="hint">
+    <span><span class="k">↑↓</span> navegar</span>
+    <span><span class="k">↵</span> ir</span>
+    <span><span class="k">esc</span> fechar</span>
+  </div>
+</div>
+
+<!-- ============================ HELP CARD ========================== -->
+<div class="help-bg" id="helpBg">
+  <div class="help-card">
+    <h3>Atalhos de teclado</h3>
+    <div class="row"><span class="desc">Abrir paleta de comandos</span><span class="k">⌘K / Ctrl+K</span></div>
+    <div class="row"><span class="desc">Modo card tela cheia</span><span class="k">C</span></div>
+    <div class="row"><span class="desc">Próximo / anterior (no modo card)</span><span class="k">→ / ←</span></div>
+    <div class="row"><span class="desc">Responder A/B/C/D/E</span><span class="k">1 2 3 4 5</span></div>
+    <div class="row"><span class="desc">Revelar explicação</span><span class="k">R</span></div>
+    <div class="row"><span class="desc">Modo foco</span><span class="k">F</span></div>
+    <div class="row"><span class="desc">Trocar tema</span><span class="k">T</span></div>
+    <div class="row"><span class="desc">Ajuda</span><span class="k">?</span></div>
+    <div class="close">esc para fechar</div>
+  </div>
+</div>
+
+<!-- ========================== CARD MODE HUD ======================== -->
+<div class="card-mode-hud">
+  <span><span class="k">←</span><span class="k">→</span>navegar</span>
+  <span><span class="k">1–5</span>responder</span>
+  <span><span class="k">R</span>explicação</span>
+  <span id="cardCounter">01 / 12</span>
+  <button class="exit" id="exitCardBtn">✕ sair (esc)</button>
+</div>
+
+<script>
+/* ======================================================================
+   OPERAÇÃO — runtime
+   ====================================================================== */
+
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+  const root = document.documentElement;
+
+  // ---------- THEME ----------
+  function setTheme(t) { root.setAttribute('data-theme', t); }
+  function toggleTheme() {
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }
+  $('#themeBtn').addEventListener('click', toggleTheme);
+
+  // ---------- SCROLL PROGRESS ----------
+  const scrollBar = $('#scrollBar');
+  function onScroll() {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    scrollBar.style.width = p + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---------- ACTIVE TOC SECTION ----------
+  const tocLinks = $$('.rail-left a');
+  const sections = $$('main h2[id]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-25% 0px -65% 0px', threshold: 0 });
+  sections.forEach(s => io.observe(s));
+
+  // ---------- QUESTION BANK ----------
+  const questions = $$('.q');
+  const hudAnswered = $('#hudAnswered');
+  const hudCorrect = $('#hudCorrect');
+  const hudStreak = $('#hudStreak');
+  let streak = 0, bestStreak = 0;
+
+  function updateHUD() {
+    let answered = 0, correct = 0;
+    questions.forEach(q => {
+      if (q.dataset.answered) {
+        answered++;
+        if (q.dataset.userCorrect === '1') correct++;
+      }
+    });
+    hudAnswered.textContent = answered;
+    hudCorrect.textContent = correct;
+    hudStreak.textContent = streak;
+  }
+
+  function answerQuestion(q, chosenLetter) {
+    if (q.dataset.answered) return;
+    const correct = q.dataset.answer;
+    q.dataset.answered = '1';
+    const isCorrect = chosenLetter === correct;
+    q.dataset.userCorrect = isCorrect ? '1' : '0';
+    q.dataset.userAnswer = chosenLetter || '';
+    q.classList.add('answered');
+    $$('.alts li', q).forEach(a => {
+      const letter = a.getAttribute('data-letter');
+      if (letter === correct) a.classList.add('correct');
+      else if (letter === chosenLetter) a.classList.add('selected-wrong');
+      else a.classList.add('wrong');
+    });
+    if (chosenLetter) {
+      if (isCorrect) { streak++; if (streak > bestStreak) bestStreak = streak; }
+      else streak = 0;
+    }
+    updateHUD();
+  }
+
+  questions.forEach(q => {
+    // alt clicks
+    $$('.alts li', q).forEach(alt => {
+      alt.addEventListener('click', () => answerQuestion(q, alt.getAttribute('data-letter')));
+    });
+    // confidence
+    $$('.conf-btn', q).forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('.conf-btn', q).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        q.classList.add('conf-set');
+        q.dataset.confidence = btn.dataset.conf;
+      });
+    });
+    // reveal explanation
+    const revealBtn = $('.reveal-btn', q);
+    const explain = $('.explain', q);
+    revealBtn.addEventListener('click', () => {
+      const opened = explain.classList.toggle('open');
+      revealBtn.textContent = opened ? '← Ocultar explicação' : 'Ver explicação →';
+      if (opened && !q.dataset.answered) answerQuestion(q, null);
+    });
+  });
+
+  $('#revealAllBtn').addEventListener('click', () => {
+    questions.forEach(q => {
+      const exp = $('.explain', q);
+      const btn = $('.reveal-btn', q);
+      if (!exp.classList.contains('open')) {
+        exp.classList.add('open');
+        btn.textContent = '← Ocultar explicação';
+      }
+      if (!q.dataset.answered) answerQuestion(q, null);
+    });
+  });
+
+  $('#resetBtn').addEventListener('click', () => {
+    streak = 0;
+    questions.forEach(q => {
+      delete q.dataset.answered;
+      delete q.dataset.userCorrect;
+      delete q.dataset.userAnswer;
+      delete q.dataset.confidence;
+      q.classList.remove('answered', 'conf-set');
+      $$('.alts li', q).forEach(a => a.classList.remove('correct', 'wrong', 'selected-wrong'));
+      $$('.conf-btn', q).forEach(b => b.classList.remove('active'));
+      const exp = $('.explain', q);
+      exp.classList.remove('open');
+      $('.reveal-btn', q).textContent = 'Ver explicação →';
+    });
+    updateHUD();
+    $('#questoes').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  updateHUD();
+
+  // ---------- CARD MODE ----------
+  let cardIndex = 0;
+  const cardCounter = $('#cardCounter');
+  function enterCardMode(idx = 0) {
+    cardIndex = idx;
+    document.body.classList.add('card-mode');
+    renderCard();
+  }
+  function exitCardMode() {
+    document.body.classList.remove('card-mode');
+    questions.forEach(q => q.classList.remove('card-active'));
+  }
+  function renderCard() {
+    questions.forEach((q, i) => q.classList.toggle('card-active', i === cardIndex));
+    cardCounter.textContent = String(cardIndex + 1).padStart(2, '0') + ' / ' + String(questions.length).padStart(2, '0');
+  }
+  function nextCard() { cardIndex = (cardIndex + 1) % questions.length; renderCard(); }
+  function prevCard() { cardIndex = (cardIndex - 1 + questions.length) % questions.length; renderCard(); }
+
+  $('#cardModeBtn').addEventListener('click', () => enterCardMode(0));
+  $('#exitCardBtn').addEventListener('click', exitCardMode);
+
+  // ---------- COMMAND PALETTE ----------
+  const paletteBg = $('#paletteBg');
+  const palette = $('#palette');
+  const paletteInput = $('#paletteInput');
+  const paletteList = $('#paletteList');
+
+  const commands = [
+    ...$$('.rail-left a').map(a => ({
+      label: a.textContent.trim(),
+      hint: a.getAttribute('href'),
+      action: () => { location.hash = a.getAttribute('href'); closePalette(); }
+    })),
+    ...questions.map((q, i) => ({
+      label: `Questão ${String(i + 1).padStart(2, '0')} · ${$('.q-tag', q).textContent}`,
+      hint: '→ questão',
+      action: () => { q.scrollIntoView({ behavior: 'smooth' }); closePalette(); }
+    })),
+    { label: 'Entrar em modo card', hint: 'C', action: () => { enterCardMode(0); closePalette(); } },
+    { label: 'Revelar todas as explicações', hint: '',  action: () => { $('#revealAllBtn').click(); closePalette(); } },
+    { label: 'Resetar questões', hint: '',  action: () => { $('#resetBtn').click(); closePalette(); } },
+    { label: 'Alternar tema', hint: 'T',  action: () => { toggleTheme(); closePalette(); } },
+    { label: 'Modo foco', hint: 'F',  action: () => { toggleFocus(); closePalette(); } },
+    { label: 'Imprimir / salvar PDF', hint: '',  action: () => { closePalette(); window.print(); } },
+  ];
+
+  let paletteFiltered = commands.slice();
+  let paletteActive = 0;
+
+  function renderPalette() {
+    paletteList.innerHTML = paletteFiltered.map((c, i) =>
+      `<li data-i="${i}" class="${i === paletteActive ? 'active' : ''}"><span>${c.label}</span><span class="n">${c.hint || ''}</span></li>`
+    ).join('');
+    $$('#paletteList li').forEach(li => {
+      li.addEventListener('click', () => {
+        const i = parseInt(li.dataset.i);
+        paletteFiltered[i].action();
+      });
+      li.addEventListener('mouseenter', () => {
+        paletteActive = parseInt(li.dataset.i);
+        $$('#paletteList li').forEach(l => l.classList.toggle('active', parseInt(l.dataset.i) === paletteActive));
+      });
+    });
+  }
+
+  function openPalette() {
+    paletteBg.classList.add('open');
+    palette.classList.add('open');
+    paletteInput.value = '';
+    paletteFiltered = commands.slice();
+    paletteActive = 0;
+    renderPalette();
+    setTimeout(() => paletteInput.focus(), 10);
+  }
+  function closePalette() {
+    paletteBg.classList.remove('open');
+    palette.classList.remove('open');
+  }
+  paletteBg.addEventListener('click', closePalette);
+  $('#paletteBtn').addEventListener('click', openPalette);
+
+  paletteInput.addEventListener('input', () => {
+    const q = paletteInput.value.toLowerCase().trim();
+    paletteFiltered = q
+      ? commands.filter(c => c.label.toLowerCase().includes(q))
+      : commands.slice();
+    paletteActive = 0;
+    renderPalette();
+  });
+  paletteInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); paletteActive = Math.min(paletteActive + 1, paletteFiltered.length - 1); renderPalette(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); paletteActive = Math.max(paletteActive - 1, 0); renderPalette(); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (paletteFiltered[paletteActive]) paletteFiltered[paletteActive].action(); }
+    else if (e.key === 'Escape') { closePalette(); }
+  });
+
+  // ---------- HELP ----------
+  const helpBg = $('#helpBg');
+  $('#helpBtn').addEventListener('click', () => helpBg.classList.add('open'));
+  helpBg.addEventListener('click', (e) => { if (e.target === helpBg) helpBg.classList.remove('open'); });
+
+  // ---------- FOCUS MODE ----------
+  function toggleFocus() {
+    document.body.classList.toggle('focus-mode');
+    if (document.body.classList.contains('focus-mode')) {
+      document.addEventListener('mousemove', onFocusMove);
+    } else {
+      document.removeEventListener('mousemove', onFocusMove);
+      $$('main > .focus-active').forEach(el => el.classList.remove('focus-active'));
+    }
+  }
+  function onFocusMove(e) {
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    if (!el) return;
+    const target = el.closest('main > *');
+    if (!target) return;
+    $$('main > .focus-active').forEach(el => el.classList.remove('focus-active'));
+    target.classList.add('focus-active');
+  }
+
+  // ---------- KEYBOARD ----------
+  document.addEventListener('keydown', (e) => {
+    const inInput = /INPUT|TEXTAREA/.test(e.target.tagName);
+    if (inInput && e.key !== 'Escape') return;
+
+    // Cmd/Ctrl+K
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (palette.classList.contains('open')) closePalette();
+      else openPalette();
+      return;
+    }
+    // Escape closes overlays
+    if (e.key === 'Escape') {
+      if (palette.classList.contains('open')) return closePalette();
+      if (helpBg.classList.contains('open')) return helpBg.classList.remove('open');
+      if (document.body.classList.contains('card-mode')) return exitCardMode();
+      return;
+    }
+
+    // Card mode navigation
+    if (document.body.classList.contains('card-mode')) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); nextCard(); return; }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); prevCard(); return; }
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 5) {
+        const q = questions[cardIndex];
+        const letter = ['A', 'B', 'C', 'D', 'E'][n - 1];
+        answerQuestion(q, letter);
+        return;
+      }
+      if (e.key.toLowerCase() === 'r') {
+        const btn = $('.reveal-btn', questions[cardIndex]);
+        if (btn) btn.click();
+        return;
+      }
+    }
+
+    // Global hotkeys
+    if (e.key === '?') { e.preventDefault(); helpBg.classList.toggle('open'); return; }
+    if (e.key.toLowerCase() === 't') { toggleTheme(); return; }
+    if (e.key.toLowerCase() === 'c') {
+      if (!document.body.classList.contains('card-mode')) enterCardMode(0);
+      return;
+    }
+    if (e.key.toLowerCase() === 'f') { toggleFocus(); return; }
+    if (e.key.toLowerCase() === 'j') { scrollToSection(+1); return; }
+    if (e.key.toLowerCase() === 'k') { scrollToSection(-1); return; }
+  });
+
+  function scrollToSection(dir) {
+    const ys = sections.map(s => s.getBoundingClientRect().top);
+    let idx = ys.findIndex(y => y > 10);
+    if (dir < 0) idx = Math.max(0, (idx === -1 ? sections.length : idx) - 2);
+    if (idx === -1) idx = sections.length - 1;
+    sections[Math.max(0, Math.min(idx, sections.length - 1))].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // set initial theme
+  setTheme('light');
+})();
+</script>
+</body>
+</html>

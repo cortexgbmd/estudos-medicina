@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interações Medicamentosas — Guia de Estudo</title>
+<style>
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --ink:#1f2733; --soft:#5f6b7a; --line:#e4e9f0;
+  --blue:#2d6cdf; --pd:#d1493f; --pdbg:#fbeae8; --pk:#1f8a76; --pkbg:#e4f4f0;
+  --chip:#eef2f7; --chiptxt:#3a4654; --warn:#b9770a; --hookbg:#eef5ff; --shadow:rgba(31,39,51,.08);
+}
+[data-theme="dark"]{
+  --bg:#10141a; --panel:#181d25; --ink:#e7ecf2; --soft:#9aa6b4; --line:#2a313c;
+  --blue:#6aa0ff; --pd:#f08a80; --pdbg:#2a1d1c; --pk:#74d3bf; --pkbg:#16241f;
+  --chip:#222a35; --chiptxt:#c2ccd8; --warn:#e0a945; --hookbg:#15202f; --shadow:rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+  line-height:1.55;font-size:16px}
+.wrap{max-width:840px;margin:0 auto;padding:30px 20px 80px}
+header{margin-bottom:8px}
+h1{font-size:30px;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--soft);font-size:16px;margin:0}
+.tagline{display:inline-block;background:var(--blue);color:#fff;font-size:12px;font-weight:600;
+  letter-spacing:.04em;padding:4px 12px;border-radius:20px;margin-bottom:14px}
+h2{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);
+  margin:42px 0 4px;font-weight:700}
+.lead{color:var(--soft);font-size:15px;margin:0 0 14px}
+/* quick table */
+.quick{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0;font-size:14px;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 6px 20px -14px var(--shadow)}
+.quick th,.quick td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.quick th{background:var(--chip);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--soft)}
+.quick tr:last-child td{border-bottom:none}
+.quick .pair{font-weight:600;white-space:nowrap}
+.quick td.proto{font-weight:700;color:var(--blue)}
+.dot{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px}
+.dot.pd{color:var(--pd);background:var(--pdbg)} .dot.pk{color:var(--pk);background:var(--pkbg)}
+.dot.mix{color:var(--warn);background:var(--hookbg)}
+/* card */
+.card{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--blue);
+  border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 6px 20px -14px var(--shadow)}
+.card.pd{border-left-color:var(--pd)} .card.pk{border-left-color:var(--pk)} .card.mix{border-left-color:var(--warn)}
+.eq{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.drug{font-size:18px;font-weight:700}
+.x{color:var(--soft);font-size:18px;font-weight:400}
+.kind{margin-left:auto;font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px}
+.kind.pd{color:var(--pd);background:var(--pdbg)} .kind.pk{color:var(--pk);background:var(--pkbg)} .kind.mix{color:var(--warn);background:var(--hookbg)}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:12px 0 4px}
+.chip{background:var(--chip);color:var(--chiptxt);font-size:13.5px;padding:5px 11px;border-radius:8px;font-weight:500}
+.chip.end{background:var(--pdbg);color:var(--pd);font-weight:700}
+.card.pk .chip.end{background:var(--pkbg);color:var(--pk)}
+.ar{color:var(--blue);font-weight:800}
+.q{font-size:14px;color:var(--soft);font-style:italic;border-left:2px solid var(--line);padding-left:12px;margin:10px 0 2px}
+.src{font-size:12px;color:var(--soft);opacity:.85}
+.hook{background:var(--hookbg);border-radius:9px;padding:10px 13px;margin-top:12px;font-size:14.5px}
+.hook b{color:var(--blue)}
+[data-theme="dark"] .hook b{color:var(--blue)}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:16px 0;box-shadow:0 6px 20px -14px var(--shadow)}
+.note h3{margin:0 0 8px;font-size:17px}
+.note table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.note td,.note th{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.note th{background:var(--chip);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--soft)}
+b{color:var(--ink);font-weight:700}
+#toggle{position:fixed;top:16px;right:18px;background:var(--panel);color:var(--ink);
+  border:1px solid var(--line);border-radius:20px;padding:7px 13px;cursor:pointer;font-size:13px;box-shadow:0 6px 18px -10px var(--shadow)}
+.foot{text-align:center;color:var(--soft);font-size:13px;margin-top:44px;border-top:1px solid var(--line);padding-top:20px}
+@media(max-width:560px){h1{font-size:24px}.kind{margin-left:0}.wrap{padding:22px 14px}}
+</style>
+</head>
+<body>
+<button id="toggle" onclick="tg()">☀️ Claro</button>
+<div class="wrap">
+
+<header>
+<span class="tagline">Tirado das provas e exames reais da disciplina</span>
+<h1>Interações Medicamentosas — guia de estudo</h1>
+<p class="sub">Cada interação em 3 partes: a <b>cadeia</b> (o porquê, passo a passo), <b>como caiu</b> na prova, e a <b>resposta pronta</b> pra escrever. 🟥 farmacodinâmica · 🟩 farmacocinética.</p>
+</header>
+
+<h2>📌 Consulta rápida — todas de uma vez</h2>
+<p class="lead">Se for revisar correndo, é só esta tabela. Os detalhes vêm logo abaixo.</p>
+<table class="quick">
+<tr><th>Interação</th><th>Decora assim (1 linha)</th><th>Protocolo</th></tr>
+<tr><td class="pair">Digoxina + diurético</td><td>diurético → hipocalemia → ↑ toxicidade da digoxina</td><td class="proto">repor K⁺/Mg²⁺</td></tr>
+<tr><td class="pair">Verapamil/diltiazem + digitálicos</td><td>ambos deprimem o nó AV → bloqueio AV</td><td class="proto">vigiar FC</td></tr>
+<tr><td class="pair">Tiazídico + hipoglicemiante</td><td>hipocalemia → hiperglicemia → antagoniza o hipoglicemiante</td><td class="proto">no diabético, trocar o diurético por IECA/BRA</td></tr>
+<tr><td class="pair">BZD + álcool/depressor do SNC</td><td>depressão do SNC somada → depressão respiratória</td><td class="proto">flumazenil reverte</td></tr>
+<tr><td class="pair">BZD + fluoxetina</td><td>inibe o CYP → ↑ nível do BZD</td><td class="proto">↓ dose do BZD</td></tr>
+<tr><td class="pair">IMAO + tricíclico/ISRS</td><td>excesso de serotonina → síndrome serotoninérgica</td><td class="proto">washout</td></tr>
+<tr><td class="pair">IMAO + tiramina (queijo/vinho)</td><td>tiramina acumula → crise hipertensiva ("reação do queijo")</td><td class="proto">restrição alimentar</td></tr>
+<tr><td class="pair">Fenitoína + outros antiepilépticos</td><td>indução enzimática (valproato = inibidor)</td><td class="proto">monitorar nível sérico</td></tr>
+<tr><td class="pair">Fibrato + varfarina</td><td>desloca da albumina → ↑ sangramento</td><td class="proto">checar o INR (= tempo de coagulação/TP)</td></tr>
+<tr><td class="pair">AINE + varfarina</td><td>desloca da albumina + antiagrega → ↑ risco de hemorragia</td><td class="proto">evitar (ou monitorar INR)</td></tr>
+<tr><td class="pair">Fibrato + estatina</td><td>toxicidade muscular somada → rabdomiólise</td><td class="proto">checar a CK (creatina quinase)</td></tr>
+<tr><td class="pair">Anestésico local + adrenalina</td><td>vasoconstrição → ↑ duração, ↓ toxicidade (boa!)</td><td class="proto">é boa; evitar em extremidades</td></tr>
+<tr><td class="pair">Lítio + diurético/AINE</td><td>↓ excreção → intoxicação por lítio</td><td class="proto">dosar litemia</td></tr>
+<tr><td class="pair">IMAO + meperidina</td><td>excesso de serotonina/excitação → hipertermia + convulsões</td><td class="proto">não associar</td></tr>
+<tr><td class="pair">Tricíclico (ADT) + anestésico geral / anti-HAS / AINE</td><td>potencializa → hipotensão e depressão cardíaca/SNC</td><td class="proto">evitar / ajustar dose</td></tr>
+<tr><td class="pair">IECA + BRA</td><td>duplo bloqueio do SRAA → hipercalemia</td><td class="proto">evitar a dupla</td></tr>
+<tr><td class="pair">IECA/BRA + espironolactona</td><td>ambos retêm K⁺ → hipercalemia</td><td class="proto">monitorar K⁺</td></tr>
+<tr><td class="pair">Varfarina + sulfonilureia</td><td>desloca da albumina → ↑ varfarina → sangramento</td><td class="proto">monitorar INR</td></tr>
+<tr><td class="pair">DOAC + amiodarona/quinidina</td><td>↑ nível do anticoagulante → sangramento</td><td class="proto">evitar / ajustar</td></tr>
+<tr><td class="pair">Sulfonilureia + AINE</td><td>AINE desloca da albumina → ↑ sulfonilureia → hipoglicemia</td><td class="proto">atenção à hipoglicemia</td></tr>
+<tr><td class="pair">Sulfonilureia + glinida</td><td>competem o mesmo sítio (canal de K⁺) → anulam-se</td><td class="proto">não associar</td></tr>
+<tr><td class="pair">Glitazona + insulina</td><td>efeitos somados → hipoglicemia / retenção hídrica</td><td class="proto">cuidado (risco de IC)</td></tr>
+<tr><td class="pair">Varfarina + vitamina K (couve/folhas verdes)</td><td>vit. K reverte → ↓ efeito anticoagulante</td><td class="proto">dieta constante de verduras</td></tr>
+</table>
+
+<h2>1 · Cardiovascular — digitálicos &nbsp;⭐ mais cobrada</h2>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Digoxina</span><span class="x">+</span><span class="drug">Diurético (furosemida / tiazídico)</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">furosemida</span><span class="ar">→</span><span class="chip">hipocalemia (↓K⁺)</span><span class="ar">→</span><span class="chip">K⁺ e digoxina disputam a bomba Na⁺/K⁺-ATPase</span><span class="ar">→</span><span class="chip end">↑ toxicidade digitálica</span></div>
+<p class="q">"Explique e classifique a interação entre digitálicos e diuréticos depletores de potássio."<br><span class="src">P3 — Prova (Q46) · P3 — Compilado (Q2) · Exame — Perguntas · P4 — Testes · AV2</span></p>
+<div class="hook"><b>Resposta pronta:</b> o diurético espolia K⁺ → como o K⁺ compete com a digoxina no mesmo sítio da Na⁺/K⁺-ATPase, a hipocalemia faz a digoxina se ligar mais → intoxicação digitálica (arritmia, xantopsia). <b>Interação farmacodinâmica.</b> Conduta: repor K⁺/Mg²⁺.</div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Digital</span><span class="x">+</span><span class="drug">Verapamil / Diltiazem</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">ambos deprimem o nó AV</span><span class="ar">→</span><span class="chip">efeito somado</span><span class="ar">→</span><span class="chip end">bradicardia / bloqueio AV</span></div>
+<p class="q">"Os antagonistas de cálcio podem precipitar bloqueio AV, principalmente se associados a digitálicos."<br><span class="src">P3 — Questões Anti-hipertensivos (Q1)</span></p>
+<div class="hook"><b>Resposta pronta:</b> os dois freiam a condução AV (digital por via vagal; verapamil/diltiazem por bloquear Ca²⁺) → somam-se → risco de bloqueio. Vigiar FC.</div>
+</div>
+
+<h2>2 · Diuréticos — o nó renal</h2>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Tiazídico</span><span class="x">+</span><span class="drug">Hipoglicemiante oral</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">tiazídico → hipocalemia</span><span class="ar">→</span><span class="chip">↓ secreção de insulina</span><span class="ar">→</span><span class="chip">hiperglicemia</span><span class="ar">→</span><span class="chip end">antagoniza o hipoglicemiante</span></div>
+<p class="q">"Os tiazídicos interagem com hipoglicemiantes orais por produzirem hipocalemia."<br><span class="src">AV2 (com gabarito) · P4 — Testes &nbsp;— <b>combo que o professor adiantou</b></span></p>
+<div class="hook"><b>Resposta pronta:</b> o K⁺ é necessário pra célula β liberar insulina; o tiazídico causa hipocalemia → menos insulina → hiperglicemia → derruba o efeito do hipoglicemiante. Preferir IECA/BRA no diabético.</div>
+</div>
+
+<div class="card mix">
+<div class="eq"><span class="drug">Acetazolamida</span><span class="x">—</span><span class="drug">a exceção</span><span class="kind mix">⚠️ pegadinha</span></div>
+<p class="q">"Os inibidores da anidrase carbônica fazem interação farmacocinética com os digitálicos." → afirmação <b>FALSA</b>.<br><span class="src">P4 — Testes</span></p>
+<div class="hook"><b>Guarde:</b> entre os diuréticos, a <b>acetazolamida é a que NÃO interage</b> com digitálicos (os outros interagem via hipocalemia). Aparece como alternativa-pegadinha.</div>
+</div>
+
+<h2>3 · Benzodiazepínicos &amp; sono &nbsp;⭐ mais cobrada (Soraia)</h2>
+
+<div class="card pd">
+<div class="eq"><span class="drug">BZD</span><span class="x">+</span><span class="drug">Álcool / barbitúrico / anti-H1 / tricíclico / opioide / antipsicótico</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">todos deprimem o SNC</span><span class="ar">→</span><span class="chip">depressão somada</span><span class="ar">→</span><span class="chip end">depressão respiratória</span></div>
+<p class="q">"Explique o mecanismo, interações e efeitos dos benzodiazepínicos." · "As interações com BZD potencializam os efeitos do álcool…"<br><span class="src">P3 — Compilado (Q24) · P3 — Prova (Q32) · Frede — Casos</span></p>
+<div class="hook"><b>Resposta pronta:</b> BZD + qualquer depressor do SNC = sedação e depressão respiratória somadas (pode matar com álcool). <b>Dinâmica.</b> Antídoto do BZD: flumazenil.</div>
+</div>
+
+<div class="card pk">
+<div class="eq"><span class="drug">BZD</span><span class="x">+</span><span class="drug">Fluoxetina</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">fluoxetina inibe o CYP (fígado)</span><span class="ar">→</span><span class="chip">↓ metabolismo do BZD</span><span class="ar">→</span><span class="chip end">↑ concentração / efeito do BZD</span></div>
+<p class="q">"Drogas que produzem interação farmacocinética com BZD aumentando sua concentração plasmática."<br><span class="src">P3 — Prova (Q52) · Exame — Banco</span></p>
+<div class="hook"><b>Resposta pronta:</b> a fluoxetina trava o metabolismo hepático do BZD → o BZD sobe no sangue → mais efeito. <b>Cinética (metabolismo).</b></div>
+</div>
+
+<h2>4 · Anticonvulsivantes</h2>
+
+<div class="card pk">
+<div class="eq"><span class="drug">Fenitoína</span><span class="x">+</span><span class="drug">carbamazepina / fenobarbital / valproato / diazepam</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">fenitoína = indutor enzimático</span><span class="ar">→</span><span class="chip">altera metabolismo dos outros</span><span class="ar">→</span><span class="chip end">muda o nível de todos</span></div>
+<p class="q">"A fenitoína interage com: carbamazepina, diazepam, fenobarbital, ác. valproico → todas."<br><span class="src">P3 — Prova / Prova 2 (Q14)</span></p>
+<div class="hook"><b>Resposta pronta:</b> fenitoína, carbamazepina e fenobarbital são <b>indutores</b> do CYP; o <b>valproato é inibidor</b> (faz o oposto) — por isso valproato + lamotrigina ↑ risco de rash/Stevens-Johnson. <b>Cinética.</b></div>
+</div>
+
+<h2>5 · Antidepressivos</h2>
+
+<div class="card pd">
+<div class="eq"><span class="drug">IMAO</span><span class="x">+</span><span class="drug">Tricíclico / ISRS</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">IMAO ↓ degradação</span><span class="ar">+</span><span class="chip">tricíclico/ISRS ↓ recaptação</span><span class="ar">→</span><span class="chip">excesso de serotonina</span><span class="ar">→</span><span class="chip end">síndrome serotoninérgica</span></div>
+<p class="q">"Paciente em uso de tricíclico — qual antidepressivo NÃO pode associar? (IMAO)." · "Por que não usar IMAO com tricíclico?"<br><span class="src">Exame — Banco · Exame — Perguntas</span></p>
+<div class="hook"><b>Resposta pronta:</b> um impede a degradação, o outro impede a recaptação → serotonina demais na fenda → síndrome serotoninérgica (hipertermia, rigidez) e crise hipertensiva. <b>Nunca associar; respeitar o washout.</b></div>
+</div>
+
+<div class="card mix">
+<div class="eq"><span class="drug">IMAO</span><span class="x">+</span><span class="drug">Tiramina (queijo, vinho)</span><span class="kind mix">🍷 fármaco-alimento</span></div>
+<div class="chain"><span class="chip">MAO inibida não degrada tiramina</span><span class="ar">→</span><span class="chip">tiramina acumula</span><span class="ar">→</span><span class="chip">↑ liberação de noradrenalina</span><span class="ar">→</span><span class="chip end">crise hipertensiva ("reação do queijo")</span></div>
+<p class="q"><span class="src">Exame — Perguntas · Possíveis questões T8</span></p>
+<div class="hook"><b>Resposta pronta:</b> é a interação fármaco-alimento clássica do IMAO — tiramina + IMAO = crise hipertensiva. Restrição alimentar.</div>
+</div>
+
+<h2>6 · Dislipidemia — fibratos</h2>
+
+<div class="card pk">
+<div class="eq"><span class="drug">Fenofibrato</span><span class="x">+</span><span class="drug">Varfarina</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">fibrato desloca a varfarina da albumina</span><span class="ar">→</span><span class="chip">↑ varfarina livre</span><span class="ar">→</span><span class="chip end">↑ anticoagulação / sangramento</span></div>
+<p class="q">"Como age e quais as interações do fenofibrato?"<br><span class="src">Exame — Perguntas</span></p>
+<div class="hook"><b>Resposta pronta:</b> o fibrato empurra a varfarina pra fora da albumina → mais varfarina ativa no sangue → sangramento. <b>Cinética (ligação proteica).</b> Monitorar INR.</div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Fibrato + Estatina</span><span class="x">·</span><span class="drug">Ezetimiba + Estatina</span><span class="kind pd">🟥 dinâmica</span></div>
+<div class="chain"><span class="chip">fibrato + estatina = toxicidade muscular somada</span><span class="ar">→</span><span class="chip end">rabdomiólise</span></div>
+<p class="q">"Fibrato + estatina aumenta o risco de rabdomiólise." · "Ezetimiba + estatina resulta em +20% de redução do LDL."<br><span class="src">Exame — Perguntas (Q3, Q4)</span></p>
+<div class="hook"><b>Atenção (pegadinha boa):</b> nem toda associação é ruim — <b>fibrato + estatina = perigosa</b> (rabdomiólise), mas <b>ezetimiba + estatina = benéfica</b> (somam mecanismos, ↓ mais LDL). Saber diferenciar é o pulo do gato.</div>
+</div>
+
+<h2>7 · Anestésicos locais</h2>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Anestésico local</span><span class="x">+</span><span class="drug">Adrenalina</span><span class="kind pd">🟥 dinâmica (boa!)</span></div>
+<div class="chain"><span class="chip">adrenalina → vasoconstrição (receptor α)</span><span class="ar">→</span><span class="chip">↓ absorção sistêmica</span><span class="ar">→</span><span class="chip end">↑ duração · ↓ toxicidade · ↓ sangramento</span></div>
+<p class="q">"Explique e classifique a interação da adrenalina associada a anestésicos locais."<br><span class="src">Exame — Banco (Q7) · P2 — Compilado</span></p>
+<div class="hook"><b>Resposta pronta:</b> aqui a interação é <b>desejada</b>: a adrenalina vasoconstringe e segura o anestésico no local → dura mais e é menos tóxico. <b>Dinâmica.</b> Pegadinha: o ganho é menor na bupivacaína (já dura muito); evitar em extremidades.</div>
+</div>
+
+<h2>8 · Outras de alto retorno</h2>
+
+<div class="card pk">
+<div class="eq"><span class="drug">Lítio</span><span class="x">+</span><span class="drug">Diurético / AINE</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">↓ excreção renal do lítio</span><span class="ar">→</span><span class="chip">↑ litemia</span><span class="ar">→</span><span class="chip end">intoxicação (tremor, confusão, convulsão)</span></div>
+<div class="hook"><b>Resposta pronta:</b> lítio tem janela estreita; qualquer coisa que segure o lítio no corpo (diurético, AINE) vira intoxicação. Dosar litemia.</div>
+</div>
+
+<div class="card mix">
+<div class="eq"><span class="drug">AINE</span><span class="x">+</span><span class="drug">Varfarina / outros</span><span class="kind mix">🟧 mista</span></div>
+<div class="chain"><span class="chip">AINE desloca da albumina</span><span class="ar">+</span><span class="chip">antiagrega + lesa estômago</span><span class="ar">→</span><span class="chip end">↑ sangramento</span></div>
+<p class="q">"Os AINEs ligam-se a proteínas plasmáticas determinando interações." (verdadeiro)<br><span class="src">Exame — Banco · P2 — Compilado</span></p>
+<div class="hook"><b>Resposta pronta:</b> AINE desloca a varfarina da albumina (cinética) e ainda antiagrega + lesa a mucosa (dinâmica) → risco alto de sangramento.</div>
+</div>
+
+<h2>9 · Completando o escopo (clássicas P2–P4 que faltavam)</h2>
+<p class="lead">Estas não apareceram nas provas que li, mas são interações clássicas do escopo — vale saber.</p>
+
+<div class="card pd">
+<div class="eq"><span class="drug">IMAO</span><span class="x">+</span><span class="drug">Meperidina (opioide)</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">excesso de serotonina + excitação do SNC</span><span class="ar">→</span><span class="chip end">hipertermia + convulsões</span></div>
+<div class="hook"><b>Resposta pronta:</b> não associar opioide (sobretudo meperidina/tramadol) a IMAO — risco de toxicidade serotoninérgica grave. Usar opioide alternativo.</div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Tricíclico (ADT)</span><span class="x">+</span><span class="drug">Anestésico geral / anti-HAS / AINE</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">somatório de efeitos do tricíclico</span><span class="ar">→</span><span class="chip end">hipotensão e depressão cardíaca/SNC</span></div>
+<div class="hook"><b>Resposta pronta:</b> o ADT potencializa hipotensão e depressão; cuidado em cirurgia e com anti-hipertensivos. Ajustar/evitar.</div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">IECA</span><span class="x">+</span><span class="drug">BRA</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">duplo bloqueio do SRAA</span><span class="ar">→</span><span class="chip">↓ aldosterona dobrada → retém K⁺</span><span class="ar">→</span><span class="chip end">hipercalemia</span></div>
+<div class="hook"><b>Resposta pronta:</b> não combinar IECA com BRA — sem benefício e com risco de hipercalemia e piora renal.</div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">IECA / BRA</span><span class="x">+</span><span class="drug">Espironolactona</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">IECA/BRA ↓ aldosterona</span><span class="ar">+</span><span class="chip">espironolactona poupa K⁺</span><span class="ar">→</span><span class="chip end">hipercalemia</span></div>
+<div class="hook"><b>Resposta pronta:</b> ambos retêm potássio → monitorar K⁺ e função renal.</div>
+</div>
+
+<div class="card pk">
+<div class="eq"><span class="drug">Varfarina</span><span class="x">+</span><span class="drug">Sulfonilureia</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">competem pela albumina</span><span class="ar">→</span><span class="chip">↑ varfarina livre</span><span class="ar">→</span><span class="chip end">sangramento (e ↑ hipoglicemia)</span></div>
+<div class="hook"><b>Resposta pronta:</b> deslocamento da ligação proteica → mais varfarina ativa → sangramento. Monitorar INR. <b>Cinética (distribuição).</b></div>
+</div>
+
+<div class="card pk">
+<div class="eq"><span class="drug">DOAC</span><span class="x">+</span><span class="drug">Amiodarona / Quinidina</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">amiodarona/quinidina inibem P-gp/CYP</span><span class="ar">→</span><span class="chip">↑ nível do DOAC (rivaroxabana, dabigatrana…)</span><span class="ar">→</span><span class="chip end">sangramento</span></div>
+<div class="hook"><b>Resposta pronta:</b> ↑ concentração do anticoagulante direto → risco de sangramento. Evitar ou ajustar dose. <b>Cinética.</b></div>
+</div>
+
+<div class="card pk">
+<div class="eq"><span class="drug">Sulfonilureia</span><span class="x">+</span><span class="drug">AINE</span><span class="kind pk">🟩 farmacocinética</span></div>
+<div class="chain"><span class="chip">AINE desloca a sulfonilureia da albumina</span><span class="ar">→</span><span class="chip">↑ sulfonilureia livre</span><span class="ar">→</span><span class="chip end">hipoglicemia</span></div>
+<div class="hook"><b>Resposta pronta:</b> mais secretagogo livre no sangue → hipoglicemia. <b>Cinética (distribuição).</b></div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Sulfonilureia</span><span class="x">+</span><span class="drug">Glinida (repaglinida/nateglinida)</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">disputam o mesmo sítio no canal de K⁺ATP</span><span class="ar">→</span><span class="chip end">anulam-se (sem ganho)</span></div>
+<div class="hook"><b>Resposta pronta:</b> dois secretagogos no mesmo sítio competem e se anulam — não associar. <b>Dinâmica (mesmo alvo).</b></div>
+</div>
+
+<div class="card pd">
+<div class="eq"><span class="drug">Glitazona (pioglitazona)</span><span class="x">+</span><span class="drug">Insulina</span><span class="kind pd">🟥 farmacodinâmica</span></div>
+<div class="chain"><span class="chip">efeito hipoglicemiante somado + retenção hídrica</span><span class="ar">→</span><span class="chip end">hipoglicemia / edema (risco de IC)</span></div>
+<div class="hook"><b>Resposta pronta:</b> somatório → hipoglicemia e retenção de líquido; cuidado sobretudo em cardiopata.</div>
+</div>
+
+<div class="card mix">
+<div class="eq"><span class="drug">Varfarina</span><span class="x">+</span><span class="drug">Vitamina K (couve, folhas verdes)</span><span class="kind mix">🍽️ fármaco-alimento</span></div>
+<div class="chain"><span class="chip">vit. K repõe o que a varfarina bloqueia</span><span class="ar">→</span><span class="chip end">↓ efeito anticoagulante (↓ INR)</span></div>
+<div class="hook"><b>Resposta pronta:</b> a vit. K antagoniza a varfarina. Não precisa cortar verduras — manter ingestão <b>constante</b> (nem cortar nem exagerar).</div>
+</div>
+
+<h2>★ A regra que destrava tudo</h2>
+<div class="note">
+<h3>Farmacodinâmica 🟥 ou farmacocinética 🟩 ?</h3>
+<p class="lead" style="margin:0 0 6px">A banca quase sempre pede "explique <b>e classifique</b>". O atalho:</p>
+<table>
+<tr><th>Pergunte-se…</th><th>Se sim…</th><th>Exemplos</th></tr>
+<tr><td>Os dois mexem no <b>mesmo efeito final</b>? (somam ou anulam)</td><td><span class="dot pd">farmacodinâmica</span></td><td>digoxina+diurético · BZD+álcool · IMAO+tricíclico · AL+adrenalina</td></tr>
+<tr><td>Um muda o <b>nível do outro no sangue</b>? (ADME)</td><td><span class="dot pk">farmacocinética</span></td><td>fibrato+varfarina · BZD+fluoxetina · lítio+AINE · fenitoína+outros antiepilépticos</td></tr>
+</table>
+<p style="margin:10px 0 0;font-size:14.5px"><b>Frase-gatilho:</b> "mudou a concentração" = cinética · "mudou o efeito" = dinâmica.</p>
+</div>
+
+<p class="foot">Compilado das provas e exames reais da disciplina · use com o banco de questões e os flashcards de interações.</p>
+</div>
+<script>
+function tg(){var h=document.documentElement,b=document.getElementById('toggle');
+ var d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'':'dark');
+ b.textContent=d?'🌙 Escuro':'☀️ Claro';}
+</script>
+</body>
+</html>
