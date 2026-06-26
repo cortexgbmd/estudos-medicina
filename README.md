@@ -55,12 +55,12 @@ O semestre de cada material é **derivado da matéria** por esta tabela (curríc
 | Anatomia Patológica | **3º** | Módulo Agressão e Defesa I/II |
 | Cardiologia / Semiologia | **3º** | Propedêutica e Semiologia III |
 | Bioestatística | **3º** | Epidemiologia e Bioestatística II |
-| Endocrinologia | **2º** | Bases da Fisiologia Humana (endócrino) |
+| Endocrinologia | **7º** | Saúde do Adulto e do Idoso – Especialidades Clínicas |
+| Geriatria | **7º** | Saúde do Adulto e do Idoso – Especialidades Clínicas |
 | APH — Pré-Hospitalar | **2º** | Atendimento Pré-Hospitalar do Trauma |
-| Geriatria | **4º** | Saúde do Idoso (Atenção Primária IV) |
 | Dermatologia | **4º** | Saúde da Criança (dermato neonatal) |
 
-> ⚠️ O currículo é **modular/integrado** (os assuntos vivem dentro de módulos, não como disciplinas isoladas), então o semestre de alguns temas transversais (Cardio, Geriatria, Endócrino, Dermato) é uma **aproximação** — ajuste livremente em `data/materials.json` ou avise no `/lancar`.
+> ⚠️ O currículo é **modular/integrado** (os assuntos vivem dentro de módulos, não como disciplinas isoladas), então o semestre de alguns temas transversais (Cardio, Dermato) é uma **aproximação** — ajuste livremente em `data/materials.json` ou avise no `/lancar`.
 
 No site, isso vira: um **badge "Xº sem"** em cada card, uma linha de **chips por semestre** (filtro) e o semestre entra na **busca**.
 
