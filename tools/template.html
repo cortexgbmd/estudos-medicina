@@ -397,6 +397,14 @@
   .theme-toggle:active{transform:scale(.94);}
   :root[data-theme="dark"] .theme-toggle .ic-dark{display:none;}
   :root[data-theme="light"] .theme-toggle .ic-light{display:none;}
+  .badge-sem{
+    font-size:10.5px;font-weight:700;letter-spacing:.02em;
+    color:var(--muted);background:var(--btn-soft);
+    border-radius:6px;padding:3px 7px;white-space:nowrap;
+  }
+  .chips-sem{margin-top:9px;}
+  .chips-sem .chip{font-size:12.5px;padding:6px 11px;}
+  .chips-sem .cnt{font-size:11px;}
 </style>
 </head>
 <body>
@@ -447,8 +455,9 @@
     </div>
   </section>
 
-  <nav class="chips-bar" aria-label="Filtrar por matéria">
+  <nav class="chips-bar" aria-label="Filtrar por matéria e semestre">
     <div class="chips" id="chips" role="tablist"></div>
+    <div class="chips chips-sem" id="semestres" aria-label="Filtrar por semestre"></div>
   </nav>
 
   <!-- Navegação padrão -->
@@ -550,6 +559,7 @@
     const st = styleFor(m.materia_key);
     const per = m.periodo ? `<span class="badge-per">${esc(m.periodo)}</span>` : '';
     const novo = isNew(m.date) ? `<span class="badge-new">novo</span>` : '';
+    const sem = m.semestre ? `<span class="badge-sem">${esc(String(m.semestre))}º sem</span>` : '';
     return `<a class="card" href="${esc(m.url)}" target="_blank" rel="noopener"
         style="--dot:${st.dot};--soft:${st.soft}"
         aria-label="${esc(m.title)} — ${esc(m.materia)}${m.periodo ? ' ' + esc(m.periodo) : ''}">
@@ -558,7 +568,7 @@
         <span class="pill">
           <span class="emoji" aria-hidden="true">${st.emoji}</span><span class="txt">${esc(m.materia)}</span>
         </span>
-        ${per}${novo}
+        ${sem}${per}${novo}
       </div>
       <h3 class="card-title">${esc(m.title)}</h3>
       <div class="card-foot">
@@ -587,6 +597,28 @@
     });
   }
 
+  /* ---------- chips de semestre ---------- */
+  const SEMESTRES = [...new Set(MATERIALS.map(m => m.semestre).filter(s => s != null))].sort((a,b)=>a-b);
+  function semChipHTML(val, label, count){
+    return `<button class="chip" type="button" role="tab" data-sem="${esc(String(val))}">
+      <span class="emoji" aria-hidden="true">🗓️</span><span>${esc(label)}</span><span class="cnt">${count}</span>
+    </button>`;
+  }
+  function renderSemChips(){
+    if (!SEMESTRES.length) return;
+    const all = semChipHTML('all', 'Todos os semestres', MATERIALS.length);
+    const rest = SEMESTRES.map(s => semChipHTML(s, s + 'º semestre',
+      MATERIALS.filter(m => String(m.semestre) === String(s)).length)).join('');
+    $('#semestres').innerHTML = all + rest;
+    $('#semestres').addEventListener('click', e => {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      state.semestre = btn.dataset.sem;
+      apply();
+      if (state.semestre !== 'all' || state.q.trim() || state.materia !== 'all') window.scrollTo({top:0, behavior:'smooth'});
+    });
+  }
+
   /* ---------- browse (default) ---------- */
   function renderBrowse(){
     const recent = MATERIALS.slice().sort(byDateDesc).slice(0, 8);
@@ -611,11 +643,12 @@
   function filtered(){
     let items = MATERIALS.slice();
     if (state.materia !== 'all') items = items.filter(m => m.materia_key === state.materia);
+    if (state.semestre !== 'all') items = items.filter(m => String(m.semestre) === String(state.semestre));
     const q = norm(state.q.trim());
     if (q){
       const terms = q.split(/\s+/).filter(Boolean);
       items = items.filter(m => {
-        const hay = norm([m.title, m.materia, m.materia_key, m.tipo, m.periodo].join(' '));
+        const hay = norm([m.title, m.materia, m.materia_key, m.tipo, m.periodo, m.semestre ? m.semestre + ' semestre' : ''].join(' '));
         return terms.every(t => hay.includes(t));
       });
     }
@@ -627,12 +660,14 @@
     const n = items.length;
     const q = state.q.trim();
     const matLabel = state.materia !== 'all' ? labelFor(state.materia) : '';
-    const emoji = q ? '🔍' : (state.materia !== 'all' ? styleFor(state.materia).emoji : '📚');
+    const semLabel = state.semestre !== 'all' ? state.semestre + 'º semestre' : '';
+    const scope = [matLabel, semLabel].filter(Boolean).join(' · ');
+    const emoji = q ? '🔍' : (state.materia !== 'all' ? styleFor(state.materia).emoji : (state.semestre !== 'all' ? '🗓️' : '📚'));
 
     let title;
-    if (q && matLabel) title = `<b>${n}</b> em ${esc(matLabel)} para “${esc(q)}”`;
+    if (q && scope) title = `<b>${n}</b> em ${esc(scope)} para “${esc(q)}”`;
     else if (q)        title = `<b>${n}</b> ${n === 1 ? 'resultado' : 'resultados'} para “${esc(q)}”`;
-    else               title = `<b>${n}</b> ${n === 1 ? 'material' : 'materiais'} · ${esc(matLabel)}`;
+    else               title = `<b>${n}</b> ${n === 1 ? 'material' : 'materiais'} · ${esc(scope || 'Todos')}`;
 
     const head = `<div class="results-head">
         <p class="rtitle"><span class="rt-emoji" aria-hidden="true">${emoji}</span><span>${title}</span></p>
@@ -656,12 +691,17 @@
   }
 
   /* ---------- state ---------- */
-  const state = {q:'', materia:'all'};
-  const isBrowse = () => state.q.trim() === '' && state.materia === 'all';
+  const state = {q:'', materia:'all', semestre:'all'};
+  const isBrowse = () => state.q.trim() === '' && state.materia === 'all' && state.semestre === 'all';
 
   function syncChips(){
     document.querySelectorAll('#chips .chip').forEach(c => {
       const on = c.dataset.key === state.materia;
+      c.classList.toggle('active', on);
+      c.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('#semestres .chip').forEach(c => {
+      const on = c.dataset.sem === String(state.semestre);
       c.classList.toggle('active', on);
       c.setAttribute('aria-selected', on ? 'true' : 'false');
     });
@@ -687,6 +727,7 @@
   function resetAll(){
     state.q = '';
     state.materia = 'all';
+    state.semestre = 'all';
     $('#search').value = '';
     apply();
     window.scrollTo({top:0, behavior:'smooth'});
@@ -703,6 +744,7 @@
     $('#metaDate').textContent = newest ? fmtDate(newest.date) : '—';
 
     renderChips();
+    renderSemChips();
     renderBrowse();
     apply();
 

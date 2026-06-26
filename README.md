@@ -42,6 +42,30 @@ estudos-medicina/
 
 ---
 
+## 🎓 Matéria → Semestre (FASM, currículo 2023)
+
+O semestre de cada material é **derivado da matéria** por esta tabela (currículo modular da Faculdade Santa Marcelina). Por isso, ao adicionar um HTML, **não é preciso informar o semestre** — ele sai da matéria.
+
+| Matéria | Semestre | Onde fica no currículo |
+|---|---|---|
+| Imunologia | **3º** | Módulo Agressão e Defesa I |
+| Microbiologia | **3º** | Módulo Agressão e Defesa I |
+| DIP — Infecto & Parasito | **3º** | Módulo Agressão e Defesa I |
+| Farmacologia | **3º** | Módulo Agressão e Defesa I/II |
+| Anatomia Patológica | **3º** | Módulo Agressão e Defesa I/II |
+| Cardiologia / Semiologia | **3º** | Propedêutica e Semiologia III |
+| Bioestatística | **3º** | Epidemiologia e Bioestatística II |
+| Endocrinologia | **2º** | Bases da Fisiologia Humana (endócrino) |
+| APH — Pré-Hospitalar | **2º** | Atendimento Pré-Hospitalar do Trauma |
+| Geriatria | **4º** | Saúde do Idoso (Atenção Primária IV) |
+| Dermatologia | **4º** | Saúde da Criança (dermato neonatal) |
+
+> ⚠️ O currículo é **modular/integrado** (os assuntos vivem dentro de módulos, não como disciplinas isoladas), então o semestre de alguns temas transversais (Cardio, Geriatria, Endócrino, Dermato) é uma **aproximação** — ajuste livremente em `data/materials.json` ou avise no `/lancar`.
+
+No site, isso vira: um **badge "Xº sem"** em cada card, uma linha de **chips por semestre** (filtro) e o semestre entra na **busca**.
+
+---
+
 ## 🔧 Como a home é montada
 
 A home **não é editada à mão**. Ela é gerada a partir de `data/materials.json`:
@@ -58,6 +82,7 @@ Isso pega `tools/template.html`, substitui o placeholder `__MATERIALS_JSON__` pe
   "materia": "Farmacologia",            // rótulo exibido
   "materia_key": "farmacologia",        // slug da pasta (= 1ª pasta da url)
   "periodo": "P2",                      // "P1".."P4" ou "" se não houver
+  "semestre": 3,                        // semestre do currículo (derivado da matéria — ver tabela)
   "tipo": "Banco de questões",          // rótulo do tipo
   "title": "Banco de Questões — Farmacologia P2",
   "url": "farmacologia/p2/questoes/",   // caminho RELATIVO até o material
