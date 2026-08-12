@@ -1,0 +1,1620 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Aula 01 — Introdução · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+</style>
+</head>
+<body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Aula 01 — Introdução</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Aula 01</p>
+  <h1 class="page-h1">Introdução à Anatomia Topográfica</h1>
+  <p class="lead">A aula explicada do zero — do jeito que o professor cobriu, com o conteúdo anatomicamente correto e todos os termos definidos na primeira aparição.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#a1-oque">O que é (e por que é diferente)</a></li>
+      <li><a href="#a1-topias">Os 5 conceitos-chave (as "-topias")</a></li>
+      <li><a href="#a1-normal">Normal anatômico × variação</a></li>
+      <li><a href="#a1-metodos">Métodos de exame do corpo</a></li>
+      <li><a href="#a1-eixos">Eixos e planos</a></li>
+      <li><a href="#a1-principios">Princípios de construção do corpo</a></li>
+      <li><a href="#a1-resumo">✅ Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+<h2 class="topic" id="a1-oque">1 · O que é — e por que ela é diferente do que você já viu</h2>
+
+<p>Até aqui você estudou <strong>anatomia descritiva/sistêmica</strong>: um sistema de cada vez — o esquelético, o circulatório, o digestório, o nervoso. A anatomia topográfica vira essa lógica do avesso: em vez de seguir um sistema pelo corpo inteiro, ela olha <strong>uma região</strong> e estuda <strong>tudo</strong> que existe dentro dela ao mesmo tempo — ossos, músculos, vasos, nervos e vísceras, integrados.</p>
+
+<div class="def">
+  <b>Anatomia topográfica</b> = anatomia <b>regional</b> (ou loco-regional). Também chamada de <b>anatomia médico-cirúrgica</b>, porque é a anatomia <em>aplicada à clínica e à cirurgia</em>: é o mapa que o cirurgião precisa antes de encostar o bisturi e o raciocínio que o clínico usa para entender por onde uma bala passou ou onde um tumor invadiu.
+</div>
+
+<p>O curso percorre o corpo por regiões, nesta ordem: parede torácica → dorso → parede abdominal → membro superior → cabeça e pescoço → cavidade torácica → cavidade abdominal → membro inferior. Em cada região convivem vários sistemas, e é você quem precisa integrá-los. Por isso a topográfica só faz sentido depois da descritiva: ela junta o que a descritiva separou.</p>
+
+<div class="box prof">
+  <p class="h">🎯 O que o professor frisou</p>
+  <p>A palavra-chave da matéria é <strong>relação</strong>. Topográfica é saber <em>quem está ao lado de quem</em>. De todos os conceitos abaixo, ele repetiu que <strong>sintopia é o mais importante</strong> — é o coração da disciplina. Se você entender sintopia de verdade, entende a lógica da prova inteira.</p>
+</div>
+
+<h2 class="topic" id="a1-topias">2 · Os 5 conceitos-chave: as "-topias"</h2>
+
+<p>Existem cinco maneiras de descrever "onde" uma estrutura está. Todas terminam em <em>-topia</em> (do grego <em>tópos</em>, lugar). Decore as cinco — a prova adora perguntar "qual conceito descreve isto?".</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th>Conceito</th><th>Responde à pergunta…</th><th>Relação com…</th></tr></thead>
+<tbody>
+<tr><td><b>Holotopia</b></td><td>Em que <em>região</em> está?</td><td>a região do corpo</td></tr>
+<tr><td><b>Sintopia</b> <span class="chip">a mais importante</span></td><td>Quem são os <em>vizinhos</em>?</td><td>as estruturas ao redor</td></tr>
+<tr><td><b>Idiotopia</b></td><td>Como se relaciona com <em>suas próprias partes</em>?</td><td>as partes do próprio órgão</td></tr>
+<tr><td><b>Estiotopia / estratigrafia</b></td><td>Quais são suas <em>camadas</em>?</td><td>os estratos/túnicas histológicos</td></tr>
+<tr><td><b>Esqueletotopia</b></td><td>Sobre qual <em>osso</em> se apoia?</td><td>o esqueleto</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.1 · Holotopia — a região onde a estrutura mora</h3>
+<div class="def"><b>Holotopia</b> — a relação de um órgão (ou de qualquer estrutura) com a <b>região do corpo</b> onde ele está contido, seja essa região uma cavidade ou não.</div>
+<p>Exemplos que o professor usou:</p>
+<ul>
+  <li>O <strong>coração</strong> está no <span class="term">mediastino</span> (o compartimento central do tórax, entre as duas cavidades pleuropulmonares) — mais precisamente no <strong>mediastino inferior</strong>. Essa é a holotopia do coração.</li>
+  <li>O <strong>pulmão direito</strong> está na <strong>cavidade pleuropulmonar direita</strong>.</li>
+  <li>A <strong>veia cava superior</strong>, em sua maior parte, está no <strong>mediastino superior</strong>.</li>
+</ul>
+<p>Holotopia não vale só para vísceras. Dentro do <span class="term">trígono femoral</span> (um triângulo da raiz da coxa delimitado pelo <strong>ligamento inguinal</strong> em cima, pelo músculo <strong>sartório</strong> lateralmente e pelo <strong>adutor longo</strong> medialmente) estão a <strong>artéria femoral</strong>, a <strong>veia femoral</strong> e o <strong>nervo femoral</strong>. Dizer que a artéria femoral "está no trígono femoral" é falar da holotopia dela. Do mesmo jeito: a artéria radial está no antebraço.</p>
+
+<h3>2.2 · Sintopia — os vizinhos (medial, lateral, anterior, posterior)</h3>
+<div class="def"><b>Sintopia</b> — a relação de uma estrutura com suas <b>estruturas vizinhas</b>. Vizinho não é só quem está do lado (medial/lateral): é também <b>quem está na frente (anterior)</b> e <b>quem está atrás (posterior)</b>.</div>
+
+<div class="box prof">
+  <p class="h">🎯 O erro que ele cobra</p>
+  <p>Todo mundo lembra do medial e do lateral e <strong>esquece do anterior e do posterior</strong>. Quando a prova pede "descreva a sintopia de X", ela quer as <strong>quatro</strong> relações. Faltou uma, perdeu ponto.</p>
+</div>
+
+<p><strong>Sintopia da artéria femoral</strong> (no trígono femoral):</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Direção</th><th>O que está ali</th></tr></thead>
+<tbody>
+<tr><td><b>Lateral</b></td><td>Nervo femoral</td></tr>
+<tr><td><b>Medial</b></td><td>Veia femoral</td></tr>
+<tr><td><b>Posterior</b></td><td>Músculos do assoalho: ilíaco, psoas e pectíneo</td></tr>
+<tr><td><b>Anterior</b></td><td>Fáscia lata / bainha femoral (e, mais lateralmente, a borda do sartório)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="small">Mnemônico clássico do trígono, de lateral para medial: <span class="chip">NAVEL</span> — <b>N</b>ervo, <b>A</b>rtéria, <b>V</b>eia, <b>E</b>spaço (canal femoral), <b>L</b>infonodo.</p>
+
+<p><strong>Sintopia do útero</strong> (visto de cima, na cavidade pélvica):</p>
+<ul>
+  <li><strong>Anterior:</strong> a <strong>bexiga</strong> — e entre os dois, uma dobra do peritônio chamada <span class="term">escavação vesicouterina</span>.</li>
+  <li><strong>Posterior:</strong> o <strong>reto</strong> — e entre os dois, a <span class="term">escavação retouterina</span>, também chamada de <em>fundo de saco de Douglas</em> (o ponto mais baixo da cavidade peritoneal na mulher; é onde pus e sangue se acumulam).</li>
+  <li><strong>Lateral:</strong> o <strong>ligamento largo</strong>, os <strong>ovários</strong> e as <strong>tubas uterinas</strong>.</li>
+</ul>
+
+<p><strong>Sintopia do pedículo hepático</strong> — o conjunto de estruturas que entra e sai do fígado, contido no <em>ligamento hepatoduodenal</em>. Vale a pena decorar porque o professor repetiu:</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Posição</th><th>Estrutura</th><th>Detalhe</th></tr></thead>
+<tbody>
+<tr><td><b>Lateral (à direita)</b></td><td>Vias biliares (ducto colédoco)</td><td>Colédoco = hepático comum + ducto cístico. O hepático comum vem da junção dos hepáticos direito e esquerdo.</td></tr>
+<tr><td><b>Medial (à esquerda)</b></td><td>Artéria hepática própria</td><td>Vem da hepática comum; divide-se em ramos direito e esquerdo (a a. cística costuma sair da direita).</td></tr>
+<tr><td><b>Central e posterior</b></td><td>Veia porta do fígado</td><td>É a maior das três e fica atrás, no centro.</td></tr>
+</tbody>
+</table>
+</div>
+<p class="small">Mnemônico: <span class="chip">"a Direita das vias, a Esquerda a artéria, atrás a porta"</span>. E a holotopia do pedículo hepático? Ele está contido na <strong>cavidade peritoneal</strong>.</p>
+
+<div class="box caso">
+  <p class="h">🩺 Por que sintopia salva vida</p>
+  <p>Numa colecistectomia (retirada da vesícula), o cirurgião precisa clipar a artéria cística sem cortar por engano a artéria hepática ou o colédoco. Errar a sintopia aqui significa isquemia do fígado ou uma lesão de via biliar — uma das complicações mais temidas da cirurgia geral. Saber quem é medial, lateral e posterior <em>é</em> a segurança do procedimento.</p>
+</div>
+
+<h3>2.3 · Idiotopia — o órgão e suas próprias partes</h3>
+<div class="def"><b>Idiotopia</b> — a relação de um órgão com <b>as suas próprias partes</b>. Costuma aparecer onde o órgão tem <b>angulações</b> entre segmentos.</div>
+<ul>
+  <li><strong>Útero:</strong> fundo → corpo → istmo → colo. O ângulo entre o eixo do <em>corpo</em> e o eixo do <em>colo</em> é o <span class="term">ângulo de flexão</span>. No mais comum, corpo e fundo estão para a frente → <strong>anteflexão</strong>. Se estão para trás → retroflexão. <em>(Idiotopia bate só na flexão — ver o alerta abaixo.)</em></li>
+  <li><strong>Duodeno:</strong> parte superior → descendente → horizontal → ascendente. As angulações entre elas são as <span class="term">flexuras duodenais</span> superior e inferior.</li>
+  <li><strong>Intestino grosso:</strong> ceco → cólon ascendente → transverso → descendente → sigmoide → reto. As curvas são a <strong>flexura cólica direita (hepática)</strong> e a <strong>flexura cólica esquerda (esplênica)</strong> — a esquerda fica mais <em>alta</em> que a direita.</li>
+</ul>
+<div class="box alerta">
+  <p class="h">⚠️ Não confundir: flexão × versão do útero</p>
+  <p>O <strong>ângulo de flexão</strong> é entre o corpo e o colo do útero (mesmo órgão) → <strong>é idiotopia</strong>. O <strong>ângulo de versão</strong> é entre o colo do útero e o canal vaginal (órgãos <em>diferentes</em>) → <strong>não é idiotopia</strong>, mesmo sendo importante para a estática do útero. A posição normal é <em>anteversoflexão</em>: os dois ângulos apontando o útero para a frente.</p>
+</div>
+
+<h3>2.4 · Estiotopia / estratigrafia — as camadas</h3>
+<div class="def"><b>Estiotopia</b> (também chamada de <b>histiotopia</b>) — a relação de um órgão com as suas <b>camadas / estratos</b>, do ponto de vista histológico. Nas vísceras ocas essas camadas chamam-se <b>túnicas</b>.</div>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Órgão</th><th>Camada externa</th><th>Camada média</th><th>Camada interna</th></tr></thead>
+<tbody>
+<tr><td><b>Útero</b></td><td>Perimétrio (serosa)</td><td>Miométrio (muscular)</td><td>Endométrio (mucosa que descama)</td></tr>
+<tr><td><b>Artéria</b></td><td>Túnica adventícia</td><td>Túnica média (elástica/muscular)</td><td>Túnica íntima (endotélio)</td></tr>
+<tr><td><b>Coração</b></td><td>Pericárdio / epicárdio</td><td>Miocárdio</td><td>Endocárdio</td></tr>
+<tr><td><b>Intestino</b></td><td>Serosa (peritônio)</td><td>Muscular</td><td>Mucosa</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>2.5 · Esqueletotopia — o osso que serve de apoio</h3>
+<div class="def"><b>Esqueletotopia</b> — a relação de uma estrutura com o <b>esqueleto</b>.</div>
+<ul>
+  <li>O <strong>coração</strong> se assenta sobre as vértebras <strong>T5, T6, T7, T8 e T9</strong> — as <span class="term">vértebras cardíacas</span> (ou vértebras de Giacomini). Em inspiração profunda pode chegar à T9. <em>Esse dado volta na Aula 02.</em></li>
+  <li>A <strong>artéria radial</strong> corre sobre o rádio; a <strong>artéria ulnar</strong>, sobre a ulna; a <strong>artéria braquial</strong>, sobre o úmero (por isso era chamada de "umeral"); a <strong>artéria femoral</strong>, sobre o fêmur.</li>
+</ul>
+
+<div class="box conexao">
+  <p class="h">🔗 Conexão</p>
+  <p>As "-topias" não são gavetas separadas: elas descrevem a mesma estrutura por ângulos diferentes. A artéria femoral, por exemplo, tem holotopia (está no trígono femoral), sintopia (lateral ao nervo? não — medial a ele), esqueletotopia (sobre o fêmur) e estiotopia (adventícia/média/íntima) — tudo ao mesmo tempo. A <strong>estiotopia</strong> reaparece lá na frente como <strong>princípio da estratigrafia</strong>, e a <strong>esqueletotopia das vértebras cardíacas</strong> reaparece na parede torácica.</p>
+</div>
+
+<h2 class="topic" id="a1-normal">3 · Normal anatômico × variação anatômica</h2>
+<p>Quando descrevemos a sintopia de uma estrutura, damos a posição <strong>mais comum</strong> — o <span class="term">normal anatômico</span>. O corpo, porém, tem muita <span class="term">variação anatômica</span>: em algumas pessoas a artéria femoral pode estar medial à veia, por exemplo. Isso não é doença, é variante.</p>
+<div class="box prof">
+  <p class="h">🎯 A pegadinha conceitual</p>
+  <p>Um aluno perguntou se mudar a sintopia muda a <em>função</em> da estrutura. A resposta do professor: <strong>não</strong>. A variação anatômica altera a <em>posição</em>, não a função — o rim continua filtrando esteja ele um pouco mais alto ou mais baixo. A função só muda se a nova posição <em>comprimir</em> algo (ex.: uma estrutura cruzando e comprimindo uma veia). Posição ≠ função.</p>
+</div>
+
+<h2 class="topic" id="a1-metodos">4 · Métodos de exame do corpo humano</h2>
+<p>São seis: <strong>inspeção, palpação, percussão, ausculta, mensuração e dissecação</strong>. Os cinco primeiros são clínicos (feitos no paciente vivo); o sexto é o método anatômico completo.</p>
+
+<h3>4.1 · Inspeção — olhar</h3>
+<p>É a análise <strong>visual</strong>. Divide-se em:</p>
+<ul>
+  <li><span class="term">Ectoscopia</span> — a inspeção <strong>externa</strong> do corpo. Muitas vezes o diagnóstico já sai só de olhar.</li>
+  <li><span class="term">Endoscopia</span> — a inspeção <strong>interna</strong>, por orifícios naturais <em>ou</em> por uma incisão. Não é só digestiva: otoscopia (ouvido), laringoscopia (boca), endoscopia digestiva alta, colonoscopia, toracoscopia (cânula no tórax), laparoscopia (cânula no abdome) — todas são endoscopias.</li>
+</ul>
+<div class="box caso">
+  <p class="h">🩺 Casos que ele contou</p>
+  <p><b>Insuficiência venosa crônica:</b> pernas de tamanhos diferentes, varizes e manchas marrons na pele. As manchas são <em>hemossiderina</em> — o ferro do sangue que extravasou e se depositou no subcutâneo. Só de olhar, o diagnóstico está feito.</p>
+  <p><b>Erisipela bolhosa:</b> pele vermelha (hiperemia), bolhas, febre, náusea e vômito — quadro infeccioso da pele. A inspeção dá o diagnóstico; o exame complementar só confirma.</p>
+  <p><b>Elefantíase:</b> membro muito aumentado e, à palpação, <em>endurecido</em> (diferente do edema mole comum), por acúmulo de linfa.</p>
+</div>
+<div class="box prof">
+  <p class="h">🎯 A regra de ouro da inspeção</p>
+  <p><strong>Tire a roupa do doente.</strong> Ele contou o caso do baleado que dizia ter levado "um tiro só": só ao despir e virar o paciente é que aparecia o segundo orifício. Se você não inspeciona direito, não tem como saber o que está acontecendo. Isso vale de baleado a UBS.</p>
+</div>
+
+<h3>4.2 · Palpação — tocar</h3>
+<p>Sentir com as mãos. Descreva sempre <strong>as características</strong> do que palpa (tamanho, borda, consistência).</p>
+<ul>
+  <li><strong>Fígado</strong> — pela <em>técnica de Mathieu</em> (mãos em garra, o examinador ao lado do paciente): "a borda hepática está a 5 cm do rebordo costal, lisa, regular, mole/endurecida".</li>
+  <li><strong>Toque retal</strong> — palpa a próstata (no homem) e pode detectar tumor no reto (em ambos os sexos); é obrigatório em muitos contextos.</li>
+  <li><strong>Toque vaginal / bimanual</strong> — avalia a consistência do colo do útero e o tamanho do órgão.</li>
+</ul>
+
+<h3>4.3 · Percussão — bater e escutar o som</h3>
+<p>Usa-se um dedo que bate (<span class="term">dedo percussor</span>) sobre outro dedo apoiado na pele (<span class="term">dedo plexímetro</span>). O movimento vem da articulação <em>radiocarpal</em> (o punho), não do dedo. Dois sons importam:</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Som</th><th>Significa</th><th>Onde</th></tr></thead>
+<tbody>
+<tr><td><b>Timpânico</b></td><td>Ar / gás por baixo</td><td>Sobre alças intestinais com gás</td></tr>
+<tr><td><b>Maciço</b></td><td>Sólido / líquido por baixo (não tem ar)</td><td>Sobre o fígado, sobre osso</td></tr>
+</tbody>
+</table>
+</div>
+<div class="box alerta">
+  <p class="h">⚠️ Não confundir percussão com ausculta</p>
+  <p>"<strong>Timpânico</strong>" e "<strong>maciço</strong>" são achados de <strong>percussão</strong>. Já "<strong>claro pulmonar</strong>" e "<strong>murmúrio vesicular</strong>" são achados de <strong>ausculta</strong> — são <em>sons</em> do pulmão, não a resposta a uma batida. Estertores, roncos e sibilos também são ausculta. Não misture os dois métodos na prova.</p>
+</div>
+<p class="small"><b>Sinal de Giordano:</b> percussão da região lombar (ângulo costovertebral, sobre a loja renal) com a borda ulnar da mão. Dor = sinal positivo → sugere infecção (pielonefrite) ou cálculo renal. A variante com o punho fechado é a <em>punho-percussão de Murphy</em>.</p>
+
+<h3>4.4 · Ausculta — escutar os sons do corpo</h3>
+<p>Com o estetoscópio, ouvimos sons normais e alterados. O conceito central:</p>
+<div class="def"><b>Sopro</b> = som produzido por <b>turbilhonamento do fluxo</b> dentro de um vaso ou câmara. Turbilhonamento traduz que há <b>algo obstruindo ou estreitando</b> o caminho do sangue.</div>
+<ul>
+  <li><strong>Carótida:</strong> obstrução &gt; 70% → sopro audível.</li>
+  <li><strong>Coração:</strong> sopro no foco aórtico ou pulmonar → estenose ou insuficiência valvar.</li>
+  <li><strong>Intestino:</strong> som metálico → sugere obstrução intestinal (a alça tenta empurrar contra um bloqueio).</li>
+</ul>
+<p class="small">História que ele contou: antes do estetoscópio (1816, Laennec), auscultava-se com o ouvido direto no peito, depois com papel enrolado. Na obstetrícia usou-se o <em>estetoscópio de Pinard</em> (um cone) para ouvir o coração do feto; hoje há o Doppler — mas o estetoscópio segue insubstituível.</p>
+
+<h3>4.5 · Mensuração — medir</h3>
+<ul>
+  <li><strong>Circunferência de membro</strong> (fita métrica) — compara os dois lados: um membro fino pode indicar sequela (ex.: poliomielite); um membro grosso, trombose, elefantíase ou edema. Serve para acompanhamento.</li>
+  <li><strong>Perímetro cefálico</strong> — fundamental no recém-nascido e na puericultura: cabeça grande sugere <em>hidrocefalia</em>; cabeça pequena, <em>microcefalia</em> (lembrado o surto de zika/chikungunya na gestação).</li>
+  <li><strong>Circunferência abdominal</strong> — parâmetro <em>metabólico</em> (risco cardiovascular), além de acompanhar obesidade.</li>
+</ul>
+
+<h3>4.6 · Dissecação — o método mais completo</h3>
+<div class="def"><b>Dissecação por planos em janela</b> — retirar (ou melhor, <b>rebater</b>, sem cortar) o corpo camada por camada: pele → tela subcutânea → aponeurose → músculo → estruturas profundas. Cada camada é levantada como quem abre uma janela.</div>
+<p>É a análise mais completa do corpo — por isso o Instituto Médico Legal disseca tudo para saber a causa da morte. Cortes <strong>transversais</strong> também são possíveis e equivalem, na prática, ao que a <strong>tomografia</strong> e a <strong>ressonância</strong> mostram: cortes axiais, coronais e sagitais que reconstroem o corpo inteiro.</p>
+<div class="box conexao">
+  <p class="h">🔗 Conexão</p>
+  <p>A dissecação por planos é a <strong>estratigrafia</strong> em ação (§6.6). E a Aula 02 é exatamente isto: dissecar a parede torácica camada a camada, da pele até a pleura.</p>
+</div>
+
+<h2 class="topic" id="a1-eixos">5 · Eixos e planos — a base geométrica</h2>
+<p>Antes dos princípios de construção, precisamos dos <strong>eixos</strong> (linhas) e <strong>planos</strong> (superfícies) do corpo. Um plano nasce do deslizamento de um eixo sobre outro.</p>
+
+<div class="tablewrap">
+<table>
+<thead><tr><th>Eixo</th><th>Outros nomes</th><th>Polaridade</th><th>Significa</th></tr></thead>
+<tbody>
+<tr><td><b>Longitudinal</b></td><td>cefalopodálico</td><td><b>Heteropolar</b></td><td>Vai da cabeça aos pés, atravessando unidades morfológicas <em>diferentes</em> (couro cabeludo, olho, tórax, abdome, pé)</td></tr>
+<tr><td><b>De profundidade</b></td><td>ântero-posterior, sagital, de espessura</td><td><b>Heteropolar</b></td><td>Vai da frente às costas, atravessando estruturas <em>diferentes</em> (pele, intestino, aorta, coluna)</td></tr>
+<tr><td><b>Transversal</b></td><td>—</td><td><b>Homopolar</b></td><td>Vai de um lado ao outro, atravessando estruturas <em>homólogas</em> (pulmão D e E, rim D e E)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="small"><b>Heteropolar</b> = as duas pontas caem em unidades diferentes. <b>Homopolar</b> = as pontas caem em unidades iguais/homólogas. O eixo transversal é o <strong>único homopolar</strong> — guarde isso, porque conecta com o princípio da metameria.</p>
+
+<p>Deslizando um eixo sobre outro, nascem os <strong>três planos</strong>:</p>
+<ul>
+  <li><span class="term">Plano sagital</span> — longitudinal deslizando no ântero-posterior. Quando passa bem no meio, é o <strong>plano sagital mediano</strong>, o plano de simetria bilateral, que divide o corpo em metades direita e esquerda.</li>
+  <li><span class="term">Plano coronal (frontal)</span> — longitudinal deslizando no transversal. Divide o corpo em anterior e posterior.</li>
+  <li><span class="term">Plano transversal (axial)</span> — divide o corpo em superior e inferior.</li>
+</ul>
+
+<h2 class="topic" id="a1-principios">6 · Os princípios de construção do corpo</h2>
+<p>São cinco: <strong>simetria bilateral, antimeria, metameria, paquimeria e estratigrafia (estratimeria)</strong>. Cada um usa um eixo/plano.</p>
+
+<h3>6.1 · Simetria bilateral</h3>
+<p>O plano sagital mediano divide o corpo em duas metades. Externamente (ectoscopia) elas parecem iguais — é a <span class="term">simetria de massa</span>. Internamente há assimetria de posição, mas os órgãos são <strong>homólogos de construção</strong> — é a <span class="term">simetria de órgãos</span>: pulmão D e pulmão E, rim D e rim E, testículo/ovário D e E; e mesmo baço (esquerdo) e fígado (direito) são homólogos <em>de construção</em>.</p>
+<div class="box alerta">
+  <p class="h">⚠️ Construção ≠ função</p>
+  <p>Homologia aqui é de <strong>construção</strong> (plano embrionário/estrutural), <strong>não de função</strong>. O fígado e o baço são homólogos como <em>construção</em>, mas suas funções são completamente diferentes. Sempre que ele fala "homólogo", pense "mesmo plano de construção".</p>
+</div>
+
+<h3>6.2 · Antimeria</h3>
+<div class="def"><b>Antimeria</b> — o corpo é formado por <b>duas metades iguais</b>, chamadas <b>antímeros</b> = <b>hemissomas</b> = <b>dimídios</b> (o termo mais usado na clínica é <em>dimídio</em>). A equivalência entre elas é o <b>fenômeno da homotipia</b>: as unidades da direita são homólogas às da esquerda.</div>
+<div class="box caso">
+  <p class="h">🩺 Onde "dimídio" aparece na clínica</p>
+  <p>Na neurologia: um AVC no hemisfério <strong>esquerdo</strong> paralisa o <strong>dimídio direito</strong> (hemiplegia). O déficit é <em>contralateral</em> por causa da decussação das pirâmides no bulbo. "Paralisou o dimídio direito" = paralisou metade direita do corpo.</p>
+</div>
+
+<h3>6.3 · Assimetrias: normal, distopia e modificação morfológica</h3>
+<ul>
+  <li><strong>Assimetria normal:</strong> uma pálpebra um pouco mais baixa, uma mama mais alta, um testículo mais baixo — variações estéticas sem doença.</li>
+  <li><span class="term">Distopia</span> — mudança de <strong>posição</strong> do órgão (transposição). Exemplos-âncora:
+    <ul>
+      <li><strong>Situs inversus</strong> (totalis): tudo invertido — fígado à esquerda, baço à direita, coração à direita, arco aórtico à direita. A <em>função</em> se mantém; só a construção está espelhada.</li>
+      <li><strong>Dextrocardia:</strong> o ápice do coração aponta para o 5º espaço intercostal <em>direito</em> em vez do esquerdo. Muitas vezes só se descobre na ausculta (batimento à direita) ou num raio-X — e frequentemente não causa dano.</li>
+    </ul>
+  </li>
+  <li><strong>Modificação morfológica:</strong> mudança na <strong>forma</strong> (não na posição) do órgão — clássico nas mamas, de formatos variados.</li>
+</ul>
+
+<h3>6.4 · Metameria</h3>
+<div class="def"><b>Metameria</b> — segmentação <b>transversal</b> do corpo em <b>metâmeros</b>: segmentos escalonados e superpostos no sentido crânio-caudal. Metâmeros começam homólogos e depois se diferenciam. Usa o único eixo homopolar (o transversal).</div>
+<p>Melhor exemplo: a <strong>coluna vertebral</strong> — vértebras empilhadas uma sobre a outra, transversalmente.</p>
+<div class="tablewrap">
+<table>
+<thead><tr><th>Região</th><th>Nº de vértebras</th></tr></thead>
+<tbody>
+<tr><td>Cervicais</td><td>7</td></tr>
+<tr><td>Torácicas</td><td>12</td></tr>
+<tr><td>Lombares</td><td>5</td></tr>
+<tr><td>Sacrais</td><td>5 (fundidas)</td></tr>
+<tr><td>Coccígeas</td><td>3 a 5 (frequentemente fundidas)</td></tr>
+</tbody>
+</table>
+</div>
+<p>A <strong>inervação sensitiva do tronco</strong> também é metamérica: cada nervo cobre uma faixa transversal de pele — um <span class="term">dermátomo</span>. As <strong>linhas de força da pele</strong> (linhas de Langer) acompanham essa lógica.</p>
+<div class="box caso">
+  <p class="h">🩺 Herpes-zóster — a doença que "desenha" o metâmero</p>
+  <p>O vírus varicela-zóster fica latente no <strong>gânglio da raiz dorsal</strong> de um nervo. Ao reativar, ele desce pelo nervo sensitivo e produz uma erupção vesicular <strong>dolorosa em faixa</strong>, seguindo exatamente <strong>um dermátomo, de um lado só</strong> do corpo. É a metameria escrita na pele — por isso a lesão respeita a linha média e não passa para o outro lado.</p>
+</div>
+<div class="box prof">
+  <p class="h">🎯 Metameria com aplicação cirúrgica</p>
+  <p>Incisões que <strong>seguem</strong> as linhas de Langer cicatrizam melhor; incisões <strong>contra</strong> elas tendem a formar cicatriz hipertrófica ou <em>queloide</em>. No abdome da <strong>criança</strong> a distribuição é mais <em>transversa</em> → a laparotomia (incisão para abrir a cavidade abdominal) é feita transversal; no adulto, mais longitudinal. <span class="small">Curiosidade: "laparo" = flanco/plano; o termo consagrou-se para toda incisão abdominal.</span></p>
+</div>
+
+<h3>6.5 · Paquimeria</h3>
+<div class="def"><b>Paquimeria</b> — usando o <b>plano coronal</b>, o corpo se organiza em <b>dois tubos</b> no sentido crânio-podálico:
+<br>• <b>Paquímero ventral (anterior) = esplâncnico</b> → a maior parte das <b>vísceras</b>.
+<br>• <b>Paquímero dorsal (posterior) = neural</b> → o <b>sistema nervoso</b> (encéfalo, medula, origem da inervação).
+<br>Ambos envoltos pelo <b>tegumento comum</b> (a pele).</div>
+
+<h3>6.6 · Estratigrafia (estratimeria)</h3>
+<div class="def"><b>Estratigrafia</b> — o corpo é constituído por <b>camadas superpostas (estratos)</b>. Nas vísceras, essas camadas são as <b>túnicas</b> — ou seja, a estiotopia/histiotopia é uma estratigrafia.</div>
+<p>Exemplo que ele dissecou verbalmente — a <strong>parede anterolateral do abdome</strong>, de fora para dentro:</p>
+<div class="diagrama">
+  <p class="t">Estratigrafia da parede abdominal anterolateral</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Pele + tela subcutânea</b></div></li>
+    <li><span class="n">2</span><div><b>M. oblíquo externo</b> <span class="d">— fibras "mão no bolso"; parte carnosa + aponeurose</span></div></li>
+    <li><span class="n">3</span><div><b>M. oblíquo interno</b> <span class="d">— fibras cruzando em sentido oposto</span></div></li>
+    <li><span class="n">4</span><div><b>M. transverso do abdome</b> <span class="d">— transição carnosa→aponeurótica = linha semilunar de Spiegel</span></div></li>
+    <li><span class="n">5</span><div><b>M. reto do abdome</b> <span class="d">— e atrás dele a lâmina posterior da bainha do reto</span></div></li>
+  </ol>
+</div>
+<div class="box caso">
+  <p class="h">🩺 Ponto fraco = hérnia</p>
+  <p>Na <strong>linha semilunar de Spiegel</strong> (transição carnosa-aponeurótica do transverso) pode haver fraqueza → protrusão de conteúdo abdominal = <strong>hérnia de Spiegel</strong>. As hérnias mais frequentes da parede, porém, são as <strong>inguinais</strong>, em parte porque o oblíquo interno às vezes tem inserção mais alta e "desprotege" a região inguinal.</p>
+</div>
+
+<div class="resumo" id="a1-resumo">
+  <h3>✅ Resumo rápido — Aula 01</h3>
+  <ul>
+    <li><b>Topográfica = regional = médico-cirúrgica:</b> estuda tudo de uma região junto; a palavra-chave é <b>relação</b>.</li>
+    <li><b>As 5 "-topias":</b> holotopia (região), <b>sintopia (vizinhos — a mais importante)</b>, idiotopia (partes do próprio órgão), estiotopia (camadas), esqueletotopia (osso).</li>
+    <li><b>Sintopia cobra as 4 direções:</b> medial, lateral, <b>anterior e posterior</b> — ninguém pode esquecer as duas últimas.</li>
+    <li><b>Normal × variação:</b> variação muda a posição, não a função (a não ser que comprima algo).</li>
+    <li><b>6 métodos de exame:</b> inspeção (ecto/endoscopia), palpação, percussão (timpânico/maciço), ausculta (sopro = turbilhonamento), mensuração, dissecação (por planos em janela).</li>
+    <li><b>Eixos:</b> longitudinal e sagital são heteropolares; o transversal é o único <b>homopolar</b>.</li>
+    <li><b>5 princípios de construção:</b> simetria bilateral, antimeria (dimídios/homotipia), metameria (metâmeros, dermátomos, herpes-zóster), paquimeria (tubo esplâncnico ventral + neural dorsal), estratigrafia (camadas/túnicas).</li>
+    <li><b>Distopia</b> (situs inversus, dextrocardia) muda posição; <b>modificação morfológica</b> muda forma — nenhuma das duas muda função.</li>
+  </ul>
+</div>
+
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: RESUMO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Aula 01</h1>
+  <p class="sub">Revisão da véspera · Introdução à Anatomia Topográfica · só o que tem chance real de cair</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Aula 01</span>
+    <a class="a1" href="#c-conceitos">5 conceitos</a>
+    <a class="a1" href="#c-metodos">Métodos</a>
+    <a class="a1" href="#c-eixos">Eixos &amp; planos</a>
+    <a class="a1" href="#c-principios">Princípios</a>
+    <a class="a1" href="#c-gatilhos">🔑 Gatilhos</a>
+  </div>
+</nav>
+
+<section id="c-conceitos">
+  <span class="aula-tag t1">Aula 01</span>
+  <h2>Os 5 conceitos topográficos</h2>
+  <p class="mini">Mnemônico do "topia": cada um responde a uma pergunta diferente sobre a MESMA estrutura.</p>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Conceito</th><th>Relação do órgão/estrutura com…</th><th>Exemplo-âncora do professor</th></tr></thead>
+    <tbody>
+      <tr><td><span class="lead">Holotopia</span></td><td>a <b>região</b> onde está contido (seja cavidade ou não)</td><td>Coração → mediastino inferior · a. femoral → trígono femoral · v. cava sup. → mediastino superior</td></tr>
+      <tr><td><span class="lead">Sintopia</span> ⭐</td><td>as <b>estruturas vizinhas</b> (lateral, medial, <u>anterior E posterior</u>)</td><td>A. femoral: veia medial / n. lateral · Pedículo hepático: via biliar lateral, a. hepática própria medial, v. porta central-posterior</td></tr>
+      <tr><td><span class="lead">Idiotopia</span></td><td>as suas <b>partes</b> (geralmente por angulações)</td><td>Útero (fundo/corpo/colo → ângulo de flexão) · duodeno e cólon (flexuras)</td></tr>
+      <tr><td><span class="lead">Estiotopia</span><br><span class="mini">(histiotopia)</span></td><td>as suas <b>camadas / estratos</b> (histológico)</td><td>Útero: perimétrio/miométrio/endométrio · artéria: adventícia/média/íntima · coração: peri/mio/endocárdio</td></tr>
+      <tr><td><span class="lead">Esqueletotopia</span></td><td>o <b>osso / esqueleto</b></td><td>Coração sobre <b class="k">T5–T9</b> (vértebras cardíacas) · a. radial sobre o rádio · a. femoral sobre o fêmur</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="prof"><span class="box-h">🎯 Ênfase do professor</span><b>Sintopia é o conceito MAIS importante</b> — é a razão de ser da topográfica (estudo regional). Na sintopia, sempre considerar a posição <b>mais comum (normal anatômico)</b>; fora dela = variação anatômica (função não muda).</div>
+  <div class="alerta"><span class="box-h">⚠️ Não confundir</span><b>Sintopia ≠ Holotopia.</b> Holotopia = com a REGIÃO (o "endereço"). Sintopia = com os VIZINHOS (quem está ao lado/frente/atrás). Ângulo de <b>versão</b> do útero (colo × vagina) NÃO é idiotopia — só o ângulo de <b>flexão</b> (corpo × colo, mesmo órgão) é.</div>
+</section>
+
+<section id="c-metodos">
+  <span class="aula-tag t1">Aula 01</span>
+  <h2>Métodos de estudo do corpo</h2>
+  <ul>
+    <li><b>Inspeção</b> = análise visual. <b>Ectoscopia</b> (externa) × <b>Endoscopia</b> (interna, por orifício natural OU incisão — não é só digestiva: otoscopia, laringoscopia, toracoscopia, laparoscopia).</li>
+    <li><b>Palpação</b> (fígado por Mathieu, toque retal, toque vaginal/bimanual). <b>Mensuração</b> (perímetro cefálico em RN; circunferência abdominal = parâmetro metabólico).</li>
+    <li><b>Percussão</b>: dedo <b>percussor</b> bate no dedo <b>plexímetro</b>; movimento vem da articulação radiocárpica. <b>Sinal de Giordano</b>: punho-percussão lombar dolorosa → infecção / cálculo renal.</li>
+    <li><b>Ausculta</b>: sopro em artéria = fluxo turbilhonado (ex.: carótida com obstrução &gt;70%); sopro cardíaco = estenose/insuficiência valvar; ruído metálico = obstrução intestinal. Murmúrio vesicular e estertores são de ausculta.</li>
+    <li><b>Dissecação</b> = método <b>MAIS completo</b>: por planos "em janelas" (rebate camadas sem cortar) — segue a estratigrafia.</li>
+  </ul>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Percussão — som</th><th>Sobre o quê</th><th>Exemplo</th></tr></thead>
+    <tbody>
+      <tr><td><b class="k">Timpânico</b></td><td>víscera oca com <b>ar</b></td><td>Alças intestinais, estômago, pulmão hiperinsuflado</td></tr>
+      <tr><td><b class="k">Maciço</b> (submaciço)</td><td>órgão <b>sólido / denso</b></td><td>Fígado, coração, sobre a costela</td></tr>
+      <tr><td><b class="k">Claro pulmonar</b></td><td>pulmão <b>normal aerado</b> (som ressonante)</td><td>Campos pulmonares normais</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="mini">⚠️ Pegadinha do professor: ele frisa que o "claro pulmonar" traduz o pulmão <b>normal</b> (e chama o murmúrio vesicular de achado de ausculta) — não confundir com ruído adventício.</p>
+</section>
+
+<section id="c-eixos">
+  <span class="aula-tag t1">Aula 01</span>
+  <h2>Eixos &amp; planos</h2>
+  <div class="grid2">
+    <div class="conexao"><span class="box-h">🔗 Eixos</span>
+      <ul>
+        <li><b>Longitudinal</b> (cefalopodálico): <b>heteropolar</b> (unidades diferentes).</li>
+        <li><b>Sagital / ântero-posterior / profundidade</b>: <b>heteropolar</b>.</li>
+        <li><b>Transversal</b>: único <b>HOMOPOLAR</b> — atinge estruturas homólogas (pulmão dir. × esq.; rim dir. × esq.; cava × aorta).</li>
+      </ul>
+    </div>
+    <div class="conexao"><span class="box-h">🔗 Planos</span>
+      <ul>
+        <li><b>Sagital mediano</b> = long. sobre sagital → plano de <b>simetria bilateral</b>.</li>
+        <li><b>Coronal</b> = long. sobre transverso → divide ant./post. (usado na paquimeria).</li>
+        <li><b>Transversal</b> = corte tipo tomografia/RM.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="c-principios">
+  <span class="aula-tag t1">Aula 01</span>
+  <h2>Princípios de construção do corpo</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Princípio</th><th>Ideia-chave</th><th>Detalhe que cai</th></tr></thead>
+    <tbody>
+      <tr><td><span class="lead">Simetria bilateral</span></td><td>plano sagital mediano</td><td>Externa = simetria de <b>massa</b>; interna = simetria de <b>construção / órgãos</b> (não de função)</td></tr>
+      <tr><td><span class="lead">Antimeria</span></td><td>2 metades iguais = <b>antímeros / hemissomas / dimídios</b></td><td>Fenômeno da <b>homotipia</b>. <b>Distopia</b> = mudança de posição: <i>situs inversus</i>, <b>dextrocardia</b> (só descobre quem ausculta)</td></tr>
+      <tr><td><span class="lead">Metameria</span></td><td>segmentação <b>transversal</b>, escalonada, crânio-caudal</td><td>Ex.: coluna vertebral, nervos sensitivos do tronco, <b>dermátomos</b>. Doença-exemplo: <b class="k">herpes-zóster</b> (dor/vesículas em faixa, unilateral)</td></tr>
+      <tr><td><span class="lead">Paquimeria</span></td><td>plano coronal → 2 tubos</td><td>Ventral = paquímero <b>esplâncnico</b> (vísceras); dorsal = paquímero <b>neural</b> (SNC)</td></tr>
+      <tr><td><span class="lead">Estratigrafia</span><br><span class="mini">(estratimeria)</span></td><td>camadas superpostas / estratos</td><td>Nas vísceras = túnicas. Histiotopia é uma estratigrafia. Ex.: parede abdominal em janelas</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="prof"><span class="box-h">🎯 Ênfase do professor</span><b>Linhas de força da pele = linhas de Langer.</b> Incisão a favor cicatriza melhor; contra as linhas → cicatriz <b>hipertrófica</b> / <b>queloide</b>. Laparotomia: na <b>criança</b> = transversa (parede mais transversal); no <b>adulto</b> = longitudinal.</div>
+  <p class="mini">Contagem de vértebras: 7 cervicais · 12 torácicas · 5 lombares · 5 sacrais · 3–5 coccígeas. Fraqueza da linha semilunar de Spiegel → hérnia de Spiegel.</p>
+</section>
+
+<section id="c-gatilhos">
+  <span class="aula-tag t1">Aula 01</span>
+  <h2>🔑 Palavras-chave gatilho</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Se aparecer…</th><th>Pense em…</th></tr></thead>
+    <tbody>
+      <tr><td><b>Sintopia</b></td><td>Vizinhos: lateral, medial, anterior E posterior (o conceito mais cobrado)</td></tr>
+      <tr><td><b>Holotopia</b></td><td>Região/endereço onde a estrutura está contida</td></tr>
+      <tr><td><b>Ângulo de flexão × versão (útero)</b></td><td>Flexão (corpo × colo) = idiotopia; versão (colo × vagina) NÃO é</td></tr>
+      <tr><td><b>T5–T9</b></td><td>Vértebras cardíacas (esqueletotopia do coração)</td></tr>
+      <tr><td><b>Homopolar</b></td><td>Eixo transversal (o único) → base da metameria</td></tr>
+      <tr><td><b>Dimídio / hemissoma</b></td><td>Antimeria (metade do corpo) — AVC esquerdo → hemiplegia direita</td></tr>
+      <tr><td><b>Herpes-zóster / lesão "em faixa"</b></td><td>Metameria (dermátomo), unilateral</td></tr>
+      <tr><td><b>Claro pulmonar / murmúrio vesicular</b></td><td>Achados de AUSCULTA (não de percussão)</td></tr>
+      <tr><td><b>Timpânico / maciço</b></td><td>Achados de PERCUSSÃO</td></tr>
+      <tr><td><b>Distopia (situs inversus, dextrocardia)</b></td><td>Muda a posição, não a função</td></tr>
+      <tr><td><b>Linhas de Langer</b></td><td>Incisão a favor cicatriza melhor; contra → queloide</td></tr>
+      <tr><td><b>Sopro</b></td><td>Turbilhonamento do fluxo → obstrução/estenose</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: QUESTÕES -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Aula 01</h2>
+    <p>Introdução à Anatomia Topográfica · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>16</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>3</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 01 — Introdução</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Ao apresentar um caso, um estudante afirma: "o coração está contido no mediastino inferior".</span><div class="pergunta">Essa descrição — que relaciona um órgão à região do corpo em que ele está contido — corresponde ao conceito de:</div>`,
+ alts:["Sintopia","Estiotopia","Holotopia","Idiotopia","Esqueletotopia"], correta:2,
+ just:[
+  "Sintopia é a relação com estruturas VIZINHAS, não com a região que contém o órgão.",
+  "Estiotopia é a relação do órgão com suas CAMADAS/túnicas histológicas.",
+  "Correta. Holotopia é a relação de um órgão (ou estrutura) com a REGIÃO em que está contido — aqui, o coração no mediastino inferior.",
+  "Idiotopia é a relação do órgão com suas próprias PARTES.",
+  "Esqueletotopia é a relação do órgão com o ESQUELETO/osso."],
+ ref:"Aula 01 — Conceitos topográficos (holotopia)"},
+
+/* 2 */ {n:2,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">O professor insiste que, ao descrever a sintopia da artéria femoral, não basta citar o que está medial e lateral — é preciso dizer também o que está à frente e atrás.</span><div class="pergunta">Esse conceito, o mais valorizado na anatomia topográfica, é a relação de uma estrutura com:</div>`,
+ alts:["as estruturas vizinhas ao seu redor","a região que a contém","as suas próprias partes e as angulações entre elas","as suas camadas ou túnicas, no plano histológico","o osso em que se apoia"], correta:0,
+ just:[
+  "Correta. Sintopia é a relação com as estruturas vizinhas em TODAS as direções (anterior, posterior, medial e lateral).",
+  "Relação com a região = holotopia.",
+  "Relação com as próprias partes = idiotopia.",
+  "Relação com as camadas = estiotopia.",
+  "Relação com o osso = esqueletotopia."],
+ ref:"Aula 01 — Sintopia"},
+
+/* 3 */ {n:3,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Durante uma colecistectomia, o cirurgião revisa a sintopia do pedículo hepático.</span><div class="pergunta">Nessa relação clássica, a estrutura situada MEDIALMENTE é:</div>`,
+ alts:["o ducto colédoco, a via biliar","a veia porta","a veia cava inferior, retroperitoneal","o ducto cístico","a artéria hepática própria"], correta:4,
+ just:[
+  "A via biliar (colédoco) é LATERAL no pedículo hepático.",
+  "A veia porta é CENTRAL e POSTERIOR, não medial.",
+  "A veia cava inferior é retroperitoneal e não integra o pedículo hepático.",
+  "O ducto cístico compõe a via biliar (lateral), não a posição medial.",
+  "Correta. No pedículo hepático: via biliar lateral, artéria hepática própria MEDIAL e veia porta central/posterior."],
+ ref:"Aula 01 — Sintopia (pedículo hepático)"},
+
+/* 4 */ {n:4,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A relação da artéria radial passando sobre o rádio e do coração assentado sobre as vértebras T5–T9 ("vértebras cardíacas") ilustra o conceito de:</div>`,
+ alts:["Holotopia","Esqueletotopia","Sintopia","Idiotopia","Estiotopia"], correta:1,
+ just:[
+  "Holotopia é a relação com a REGIÃO, não com o osso.",
+  "Correta. Esqueletotopia é a relação de uma estrutura com o osso/esqueleto (artéria radial sobre o rádio; coração sobre T5–T9).",
+  "Sintopia é a relação com estruturas vizinhas.",
+  "Idiotopia é a relação com as partes do órgão.",
+  "Estiotopia é a relação com as camadas."],
+ ref:"Aula 01 — Esqueletotopia (vértebras cardíacas T5–T9)"},
+
+/* 5 */ {n:5,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">A descrição do útero em suas camadas — perimétrio (externa), miométrio (média, muscular) e endométrio (interna) — corresponde a qual conceito topográfico?</div>`,
+ alts:["Holotopia","Idiotopia","Esqueletotopia","Estiotopia","Sintopia"], correta:3,
+ just:[
+  "Holotopia é a relação com a região que contém o órgão.",
+  "Idiotopia é a relação com as PARTES (fundo, corpo, colo), não com as camadas.",
+  "Esqueletotopia é a relação com o osso.",
+  "Correta. Estiotopia (ou histiotopia) é a relação do órgão com suas camadas/estratos histológicos (túnicas): endométrio, miométrio, perimétrio.",
+  "Sintopia é a relação com estruturas vizinhas."],
+ ref:"Aula 01 — Estiotopia/histiotopia"},
+
+/* 6 */ {n:6,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Uma paciente tem útero em anteversoflexão.</span><div class="pergunta">Considerando o conceito de idiotopia (relação do órgão com suas próprias partes), assinale a aplicação CORRETA:</div>`,
+ alts:["ângulo de flexão (corpo × colo do útero) → idiotopia","ângulo de versão (colo do útero × vagina) → idiotopia","posição do útero na cavidade pélvica, entre outros órgãos → idiotopia","relação do útero com a bexiga à frente e o reto atrás → idiotopia","camadas endométrio/miométrio/perimétrio do útero → idiotopia"], correta:0,
+ just:[
+  "Correta. A idiotopia relaciona PARTES do MESMO órgão; o ângulo de flexão (corpo × colo do útero) é entre partes do útero.",
+  "O ângulo de versão relaciona o colo do útero e a VAGINA (órgãos distintos) — importante para a estática, mas NÃO é idiotopia.",
+  "A posição na cavidade pélvica é holotopia.",
+  "A relação com bexiga e reto é sintopia.",
+  "A relação com as camadas é estiotopia."],
+ ref:"Aula 01 — Idiotopia (ângulo de flexão × versão)"},
+
+/* 7 */ {n:7,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Um médico introduz o otoscópio para examinar a cavidade timpânica através do meato acústico externo.</span><div class="pergunta">Do ponto de vista dos métodos de exame, esse procedimento é uma forma de inspeção:</div>`,
+ alts:["externa, da superfície do corpo, chamada ectoscopia","por mensuração de perímetros","por percussão da parede","interna, por orifício natural, chamada endoscopia","por dissecação do corpo em planos, camada a camada"], correta:3,
+ just:[
+  "Ectoscopia é a inspeção EXTERNA (superfície do corpo).",
+  "Mensuração é medir (fita, perímetro cefálico, circunferência).",
+  "Percussão é golpear a superfície para obter som.",
+  "Correta. Endoscopia é a inspeção INTERNA, através de orifícios naturais (ou incisões); o otoscópio vê a cavidade timpânica por dentro.",
+  "Dissecação é a análise por planos/camadas no cadáver."],
+ ref:"Aula 01 — Métodos de exame (ectoscopia × endoscopia)"},
+
+/* 8 */ {n:8,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Ao percutir o hipocôndrio direito exatamente sobre o fígado, o som esperado é:</div>`,
+ alts:["timpânico","claro pulmonar","maciço","hipersonoro","metálico"], correta:2,
+ just:[
+  "O som timpânico ocorre sobre vísceras cheias de AR (alças intestinais, estômago).",
+  "O claro pulmonar é o som normal sobre o PULMÃO aerado.",
+  "Correta. Sobre órgão sólido e sem ar (fígado), a percussão gera som MACIÇO.",
+  "O som hipersonoro sugere excesso de ar (enfisema/pneumotórax), não fígado.",
+  "O som metálico surge em obstrução intestinal, não sobre o fígado."],
+ ref:"Aula 01 — Percussão (sons)"},
+
+/* 9 */ {n:9,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Ao auscultar a artéria carótida de um paciente, o examinador detecta um sopro.</span><div class="pergunta">Esse achado traduz:</div>`,
+ alts:["fluxo laminar normal","transmissão de uma bulha cardíaca normal","refluxo por válvula venosa incompetente","fístula linfática cervical de alto débito","turbilhonamento do fluxo por estenose"], correta:4,
+ just:[
+  "O fluxo laminar normal é silencioso à ausculta.",
+  "A bulha cardíaca normal não gera sopro sobre a carótida.",
+  "Válvulas venosas não produzem sopro arterial.",
+  "Fístula linfática não gera sopro à ausculta arterial.",
+  "Correta. O sopro arterial indica turbilhonamento do fluxo por obstrução/estenose significativa (classicamente > 70% na carótida)."],
+ ref:"Aula 01 — Ausculta (sopro = turbilhonamento)"},
+
+/* 10 */ {n:10,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Um paciente refere dor lombar; à punho-percussão da loja renal (sinal de Giordano) há dor intensa e circunscrita.</span><div class="pergunta">Esse achado aponta para comprometimento:</div>`,
+ alts:["hepático (hipocôndrio direito)","renal (loja lombar posterior)","apendicular (fossa ilíaca direita)","pancreático (retroperitônio)","esplênico (hipocôndrio esquerdo)"], correta:1,
+ just:[
+  "A dor hepática é pesquisada no hipocôndrio direito, não na loja renal.",
+  "Correta. O sinal de Giordano positivo (dor à punho-percussão da região renal) sugere acometimento RENAL, como pielonefrite ou cálculo.",
+  "A apendicite dá dor em fossa ilíaca direita (ponto de McBurney).",
+  "O pâncreas é retroperitoneal alto/epigástrico, não avaliado pelo Giordano.",
+  "O baço fica no hipocôndrio esquerdo, sem relação com o sinal."],
+ ref:"Aula 01 — Percussão (sinal de Giordano)"},
+
+/* 11 */ {n:11,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Qual método de exame do corpo humano é considerado o mais completo, permitindo analisar o organismo camada por camada, rebatendo os planos "em janela"?</div>`,
+ alts:["Palpação","Percussão","Ausculta","Dissecação","Mensuração"], correta:3,
+ just:[
+  "A palpação avalia consistência/superfície pelo tato, não por planos.",
+  "A percussão avalia sons por golpes na superfície.",
+  "A ausculta capta sons internos com o estetoscópio.",
+  "Correta. A dissecação é o método mais completo: analisa o corpo por planos/estratos, rebatendo camadas em janela.",
+  "A mensuração é medida de perímetros/circunferências."],
+ ref:"Aula 01 — Métodos de exame (dissecação)"},
+
+/* 12 */ {n:12,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Após AVC no hemisfério cerebral esquerdo, um paciente evolui com paralisia de todo o lado direito do corpo.</span><div class="pergunta">Cada metade do corpo (antímero) é também denominada:</div>`,
+ alts:["metâmero (segmento)","dimídio (hemissoma)","paquímero (tubo)","estrato (camada)","homótipo (homólogo)"], correta:1,
+ just:[
+  "Metâmero é o segmento TRANSVERSAL (metameria), não a metade lateral.",
+  "Correta. Antímero = dimídio = hemissoma: cada metade (direita/esquerda) delimitada pelo plano sagital mediano.",
+  "Paquímero é o tubo ventral/dorsal (paquimeria).",
+  "Estrato é a camada (estratigrafia).",
+  "Homótipo não é a metade; homotipia é o fenômeno de as unidades D/E serem homólogas."],
+ ref:"Aula 01 — Princípio da antimeria (dimídio)"},
+
+/* 13 */ {n:13,aula:1,nivel:"dificil",
+ enun:`<div class="pergunta">Entre os eixos do corpo, apenas um é HOMOPOLAR, atingindo unidades morfológicas iguais (homólogas) em suas extremidades. Trata-se do eixo:</div>`,
+ alts:["transversal (látero-lateral)","longitudinal (cefalopodálico)","sagital (ântero-posterior)","de profundidade (dorsoventral)","craniocaudal (vertical)"], correta:0,
+ just:[
+  "Correta. O eixo transversal é o único homopolar — passa por estruturas homólogas (pulmão D e E; rim D e E).",
+  "O longitudinal é heteropolar (cabeça × pés, unidades diferentes).",
+  "O sagital (ântero-posterior) é heteropolar, atravessa unidades diferentes.",
+  "\"De profundidade\" é outro nome do eixo sagital — heteropolar.",
+  "Craniocaudal é outro nome do eixo longitudinal — heteropolar."],
+ ref:"Aula 01 — Eixos (transversal = homopolar)"},
+
+/* 14 */ {n:14,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Em um exame de rotina, ausculta-se o ictus e as bulhas cardíacas no hemitórax direito, e o fígado é palpado à esquerda.</span><div class="pergunta">Esse achado, em que o órgão muda de posição na região, é um exemplo de:</div>`,
+ alts:["assimetria normal (variação fisiológica)","modificação morfológica (da forma)","distopia (transposição)","metameria (segmentação transversal)","antimeria (2 metades)"], correta:2,
+ just:[
+  "A assimetria normal são pequenas diferenças fisiológicas (ex.: mama D mais alta), sem troca de posição.",
+  "A modificação morfológica altera a FORMA do órgão, não a posição.",
+  "Correta. Distopia é a mudança de posição do órgão (transposição), como no situs inversus/dextrocardia.",
+  "Metameria é a segmentação transversal do corpo.",
+  "Antimeria é a divisão em duas metades homólogas."],
+ ref:"Aula 01 — Assimetria/distopia (dextrocardia, situs inversus)"},
+
+/* 15 */ {n:15,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Homem de 62 anos apresenta erupção vesicular dolorosa em faixa, unilateral, no hemitórax esquerdo, sem ultrapassar a linha média.</span><div class="pergunta">Essa distribuição "em faixa", acompanhando um dermátomo, reflete o princípio de construção da:</div>`,
+ alts:["paquimeria (dois tubos)","antimeria (duas metades)","estratigrafia (camadas)","simetria bilateral","metameria (metâmeros)"], correta:4,
+ just:[
+  "A paquimeria divide o corpo em tubo ventral/dorsal (plano coronal).",
+  "A antimeria é a divisão em duas metades laterais homólogas.",
+  "A estratigrafia é a construção em camadas superpostas.",
+  "A simetria bilateral é o plano de divisão D/E, não a faixa transversal.",
+  "Correta. A distribuição metamérica (dermátomos, inervação transversa do tronco) explica a lesão em faixa do herpes-zóster."],
+ ref:"Aula 01 — Metameria (dermátomo, herpes-zóster)"},
+
+/* 16 */ {n:16,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Ao planejar uma incisão eletiva, o cirurgião procura reduzir o risco de cicatriz hipertrófica/queloide.</span><div class="pergunta">Para isso, deve orientar a incisão:</div>`,
+ alts:["contra as linhas de força da pele","a favor das linhas de força da pele","sempre no sentido longitudinal do corpo","sempre no sentido transversal do corpo","em ziguezague, cruzando as linhas de força"], correta:1,
+ just:[
+  "Incisar perpendicular/contra as linhas piora a cicatrização.",
+  "Correta. Incisar a FAVOR das linhas de tensão da pele (linhas de Langer) melhora a cicatrização e reduz cicatriz hipertrófica/queloide.",
+  "A orientação ideal segue as linhas de Langer, que variam por região — não é fixa longitudinal.",
+  "Também não é fixa transversal — depende das linhas de Langer da região.",
+  "O ziguezague cruza as linhas, favorecendo cicatriz inestética."],
+ ref:"Aula 01 — Estratigrafia / linhas de Langer"}
+];
+
+const dissertativas=[
+/* D1 */ {n:1,aula:1,
+ caso:`Homem de 63 anos procura a UBS com dor em queimação e surgimento de vesículas agrupadas sobre base eritematosa, dispostas em faixa no hemitórax esquerdo, do dorso até a linha paraesternal, sem ultrapassar a linha média anterior. Refere que a dor precedeu as lesões em três dias. Diagnóstico: herpes-zóster ("cobreiro").`,
+ perg:["Qual princípio de construção do corpo humano explica a disposição \"em faixa\" das lesões? Justifique.","Por que a erupção é unilateral e não ultrapassa a linha média?","Onde o vírus permanece latente e por que a manifestação é predominantemente sensitiva, em um dermátomo?","Por que, na face, o padrão de distribuição não é \"em faixa\" transversal como no tronco?"],
+ resp:[
+  ["a) Princípio da distribuição","O princípio da METAMERIA. O corpo é segmentado transversalmente em metâmeros (dermátomos), e a inervação sensitiva do tronco tem distribuição transversal; a lesão acompanha um dermátomo, o que produz a faixa."],
+  ["b) Por que unilateral","Cada nervo intercostal inerva a metade correspondente do dermátomo, do seu lado. A reativação ocorre em um único gânglio (de um lado) e a inervação sensitiva não cruza a linha média — por isso a faixa é unilateral e termina na linha média."],
+  ["c) Latência e caráter sensitivo","O vírus varicela-zóster permanece latente no gânglio sensitivo da raiz dorsal (gânglio espinal). Ao reativar, percorre o ramo anterior (nervo intercostal) até a pele, provocando dor e vesículas no dermátomo — daí a manifestação sensitiva."],
+  ["d) Por que difere na face","Na face, as linhas de força da pele e a inervação (nervo trigêmeo) não têm distribuição transversal como no tronco. O zóster segue os ramos do trigêmeo (ex.: ramo oftálmico), e não uma faixa metamérica horizontal."]],
+ ref:"Aula 01 — Metameria / dermátomo / herpes-zóster"},
+
+/* D2 */ {n:2,aula:1,
+ caso:`Ao estudar a pelve e o tórax, um estudante precisa aplicar os cinco conceitos da anatomia topográfica ao útero e ao coração.`,
+ perg:["Defina holotopia e dê um exemplo com o coração.","Defina sintopia e cite as estruturas anterior e posterior ao útero.","Defina idiotopia e explique por que o ângulo de flexão do útero a exemplifica, mas o de versão não.","Defina estiotopia e esqueletotopia, com um exemplo de cada."],
+ resp:[
+  ["a) Holotopia","Relação de um órgão com a REGIÃO em que está contido. Ex.: o coração está no mediastino (inferior)."],
+  ["b) Sintopia","Relação com estruturas VIZINHAS (anterior, posterior, medial e lateral). No útero: anteriormente a bexiga (escavação vesicouterina); posteriormente o reto (escavação retouterina / fundo de saco de Douglas); lateralmente os ligamentos largos e ovários."],
+  ["c) Idiotopia","Relação do órgão com suas próprias PARTES. O ângulo de flexão fica entre o corpo e o colo do útero (partes do mesmo órgão) → idiotopia. O ângulo de versão fica entre o colo do útero e o canal vaginal (órgãos diferentes) → não é idiotopia, embora importe para a estática uterina."],
+  ["d) Estiotopia e esqueletotopia","Estiotopia = relação do órgão com suas CAMADAS/túnicas (útero: endométrio, miométrio, perimétrio; artéria: íntima, média, adventícia). Esqueletotopia = relação com o ESQUELETO (coração sobre T5–T9 = \"vértebras cardíacas\"; artéria radial sobre o rádio)."]],
+ ref:"Aula 01 — Conceitos topográficos"},
+
+/* D3 */ {n:3,aula:1,
+ caso:`Um cirurgião planeja uma laparotomia e discute com os residentes a dissecção "por planos, em janela" e a escolha da incisão na parede anterolateral do abdome.`,
+ perg:["Explique o princípio da estratigrafia e o que significa dissecar \"por planos, em janela\".","O que são as linhas de Langer e qual a sua importância prática na escolha da incisão?","Cite a sequência de camadas musculoaponeuróticas da parede anterolateral do abdome e explique onde se forma a hérnia de Spiegel."],
+ resp:[
+  ["a) Estratigrafia","Princípio segundo o qual o corpo é constituído por camadas/estratos superpostos (nas vísceras, as túnicas). Dissecar \"por planos, em janela\" é rebater cada camada sucessivamente (pele, tela subcutânea, aponeuroses, músculos) sem cortá-las por completo, expondo os planos mais profundos. A histiotopia é uma forma de estratigrafia."],
+  ["b) Linhas de Langer","São as linhas de força/tensão da pele, determinadas pela orientação das fibras colágenas. Incisar a FAVOR delas resulta em ferida que se abre menos e cicatriz mais discreta; incisar contra favorece cicatriz hipertrófica/queloide."],
+  ["c) Camadas e hérnia de Spiegel","Da superfície à profundidade: oblíquo externo → oblíquo interno → transverso do abdome (e a bainha do reto / reto do abdome medialmente). A hérnia de Spiegel forma-se na linha semilunar (de Spiegel), na transição entre a parte carnosa e a aponeurótica do transverso do abdome — ponto de fraqueza por onde o conteúdo abdominal pode protruir."]],
+ ref:"Aula 01 — Estratigrafia / linhas de Langer / hérnia de Spiegel"}
+];
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 01</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 01</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 01 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 01 — Introdução",kicker:"AULA 01",desc:"Conceitos (as 5 “topias”), métodos de exame e plano geral de construção do corpo.",cards:[
+ {area:"Conceitos gerais",cat:"conceito",q:"Anatomia topográfica — o que é e qual a abordagem?",a:"Estudo do corpo por <b>regiões</b> (e não por sistemas, como na anatomia descritiva/sistêmica). É uma anatomia <b>aplicada à clínica e à cirurgia</b>.",obs:"Sinonímia: anatomia regional, locorregional e médico-cirúrgica."},
+ {area:"Conceitos gerais",cat:"conceito",q:"Em que sequência de regiões o curso é dado?",a:"Parede torácica → dorso → parede abdominal → membros superiores → cabeça e pescoço → cavidade torácica → cavidade abdominal → membros inferiores."},
+ {area:"As 5 topias",cat:"conceito",q:"Holotopia — definição?",a:"Relação de um órgão/estrutura com a <b>região</b> onde está contido.",obs:"Ex.: o coração está no mediastino (inferior); o pulmão direito na cavidade pleuropulmonar direita; a a. femoral no trígono femoral."},
+ {area:"As 5 topias",cat:"prof",q:"Sintopia — definição? (o conceito mais cobrado)",a:"Relação de um órgão/estrutura com suas <b>estruturas vizinhas</b>: medial, lateral, <b>anterior</b> e <b>posterior</b>.",obs:"Pegadinha do professor: nunca esquecer quem está na FRENTE e ATRÁS — não é só lateral/medial."},
+ {area:"As 5 topias",cat:"prof",q:"Sintopia da artéria femoral no trígono femoral?",a:"<ul><li><b>Medial:</b> veia femoral</li><li><b>Lateral:</b> nervo femoral</li><li><b>Anterior:</b> sartório / fáscia lata</li><li><b>Posterior:</b> mm. iliopsoas e pectíneo</li></ul>",obs:"Trígono femoral: delimitado por ligamento inguinal, sartório e adutor longo."},
+ {area:"As 5 topias",cat:"prof",q:"Sintopia do pedículo hepático (tríade portal)?",a:"<ul><li><b>Lateral:</b> vias biliares (ducto colédoco)</li><li><b>Medial:</b> artéria hepática própria</li><li><b>Central e posterior:</b> veia porta do fígado</li></ul>"},
+ {area:"As 5 topias",cat:"alerta",q:"Normal anatômico × variação anatômica — o que a sintopia descreve?",a:"A sintopia descreve a <b>posição mais comum</b> (normal anatômico). Quando difere, é <b>variação anatômica</b> — mas a função do órgão se mantém.",obs:"Ex.: a. cística passando por cima ou por baixo do ducto continua irrigando a vesícula."},
+ {area:"As 5 topias",cat:"conceito",q:"Idiotopia — definição?",a:"Relação do órgão com suas <b>próprias partes</b>, normalmente por causa de angulações."},
+ {area:"As 5 topias",cat:"conceito",q:"Exemplos de idiotopia (angulações)?",a:"<ul><li><b>Útero:</b> ângulo de flexão (corpo × colo)</li><li><b>Duodeno:</b> flexuras duodenais superior e inferior</li><li><b>Cólon:</b> flexura hepática (direita) e esplênica (esquerda)</li></ul>"},
+ {area:"As 5 topias",cat:"alerta",q:"Útero: ângulo de flexão × ângulo de versão — qual é idiotopia?",a:"<b>Flexão</b> (corpo × colo) = idiotopia. <b>Versão</b> (colo × canal vaginal) <span class='al'>NÃO é idiotopia</span> (são estruturas diferentes), mas importa para a estática do útero.",obs:"Posição mais comum: anteversoflexão."},
+ {area:"As 5 topias",cat:"conceito",q:"Estiotopia (histiotopia) — definição?",a:"Relação do órgão com suas <b>camadas / estratos</b> (histológico).",obs:"Útero: perimétrio → miométrio → endométrio. Artéria: adventícia → média → íntima. Coração: pericárdio → miocárdio → endocárdio."},
+ {area:"As 5 topias",cat:"conceito",q:"Esqueletotopia — definição?",a:"Relação do órgão/estrutura com o <b>osso / esqueleto</b>.",obs:"Ex.: a. radial sobre o rádio; a. femoral sobre o fêmur; coração sobre as vértebras cardíacas."},
+ {area:"As 5 topias",cat:"prof",q:"Vértebras cardíacas — quais são e por quê?",a:"<b>T5 a T9</b> (vértebras de Giacomini): o coração se assenta sobre elas.",obs:"Exemplo clássico de esqueletotopia. Na inspiração profunda pode chegar a T9."},
+ {area:"Métodos de exame",cat:"conceito",q:"Quais são os métodos de estudo do corpo humano?",a:"Inspeção, palpação, percussão, ausculta, mensuração e <b>dissecação</b> (o mais completo)."},
+ {area:"Métodos de exame",cat:"conceito",q:"Inspeção — quais os dois tipos?",a:"<b>Externa = ectoscopia</b> (observação da superfície) e <b>interna = endoscopia</b> (através de orifícios naturais ou por incisão)."},
+ {area:"Métodos de exame",cat:"caso",q:"Ectoscopia — por que é tão importante?",a:"Só de olhar já se fecham muitos diagnósticos.",obs:"Ex.: insuficiência venosa → manchas marrons por depósito de hemossiderina; erisipela bolhosa. Sempre despir o paciente para inspecionar."},
+ {area:"Métodos de exame",cat:"alerta",q:"Endoscopia é só digestiva?",a:"<span class='al'>Não.</span> É qualquer análise <b>interna</b> do corpo — via orifício natural (otoscopia, laringoscopia) ou por incisão (toracoscopia, laparoscopia)."},
+ {area:"Métodos de exame",cat:"conceito",q:"Percussão — como se faz e quais os sons?",a:"Dedo <b>percussor</b> bate no dedo <b>plexímetro</b>; o movimento vem da articulação radiocárpica. Sons: <b>timpânico</b> (ar/intestino) e <b>maciço</b> (fígado, costela).",obs:"“Claro pulmonar” é achado da AUSCULTA (ruído), não da percussão."},
+ {area:"Métodos de exame",cat:"caso",q:"Sinal de Giordano — o que é e o que indica?",a:"Punho-percussão / percussão da região lombar (loja renal). <b>Dor = sinal positivo</b> → infecção ou cálculo renal.",obs:"Variante: punho-percussão de Murphy."},
+ {area:"Métodos de exame",cat:"conceito",q:"Mensuração — exemplos clínicos?",a:"Circunferência de membros; <b>perímetro cefálico</b> no RN (hidrocefalia × microcefalia); circunferência abdominal (parâmetro metabólico)."},
+ {area:"Métodos de exame",cat:"caso",q:"Ausculta — o que um sopro arterial traduz?",a:"<b>Turbilhonamento do fluxo</b> → processo obstrutivo.",obs:"Ex.: sopro na carótida = estenose >70%. No foco cardíaco, sopro = insuficiência ou estenose valvar."},
+ {area:"Métodos de exame",cat:"prof",q:"Dissecação — por que é o método mais completo e como se faz?",a:"Analisa o corpo <b>por camadas</b>. Feita por planos “<b>em janelas</b>”: rebate pele, subcutâneo, aponeurose e músculo <b>sem cortar/retirar</b>."},
+ {area:"Eixos e planos",cat:"conceito",q:"Eixo longitudinal — características?",a:"<b>Cefalopodálico</b> (cabeça↔pés). É <b>heteropolar</b>: atravessa unidades morfológicas diferentes."},
+ {area:"Eixos e planos",cat:"prof",q:"Eixo transversal — o que tem de único?",a:"É o <b>único eixo homopolar</b>: atinge unidades morfológicas <b>iguais / homólogas</b>.",obs:"Ex.: pulmão D × pulmão E; rim D × rim E; cava × aorta. É a base do princípio da metameria."},
+ {area:"Eixos e planos",cat:"conceito",q:"Plano sagital mediano — o que define?",a:"Divide o corpo em 2 metades. Externamente: <b>simetria de massa</b> (lado D = lado E). Internamente: <b>simetria de construção / de órgãos</b> (órgãos homólogos, embora a forma difira)."},
+ {area:"Construção",cat:"conceito",q:"Princípio da antimeria?",a:"Corpo = 2 metades iguais chamadas <b>antímeros</b> (= hemissomas = <b>dimídios</b>). Unidades D e E homólogas → fenômeno da <b>homotipia</b>."},
+ {area:"Construção",cat:"caso",q:"Dimídio — uso clínico na neurologia?",a:"Metade do corpo. Ex.: AVC <b>esquerdo</b> → hemiplegia do dimídio <b>direito</b> (contralateral, pela decussação das pirâmides)."},
+ {area:"Construção",cat:"alerta",q:"Assimetria anormal: o que é DISTOPIA?",a:"Mudança de <b>posição</b> do órgão.",obs:"Ex.: situs inversus; dextrocardia (ponta do coração no 5º EIC direito — só se descobre auscultando)."},
+ {area:"Construção",cat:"caso",q:"Situs inversus totalis?",a:"Inversão de <b>todos</b> os órgãos (fígado à esquerda, baço à direita, coração à direita, arco aórtico à direita).",obs:"A construção está invertida; a <b>função é preservada</b>."},
+ {area:"Construção",cat:"conceito",q:"O que são modificações morfológicas (assimetria)?",a:"Mudança apenas da <b>forma</b> do órgão — não da posição nem da função. Ex.: diferentes formas de mama."},
+ {area:"Construção",cat:"prof",q:"Princípio da metameria?",a:"Segmentação <b>transversal</b> do corpo em <b>metâmeros</b> (escalonados, crânio-caudais).",obs:"Melhor exemplo: coluna vertebral."},
+ {area:"Construção",cat:"caso",q:"Metameria — exemplo clínico clássico no tronco?",a:"<b>Herpes zóster</b>: acomete um nervo sensitivo (transverso) → dor e vesículas <b>em faixa</b>, seguindo o dermátomo/metâmero, quase sempre <b>unilateral</b>."},
+ {area:"Construção",cat:"prof",q:"Linhas de Langer (linhas de força da pele)?",a:"Direção das fibras de colágeno da pele. Incisão <b>a favor</b> → melhor cicatrização; <b>contra</b> → cicatriz hipertrófica / quelóide.",obs:"No tórax são oblíquas; no epi/mesogástrio, mais transversas."},
+ {area:"Construção",cat:"caso",q:"Laparotomia — significado e por que transversa na criança?",a:"Incisão para abordar a cavidade abdominal. Na criança o abdome é mais <b>transversal</b> → incisão transversa; no adulto, longitudinal.",obs:"Rigor: “laparo” = plano/parede; o mais correto seria celiotomia (abertura da cavidade)."},
+ {area:"Construção",cat:"conceito",q:"Princípio da paquimeria?",a:"O plano coronal divide o corpo em 2 tubos: <b>paquímero ventral</b> = vísceras (esplâncnico) e <b>paquímero dorsal</b> = neural (SNC), envoltos pelo tegumento comum."},
+ {area:"Construção",cat:"conceito",q:"Princípio da estratigrafia (estratimeria)?",a:"O corpo é constituído por <b>camadas / estratos superpostos</b> (nas vísceras, as túnicas). É a base da dissecção “em janelas”."},
+ {area:"Construção",cat:"prof",q:"Estratigrafia da parede abdominal — ordem das camadas?",a:"Pele → subcutâneo → <b>oblíquo externo</b> → <b>oblíquo interno</b> → <b>transverso do abdome</b> → fáscia transversal → peritônio. (na frente: bainha do reto e m. reto do abdome)"},
+ {area:"Construção",cat:"caso",q:"Linha semilunar de Spiegel — importância?",a:"Transição carnoso-aponeurótica do transverso do abdome; ponto de fraqueza que pode gerar <b>hérnia de Spiegel</b>."}
+]}
+};
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-intro-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
