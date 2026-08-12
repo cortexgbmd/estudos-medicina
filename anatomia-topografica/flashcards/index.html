@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards · Anatomia Topográfica</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+:root{
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:18px 16px 40px;line-height:1.5}
+a{color:inherit}
+
+/* ---------- Cabeçalho ---------- */
+.head{width:100%;max-width:760px}
+.title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+.title-row .sub{font-size:12.5px;color:var(--muted)}
+.emoji{font-size:20px}
+#themeBtn{position:fixed;top:14px;right:14px;z-index:20;background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:14px;cursor:pointer}
+#themeBtn:hover{border-color:var(--accent)}
+
+/* ---------- Seletor de deck ---------- */
+.decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+.deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+.deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+.deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+.deckbtn .ct{font-size:12px;color:var(--muted)}
+.deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.deckbtn.d1.on{border-left-color:var(--accent)} .deckbtn.d1 .k{color:var(--accent)}
+.deckbtn.d2.on{border-left-color:var(--caso)} .deckbtn.d2 .k{color:var(--caso)}
+
+/* ---------- Barra de controles ---------- */
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.controls button, .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+.controls button:hover{border-color:var(--accent)}
+.controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+.counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.eyebtn{display:inline-flex;align-items:center;gap:6px}
+.eyebtn .lbl{font-size:12.5px}
+
+/* ---------- Barra de progresso ---------- */
+.progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.bar .kn{background:var(--ok)} .bar .dk{background:var(--alerta)}
+.dot{display:inline-flex;align-items:center;gap:5px}
+.dot::before{content:"";width:9px;height:9px;border-radius:99px}
+.dot.kn::before{background:var(--ok)} .dot.dk::before{background:var(--alerta)} .dot.rem::before{background:var(--faint)}
+
+/* ---------- Card ---------- */
+.stage{width:100%;max-width:760px;margin-top:10px}
+#card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#card.flip #inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.back{transform:rotateY(180deg)}
+.badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+.badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+.badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+.badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+.badge.hide{visibility:hidden}
+.qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+.hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+.hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+.backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+.lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+.answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+.answer b{color:var(--ok);font-weight:700}
+.answer .al{color:var(--alerta);font-weight:700}
+.answer ul{margin:6px 0 0;padding-left:20px}
+.answer li{margin:3px 0}
+.obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+.obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+.obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+.obs b{color:var(--ink)}
+
+/* ---------- Navegação ---------- */
+.nav{display:flex;align-items:center;gap:10px;margin-top:14px}
+.nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+.nav .navbtn:hover{border-color:var(--accent)}
+.nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+.nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+.mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+.mark small{font-weight:400;font-size:11px;color:var(--muted)}
+.mark.know{border-color:var(--ok);color:var(--ok)}
+.mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.mark.dont{border-color:var(--alerta);color:var(--alerta)}
+.mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+.mark.sel{outline:2px solid currentColor;outline-offset:1px}
+.mark:disabled{opacity:.4;cursor:not-allowed}
+.flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+
+#empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+
+.foot{margin-top:26px;font-size:12px;color:var(--faint);text-align:center}
+@media(max-width:560px){
+  .deckbtn{min-width:100%}
+  .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #card{height:66vh}
+  .nav .navbtn{padding:12px}
+  .mark{font-size:13.5px}
+}
+</style>
+</head>
+<body>
+<button id="themeBtn" onclick="toggleTheme()" title="Alternar tema">☀︎ / ☾</button>
+
+<div class="head">
+  <div class="title-row">
+    <span class="emoji">🗺️</span>
+    <h1>Flashcards · Anatomia Topográfica</h1>
+    <span class="sub">4º semestre · vira o cartão no clique</span>
+  </div>
+
+  <div class="decks" id="decks"></div>
+
+  <div class="controls">
+    <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+    <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como “Não sabia”">🎯 Só as que errei</button>
+    <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações deste deck">↺ Reiniciar</button>
+    <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+    <span class="counter" id="counter"></span>
+  </div>
+</div>
+
+<div class="progress">
+  <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+  <span class="dot kn" id="statKn">0 sabia</span>
+  <span class="dot dk" id="statDk">0 não sabia</span>
+  <span class="dot rem" id="statRem">0 sem marcar</span>
+</div>
+
+<div class="stage">
+  <div id="card" onclick="flip()">
+    <div id="inner">
+      <div class="face front">
+        <span class="badge" id="fBadge"></span>
+        <div class="qfront" id="fQ"></div>
+        <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+      </div>
+      <div class="face back">
+        <div class="backq" id="bQ"></div>
+        <div class="lbl">Resposta</div>
+        <div class="answer" id="bA"></div>
+        <div class="obs" id="bObs" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+    <div class="mid">
+      <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+      <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+    </div>
+    <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+  </div>
+  <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+  <div id="empty"></div>
+</div>
+
+<div class="foot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<script>
+/* =========================================================================
+   CONTEÚDO — corrigido a partir das transcrições (ASR) + slides
+   cat: conceito | prof (alto rendimento/cai na prova) | caso (clínico) | alerta (pegadinha)
+   ========================================================================= */
+const DECKS={
+a1:{name:"Aula 01 — Introdução",kicker:"AULA 01",desc:"Conceitos (as 5 “topias”), métodos de exame e plano geral de construção do corpo.",cards:[
+ {area:"Conceitos gerais",cat:"conceito",q:"Anatomia topográfica — o que é e qual a abordagem?",a:"Estudo do corpo por <b>regiões</b> (e não por sistemas, como na anatomia descritiva/sistêmica). É uma anatomia <b>aplicada à clínica e à cirurgia</b>.",obs:"Sinonímia: anatomia regional, locorregional e médico-cirúrgica."},
+ {area:"Conceitos gerais",cat:"conceito",q:"Em que sequência de regiões o curso é dado?",a:"Parede torácica → dorso → parede abdominal → membros superiores → cabeça e pescoço → cavidade torácica → cavidade abdominal → membros inferiores."},
+ {area:"As 5 topias",cat:"conceito",q:"Holotopia — definição?",a:"Relação de um órgão/estrutura com a <b>região</b> onde está contido.",obs:"Ex.: o coração está no mediastino (inferior); o pulmão direito na cavidade pleuropulmonar direita; a a. femoral no trígono femoral."},
+ {area:"As 5 topias",cat:"prof",q:"Sintopia — definição? (o conceito mais cobrado)",a:"Relação de um órgão/estrutura com suas <b>estruturas vizinhas</b>: medial, lateral, <b>anterior</b> e <b>posterior</b>.",obs:"Pegadinha do professor: nunca esquecer quem está na FRENTE e ATRÁS — não é só lateral/medial."},
+ {area:"As 5 topias",cat:"prof",q:"Sintopia da artéria femoral no trígono femoral?",a:"<ul><li><b>Medial:</b> veia femoral</li><li><b>Lateral:</b> nervo femoral</li><li><b>Anterior:</b> sartório / fáscia lata</li><li><b>Posterior:</b> mm. iliopsoas e pectíneo</li></ul>",obs:"Trígono femoral: delimitado por ligamento inguinal, sartório e adutor longo."},
+ {area:"As 5 topias",cat:"prof",q:"Sintopia do pedículo hepático (tríade portal)?",a:"<ul><li><b>Lateral:</b> vias biliares (ducto colédoco)</li><li><b>Medial:</b> artéria hepática própria</li><li><b>Central e posterior:</b> veia porta do fígado</li></ul>"},
+ {area:"As 5 topias",cat:"alerta",q:"Normal anatômico × variação anatômica — o que a sintopia descreve?",a:"A sintopia descreve a <b>posição mais comum</b> (normal anatômico). Quando difere, é <b>variação anatômica</b> — mas a função do órgão se mantém.",obs:"Ex.: a. cística passando por cima ou por baixo do ducto continua irrigando a vesícula."},
+ {area:"As 5 topias",cat:"conceito",q:"Idiotopia — definição?",a:"Relação do órgão com suas <b>próprias partes</b>, normalmente por causa de angulações."},
+ {area:"As 5 topias",cat:"conceito",q:"Exemplos de idiotopia (angulações)?",a:"<ul><li><b>Útero:</b> ângulo de flexão (corpo × colo)</li><li><b>Duodeno:</b> flexuras duodenais superior e inferior</li><li><b>Cólon:</b> flexura hepática (direita) e esplênica (esquerda)</li></ul>"},
+ {area:"As 5 topias",cat:"alerta",q:"Útero: ângulo de flexão × ângulo de versão — qual é idiotopia?",a:"<b>Flexão</b> (corpo × colo) = idiotopia. <b>Versão</b> (colo × canal vaginal) <span class='al'>NÃO é idiotopia</span> (são estruturas diferentes), mas importa para a estática do útero.",obs:"Posição mais comum: anteversoflexão."},
+ {area:"As 5 topias",cat:"conceito",q:"Estiotopia (histotopia) — definição?",a:"Relação do órgão com suas <b>camadas / estratos</b> (histológico).",obs:"Útero: perimétrio → miométrio → endométrio. Artéria: adventícia → média → íntima. Coração: pericárdio → miocárdio → endocárdio."},
+ {area:"As 5 topias",cat:"conceito",q:"Esqueletotopia — definição?",a:"Relação do órgão/estrutura com o <b>osso / esqueleto</b>.",obs:"Ex.: a. radial sobre o rádio; a. femoral sobre o fêmur; coração sobre as vértebras cardíacas."},
+ {area:"As 5 topias",cat:"prof",q:"Vértebras cardíacas — quais são e por quê?",a:"<b>T5 a T9</b> (vértebras de Giacomini): o coração se assenta sobre elas.",obs:"Exemplo clássico de esqueletotopia. Na inspiração profunda pode chegar a T9."},
+ {area:"Métodos de exame",cat:"conceito",q:"Quais são os métodos de estudo do corpo humano?",a:"Inspeção, palpação, percussão, ausculta, mensuração e <b>dissecação</b> (o mais completo)."},
+ {area:"Métodos de exame",cat:"conceito",q:"Inspeção — quais os dois tipos?",a:"<b>Externa = ectoscopia</b> (observação da superfície) e <b>interna = endoscopia</b> (através de orifícios naturais ou por incisão)."},
+ {area:"Métodos de exame",cat:"caso",q:"Ectoscopia — por que é tão importante?",a:"Só de olhar já se fecham muitos diagnósticos.",obs:"Ex.: insuficiência venosa → manchas marrons por depósito de hemossiderina; erisipela bolhosa. Sempre despir o paciente para inspecionar."},
+ {area:"Métodos de exame",cat:"alerta",q:"Endoscopia é só digestiva?",a:"<span class='al'>Não.</span> É qualquer análise <b>interna</b> do corpo — via orifício natural (otoscopia, laringoscopia) ou por incisão (toracoscopia, laparoscopia)."},
+ {area:"Métodos de exame",cat:"conceito",q:"Percussão — como se faz e quais os sons?",a:"Dedo <b>percussor</b> bate no dedo <b>plexímetro</b>; o movimento vem da articulação radiocárpica. Sons: <b>timpânico</b> (ar/intestino) e <b>maciço</b> (fígado, costela).",obs:"“Claro pulmonar” é achado da AUSCULTA (ruído), não da percussão."},
+ {area:"Métodos de exame",cat:"caso",q:"Sinal de Giordano — o que é e o que indica?",a:"Punho-percussão / percussão da região lombar (loja renal). <b>Dor = sinal positivo</b> → infecção ou cálculo renal.",obs:"Variante: punho-percussão de Murphy."},
+ {area:"Métodos de exame",cat:"conceito",q:"Mensuração — exemplos clínicos?",a:"Circunferência de membros; <b>perímetro cefálico</b> no RN (hidrocefalia × microcefalia); circunferência abdominal (parâmetro metabólico)."},
+ {area:"Métodos de exame",cat:"caso",q:"Ausculta — o que um sopro arterial traduz?",a:"<b>Turbilhonamento do fluxo</b> → processo obstrutivo.",obs:"Ex.: sopro na carótida = estenose >70%. No foco cardíaco, sopro = insuficiência ou estenose valvar."},
+ {area:"Métodos de exame",cat:"prof",q:"Dissecação — por que é o método mais completo e como se faz?",a:"Analisa o corpo <b>por camadas</b>. Feita por planos “<b>em janelas</b>”: rebate pele, subcutâneo, aponeurose e músculo <b>sem cortar/retirar</b>."},
+ {area:"Eixos e planos",cat:"conceito",q:"Eixo longitudinal — características?",a:"<b>Cefalopodálico</b> (cabeça↔pés). É <b>heteropolar</b>: atravessa unidades morfológicas diferentes."},
+ {area:"Eixos e planos",cat:"prof",q:"Eixo transversal — o que tem de único?",a:"É o <b>único eixo homopolar</b>: atinge unidades morfológicas <b>iguais / homólogas</b>.",obs:"Ex.: pulmão D × pulmão E; rim D × rim E; cava × aorta. É a base do princípio da metameria."},
+ {area:"Eixos e planos",cat:"conceito",q:"Plano sagital mediano — o que define?",a:"Divide o corpo em 2 metades. Externamente: <b>simetria de massa</b> (lado D = lado E). Internamente: <b>simetria de construção / de órgãos</b> (órgãos homólogos, embora a forma difira)."},
+ {area:"Construção",cat:"conceito",q:"Princípio da antimeria?",a:"Corpo = 2 metades iguais chamadas <b>antímeros</b> (= hemissomas = <b>dimídios</b>). Unidades D e E homólogas → fenômeno da <b>homotipia</b>."},
+ {area:"Construção",cat:"caso",q:"Dimídio — uso clínico na neurologia?",a:"Metade do corpo. Ex.: AVC <b>esquerdo</b> → hemiplegia do dimídio <b>direito</b> (contralateral, pela decussação das pirâmides)."},
+ {area:"Construção",cat:"alerta",q:"Assimetria anormal: o que é DISTOPIA?",a:"Mudança de <b>posição</b> do órgão.",obs:"Ex.: situs inversus; dextrocardia (ponta do coração no 5º EIC direito — só se descobre auscultando)."},
+ {area:"Construção",cat:"caso",q:"Situs inversus totalis?",a:"Inversão de <b>todos</b> os órgãos (fígado à esquerda, baço à direita, coração à direita, arco aórtico à direita).",obs:"A construção está invertida; a <b>função é preservada</b>."},
+ {area:"Construção",cat:"conceito",q:"O que são modificações morfológicas (assimetria)?",a:"Mudança apenas da <b>forma</b> do órgão — não da posição nem da função. Ex.: diferentes formas de mama."},
+ {area:"Construção",cat:"prof",q:"Princípio da metameria?",a:"Segmentação <b>transversal</b> do corpo em <b>metâmeros</b> (escalonados, crânio-caudais).",obs:"Melhor exemplo: coluna vertebral. Gera o fenômeno da homodinamia."},
+ {area:"Construção",cat:"caso",q:"Metameria — exemplo clínico clássico no tronco?",a:"<b>Herpes zóster</b>: acomete um nervo sensitivo (transverso) → dor e vesículas <b>em faixa</b>, seguindo o dermátomo/metâmero, quase sempre <b>unilateral</b>."},
+ {area:"Construção",cat:"prof",q:"Linhas de Langer (linhas de força da pele)?",a:"Direção das fibras de colágeno da pele. Incisão <b>a favor</b> → melhor cicatrização; <b>contra</b> → cicatriz hipertrófica / quelóide.",obs:"No tórax são oblíquas; no epi/mesogástrio, mais transversas."},
+ {area:"Construção",cat:"caso",q:"Laparotomia — significado e por que transversa na criança?",a:"Incisão para abordar a cavidade abdominal. Na criança o abdome é mais <b>transversal</b> → incisão transversa; no adulto, longitudinal.",obs:"Rigor: “laparo” = plano/parede; o mais correto seria celiotomia (abertura da cavidade)."},
+ {area:"Construção",cat:"conceito",q:"Princípio da paquimeria?",a:"O plano coronal divide o corpo em 2 tubos: <b>paquímero ventral</b> = vísceras (esplâncnico) e <b>paquímero dorsal</b> = neural (SNC), envoltos pelo tegumento comum."},
+ {area:"Construção",cat:"conceito",q:"Princípio da estratigrafia (estratimeria)?",a:"O corpo é constituído por <b>camadas / estratos superpostos</b> (nas vísceras, as túnicas). É a base da dissecção “em janelas”."},
+ {area:"Construção",cat:"prof",q:"Estratigrafia da parede abdominal — ordem das camadas?",a:"Pele → subcutâneo → <b>oblíquo externo</b> → <b>oblíquo interno</b> → <b>transverso do abdome</b> → fáscia transversal → peritônio. (na frente: bainha do reto e m. reto do abdome)"},
+ {area:"Construção",cat:"caso",q:"Linha semilunar de Spiegel — importância?",a:"Transição carnoso-aponeurótica do transverso do abdome; ponto de fraqueza que pode gerar <b>hérnia de Spiegel</b>."}
+]},
+a2:{name:"Aula 02 — Parede Torácica",kicker:"AULA 02",desc:"Limites, estratigrafia, fáscias, músculos, feixe VAN, nervos, artérias, veias, mama e casos.",cards:[
+ {area:"Limites e regiões",cat:"conceito",q:"Limites da parede torácica?",a:"<b>Superior:</b> clavículas e manúbrio do esterno (incisura jugular). <b>Inferior:</b> margem / arco costal (união das cartilagens costais).",obs:"Nesta aula estuda-se só a parte anterolateral; a posterior fica no dorso."},
+ {area:"Limites e regiões",cat:"prof",q:"Por que a parede torácica é mais LONGA que a cavidade torácica?",a:"Porque o <b>diafragma forma cúpulas</b> — a cavidade é menor que a parede. Assim, a parede torácica <b>cobre e protege órgãos abdominais</b> altos.",obs:"Protegidos: fígado, baço, estômago e rins."},
+ {area:"Limites e regiões",cat:"conceito",q:"Sulco deltopeitoral — o que passa nele?",a:"A <b>veia cefálica</b>, entre o deltoide e o peitoral maior — separa a parede torácica do membro superior.",obs:"A cefálica se aprofunda no trígono clavipeitoral e desemboca na veia axilar."},
+ {area:"Limites e regiões",cat:"prof",q:"Ângulo de Louis (esternal) — para que serve?",a:"Ângulo do manúbrio com o corpo do esterno. Serve para <b>localizar a 2ª costela</b> — referência para contar costelas e espaços intercostais.",obs:"É onde se articula a 2ª cartilagem costal."},
+ {area:"Limites e regiões",cat:"caso",q:"Acesso subxifóideo (ângulo infraesternal) — utilidade clínica?",a:"Dá acesso ao <b>pericárdio</b>. Numa <b>pericardiocentese</b> (ex.: tamponamento cardíaco), introduz-se a agulha por esse ângulo para drenar o líquido."},
+ {area:"Movimentos",cat:"prof",q:"Movimentos respiratórios — quais ossos aumentam cada dimensão?",a:"<ul><li><b>Longitudinal:</b> contração do diafragma (abaixa)</li><li><b>Ântero-posterior (sagital):</b> costelas superiores — “<b>braço de bomba</b>”</li><li><b>Transversal:</b> costelas inferiores — “<b>alça de balde</b>”</li></ul>"},
+ {area:"Movimentos",cat:"alerta",q:"Musculatura da respiração calma × forçada?",a:"<b>Inspiração calma:</b> ativa — diafragma (principal) + intercostais. <b>Expiração calma:</b> <span class='al'>passiva</span> — retração elástica do pulmão. <b>Inspiração forçada:</b> ECM, escalenos, peitorais, serrátil anterior, levantadores das costelas.",obs:"O pulmão é elástico: ao relaxar a musculatura, ele se retrai e o ar sai."},
+ {area:"Estratigrafia",cat:"prof",q:"Estratigrafia da parede torácica — sequência das camadas?",a:"Pele → tela subcutânea → <b>fáscia peitoral</b> → <b>fáscia clavipeitoral</b> → músculos → <b>fáscia endotorácica</b> → pleura parietal."},
+ {area:"Estratigrafia",cat:"caso",q:"Veia toracoepigástrica — o que conecta?",a:"Anastomose entre a <b>v. torácica lateral</b> (→ axilar) e a <b>v. epigástrica superficial</b> (→ femoral). Colateral entre os sistemas das cavas.",obs:"O sangue sobe ou desce conforme a demanda / obstrução."},
+ {area:"Estratigrafia",cat:"alerta",q:"“Cabeça de medusa” — o que é (e não confundir)?",a:"Dilatação de veias <b>periumbilicais</b> na <b>hipertensão portal</b> (ex.: cirrose): o sangue desvia do fígado e sobe pela parede.",obs:"É diferente da v. toracoepigástrica (colateral sistêmica axilar↔femoral), embora ambas sejam circulação colateral."},
+ {area:"Fáscias",cat:"conceito",q:"Fáscia peitoral — o que reveste?",a:"Envolve (“envelopa”) o <b>peitoral maior</b>, por fora e por dentro. É <b>contínua</b>."},
+ {area:"Fáscias",cat:"prof",q:"Fáscia clavipeitoral — o que reveste e onde começa?",a:"Começa na <b>clavícula</b> e envolve o <b>subclávio</b> e o <b>peitoral menor</b>.",obs:"Partes (asterisco nos slides): fáscia do subclávio, membrana costocoracoide, fáscia do peitoral menor e ligamento suspensor da axila."},
+ {area:"Fáscias",cat:"prof",q:"O que passa pelo hiato da fáscia clavipeitoral?",a:"<b>Veia cefálica</b>, <b>artéria toracoacromial</b> e <b>nervo peitoral lateral</b>.",obs:"Diferente da f. peitoral (contínua), a clavipeitoral tem esse orifício. Limite dela: ligamento suspensor da axila (depois já é fáscia axilar, do membro superior)."},
+ {area:"Fáscias",cat:"conceito",q:"Fáscia endotorácica — o que é e função?",a:"Camada de tecido conjuntivo <b>frouxo</b> entre a <b>pleura parietal</b> e a parede. Mantém a pleura em contato com a parede.",obs:"Diferente da pleura (serosa, lamelar), sai “picadinha” ao ser removida."},
+ {area:"Fáscias",cat:"prof",q:"Membrana suprapleural = fáscia de ______?",a:"Fáscia de <b>Sibson</b> — espessamento da <b>fáscia endotorácica</b> sobre a cúpula pleural (ápice do pulmão).",obs:"Já está no PESCOÇO (acima da 1ª costela). Por isso lesão cervical / punção de subclávia pode causar pneumotórax."},
+ {area:"Músculos",cat:"prof",q:"Serrátil anterior — inervação e lesão característica?",a:"Inervado pelo <b>nervo torácico longo</b>. Lesão → <b>escápula alada</b>.",obs:"Cuidado na mastectomia: o nervo desce na parede lateral do tórax, junto à mama."},
+ {area:"Músculos",cat:"conceito",q:"Inervação dos peitorais maior e menor?",a:"Nervos <b>peitoral lateral</b> (do fascículo lateral) e <b>peitoral medial</b> (do fascículo medial).",obs:"O peitoral lateral vem do fascículo lateral; o medial, do medial — o nome segue o fascículo de origem."},
+ {area:"Músculos",cat:"conceito",q:"Escalenos — inserção e papel respiratório?",a:"Fixam-se nas vértebras cervicais e na <b>1ª e 2ª costelas</b>; na inspiração forçada as estabilizam para os intercostais elevarem.",obs:"O plexo braquial passa entre os escalenos anterior e médio."},
+ {area:"Músculos",cat:"prof",q:"Intercostais externo, interno e íntimo — extensão de cada?",a:"<ul><li><b>Externo:</b> vai até a coluna atrás; para na articulação costocondral na frente (resto = membrana intercostal externa)</li><li><b>Interno:</b> da frente até o ângulo da costela atrás (resto = membrana intercostal interna)</li><li><b>Íntimo:</b> parte mais profunda do interno</li></ul>"},
+ {area:"Músculos",cat:"conceito",q:"Subcostais — função e diferença dos intercostais?",a:"Mesma função dos intercostais internos/íntimos, mas <b>cruzam 2 espaços intercostais</b> (pulam uma costela).",obs:"Levantadores das costelas também auxiliam na respiração forçada (estudo no dorso)."},
+ {area:"Músculos",cat:"conceito",q:"Transverso do tórax — importância topográfica?",a:"Sem função motora relevante; serve para mostrar a <b>sintopia</b> com a a. e v. torácicas internas (que passam por trás dele).",obs:"Sintopia: a artéria é lateral e a veia é medial."},
+ {area:"Feixe VAN",cat:"prof",q:"Ordem do feixe intercostal no sulco da costela (de cima p/ baixo)?",a:"<b>V-A-N</b>: <b>Veia</b> (superior), <b>Artéria</b> (média), <b>Nervo</b> (inferior). Correm no <b>sulco da costela</b>, na borda inferior.",obs:"O feixe passa entre o intercostal interno e o íntimo."},
+ {area:"Feixe VAN",cat:"alerta",q:"Abaixo do 2º EIC, quantas veias há no feixe?",a:"<b>Duas veias</b> (medial e lateral) + <b>1 artéria</b> no meio + nervo. Acima do 2º EIC: 1 veia + 1 artéria.",obs:"As duas veias depois se unem numa só."},
+ {area:"Nervos",cat:"conceito",q:"Nervos intercostais — de onde vêm?",a:"São os <b>ramos anteriores</b> dos nervos espinais torácicos <b>T1–T11</b>. O de T12 é o <b>nervo subcostal</b>. O ramo posterior inerva o dorso.",obs:"Entre T1 e T12 não há plexo (só na frente = intercostal)."},
+ {area:"Nervos",cat:"prof",q:"Nervos intercostais TÍPICOS — quais são?",a:"<b>3º ao 6º</b>: percorrem todo o espaço intercostal e emitem <b>ramo cutâneo lateral</b> e <b>ramo cutâneo anterior</b>."},
+ {area:"Nervos",cat:"prof",q:"Nervos intercostais ATÍPICOS — quais e por quê?",a:"<ul><li><b>1º:</b> curto, sem ramo cutâneo lateral; contribui p/ plexo braquial</li><li><b>2º:</b> intercostobraquial (vai ao braço)</li><li><b>7º–11º:</b> toracoabdominais (terminam na parede abdominal)</li><li><b>12º:</b> subcostal</li></ul>"},
+ {area:"Nervos",cat:"conceito",q:"Nervo intercostobraquial — o que é?",a:"<b>Ramo cutâneo lateral do 2º nervo intercostal</b> (às vezes também o 3º); vai ao braço e se une ao <b>n. cutâneo medial do braço</b> para inervar a pele da axila/braço medial."},
+ {area:"Nervos",cat:"conceito",q:"Nervos toracoabdominais — quais e por quê o nome?",a:"<b>7º ao 11º</b> intercostais: começam no tórax mas <b>terminam na parede abdominal</b> — por isso não são chamados só de intercostais."},
+ {area:"Nervos",cat:"prof",q:"O que é um dermátomo? Referências clássicas?",a:"Faixa de pele inervada por um único nervo espinal (via ramos cutâneos lateral e anterior).",obs:"Referências: <b>T4 = mamilo</b>, <b>T10 = umbigo</b>."},
+ {area:"Nervos",cat:"caso",q:"Herpes zóster — mecanismo neuroanatômico?",a:"O vírus (varicela-zóster) fica latente no <b>gânglio da raiz dorsal</b>; ao reativar, percorre o nervo intercostal e causa lesão <b>em faixa</b> no dermátomo (dor + vesículas), quase sempre <b>unilateral</b>."},
+ {area:"Nervos",cat:"caso",q:"Escápula alada — qual nervo foi lesado?",a:"<b>Nervo torácico longo</b> (inerva o serrátil anterior).",obs:"Risco na mastectomia — o nervo desce na lateral do tórax."},
+ {area:"Artérias",cat:"prof",q:"Artérias intercostais posteriores — origem?",a:"Da <b>aorta torácica</b> (3ª à 11ª + subcostal). As <b>1ª e 2ª</b> vêm da a. intercostal suprema (ramo do <b>tronco costocervical</b> da subclávia)."},
+ {area:"Artérias",cat:"prof",q:"Artéria de Adamkiewicz — o que é e por que importa?",a:"<b>Artéria radicular/segmentar anterior magna</b> (região toracolombar baixa, geralmente à esquerda). Principal suprimento da <b>parte anterior da medula inferior</b>.",obs:"Risco em cirurgia de aneurisma de aorta: lesão → <b>paraplegia</b>. Anastomosa com a espinal anterior (nem sempre)."},
+ {area:"Artérias",cat:"prof",q:"Artéria torácica interna (mamária interna) — origem e ramos terminais?",a:"Ramo da <b>subclávia</b>. Desce atrás das cartilagens costais e, no <b>6º espaço intercostal</b>, divide-se em: <b>a. epigástrica superior</b> (atrás do reto do abdome) e <b>a. musculofrênica</b> (ao longo do arco costal)."},
+ {area:"Artérias",cat:"conceito",q:"Artérias intercostais anteriores — origem?",a:"Da <b>a. torácica interna</b> (até o 6º EIC) e da <b>a. musculofrênica</b>. Anastomosam com as intercostais posteriores.",obs:"São pequenas e, do 2º EIC para baixo, acompanhadas por 2 veias."},
+ {area:"Artérias",cat:"caso",q:"“Ponte de mamária” — o que é?",a:"Revascularização do miocárdio: a <b>a. torácica interna (mamária)</b> é anastomosada direto a uma <b>coronária</b> (ramo interventricular anterior / DA).",obs:"Enxerto de longuíssima durabilidade — daí o nome antigo “mamária interna”."},
+ {area:"Artérias",cat:"conceito",q:"Artérias torácicas superior e lateral — origem?",a:"Ambas da <b>a. axilar</b>. A <b>torácica superior</b> supre os 1º–2º EIC; a <b>torácica lateral</b> margeia o peitoral menor."},
+ {area:"Mama",cat:"prof",q:"Irrigação da mama — ramos mediais × laterais?",a:"<b>Mediais:</b> da a. torácica interna. <b>Laterais:</b> da a. torácica lateral e das aa. intercostais posteriores (ramos cutâneos).",obs:"Por irrigar a mama, a torácica interna era chamada de “mamária”."},
+ {area:"Veias",cat:"prof",q:"Drenagem venosa POSTERIOR do tórax — sistema?",a:"Vv. intercostais posteriores + v. subcostal → <b>sistema ázigo</b>: <b>v. ázigo</b> (direita → v. cava superior); <b>v. hemiázigo</b> e <b>hemiázigo acessória</b> (esquerda → ázigo).",obs:"A ázigo é a mais importante — leva tudo à cava superior."},
+ {area:"Veias",cat:"conceito",q:"Drenagem venosa ANTERIOR do tórax?",a:"Vv. intercostais anteriores → <b>vv. torácicas internas</b>."},
+ {area:"Linfáticos",cat:"conceito",q:"Linfonodos paraesternais — localização e o que drenam?",a:"Nos <b>5 primeiros EIC</b> (ao longo da a. torácica interna). Drenam a parte <b>medial da mama</b>, diafragma, EIC e pleura costal.",obs:"Frênicos: últimos EIC, pericárdio, diafragma e fígado. Intercostais: superiores → ducto torácico; inferiores → cisterna do quilo."},
+ {area:"Casos clínicos",cat:"prof",q:"Onde inserir o dreno torácico em relação à costela e por quê?",a:"Na <b>borda SUPERIOR da costela de baixo</b> — para <span class='al'>não lesar o feixe VAN</span>, que corre no sulco (borda inferior) da costela de cima.",obs:"Locais: pneumotórax = 2º/3º EIC na linha hemiclavicular; hemotórax = 5º EIC na linha axilar média."},
+ {area:"Casos clínicos",cat:"prof",q:"Camadas que o dreno atravessa (linha axilar média)?",a:"Pele → subcutâneo → <b>serrátil anterior</b> → intercostal externo → interno → íntimo → <b>fáscia endotorácica</b> → <b>pleura parietal</b> → cavidade pleural."},
+ {area:"Casos clínicos",cat:"caso",q:"Tórax instável (flail chest) — definição e movimento paradoxal?",a:"<b>≥2 costelas fraturadas em ≥2 pontos cada</b> → segmento (“ilha”) solto. Na <b>inspiração o segmento afunda</b> enquanto o resto do tórax expande (e o oposto na expiração).",obs:"Geralmente trauma grave, com contusão pulmonar associada."},
+ {area:"Casos clínicos",cat:"caso",q:"Pneumotórax — o que é?",a:"<b>Ar na cavidade pleural</b> → rompe o equilíbrio de pressão (fica positiva) → colapso do pulmão.",obs:"Pode ocorrer SEM fratura (ex.: ferida cervical, punção de subclávia mal angulada)."},
+ {area:"Casos clínicos",cat:"caso",q:"Tamponamento cardíaco — o que é e como aliviar?",a:"Acúmulo de líquido no <b>pericárdio</b> (entre as lâminas parietal e visceral do pericárdio seroso) → comprime o coração. Alívio: <b>pericardiocentese</b> por via subxifóidea.",obs:"Instala-se de forma insidiosa — a ausculta demora a mudar."},
+ {area:"Casos clínicos",cat:"conceito",q:"Toracotomia — o que é?",a:"Abertura cirúrgica do tórax (ex.: lateral, para acessar um lobo pulmonar): secciona-se peitoral maior e músculos intercostais.",obs:"O fechamento é feito camada por camada."}
+]}
+};
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+DECKS.a2.cards.forEach((c,i)=>c.id='a2-'+i);
+
+/* =========================================================================
+   ESTADO
+   ========================================================================= */
+const SAVE='flashcards-topo-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={}; // id -> 'know'|'dont'
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+/* =========================================================================
+   RENDER
+   ========================================================================= */
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1','a2'].forEach((k,n)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d'+(n+1)+(k===cur?' on':'');
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  if(order.length===0){
+    stage.style.display='none';
+    document.querySelector('.nav').style.display='none';
+    document.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  document.querySelector('.nav').style.display='flex';
+  document.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  // frente
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  // verso
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  // marcações
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  // controles ativos
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* =========================================================================
+   AÇÕES
+   ========================================================================= */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val; // clicar de novo desmarca
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  // avança automaticamente se marcou e não é o último
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+function toggleTheme(){
+  const el=document.documentElement;
+  const nv=el.dataset.theme==='light'?'dark':'light';
+  el.dataset.theme=nv;
+  try{localStorage.setItem('tema-topo',nv);}catch(e){}
+}
+
+/* teclado */
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+</script>
+</body>
+</html>
