@@ -1,0 +1,1750 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 01 — Patologia do Esôfago · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 01 — Patologia do Esôfago</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 01</p>
+  <h1 class="page-h1">Patologia do Esôfago</h1>
+  <p class="lead">A aula inteira explicada do zero — malformações congênitas, distúrbios de motilidade, varizes, esofagites, DRGE, Barrett e os dois cânceres — na ordem e com as ênfases que a professora deu, com todos os termos definidos na primeira aparição.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O funil do raciocínio clínico-patológico (os 4 grupos)</a></li>
+      <li><a href="#t2">Recordatório: anatomia, histologia e embriologia do esôfago</a></li>
+      <li><a href="#t3">Malformações congênitas: ectopias, atresias e fístulas</a></li>
+      <li><a href="#t4">Distúrbios de motilidade: acalásia e hérnia de hiato</a></li>
+      <li><a href="#t5">Varizes esofágicas</a></li>
+      <li><a href="#t6">Esofagites agudas (infecciosas e outras)</a></li>
+      <li><a href="#t7">DRGE — doença do refluxo gastroesofágico</a></li>
+      <li><a href="#t8">Esôfago de Barrett (e as lacerações de Mallory-Weiss)</a></li>
+      <li><a href="#t9">Neoplasias benignas: papiloma escamoso e leiomioma</a></li>
+      <li><a href="#t10">Neoplasias malignas: CCE e adenocarcinoma</a></li>
+      <li><a href="#t11">Os três casos discutidos em aula</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O funil do raciocínio clínico-patológico</h2>
+  <p>Antes de qualquer doença, a aula abriu com um caso — porque é assim que a disciplina inteira vai funcionar: <em>partir da queixa e afunilar até a hipótese</em>.</p>
+
+  <div class="box caso"><p class="h">🩺 Caso de abertura — Adalberto</p>
+  <p>Adalberto, 55 anos, 80 kg, regular estado geral, hipertenso e diabético em acompanhamento. Procura a UBS com <b>dor retroesternal, náuseas, pirose e sensação de regurgitação ácida há mais de 6 meses</b>; 3 episódios de vômitos pós-refeição no último mês; desânimo e cansaço. Tabagista há 30 anos, etilista eventual, alimentação desregulada. Exame clínico e hemograma/leucograma sem achados relevantes. <b>Qual grupo de diagnósticos diferenciais é o mais provável, e qual exame pedir?</b></p></div>
+
+  <p>Vamos definir o vocabulário que apareceu aí:</p>
+  <div class="def"><b>Diagnósticos diferenciais (DDs)</b> — o grupo de doenças que ainda explicam o quadro; você ainda não conseguiu diferenciar entre as hipóteses. <b>Hipótese diagnóstica (HD)</b> — a mais provável dentro dos DDs, que os exames complementares vão confirmar (confirmação diagnóstica / diagnóstico final).</div>
+  <div class="def"><b>Pirose</b> — queimação retroesternal, a "azia". <b>Dispepsia</b> — sensação de má digestão. <b>Disfagia</b> — dificuldade de engolir. <b>Odinofagia</b> — dor ao engolir. <b>EDA (esofagogastroduodenoscopia)</b> — o nome verdadeiro da "endoscopia digestiva alta": mostra esôfago, estômago e o início do duodeno. <b>pHmetria</b> — sonda com sensor que mede o pH dentro do esôfago por 24h; padrão-ouro para confirmar refluxo quando a dúvida persiste.</div>
+
+  <p>No caso, o quadro é crônico e irritativo, sem perda ponderal (perda de peso mensurável) e sem disfagia — nada sugerindo massa. A resposta é o grupo das <b>doenças inflamatórias esofágicas</b>, investigadas por <b>EDA</b>. Congênitas se manifestariam no nascimento/infância, não aos 55 anos; neoplasias (benignas ou malignas) pediriam disfagia, massa ou emagrecimento.</p>
+
+  <div class="box prof"><p class="h">🎯 O que a professora destacou</p>
+  <p>Ela repetiu isso várias vezes e disse que só aprendeu na pós-graduação: <b>o Robbins descreve mais de 5 mil doenças, mas TODAS cabem em 4 grupos</b>. Esse funil é o jeito de pensar da Pato II inteira, e ela organiza as próprias aulas nessa ordem:</p></div>
+
+  <div class="diagrama"><p class="t">Os 4 grupos de processos patológicos</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Doenças congênitas</b> — <span class="d">falha na embriogênese; manifestam-se ao nascimento ou na infância (por isso a Pato traz poucas — o resto é da Pediatria).</span></div></li>
+    <li><span class="n">2</span><div><b>Alterações adquiridas não inflamatórias</b> — <span class="d">algo aconteceu sem inflamação como evento primário — no esôfago, as disfunções de motilidade.</span></div></li>
+    <li><span class="n">3</span><div><b>Processos inflamatórios</b> — <span class="d">"o campeão de bilheteria". Subdividir sempre: agudo × crônico · infeccioso × não infeccioso · autoimune × imunomediado.</span></div></li>
+    <li><span class="n">4</span><div><b>Processos neoplásicos</b> — <span class="d">benignos × malignos. O grupo que menos queremos encontrar.</span></div></li>
+  </ol></div>
+
+  <p>Diante de qualquer lesão, as perguntas do funil são: <b>quem é o hospedeiro</b> (epidemiologia)? <b>Qual o padrão de sinais e sintomas</b> (alteração morfológica macro/micro, fisiopatologia)? <b>Qual o tempo de evolução</b> (ontem ≠ há 3 meses — separa agudo de crônico)? Daí saem os DDs, a HD e a história natural da doença.</p>
+
+  <h2 class="topic" id="t2">2 · Recordatório: anatomia, histologia e embriologia</h2>
+
+  <h3>Anatomia que importa para a patologia</h3>
+  <ul>
+    <li>O esôfago é um <b>tubo muscular oco</b> (~25–40 cm, varia com a altura) dividido em <b>3 terços — cervical, torácico (o maior) e abdominal</b> —, com <b>3 pontos fisiológicos de estreitamento</b> (constrições).</li>
+    <li><b>Constrição superior</b> (nível da cartilagem cricóide / m. cricofaríngeo — o EES): controla o início da deglutição. No 1º terço ainda há músculo <b>estriado esquelético</b> (você "sente" engolir); do torácico para baixo é músculo <b>liso</b> — involuntário. Por isso dá para engolir de cabeça para baixo: a peristalse não depende da gravidade.</li>
+    <li><b>Constrição média</b> (adjacente ao arco aórtico e à bifurcação da traqueia): pouco citada nas patologias, mas explica por que câncer de esôfago tem prognóstico ruim — <b>ali é um "bolo" de estruturas nobres</b> (aorta, traqueia, pericárdio) que um tumor invade por contiguidade.</li>
+    <li><b>Constrição inferior = EEI (esfíncter esofágico inferior)</b>, 2–4 cm acima da junção esofagogástrica: deixa o alimento passar e <b>impede o refluxo do conteúdo gástrico — é o principal mecanismo protetor</b>. Não é 100%: pequenos refluxos fisiológicos acontecem todo dia, compensados pelo <i>clearance</i>.</li>
+    <li><b><span class="term">Clearance esofágico</span></b> — a "limpeza" contínua feita pela saliva (~3 L/dia) + secreção das glândulas esofágicas + peristalse descendente.</li>
+    <li>Na endoscopia, as distâncias são medidas <b>a partir da arcada dentária superior (ADS)</b> — é por isso que o laudo diz "aos 35 cm da ADS, presença de lesão".</li>
+  </ul>
+
+  <h3>Histologia — a mucosa é mais que o epitélio</h3>
+  <div class="diagrama"><p class="t">Parede do esôfago, do lúmen para fora</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Mucosa</b> — <span class="d">epitélio <b>pavimentoso (escamoso) estratificado NÃO queratinizado</b> (~15–30 camadas) + <b>lâmina própria</b> (conjuntivo frouxo vascularizado que nutre o epitélio avascular) + <b>muscular da mucosa</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>Submucosa</b> — <span class="d">conjuntivo denso com vasos e as <b>glândulas esofágicas</b> (mucosas) — especificidade histológica do órgão; lubrificam e participam do clearance.</span></div></li>
+    <li><span class="n">3</span><div><b>Muscular externa (do órgão)</b> — <span class="d">circular interna + longitudinal externa (predominantemente lisa): as duas direções fazem a peristalse.</span></div></li>
+    <li><span class="n">4</span><div><b>Adventícia</b> — <span class="d">fáscia conjuntiva nos terços superiores; só o esôfago abdominal tem <b>serosa</b>. Isso volta lá no câncer.</span></div></li>
+  </ol></div>
+
+  <div class="box prof"><p class="h">🎯 A fronteira que define carcinoma in situ</p>
+  <p>A mucosa = epitélio <b>+ lâmina própria + muscular da mucosa</b>. A <b>muscular da mucosa é a fronteira entre mucosa e submucosa</b> — funciona, junto com a membrana basal, como o limite conceitual: enquanto a proliferação maligna <b>não ultrapassa</b> membrana basal/muscular da mucosa, é <b>carcinoma in situ</b> (ou tumor intramucoso). Ultrapassou = invasivo. Guarde agora, porque é assim que os laudos de câncer vão ser escritos.</p></div>
+
+  <p>A mucosa normal é <b>lisa, úmida, rosa-pálida</b> — a professora compara com a mucosa da bochecha ("se o epitélio fosse rugoso, o alimento não desceria sem traumatizar a parede"). Esse padrão visual importa: quase toda doença desta aula começa como <em>mudança de cor, brilho ou relevo</em> vista na EDA.</p>
+
+  <h3>Embriologia em uma frase</h3>
+  <p>Entre a <b>4ª e a 6ª semanas</b>, o intestino primitivo anterior se bifurca: um broto vira <b>traqueia</b>, o tubo posterior segue como <b>esôfago</b>. <b>Falhas nessa separação</b> — ou na reprogramação/diferenciação das células — geram as malformações congênitas do próximo tópico.</p>
+
+  <h2 class="topic" id="t3">3 · Malformações congênitas</h2>
+  <p><b>Patogênese geral:</b> falhas na embriogênese e <b>persistência de restos de tecidos não maduros</b> — tanto falha de formação quanto falha do desaparecimento de um tecido.</p>
+
+  <h3>Ectopias (heterotopias)</h3>
+  <div class="def"><b>Ectopia</b> — tecido normal fora do seu lugar de origem. No esôfago, a mais comum é a <b>mucosa gástrica ectópica (MGE)</b> no <b>1/3 superior</b>; também existem ectopias <b>pancreáticas</b>.</div>
+  <ul>
+    <li>Aparecem como <b>"patches"</b> (adesivos) — geralmente <b>assintomáticas, achados de EDA</b> (área com coloração diferente na mucosa).</li>
+    <li>Microscopia: <b>ilhas de epitélio colunar glandular</b> do tipo gástrico (mais frequente) ou pancreático no meio do epitélio escamoso.</li>
+    <li>Se o tecido ectópico for <b>funcional</b>, produz HCl/enzimas <em>dentro do esôfago</em> — que não foi feito para pH baixo → inflamação localizada e disfagia.</li>
+  </ul>
+  <div class="box conexao"><p class="h">🔗 Isso reaparece no Barrett</p><p>Tecido glandular no esôfago tem dois donos possíveis: <b>ectopia congênita</b> (1/3 superior, presente desde sempre) e <b>metaplasia de Barrett</b> (adquirida, no 1/3 distal, contígua à junção). A professora cobrou exatamente esse DD na discussão do caso final.</p></div>
+
+  <h3>Atresias e fístulas</h3>
+  <div class="def"><b>Atresia</b> — redução/ausência de orifício: desenvolvimento incompleto forma uma <b>bolsa esofágica</b> e um <b>cordão fino não canalizado</b> substituindo um segmento (perto da bifurcação traqueal). A <b>estenose congênita</b> é uma "atresia incompleta". <b>Fístula</b> — canal de <b>comunicação anômala</b> com o trato respiratório (traqueia/brônquios), geralmente associada à atresia.</div>
+  <ul>
+    <li><b>Quadro clássico ao nascimento:</b> na primeira mamada — engasgos, tosse, <b>cianose</b>, regurgitação abrupta, risco de <b>broncoaspiração</b>. Manobra diagnóstica inicial: <b>a sonda nasogástrica "dobra"</b>, batendo na barreira.</li>
+    <li>Classificação de <b>Gross</b>: o tipo mais comum (<b>&gt;80%</b>) é o <b>tipo C = atresia + fístula traqueoesofágica distal</b>.</li>
+    <li>Fístulas pequenas → aspiração (pneumonias de repetição), sufocamento, sequelas por hipóxia. <b>Fístula completa é incompatível com a vida</b> → cirurgia urgente na neonatologia (anastomose para reconstrução). Hoje muitas são vistas ainda no pré-natal (USG morfológico).</li>
+    <li>Podem acompanhar outras malformações (cardíacas, geniturinárias, síndrome de Down).</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · Distúrbios de motilidade</h2>
+  <p>Grupo das <b>adquiridas não inflamatórias</b>: o problema é a "obstrução funcional". A deglutição é um processo complexo: as camadas musculares + os <b>plexos submucoso (Meissner) e mioentérico (Auerbach)</b> + o <b>nervo vago (X par)</b>, com sinalização adrenérgica e colinérgica, coordenam ondas peristálticas descendentes. <b>Patogênese das disfunções de motilidade = quebra desse ritmo</b> (doenças degenerativas — como Alzheimer avançado, que a professora ilustrou com o próprio pai —, Chagas, traumas raquimedulares, neuropatias).</p>
+  <div class="def"><b>Manometria esofágica</b> — exame que mede a pressão/força de contração do esôfago; essencial quando a EDA é normal mas o paciente tem disfagia. <b>Esofagograma</b> — radiografia contrastada (baritada) do esôfago.</div>
+
+  <h3>Acalásia</h3>
+  <p>A mais comum das disfunções de motilidade: <b>ausência/dificuldade de relaxamento do EEI</b>. O alimento desce e "entala" na transição — o paciente descreve exatamente isso.</p>
+  <div class="box prof"><p class="h">🎯 A tríade da acalásia (cobrada como conjunto)</p>
+  <ol><li><b>Aperistalse</b> — falta de peristaltismo do corpo esofágico;</li><li><b>Aumento do tônus basal do EEI</b> — contração basal exacerbada;</li><li><b>Relaxamento incompleto do EEI</b> à deglutição.</li></ol></div>
+  <ul>
+    <li><b>Etiopatogenia:</b> <b>primária</b> — degeneração comprovada dos <b>neurônios inibitórios</b> do esôfago distal; <b>secundária</b> — outra doença destrói o plexo, o grande exemplo é a <b>doença de Chagas</b> (tropismo do <i>T. cruzi</i> por tecido nervoso → destruição do plexo mioentérico → <b>megaesôfago</b>: o alimento estagna e dilata o órgão); <b>idiopática</b> — sem causa identificada.</li>
+    <li><b>Clínica:</b> <b>disfagia insidiosa e progressiva, primeiro para sólidos, depois líquidos</b> — casos avançados nem a saliva descem.</li>
+    <li><b>Imagem clássica:</b> esofagograma com <b>"bico de pássaro"</b> — esôfago dilatado que afila progressivamente até o contraste passar gota a gota.</li>
+    <li><b>Bases do tratamento:</b> clínico (nitratos — relaxam a musculatura), <b>dilatação pneumática por balão</b>, e nos graves cirurgia (miotomia; esofagectomia em último caso).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide14-acalasia-bico-de-passaro.jpg" alt="Slide: acalásia com esofagograma em bico de pássaro e tríade fisiopatológica" loading="lazy"><figcaption>Slide da aula: acalásia — a tríade, e o esofagograma com o sinal do "bico de pássaro" (dilatação que afila até a passagem gota a gota). Também lista as obstruções mecânicas adquiridas: membranas esofágicas, anéis de Schatzki e estenose benigna.</figcaption></figure>
+  <p class="small">Além da acalásia existem <b>obstruções mecânicas adquiridas</b>: membranas esofágicas, <b>anéis de Schatzki</b> (membrana anelar no esôfago distal — apareceu na questão ENAMED do fim da aula), estenoses benignas e divertículos.</p>
+
+  <h3>Hérnia de hiato</h3>
+  <p>O <b>oposto funcional da acalásia</b>: em vez de esfíncter hipertônico, um esfíncter <b>incompetente</b> num hiato <b>alargado</b>.</p>
+  <div class="def"><b>Hérnia</b> — protrusão (escape) parcial ou total de órgão por um orifício alargado por má-formação ou enfraquecimento. Na hérnia de hiato, os <b>pilares diafragmáticos se dilatam</b> na região do hiato — e é essa parede que dava sustentação ao EEI.</div>
+  <div class="tablewrap"><table>
+    <thead><tr><th></th><th>Deslizante (~90%)</th><th>Paraesofágica (~10%)</th></tr></thead>
+    <tbody>
+      <tr><td><b>O que acontece</b></td><td>O fundo gástrico <b>sobe e volta</b> ("desliza") pelo hiato</td><td>Parte do estômago fica <b>posicionada ao lado do esôfago</b> no tórax, sem voltar</td></tr>
+      <tr><td><b>Como aparece na EDA</b></td><td><b>Linha Z (JEG) ≥2 cm acima do pinçamento diafragmático</b></td><td>Não se vê diretamente — exige <b>manobra de retrovisão</b></td></tr>
+      <tr><td><b>Risco</b></td><td>Associação forte com <b>DRGE</b></td><td><b>Encarceramento/estrangulamento</b> → necrose, perfuração — emergência</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>Etiologia:</b> desconhecida; majoritariamente <b>progressão da incompetência do EEI</b> ou de esofagites crônicas de refluxo que sobrecarregam e dilatam os pilares. Associação com fraqueza muscular/perda de elasticidade após os 50 anos, sedentarismo, <b>obesidade</b> (pressão intra-abdominal), senescência.</li>
+    <li>Só <b>~10% são sintomáticas</b> (pirose + dispepsia); a maioria é achado de exame. Complicações possíveis: hematêmese, perfuração.</li>
+    <li><b>Bases do tratamento:</b> conforme sintomas/grau — clínico (tratar a DRGE, perder peso) ou cirúrgico (<b>fundoplicatura</b>: usa o próprio fundo gástrico para reforçar o esfíncter e reposicionar a junção).</li>
+  </ul>
+
+  <div class="box caso"><p class="h">🩺 Lendo o laudo de EDA como a professora leu</p>
+  <p>"…<i>A linha de transição esofagogástrica situa-se 2 cm acima do nível do pinçamento diafragmático</i>…" → o fisiológico é a <b>linha Z</b> (transição do epitélio escamoso esofágico para o colunar gástrico) coincidir com o pinçamento do diafragma. Linha Z <em>acima</em> do pinçamento = tecido gástrico subiu = <b>hérnia de hiato por deslizamento</b>. O mesmo laudo descrevia erosões ("ocupando menos de 75% da luz, não confluentes") — sinais da esofagite associada.</p></div>
+
+  <h2 class="topic" id="t5">5 · Varizes esofágicas</h2>
+  <p>Não é distúrbio de motilidade — é doença <b>vascular</b> do <b>1/3 distal</b>, e a relação é anatômica: o sangue venoso do TGI passa pelo <b>fígado</b> (veia porta) antes da circulação sistêmica.</p>
+  <ul>
+    <li><b>Etiologia:</b> <b>doença hepática alcoólica/cirrose</b> (varizes em ~90% dos cirróticos) e <b>esquistossomose</b>.</li>
+    <li><b>Patogênese:</b> fibrose hepática → <b>hipertensão portal</b> prolongada → o sangue busca <b>canais colaterais</b> → o plexo venoso submucoso do esôfago distal (e do estômago proximal — varizes gástricas concomitantes são frequentes) fica <b>dilatado, tortuoso e congesto</b>.</li>
+    <li><b>Clínica:</b> geralmente <b>assintomáticas</b>… até romperem: <b>hemorragia digestiva alta (HDA) de difícil manejo — emergência médica</b> (tamponamento por balão, endoscopia). Não são visíveis externamente (isso seria telangiectasia).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide17-varizes-macroscopia.jpg" alt="Slide: varizes esofágicas — macroscopia de peça com veias colapsadas em esôfago distal" loading="lazy"><figcaption>Macroscopia (peça pós-morte): varizes colapsadas envolvendo esôfago distal e estômago proximal — compare com a mucosa lisa normal; aqui há trajetos venosos tortuosos e congestos.</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Macroscopia ≠ aspecto clínico</p><p>A partir daqui a aula passa a mostrar dois tipos de imagem: <b>aspecto clínico</b> (tecido vivo, na endoscopia) e <b>macroscopia</b> (peça de biópsia/cirúrgica ou cadavérica, antes do microscópio). Nos laudos, a macroscopia descreve <i>coloração, consistência e superfície</i> da peça.</p></div>
+
+  <h2 class="topic" id="t6">6 · Esofagites agudas</h2>
+  <div class="box prof"><p class="h">🎯 Regra de nomenclatura que ela repetiu</p><p><b>Esofagite aguda costuma se chamar só "esofagite". Inflamação crônica ganha nome próprio</b> — "doença do refluxo gastroesofágico", "esôfago de Barrett". Vale para outros órgãos também.</p></div>
+  <p>A mucosa escamosa inflama ao ser agredida por <b>irritantes químicos</b> (álcool, ácidos e álcalis corrosivos, fluidos muito quentes — o cigarro chega a ~200 °C na boca —, refluxo de HCl), por <b>doenças bolhosas de pele</b> que também acometem mucosa (ex.: pênfigo) e por <b>agentes biológicos</b>. Sintomas comuns a todas, variando com o grau: pirose, dispepsia, regurgitação ácida, dor retroesternal e, progressivamente, disfagia, odinofagia, obstrução, emagrecimento.</p>
+
+  <h3>Esofagites infecciosas</h3>
+  <ul>
+    <li><b>Patogênese:</b> fúngica (<b><i>Candida</i> sp.</b>), viral (<b>HSV</b>, <b>CMV</b>), bacteriana (menos frequente). Quase sempre num contexto de <b>imunossupressão ou disbiose</b> — a <i>Candida</i> faz parte da microbiota normal; ela vira doença quando a vigilância imune cai (acamados, idosos, quimioterapia, AIDS).</li>
+    <li>Normalmente <b>autolimitadas</b> (imunocompetência = resolução). Se persistem → cultura ou biópsia para guiar tratamento sistêmico.</li>
+    <li><b>Aspecto clínico:</b> mucosa flogística (hiperemia, dor, perda de função), lesões <b>leucoplásicas</b> (placas brancas) ou <b>eritroplásicas</b> (avermelhadas); necrose é rara. <b>Placas brancacentas destacáveis = muito sugestivo de candidíase</b>; <b>lesões vesículo-ulcerosas = muito sugestivo de herpes</b>.</li>
+    <li><b>Microscopia (quando há amostra):</b> <i>Candida</i> — coloração <b>PAS</b> evidencia <b>hifas e leveduras</b> entre as células escamosas; HSV — <b>células gigantes multinucleadas com inclusões nucleares (células de Tzanck)</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide20-esofagite-infecciosa-micro.jpg" alt="Slide: microscopia das esofagites infecciosas — PAS com hifas de Candida e células de Tzanck do HSV" loading="lazy"><figcaption>Microscopia: à esquerda, PAS com hifas/leveduras de <i>Candida</i> na camada espinhosa; à direita, HE com células escamosas gigantes multinucleadas com inclusões do HSV (células de Tzanck).</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Dica direta de prova</p><p>"Aspecto microscópico de esofagite <b>aguda</b> a gente <b>não cobra</b> — porque na prática <b>quase não se faz biópsia de processo agudo</b>." Biópsia entra quando a lesão <b>persiste</b> ou não responde ao tratamento. (A microscopia que cai é a das <b>crônicas</b> — DRGE e Barrett.)</p></div>
+
+  <h3>Outras esofagites do slide</h3>
+  <ul>
+    <li><b>Eosinofílica (EEo):</b> imunomediada/antígeno-mediada, ligada a <b>alergias e intolerâncias alimentares</b> — em franca ascensão.</li>
+    <li><b>Química:</b> ingestão de agentes irritativos/corrosivos (ex.: soda cáustica em tentativa de suicídio).</li>
+    <li><b>Física:</b> <b>radioterapia</b> regional (tórax, cabeça e pescoço) → <b>mucosite</b> por apoptose das células epiteliais, que se estende à mucosa esofágica.</li>
+    <li>Todas podem evoluir com <b>estenoses fibrocicatriciais</b> que precisam de tratamento.</li>
+  </ul>
+
+  <h2 class="topic" id="t7">7 · DRGE — doença do refluxo gastroesofágico</h2>
+  <p><b>Definição:</b> esofagite <b>crônica e sintomática</b> causada por fluxo retrógrado do conteúdo gástrico para o esôfago (ou boca), <b>sem esforço e persistente</b>, com sintomas progressivos e complicações. É o <b>diagnóstico gastrointestinal mais frequente do mundo ocidental</b> e o maior responsável pelas esofagites graves. Note a lógica: refluxo eventual todo mundo tem; <b>vira doença quando os mecanismos de proteção quebram e os sintomas se instalam</b>.</p>
+
+  <h3>Os mecanismos de proteção (e como quebram)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Mecanismo protetor</th><th>O que o derrota</th></tr></thead>
+    <tbody>
+      <tr><td>Pressão basal normal do <b>EEI</b></td><td>Envelhecimento, tabaco, álcool, <b>depressores do SNC</b> (psicotrópicos relaxam o esfíncter), hérnia de hiato</td></tr>
+      <tr><td>Compressão pelos <b>pilares diafragmáticos</b></td><td>Dilatação dos pilares (hérnia de hiato)</td></tr>
+      <tr><td><b>Posição oblíqua da JEG</b> (ângulo agudo que faz "sobra" protetora)</td><td>Ruptura progressiva da junção; hérnia</td></tr>
+      <tr><td><b>Gravidade</b> (postura ereta mantém o líquido no fundo gástrico)</td><td>Vida deitada/sentada — a professora citou "gamers com refluxo aos 21 anos"; bebês (dieta líquida + posição supina + esfíncter imaturo)</td></tr>
+      <tr><td><b>Esvaziamento gástrico rápido</b></td><td>Retardo do esvaziamento (refeição gordurosa), <b>aumento da pressão intra-abdominal</b> (obesidade, gravidez)</td></tr>
+      <tr><td><b>Saliva + clearance esofágico</b></td><td>Redução de salivação (senilidade), pH que não neutraliza</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box prof"><p class="h">🎯 O decúbito que protege (ela desenhou até acertar)</p><p>Como a JEG é oblíqua e a grande curvatura gástrica fica à esquerda, <b>deitar em decúbito lateral ESQUERDO deixa o líquido acumulado na curvatura, longe da junção</b> — protege. <b>Decúbito direito aproxima o líquido do esôfago</b> — piora. É orientação prática de tratamento.</p></div>
+
+  <h3>Clínica e diagnóstico</h3>
+  <ul>
+    <li>Mais frequente em <b>adultos 40+</b>, crescendo em jovens sedentários e presente em bebês.</li>
+    <li><b>Sintoma cardinal: pirose</b>; com a progressão, engasgos noturnos, comprometimento do sono, e <b>sintomas atípicos</b>: rouquidão, faringite, tosse, dor torácica, microbroncoaspirações que mimetizam doença pulmonar ("tratava asma, era refluxo").</li>
+    <li>Complicações estruturais: <b>erosões e ulcerações</b> (a injúria principal é o HCl persistente) e, tardiamente, <b>estenose</b> péptica com disfagia (fibrose cicatricial).</li>
+    <li><b>Diagnóstico: queixa clínica + alterações endoscópicas + pHmetria</b> (pH esofágico caindo a 4–3,5).</li>
+  </ul>
+
+  <h3>Classificação endoscópica de Los Angeles</h3>
+  <p>Todo laudo de esofagite erosiva usa: <b>graus A → D</b>, conforme o <b>número/tamanho das erosões (menores ou maiores que 5 mm)</b> e a <b>porcentagem da circunferência</b> acometida. A = 1 erosão ≤5 mm restrita a uma prega; D = erosões confluentes tomando quase toda a circunferência.</p>
+  <figure class="fig"><img src="img/slide23-classificacao-los-angeles.jpg" alt="Slide: classificação de Los Angeles graus A a D na endoscopia" loading="lazy"><figcaption>Classificação de Los Angeles (laudo de EDA): a gravidade cresce de A a D com o tamanho (&lt; ou &gt; 5 mm), o número e a confluência das erosões na circunferência esofágica.</figcaption></figure>
+
+  <h3>Morfologia</h3>
+  <ul>
+    <li><b>Aspecto clínico:</b> áreas localizadas de mucosa <b>nacarada</b> (rosa-vivo aveludado), hiperemiada ou eritematosa, com ou sem erosão. <b>Macroscopia</b> (peça): coloração branco-acinzentada a pardo-clara, consistência macia, superfície lisa.</li>
+    <li><b>Microscopia (leve):</b> discreta hiperemia e infiltrado, erosões superficiais. <b>(moderada/severa):</b> <b>hiperplasia da camada basal</b> (o epitélio acelera mitoses para repor as células destruídas pelo ácido), <b>alongamento das papilas</b>, <b>linfocitose/eosinofilia intraepitelial</b> (exocitose), lâmina própria e submucosa com <b>vasos dilatados e congestos</b>, infiltrado <b>mononuclear</b> (linfócitos e plasmócitos). Casos severos: descolamento epitelial, necrose.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide25-drge-microscopia.jpg" alt="Slide: microscopia da DRGE com hiperplasia basal e infiltrado linfocitário" loading="lazy"><figcaption>Microscopia da DRGE em progressão: epitélio escamoso com hiperplasia de camada basal, infiltrado inflamatório misto rico em linfócitos nas camadas basais/espinhosas, congestão e dilatação vascular no conjuntivo.</figcaption></figure>
+  <div class="box alerta"><p class="h">⚠️ Omeprazol não é cura</p><p>Os <b>IBPs</b> (inibidores de bomba de prótons) reduzem o pH do refluxato — <b>tratamento sintomático</b>, que não corrige esfíncter, hérnia, postura, peso. No caso final da aula, o paciente usou omeprazol por conta própria "sem melhora" — e evoluiu com complicação.</p></div>
+
+  <h2 class="topic" id="t8">8 · Esôfago de Barrett</h2>
+  <p>É a <b>complicação da DRGE não tratada</b> — uma resposta <b>adaptativa</b> do tecido à injúria prolongada. A professora fez a turma deduzir: "se você fosse um tecido esofágico inteligente apanhando de ácido, em que célula se transformaria?" — não na gástrica (produz mais ácido), e sim na <b>intestinal</b>, cheia de <b>células caliciformes produtoras de muco</b>, que fazem uma "paredinha" protetora.</p>
+  <div class="def"><b>Esôfago de Barrett = metaplasia intestinal da mucosa esofágica</b> — substituição do epitélio escamoso por epitélio <b>colunar glandular com células caliciformes</b>, no terço distal, em resposta ao refluxo crônico.</div>
+  <ul>
+    <li><b>Epidemiologia:</b> homens <b>brancos</b>, 40–60 anos; mais frequente no <b>Sul</b> do Brasil — pela etnia e pela ingestão habitual de <b>bebida muito quente</b> (o chimarrão pela temperatura, não pela erva).</li>
+    <li><b>Clínico/macro:</b> manchas/línguas <b>avermelhadas aveludadas</b> subindo a partir da JEG — <b>"mucosa em salmão"</b>, bem delimitada. Classificação endoscópica: <b>segmento curto &lt;3 cm; longo ≥3 cm</b>.</li>
+    <li><b>Micro:</b> mucosa com <b>metaplasia intestinal</b> (epitélio glandular com caliciformes — vacúolos de mucina) <b>contígua</b> ao epitélio escamoso do terço distal, com infiltrado e vasos congestos.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide26-barrett-mucosa-salmao.jpg" alt="Slide: esôfago de Barrett — mucosa em salmão na endoscopia" loading="lazy"><figcaption>Barrett no aspecto clínico: "mucosa em salmão" — lesões avermelhadas aveludadas bem delimitadas estendendo-se para cima a partir da JEG; a extensão (&lt;3 cm ou ≥3 cm) define segmento curto × longo.</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Critério diagnóstico OBRIGATÓRIO (ela bateu nessa tecla o caso inteiro)</p>
+  <p><b>Endoscopia + comprovação histológica da metaplasia intestinal. Uma sem a outra não fecha Barrett.</b> A mancha vermelha sozinha pode ser só DRGE; a metaplasia na biópsia sem a imagem pode ser uma <b>heterotopia</b>. Precisa das duas.</p></div>
+  <figure class="fig"><img src="img/slide27-barrett-micro-sem-displasia.jpg" alt="Slide: microscopia do Barrett sem displasia com células caliciformes" loading="lazy"><figcaption>Barrett sem displasia: transição entre epitélio escamoso e epitélio glandular metaplásico com <b>células caliciformes</b> abundantes (vacúolos de mucina rosa-pálido no HE) — núcleos regulares, sem atipias.</figcaption></figure>
+
+  <h3>O problema: potencial de progressão</h3>
+  <ul>
+    <li><b>Metaplasia sem displasia é reversível</b> — tratando o refluxo, o tecido pode voltar.</li>
+    <li>Mas a metaplasia pode <b>progredir para displasia</b> (atipia arquitetural + citológica) → <b>lesão pré-maligna</b> → <b>adenocarcinoma</b>. Barrett é o <b>principal fator de risco</b> para adenocarcinoma de esôfago.</li>
+    <li>Com displasia, a classificação muda: sai Los Angeles, entra a <b>classificação de Viena (1–5)</b>. <b>Displasia de alto grau ≈ quase carcinoma in situ</b> — glândulas dismórficas, hipercromasia, pleomorfismo, perda da polaridade nuclear — <b>raríssimamente reversível</b>, exige seguimento obrigatório e <b>tratamento agressivo</b> (crioablação/cirurgia; risco de progressão ~30%).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide28-barrett-displasia-alto-grau.jpg" alt="Slide: Barrett com displasia de alto grau" loading="lazy"><figcaption>Barrett com displasia de alto grau: elevada complexidade e desorganização citológica/arquitetural (glândulas dismórficas, hipercromasia, pleomorfismo, perda de polaridade) — DD com adenocarcinoma; classificação de Viena e conduta agressiva.</figcaption></figure>
+
+  <h3>Lacerações de Mallory-Weiss</h3>
+  <p>Fechando os achados da JEG: <b>vômitos repetidos/induzidos</b> (pós-libação alcoólica, "o dia seguinte do churrasco"), contrações retrógradas e falha de relaxamento geram <b>lacerações lineares transitórias</b> na junção — as <b>lacerações de Mallory-Weiss</b>. Podem sangrar (hematêmese leve), mas se não há sintomatologia persistente e a EDA seguinte mostra reparo, tudo bem: <b>o problema, como sempre, é a persistência</b>.</p>
+
+  <h2 class="topic" id="t9">9 · Neoplasias benignas</h2>
+  <p>Podem se originar de <b>qualquer tecido constitutivo</b> do órgão (epitelial, conjuntivo, muscular, nervoso, vascular, adiposo). São de <b>crescimento lento e intraluminal</b>, sem progressão maligna via de regra, <b>pouco sintomáticas</b> (a luz do esôfago é ampla) — muitas vezes achados incidentais. Nomenclatura pelo tecido de origem; a confirmação é sempre <b>histológica</b>, e o laudo benigno vem acompanhado da frase-chave: <b>"ausência de atipias ou mitoses atípicas"</b>.</p>
+
+  <h3>Papiloma escamoso</h3>
+  <ul>
+    <li><b>Patogênese:</b> proliferação do próprio epitélio escamoso associada a <b>HPV de BAIXO risco oncogênico — subtipos 6 e 11</b> (contato direto ou autoinoculação). <b>Não confundir</b> com HPV 16/18 (alto risco, câncer de colo do útero).</li>
+    <li><b>Clínico/macro:</b> nódulo <b>papilomatoso/digitiforme</b> (dedinhos), leucoplásico ou normocromático, geralmente <b>pedunculado</b> (base estreita — facilita a <b>biópsia excisional</b> endoscópica, que é o tratamento).</li>
+    <li><b>Micro:</b> queratinócitos hiperplásicos (espessamento muito além das ~30 camadas normais), <b>paraqueratinização</b> (formação de "calo" por trauma alimentar num epitélio que não deveria ter queratina), infiltrado inflamatório e — a palavra do laudo — <b>coilocitose</b>: <b>halos claros perinucleares, marca citopática de infecção viral</b>. Não é patognomônica, mas coilocitose + papiloma esofágico = HPV.</li>
+  </ul>
+
+  <h3>Leiomioma (e o lipoma)</h3>
+  <ul>
+    <li><b>Leiomioma:</b> proliferação benigna espontânea de <b>músculo liso</b> — tipicamente da <b>muscular da mucosa</b>. Nódulo <b>séssil</b> (base larga), <b>mais profundo, firme/fibroso</b>, normocromático; sintomas dependem do tamanho.</li>
+    <li><b>Micro:</b> <b>feixes uniformes entrelaçados de células musculares lisas</b>, citoplasma eosinofílico fibrilar, núcleos alongados, <b>sem atipias nem mitoses</b>. Tratamento: excisão endoscópica (guiada ou não por US).</li>
+    <li><b>Lipoma:</b> outro benigno comum (tecido adiposo, mais amarelado) — como cresce numa luz ampla, pode atingir grandes volumes.</li>
+  </ul>
+
+  <h2 class="topic" id="t10">10 · Neoplasias malignas</h2>
+  <p><b>Epidemiologia (INCA):</b> ~<b>12 mil casos novos/ano</b> no Brasil; no top 10 dos cânceres e <b>5º–6º em homens</b>; ligado a <b>tabaco e álcool</b>. O início é <b>insidioso e assintomático por anos</b> (a luz ampla acomoda o tumor) → descoberta em <b>estadiamento avançado</b>, com <b>disfagia progressiva, odinofagia</b>, hemorragia (menos frequente), tosse e rouquidão. <b>Patogênese:</b> multifatorial — acúmulo de alterações genéticas/epigenéticas ativando vias carcinogênicas em queratinócitos ou células glandulares (ex.: mutações de <b>p53</b>, CDKN2A).</p>
+  <div class="box prof"><p class="h">🎯 Por que os dois campeões são esses (raciocínio que ela cobrou)</p><p>Epitélios são tecidos de <b>células lábeis</b> — proliferam a vida toda, então acumulam mutações: por isso o câncer nº 1 é do <b>epitélio escamoso</b> (CCE). E o nº 2 nasce do <b>tecido glandular metaplásico do Barrett</b> (adenocarcinoma) — adenocarcinoma de glândula esofágica própria é raro. Cada um tem até endereço: <b>CCE = terços médio/superior</b> (contato direto com tabaco/álcool); <b>adenocarcinoma = terço distal</b> (onde vive o Barrett), podendo invadir a cárdia.</p></div>
+
+  <h3>Carcinoma de células escamosas (CCE / espinocelular / epidermóide)</h3>
+  <ul>
+    <li><b>O mais comum no Brasil (~80%)</b>; homens 50+, mais frequente em <b>negros</b>; terços <b>médio e superior</b>.</li>
+    <li><b>Fatores:</b> tabaco + álcool com <b>sinergismo</b>; deficiência de vitaminas A e C (reparo/vigilância deficientes); <b>nitrosaminas</b> e alimentos em conserva contaminados por <i>Aspergillus</i>; <b>acalásia persistente</b> (estase crônica) predispõe.</li>
+    <li><b>Clínico/macro:</b> erosões, <b>placas leucoplásicas</b> ou <b>úlceras de bordas endurecidas</b> → massas <b>infiltrativas ou exofíticas/vegetantes</b> (crescem "soltas" para a luz, como couve-flor).</li>
+    <li><b>Micro:</b> queratinócitos atípicos <b>hipercromáticos</b> (núcleos roxos marcados), <b>pleomórficos</b> (formas/tamanhos variados), com <b>cariomegalia</b> exuberante, <b>mitoses atípicas em todas as camadas</b>, <b>pérolas córneas</b> (queratina em nódulos concêntricos — típico de CCE), resposta inflamatória e neoangiogênese.</li>
+    <li><b>Progressão:</b> displasia escamosa → neoplasia intraepitelial → <b>carcinoma in situ</b> (membrana basal/muscular da mucosa preservadas) → <b>invasivo</b> → metástase, principalmente <b>por contiguidade</b> (traqueia, aorta, pericárdio — lembra da 2ª constrição) <b>e por via linfática</b> (rede linfática esofágica é abundante).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide36-cce-macro-micro.jpg" alt="Slide: CCE — macroscopia com úlcera de bordas endurecidas e micro com displasia de alto grau/CIS" loading="lazy"><figcaption>CCE: macroscopia com placa/úlcera de bordas endurecidas evoluindo a massa exofítica; micro comparando epitélio normal → displasia de alto grau/carcinoma in situ (atipias em todas as camadas, membrana basal ainda preservada).</figcaption></figure>
+  <figure class="fig"><img src="img/slide37-cce-invasivo-micro.jpg" alt="Slide: CCE invasivo com pérolas córneas invadindo o córion" loading="lazy"><figcaption>CCE invasivo (40× e 200×): queratinócitos pleomórficos e hipercromáticos com relação núcleo/citoplasma aumentada formando <b>pérolas córneas</b> e invadindo o córion, com inflamação estromal e neoangiogênese.</figcaption></figure>
+
+  <h3>Adenocarcinoma</h3>
+  <ul>
+    <li>Menos prevalente que o CCE no Brasil (mas nº 1 em alguns países do hemisfério norte) e <b>em ascensão — pela obesidade</b> (mais DRGE → mais Barrett).</li>
+    <li><b>Origem:</b> maioria a partir da <b>metaplasia do Barrett</b>, em <b>homens brancos/caucasianos</b> — por isso Barrett exige rastreamento com biópsias seriadas. A relação <b>DRGE persistente → Barrett → adenocarcinoma é diretamente proporcional em tempo e extensão</b>.</li>
+    <li><b>Macro:</b> massas no <b>esôfago distal</b>, frequentemente invadindo a <b>cárdia</b> (porção inicial do estômago).</li>
+    <li><b>Micro:</b> células glandulares mucosas/caliciformes formando cordões atípicos que <em>ainda</em> lembram glândula (é o que diferencia do Barrett puro: aqui há <b>hipercromasia marcada, pleomorfismo, cariomegalia</b>); com a progressão, <b>desdiferenciação</b> — vira "massa" que nem parece glandular, e aí entram colorações especiais/imuno-histoquímica para definir a origem.</li>
+    <li><b>Graduação do laudo:</b> <b>bem / moderadamente / mal diferenciado (anaplásico)</b> — quanto <b>menos diferenciado, pior</b> o comportamento e a resposta ao tratamento.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide39-adenocarcinoma-micro.jpg" alt="Slide: adenocarcinoma — micro com glândulas atípicas e graus de diferenciação" loading="lazy"><figcaption>Adenocarcinoma: tecido inicialmente "lembra" glândula com caliciformes atípicas; na fase indiferenciada, células polimórficas com ácinos em degeneração. O quadro do slide reforça: bem × moderadamente × mal diferenciado — "importante não confundir".</figcaption></figure>
+
+  <h3>Diagnóstico, estadiamento e prognóstico</h3>
+  <ul>
+    <li><b>Diagnóstico:</b> EDA + <b>biópsias incisionais múltiplas</b> (lesões grandes são heterogêneas — colhe-se mais de uma amostra, com margem de mucosa normal para comparação); <b>esofagografia baritada</b> com o clássico <b>padrão de "maçã mordida"</b> (falha irregular do contraste onde o tumor invade a luz); <b>TC</b> para metástases (fígado e pulmão).</li>
+    <li><b>Por que dissemina tão fácil:</b> o esôfago <b>quase não tem serosa</b> e é <b>justaposto à traqueia</b> → fístulas são frequentes (pneumonia aspirativa), invasão de mediastino, pericárdio e aorta com hemorragias graves.</li>
+    <li><b>Estadiamento TNM:</b> T1–4 (profundidade de invasão — <b>tumor intramucoso/CIS respeita a muscular da mucosa</b>), N0–3 (linfonodos), M0–1 (metástase). Os <b>estádios</b> (somatória) de CCE e adenocarcinoma são tabelados <b>separadamente</b>. Lesão vegetante grande já é descrita como "neoplasia avançada" antes mesmo da biópsia.</li>
+    <li><b>Prognóstico:</b> sobrevida em 5 anos <b>&lt;30–40%</b> — consequência do diagnóstico tardio. Daí o alerta social da aula: HDA, sangramento sem causa, ou paciente "se alimentando só de líquidos há 3 meses" precisam de investigação — <b>isso existe em São Paulo, hoje</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide40-maca-mordida-diagnostico.jpg" alt="Slide: esofagografia baritada com padrão de maçã mordida e bases do diagnóstico" loading="lazy"><figcaption>Diagnóstico e estadiamento: esofagografia baritada com o padrão de <b>"maçã mordida"</b>; TC para metástases; a ausência de serosa e a vizinhança com a traqueia explicam fístulas e invasão mediastinal (sobrevida &lt;30%).</figcaption></figure>
+  <figure class="fig"><img src="img/slide41-progressao-tnm.jpg" alt="Slide: progressão geral dos tumores malignos esofágicos e TNM" loading="lazy"><figcaption>Progressão geral: displasia de alto grau → tumor intramucoso/CIS → invasivo → metastização; T1–4, N0–3, M0–1 — estádios de CCE e adenocarcinoma são diferentes.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Os três casos discutidos em aula</h2>
+
+  <div class="box caso"><p class="h">🩺 Caso 1 — Adalberto (abertura)</p>
+  <p>55 anos, pirose + regurgitação ácida + dor retroesternal há &gt;6 meses, sem perda ponderal nem disfagia → grupo das <b>doenças inflamatórias esofágicas</b>, investigação por <b>EDA</b> (alternativa D do quiz). O caso existe para treinar o funil: cada alternativa descartada tinha um porquê (congênita: idade; benigna/maligna: sem disfagia, sem massa, sem emagrecimento).</p></div>
+
+  <div class="box caso"><p class="h">🩺 Caso 2 — José da Silva, 39 anos (estudo dirigido de Barrett)</p>
+  <p>Paralisia cerebral leve (asfixia neonatal), obeso, DM2, mobilidade reduzida. Vômitos frequentes no 1º ano de vida; <b>DRGE grave aos 6 anos → cirurgia antirrefluxo</b>, com 3 décadas de melhora. Agora: dor retroesternal até hipocôndrio D, <b>recidiva do refluxo noturno</b> no último ano, automedicado com <b>omeprazol 20 mg/dia sem melhora</b>, <b>2 episódios de hematêmese</b> na última semana. EDA: <b>mucosa avermelhada lisa e homogênea &gt;3 cm acima da linha Z, sem ulcerações</b>; biópsia incisional com margem de mucosa típica. Anatomopatológico: numa margem, epitélio escamoso esofágico; na outra, <b>epitélio tipo intestinal com células colunares e caliciformes em criptas regulares</b>, intenso infiltrado mononuclear até a submucosa, <b>ausência de displasia</b>.</p>
+  <p><b>Respostas construídas em aula:</b> (1) DDs: DRGE complicada × esôfago de Barrett (× heterotopia, que ela provocou no fim); (2) nenhum exame "vence" — <b>endoscopia E histologia são obrigatórias juntas</b>; (3) diagnóstico final: <b>esôfago de Barrett de segmento longo, sem displasia</b> (metaplasia = reversível tratando o refluxo); (4) <b>se houvesse displasia de alto grau</b>: muda tudo — raríssimamente reversível, âmbito da progressão, classificação de <b>Viena</b>, seguimento e tratamento agressivos.</p></div>
+
+  <div class="box caso"><p class="h">🩺 Caso 3 — Questão ENAMED (fechamento, discutida alternativa por alternativa)</p>
+  <p>Homem, 62 anos, <b>disfagia progressiva (sólidos → líquidos)</b>, perda ponderal significativa, anorexia, dor retroesternal; <b>tabagista 40 anos + etilista crônico</b>; emagrecido; EDA: <b>lesão vegetante irregular com estenose no terço MÉDIO</b>.</p>
+  <ul>
+    <li><b>A) Acalásia?</b> Não — explica disfagia, mas acalásia é doença do <b>EEI/terço distal</b> e não produz lesão vegetante no terço médio.</li>
+    <li><b>B) Estenose benigna?</b> Não — estenose benigna existe, mas <b>perda ponderal + lesão vegetante</b> apontam para malignidade.</li>
+    <li><b>C) Carcinoma de células escamosas obstruindo a luz pelo crescimento tumoral — CORRETA:</b> terço médio, homem, tabaco+álcool (sinergismo), disfagia progressiva com emagrecimento.</li>
+    <li><b>D) Anel de Schatzki?</b> Membrana esofágica justificaria disfagia — mas não a lesão vegetante, nem a perda ponderal.</li>
+    <li><b>E) Obstrução por dilatação?</b> Contradição — o quadro é de <b>constrição</b> da luz por massa, não de dilatação.</li>
+  </ul></div>
+
+  <div class="box conexao"><p class="h">🔗 HDA — para onde isso tudo converge</p><p><b>Hemorragia digestiva alta</b> (hematêmese) tem origem em <b>esôfago, estômago ou duodeno</b>. Desta aula, os candidatos esofágicos: <b>ruptura de varizes</b> (cirrótico), <b>esofagites/úlceras</b>, <b>Mallory-Weiss</b> (pós-vômitos) e <b>tumores ulcerados</b>. É urgência do TGI superior → EDA.</p></div>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Funil de 4 grupos</b>: congênitas · adquiridas não inflamatórias · inflamatórias (agudo×crônico, infeccioso×não, autoimune×imunomediado) · neoplásicas (benigno×maligno).</li>
+    <li><b>Mucosa</b> = epitélio escamoso estratificado não queratinizado + lâmina própria + <b>muscular da mucosa</b> (fronteira do carcinoma in situ). <b>EEI = principal proteção antirrefluxo.</b></li>
+    <li><b>Congênitas:</b> ectopia gástrica (1/3 sup, patch achado de EDA) · atresia+fístula (RN engasgo/cianose, sonda dobra; <b>Gross C &gt;80%</b>).</li>
+    <li><b>Acalásia:</b> tríade aperistalse + ↑tônus basal + relaxamento incompleto do EEI; 2ª = <b>Chagas</b> (megaesôfago); <b>bico de pássaro</b>.</li>
+    <li><b>Hérnia de hiato:</b> deslizante ~90% (linha Z acima do pinçamento) × <b>paraesofágica = perigosa</b> (estrangulamento).</li>
+    <li><b>Varizes:</b> hipertensão portal (cirrose 90%/esquistossomose) → 1/3 distal → ruptura = <b>HDA emergência</b>.</li>
+    <li><b>Esofagites agudas:</b> Candida (placas brancas destacáveis; PAS: hifas) · HSV (vesículo-ulcerosas; <b>Tzanck</b>) — contexto de <b>imunossupressão</b>; agudas quase não se biopsiam.</li>
+    <li><b>DRGE:</b> quebra dos mecanismos de proteção; pirose + atípicos; <b>Los Angeles A–D</b>; micro: hiperplasia basal + eosinófilos intraepiteliais; decúbito lateral <b>esquerdo</b> protege; IBP = sintomático.</li>
+    <li><b>Barrett = metaplasia intestinal (caliciformes)</b>; diagnóstico <b>obrigatório = EDA + biópsia</b>; sem displasia reversível; displasia de alto grau ≈ CIS → <b>Viena</b>, conduta agressiva; principal fator de risco do <b>adenocarcinoma</b>.</li>
+    <li><b>Benignas:</b> papiloma (HPV <b>6/11</b>, <b>coilocitose</b>, pedunculado) · leiomioma (muscular da mucosa, séssil, <b>sem atipias</b>).</li>
+    <li><b>Malignas:</b> <b>CCE 80%</b> — terço médio/sup, tabaco+álcool sinergismo, <b>pérolas córneas</b> · <b>Adenocarcinoma</b> — terço distal, do Barrett, homens brancos, obesidade em ascensão; <b>"maçã mordida"</b>; TNM; sem serosa → invasão por contiguidade; sobrevida 5a &lt;30–40%.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova — Patologia do Esôfago</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · só o que a professora enfatizou</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#r-funil">Funil</a>
+    <a class="a1" href="#r-base">Base</a>
+    <a class="a1" href="#r-cong">Congênitas</a>
+    <a class="a1" href="#r-motil">Motilidade</a>
+    <a class="a1" href="#r-variz">Varizes</a>
+    <a class="a1" href="#r-esof">Esofagites</a>
+    <a class="a1" href="#r-drge">DRGE</a>
+    <a class="a1" href="#r-barrett">Barrett</a>
+    <a class="a1" href="#r-benig">Benignas</a>
+    <a class="a1" href="#r-malig">Malignas</a>
+    <a class="a1" href="#r-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="r-funil">
+  <span class="aula-tag t1">O funil (ela repete em TODA prova)</span>
+  <ul>
+    <li><b class="k">4 grupos:</b> congênitas (nascimento/infância) · adquiridas não inflamatórias (motilidade) · <b>inflamatórias</b> (agudo×crônico · infeccioso×não · autoimune×imunomediado) · neoplásicas (benigno×maligno).</li>
+    <li>Sequência: anamnese+exame → <b>DDs</b> → exames → <b>HD</b> → confirmação. Perguntas: quem é o hospedeiro · padrão macro/micro · <b>tempo de evolução</b>.</li>
+    <li><b class="k">Nomenclatura:</b> inflamação aguda = "esofagite"; crônica ganha NOME (DRGE, Barrett).</li>
+  </ul>
+</section>
+
+<section id="r-base">
+  <span class="aula-tag t1">Base anatômica/histológica que cai</span>
+  <ul>
+    <li>Mucosa = epitélio <b>escamoso estratificado não queratinizado</b> (15–30 camadas) + lâmina própria + <b>muscular da mucosa</b> = <b class="k">fronteira mucosa/submucosa → define carcinoma in situ</b>.</li>
+    <li>3 constrições; <b>EEI</b> (2–4 cm acima da JEG) = <b class="k">principal mecanismo protetor</b>. 2ª constrição = vizinhança aorta/traqueia → invasão por contiguidade no CA.</li>
+    <li>1º terço = músculo estriado (voluntário); depois liso. Clearance: saliva ~3 L/dia + glândulas submucosas. EDA mede da <b>arcada dentária superior (ADS)</b>. Só o esôfago abdominal tem serosa.</li>
+    <li>Embrio: separação esôfago/traqueia na <b>4ª–6ª semana</b> → falha = atresia/fístula.</li>
+  </ul>
+</section>
+
+<section id="r-cong">
+  <span class="aula-tag t1">Congênitas</span>
+  <ul>
+    <li><b>Ectopia (MGE):</b> patch de mucosa gástrica no <b>1/3 SUPERIOR</b>; assintomática/achado de EDA; se funcional → HCl → inflamação local. Micro: ilhas de epitélio colunar glandular.</li>
+    <li><b>Atresia+fístula:</b> RN na 1ª mamada — engasgo, cianose, regurgitação; <b class="k">sonda dobra</b>. <b>Gross tipo C &gt;80% = atresia + fístula traqueoesofágica DISTAL</b>. Fístula completa = incompatível com a vida → cirurgia neonatal. Associação: Down, cardíacas, geniturinárias.</li>
+  </ul>
+</section>
+
+<section id="r-motil">
+  <span class="aula-tag t1">Motilidade</span>
+  <div class="prof"><span class="box-h">🎯 Tríade da acalásia</span>1) <b>aperistalse</b> · 2) <b>↑tônus basal do EEI</b> · 3) <b>relaxamento incompleto do EEI</b>. Etiologia: 1ª = degeneração dos neurônios inibitórios · 2ª = <b>Chagas</b> (destrói plexo mioentérico → megaesôfago) · idiopática.</div>
+  <ul>
+    <li>Disfagia <b>insidiosa progressiva sólidos→líquidos</b>; esofagograma: <b class="k">bico de pássaro</b>; manometria mede pressão. Tto: nitratos → balão (dilatação pneumática) → miotomia.</li>
+    <li><b>Hérnia de hiato:</b> dilatação dos pilares diafragmáticos + EEI incompetente. <b>Deslizante ~90%</b> (linha Z <b>≥2 cm acima do pinçamento</b> na EDA; associada à DRGE) × <b class="k">paraesofágica = a perigosa</b> (estrangulamento/necrose; só aparece em retrovisão). Tto: tratar DRGE/peso; cirúrgico = <b>fundoplicatura</b>.</li>
+  </ul>
+</section>
+
+<section id="r-variz">
+  <span class="aula-tag t1">Varizes</span>
+  <ul>
+    <li>Cirrose (90%) / esquistossomose → <b>hipertensão portal</b> → colaterais → plexo submucoso do <b>1/3 distal</b> dilatado/tortuoso (+ varizes gástricas juntas).</li>
+    <li>Assintomáticas até <b class="k">ruptura = HDA de difícil manejo = emergência</b> (balão/EDA). Não são visíveis externamente.</li>
+  </ul>
+</section>
+
+<section id="r-esof">
+  <span class="aula-tag t1">Esofagites agudas</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Candidíase</th><th>Herpética (HSV)</th></tr></thead>
+    <tbody>
+      <tr><td><b>Clínico</b></td><td><b>Placas brancas DESTACÁVEIS</b></td><td>Lesões <b>vesículo-ulcerosas</b></td></tr>
+      <tr><td><b>Micro</b></td><td><b>PAS: hifas + leveduras</b> na camada espinhosa</td><td><b>Células de Tzanck</b> (gigantes multinucleadas c/ inclusões)</td></tr>
+      <tr><td><b>Contexto</b></td><td colspan="2">Imunossupressão/disbiose · autolimitadas · biópsia só se persistir</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prof"><span class="box-h">🎯 Dica literal de prova</span>Micro de esofagite <b>aguda</b> não é cobrada — "não se faz biópsia de agudo". As micros cobradas são DRGE e Barrett.</div>
+  <ul><li>Outras: <b>eosinofílica</b> (alergias/intolerâncias, em ascensão) · química (soda cáustica) · <b>física</b> (radioterapia → mucosite). Todas podem dar estenose fibrocicatricial.</li></ul>
+</section>
+
+<section id="r-drge">
+  <span class="aula-tag t1">DRGE</span>
+  <ul>
+    <li>Esofagite <b>crônica sintomática</b> por refluxo persistente <b>sem esforço</b>; dx GI + comum do Ocidente; 40+, gamers jovens, bebês (supino+líquido).</li>
+    <li><b>Proteções que quebram:</b> pressão basal do EEI · pilares diafragmáticos · <b>JEG oblíqua</b> · gravidade/postura · esvaziamento gástrico · saliva/clearance. Fatores: hérnia, tabaco, álcool, <b>depressores do SNC</b>, obesidade/gravidez (pressão intra-abdominal).</li>
+    <li><b class="k">Decúbito lateral ESQUERDO protege</b> (líquido fica na grande curvatura); direito piora.</li>
+    <li>Clínica: pirose; <b>atípicos</b>: tosse, rouquidão, faringite, broncoaspiração ("asma que era refluxo"). Complicações: erosão → úlcera → <b>estenose péptica</b>.</li>
+    <li>Dx: clínica + EDA + <b>pHmetria</b> (padrão-ouro; pH ~4–3,5). <b class="k">Los Angeles A–D</b> (nº de erosões, ≥/&lt; 5 mm, % da circunferência).</li>
+    <li><b>Micro:</b> <b>hiperplasia basal</b> + alongamento de papilas + <b>eosinófilos/linfócitos intraepiteliais</b> (exocitose) + infiltrado mononuclear + vasos congestos.</li>
+    <li><b>IBP (omeprazol) = sintomático</b>, não corrige a causa.</li>
+  </ul>
+</section>
+
+<section id="r-barrett">
+  <span class="aula-tag t1">Barrett</span>
+  <ul>
+    <li>= <b class="k">METAPLASIA INTESTINAL</b> (células <b>caliciformes</b>) do esôfago distal — adaptação à DRGE não tratada. "Célula inteligente vira intestinal (muco), não gástrica".</li>
+    <li>Homens <b>brancos</b> 40–60 · +Sul (bebida <b>quente</b> — chimarrão pela temperatura). <b>Mucosa em salmão</b> aveludada; segmento curto &lt;3 cm / longo ≥3 cm.</li>
+    <li><b class="k">Dx OBRIGATÓRIO = endoscopia + biópsia</b> (imagem sozinha = pode ser DRGE; metaplasia sem imagem = pode ser heterotopia).</li>
+    <li>Sem displasia → <b>reversível</b> tratando refluxo. Com displasia → lesão precursora; sai Los Angeles, entra <b class="k">classificação de VIENA (1–5)</b>; <b>alto grau ≈ carcinoma in situ</b>, raríssimo reverter, tto agressivo (~30% risco).</li>
+    <li>Principal fator de risco do <b>ADENOCARCINOMA</b>.</li>
+    <li><b>Mallory-Weiss:</b> lacerações <b>LINEARES</b> da JEG por vômitos repetidos/induzidos (pós-álcool); transitórias, reparam; problema = persistência.</li>
+  </ul>
+</section>
+
+<section id="r-benig">
+  <span class="aula-tag t1">Benignas</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Papiloma escamoso</th><th>Leiomioma</th></tr></thead>
+    <tbody>
+      <tr><td><b>Origem</b></td><td>Epitélio escamoso + <b>HPV 6/11 (baixo risco)</b></td><td>Músculo liso (<b>muscular da mucosa</b>)</td></tr>
+      <tr><td><b>Macro</b></td><td>Papilomatoso/digitiforme, <b>pedunculado</b>, leucoplásico</td><td>Nódulo <b>séssil</b>, firme, mais profundo</td></tr>
+      <tr><td><b>Micro</b></td><td>Hiperplasia + paraqueratinização + <b>COILOCITOSE</b> (halo perinuclear = vírus)</td><td>Feixes uniformes de m. liso, núcleos alongados</td></tr>
+      <tr><td><b>Laudo</b></td><td colspan="2"><b>"Ausência de atipias ou mitoses atípicas"</b> = benigno · tto: excisão endoscópica</td></tr>
+    </tbody>
+  </table></div>
+  <ul><li>Lipoma: benigno comum, pode ficar grande (luz ampla).</li></ul>
+</section>
+
+<section id="r-malig">
+  <span class="aula-tag t1">Malignas (INCA ~12 mil/ano · 5º–6º em homens)</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>CCE (~80% no Brasil)</th><th>Adenocarcinoma (em ascensão)</th></tr></thead>
+    <tbody>
+      <tr><td><b>Local</b></td><td><b>Terços médio e superior</b></td><td><b>Terço distal</b> (+ cárdia)</td></tr>
+      <tr><td><b>Quem</b></td><td>Homens 50+, mais <b>negros</b></td><td>Homens <b>brancos</b>/caucasianos</td></tr>
+      <tr><td><b>Fatores</b></td><td><b>Tabaco+álcool (SINERGISMO)</b>, nitrosaminas/conservas (Aspergillus), déficit vit. A/C, <b>acalásia persistente</b></td><td><b>Barrett</b> (DRGE→Barrett→adeno, proporcional), <b>obesidade</b></td></tr>
+      <tr><td><b>Macro</b></td><td>Placa/úlcera de <b>bordas endurecidas</b> → massa <b>vegetante</b></td><td>Massa distal invadindo cárdia</td></tr>
+      <tr><td><b>Micro</b></td><td>Atipias em todas as camadas + <b>PÉROLAS CÓRNEAS</b></td><td>Glândulas atípicas c/ caliciformes → <b>desdiferenciação</b> (bem/mod/mal dif.)</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Genes: <b>p53</b>, CDKN2A. Progressão: displasia → <b>CIS (respeita membrana basal/muscular da mucosa)</b> → invasivo → metástase (<b>contiguidade</b> + linfática).</li>
+    <li>Dx: EDA + <b>biópsias múltiplas</b> · baritado: <b class="k">"maçã mordida"</b> · TC (fígado/pulmão). <b>Sem serosa</b> + colado na traqueia → fístula, mediastinite, aorta.</li>
+    <li><b>TNM</b> (T1–4/N0–3/M0–1; estádios de CCE ≠ adeno). Sobrevida 5a <b>&lt;30–40%</b> (dx tardio). Disfagia progressiva + emagrecimento = investigar SEMPRE.</li>
+  </ul>
+</section>
+
+<section id="r-nc">
+  <span class="aula-tag t1">⚠️ Não confundir (armadilhas ditas em aula)</span>
+  <div class="alerta"><span class="box-h">Pares que a prova mistura</span>
+  <ul>
+    <li><b>Ectopia × Barrett:</b> os dois têm tecido glandular no esôfago — ectopia = <b>congênita, 1/3 superior</b>; Barrett = <b>metaplasia adquirida, distal, contígua à JEG</b>.</li>
+    <li><b>Acalásia × hérnia de hiato:</b> opostos — acalásia = EEI <b>hipertônico</b> que não relaxa; hérnia = EEI/hiato <b>frouxos</b>.</li>
+    <li><b>Deslizante × paraesofágica:</b> a comum é a deslizante; a <b>perigosa</b> é a paraesofágica (estrangulamento).</li>
+    <li><b>HPV 6/11 × 16/18:</b> papiloma esofágico = <b>6/11 baixo risco</b>; 16/18 = alto risco (colo do útero).</li>
+    <li><b>Los Angeles × Viena:</b> LA = <b>erosões da DRGE</b>; Viena = <b>displasia/neoplasia</b> (Barrett displásico em diante).</li>
+    <li><b>Metaplasia × displasia:</b> metaplasia = adaptação <b>reversível</b>; displasia = pré-maligna; <b>alto grau ≈ CIS</b>, quase nunca reverte.</li>
+    <li><b>CIS × invasivo:</b> a fronteira é <b>membrana basal / muscular da mucosa</b>.</li>
+    <li><b>Bico de pássaro × maçã mordida:</b> bico = <b>acalásia</b> (esofagograma); maçã mordida = <b>câncer</b> (baritado).</li>
+    <li><b>Coilocitose:</b> típica de vírus/HPV, mas <b>não patognomônica</b>.</li>
+    <li><b>Omeprazol:</b> alivia sintoma, <b>não trata a causa</b> da DRGE.</li>
+  </ul></div>
+  <div class="caso"><span class="box-h">🩺 Palavras-gatilho → resposta</span>
+  <ul>
+    <li>"Sonda dobra no RN" → atresia esofágica (Gross C).</li>
+    <li>"Placa branca destacável" → Candida · "vesículo-ulcerosa" → HSV · "Tzanck" → HSV.</li>
+    <li>"Linha Z acima do pinçamento" → hérnia deslizante.</li>
+    <li>"Mucosa em salmão" / "células caliciformes" → Barrett.</li>
+    <li>"Laceração linear pós-vômito" → Mallory-Weiss.</li>
+    <li>"Pérolas córneas" → CCE · "glândulas atípicas no distal" → adenocarcinoma.</li>
+    <li>"Bebida quente/chimarrão + homem branco do Sul" → Barrett/adeno.</li>
+    <li>"Cirrótico com hematêmese" → ruptura de varizes.</li>
+  </ul></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologia do Esôfago</h2>
+    <p>Anato Pato II · Aula 01 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 01 — Patologia do Esôfago</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Homem de 55 anos, hipertenso e diabético, tabagista, procura a UBS com dor retroesternal, pirose e regurgitação ácida há mais de 6 meses, com 3 episódios de vômitos pós-prandiais no último mês. Sem perda ponderal, sem disfagia; hemograma e leucograma sem alterações.</span><div class="pergunta">Seguindo o "funil" do raciocínio clínico-patológico, o grupo de diagnósticos diferenciais mais provável e o exame mais indicado são:</div>`,
+ alts:["doenças congênitas esofágicas — pHmetria esofágica de 24 horas", "neoplasias benignas esofágicas — radiografia contrastada ou TC de tórax", "neoplasias malignas esofágicas — endoscopia por cápsula deglutida", "doenças inflamatórias esofágicas — esofagogastroduodenoscopia", "distúrbios de motilidade esofágica — manometria esofágica"], correta:3,
+ just:[
+  "Doença congênita se manifesta ao nascimento ou na infância — não aos 55 anos, após décadas assintomático.",
+  "Sem disfagia nem massa não há por que pensar em neoplasia benigna; RX/TC não seriam a primeira escolha para mucosa.",
+  "Neoplasia maligna pediria sinais de alarme (perda ponderal, disfagia, anemia) — o caso não tem nenhum.",
+  "Correta. Quadro crônico irritativo (pirose + regurgitação + dor retroesternal) sem sinais de alarme aponta para o grupo inflamatório (esofagite/DRGE), e a investigação inicial é a EDA.",
+  "Distúrbio de motilidade cursa com disfagia ('entalo') — o paciente não tem disfagia; manometria não é o primeiro exame aqui."],
+ ref:"Caso Adalberto — funil dos 4 grupos"},
+
+/* 2 */ {n:2,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Um laudo anatomopatológico de esôfago descreve proliferação neoplásica epitelial que "respeita a fronteira entre mucosa e submucosa", caracterizando carcinoma in situ.</span><div class="pergunta">A estrutura histológica que funciona como essa fronteira é:</div>`,
+ alts:["a lâmina própria","a muscular da mucosa","a adventícia","a camada circular interna da muscular externa","a serosa do esôfago abdominal"], correta:1,
+ just:[
+  "A lâmina própria é o conjuntivo frouxo DENTRO da mucosa, que nutre o epitélio — está aquém da fronteira.",
+  "Correta. A mucosa é formada por epitélio + lâmina própria + muscular da mucosa; a muscular da mucosa (junto com a membrana basal, no plano do epitélio) marca o limite com a submucosa — enquanto não é ultrapassada, o tumor é in situ/intramucoso.",
+  "A adventícia é o revestimento conjuntivo EXTERNO do órgão — um tumor que chegou lá é francamente invasivo.",
+  "A muscular externa fica além da submucosa; invasão nesse nível já é T2, muito além do in situ.",
+  "Só o esôfago abdominal tem serosa, e ela é a camada mais externa — nada tem a ver com o limite mucosa/submucosa."],
+ ref:"Histologia do esôfago — a fronteira do carcinoma in situ"},
+
+/* 3 */ {n:3,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">O revestimento normal da mucosa esofágica — que explica sua superfície lisa, úmida e rosa-pálida, semelhante à mucosa jugal — é um epitélio:</div>`,
+ alts:["colunar simples com células caliciformes", "pavimentoso estratificado queratinizado", "escamoso estratificado não queratinizado", "colunar pseudoestratificado ciliado de tipo respiratório", "de transição, semelhante ao urotélio vesical"], correta:2,
+ just:[
+  "Epitélio colunar com caliciformes é o padrão INTESTINAL — no esôfago ele só aparece na metaplasia de Barrett ou em ectopias.",
+  "Queratina impermeabilizaria a mucosa; o esôfago normal NÃO é queratinizado (a paraqueratinização aparece em situações patológicas, como o papiloma traumatizado).",
+  "Correta. São ~15–30 camadas de células escamosas sem queratina, apoiadas em lâmina própria vascularizada — o que dá o aspecto liso, úmido e rosa-pálido.",
+  "Pseudoestratificado ciliado é o epitélio RESPIRATÓRIO (traqueia) — vizinho anatômico, mas outro órgão.",
+  "Urotélio reveste vias urinárias, não o tubo digestivo."],
+ ref:"Histologia do esôfago"},
+
+/* 4 */ {n:4,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Das três constrições fisiológicas do esôfago, uma delas é considerada, pela aula, o alvo central das patologias de refluxo.</span><div class="pergunta">O principal mecanismo protetor contra o refluxo do conteúdo gástrico é:</div>`,
+ alts:["o esfíncter esofágico inferior, logo acima da junção esofagogástrica", "a constrição do músculo cricofaríngeo, no esfíncter esofágico superior", "a constrição média do esôfago, adjacente ao arco aórtico e à traqueia", "a musculatura estriada esquelética do terço cervical do esôfago", "o pinçamento da cárdia pela musculatura oblíqua do fundo gástrico"], correta:0,
+ just:[
+  "Correta. O EEI permite a passagem do alimento e impede o refluxo — auxiliado pelos pilares diafragmáticos, pela JEG oblíqua e pelo clearance; sua incompetência é o eixo da DRGE.",
+  "O EES controla o INÍCIO da deglutição — protege via aérea na entrada, não contra refluxo gástrico.",
+  "A constrição média importa por outra razão: a vizinhança com aorta e traqueia explica a invasão por contiguidade dos tumores.",
+  "A musculatura estriada do 1º terço dá o controle voluntário inicial da deglutição, sem papel antirrefluxo.",
+  "O 'pinçamento' protetor é o dos pilares diafragmáticos sobre o hiato — não do fundo gástrico sobre a cárdia."],
+ ref:"Anatomia — constrições e EEI"},
+
+/* 5 */ {n:5,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Recém-nascido, na primeira mamada, apresenta engasgos, tosse, regurgitação abrupta e cianose. A equipe tenta passar a sonda nasogástrica, que "dobra" e retorna, sem progredir ao estômago.</span><div class="pergunta">Considerando a forma mais comum dessa malformação, a hipótese principal é:</div>`,
+ alts:["estenose hipertrófica do piloro com vômitos em jato", "hérnia diafragmática congênita com herniação visceral", "mucosa gástrica ectópica funcional no terço superior", "anel de Schatzki estenosando o esôfago distal", "atresia esofágica com fístula traqueoesofágica distal"], correta:4,
+ just:[
+  "Estenose de piloro dá vômitos em jato após semanas de vida — a sonda passaria pelo esôfago normalmente.",
+  "Hérnia diafragmática cursa com desconforto respiratório e abdome escavado — a sonda também progride.",
+  "A ectopia gástrica é tipicamente assintomática, um achado de endoscopia — não obstrui a passagem da sonda.",
+  "Anel de Schatzki é membrana ADQUIRIDA do adulto, causa de disfagia intermitente — não de quadro neonatal.",
+  "Correta. A sonda que dobra denuncia a bolsa esofágica cega da atresia; o tipo C de Gross (atresia + fístula distal) responde por >80% dos casos. Falha de separação esôfago/traqueia entre a 4ª e a 6ª semana."],
+ ref:"Malformações congênitas — atresia e fístula"},
+
+/* 6 */ {n:6,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">EDA de rotina em paciente assintomático encontra, no terço SUPERIOR do esôfago, uma pequena área ("patch") de coloração diferente; a biópsia mostra ilhas de epitélio colunar glandular do tipo gástrico em meio ao epitélio escamoso.</span><div class="pergunta">O diagnóstico e o argumento que o distingue de esôfago de Barrett são:</div>`,
+ alts:["mucosa gástrica ectópica — congênita do terço superior; Barrett é adquirido e distal", "esôfago de Barrett de segmento curto — a extensão da lesão é menor que 3 cm", "metaplasia intestinal focal — o epitélio glandular denuncia adaptação ao refluxo", "adenocarcinoma inicial — tecido glandular em localização atípica sugere neoplasia", "esofagite péptica — a inflamação da mucosa adjacente explicaria o achado"], correta:0,
+ just:[
+  "Correta. Tecido gástrico no 1/3 superior, assintomático e presente desde sempre = ectopia (heterotopia) por falha de diferenciação embrionária. Barrett é ADQUIRIDO, fica no distal, contíguo à JEG, e exige contexto de refluxo.",
+  "Segmento curto/longo classifica Barrett CONFIRMADO no distal — não se aplica a um patch isolado no terço superior.",
+  "O epitélio descrito é do tipo GÁSTRICO; metaplasia intestinal exigiria células caliciformes — e mesmo assim, no distal.",
+  "Não há atipia, displasia nem massa — tecido glandular organizado não é sinônimo de carcinoma.",
+  "Não há erosão nem infiltrado relevante descritos; esofagite péptica é diagnóstico do esôfago distal com refluxo."],
+ ref:"Ectopias × Barrett (DD cobrado em aula)"},
+
+/* 7 */ {n:7,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">A tríade fisiopatológica que caracteriza a acalásia é:</div>`,
+ alts:["hipotonia do EEI + peristalse exacerbada + esvaziamento acelerado", "aperistalse + tônus basal do EEI aumentado + relaxamento incompleto", "aperistalse + hipotonia do EEI + dilatação dos pilares diafragmáticos", "refluxo persistente + metaplasia intestinal + estenose péptica distal", "espasmo esofágico difuso + hérnia por deslizamento + hipersalivação"], correta:1,
+ just:[
+  "Descreve o oposto: na acalásia o EEI está HIPERtônico e a peristalse está ABOLIDA.",
+  "Correta. Falta de peristaltismo do corpo, contração basal exacerbada do EEI e relaxamento incompleto à deglutição — o alimento 'entala' e o esôfago dilata acima do esfíncter.",
+  "Mistura acalásia (aperistalse) com hérnia de hiato (hipotonia/pilares dilatados) — doenças opostas quanto ao tônus.",
+  "Essa é a sequência da DRGE → Barrett → complicações, outro capítulo da aula.",
+  "Espasmo difuso é outra desordem motora; hérnia e salivação não compõem a tríade."],
+ ref:"Acalásia — tríade"},
+
+/* 8 */ {n:8,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Homem de 58 anos, natural de área rural endêmica, com disfagia insidiosa e progressiva (sólidos e, agora, líquidos). Esofagograma: esôfago muito dilatado que se afila em "bico de pássaro". Sorologia positiva para Trypanosoma cruzi.</span><div class="pergunta">O mecanismo da acalásia secundária desse paciente é:</div>`,
+ alts:["fibrose cicatricial do EEI secundária a refluxo ácido crônico", "compressão extrínseca da junção esofagogástrica pelo megacólon", "destruição do plexo mioentérico pela infecção crônica", "hipertensão portal com formação de colaterais venosas submucosas", "metaplasia intestinal do terço distal evoluindo com estenose"], correta:2,
+ just:[
+  "Fibrose péptica do EEI é complicação de DRGE — e o quadro não tem pirose nem refluxo.",
+  "O megaesôfago chagásico é DILATAÇÃO do próprio esôfago por estase; não há compressão por megacólon na JEG.",
+  "Correta. O T. cruzi tem tropismo por tecido nervoso e destrói o plexo mioentérico — perdem-se os neurônios inibitórios, o EEI não relaxa, instala-se aperistalse e o órgão dilata (megaesôfago).",
+  "Hipertensão portal produz VARIZES esofágicas — doença vascular, sem relação com o relaxamento do EEI.",
+  "Metaplasia (Barrett) é adaptação ao refluxo; não explica aperistalse nem o bico de pássaro."],
+ ref:"Acalásia secundária — doença de Chagas"},
+
+/* 9 */ {n:9,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Dois pacientes recebem diagnóstico de hérnia de hiato: um com a forma por deslizamento, outro com a forma paraesofágica.</span><div class="pergunta">A forma paraesofágica é considerada a mais preocupante clinicamente porque:</div>`,
+ alts:["é a forma mais frequente, respondendo por cerca de 90% das hérnias de hiato", "associa-se obrigatoriamente a doença do refluxo mais intensa e precoce", "é a única forma visível diretamente na endoscopia digestiva convencional", "impede por completo a passagem do alimento pela junção esofagogástrica", "o segmento gástrico fixo no tórax pode encarcerar e estrangular"], correta:4,
+ just:[
+  "Inverteu: a DESLIZANTE é ~90% dos casos; a paraesofágica é ~10%.",
+  "A associação clássica com DRGE é da forma deslizante (a junção sobe); a paraesofágica preocupa por outro motivo.",
+  "É o contrário — a paraesofágica costuma exigir manobra de retrovisão para ser vista; a deslizante é a que se identifica pela linha Z elevada.",
+  "A luz esofágica segue pérvia; o problema não é obstrução da deglutição.",
+  "Correta. O segmento gástrico posicionado ao lado do esôfago não retorna ao abdome — pode encarcerar, estrangular, evoluir com necrose e perfuração: emergência cirúrgica."],
+ ref:"Hérnia de hiato — deslizante × paraesofágica"},
+
+/* 10 */ {n:10,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Laudo de EDA: "…a linha de transição esofagogástrica situa-se 2 cm acima do nível do pinçamento diafragmático…".</span><div class="pergunta">Esse achado é o critério endoscópico de:</div>`,
+ alts:["acalásia primária","hérnia de hiato por deslizamento","esôfago de Barrett de segmento curto","divertículo esofágico de tração","varizes esofágicas incipientes"], correta:1,
+ just:[
+  "Acalásia se avalia por manometria/esofagograma; na EDA não é a posição da linha Z que a define.",
+  "Correta. O fisiológico é a linha Z coincidir com o pinçamento diafragmático; linha Z acima do pinçamento = tecido gástrico herniado para o tórax = hérnia por deslizamento.",
+  "Barrett é diagnóstico de MUCOSA (salmão + biópsia com metaplasia) — não de posição da junção.",
+  "Divertículo apareceria como bolsa/saculação da parede, não como deslocamento da linha Z.",
+  "Varizes aparecem como cordões venosos tortuosos submucosos — o laudo diria 'cordões varicosos', que ele nega."],
+ ref:"Leitura de laudo — hérnia deslizante"},
+
+/* 11 */ {n:11,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Homem de 60 anos, etilista de longa data com cirrose hepática, chega à emergência com hematêmese volumosa.</span><div class="pergunta">O mecanismo mais provável do sangramento é:</div>`,
+ alts:["laceração linear da junção esofagogástrica por vômitos repetidos", "úlcera péptica perfurada na parede anterior do duodeno", "carcinoma de células escamosas ulcerado do terço médio", "ruptura de varizes esofágicas por hipertensão portal", "esofagite herpética extensa com necrose de mucosa"], correta:3,
+ just:[
+  "Mallory-Weiss é possível em etilistas, mas produz sangramento geralmente menor, após crise de vômitos — o cirrótico com hematêmese volumosa pede primeiro a causa portal.",
+  "Úlcera duodenal sangra, mas o dado-chave do caso (cirrose) aponta diretamente para o mecanismo portal.",
+  "CCE pode sangrar, porém é menos frequente como causa de hemorragia maciça e o caso não traz disfagia/emagrecimento.",
+  "Correta. A fibrose hepática gera hipertensão portal → colaterais → plexo venoso submucoso do 1/3 distal dilatado (varizes em ~90% dos cirróticos); a ruptura causa HDA de difícil manejo — emergência.",
+  "Esofagite infecciosa acomete imunossuprimidos e raramente produz hemorragia dessa magnitude."],
+ ref:"Varizes esofágicas"},
+
+/* 12 */ {n:12,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Paciente em quimioterapia apresenta odinofagia. EDA: placas brancacentas destacáveis ao longo do esôfago. Biópsia corada pelo PAS: hifas e leveduras entre as células da camada espinhosa.</span><div class="pergunta">O diagnóstico é esofagite:</div>`,
+ alts:["herpética","por citomegalovírus","por Candida sp.","eosinofílica","cáustica (química)"], correta:2,
+ just:[
+  "HSV dá lesões vesículo-ulcerosas e células de Tzanck — não placas destacáveis com hifas.",
+  "CMV produz úlceras com inclusões citomegálicas em células endoteliais/estromais — sem hifas.",
+  "Correta. Placas brancas DESTACÁVEIS + PAS com hifas e leveduras = candidíase, típica do hospedeiro imunossuprimido (a Candida é microbiota que se aproveita da queda de vigilância).",
+  "A eosinofílica liga-se a alergias/intolerâncias e mostra eosinofilia intraepitelial — não micro-organismos.",
+  "Esofagite química depende de história de ingestão de corrosivo, com necrose — não placas fúngicas."],
+ ref:"Esofagites infecciosas — Candida"},
+
+/* 13 */ {n:13,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Em paciente imunossuprimido com odinofagia e lesões vesículo-ulcerosas ao exame endoscópico, a biópsia esofágica mostra células escamosas gigantes, multinucleadas, com inclusões nucleares.</span><div class="pergunta">Essas células — e o agente que elas denunciam — são:</div>`,
+ alts:["coilócitos — efeito citopático do papilomavírus (HPV)", "células de Tzanck — herpes-vírus simples (HSV)", "células em anel de sinete — adenocarcinoma difuso", "corpos de psamoma — neoplasia de padrão papilífero", "células caliciformes — metaplasia intestinal de Barrett"], correta:1,
+ just:[
+  "Coilócito é a célula com halo perinuclear do HPV — aparece no papiloma, não em úlcera herpética.",
+  "Correta. Células gigantes multinucleadas com inclusões nucleares = células de Tzanck, marca citopática do HSV; combinam com as lesões vesículo-ulcerosas do exame.",
+  "Anel de sinete é célula com vacúolo de mucina empurrando o núcleo — padrão de adenocarcinoma, sem relação com vírus.",
+  "Psamomas são calcificações lamelares de tumores papilíferos (tireoide, ovário) — outro contexto por completo.",
+  "Caliciformes definem Barrett; são células normais de padrão intestinal, não células gigantes infectadas."],
+ ref:"Esofagite herpética — Tzanck"},
+
+/* 14 */ {n:14,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Jovem de 21 anos, sedentário, passa muitas horas por dia deitado jogando; queixa-se de pirose e regurgitação noturnas. Entre as orientações não farmacológicas, está a escolha do decúbito ao dormir.</span><div class="pergunta">Pela anatomia da junção esofagogástrica, a orientação correta e sua justificativa são:</div>`,
+ alts:["decúbito dorsal — alinha o esôfago com o estômago e acelera o esvaziamento", "decúbito lateral direito — a gravidade desvia o conteúdo gástrico ao duodeno", "posição de Trendelenburg — reduz a pressão intra-abdominal sobre a junção", "decúbito lateral esquerdo — o líquido fica na grande curvatura, longe da junção", "qualquer decúbito — a posição não interfere nos mecanismos de proteção"], correta:3,
+ just:[
+  "Deitado de costas o conteúdo gástrico permanece nivelado com a junção — não há proteção adicional.",
+  "É o decúbito que PIORA: à direita, o líquido aproxima-se da JEG e reflui com facilidade.",
+  "Trendelenburg (cabeça para baixo) é o oposto do desejado — a gravidade passa a favorecer o refluxo.",
+  "Correta. A JEG é oblíqua e a grande curvatura fica à esquerda: nesse decúbito o conteúdo se afasta da junção — a gravidade vira mecanismo de proteção (a professora desenhou até acertar o lado).",
+  "A postura é justamente um dos mecanismos de proteção — tanto que a vida 'deitada' dos gamers explica DRGE aos 21 anos."],
+ ref:"DRGE — mecanismos de proteção e postura"},
+
+/* 15 */ {n:15,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Laudo de EDA em paciente com pirose: "uma única erosão de 4 mm, restrita a uma prega mucosa, no esôfago distal".</span><div class="pergunta">Pela classificação de Los Angeles, trata-se do grau:</div>`,
+ alts:["grau A", "grau B", "grau C", "grau D", "não classificável"], correta:0,
+ just:[
+  "Correta. Los Angeles A = uma (ou mais) erosão ≤5 mm restrita a uma prega. É o menor grau da esofagite erosiva.",
+  "B seria erosão >5 mm (ainda sem continuidade entre pregas).",
+  "C exige erosões contínuas ENTRE pregas, envolvendo <75% da circunferência.",
+  "D é o acometimento de ≥75% da circunferência — bem além de uma única erosão pequena.",
+  "Los Angeles é classificação ENDOSCÓPICA da DRGE erosiva; não depende de histologia."],
+ ref:"DRGE — classificação de Los Angeles"},
+
+/* 16 */ {n:16,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Biópsia de esôfago distal em paciente com pirose crônica (sem mucosa em salmão à EDA).</span><div class="pergunta">O conjunto de achados histológicos esperado na esofagite de refluxo é:</div>`,
+ alts:["pérolas córneas, mitoses atípicas e invasão da lâmina própria", "hifas e leveduras no epitélio com microabscessos de neutrófilos", "células caliciformes em criptas contíguas ao epitélio escamoso", "granulomas não caseosos com células gigantes multinucleadas de Langhans", "hiperplasia basal, papilas alongadas e eosinófilos intraepiteliais"], correta:4,
+ just:[
+  "Pérolas córneas e mitoses atípicas com invasão definem CARCINOMA de células escamosas — não inflamação de refluxo.",
+  "Hifas apontam candidíase; a DRGE é injúria química pelo refluxato, sem micro-organismo.",
+  "Caliciformes = metaplasia intestinal = Barrett — que o enunciado afasta ao negar mucosa em salmão.",
+  "Granulomas remetem a Crohn/tuberculose/sarcoidose — outro grupo de doenças.",
+  "Correta. O ácido acelera a reposição celular (hiperplasia basal + alongamento de papilas) e recruta células — linfocitose/eosinofilia intraepitelial (exocitose), infiltrado mononuclear e vasos congestos na lâmina própria."],
+ ref:"DRGE — microscopia"},
+
+/* 17 */ {n:17,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente com DRGE de longa data; EDA mostra "mucosa em salmão" aveludada estendendo-se 4 cm acima da junção esofagogástrica.</span><div class="pergunta">Para FECHAR o diagnóstico de esôfago de Barrett é obrigatório:</div>`,
+ alts:["repetir a endoscopia após 8 semanas de inibidor de bomba de prótons", "documentar o refluxo com pHmetria esofágica ambulatorial de 24 horas", "biópsia com comprovação histológica de metaplasia intestinal", "tomografia de tórax para avaliar a extensão mediastinal da lesão", "pesquisa de infecção gástrica por Helicobacter pylori com biópsia"], correta:2,
+ just:[
+  "Repetir EDA não muda a exigência diagnóstica — a imagem sozinha nunca fecha Barrett, agora ou depois.",
+  "A pHmetria confirma REFLUXO, não a transformação do tecido.",
+  "Correta. Critério obrigatório = evidência endoscópica + comprovação histológica da metaplasia intestinal. A mancha pode ser só DRGE; e metaplasia sem a imagem pode ser heterotopia — precisa das duas.",
+  "TC entra no ESTADIAMENTO de câncer estabelecido, não no diagnóstico de Barrett.",
+  "H. pylori pertence à patologia gástrica; não participa do critério diagnóstico de Barrett."],
+ ref:"Barrett — critério diagnóstico obrigatório"},
+
+/* 18 */ {n:18,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Dois laudos de esôfago de Barrett: (I) metaplasia intestinal SEM displasia; (II) displasia de ALTO grau.</span><div class="pergunta">Sobre reversibilidade e conduta, é correto afirmar:</div>`,
+ alts:["ambos regridem por completo com inibidor de bomba de prótons em dose plena associado a medidas comportamentais", "nenhum dos dois é reversível e ambos têm indicação formal de esofagectomia imediata", "o laudo II passa a ser graduado pela classificação de Los Angeles, nos graus C e D", "o laudo I pode reverter com o controle do refluxo; o II raramente reverte e exige conduta agressiva", "a distinção entre os dois laudos é puramente endoscópica, dispensando o exame histológico"], correta:3,
+ just:[
+  "A displasia de alto grau NÃO regride com IBP — ela já está no âmbito da progressão neoplásica.",
+  "O extremo oposto: metaplasia sem displasia pode regredir com o controle do refluxo; esofagectomia imediata para o laudo I seria um exagero sem indicação.",
+  "Los Angeles gradua EROSÕES da DRGE; displasia/neoplasia usa a classificação de Viena (1–5).",
+  "Correta. Metaplasia = adaptação reversível; displasia de alto grau ≈ quase carcinoma in situ (risco ~30%), raríssimamente reversível — muda a classificação (Viena), o seguimento e a agressividade do tratamento (crioablação/cirurgia).",
+  "Displasia é diagnóstico HISTOLÓGICO — a endoscopia não separa os dois laudos."],
+ ref:"Barrett — metaplasia × displasia de alto grau"},
+
+/* 19 */ {n:19,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre a epidemiologia do câncer de esôfago no Brasil, é correto afirmar:</div>`,
+ alts:["o carcinoma escamoso responde por ~80% dos casos, com tabaco e álcool em sinergismo", "o adenocarcinoma é o tipo predominante no país, repetindo o padrão do hemisfério norte", "a incidência é maior em mulheres jovens, acompanhando o aumento da obesidade", "o tipo escamoso predomina no terço distal do órgão, junto à cárdia gástrica", "a sobrevida em cinco anos ultrapassa 70%, graças à detecção precoce por endoscopia"], correta:0,
+ just:[
+  "Correta. No Brasil o CCE é ~80% (INCA ~12 mil casos/ano; 5º–6º câncer em homens); tabaco + álcool multiplicam o risco um do outro (sinergismo), com nitrosaminas, déficit de vitaminas A/C e acalásia persistente como cofatores.",
+  "Em alguns países do norte o adeno já é o nº 1 — mas no Brasil ainda é minoria (em ascensão pela obesidade).",
+  "O perfil dominante é o homem 50+ — não mulheres jovens.",
+  "Inverteu a topografia: escamoso = terços médio/superior; distal é o território do ADENOcarcinoma.",
+  "É o oposto: diagnóstico tardio e sobrevida em 5 anos abaixo de 30–40%."],
+ ref:"Neoplasias malignas — epidemiologia"},
+
+/* 20 */ {n:20,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Biópsia de massa no esôfago DISTAL de homem branco de 62 anos com história de DRGE e Barrett: células glandulares mucosas e caliciformes formando cordões atípicos, com hipercromasia marcada, pleomorfismo e cariomegalia.</span><div class="pergunta">O diagnóstico e sua origem mais provável são:</div>`,
+ alts:["carcinoma de células escamosas — do epitélio escamoso de revestimento", "leiomiossarcoma — da camada muscular externa do órgão", "adenocarcinoma — da metaplasia intestinal do esôfago de Barrett", "linfoma MALT — do tecido linfoide associado à submucosa", "carcinoma epidermóide — de foco de ectopia gástrica funcional"], correta:2,
+ just:[
+  "CCE nasce do epitélio ESCAMOSO e mostra pérolas córneas/queratinócitos atípicos — não glândulas com caliciformes.",
+  "Leiomiossarcoma é fusocelular, de músculo liso — sem arquitetura glandular.",
+  "Correta. Glândulas atípicas com caliciformes no terço distal de paciente com Barrett = adenocarcinoma sobre metaplasia (a via DRGE → Barrett → displasia → adeno, diretamente proporcional em tempo e extensão). Adeno de glândula esofágica própria é raro.",
+  "Linfoma teria lençóis de linfócitos atípicos, não estruturas glandulares mucossecretoras.",
+  "'Carcinoma epidermóide' é sinônimo de CCE — e ectopia não é a origem habitual de adenocarcinoma distal."],
+ ref:"Adenocarcinoma — origem no Barrett"},
+
+/* 21 */ {n:21,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Jovem de 24 anos, após episódio de libação alcoólica com vômitos repetidos, apresenta hematêmese de pequeno volume. EDA: lacerações LINEARES na junção esofagogástrica, sem outras alterações.</span><div class="pergunta">O diagnóstico é:</div>`,
+ alts:["varizes esofágicas rotas","perfuração espontânea do esôfago","úlcera de Barrett complicada","esofagite cáustica aguda","lacerações de Mallory-Weiss"], correta:4,
+ just:[
+  "Varizes pedem hepatopatia/hipertensão portal e aparecem como cordões venosos — não lacerações lineares num jovem hígido.",
+  "Perfuração (síndrome de Boerhaave) é quadro dramático com dor torácica intensa, enfisema e mediastinite — não achado endoscópico discreto.",
+  "Não há Barrett descrito; úlcera de Barrett fica em mucosa metaplásica salmão.",
+  "Esofagite cáustica exige ingestão de corrosivo — a história é de vômitos, não de agente químico.",
+  "Correta. Vômitos repetidos/induzidos geram contrações retrógradas com falha de relaxamento → lacerações lineares transitórias da JEG (Mallory-Weiss), que costumam reparar; o problema seria a persistência."],
+ ref:"Lacerações de Mallory-Weiss"},
+
+/* 22 */ {n:22,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Biópsia excisional de nódulo esofágico pedunculado e leucoplásico: hiperplasia de queratinócitos com espessamento epitelial, paraqueratinização, infiltrado inflamatório e halos claros perinucleares. Laudo conclui "ausência de atipias".</span><div class="pergunta">Sobre esse achado, é correto afirmar:</div>`,
+ alts:["papiloma escamoso por HPV de baixo risco (6/11), com coilocitose como efeito viral", "lesão precursora de carcinoma escamoso associada aos HPVs de alto risco oncogênico 16 e 18", "a coilocitose é achado patognomônico de infecção herpética latente no epitélio", "o aspecto pedunculado indica origem profunda, na muscular própria do órgão", "a paraqueratinização confirma transformação maligna incipiente da lesão"], correta:0,
+ just:[
+  "Correta. Nódulo papilomatoso pedunculado + hiperplasia + coilocitose + ausência de atipias = papiloma escamoso, ligado aos HPVs de BAIXO risco oncogênico 6/11 (contato direto ou autoinoculação); a excisão endoscópica trata.",
+  "16/18 são os HPVs de ALTO risco do colo do útero — a professora avisou para não confundir; papiloma esofágico é 6/11.",
+  "Coilocitose sugere efeito viral (HPV), mas NÃO é patognomônica; herpes marca-se por células de Tzanck.",
+  "Pedunculado descreve a base estreita da lesão (facilita a excisão) — nada diz sobre camada de origem; papiloma é EPITELIAL.",
+  "Paraqueratina ali é resposta ao trauma alimentar sobre a lesão elevada — 'ausência de atipias' afasta malignidade."],
+ ref:"Papiloma escamoso — HPV 6/11 e coilocitose"},
+
+/* 23 */ {n:23,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Achado incidental em EDA: nódulo séssil, firme, normocromático, aparentemente profundo à mucosa esofágica. Após excisão: feixes uniformes entrelaçados de células musculares lisas com núcleos alongados, sem atipias e sem mitoses.</span><div class="pergunta">O diagnóstico é:</div>`,
+ alts:["papiloma escamoso","leiomioma esofágico","leiomiossarcoma bem diferenciado","lipoma submucoso","carcinoma in situ de padrão fusocelular"], correta:1,
+ just:[
+  "Papiloma é lesão EPITELIAL, papilomatosa/digitiforme e superficial — não um nódulo profundo de músculo liso.",
+  "Correta. Proliferação benigna de músculo liso — tipicamente da muscular da mucosa —, séssil, firme e mais profunda; os feixes uniformes SEM atipias/mitoses fecham a benignidade.",
+  "O sarcoma exigiria atipias, mitoses e necrose — o laudo nega exatamente isso.",
+  "Lipoma é amarelado e formado por adipócitos, não por feixes musculares.",
+  "Carcinoma in situ é lesão do EPITÉLIO com atipias em todas as camadas — o oposto do descrito."],
+ ref:"Leiomioma"},
+
+/* 24 */ {n:24,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Homem de 65 anos com CCE de terço médio do esôfago. A esofagografia baritada mostra falha de enchimento irregular ("maçã mordida"); a TC revela invasão mediastinal precoce.</span><div class="pergunta">A característica anatômica do esôfago que melhor explica essa disseminação local precoce é:</div>`,
+ alts:["a riqueza de glândulas submucosas produtoras de muco em toda a extensão", "o predomínio de musculatura estriada esquelética nas camadas dos terços inferiores do órgão", "a presença de serosa espessa recobrindo o órgão em toda a sua extensão", "a ausência de serosa na maior parte do órgão, justaposto às estruturas do mediastino", "a irrigação exclusivamente arterial do terço distal do esôfago"], correta:3,
+ just:[
+  "As glândulas participam do clearance — não influenciam a via de disseminação tumoral.",
+  "Inverteu: o estriado está no terço SUPERIOR; e o tipo de músculo não é a chave da invasão.",
+  "É justamente o que o esôfago NÃO tem — serosa só na curta porção abdominal.",
+  "Correta. Sem a barreira serosa e encostado nas estruturas do mediastino (2ª constrição: traqueia, aorta; e pericárdio), o tumor invade por contiguidade e fistuliza — pneumonia aspirativa, hemorragias, sobrevida <30%.",
+  "A vascularização do distal é porto-sistêmica (daí as varizes) — e não é o determinante da invasão por contiguidade."],
+ ref:"Malignas — disseminação e 'maçã mordida'"}
+];
+
+const dissertativas=[
+/* D1 */ {n:1,aula:1,
+ caso:`José da Silva, 39 anos, com paralisia cerebral leve secundária a asfixia neonatal, obeso, DM2, autonomia e mobilidade reduzidas. História pregressa: vômitos alimentares frequentes no 1º ano de vida; aos 6 anos, diagnóstico de refluxo gastroesofágico grave, submetido a cirurgia antirrefluxo com melhora por 3 décadas. Há 1 ano, recidiva do refluxo noturno; a família o medicou com omeprazol 20 mg/dia, sem melhora; 2 episódios de hematêmese na última semana. EDA: esôfago distal com área de mucosa avermelhada, lisa e homogênea, bordas irregulares, extensão superior a 3 cm a partir da cárdia (linha Z), sem ulcerações; colhida biópsia incisional com margem de mucosa típica. Anatomopatológico: em uma margem, epitélio esofágico pavimentoso estratificado não queratinizado; na outra, epitélio de tipo intestinal com células colunares e caliciformes configurando criptas regulares, intenso infiltrado mononuclear interglandular até a submucosa; ausência de displasia.`,
+ perg:["Quais os diagnósticos diferenciais (possíveis HDs) diante do quadro clínico e endoscópico?","Qual exame é o mais relevante para a conclusão do quadro?","Qual o diagnóstico final e o que ele significa biologicamente?","Caso o laudo anatomopatológico acusasse displasia de ALTO grau, o que mudaria na classificação, no prognóstico e na conduta?"],
+ resp:[
+  ["a) Diagnósticos diferenciais","Mucosa avermelhada >3 cm acima da linha Z em paciente com DRGE de longa data levanta: DRGE complicada (esofagite erosiva crônica), esôfago de Barrett (mucosa em salmão) e — provocação feita em aula — heterotopia/ectopia de tecido glandular, que também poderia dar mancha com epitélio colunar (mas seria tipicamente do 1/3 superior e congênita). A hematêmese ainda obriga a lembrar úlcera e laceração de Mallory-Weiss."],
+  ["b) Exame mais relevante","Pegadinha discutida em aula: nenhum exame 'vence' sozinho. O diagnóstico de Barrett exige OBRIGATORIAMENTE as duas evidências — a endoscopia (mucosa em salmão, extensão a partir da JEG) E a histologia comprovando metaplasia intestinal (células caliciformes). A imagem sem biópsia pode ser só DRGE; a metaplasia sem a imagem pode ser heterotopia."],
+  ["c) Diagnóstico final","Esôfago de Barrett de segmento LONGO (≥3 cm), SEM displasia. Biologicamente é metaplasia intestinal: adaptação do epitélio escamoso à injúria ácida persistente — troca por epitélio colunar com caliciformes produtoras de muco. Sendo adaptação sem displasia, é potencialmente reversível tratando a causa (o refluxo) — e omeprazol isolado é tratamento sintomático, não corrige os mecanismos quebrados (obesidade, postura, esfíncter)."],
+  ["d) Se houvesse displasia de alto grau","Mudaria tudo: sai o raciocínio de adaptação e entra o de lesão precursora em progressão — displasia de alto grau ≈ quase carcinoma in situ, raríssimamente reversível. A classificação deixa de ser Los Angeles (erosões) e passa à classificação de Viena (1–5); o seguimento vira obrigatório e mais frequente e o tratamento fica agressivo (ablação/ressecção, decisão junto à oncologia), pelo risco (~30%) de adenocarcinoma."]],
+ ref:"Caso José da Silva — Barrett (estudo dirigido da aula)"},
+
+/* D2 */ {n:2,aula:1,
+ caso:`Questão ENAMED discutida no fim da aula: homem de 62 anos com disfagia progressiva — inicialmente para sólidos e, após alguns meses, também para líquidos —, perda ponderal significativa, anorexia e episódios de dor retroesternal. Tabagista há 40 anos e etilista crônico. Ao exame, emagrecido. EDA: lesão vegetante irregular com estenose significativa no TERÇO MÉDIO do esôfago. Alternativas em jogo: (A) acalásia; (B) estenose benigna; (C) carcinoma de células escamosas com obstrução pelo crescimento tumoral; (D) anel de Schatzki; (E) obstrução por dilatação esofágica.`,
+ perg:["Qual a resposta correta e quais elementos do caso a sustentam?","Por que acalásia (A) e anel de Schatzki (D) não explicam o quadro, apesar de ambos causarem disfagia?","Por que a perda ponderal pesa contra a hipótese de estenose benigna (B)?","Explique o mecanismo fisiopatológico da disfagia progressiva sólidos→líquidos nesse paciente."],
+ resp:[
+  ["a) Resposta correta","(C) Carcinoma de células escamosas. Convergem: homem 60+, tabagismo de 40 anos + etilismo crônico (sinergismo carcinogênico), topografia no terço MÉDIO (território clássico do CCE), lesão vegetante irregular com estenose, disfagia progressiva e síndrome consumptiva (perda ponderal + anorexia)."],
+  ["b) Por que não A nem D","Acalásia é doença do EEI/terço distal — disfagia por falha de relaxamento, sem lesão estrutural vegetante no terço médio (esofagograma daria 'bico de pássaro', não massa). Anel de Schatzki é membrana fina do esôfago distal: justificaria disfagia intermitente, mas não a lesão vegetante, a estenose do terço médio, nem o emagrecimento."],
+  ["c) O peso da perda ponderal","No funil da aula, sinais sistêmicos separam os grupos: estenose benigna (péptica, cáustica, cicatricial) obstrui mas não consome — perda ponderal significativa + anorexia + lesão vegetante deslocam o raciocínio para malignidade."],
+  ["d) Mecanismo da disfagia progressiva","O tumor cresce de forma insidiosa para dentro de uma luz ampla: no início nada obstrui (assintomático por anos); conforme a massa reduz o calibre, primeiro travam os sólidos (bolo maior), depois pastosos e líquidos — até a própria saliva. É obstrução MECÂNICA progressiva por crescimento tumoral, diferente da obstrução FUNCIONAL da acalásia (luz livre, esfíncter que não relaxa)."]],
+ ref:"Questão ENAMED — CCE de terço médio"},
+
+/* D3 */ {n:3,aula:1,
+ caso:`Mulher de 52 anos, natural de zona rural endêmica para doença de Chagas, refere sensação de "entalo" retroesternal há 2 anos, com disfagia insidiosa e progressiva para sólidos e, nos últimos meses, também para líquidos — chegando a regurgitar saliva. Nega pirose e emagrecimento importante. EDA sem lesões de mucosa. Esofagograma baritado: esôfago francamente dilatado, afilando em "bico de pássaro" na transição para o estômago.`,
+ perg:["Qual a hipótese diagnóstica e que exame funcional a confirma?","Descreva a tríade fisiopatológica dessa doença e classifique o caso quanto à etiopatogenia (primária, secundária, idiopática).","Explique como se forma o megaesôfago.","Quais as bases de tratamento, em ordem de invasividade?"],
+ resp:[
+  ["a) Hipótese e confirmação","Acalásia — a mais comum das disfunções de motilidade. Com EDA normal e disfagia real, o exame que confirma é a MANOMETRIA esofágica (mede a pressão/força de contração: mostra aperistalse e EEI hipertônico que não relaxa). O esofagograma com bico de pássaro reforça a imagem típica."],
+  ["b) Tríade e classificação","Tríade: (1) aperistalse do corpo esofágico; (2) aumento do tônus basal do EEI; (3) relaxamento incompleto do EEI à deglutição. O caso é acalásia SECUNDÁRIA: a doença de Chagas destrói o plexo mioentérico (tropismo do T. cruzi por tecido nervoso) — diferente da primária (degeneração comprovada dos neurônios inibitórios sem doença de base) e da idiopática (sem causa identificada)."],
+  ["c) Megaesôfago","Sem peristalse e com o 'portão' distal fechado, o alimento estagna repetidamente acima do EEI; a estase crônica distende a parede, que vai se dilatando de forma permanente — o esôfago fica gigante acima do esfíncter (mesmo mecanismo do megacólon chagásico em outro segmento do tubo)."],
+  ["d) Tratamento","Clínico: nitratos (relaxam a musculatura lisa do esfíncter). Endoscópico: dilatação pneumática por balão (distende as fibras do EEI em sessões). Cirúrgico, para os graves: miotomia (secção das fibras do esfíncter) e, em último caso, esofagectomia com reconstrução."]],
+ ref:"Acalásia chagásica — motilidade"},
+
+/* D4 */ {n:4,aula:1,
+ caso:`Recém-nascida a termo, sem intercorrências no pré-natal aparente, evolui na primeira mamada com engasgos, tosse, regurgitação abrupta do leite e crise de cianose. A tentativa de passagem de sonda nasogástrica falha: a sonda progride ~10 cm e "dobra", retornando pela boca. A radiografia mostra a sonda enovelada em fundo cego torácico alto; há ar no estômago.`,
+ perg:["Qual o diagnóstico e qual detalhe embriológico explica a malformação?","O ar no estômago, apesar do fundo cego esofágico, indica o quê? Classifique o caso.","Cite as principais complicações se o diagnóstico atrasar.","Quais as bases do tratamento e que outras malformações devem ser rastreadas?"],
+ resp:[
+  ["a) Diagnóstico e embriologia","Atresia de esôfago — a sonda que dobra denuncia a bolsa esofágica cega (desenvolvimento incompleto, com cordão fino não canalizado substituindo um segmento). Origem: falha da separação entre esôfago e traqueia no intestino anterior, entre a 4ª e a 6ª semanas de gestação."],
+  ["b) Ar no estômago e classificação","Se o esôfago termina em fundo cego mas há ar no estômago, o ar só pode estar entrando pela via respiratória: existe uma fístula traqueoesofágica DISTAL comunicando a árvore traqueobrônquica com o esôfago abaixo da atresia. É o tipo C de Gross — a combinação mais comum (>80% dos casos)."],
+  ["c) Complicações do atraso","Broncoaspiração a cada tentativa de alimentação, pneumonias de repetição (aspiração pelo trajeto fistuloso), sufocamento e sequelas de hipóxia. Fístula completa é incompatível com a vida sem correção."],
+  ["d) Tratamento e rastreio","Correção cirúrgica urgente na neonatologia: fechamento da fístula e anastomose para reconstruir o trânsito esofágico (hoje muitos casos já são suspeitados no USG morfológico pré-natal). Rastrear malformações associadas: cardíacas, geniturinárias e cromossomopatias como a síndrome de Down."]],
+ ref:"Atresia + fístula tipo C de Gross — congênitas"}
+];
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 01</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 01</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 01 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 01 — Patologia do Esôfago",kicker:"ANATO PATO II",desc:"Congênitas, motilidade, varizes, esofagites, DRGE, Barrett e os dois cânceres.",cards:[
+ {area:"Funil diagnóstico",cat:"prof",q:"Quais são os 4 grupos em que TODA doença se encaixa (o 'funil' da Pato II)?",a:"1) <b>Congênitas</b> (nascimento/infância) · 2) <b>Adquiridas não inflamatórias</b> (ex.: motilidade) · 3) <b>Inflamatórias</b> (agudo×crônico · infeccioso×não · autoimune×imunomediado) · 4) <b>Neoplásicas</b> (benignas×malignas).",obs:"A professora organiza as provas e as aulas nessa ordem — 'mais de 5 mil doenças do Robbins cabem em 4 grupos'."},
+ {area:"Funil diagnóstico",cat:"conceito",q:"Diferença entre DDs e HD?",a:"<b>DDs</b> = grupo de doenças que ainda explicam o quadro (não diferenciou). <b>HD</b> = a hipótese mais provável dentro dos DDs, que os exames vão confirmar (diagnóstico final)."},
+ {area:"Funil diagnóstico",cat:"conceito",q:"EDA: qual o nome verdadeiro do exame e o que ele mostra?",a:"<b>Esofagogastroduodenoscopia</b> — esôfago, estômago e início do duodeno.",obs:"pHmetria = sonda com sensor medindo pH esofágico (padrão-ouro p/ confirmar refluxo duvidoso)."},
+ {area:"Anatomia/histologia",cat:"conceito",q:"Qual o epitélio do esôfago normal?",a:"<b>Pavimentoso (escamoso) estratificado NÃO queratinizado</b>, ~15–30 camadas — mucosa lisa, úmida, rosa-pálida (como a bochecha)."},
+ {area:"Anatomia/histologia",cat:"prof",q:"O que compõe a MUCOSA esofágica — e qual estrutura é a 'fronteira' com a submucosa?",a:"Epitélio + <b>lâmina própria</b> + <b>muscular da mucosa</b>. A <b>muscular da mucosa</b> é a fronteira — com a membrana basal, define o <b>carcinoma in situ</b> (não ultrapassou = in situ).",obs:"É assim que os laudos de câncer são escritos."},
+ {area:"Anatomia/histologia",cat:"conceito",q:"As 3 constrições fisiológicas do esôfago e a mais importante para a patologia?",a:"Superior (cricofaríngeo/EES), média (arco aórtico + bifurcação traqueal) e inferior (<b>EEI</b>, 2–4 cm acima da JEG) — o EEI é o <b>principal mecanismo protetor antirrefluxo</b>.",obs:"A constrição média explica a invasão por contiguidade dos tumores (aorta/traqueia coladas)."},
+ {area:"Anatomia/histologia",cat:"conceito",q:"O que é o clearance esofágico?",a:"A 'limpeza' contínua da mucosa: <b>saliva (~3 L/dia)</b> + secreção das glândulas esofágicas da submucosa + peristalse descendente — neutraliza os pequenos refluxos fisiológicos."},
+ {area:"Anatomia/histologia",cat:"conceito",q:"De onde a endoscopia mede as distâncias no esôfago?",a:"Da <b>arcada dentária superior (ADS)</b> — por isso o laudo diz 'aos 35 cm da ADS, lesão…'."},
+ {area:"Congênitas",cat:"conceito",q:"Embriologia: por que existem malformações congênitas do esôfago?",a:"Entre a <b>4ª e a 6ª semanas</b> o intestino primitivo anterior se bifurca em traqueia + esôfago; <b>falhas nessa separação</b> (ou na diferenciação celular) geram atresias, fístulas e ectopias."},
+ {area:"Congênitas",cat:"conceito",q:"Ectopia gástrica esofágica (MGE): onde fica e como aparece?",a:"<b>Terço SUPERIOR</b>; 'patch' assintomático, achado de EDA; micro = ilhas de epitélio colunar glandular gástrico. Se o tecido for <b>funcional</b>, o HCl local causa inflamação e disfagia.",obs:"Também existem ectopias pancreáticas."},
+ {area:"Congênitas",cat:"caso",q:"RN engasga, tosse e fica cianótico na 1ª mamada; a sonda nasogástrica 'dobra'. Diagnóstico e forma mais comum?",a:"<b>Atresia de esôfago</b> (bolsa cega). Forma mais comum: <b>tipo C de Gross (>80%)</b> = atresia + <b>fístula traqueoesofágica DISTAL</b>.",obs:"Fístula completa = incompatível com a vida → cirurgia neonatal urgente. Associações: Down, cardíacas, geniturinárias."},
+ {area:"Motilidade",cat:"conceito",q:"Quem controla deglutição e peristalse?",a:"<b>Nervo vago (X par)</b> + plexos entéricos: <b>submucoso (Meissner)</b> e <b>mioentérico (Auerbach)</b> — sinalização simpática e parassimpática. Patogênese das disfunções = <b>quebra desse ritmo</b>."},
+ {area:"Motilidade",cat:"prof",q:"A tríade da acalásia?",a:"1) <b>Aperistalse</b> · 2) <b>Aumento do tônus basal do EEI</b> · 3) <b>Relaxamento incompleto do EEI</b>.",obs:"Clínica: disfagia insidiosa progressiva sólidos→líquidos ('entalo'), até não engolir saliva."},
+ {area:"Motilidade",cat:"conceito",q:"Acalásia primária × secundária × idiopática?",a:"<b>Primária</b>: degeneração dos neurônios INIBITÓRIOS do esôfago distal. <b>Secundária</b>: outra doença destrói o plexo — ex. clássico: <b>Chagas</b> (megaesôfago). <b>Idiopática</b>: sem causa identificada."},
+ {area:"Motilidade",cat:"alerta",q:"'Bico de pássaro' × 'maçã mordida' — quem é quem?",a:"<b>Bico de pássaro</b> = ACALÁSIA (esofagograma: dilatação que afila até passar gota a gota). <b>Maçã mordida</b> = CÂNCER (baritado: falha irregular de enchimento pela massa)."},
+ {area:"Motilidade",cat:"conceito",q:"Tratamento da acalásia (em escada)?",a:"<b>Nitratos</b> (relaxam m. liso) → <b>dilatação pneumática por balão</b> → <b>miotomia</b>; esofagectomia nos casos extremos.",obs:"Manometria esofágica = exame que mede a pressão/força de contração."},
+ {area:"Motilidade",cat:"conceito",q:"Hérnia de hiato: o que acontece anatomicamente?",a:"<b>Dilatação dos pilares diafragmáticos</b> no hiato + <b>EEI incompetente</b> → parte do estômago sobe ao tórax. É o 'oposto' da acalásia (lá o esfíncter é hipertônico)."},
+ {area:"Motilidade",cat:"alerta",q:"Hérnia deslizante × paraesofágica?",a:"<b>Deslizante (~90%)</b>: fundo gástrico sobe e volta; linha Z ≥2 cm acima do pinçamento na EDA; associada à DRGE. <b>Paraesofágica (~10%)</b>: estômago fixo ao lado do esôfago — risco de <b>estrangulamento/necrose</b> (a perigosa; vista em retrovisão).",obs:"Tratamento cirúrgico quando indicado: fundoplicatura."},
+ {area:"Varizes",cat:"caso",q:"Cirrótico com hematêmese volumosa: mecanismo?",a:"Fibrose hepática → <b>hipertensão portal</b> → canais colaterais → <b>plexo venoso submucoso do 1/3 distal dilatado e tortuoso</b> (varizes; ~90% dos cirróticos) → <b>ruptura = HDA de difícil manejo = emergência</b>.",obs:"Também na esquistossomose. Varizes gástricas costumam coexistir. Assintomáticas até romper."},
+ {area:"Esofagites agudas",cat:"prof",q:"Regra de nomenclatura das inflamações que a professora repetiu?",a:"<b>Aguda = 'esofagite'</b> (sem sobrenome). <b>Crônica ganha NOME</b>: doença do refluxo gastroesofágico, esôfago de Barrett.",obs:"E: micro de esofagite AGUDA não cai em prova — agudo quase não se biopsia."},
+ {area:"Esofagites agudas",cat:"caso",q:"Placas brancas DESTACÁVEIS no esôfago de paciente imunossuprimido — diagnóstico e micro?",a:"<b>Candidíase esofágica</b>. Micro (PAS): <b>hifas e leveduras</b> entre as células escamosas.",obs:"Candida é microbiota — vira doença na imunossupressão/disbiose. Geralmente autolimitada."},
+ {area:"Esofagites agudas",cat:"caso",q:"Lesões vesículo-ulcerosas + células gigantes multinucleadas com inclusões nucleares?",a:"<b>Esofagite herpética (HSV)</b> — as células são as <b>células de Tzanck</b>.",obs:"CMV e bactérias são causas menos frequentes."},
+ {area:"Esofagites agudas",cat:"conceito",q:"Esofagite eosinofílica, química e física — gatilhos?",a:"<b>Eosinofílica</b>: alergias/intolerâncias alimentares (imunomediada, em ascensão). <b>Química</b>: corrosivos (soda cáustica). <b>Física</b>: radioterapia regional → <b>mucosite</b>.",obs:"Todas podem deixar estenose fibrocicatricial."},
+ {area:"DRGE",cat:"conceito",q:"Definição de DRGE (e por que 'refluxo' não é sinônimo de doença)?",a:"Esofagite <b>crônica e sintomática</b> por fluxo retrógrado gástrico <b>persistente e sem esforço</b>. Refluxos fisiológicos existem — vira DOENÇA quando os mecanismos de proteção quebram e os sintomas se instalam.",obs:"Diagnóstico GI mais comum do mundo ocidental."},
+ {area:"DRGE",cat:"prof",q:"Cite os mecanismos de proteção antirrefluxo.",a:"Pressão basal do <b>EEI</b> · compressão dos <b>pilares diafragmáticos</b> · <b>JEG oblíqua</b> ('sobra' protetora) · <b>gravidade/postura</b> ereta · <b>esvaziamento gástrico rápido</b> · <b>saliva/clearance</b>.",obs:"DRGE = quebra de VÁRIOS ao mesmo tempo — por isso a patogênese é multicausal."},
+ {area:"DRGE",cat:"prof",q:"Qual decúbito protege contra refluxo — e por quê?",a:"<b>Lateral ESQUERDO</b>: o líquido fica na grande curvatura gástrica, longe da junção oblíqua. Decúbito direito aproxima o conteúdo da JEG e piora.",obs:"Orientação prática de tratamento (a professora desenhou no quadro até acertar o lado)."},
+ {area:"DRGE",cat:"conceito",q:"Fatores de predisposição à DRGE?",a:"Hérnia de hiato · envelhecimento (↓tônus, ↓saliva) · tabaco e álcool · <b>depressores do SNC</b>/psicotrópicos · <b>obesidade e gravidez</b> (pressão intra-abdominal) · esvaziamento gástrico lento · vida deitada (gamers, bebês em supino com dieta líquida)."},
+ {area:"DRGE",cat:"conceito",q:"Sintomas atípicos da DRGE que enganam?",a:"<b>Tosse, rouquidão, faringite, dor torácica</b> e microbroncoaspirações noturnas que mimetizam doença pulmonar — 'tratava asma, era refluxo'."},
+ {area:"DRGE",cat:"prof",q:"Classificação de Los Angeles — o que gradua e como?",a:"Gradua a <b>esofagite EROSIVA na endoscopia</b>: graus <b>A→D</b> conforme número/tamanho das erosões (≤ ou >5 mm) e % da circunferência acometida (D ≈ ≥75%).",obs:"NÃO confundir com Viena (displasia/neoplasia)."},
+ {area:"DRGE",cat:"conceito",q:"Micro da esofagite de refluxo?",a:"<b>Hiperplasia da camada basal</b> + <b>alongamento das papilas</b> + <b>linfócitos/eosinófilos intraepiteliais</b> (exocitose) + infiltrado <b>mononuclear</b> + vasos dilatados/congestos.",obs:"Hiperplasia basal = o epitélio acelerando mitoses para repor o que o ácido destrói."},
+ {area:"DRGE",cat:"alerta",q:"Omeprazol cura DRGE?",a:"<b>Não.</b> IBP reduz o pH do refluxato = tratamento <b>sintomático</b>. Não corrige esfíncter, hérnia, obesidade, postura — no caso da aula o paciente usou por conta própria 'sem melhora' e evoluiu com complicação."},
+ {area:"Barrett",cat:"prof",q:"O que é o esôfago de Barrett?",a:"<b>Metaplasia INTESTINAL da mucosa esofágica distal</b> — o epitélio escamoso é substituído por epitélio colunar com <b>células caliciformes</b> (muco protetor), como adaptação à DRGE não tratada.",obs:"'Célula inteligente vira intestinal (faz muco), não gástrica (faria mais ácido).'"},
+ {area:"Barrett",cat:"prof",q:"Critério diagnóstico OBRIGATÓRIO do Barrett?",a:"<b>Endoscopia (mucosa em salmão) + comprovação HISTOLÓGICA da metaplasia intestinal.</b> Imagem sozinha pode ser DRGE; metaplasia sem imagem pode ser heterotopia — precisa das duas.",obs:"Segmento curto <3 cm · longo ≥3 cm."},
+ {area:"Barrett",cat:"conceito",q:"Epidemiologia do Barrett (e por que o Sul)?",a:"<b>Homens brancos, 40–60 anos</b>; mais frequente no Sul — etnia + hábito de <b>bebida muito quente</b> (chimarrão pela TEMPERATURA, não pela erva)."},
+ {area:"Barrett",cat:"alerta",q:"Metaplasia × displasia no Barrett — o que muda?",a:"<b>Metaplasia sem displasia = reversível</b> tratando o refluxo. <b>Displasia = lesão pré-maligna</b>; alto grau ≈ <b>quase carcinoma in situ</b>, raríssimo reverter → classificação de <b>VIENA (1–5)</b>, seguimento obrigatório, tratamento agressivo (~30% risco).",obs:"Barrett é o principal fator de risco do ADENOCARCINOMA."},
+ {area:"Barrett",cat:"caso",q:"Jovem vomita repetidamente pós-libação alcoólica e tem hematêmese leve; EDA: lacerações LINEARES na JEG. Diagnóstico?",a:"<b>Lacerações de Mallory-Weiss</b> — contrações retrógradas + falha de relaxamento durante vômitos → lacerações lineares transitórias, que reparam.",obs:"O problema, como sempre na aula, é a PERSISTÊNCIA."},
+ {area:"Benignas",cat:"conceito",q:"Papiloma escamoso do esôfago: agente e micro?",a:"<b>HPV de BAIXO risco (6 e 11)</b>. Micro: hiperplasia de queratinócitos, paraqueratinização, <b>COILOCITOSE</b> (halos perinucleares — efeito citopático viral), <b>ausência de atipias</b>.",obs:"Nódulo papilomatoso/digitiforme, pedunculado → biópsia excisional trata."},
+ {area:"Benignas",cat:"alerta",q:"HPV 6/11 × HPV 16/18?",a:"<b>6/11 = baixo risco</b> → papilomas (inclusive esofágico). <b>16/18 = alto risco</b> → câncer de colo do útero. NÃO misturar.",obs:"Coilocitose sugere vírus, mas não é patognomônica."},
+ {area:"Benignas",cat:"conceito",q:"Leiomioma esofágico: origem, macro e micro?",a:"Músculo liso — tipicamente da <b>muscular da mucosa</b>. Nódulo <b>séssil</b>, firme, profundo, normocromático. Micro: <b>feixes uniformes de células musculares lisas SEM atipias/mitoses</b>.",obs:"Laudo benigno vem com a frase-chave 'ausência de atipias'. Lipoma = outro benigno comum, pode ficar grande."},
+ {area:"Malignas",cat:"prof",q:"CCE × Adenocarcinoma — topografia e hospedeiro?",a:"<b>CCE (~80% no Brasil)</b>: terços <b>médio/superior</b>, homens 50+, mais <b>negros</b>, tabaco+álcool em <b>SINERGISMO</b>. <b>Adenocarcinoma</b>: terço <b>distal</b> (+cárdia), homens <b>brancos</b>, nasce do <b>Barrett</b>, em ascensão pela obesidade."},
+ {area:"Malignas",cat:"conceito",q:"Micro do CCE — os achados-assinatura?",a:"Queratinócitos atípicos <b>hipercromáticos, pleomórficos</b>, com <b>cariomegalia</b>, mitoses atípicas em TODAS as camadas e <b>PÉROLAS CÓRNEAS</b> (queratina concêntrica — onde não devia haver queratina).",obs:"Progressão: displasia → CIS (respeita membrana basal/muscular da mucosa) → invasivo."},
+ {area:"Malignas",cat:"conceito",q:"Micro do adenocarcinoma e graduação do laudo?",a:"Glândulas atípicas com caliciformes (herança do Barrett) → com a progressão, <b>desdiferenciação</b> (nem parece glandular; entra imuno-histoquímica). Laudo: <b>bem / moderadamente / mal diferenciado</b> — mal diferenciado = pior."},
+ {area:"Malignas",cat:"prof",q:"Por que o câncer de esôfago dissemina tão cedo localmente?",a:"O esôfago <b>quase não tem serosa</b> e é <b>justaposto a traqueia, aorta e pericárdio</b> (2ª constrição) → invasão por <b>contiguidade</b>, fístulas (pneumonia aspirativa), hemorragias; + rica rede linfática.",obs:"Sobrevida em 5 anos <30–40% — diagnóstico tardio. Disfagia progressiva + emagrecimento = investigar."},
+ {area:"Malignas",cat:"conceito",q:"Como se faz diagnóstico e estadiamento do CA de esôfago?",a:"EDA + <b>biópsias incisionais múltiplas</b> (lesão heterogênea) · baritado (<b>'maçã mordida'</b>) · TC (metástases fígado/pulmão). Estadiamento <b>TNM</b> (T1–4/N0–3/M0–1); os estádios de CCE e adeno são tabelados separadamente.",obs:"Tumor intramucoso/CIS = ainda respeita a muscular da mucosa."},
+ {area:"Casos da aula",cat:"caso",q:"Caso José (39a, obeso, cirurgia antirrefluxo na infância, recidiva + hematêmese; EDA: mucosa salmão >3 cm; AP: caliciformes SEM displasia). Diagnóstico e conduta conceitual?",a:"<b>Esôfago de Barrett de segmento longo, sem displasia</b> — metaplasia reversível: tratar o REFLUXO de verdade (não só omeprazol). Se houvesse displasia de alto grau: Viena, quase-CIS, conduta agressiva.",obs:"Ela cobrou: nenhum exame sozinho fecha — endoscopia + histologia."},
+ {area:"Casos da aula",cat:"caso",q:"HDA (hematêmese): quais origens esofágicas lembrar?",a:"<b>Ruptura de varizes</b> (cirrótico) · esofagites/úlceras · <b>Mallory-Weiss</b> (pós-vômitos) · <b>tumores ulcerados</b>. Origem sempre: esôfago, estômago ou duodeno → EDA de urgência."}
+]}};
+
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-esofago-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
