@@ -1,0 +1,1658 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 02 — Patologia do Pâncreas · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 02 — Patologia do Pâncreas</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 02</p>
+  <h1 class="page-h1">Patologia do Pâncreas</h1>
+  <p class="lead">Histofisiologia, pancreatite aguda e crônica e o adenocarcinoma ductal — a aula da Profa. Fernanda Giudice explicada do zero, com o "caminho de ponta a ponta" da patogênese que ela avisou que cai em prova.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O pâncreas normal: anatomia, ductos e histologia</a></li>
+      <li><a href="#t2">Como o pâncreas não se digere: pró-enzimas e 5 proteções</a></li>
+      <li><a href="#t3">Quem manda o pâncreas secretar: secretina, CCK e vago</a></li>
+      <li><a href="#t4">Pancreatite aguda: definição e reversibilidade</a></li>
+      <li><a href="#t5">Patogênese: o tripsinogênio e os 3 mecanismos</a></li>
+      <li><a href="#t6">Etiologias: biliar, álcool (80%) e genética</a></li>
+      <li><a href="#t7">Morfologia: intersticial → necrosante → hemorrágica (e a esteatonecrose)</a></li>
+      <li><a href="#t8">Clínica, diagnóstico (2 de 3) e estratificação</a></li>
+      <li><a href="#t9">Complicações: sistêmicas, pseudocisto e abscesso</a></li>
+      <li><a href="#t10">Pancreatite crônica: fibrose irreversível</a></li>
+      <li><a href="#t11">Adenocarcinoma ductal invasor</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O pâncreas normal: anatomia, ductos e histologia</h2>
+  <div class="box caso"><p class="h">🩺 O caso que abriu a discussão</p>
+  <p>Mulher, 48 anos, procura atendimento com <b>dor abdominal intensa e vômitos</b>, agudamente doente. Laboratório: <b>amilase e lipase elevadas</b>. Imagem: <b>cálculo biliar impactado</b> na região onde o colédoco encontra o ducto pancreático principal. A aula inteira responde: <em>como um cálculo ali vira um pâncreas se autodigerindo?</em></p></div>
+
+  <h3>Anatomia que a patologia usa</h3>
+  <ul>
+    <li>Órgão <b>retroperitoneal</b>, transversal, encaixado na <b>concavidade em "C" do duodeno</b> e estendendo-se até o <b>hilo do baço</b>; ~<b>20 cm</b>, ~90 g (H) / 85 g (M) — o peso muda em processos patológicos.</li>
+    <li>Partes: <b>cabeça</b> (alguns autores separam o <b>processo uncinado</b>), <b>colo, corpo e cauda</b>.</li>
+    <li><b>Ductos:</b> o <b>principal (Wirsung)</b> desemboca na <b>papila maior (de Vater)</b>; antes disso ele se une ao <b>ducto biliar comum (colédoco)</b>, formando a <b>ampola hepatopancreática (de Vater)</b> — um canal comum para bile e suco pancreático. O <b>acessório (Santorini)</b> drena pela <b>papila menor</b>, ~2 cm acima. Grave esse encontro: é ali que um cálculo biliar consegue travar o pâncreas inteiro.</li>
+  </ul>
+
+  <h3>Histologia: um órgão, duas glândulas</h3>
+  <div class="diagrama"><p class="t">Organização do parênquima</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Cápsula conjuntiva + septos</b> — <span class="d">dividem o órgão em lóbulos (órgão lobular — visível na lâmina).</span></div></li>
+    <li><span class="n">2</span><div><b>Porção EXÓCRINA (80–85%)</b> — <span class="d"><b>células acinares</b>: serosas, piramidais, dispostas radialmente em torno de uma luz central; sintetizam e <b>armazenam as enzimas em grânulos de zimogênio</b>. Cada ácino drena para um <b>ducto intercalar → intralobular → interlobular → ducto principal</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>Porção ENDÓCRINA (1–2%)</b> — <span class="d">~1 milhão de <b>ilhotas de Langerhans</b>: micro-órgãos endócrinos, cordões de células poligonais envoltos por fina cápsula conjuntiva e uma rede rica de <b>capilares fenestrados</b> (o hormônio cai direto na circulação). Maioria = células <b>beta (insulina)</b>; alfa (glucagon) e delta (somatostatina) — na prática, só a <b>imuno-histoquímica</b> distingue os tipos.</span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/slide09-histologia-normal.jpg" alt="Slide: histologia normal do pâncreas com ilhotas claras em meio ao parênquima acinar basofílico" loading="lazy"><figcaption>Pâncreas normal: parênquima acinar basofílico (roxo) dividido em lóbulos por septos conjuntivos; as áreas arredondadas mais claras são as ilhotas de Langerhans.</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Célula centroacinosa = patognomônica do pâncreas</p>
+  <p>Na luz de cada ácino aparecem células claras — as <b>células centroacinosas</b>, o comecinho do ducto intercalar. Elas são <b>exclusivas do pâncreas</b>: é o que diferencia, na lâmina, o pâncreas da <b>parótida</b> (que também é glândula serosa de ácinos, mas <em>não tem</em> centroacinosas). Pergunta clássica de prova prática.</p></div>
+
+  <h2 class="topic" id="t2">2 · Como o pâncreas não se digere: pró-enzimas e as 5 proteções</h2>
+  <p>O suco pancreático carrega um arsenal: pró-elastase, <b>tripsinogênio</b>, calicreinogênio, quimotripsinogênio, pró-carboxipeptidase, pró-fosfolipases…</p>
+  <div class="box prof"><p class="h">🎯 As duas exceções que já saem prontas</p><p><b>Amilase e lipase</b> são as ÚNICAS enzimas secretadas já ativas — todo o resto nasce como pró-enzima inerte. Guarde: são elas que começam o estrago quando o suco fica represado, e são elas que dosamos no sangue para o diagnóstico.</p></div>
+  <p>Cinco mecanismos impedem a autodigestão (a professora avisou: <em>"posso pedir para citar dois na prova"</em>):</p>
+  <ol>
+    <li><b>Empacotamento</b> — as enzimas ficam sequestradas nos <b>grânulos de zimogênio</b>, envoltos por membrana, dentro das células acinares.</li>
+    <li><b>Pró-enzimas inativas</b> — a maioria é sintetizada inerte (exceto amilase e lipase, que são rapidamente diluídas pelo fluido rico em bicarbonato e água e carregadas ao intestino).</li>
+    <li><b>Ativação só no duodeno</b> — a <b>enteropeptidase (enteroquinase)</b> duodenal converte <b>tripsinogênio → tripsina</b>, e é a tripsina que ativa todas as outras pró-enzimas. Longe do pâncreas, portanto.</li>
+    <li><b>Inibidores de tripsina</b> — o gene <b>SPINK1</b> codifica o <b>PSTI</b> (inibidor de secreção pancreática de tripsina), secretado pelas próprias células acinares e ductais: qualquer tripsina ativada "antes da hora" é neutralizada.</li>
+    <li><b>Resistência acinar</b> — as células acinares toleram razoavelmente tripsina, quimotripsina e fosfolipase A2 (até certo ponto — grandes quantidades vencem).</li>
+  </ol>
+
+  <h2 class="topic" id="t3">3 · Quem manda o pâncreas secretar</h2>
+  <ul>
+    <li>Quando o quimo ácido chega ao duodeno (<b>pH &lt; 4,5</b>), as <b>células enteroendócrinas</b> das vilosidades do duodeno/jejuno liberam <b>secretina e colecistoquinina (CCK)</b>; o <b>nervo vago</b> também estimula.</li>
+    <li><b>Secretina</b> → suco <b>fluido, rico em bicarbonato</b> (produzido pelas células dos <b>ductos intercalares</b>) para <b>neutralizar o pH</b> do quimo.</li>
+    <li><b>CCK</b> → suco <b>rico em enzimas</b> (estimulada por aminoácidos, ácidos graxos e suco gástrico).</li>
+    <li>As duas agem integradas: o suco final precisa de enzimas <em>e</em> de água + bicarbonato.</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · Pancreatite aguda: definição e reversibilidade</h2>
+  <div class="def"><b>Pancreatite aguda</b> — inflamação pancreática aguda caracterizada por <b>dor abdominal súbita + elevação das enzimas pancreáticas</b>. É uma <b>lesão REVERSÍVEL</b> do parênquima associada à inflamação — e acomete a porção <b>exócrina</b> (as ilhotas seguem funcionando; doença endócrina = diabetes, outra aula).</div>
+  <div class="box conexao"><p class="h">🔗 Por que reversível? (conceito da Pato 1)</p><p>Reparo tecidual = <b>regeneração</b> ou <b>cicatrização</b>. As células acinares são <b>estáveis</b>: removido o agente, as remanescentes proliferam e <b>regeneram</b> a morfofisiologia — sem cicatriz. É exatamente o que a crônica perde: lá entra <b>fibrose</b>, e fibrose não volta.</p></div>
+  <p>A maioria dos episódios é <b>leve e autolimitada</b>, mas o espectro vai até formas com risco de vida.</p>
+
+  <h2 class="topic" id="t5">5 · Patogênese: o tripsinogênio e os 3 mecanismos</h2>
+  <div class="box prof"><p class="h">🎯 A chave que "não podem errar"</p><p>Pancreatite aguda = <b>autodigestão do pâncreas por enzimas ativadas INAPROPRIADAMENTE</b> — e o gatilho de tudo é a <b>ativação inapropriada do TRIPSINOGÊNIO dentro do pâncreas</b> (o normal seria ativá-lo só no duodeno). A tripsina formada ativa as demais pró-enzimas em cascata. Sem tripsinogênio ativado, não há pancreatite.</p></div>
+  <p>O que a tripsina solta faz: ativa <b>pró-fosfolipase</b> e <b>pró-elastase</b> (a fosfolipase degrada células adiposas; a elastase destrói as fibras elásticas da parede dos vasos — por isso há pancreatite <em>com hemorragia</em>); e converte <b>pré-calicreína em calicreína</b> — ativação intrínseca do <b>complemento</b> (mais inflamação) e <b>trombose de pequenos vasos</b> (congestão e ruptura de vasos já fragilizados).</p>
+
+  <h3>Mecanismo ① — Obstrução ductal (o mais comum)</h3>
+  <div class="diagrama"><p class="t">O "caminho de ponta a ponta" que ela mandou saber de trás pra frente</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Cálculo ou lama biliar impacta na ampola de Vater</b> — <span class="d">o suco pancreático não drena; a <b>pressão nos ductos intrapancreáticos sobe</b> e fluido rico em enzimas se acumula no interstício.</span></div></li>
+    <li><span class="n">2</span><div><b>A lipase (já ativa!) encontra gordura</b> — <span class="d"><b>esteatonecrose local</b>. Necrose caminha com inflamação: tecidos lesados, miofibroblastos periacinares e leucócitos liberam citocinas (IL-1β, IL-6, TNF, PAF — não precisa decorar a lista).</span></div></li>
+    <li><span class="n">3</span><div><b>Inflamação → edema intersticial</b> — <span class="d">extravasamento da microvasculatura; o edema <b>comprime os vasos</b> e compromete o fluxo local.</span></div></li>
+    <li><span class="n">4</span><div><b>Isquemia → NECROSE das células acinares</b> — <span class="d">a célula que necrosa <b>rompe tudo</b>: grânulos de zimogênio E lisossomos.</span></div></li>
+    <li><span class="n">5</span><div><b>O pulo do gato</b> — <span class="d">as <b>enzimas lisossomais (hidrolases)</b> encontram o <b>tripsinogênio</b> e o ativam <em>dentro do pâncreas</em> → tripsina → cascata de pró-enzimas → <b>autodigestão</b> generalizada.</span></div></li>
+  </ol></div>
+  <div class="box alerta"><p class="h">⚠️ Etiologia ≠ patogênese (pegadinha anunciada)</p><p>No caso da paciente com cálculo: a <b>etiologia</b> é o cálculo biliar. A <b>patogênese</b> é a historinha completa acima. Responder "o cálculo ativou de forma inapropriada" não vale — ela quer o caminho de ponta a ponta.</p></div>
+
+  <h3>Mecanismo ② — Lesão primária das células acinares</h3>
+  <p>Algo destrói a célula acinar diretamente: <b>vírus da caxumba</b> (tropismo por células acinares — e pela parótida), <b>álcool</b>, drogas/medicamentos, <b>trauma direto</b>. A célula necrosada libera pró-enzimas + hidrolases lisossomais → mesma cascata (o tripsinogênio nem chegou ao duodeno; foi ativado no próprio pâncreas).</p>
+
+  <h3>Mecanismo ③ — Transporte intracelular defeituoso</h3>
+  <p>Na célula acinar normal, enzimas digestivas e hidrolases lisossomais viajam em <b>rotas separadas</b>. No defeito, as pró-enzimas são <b>empacotadas junto com as hidrolases lisossomais</b>; os lisossomos se rompem, as pró-enzimas são ativadas dentro da célula. Álcool e obstrução ductal favorecem essa falha.</p>
+
+  <h2 class="topic" id="t6">6 · Etiologias: biliar + álcool = 80% (e a genética)</h2>
+  <ul>
+    <li><b>Doença biliar (cálculos) + alcoolismo respondem por ~80%</b> dos casos no Ocidente. A obstrução por cálculo é o evento precipitante mais comum da ativação do tripsinogênio. Curiosidade real: até <b>verminose</b> (áscaris obstruindo a papila) já causou pancreatite.</li>
+    <li><b>Pancreatite alcoólica tem prognóstico PIOR que a biliar</b>: da biliar você remove o agente (tira o cálculo/vesícula); do álcool, é bem mais difícil "retirar a etiologia".</li>
+    <li><b>O álcool ataca por vários flancos:</b> deixa o suco pancreático mais denso e proteico → <b>concreções</b> (cálculos proteicos que calcificam <em>dentro dos ductos</em>); <b>contrai o esfíncter de Oddi</b> (o músculo da ampola de Vater); é <b>tóxico direto</b> para a célula acinar; e favorece o transporte intracelular defeituoso.</li>
+    <li><b>Genética:</b> <b>PRSS1</b> mutado → tripsina <b>resistente à inativação</b> (herança autossômica <b>dominante</b>): qualquer tripsina ativada por engano dispara a doença. <b>SPINK1</b> mutado → perde-se o inibidor PSTI (herança <b>recessiva</b>). <b>As duas mutações também aumentam o risco de câncer de pâncreas.</b></li>
+  </ul>
+
+  <h2 class="topic" id="t7">7 · Morfologia: três formas + esteatonecrose</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Forma</th><th>Gravidade</th><th>O que a lâmina mostra</th></tr></thead>
+    <tbody>
+      <tr><td><b>Aguda intersticial</b></td><td>Branda (a maioria)</td><td>Inflamação leve (neutrófilos), <b>edema</b> intersticial e <b>focos de esteatonecrose</b> no pâncreas e na gordura peripancreática — o parênquima acinar ainda de pé</td></tr>
+      <tr><td><b>Necrosante aguda</b></td><td>Grave</td><td>Esteatonecrose + <b>necrose do parênquima</b>: ácinos, ductos e até <b>ilhotas</b>; lesões vasculares com <b>focos hemorrágicos</b>; necrose gordurosa também em omento, mesentério e subcutâneo</td></tr>
+      <tr><td><b>Hemorrágica</b></td><td>A mais grave</td><td><b>Necrose parenquimatosa extensa + hemorragia abundante</b> tomando a glândula — "não se reconhece mais o órgão"</td></tr>
+    </tbody>
+  </table></div>
+  <figure class="fig"><img src="img/slide51-necrosante-macro.jpg" alt="Slide: macroscopia de pancreatite necrosante aguda com hemorragia e necrose gordurosa" loading="lazy"><figcaption>Pancreatite necrosante aguda (macroscopia): áreas escuras de hemorragia na cabeça do pâncreas e foco claro de necrose gordurosa no tecido adiposo peripancreático.</figcaption></figure>
+  <figure class="fig"><img src="img/slide56-hemorragica-macro.jpg" alt="Slide: pancreatite hemorrágica com o órgão tomado por necrose e sangue" loading="lazy"><figcaption>Pancreatite hemorrágica: todo o tecido comprometido por necrose com hemorragia — a forma mais grave.</figcaption></figure>
+
+  <h3>Esteatonecrose e saponificação (revisão que ela fez questão de repetir)</h3>
+  <div class="def"><b>Esteatonecrose</b> — necrose do tecido adiposo (escreva o nome completo na prova; <b>"esteatose" é outra coisa</b> — acúmulo de gordura, não morte). É um exemplo de necrose <b>coagulativa</b> "especial" — liquefativa, lembre, é território de <b>cérebro e suprarrenal</b>.</div>
+  <ul>
+    <li>A <b>lipase</b> quebra os triglicérides dos adipócitos rompidos → libera <b>ácidos graxos</b> → eles reagem com o <b>cálcio</b> do interstício → <b>sabões insolúveis de cálcio</b> = <b>reação de saponificação</b>.</li>
+    <li><b>Macro:</b> depósitos brancacentos com aspecto de <b>"cera de vela"</b> (no pâncreas, mesentério, omento…). <b>Micro:</b> <b>contornos-fantasma de adipócitos</b> (células sem núcleo, "células fantasmas") com <b>depósitos basofílicos granulares azulados</b> de cálcio, circundados por inflamação.</li>
+    <li>Vale para qualquer adipócito que rompa (trauma de mama, por exemplo) — onde há adipócito roto + lipase, há saponificação.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide46-esteatonecrose-cera-de-vela.jpg" alt="Slide: macroscopia da esteatonecrose com aspecto de cera de vela" loading="lazy"><figcaption>Esteatonecrose na macroscopia: os pontos branco-amarelados de "cera de vela" são os sabões de cálcio da saponificação.</figcaption></figure>
+  <figure class="fig"><img src="img/slide47-esteatonecrose-micro.jpg" alt="Slide: microscopia da esteatonecrose com adipócitos-fantasma e depósitos basofílicos" loading="lazy"><figcaption>Microscopia: contornos sombreados de adipócitos necróticos ("células fantasmas") com depósitos de cálcio basofílicos e reação inflamatória ao redor.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Clínica, diagnóstico (2 de 3) e estratificação</h2>
+  <ul>
+    <li><b>Clínica:</b> dor abdominal <b>intensa e constante</b>, epigástrica, muitas vezes referida na <b>parte superior das costas</b> ("dor em faixa"), de leve a incapacitante; vômitos. É abordada como <b>emergência médica</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Diagnóstico = 2 de 3 critérios (e NÃO é biópsia!)</p>
+  <ol><li><b>Clínica compatível</b> (a dor típica);</li><li><b>Amilase e lipase elevadas ≥3× o valor de referência</b> (ela citou "3 a 5×" — "isso está em prova da vida, não só na minha");</li><li><b>Exame de imagem</b> mostrando pâncreas aumentado/inflamado (TC).</li></ol>
+  <p>Ela repetiu duas vezes: se a pergunta for "qual exame laboratorial", a resposta é <b>dosagem de amilase e lipase</b> — <b>não</b> biópsia. Pancreatite não se biopsia.</p></div>
+  <ul>
+    <li><b>Cinética:</b> a <b>amilase sobe primeiro</b> (primeiras 24h — há mais amilase disponível) e a <b>lipase sobe depois</b> (72–96h). Amilase <b>não é exclusiva</b> do pâncreas (glândulas salivares também têm); <b>lipase é específica</b>.</li>
+    <li><b>O nível de elevação NÃO se correlaciona com a gravidade</b> da doença — outro aviso de prova.</li>
+    <li>Extras: <b>glicosúria em ~10%</b> (ilhotas atingidas); <b>hipocalcemia</b> = o cálcio está sendo consumido nos sabões da esteatonecrose — <b>se persistente, mau prognóstico</b>.</li>
+    <li><b>Estratificação (depois do diagnóstico):</b> critérios de <b>Atlanta modificados</b> (leve / moderadamente grave / grave — conforme falência orgânica &gt;48h e complicações) e de <b>Petrov</b>; o mais conhecido é o de <b>Ranson</b> (há também SOFA, Marshall, Glasgow, APACHE II). <b>PCR &gt; 150 mg/dL em 48h</b> = alto risco de necrose pancreática. A necrose vista na TC <b>não</b> tem correlação uniforme com mortalidade/falência (UpToDate). Sempre avaliar <b>complicações locais</b> (necrose, abscesso, pseudocisto) e <b>sistêmicas</b> (falências orgânicas).</li>
+    <li><b>Tratamento:</b> <b>"descansar" o pâncreas</b> — restrição total da ingestão oral + analgesia + fluidos intravenosos. O objetivo é deixar a lesão reversível se resolver.</li>
+  </ul>
+
+  <h2 class="topic" id="t9">9 · Complicações</h2>
+  <ul>
+    <li><b>Sistêmicas (formas graves):</b> enzimas e citocinas caem na circulação → resposta inflamatória <b>explosiva</b>: <b>SARA</b> (síndrome da angústia respiratória aguda), <b>choque com necrose tubular renal aguda</b>, CIVD, hemólise, leucocitose, retenção de fluidos, colapso vascular, necrose gordurosa difusa. ~5% das formas graves morrem de choque na 1ª semana.</li>
+    <li><b>Sinais de Grey-Turner e Cullen:</b> equimoses em <b>flanco</b> (Grey-Turner) e <b>periumbilical</b> (Cullen) = <b>hemorragia retroperitoneal</b>, 24–48h após ruptura do parênquima — <b>pior prognóstico</b>, caracteriza pancreatite grave.</li>
+    <li><b>Paniculite:</b> inflamação/necrose gordurosa do subcutâneo por enzimas que extravasaram. <b>Icterícia:</b> por coledocolitíase obstruindo a via biliar ou pela contração do esfíncter de Oddi (álcool). <b>Xantomas:</b> tumorações gordurosas de pele da <b>hipertrigliceridemia</b> — o excesso de quilomícrons congestiona capilares pancreáticos e contribui para isquemia: quem tem xantoma tem <em>mais risco</em> de pancreatite (não significa que tenha).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide61-grey-turner-cullen.jpg" alt="Slide: sinais de Grey-Turner no flanco e Cullen periumbilical" loading="lazy"><figcaption>Sinais de Grey-Turner (equimose em flanco) e Cullen (periumbilical): hemorragia retroperitoneal — marcador clínico de pancreatite aguda grave.</figcaption></figure>
+
+  <h3>Pseudocisto × cisto × abscesso</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th></th><th>Cisto verdadeiro</th><th>Pseudocisto</th><th>Abscesso</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cavidade revestida por…</b></td><td><b>Epitélio</b></td><td><b>Tecido de granulação</b> (neovasos, fibroblastos, macrófagos)</td><td>Parede inflamatória em cavidade neoformada</td></tr>
+      <tr><td><b>Conteúdo</b></td><td>Sólido ou líquido</td><td><b>Suco pancreático liquefeito</b> (área de necrose que não cicatrizou)</td><td><b>Pus</b> (neutrófilos, necrose liquefeita)</td></tr>
+      <tr><td><b>Risco</b></td><td>—</td><td>Romper/extravasar enzimas → nova inflamação; conduta: acompanhar, aspirar/drenar</td><td>Infecção com destruição de lóbulos e ductos</td></tr>
+    </tbody>
+  </table></div>
+  <figure class="fig"><img src="img/slide74-pseudocisto-micro.jpg" alt="Slide: pseudocisto pancreático com cavidade revestida por tecido de granulação" loading="lazy"><figcaption>Pseudocisto: a luz clara contém o líquido (suco pancreático); a parede não é epitélio — é tecido de granulação (neovasos congestos, fibroblastos, macrófagos), o reparo que "não completou" a cicatriz.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Pancreatite crônica: fibrose irreversível</h2>
+  <div class="def"><b>Pancreatite crônica</b> — inflamação com <b>destruição IRREVERSÍVEL do parênquima exócrino e FIBROSE</b>; na fase tardia, destruição também do endócrino (→ diabetes). A distinção essencial em relação à aguda é a <b>irreversibilidade</b> — a palavra para grifar é <b>fibrose</b>.</div>
+  <ul>
+    <li>Quase todo paciente com <b>episódios repetidos de pancreatite aguda</b> evolui para crônica: fibrose perilobular → distorção ductal → secreções alteradas → mais episódios → mais fibrose.</li>
+    <li><b>Mecanismos:</b> ① <b>obstrução ductal por CONCREÇÕES</b> — cálculos <b>proteicos</b> do suco denso (típicos do alcoolismo) que podem calcificar (carbonato de cálcio) e obstruir ainda mais; ② <b>efeito tóxico direto</b> do álcool e metabólitos sobre as células acinares; ③ <b>estresse oxidativo</b> induzido por álcool — radicais livres, oxidação lipídica de membrana, fatores de transcrição (AP-1, NF-κB), quimiocinas que atraem mononucleares, fusão de lisossomos com grânulos de zimogênio.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 TGF-β e PDGF → células estreladas → fibrose (guardar as duas siglas)</p>
+  <p>Nos episódios repetidos, os mononucleares (macrófagos) que chegam produzem as citocinas <b>PRÓFIBROGÊNICAS: TGF-β e PDGF</b>. Elas ativam as <b>células estreladas (estelares) periacinares</b> — miofibroblastos quiescentes ao redor dos ácinos — que passam a <b>produzir colágeno</b>: fibrose e remodelamento da matriz. <b>É o mesmo mecanismo da cirrose hepática</b> (células estreladas do fígado).</p></div>
+  <ul>
+    <li><b>Causas:</b> a mais comum é o <b>álcool a longo prazo</b> (homens de meia-idade). Menos comuns: obstruções prolongadas (cálculos, neoplasias, pseudocistos, trauma), <b>pâncreas divisum</b> (malformação em que a maior parte da secreção drena pela <b>papila menor</b> — estenose relativa → pancreatites de repetição; frequentemente rotulada de "idiopática" por quem não pensa nela — a professora publicou artigo sobre isso), <b>pancreatite hereditária</b> (PRSS1/SPINK1) e <b>mutações do CFTR</b> (fibrose cística: menos bicarbonato ductal → suco denso → concreções; presentes em 25–30% das "idiopáticas").</li>
+    <li><b>Morfologia:</b> <b>fibrose parenquimatosa</b> substituindo ácinos (menos ácinos, menores), <b>ductos dilatados com concreções eosinofílicas</b> aderidas, epitélio ductal atrófico/hiperplásico ou com <b>metaplasia escamosa</b>, infiltrado <b>mononuclear</b> em torno de lóbulos e ductos; ilhotas relativamente poupadas — incorporadas ao tecido esclerótico, podem "se fundir" e por fim desaparecer.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide90-cronica-fibrose-micro.jpg" alt="Slide: pancreatite crônica com fibrose extensa e raras ilhotas e ductos residuais" loading="lazy"><figcaption>Pancreatite crônica: fibrose extensa e atrofia — sobraram poucas ilhotas residuais e ductos, com infiltrado inflamatório crônico; os ácinos quase desapareceram.</figcaption></figure>
+  <figure class="fig"><img src="img/slide93-concrecoes-ductais.jpg" alt="Slide: ducto dilatado com concreções eosinofílicas na pancreatite crônica alcoólica" loading="lazy"><figcaption>Ducto dilatado com concreções eosinofílicas solidificadas — achado altamente sugestivo de etiologia alcoólica (não patognomônico: fibrose cística também adensa a secreção).</figcaption></figure>
+  <div class="box alerta"><p class="h">⚠️ Pancreatite autoimune (esclerosante linfoplasmocítica) — "cai em prova"</p>
+  <p>Forma distinta de pancreatite crônica: infiltrado inflamatório misto <b>centrado nos ductos</b>, <b>venulite</b> e aumento de células produtoras de <b>IgG4</b>. Importa reconhecer porque <b>mimetiza o câncer de pâncreas</b> (órgão denso, endurecido, função comprometida) — mas <b>responde à corticoterapia</b>. Confundir as duas muda tudo.</p></div>
+  <ul>
+    <li><b>Clínica:</b> dor abdominal <b>recorrente</b> (moderada a grave, ou leve, ou persistente; dorso), desencadeada por álcool, excessos alimentares e <b>opiáceos</b> (contraem o esfíncter de Oddi). Pode ser <b>silenciosa</b> até se anunciar como <b>insuficiência pancreática</b> (má absorção → perda de peso, <b>edema hipoalbuminêmico</b>) e <b>diabetes</b> (destruição das ilhotas). Ataques de icterícia/indigestão podem ocorrer.</li>
+    <li><b>Laboratório-pegadinha:</b> na crise pode haver elevação leve de amilase — mas na doença <b>de longa data as enzimas podem estar normais ou baixas</b>: a destruição acinar "apagou as pistas diagnósticas".</li>
+    <li><b>Complicações:</b> pseudocistos; <b>pancreatite hereditária → 40% de risco de câncer pancreático</b> ao longo da vida.</li>
+  </ul>
+
+  <h2 class="topic" id="t11">11 · Adenocarcinoma ductal invasor</h2>
+  <ul>
+    <li>Neoplasia <b>maligna dos DUCTOS pancreáticos</b> (daí "adeno" — origem glandular ductal, não acinar) — <b>a neoplasia mais comum do pâncreas</b>; adultos <b>&gt;50 anos</b>.</li>
+    <li><b>Clínica:</b> dor abdominal superior + <b>perda de peso acentuada</b>. Tumores da <b>cabeça</b> (local mais comum) podem <b>obstruir o colédoco</b> → <b>icterícia, às vezes o primeiro sinal da doença</b> — a anatomia da ampola explicando a clínica de novo.</li>
+    <li><b>Fatores de risco:</b> diabetes, <b>tabagismo</b>, <b>pancreatite crônica</b>, displasia dos ductos (atipias: pleomorfismo, hipercromasia, mitoses atípicas — lesão precursora), dieta rica em gordura (+ PRSS1/SPINK1 hereditárias).</li>
+    <li><b>Prognóstico muito ruim: a maioria morre em &lt;1 ano</b> do diagnóstico — o crescimento elimina a chance cirúrgica: <b>invasão perineural</b>, invasão precoce além do pâncreas e <b>metástases precoces para linfonodos e fígado</b> (vias linfática e hematogênica).</li>
+    <li><b>Diagnóstico:</b> imagem + <b>citologia por PAAF</b> (punção aspirativa por agulha fina) + <b>core biopsy</b> (agulha grossa).</li>
+    <li><b>Macro:</b> massa <b>mal delimitada, irregular, pardo-clara e FIRME</b> — pela intensa fibrose intratumoral (<b>desmoplasia</b>). Por isso é <b>difícil distinguir da pancreatite crônica a olho nu</b> — que, aliás, costuma existir ao redor do tumor.</li>
+    <li><b>Micro:</b> <b>infiltração desordenada de glândulas em estroma fibrótico</b>, células isoladas e em agrupamentos, invasão <b>perineural e angiolinfática</b> comuns — e um <b>pleomorfismo nuclear impressionante</b> (até 4× de diferença de tamanho nuclear entre células da mesma glândula).</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O pleomorfismo é a chave</p><p>Na lâmina, crônica e câncer se parecem (fibrose nos dois). O que fecha o câncer é a <b>atipia</b>: glândulas desordenadas <em>invadindo</em> + <b>pleomorfismo nuclear marcado</b>. "Vocês erram na prova colocando pancreatite crônica — olhem o pleomorfismo."</p></div>
+  <figure class="fig"><img src="img/slide107-adenocarcinoma-micro.jpg" alt="Slide: adenocarcinoma ductal invasor com glândulas atípicas em estroma fibrótico" loading="lazy"><figcaption>Adenocarcinoma ductal invasor: infiltração difusa de glândulas com atipias acentuadas em meio a estroma fibrótico (desmoplasia).</figcaption></figure>
+  <figure class="fig"><img src="img/slide108-pleomorfismo-chave.jpg" alt="Slide: pleomorfismo nuclear acentuado entre células da mesma glândula maligna" loading="lazy"><figcaption>O pleomorfismo entre duas células da mesma glândula maligna — a chave para diferenciar o câncer da pancreatite crônica.</figcaption></figure>
+  <figure class="fig"><img src="img/slide109-invasao-perineural.jpg" alt="Slide: invasão perineural pelo adenocarcinoma" loading="lazy"><figcaption>Invasão perineural (setas nos nervos periféricos) — comum, dolorosa e um dos motivos da irressecabilidade.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 O caso que fechou a aula</p>
+  <p>Homem, 62 anos, <b>longa história de tabagismo</b>, procura atendimento por dor abdominal que piorou e <b>perda não intencional de 11,3 kg em 3 meses</b>. TC: <b>massa na cabeça do pâncreas</b>. PAAF: células malignas; já havia acometimento de linfonodos peripancreáticos. Tratamento tentado — <b>óbito 8 meses depois</b>. O retrato do prognóstico do tumor.</p></div>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Normal:</b> retroperitoneal; Wirsung+colédoco → <b>ampola de Vater</b> → papila maior; Santorini → menor. Exócrino 80–85% (ácinos serosos, zimogênio) · endócrino 1–2% (ilhotas, beta/insulina). <b>Célula centroacinosa = patognomônica</b> (vs parótida).</li>
+    <li><b>Proteções:</b> zimogênio empacotado · pró-enzimas (exceto <b>amilase e lipase</b>, já ativas) · ativação só no duodeno (<b>enteroquinase</b> → tripsina) · <b>SPINK1/PSTI</b> · resistência acinar. Secretina = bicarbonato · CCK = enzimas.</li>
+    <li><b>Aguda:</b> lesão <b>REVERSÍVEL</b> (regeneração); chave = <b>tripsinogênio ativado inapropriadamente</b>. 3 mecanismos: obstrução (cálculo na ampola → pressão → lipase → esteatonecrose → inflamação/edema → isquemia → necrose acinar → hidrolases ativam tripsinogênio), lesão acinar direta (caxumba, álcool, trauma), transporte defeituoso.</li>
+    <li><b>Etiologia:</b> biliar + álcool = 80%; <b>alcoólica pior que biliar</b>; PRSS1 (dominante) / SPINK1 (recessiva) — ambas ↑risco de CA.</li>
+    <li><b>Morfo:</b> intersticial (branda) → necrosante (necrose de parênquima) → hemorrágica. <b>Esteatonecrose = saponificação</b> (ácidos graxos + Ca²⁺ = "cera de vela"; necrose coagulativa; liquefativa = cérebro/suprarrenal).</li>
+    <li><b>Dx = 2 de 3:</b> clínica + <b>amilase/lipase ≥3×</b> + imagem. <b>Não é biópsia.</b> Amilase 24h (inespecífica) · lipase 72–96h (específica) · nível ≠ gravidade · hipocalcemia persistente = mau sinal. Estratificar: Atlanta/Petrov/Ranson; PCR&gt;150 = risco de necrose. Tto: jejum + analgesia + fluidos.</li>
+    <li><b>Complicações:</b> SARA, choque/NTA, CIVD; <b>Grey-Turner (flanco) + Cullen (periumbilical)</b> = hemorragia retroperitoneal grave; <b>pseudocisto = cavidade SEM epitélio</b> (tecido de granulação) ≠ abscesso (pus).</li>
+    <li><b>Crônica: FIBROSE irreversível</b>; concreções (cálculos proteicos ductais ≠ cálculo biliar); <b>TGF-β + PDGF → células estreladas → colágeno</b> (igual cirrose); álcool é a causa nº 1; pâncreas divisum, CFTR, hereditária (40% CA). Enzimas podem estar <b>normais</b> na doença longa. Insuficiência exócrina + DM. <b>Autoimune IgG4: mimetiza câncer, responde a corticoide.</b></li>
+    <li><b>Adenocarcinoma ductal:</b> o mais comum; &gt;50a; <b>cabeça → icterícia como 1º sinal</b>; desmoplasia (parece crônica) — <b>pleomorfismo é a chave</b>; invasão perineural; PAAF/core; <b>&lt;1 ano de sobrevida</b> na maioria.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova — Patologia do Pâncreas</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Aula 02 (Profa. Fernanda) · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-normal">Normal</a>
+    <a class="a1" href="#p-protec">Proteções</a>
+    <a class="a1" href="#p-aguda">Aguda</a>
+    <a class="a1" href="#p-morfo">Morfologia</a>
+    <a class="a1" href="#p-dx">Diagnóstico</a>
+    <a class="a1" href="#p-compl">Complicações</a>
+    <a class="a1" href="#p-cronica">Crônica</a>
+    <a class="a1" href="#p-ca">Adenocarcinoma</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-normal">
+  <span class="aula-tag t1">Pâncreas normal</span>
+  <ul>
+    <li>Retroperitoneal, no "C" do duodeno até o hilo do baço; ~20 cm; cabeça (+ proc. uncinado), colo, corpo, cauda.</li>
+    <li><b class="k">Ductos:</b> principal (<b>Wirsung</b>) + colédoco = <b>ampola de Vater</b> → papila MAIOR · acessório (<b>Santorini</b>) → papila MENOR (~2 cm acima).</li>
+    <li>Exócrino <b>80–85%</b> (ácinos serosos; grânulos de zimogênio; ducto intercalar→intralobular→interlobular→principal) · Endócrino <b>1–2%</b> (ilhotas; maioria = <b>beta/insulina</b>; capilares fenestrados; imuno-histoquímica distingue células).</li>
+    <li><b class="k">Célula CENTROACINOSA = patognomônica do pâncreas</b> — diferencia da parótida (também serosa) na prova prática.</li>
+  </ul>
+</section>
+
+<section id="p-protec">
+  <span class="aula-tag t1">Anti-autodigestão (5) + secreção</span>
+  <div class="prof"><span class="box-h">🎯 "Cite dois mecanismos" (ela avisou)</span>1) enzimas <b>empacotadas em grânulos de zimogênio</b> · 2) maioria como <b>pró-enzimas</b> — exceto <b>AMILASE e LIPASE (já ativas)</b> · 3) ativação só no <b>duodeno</b> (enteropeptidase/enteroquinase: tripsinogênio→tripsina→ativa as demais) · 4) <b>SPINK1 → PSTI</b> (inibidor de tripsina) · 5) resistência relativa das células acinares.</div>
+  <ul>
+    <li><b>Secretina</b> (pH duodenal &lt;4,5): suco fluido <b>rico em BICARBONATO</b> (células dos ductos intercalares) · <b>CCK</b>: suco <b>rico em ENZIMAS</b> · + nervo vago. Trabalham juntas.</li>
+  </ul>
+</section>
+
+<section id="p-aguda">
+  <span class="aula-tag t1">Pancreatite aguda</span>
+  <ul>
+    <li><b>Definição:</b> dor abdominal súbita + enzimas elevadas; lesão <b class="k">REVERSÍVEL</b> (células acinares estáveis → regeneração). Doença do EXÓCRINO.</li>
+    <li><b class="k">Chave: ativação INAPROPRIADA do TRIPSINOGÊNIO no pâncreas</b> ("não podem errar"). Tripsina → ativa pró-fosfolipase (adipócitos) e pró-elastase (parede de vasos → hemorragia) + pré-calicreína→calicreína (complemento, trombose de pequenos vasos).</li>
+  </ul>
+  <div class="prof"><span class="box-h">🎯 Mecanismo ① obstrutivo — o caminho de PONTA A PONTA (cai como "patogênese")</span>Cálculo/lama na <b>ampola de Vater</b> → ↑pressão ductal + acúmulo de fluido → <b>LIPASE (já ativa) → esteatonecrose</b> → inflamação (citocinas) → <b>edema</b> intersticial → comprime vasos → <b>isquemia</b> → <b>necrose das células acinares</b> → rompem zimogênio + lisossomos → <b>hidrolases lisossomais ativam o tripsinogênio</b> → cascata → autodigestão. <b>Etiologia = cálculo · patogênese = a historinha inteira.</b></div>
+  <ul>
+    <li>② <b>Lesão acinar direta</b>: caxumba (tropismo), álcool, drogas, trauma. ③ <b>Transporte defeituoso</b>: pró-enzimas empacotadas junto com hidrolases lisossomais.</li>
+    <li><b>Causas: biliar + álcool = 80%</b>. <b class="k">Alcoólica tem prognóstico PIOR que biliar</b> (não dá pra "tirar" o agente). Álcool: suco denso→<b>concreções</b> + contrai <b>Oddi</b> + tóxico direto + transporte defeituoso. Verminose pode obstruir a papila.</li>
+    <li><b>Genética:</b> <b>PRSS1</b> = tripsina resistente à inativação (autossômica <b>dominante</b>) · <b>SPINK1</b> = perde o inibidor (recessiva). <b>Ambas ↑ risco de CÂNCER de pâncreas</b>.</li>
+  </ul>
+</section>
+
+<section id="p-morfo">
+  <span class="aula-tag t1">Morfologia da aguda</span>
+  <div class="tw"><table>
+    <thead><tr><th>Forma</th><th>Marca</th></tr></thead>
+    <tbody>
+      <tr><td><b>Intersticial (branda)</b></td><td>Edema + inflamação + <b>focos de esteatonecrose</b>; parênquima preservado</td></tr>
+      <tr><td><b>Necrosante (grave)</b></td><td>+ <b>necrose de ácinos/ductos/até ilhotas</b>; focos hemorrágicos; gordura extrapancreática (omento, mesentério)</td></tr>
+      <tr><td><b>Hemorrágica (+ grave)</b></td><td><b>Necrose extensa + hemorragia abundante</b> — órgão irreconhecível</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prof"><span class="box-h">🎯 Esteatonecrose (NÃO escrever "esteatose"!)</span>Lipase quebra triglicérides → <b>ácidos graxos + Ca²⁺ = sabões insolúveis</b> (<b>SAPONIFICAÇÃO</b>) → macro: <b>"cera de vela"</b> · micro: <b>adipócitos-fantasma</b> com depósitos <b>basofílicos</b> granulares + inflamação. É necrose <b>COAGULATIVA</b> especial (liquefativa = <b>cérebro e suprarrenal</b>, "não pode esquecer"). Acontece onde houver adipócito roto (mesentério, mama…).</div>
+</section>
+
+<section id="p-dx">
+  <span class="aula-tag t1">Clínica e diagnóstico</span>
+  <ul>
+    <li>Dor abdominal <b>intensa, constante</b>, epigástrica, irradiando ao dorso ("em faixa"), + vômitos. Emergência.</li>
+  </ul>
+  <div class="prof"><span class="box-h">🎯 Dx = 2 de 3 (e NÃO é biópsia)</span>1) clínica típica · 2) <b>amilase/lipase ≥3× (3–5×)</b> — "prova da vida" · 3) imagem (TC). Exame LABORATORIAL essencial = <b>amilase e lipase</b>; pancreatite <b>não se biopsia</b>.</div>
+  <ul>
+    <li><b>Cinética:</b> amilase ↑ primeiro (24h; NÃO exclusiva — salivares) · <b>lipase ↑ 72–96h e é ESPECÍFICA</b>. <b class="k">Nível de elevação ≠ gravidade.</b></li>
+    <li>Glicosúria ~10% (ilhotas) · <b>hipocalcemia persistente = mau prognóstico</b> (Ca²⁺ virou sabão).</li>
+    <li><b>Estratificar depois do dx:</b> Atlanta modificado (leve/mod/grave; falência orgânica &gt;48h) · Petrov · <b>Ranson</b> (o mais conhecido; + SOFA/Marshall/APACHE II) · <b>PCR &gt;150 em 48h = risco de necrose</b> · necrose na TC não prediz mortalidade uniformemente.</li>
+    <li><b>Tratamento: "descanso do pâncreas"</b> = jejum oral total + analgesia + fluidos IV.</li>
+  </ul>
+</section>
+
+<section id="p-compl">
+  <span class="aula-tag t1">Complicações</span>
+  <ul>
+    <li><b>Sistêmicas:</b> resposta inflamatória explosiva → <b>SARA</b>, <b>choque + necrose tubular renal aguda</b>, CIVD, hemólise, leucocitose. ~5% dos graves morrem na 1ª semana.</li>
+    <li><b class="k">Grey-Turner = flanco · Cullen = periumbilical</b> → hemorragia retroperitoneal (24–48h) = pancreatite GRAVE, pior prognóstico.</li>
+    <li><b>Paniculite</b> (necrose gordurosa subcutânea) · <b>icterícia</b> (coledocolitíase ou Oddi contraído/álcool) · <b>xantomas</b> = hipertrigliceridemia → quilomícrons congestionam capilares → ↑risco de pancreatite.</li>
+  </ul>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Cisto</th><th>Pseudocisto</th><th>Abscesso</th></tr></thead>
+    <tbody>
+      <tr><td><b>Parede</b></td><td><b>Epitélio</b></td><td><b>Tecido de granulação</b> (neovasos, fibroblastos, macrófagos)</td><td>Cavidade neoformada inflamatória</td></tr>
+      <tr><td><b>Conteúdo</b></td><td>Sólido/líquido</td><td><b>Suco pancreático</b> (necrose liquefeita não cicatrizada)</td><td><b>Pus</b> (PMN)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p-cronica">
+  <span class="aula-tag t1">Pancreatite crônica</span>
+  <ul>
+    <li><b class="k">IRREVERSÍVEL = FIBROSE</b> (a palavra para grifar). Exócrino destruído; tardiamente endócrino → <b>DM</b>. Vem de episódios agudos REPETIDOS.</li>
+    <li><b>Mecanismos:</b> ① <b>concreções</b> = cálculos <b>PROTEICOS nos ductos</b> (álcool; podem calcificar) — <b>≠ cálculo biliar</b> ("não confundam na prova") · ② toxicidade direta do álcool · ③ estresse oxidativo (AP-1, NF-κB).</li>
+    <li><b class="k">TGF-β + PDGF (grifar) → ativam células ESTRELADAS periacinares (miofibroblastos quiescentes) → colágeno → fibrose</b> — mesmo mecanismo da cirrose hepática.</li>
+    <li><b>Causas:</b> nº 1 = <b>álcool crônico</b> (homem, meia-idade). Menos comuns: obstruções longas, <b>pâncreas divisum</b> (drenagem majoritária pela papila MENOR → estenose relativa → "idiopáticas" que não são), hereditária (PRSS1/SPINK1), <b>CFTR</b>/fibrose cística (↓bicarbonato → suco denso; 25–30% das idiopáticas).</li>
+    <li><b>Morfo:</b> fibrose + ácinos raros/pequenos + <b>ductos dilatados com concreções eosinofílicas</b> + epitélio ductal atrófico/hiperplásico/metaplasia escamosa + infiltrado mononuclear; ilhotas relativamente poupadas (podem fundir e sumir).</li>
+    <li><b>Clínica:</b> dor recorrente (ou silenciosa) → <b>insuficiência exócrina</b> (má absorção, perda de peso, <b>edema hipoalbuminêmico</b>) + DM. Desencadeantes: álcool, excessos, <b>opiáceos</b> (Oddi). <b class="k">Enzimas podem estar NORMAIS/baixas na doença longa</b> (acinos destruídos = sem "pistas"). Hereditária → <b>40% risco de CA</b>.</li>
+    <li><b class="k">AUTOIMUNE (esclerosante linfoplasmocítica): IgG4</b>, infiltrado centrado em ductos, venulite — <b>mimetiza câncer mas responde a CORTICOIDE</b> ("cai em prova").</li>
+  </ul>
+</section>
+
+<section id="p-ca">
+  <span class="aula-tag t1">Adenocarcinoma ductal invasor</span>
+  <ul>
+    <li>Maligno dos <b>DUCTOS</b>; o mais comum do pâncreas; <b>&gt;50 anos</b>; dor + perda de peso acentuada; local nº 1 = <b>CABEÇA → obstrui colédoco → ICTERÍCIA às vezes 1º sinal</b>.</li>
+    <li><b>Riscos:</b> tabagismo, diabetes, <b>pancreatite crônica</b>, displasia ductal, gordura dietética, PRSS1/SPINK1.</li>
+    <li><b>Macro:</b> mal delimitado, irregular, pardo-claro, <b>FIRME (desmoplasia)</b> → parece pancreatite crônica (que costuma coexistir ao redor).</li>
+    <li><b class="k">Micro — a chave = PLEOMORFISMO nuclear</b> (até 4× entre núcleos da mesma glândula) + glândulas desordenadas infiltrando estroma fibrótico + <b>invasão PERINEURAL</b> e angiolinfática.</li>
+    <li><b>Dx:</b> imagem + <b>PAAF</b> + core biopsy. <b>Prognóstico: maioria morre &lt;1 ano</b> (metástases precoces: linfonodos, fígado).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">⚠️ Não confundir (ditas em aula)</span>
+  <div class="alerta"><span class="box-h">Pares que derrubam na prova</span>
+  <ul>
+    <li><b>Esteatonecrose × esteatose:</b> necrose de adipócito (saponificação) × acúmulo de gordura. Escreva o nome certo.</li>
+    <li><b>Etiologia × patogênese:</b> cálculo = etiologia; a cascata ponta-a-ponta = patogênese.</li>
+    <li><b>Cálculo biliar × concreção:</b> vesícula/colédoco (aguda) × cálculo PROTEICO nos ductos pancreáticos (crônica/álcool).</li>
+    <li><b>Amilase × lipase:</b> amilase sobe antes mas é inespecífica (salivares); lipase é específica. Elevação ≠ gravidade.</li>
+    <li><b>Cisto × pseudocisto:</b> epitélio × tecido de granulação. Pseudocisto NÃO é cisto verdadeiro.</li>
+    <li><b>Aguda × crônica:</b> reversível (regeneração) × irreversível (FIBROSE).</li>
+    <li><b>Crônica × adenocarcinoma:</b> macro parecidas (fibrose/desmoplasia) — decide o <b>PLEOMORFISMO</b> + invasão.</li>
+    <li><b>Autoimune × câncer:</b> as duas endurecem o órgão — IgG4 responde a corticoide.</li>
+    <li><b>Grey-Turner × Cullen:</b> flanco × periumbilical (mesmo significado: hemorragia retroperitoneal grave).</li>
+    <li><b>Necrose coagulativa × liquefativa:</b> esteatonecrose é coagulativa; liquefativa = cérebro e suprarrenal.</li>
+  </ul></div>
+  <div class="caso"><span class="box-h">🩺 Palavras-gatilho → resposta</span>
+  <ul>
+    <li>"Cálculo na ampola + dor + amilase/lipase 3×" → pancreatite aguda biliar.</li>
+    <li>"Cera de vela" / "sabões de cálcio" / "células fantasmas basofílicas" → esteatonecrose/saponificação.</li>
+    <li>"Equimose em flanco/periumbilical" → Grey-Turner/Cullen (grave).</li>
+    <li>"Cavidade com suco pancreático revestida por tecido de granulação" → pseudocisto.</li>
+    <li>"Concreções eosinofílicas em ductos dilatados + fibrose" → pancreatite crônica (álcool).</li>
+    <li>"IgG4" → pancreatite autoimune (corticoide).</li>
+    <li>"Drenagem pela papila menor" → pâncreas divisum.</li>
+    <li>"Icterícia indolor + massa na cabeça + emagrecimento em >50a tabagista" → adenocarcinoma ductal.</li>
+    <li>"TGF-β/PDGF, células estreladas" → fibrose da crônica (mecanismo da cirrose).</li>
+  </ul></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologia do Pâncreas</h2>
+    <p>Anato Pato II · Aula 02 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 02 — Patologia do Pâncreas</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Numa prova prática, duas lâminas de glândulas serosas de ácinos ficam lado a lado: uma de parótida e uma de pâncreas, sem identificação.</span><div class="pergunta">O achado histológico PATOGNOMÔNICO que permite afirmar qual lâmina é a do pâncreas é a presença de:</div>`,
+ alts:["ácinos serosos com células piramidais e grânulos apicais","ductos estriados intralobulares bem desenvolvidos","células centroacinosas no interior da luz dos ácinos","cápsula conjuntiva emitindo septos interlobulares","células mioepiteliais abraçando as unidades secretoras"], correta:2,
+ just:[
+  "Ácinos serosos com grânulos existem NAS DUAS — é justamente o que as torna parecidas.",
+  "Ductos estriados evidentes são característicos das glândulas salivares — apontariam para a parótida, não para o pâncreas.",
+  "Correta. As células centroacinosas — o início do ducto intercalar, dentro da luz do ácino — são EXCLUSIVAS do pâncreas: a parótida, também serosa, não as tem. Foi o exemplo de prova que a professora deu.",
+  "Cápsula com septos lobulares é organização comum a várias glândulas — não diferencia.",
+  "Células mioepiteliais são típicas das glândulas salivares e mamárias — de novo, favoreceriam a parótida."],
+ ref:"Histologia — célula centroacinosa"},
+
+/* 2 */ {n:2,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre o sistema ductal do pâncreas e sua relação com a via biliar, é correto afirmar:</div>`,
+ alts:["o ducto de Wirsung une-se ao colédoco na ampola de Vater, drenando pela papila maior","o ducto acessório (Santorini) desemboca na papila maior, em canal comum com o colédoco","o colédoco atravessa o parênquima e drena diretamente no ducto acessório","a papila menor situa-se cerca de 2 cm abaixo da papila maior, no jejuno proximal","os ductos principal e acessório se fundem antes de qualquer contato com a via biliar"], correta:0,
+ just:[
+  "Correta. Wirsung + ducto biliar comum (colédoco) formam a ampola hepatopancreática (de Vater) — canal comum de drenagem biliar e pancreática pela papila maior. É exatamente aí que um cálculo impactado trava bile E suco pancreático.",
+  "O Santorini drena pela papila MENOR, sozinho — não pela maior.",
+  "O colédoco não se une ao acessório; a junção é com o ducto PRINCIPAL, na ampola.",
+  "A papila menor fica ~2 cm ACIMA (proximal) da maior, no duodeno — não abaixo, nem no jejuno.",
+  "Principal e acessório desembocam separados (papila maior e menor); não há fusão prévia obrigatória."],
+ ref:"Anatomia — ductos e ampola de Vater"},
+
+/* 3 */ {n:3,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre a organização do parênquima pancreático, assinale a alternativa correta:</div>`,
+ alts:["a porção endócrina forma 80% do órgão e produz as enzimas digestivas","as ilhotas de Langerhans concentram-se exclusivamente na cabeça do órgão","as células acinares secretam insulina diretamente nos capilares fenestrados","a porção exócrina é minoritária e drena seus hormônios pelos ductos","a porção exócrina corresponde a 80–85% do órgão; as ilhotas, a 1–2%"], correta:4,
+ just:[
+  "Inverteu as proporções e as funções: quem domina o órgão e produz enzimas é a porção EXÓCRINA.",
+  "As ilhotas (~1 milhão) espalham-se por todo o parênquima — não têm concentração exclusiva na cabeça.",
+  "Insulina é produto das células BETA das ilhotas; as acinares produzem enzimas digestivas para a luz do ácino.",
+  "A exócrina é a porção MAJORITÁRIA — e enzima se drena por ducto; hormônio cai no sangue, sem ducto.",
+  "Correta. Exócrino 80–85% (células acinares + sistema ductal); endócrino 1–2% (ilhotas — maioria de células beta produtoras de insulina, com rica rede de capilares fenestrados)."],
+ ref:"Histologia — exócrino × endócrino"},
+
+/* 4 */ {n:4,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">A maior parte do arsenal enzimático pancreático é secretada de forma inerte, como pró-enzima.</span><div class="pergunta">As DUAS enzimas que fogem à regra e já são secretadas em forma ativa são:</div>`,
+ alts:["tripsina e quimotripsina","amilase e lipase","elastase e calicreína","carboxipeptidase e fosfolipase A2","enteropeptidase e somatostatina"], correta:1,
+ just:[
+  "Tripsina e quimotripsina nascem como tripsinogênio e quimotripsinogênio — pró-enzimas clássicas.",
+  "Correta. Amilase e lipase são secretadas já ativas — normalmente diluídas pelo fluido rico em bicarbonato e levadas ao duodeno. É por isso que, no suco represado, a lipase começa a esteatonecrose; e é por isso que são elas as dosadas no sangue.",
+  "Elastase e calicreína saem de pró-elastase e pré-calicreína — só a tripsina as ativa depois.",
+  "Carboxipeptidase e fosfolipase nascem como pró-carboxipeptidase e pró-fosfolipase — inativas.",
+  "A enteropeptidase nem é pancreática (é duodenal); somatostatina é hormônio da ilhota, não enzima digestiva."],
+ ref:"Fisiologia — pró-enzimas e exceções"},
+
+/* 5 */ {n:5,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">São mecanismos fisiológicos que impedem a autodigestão do pâncreas, EXCETO:</div>`,
+ alts:["sequestro das enzimas em grânulos de zimogênio envoltos por membrana","síntese da maioria das enzimas como pró-enzimas inativas","presença do inibidor de tripsina PSTI, codificado pelo gene SPINK1","ativação do tripsinogênio restrita ao duodeno, pela enteropeptidase","ativação do tripsinogênio pelas hidrolases lisossomais dos ácinos"], correta:4,
+ just:[
+  "É proteção real: empacotadas nos grânulos, as enzimas não tocam o citoplasma nem o interstício.",
+  "É proteção real: pró-enzima inerte não digere nada até ser ativada (exceções: amilase e lipase).",
+  "É proteção real: o PSTI neutraliza qualquer tripsina ativada 'antes da hora' nos ductos e ácinos.",
+  "É proteção real: a enteroquinase duodenal garante que a cascata só comece longe do pâncreas.",
+  "Correta (é o item FALSO). Hidrolases lisossomais ativando tripsinogênio é justamente o EVENTO PATOLÓGICO central da pancreatite aguda — acontece quando a célula acinar necrosa e os compartimentos se misturam."],
+ ref:"Mecanismos anti-autodigestão"},
+
+/* 6 */ {n:6,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Em condições fisiológicas, o tripsinogênio é convertido em tripsina:</div>`,
+ alts:["no interior dos grânulos de zimogênio, pela acidificação local","nos ductos interlobulares, pela ação do bicarbonato secretado","na circulação porta, por proteases hepáticas de fase aguda","no duodeno, pela enteropeptidase (enteroquinase) intestinal","na ampola de Vater, pelo contato com os sais biliares"], correta:3,
+ just:[
+  "Dentro dos grânulos as enzimas ficam INATIVAS — é o mecanismo de sequestro, não de ativação.",
+  "O bicarbonato dilui e neutraliza pH; não é ativador proteolítico de tripsinogênio.",
+  "Não há ativação fisiológica na circulação — enzimas no sangue são achado de DOENÇA (é o que dosamos).",
+  "Correta. A enteropeptidase (enteroquinase) da borda intestinal converte tripsinogênio em tripsina no duodeno; a tripsina então ativa as demais pró-enzimas. Ativação longe do pâncreas = proteção.",
+  "O encontro com a bile na ampola é anatômico, não enzimático — sais biliares não ativam tripsinogênio."],
+ ref:"Fisiologia — ativação no duodeno"},
+
+/* 7 */ {n:7,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Após uma refeição, o quimo ácido (pH &lt; 4,5) chega ao duodeno e as células enteroendócrinas respondem.</span><div class="pergunta">Sobre os estímulos da secreção pancreática, é correto afirmar:</div>`,
+ alts:["a secretina estimula as células ductais a secretar suco rico em bicarbonato","a colecistoquinina estimula a secreção do componente aquoso, pobre em enzimas e rico em eletrólitos","a secretina é liberada pelas células acinares do próprio pâncreas","o nervo vago inibe a secreção pancreática durante a digestão","o estímulo para a secretina é a alcalinização do conteúdo duodenal"], correta:0,
+ just:[
+  "Correta. pH baixo → secretina (duodeno/jejuno) → suco rico em água/eletrólitos e BICARBONATO (células dos ductos intercalares), que neutraliza o quimo. A CCK completa com o suco rico em ENZIMAS — as duas agem integradas.",
+  "Inverteu: a CCK é o estímulo do componente ENZIMÁTICO (disparada por aminoácidos e ácidos graxos).",
+  "Secretina e CCK vêm das células ENTEROENDÓCRINAS da mucosa intestinal — não do pâncreas.",
+  "O vago ESTIMULA a secreção pancreática — é o terceiro estímulo citado.",
+  "O gatilho é o pH ÁCIDO (< 4,5) chegando ao duodeno — alcalinização é o resultado, não o estímulo."],
+ ref:"Fisiologia — secretina × CCK"},
+
+/* 8 */ {n:8,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Mulher, 48 anos, com cálculo biliar impactado na ampola de Vater e pancreatite aguda instalada.</span><div class="pergunta">A sequência CORRETA de eventos da patogênese, "de ponta a ponta", é:</div>`,
+ alts:["isquemia → edema → hipertensão ductal → esteatonecrose → ativação do tripsinogênio → necrose acinar","obstrução → hipertensão ductal → esteatonecrose → inflamação/edema → isquemia → necrose acinar → ativação do tripsinogênio","obstrução → refluxo de bile aos ácinos → ativação biliar do tripsinogênio → esteatonecrose → inflamação → necrose","ativação duodenal da tripsina → refluxo duodenopancreático → hipertensão ductal → edema → esteatonecrose → necrose","necrose acinar espontânea → liberação de amilase → obstrução ductal secundária → esteatonecrose → inflamação → isquemia"], correta:1,
+ just:[
+  "Embaralhou a ordem: a isquemia é consequência do edema inflamatório, que vem DEPOIS da esteatonecrose inicial.",
+  "Correta. Cálculo obstrui → pressão ductal sobe e fluido rico em enzimas se acumula → a LIPASE (já ativa) faz necrose gordurosa local → citocinas, inflamação e edema intersticial → compressão vascular → ISQUEMIA → NECROSE das células acinares → rompem grânulos de zimogênio e lisossomos → as hidrolases lisossomais ativam o TRIPSINOGÊNIO → cascata e autodigestão.",
+  "Refluxo de bile não é o mecanismo ensinado — e não é a bile que ativa o tripsinogênio: são as hidrolases lisossomais, após a necrose acinar.",
+  "A tripsina ativada NO DUODENO é a fisiologia normal — não reflui para digerir o pâncreas.",
+  "Não há necrose 'espontânea' como ponto de partida no mecanismo obstrutivo — a necrose acinar é etapa TARDIA da sequência."],
+ ref:"Patogênese obstrutiva — caminho de ponta a ponta"},
+
+/* 9 */ {n:9,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Na prova, um caso descreve paciente com colelitíase e pancreatite aguda, e o enunciado pede "etiologia" e "patogênese".</span><div class="pergunta">Segundo a distinção feita em aula, a resposta correta identifica:</div>`,
+ alts:["etiologia = autodigestão enzimática; patogênese = presença do cálculo","etiologia e patogênese como sinônimos, bastando citar o cálculo biliar","etiologia = hipertensão ductal; patogênese = colelitíase de repetição","patogênese = elevação de amilase e lipase; etiologia = dor abdominal","etiologia = o cálculo; patogênese = a cascata de autodigestão enzimática"], correta:4,
+ just:[
+  "Inverteu os conceitos: autodigestão é o processo (patogênese); o cálculo é a causa (etiologia).",
+  "Foi exatamente o erro que a professora antecipou: responder 'cálculo' quando se pede a patogênese não vale — são perguntas diferentes.",
+  "Hipertensão ductal é uma ETAPA da patogênese, não a etiologia; e colelitíase é causa, não mecanismo.",
+  "Amilase/lipase elevadas e dor são CRITÉRIOS DIAGNÓSTICOS, não etiologia nem patogênese.",
+  "Correta. Etiologia = agente causal (cálculo biliar). Patogênese = o mecanismo 'de ponta a ponta': obstrução → pressão → lipase/esteatonecrose → inflamação → isquemia → necrose acinar → hidrolases ativam tripsinogênio → autodigestão."],
+ ref:"Etiologia × patogênese"},
+
+/* 10 */ {n:10,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Adolescente com parotidite por caxumba evolui com dor epigástrica intensa e amilase e lipase elevadas.</span><div class="pergunta">O mecanismo de pancreatite aguda envolvido nesse caso é:</div>`,
+ alts:["obstrução da ampola de Vater por cálculo biliar","transporte intracelular defeituoso de pró-enzimas","lesão direta das células acinares pelo vírus","hipertrigliceridemia com congestão capilar e isquemia","contração sustentada do esfíncter de Oddi"], correta:2,
+ just:[
+  "Não há doença biliar no caso — o gatilho é viral, não obstrutivo.",
+  "O transporte defeituoso (empacotamento junto com hidrolases) associa-se a álcool e obstrução — não à infecção viral.",
+  "Correta. O vírus da caxumba tem tropismo por células acinares (como pela parótida): destrói a célula diretamente → o conteúdo (pró-enzimas + hidrolases lisossomais) se mistura → tripsinogênio ativado dentro do pâncreas. É o mecanismo ② da aula.",
+  "É o mecanismo dos xantomas/hipertrigliceridemia — outro contexto clínico.",
+  "Contração do Oddi é efeito do álcool (e de opiáceos) — não participa da pancreatite pós-caxumba."],
+ ref:"Mecanismo ② — lesão acinar direta"},
+
+/* 11 */ {n:11,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Família com múltiplos casos de pancreatite desde a juventude, em padrão autossômico dominante, sem etilismo nem litíase.</span><div class="pergunta">Sobre a base genética mais provável, é correto afirmar:</div>`,
+ alts:["PRSS1 mutado gera tripsina resistente à inativação e risco aumentado de câncer","mutação de SPINK1 produz uma tripsina hiperativa, transmitida em herança autossômica dominante","mutação de CFTR bloqueia a enteropeptidase duodenal","mutação de PRSS1 apenas reduz a secreção de bicarbonato ductal","essas mutações causam pancreatite, porém sem repercussão oncológica"], correta:0,
+ just:[
+  "Correta. PRSS1 mutado (autossômico DOMINANTE) torna a tripsina resistente à inativação: qualquer ativação mínima dispara a cascata. E tanto PRSS1 quanto SPINK1 mutados aumentam significativamente o risco de câncer de pâncreas (na hereditária, ~40%).",
+  "SPINK1 não cria tripsina hiperativa — ele DEIXA DE INIBIR (perde-se o PSTI); e sua herança é recessiva.",
+  "CFTR não age sobre a enteropeptidase: reduz a secreção de bicarbonato, adensando o suco (concreções).",
+  "Bicarbonato reduzido é o mecanismo do CFTR/fibrose cística — não do PRSS1.",
+  "Errado: o risco oncológico existe e foi enfatizado — pancreatite hereditária chega a 40% de risco de câncer."],
+ ref:"Genética — PRSS1 e SPINK1"},
+
+/* 12 */ {n:12,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Peça de mesentério de paciente com pancreatite aguda mostra depósitos brancacentos com aspecto de "cera de vela"; a lâmina exibe contornos-fantasma de adipócitos com depósitos basofílicos granulares.</span><div class="pergunta">Esses achados correspondem a:</div>`,
+ alts:["esteatose com degeneração hidrópica dos adipócitos","necrose liquefativa com formação de pus estéril","necrose caseosa granulomatosa peripancreática","esteatonecrose com saponificação dos ácidos graxos","apoptose adipocitária com corpos residuais eosinofílicos"], correta:3,
+ just:[
+  "Esteatose é ACÚMULO de gordura em célula viva — aqui há MORTE celular (e a professora avisou: não escrever esteatose na prova).",
+  "Liquefativa é o padrão de cérebro e suprarrenal (e de abscessos com pus de verdade) — não desta lesão.",
+  "Caseosa pede granuloma (tuberculose) — nada a ver com adipócitos saponificados.",
+  "Correta. A lipase libera ácidos graxos dos triglicérides; eles reagem com o Ca²⁺ intersticial formando sabões insolúveis (SAPONIFICAÇÃO): macro em 'cera de vela', micro com adipócitos-fantasma e depósitos basofílicos azulados. É necrose coagulativa 'especial'.",
+  "Apoptose é morte individual programada, sem essa reação química em campo — o quadro é necrose enzimática do tecido adiposo."],
+ ref:"Esteatonecrose e saponificação"},
+
+/* 13 */ {n:13,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Lâmina de pâncreas com esteatonecrose, infiltrado neutrofílico, necrose de ácinos e ductos atingindo algumas ilhotas, e focos hemorrágicos esparsos no parênquima.</span><div class="pergunta">Pela estratificação morfológica da pancreatite aguda, trata-se da forma:</div>`,
+ alts:["aguda intersticial (branda)","necrosante aguda (forma grave)","hemorrágica (forma mais grave)","crônica agudizada com fibrose","autoimune esclerosante linfoplasmocítica"], correta:1,
+ just:[
+  "Na intersticial o foco é esteatonecrose + edema + inflamação — o PARÊNQUIMA acinar segue de pé, o que aqui não ocorre.",
+  "Correta. Necrose do parênquima (ácinos, ductos e até ilhotas) somada à esteatonecrose, com FOCOS hemorrágicos — é a definição da necrosante aguda. A hemorrágica exigiria necrose extensa com hemorragia abundante tomando a glândula.",
+  "Na hemorrágica o órgão inteiro está comprometido por necrose com hemorragia abundante — não apenas focos.",
+  "Não há fibrose descrita — fibrose é a assinatura da CRÔNICA, irreversível.",
+  "A autoimune é crônica, com infiltrado linfoplasmocitário centrado em ductos e IgG4 — outro cenário."],
+ ref:"Morfologia — intersticial × necrosante × hemorrágica"},
+
+/* 14 */ {n:14,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Homem com dor epigástrica em faixa e vômitos. Amilase sérica 2× o limite superior. A equipe questiona se já é possível firmar pancreatite aguda.</span><div class="pergunta">Pelos critérios diagnósticos apresentados em aula, a conduta correta é:</div>`,
+ alts:["fechar o diagnóstico — dor típica com qualquer elevação de amilase basta","solicitar biópsia pancreática, o padrão-ouro diagnóstico","buscar o segundo critério: enzimas ≥3× e/ou imagem compatível","descartar pancreatite, pois a lipase deveria subir antes da amilase","aguardar 7 dias e repetir a dosagem antes de qualquer definição"], correta:2,
+ just:[
+  "Elevação de 2× não cumpre o critério laboratorial — a aula martelou: ≥3× (3 a 5×) o valor de referência.",
+  "Pancreatite aguda NÃO se biopsia — 'se eu pergunto exame laboratorial, é amilase e lipase, não biópsia'.",
+  "Correta. Diagnóstico = 2 de 3: (1) clínica compatível; (2) amilase/lipase ≥3×; (3) imagem (TC) com pâncreas inflamado. Com dor típica + amilase apenas 2×, falta confirmar com enzimas ≥3× ou imagem.",
+  "É o inverso: a AMILASE sobe primeiro (24h); a lipase sobe em 72–96h — e nada disso 'descarta' o quadro.",
+  "Esperar dias numa emergência abdominal é conduta inadequada — a definição usa os critérios disponíveis agora."],
+ ref:"Diagnóstico — 2 de 3 critérios"},
+
+/* 15 */ {n:15,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre as enzimas usadas no diagnóstico da pancreatite aguda, é correto afirmar:</div>`,
+ alts:["a amilase é exclusiva do pâncreas, o que garante sua especificidade","a lipase eleva-se nas primeiras horas e normaliza antes da amilase","o grau de elevação enzimática quantifica a gravidade da doença","amilase e lipase só têm valor quando dosadas no líquido peritoneal","a lipase é específica do pâncreas; já a amilase é também salivar"], correta:4,
+ just:[
+  "A amilase NÃO é exclusiva — glândulas salivares também a produzem (por isso ela é a menos específica).",
+  "Inverteu a cinética: amilase sobe primeiro (24h); a lipase sobe depois (72–96h).",
+  "Aviso repetido em aula: o NÍVEL de elevação NÃO se correlaciona com a gravidade.",
+  "A dosagem diagnóstica é SÉRICA (sangue) — não no líquido peritoneal.",
+  "Correta. A lipase é específica do pâncreas; a amilase é compartilhada com as salivares — e a amilase sobe primeiro por haver maior quantidade disponível."],
+ ref:"Amilase × lipase"},
+
+/* 16 */ {n:16,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">No 2º dia de internação por pancreatite aguda, o paciente desenvolve equimose em flanco esquerdo e outra periumbilical.</span><div class="pergunta">Esses sinais indicam:</div>`,
+ alts:["Grey-Turner e Cullen — hemorragia retroperitoneal","paniculite — inflamação benigna do subcutâneo, sem gravidade","xantomas eruptivos por hipertrigliceridemia descompensada","icterícia precoce por coledocolitíase associada","trombose venosa profunda com sufusões cutâneas"], correta:0,
+ just:[
+  "Correta. Equimose em FLANCO = Grey-Turner; PERIUMBILICAL = Cullen. Traduzem hemorragia retroperitoneal 24–48h após ruptura do parênquima — caracterizam pancreatite aguda GRAVE, de pior prognóstico.",
+  "Paniculite é necrose gordurosa subcutânea inflamatória — nódulos, não equimoses em localização típica.",
+  "Xantomas são tumorações gordurosas amareladas crônicas — não equimoses agudas.",
+  "Icterícia é coloração amarelada de pele/mucosas — nada a ver com equimoses em flanco/periumbilical.",
+  "TVP não produz esse padrão periumbilical/flanco bilateralmente típico do retroperitônio."],
+ ref:"Sinais de Grey-Turner e Cullen"},
+
+/* 17 */ {n:17,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente com pancreatite aguda grave evolui com cálcio sérico persistentemente baixo.</span><div class="pergunta">A explicação fisiopatológica e o significado prognóstico são:</div>`,
+ alts:["o cálcio migra para dentro das ilhotas lesadas; achado sem valor clínico","consumo do cálcio nos sabões da esteatonecrose; mau prognóstico","há hiperparatireoidismo reativo transitório; sinal de boa evolução","a hipocalcemia decorre da glicosúria; marcador de doença leve","o cálcio precipita nos túbulos renais; indica apenas desidratação"], correta:1,
+ just:[
+  "Não há 'migração para ilhotas' — o sequestro do cálcio é extracelular, no tecido adiposo necrótico.",
+  "Correta. Na saponificação, os ácidos graxos liberados pela lipase ligam o Ca²⁺ formando sabões insolúveis — quanto mais esteatonecrose, mais cálcio consumido. Hipocalcemia PERSISTENTE = mau sinal prognóstico.",
+  "Hiperparatireoidismo causaria HIPERcalcemia — e não é o mecanismo aqui.",
+  "Glicosúria (10% dos casos) reflete ilhotas atingidas — não gera hipocalcemia nem indica doença leve.",
+  "Precipitação tubular renal não é o mecanismo — e o achado é de gravidade, não de simples desidratação."],
+ ref:"Hipocalcemia — sabões de cálcio"},
+
+/* 18 */ {n:18,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A abordagem terapêutica principal da pancreatite aguda consiste em:</div>`,
+ alts:["antibioticoterapia precoce de amplo espectro em todos os casos","ressecção cirúrgica imediata da área inflamada","reposição de enzimas pancreáticas por via oral","repouso do órgão: jejum, analgesia e fluidos intravenosos","corticoterapia em altas doses para bloquear a autodigestão"], correta:3,
+ just:[
+  "Antibiótico não é rotina — reserva-se a complicações infecciosas (como abscesso).",
+  "Cirurgia imediata não é a base — a lesão é reversível e a maioria dos casos é leve e autolimitada.",
+  "Repor enzimas é conduta da INSUFICIÊNCIA da pancreatite crônica — na aguda seria contraproducente.",
+  "Correta. 'Descansar' o pâncreas: restrição total da ingestão oral (sem estímulo de secretina/CCK), analgésicos e fluidos IV — deixando a lesão reversível se resolver.",
+  "Corticoide é tratamento da pancreatite AUTOIMUNE (IgG4) — não da aguda comum."],
+ ref:"Tratamento — descanso do pâncreas"},
+
+/* 19 */ {n:19,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">TC de controle após pancreatite aguda grave mostra coleção líquida peripancreática organizada. A biópsia da parede da lesão revela tecido de granulação com neovasos, fibroblastos e macrófagos, SEM revestimento epitelial, contendo suco pancreático.</span><div class="pergunta">O diagnóstico é:</div>`,
+ alts:["cisto verdadeiro de retenção pancreático","abscesso pancreático em organização","pseudocisto pancreático pós-necrose","cistoadenoma seroso incidental","necrose gordurosa encapsulada calcificada"], correta:2,
+ just:[
+  "Cisto VERDADEIRO exige parede revestida por EPITÉLIO — que o laudo nega explicitamente.",
+  "Abscesso conteria PUS (infiltrado polimorfonuclear maciço) — não suco pancreático limpo em parede de granulação.",
+  "Correta. Cavidade com suco pancreático liquefeito circundada por TECIDO DE GRANULAÇÃO (reparo que não completou a cicatriz), sem epitélio = pseudocisto — a complicação local clássica. Risco: romper e reinflamar; conduta: acompanhar/drenar.",
+  "Cistoadenoma é NEOPLASIA cística com revestimento epitelial próprio — outra entidade.",
+  "A necrose gordurosa dá placas de saponificação, não uma cavidade única organizada com líquido."],
+ ref:"Pseudocisto × cisto × abscesso"},
+
+/* 20 */ {n:20,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Na pancreatite crônica, episódios repetidos de lesão acinar culminam em deposição de colágeno e perda irreversível do parênquima.</span><div class="pergunta">As citocinas prófibrogênicas e a célula efetora desse processo são:</div>`,
+ alts:["IL-1β e TNF, agindo diretamente sobre as células centroacinosas","secretina e CCK, agindo sobre as células ductais","interferon-gama e IL-8, agindo sobre neutrófilos","complemento e calicreína, agindo sobre o endotélio","TGF-β e PDGF, ativando as células estreladas periacinares"], correta:4,
+ just:[
+  "IL-1β e TNF são citocinas da inflamação AGUDA — e centroacinosa é célula ductal normal, não efetora de fibrose.",
+  "Secretina e CCK são hormônios FISIOLÓGICOS da secreção — nada têm de fibrogênico.",
+  "IFN-γ/IL-8 recrutam células inflamatórias, mas não são o eixo fibrogênico destacado; neutrófilo não produz colágeno.",
+  "Complemento e calicreína pertencem à cascata da pancreatite AGUDA (inflamação/trombose) — não à fibrose.",
+  "Correta. Mononucleares dos episódios repetidos liberam TGF-β e PDGF, que ativam as células ESTRELADAS (estelares) periacinares — miofibroblastos quiescentes — a produzir colágeno: fibrose e remodelamento. Mesmo mecanismo das células estreladas na cirrose hepática."],
+ ref:"Crônica — TGF-β/PDGF e células estreladas"},
+
+/* 21 */ {n:21,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Etilista crônico com lâmina pancreática mostrando ductos dilatados contendo material eosinofílico solidificado aderido, extensa fibrose e infiltrado mononuclear.</span><div class="pergunta">Sobre o material intraductal, é correto afirmar:</div>`,
+ alts:["são concreções — cálculos proteicos formados do suco pancreático denso","são cálculos biliares que migraram do colédoco para os ductos pancreáticos","são êmbolos de colesterol da hipertrigliceridemia associada","é bile espessada refluída da ampola de Vater","é patognomônico do alcoolismo, dispensando outras hipóteses"], correta:0,
+ just:[
+  "Correta. Concreções = cálculos PROTEICOS formados no próprio ducto pelo suco pancreático adensado (podem calcificar em carbonato de cálcio) — típicas do alcoolismo crônico e altamente sugestivas dele.",
+  "Cálculo biliar vem da vesícula/colédoco e obstrui a AMPOLA — não vira material aderido dentro dos duetos pancreáticos ('não confundam na prova').",
+  "Hipertrigliceridemia congestiona capilares com quilomícrons — não forma concreções ductais.",
+  "Bile não reflui para preencher os ductos pancreáticos como material solidificado eosinofílico.",
+  "NÃO é patognomônico: a fibrose cística (CFTR) também adensa a secreção e forma concreções — por isso 'altamente sugestivo', não exclusivo."],
+ ref:"Crônica — concreções ductais"},
+
+/* 22 */ {n:22,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Homem de 55 anos com massa pancreática endurecida e função exócrina comprometida. A histologia mostra infiltrado inflamatório misto centrado nos ductos, venulite e numerosas células produtoras de IgG4.</span><div class="pergunta">O diagnóstico e sua importância prática são:</div>`,
+ alts:["adenocarcinoma ductal — indicar duodenopancreatectomia imediata","pancreatite crônica alcoólica — abstinência resolve o quadro","pancreatite autoimune — mimetiza câncer e responde a corticoide","pseudocisto gigante — drenagem endoscópica de urgência","fibrose cística do adulto — iniciar reposição enzimática"], correta:2,
+ just:[
+  "É justamente o erro que a entidade induz: parece câncer (órgão denso, função ruim) — mas não há células malignas nem pleomorfismo; operar seria desastre evitável.",
+  "A etiologia alcoólica daria concreções ductais e história de etilismo — não infiltrado IgG4 com venulite.",
+  "Correta. Infiltrado misto centrado em ductos + venulite + células IgG4 = pancreatite AUTOIMUNE. Importa reconhecer porque clinicamente se assemelha ao câncer de pâncreas e, ao contrário dele, RESPONDE à terapia esteroidal.",
+  "Pseudocisto é cavidade líquida pós-necrose — nada a ver com massa sólida infiltrada por IgG4.",
+  "CFTR/fibrose cística adensa secreções e forma concreções — não produz esse padrão imune."],
+ ref:"Pancreatite autoimune — IgG4"},
+
+/* 23 */ {n:23,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Jovem com pancreatites agudas de repetição rotuladas de "idiopáticas". A colangiorressonância revela que a maior parte da drenagem pancreática ocorre pela papila MENOR.</span><div class="pergunta">O diagnóstico é:</div>`,
+ alts:["síndrome de Mirizzi comprimindo o ducto hepático comum","coledocolitíase recidivante de microcálculos","disfunção primária do esfíncter de Oddi","pâncreas divisum, com estenose relativa da drenagem","duplicação completa do ducto colédoco"], correta:3,
+ just:[
+  "Mirizzi é compressão do hepático/colédoco por cálculo na vesícula — não altera a via de drenagem pancreática.",
+  "Microcálculos causam pancreatite biliar, mas a imagem NÃO mostra litíase — mostra anatomia ductal anômala.",
+  "A disfunção do Oddi afeta a papila MAIOR e não explica a drenagem dominante pela menor.",
+  "Correta. No pâncreas divisum, a maior parte da secreção drena pela papila MENOR — uma estenose relativa que dificulta o escoamento e gera pancreatites de repetição frequentemente rotuladas de idiopáticas (a professora publicou artigo sobre isso).",
+  "Duplicação do colédoco é raridade da via BILIAR — não redireciona o suco pancreático."],
+ ref:"Pâncreas divisum"},
+
+/* 24 */ {n:24,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Homem, 62 anos, tabagista de longa data, com dor abdominal e perda de 11 kg em 3 meses; icterícia progressiva. TC: massa na CABEÇA do pâncreas. Core biopsy: glândulas desordenadas infiltrando estroma fibrótico, invasão perineural e acentuado pleomorfismo nuclear.</span><div class="pergunta">Sobre esse quadro, é correto afirmar:</div>`,
+ alts:["a icterícia afasta neoplasia e sugere hepatite associada","é adenocarcinoma ductal invasor; a icterícia decorre da obstrução do colédoco","trata-se de pancreatite crônica pseudotumoral, pois há estroma fibrótico","é neoplasia de células acinares, a mais comum do pâncreas","o prognóstico é favorável quando a lesão está na cabeça, pela ressecção fácil"], correta:1,
+ just:[
+  "Ao contrário: na cabeça do pâncreas, a icterícia obstrutiva é às vezes o PRIMEIRO sinal do tumor.",
+  "Correta. Adenocarcinoma DUCTAL invasor (a neoplasia mais comum do pâncreas, >50 anos, tabagismo como fator de risco): massa da cabeça obstrui o colédoco → icterícia; a fibrose (desmoplasia) o faz parecer pancreatite crônica — e o que decide é o PLEOMORFISMO nuclear acentuado + invasão (perineural/angiolinfática).",
+  "O estroma fibrótico engana mesmo — mas glândulas invasoras com pleomorfismo marcado fecham malignidade.",
+  "A neoplasia mais comum é DUCTAL (por isso 'adeno... ductal'), não acinar.",
+  "O prognóstico é péssimo em qualquer topografia: invasão perineural e metástases precoces (linfonodos, fígado) tiram a chance cirúrgica — a maioria morre em <1 ano."],
+ ref:"Adenocarcinoma ductal invasor"}
+];
+
+
+const dissertativas=[
+{n:1,aula:1,
+ caso:`Mulher, 48 anos, obesa, procura o pronto-socorro com dor epigástrica intensa de início súbito após um almoço gorduroso, irradiando em faixa para o dorso, acompanhada de náuseas e vômitos. Ultrassom prévio já mostrava colelitíase. Na admissão: amilase 4× e lipase 3,5× o limite superior. A tomografia evidencia cálculo impactado na ampola de Vater e pâncreas edemaciado, com densificação da gordura peripancreática.`,
+ perg:[
+  "a) Diferencie etiologia e patogênese neste caso, identificando cada uma.",
+  "b) Descreva a patogênese 'de ponta a ponta': do cálculo impactado até a autodigestão do órgão.",
+  "c) Por que a lesão da pancreatite aguda é considerada potencialmente reversível, e qual é a base do tratamento?",
+  "d) Que particularidade da amilase e da lipase explica tanto o início da lesão quanto o seu uso diagnóstico?"],
+ resp:[
+  ["a) Etiologia × patogênese",
+   `A <b>etiologia</b> é o agente causal: o <b>cálculo biliar impactado na ampola de Vater</b> (a causa mais comum, ~80% junto com o álcool). A <b>patogênese</b> é o mecanismo pelo qual essa causa produz a doença: a cadeia de eventos que leva à ativação inapropriada das enzimas dentro do pâncreas. A professora avisou explicitamente: se a prova pedir patogênese e o aluno responder "cálculo", não pontua — cálculo é etiologia.`],
+  ["b) Patogênese de ponta a ponta",
+   `① O cálculo <b>obstrui</b> o canal comum na ampola → ② o suco pancreático não escoa, a <b>pressão intraductal sobe</b> e o fluido rico em enzimas se acumula no interstício → ③ a <b>lipase, secretada já ativa</b>, começa a digerir a gordura local (<b>esteatonecrose</b>) → ④ o dano libera citocinas: <b>inflamação e edema intersticial</b> → ⑤ o edema comprime a microcirculação de suprimento precário: <b>isquemia</b> → ⑥ sofrimento e <b>necrose das células acinares</b> → ⑦ com a necrose, grânulos de zimogênio e lisossomos se rompem e misturam: as <b>hidrolases lisossomais ativam o tripsinogênio em tripsina</b> dentro do órgão → ⑧ a tripsina ativa as demais pró-enzimas (pró-elastase, pró-fosfolipase…) e também pré-calicreína e cascatas de coagulação/complemento → <b>autodigestão</b>, vasodilatação, trombose, hemorragia.`],
+  ["c) Reversibilidade e tratamento",
+   `A inflamação aguda instala-se em órgão previamente normal e, se o estímulo cessa antes de necrose extensa, o parênquima se recupera <b>sem fibrose</b> — diferente da crônica, onde a perda é irreversível. Por isso a base do tratamento é o <b>"descanso" do pâncreas</b>: <b>jejum oral total</b> (sem alimento no duodeno → sem secretina/CCK → sem estímulo secretório), <b>analgesia</b> para a dor intensa e <b>fluidos intravenosos</b> para sustentar volemia e perfusão. Na etiologia biliar, trata-se também a causa (desobstrução/colecistectomia).`],
+  ["d) Amilase e lipase — vilãs e marcadores",
+   `São as <b>duas únicas enzimas secretadas já em forma ativa</b> (as demais são pró-enzimas). No suco represado pela obstrução, a lipase ativa inicia a esteatonecrose — o primeiro dano. E, com a inflamação e a necrose acinar, ambas <b>extravasam para o sangue</b>: amilase sobe primeiro (~24h; existe em maior quantidade, mas também é salivar — menos específica) e lipase depois (72–96h; <b>específica do pâncreas</b>). Elevação <b>≥3×</b> o limite é critério diagnóstico — mas o nível <b>não</b> mede gravidade.`],
+ ],
+ ref:"Pancreatite aguda biliar — patogênese e tratamento"},
+
+{n:2,aula:1,
+ caso:`Homem, 39 anos, chega ao pronto-socorro com dor abdominal superior intensa "em barra", vômitos e distensão. O plantonista aventa pancreatite aguda e discute com o interno como confirmar o diagnóstico e como estimar a gravidade do caso.`,
+ perg:[
+  "a) Quais são os três critérios diagnósticos da pancreatite aguda e quantos são exigidos? Qual exame NÃO entra nesse diagnóstico?",
+  "b) Compare amilase e lipase quanto a cinética e especificidade. O grau de elevação informa a gravidade?",
+  "c) Cite instrumentos de estratificação de gravidade e dois achados de mau prognóstico, explicando o mecanismo de um deles.",
+  "d) Que sinais cutâneos denunciam a forma hemorrágica grave, e o que significam?"],
+ resp:[
+  ["a) Critérios 2 de 3",
+   `Diagnóstico = <b>2 de 3</b>: ① <b>quadro clínico</b> compatível (dor epigástrica em faixa, náuseas/vômitos); ② <b>amilase e/ou lipase séricas ≥3×</b> (3–5×) o valor de referência; ③ <b>imagem</b> (TC) mostrando pâncreas inflamado/edemaciado. A <b>biópsia NÃO</b> faz parte — pancreatite aguda não se biopsia; "se eu pergunto exame laboratorial, é amilase e lipase".`],
+  ["b) Amilase × lipase",
+   `<b>Amilase</b>: sobe primeiro (~<b>24h</b>) — há mais amilase disponível —, mas é <b>menos específica</b> (também produzida pelas glândulas salivares). <b>Lipase</b>: sobe mais tarde (<b>72–96h</b>) e é <b>específica do pâncreas</b>. Juntas dão sensibilidade + especificidade. E o aviso repetido em aula: o <b>nível de elevação NÃO se correlaciona com a gravidade</b> — enzima 10× não significa doença pior que 3×.`],
+  ["c) Gravidade",
+   `Instrumentos: <b>classificação de Atlanta</b> (leve × moderadamente grave × grave, por falência orgânica e complicações), critérios de <b>Ranson</b>, APACHE II e <b>PCR &gt; 150 mg/L</b> em 48h. Mau prognóstico: <b>hipocalcemia persistente</b> e <b>PCR elevada</b>, além de falência orgânica persistente. Mecanismo da hipocalcemia: na esteatonecrose, os ácidos graxos liberados pela lipase <b>sequestram Ca²⁺ formando sabões</b> (saponificação) — quanto mais necrose gordurosa, mais cálcio consumido; se o cálcio não se recupera, a necrose é extensa → pior evolução.`],
+  ["d) Sinais cutâneos",
+   `<b>Grey-Turner</b>: equimose nos <b>flancos</b>; <b>Cullen</b>: equimose <b>periumbilical</b>. Aparecem 24–48h após ruptura do parênquima com <b>hemorragia retroperitoneal</b> dissecando os planos até a pele — denunciam a forma <b>hemorrágica/necro-hemorrágica grave</b>, de pior prognóstico.`],
+ ],
+ ref:"Diagnóstico e gravidade da pancreatite aguda"},
+
+{n:3,aula:1,
+ caso:`Homem, 52 anos, etilista pesado há 25 anos, com episódios repetidos de dor abdominal alta. Evolui há 2 anos com esteatorreia (fezes gordurosas, volumosas), perda de peso e diabetes recém-diagnosticado. TC: pâncreas atrófico com calcificações. Curiosamente, amilase e lipase séricas estão normais. A biópsia mostra extensa fibrose, infiltrado mononuclear e ductos dilatados com material eosinofílico solidificado.`,
+ perg:[
+  "a) Qual o diagnóstico e por que essa doença é irreversível, ao contrário da pancreatite aguda?",
+  "b) Explique os mecanismos pelos quais o álcool agride o pâncreas e o que é o material intraductal descrito.",
+  "c) Descreva o mecanismo molecular da fibrose (citocinas e célula efetora) e o paralelo com outra doença vista no semestre.",
+  "d) Explique a esteatorreia, o diabetes e as enzimas séricas normais neste paciente."],
+ resp:[
+  ["a) Pancreatite crônica — irreversível",
+   `<b>Pancreatite crônica</b> de etiologia alcoólica (a causa mais comum da forma crônica). É irreversível porque a assinatura da doença é a <b>FIBROSE</b>: episódios repetidos de necroinflamação destroem o parênquima exócrino, que é substituído por colágeno — cicatriz não volta a ser ácino. Na aguda, a lesão pode se resolver sem sequela; na crônica, cada surto soma perda definitiva. (Detalhe de prova: a alcoólica tem <b>pior prognóstico</b> que a biliar já na forma aguda.)`],
+  ["b) Álcool e concreções",
+   `O álcool age por várias frentes: ① <b>contração do esfíncter de Oddi</b> (obstrução funcional); ② efeito <b>tóxico direto</b> sobre a célula acinar (com estresse oxidativo); ③ torna o suco pancreático <b>denso, rico em proteínas</b>, que precipita nos ductos formando <b>CONCREÇÕES</b> — cálculos proteicos intraductais (podem calcificar: carbonato de cálcio) — que obstruem e perpetuam a agressão. Concreção <b>não é cálculo biliar</b>: nasce no próprio ducto pancreático, do suco adensado. É achado altamente sugestivo de etiologia alcoólica (a fibrose cística/CFTR também adensa a secreção).`],
+  ["c) Mecanismo da fibrose",
+   `O infiltrado <b>mononuclear</b> dos surtos repetidos libera <b>TGF-β e PDGF</b>, que ativam as <b>células estreladas (estelares) periacinares</b> — miofibroblastos quiescentes do estroma — a proliferar e produzir <b>colágeno</b>: fibrose progressiva e remodelamento ductal. É o <b>mesmo mecanismo da cirrose hepática</b>, onde as células estreladas (de Ito) do espaço de Disse, ativadas por TGF-β, fibrosam o fígado do etilista — a professora fez essa ponte explicitamente.`],
+  ["d) Consequências funcionais",
+   `<b>Esteatorreia</b>: com a massa acinar destruída, faltam lipases no duodeno → gordura não digerida sai nas fezes (insuficiência <b>exócrina</b>) — tratada com reposição enzimática oral. <b>Diabetes</b>: a destruição avança sobre as <b>ilhotas</b> → insuficiência <b>endócrina</b> (DM secundário). <b>Enzimas normais</b>: na doença longa "sobrou pouco pâncreas para inflamar" — resta pouco parênquima produtor de enzimas, então amilase/lipase podem ser normais mesmo com doença ativa; o diagnóstico apoia-se em imagem (calcificações, atrofia) e função.`],
+ ],
+ ref:"Pancreatite crônica alcoólica"},
+
+{n:4,aula:1,
+ caso:`Homem, 62 anos, tabagista desde os 20 anos, procura atendimento por dor abdominal vaga, icterícia progressiva com colúria, e emagrecimento de 11,3 kg em 3 meses. TC: massa hipodensa de 3,5 cm na cabeça do pâncreas, dilatação das vias biliares e do ducto de Wirsung. Biópsia por agulha (PAAF): glândulas atípicas desorganizadas em meio a estroma intensamente fibrótico, com acentuado pleomorfismo nuclear e invasão perineural.`,
+ perg:[
+  "a) Qual o diagnóstico, e por que a icterícia foi uma das primeiras manifestações neste caso?",
+  "b) A fibrose intensa poderia sugerir pancreatite crônica. Que critérios histológicos decidem por malignidade, e que outra entidade benigna também mimetiza câncer de pâncreas?",
+  "c) Cite os fatores de risco presentes no caso e as principais vias de disseminação desse tumor.",
+  "d) Comente o prognóstico e o desfecho esperado, relacionando-o ao comportamento biológico do tumor."],
+ resp:[
+  ["a) Adenocarcinoma ductal e icterícia",
+   `<b>Adenocarcinoma ductal invasor do pâncreas</b> — a neoplasia pancreática mais comum (origem no epitélio DUCTAL, daí o nome). Como a massa está na <b>cabeça</b>, comprime/obstrui o <b>colédoco</b>, que a atravessa a caminho da ampola: bilirrubina reflui → <b>icterícia obstrutiva</b> (com colúria) — às vezes o <b>primeiro sinal</b> do tumor. Tumores de corpo/cauda, sem relação com a via biliar, crescem silenciosos e são descobertos ainda mais tarde.`],
+  ["b) Câncer × crônica × autoimune",
+   `O tumor induz <b>desmoplasia</b> — estroma fibrótico denso — que o faz parecer pancreatite crônica na lâmina. Decidem por malignidade: o <b>acentuado PLEOMORFISMO nuclear</b> ("a chave é o pleomorfismo"), a arquitetura glandular desorganizada e infiltrativa e a <b>invasão</b> (perineural, angiolinfática) — a crônica tem fibrose com ductos e ácinos residuais regulares, sem atipia. A outra grande imitadora é a <b>pancreatite autoimune (IgG4)</b>: massa endurecida que mimetiza câncer, mas com infiltrado linfoplasmocitário rico em IgG4 centrado em ductos + venulite — e que <b>responde a corticoide</b>; reconhecê-la evita uma cirurgia de Whipple desnecessária.`],
+  ["c) Fatores de risco e disseminação",
+   `No caso: <b>tabagismo</b> de longa data (principal fator ambiental) e <b>idade &gt; 50–60 anos</b>. Outros: pancreatite crônica, diabetes, obesidade e síndromes hereditárias (PRSS1/SPINK1 — pancreatite hereditária chega a ~40% de risco). Disseminação: <b>invasão perineural</b> (marca do tumor, relacionada à dor), <b>angiolinfática</b> → linfonodos peripancreáticos, <b>fígado</b> (via porta), peritônio e pulmões; localmente invade duodeno, via biliar e vasos retroperitoneais.`],
+  ["d) Prognóstico",
+   `Péssimo — é um dos tumores mais letais: cresce silencioso, diagnostica-se tarde (a icterícia da cabeça é a exceção "precoce") e invade cedo estruturas vitais e linfáticos, tirando a chance de ressecção curativa na maioria. A <b>maioria dos pacientes morre em menos de 1 ano</b> após o diagnóstico — como o paciente real do caso da aula, que faleceu ~8 meses depois. Sobrevida em 5 anos &lt; 10%.`],
+ ],
+ ref:"Adenocarcinoma ductal do pâncreas"},
+];
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 02</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 02</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 02 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 02 — Patologia do Pâncreas",kicker:"ANATO PATO II",desc:"Histofisiologia, pancreatite aguda e crônica, pseudocisto, genética e adenocarcinoma ductal — com as ênfases da professora.",cards:[
+{area:"Histofisiologia",cat:"prof",q:"Prova prática: lâmina de parótida × lâmina de pâncreas, ambas serosas. O que decide?",a:"A CÉLULA CENTROACINOSA — início do ducto intercalar DENTRO da luz do ácino. É patognomônica do pâncreas; a parótida não a tem.",obs:"Exemplo de prova dado pela professora."},
+{area:"Histofisiologia",cat:"conceito",q:"Proporção exócrino × endócrino do pâncreas e o que cada porção produz?",a:"Exócrino 80–85%: células acinares (enzimas) + ductos. Endócrino 1–2%: ilhotas de Langerhans (~1 milhão), maioria células beta → insulina, com capilares fenestrados."},
+{area:"Histofisiologia",cat:"conceito",q:"Trajeto do suco pancreático até o duodeno (ductos e papilas)?",a:"Ácino → ducto intercalar → interlobular → Wirsung (principal), que se une ao colédoco na AMPOLA DE VATER → papila MAIOR. Santorini (acessório) → papila MENOR, ~2 cm acima."},
+{area:"Histofisiologia",cat:"alerta",q:"Por que a ampola de Vater é o ponto crítico da pancreatite biliar?",a:"É o canal COMUM de bile + suco pancreático. Cálculo impactado ali trava os dois → hipertensão ductal pancreática → gatilho da pancreatite aguda."},
+{area:"Proteções e secreção",cat:"prof",q:"\"Cite dois mecanismos que impedem a autodigestão do pâncreas\" (pedido literal de prova).",a:"① Enzimas como PRÓ-enzimas inativas; ② sequestro em grânulos de zimogênio; ③ ativação só no DUODENO (enteropeptidase); ④ inibidor de tripsina PSTI (gene SPINK1); ⑤ autólise da tripsina em excesso.",obs:"Qualquer dois valem — saiba os cinco."},
+{area:"Proteções e secreção",cat:"alerta",q:"Quais são as DUAS enzimas pancreáticas secretadas já ATIVAS?",a:"AMILASE e LIPASE. Por isso a lipase inicia a esteatonecrose no suco represado — e por isso são elas as dosadas no sangue."},
+{area:"Proteções e secreção",cat:"conceito",q:"Quem ativa o tripsinogênio fisiologicamente, e onde?",a:"A ENTEROPEPTIDASE (enteroquinase) da mucosa duodenal, NO DUODENO. A tripsina então ativa as demais pró-enzimas em cascata.",obs:"'Não podem errar' — ênfase da professora."},
+{area:"Proteções e secreção",cat:"conceito",q:"Secretina × CCK: estímulo e produto de cada uma?",a:"SECRETINA: quimo ácido (pH<4,5) no duodeno → suco AQUOSO rico em BICARBONATO (células ductais) para neutralizar. CCK: aminoácidos/ácidos graxos → suco rico em ENZIMAS (células acinares). + estímulo vagal."},
+{area:"Aguda — patogênese",cat:"conceito",q:"Definição de pancreatite aguda em uma frase?",a:"Inflamação aguda do pâncreas por ATIVAÇÃO INAPROPRIADA das enzimas dentro do órgão → AUTODIGESTÃO; lesão potencialmente REVERSÍVEL."},
+{area:"Aguda — patogênese",cat:"prof",q:"Etiologia × patogênese no caso do cálculo biliar — qual a pegadinha de prova?",a:"ETIOLOGIA = o cálculo (a causa). PATOGÊNESE = a cascata completa da autodigestão. Se a prova pede patogênese e você responde 'cálculo', NÃO pontua.",obs:"Aviso literal da professora."},
+{area:"Aguda — patogênese",cat:"prof",q:"Patogênese obstrutiva 'de ponta a ponta' (8 passos)?",a:"Obstrução → hipertensão ductal → LIPASE ativa faz esteatonecrose → inflamação/edema → compressão vascular → ISQUEMIA → NECROSE acinar → hidrolases lisossomais ativam TRIPSINOGÊNIO → cascata e autodigestão."},
+{area:"Aguda — patogênese",cat:"conceito",q:"Quais as 2 etiologias que somam ~80% das pancreatites agudas? E a forma de pior prognóstico?",a:"Cálculo BILIAR + ÁLCOOL (~80%). A ALCOÓLICA tem pior prognóstico que a biliar."},
+{area:"Aguda — patogênese",cat:"conceito",q:"Mecanismo da pancreatite por caxumba? E por hipertrigliceridemia?",a:"Caxumba: LESÃO ACINAR DIRETA pelo vírus (tropismo acinar, como na parótida). Hipertrigliceridemia: quilomícrons congestionam capilares → ISQUEMIA."},
+{area:"Aguda — patogênese",cat:"conceito",q:"Como o álcool causa pancreatite aguda? (3 frentes)",a:"① Contração do esfíncter de ODDI (obstrução funcional); ② toxicidade DIRETA à célula acinar; ③ suco DENSO rico em proteínas → concreções que obstruem."},
+{area:"Genética / divisum / autoimune",cat:"prof",q:"PRSS1 × SPINK1 — o que cada mutação faz e qual a herança?",a:"PRSS1 (dominante): tripsina RESISTENTE à inativação — qualquer ativação dispara a cascata. SPINK1 (recessiva): perde-se o INIBIDOR PSTI. Ambas: pancreatite desde jovem + risco AUMENTADO de câncer (~40% na hereditária)."},
+{area:"Genética / divisum / autoimune",cat:"conceito",q:"O que é pâncreas divisum e por que causa pancreatite 'idiopática' de repetição?",a:"Malformação em que a maior parte da drenagem sai pela papila MENOR — estenose relativa → escoamento difícil → pancreatites de repetição rotuladas de idiopáticas.",obs:"A professora publicou artigo sobre um caso."},
+{area:"Genética / divisum / autoimune",cat:"prof",q:"Pancreatite autoimune: histologia e por que 'cai em prova'?",a:"Infiltrado linfoplasmocitário rico em IgG4 centrado em DUCTOS + venulite; forma esclerosante que MIMETIZA CÂNCER de pâncreas — mas RESPONDE A CORTICOIDE. Reconhecer evita Whipple desnecessária."},
+{area:"Aguda — morfologia",cat:"prof",q:"Esteatonecrose: mecanismo químico, macro e micro?",a:"Lipase libera ácidos graxos → ligam Ca²⁺ → SABÕES insolúveis (SAPONIFICAÇÃO). Macro: placas branco-amareladas 'CERA DE VELA'. Micro: adipócitos-fantasma + depósitos basofílicos granulares.",obs:"NÃO escrever 'esteatose' — esteatose é acúmulo em célula viva; aqui é NECROSE."},
+{area:"Aguda — morfologia",cat:"alerta",q:"A necrose da pancreatite é de que tipo? E onde a liquefativa é típica?",a:"COAGULATIVA (com a esteatonecrose como padrão especial enzimático). Liquefativa = CÉREBRO e suprarrenal (e abscessos)."},
+{area:"Aguda — morfologia",cat:"conceito",q:"As 3 formas morfológicas da pancreatite aguda, em ordem de gravidade?",a:"① INTERSTICIAL (branda): edema + esteatonecrose, parênquima de pé. ② NECROSANTE: necrose de ácinos/ductos/ilhotas + focos hemorrágicos. ③ HEMORRÁGICA: necrose extensa com hemorragia abundante — a mais grave."},
+{area:"Aguda — clínica/dx",cat:"prof",q:"Critérios diagnósticos da pancreatite aguda?",a:"2 DE 3: ① clínica (dor em faixa, vômitos); ② amilase/lipase ≥3× (3–5×); ③ imagem (TC) compatível. BIÓPSIA NÃO ENTRA — pancreatite aguda não se biopsia."},
+{area:"Aguda — clínica/dx",cat:"prof",q:"Amilase × lipase: cinética, especificidade e a pegadinha da gravidade?",a:"Amilase: sobe ~24h, MENOS específica (salivar também). Lipase: 72–96h, ESPECÍFICA do pâncreas. E o NÍVEL de elevação NÃO mede gravidade.",obs:"'Prova da vida' — dosagem sérica."},
+{area:"Aguda — clínica/dx",cat:"conceito",q:"Sinais de Grey-Turner e Cullen: onde e o que significam?",a:"GREY-TURNER: equimose em FLANCO. CULLEN: PERIUMBILICAL. Hemorragia RETROPERITONEAL 24–48h pós-ruptura do parênquima → forma grave, mau prognóstico."},
+{area:"Aguda — clínica/dx",cat:"prof",q:"Por que hipocalcemia na pancreatite aguda, e qual o significado prognóstico?",a:"Ca²⁺ é consumido nos SABÕES da esteatonecrose (saponificação). Hipocalcemia PERSISTENTE = necrose gordurosa extensa = MAU prognóstico."},
+{area:"Aguda — clínica/dx",cat:"conceito",q:"Instrumentos de estratificação de gravidade citados em aula?",a:"Classificação de ATLANTA (leve/moderadamente grave/grave), critérios de RANSON, APACHE II e PCR > 150 mg/L em 48h."},
+{area:"Aguda — clínica/dx",cat:"conceito",q:"Tratamento da pancreatite aguda (a base)?",a:"'Descansar' o pâncreas: JEJUM oral total (sem secretina/CCK) + ANALGESIA + FLUIDOS IV. Antibiótico só para complicação infecciosa; cirurgia não é rotina."},
+{area:"Complicações",cat:"prof",q:"Pseudocisto: definição histológica e por que 'pseudo'?",a:"Cavidade com suco pancreático liquefeito cercada por TECIDO DE GRANULAÇÃO (neovasos, fibroblastos, macrófagos) — SEM revestimento EPITELIAL. Cisto verdadeiro tem epitélio; o pseudo não → 'pseudo'.",obs:"Reparo que não completou a cicatriz."},
+{area:"Complicações",cat:"conceito",q:"Pseudocisto × abscesso pancreático — como diferenciar?",a:"PSEUDOCISTO: suco pancreático em parede de granulação, estéril. ABSCESSO: coleção de PUS (necrose liquefativa + neutrófilos), geralmente infecção secundária — pede drenagem + antibiótico."},
+{area:"Complicações",cat:"conceito",q:"Complicações sistêmicas da pancreatite aguda grave?",a:"Choque, SARA (lecitinase/fosfolipase degrada surfactante), insuficiência renal aguda, CIVD, hipocalcemia, hiperglicemia/glicosúria (~10%, ilhotas atingidas)."},
+{area:"Crônica",cat:"prof",q:"Qual é a assinatura da pancreatite crônica e por que é irreversível?",a:"FIBROSE do parênquima exócrino. Cicatriz de colágeno não volta a ser ácino — cada surto soma perda DEFINITIVA (na aguda a lesão pode resolver sem sequela)."},
+{area:"Crônica",cat:"prof",q:"Mecanismo molecular da fibrose pancreática (citocinas + célula)?",a:"Mononucleares liberam TGF-β e PDGF → ativam CÉLULAS ESTRELADAS (miofibroblastos periacinares) → colágeno. MESMO mecanismo da cirrose hepática (células de Ito).",obs:"Ponte explícita da professora com a aula de fígado."},
+{area:"Crônica",cat:"alerta",q:"Concreção ductal × cálculo biliar — não confundir!",a:"CONCREÇÃO: cálculo PROTEICO formado NO ducto pancreático pelo suco denso (álcool; pode calcificar). Cálculo biliar: nasce na VESÍCULA e obstrui a ampola. Concreção sugere etiologia alcoólica (CFTR também adensa)."},
+{area:"Crônica",cat:"conceito",q:"Tríade clínica tardia da pancreatite crônica e por que as enzimas podem ser normais?",a:"ESTEATORREIA (insuf. exócrina) + DIABETES (ilhotas destruídas) + dor/calcificações. Enzimas normais: 'sobrou pouco pâncreas' para produzi-las — dx por imagem e função."},
+{area:"Adenocarcinoma",cat:"conceito",q:"Qual a neoplasia mais comum do pâncreas e seus fatores de risco?",a:"ADENOCARCINOMA DUCTAL invasor (origem no epitélio ductal). Riscos: idade >50–60, TABAGISMO, pancreatite crônica, diabetes, obesidade, hereditária (PRSS1/SPINK1 ~40%)."},
+{area:"Adenocarcinoma",cat:"prof",q:"Por que tumor de CABEÇA do pâncreas pode dar sinal 'precoce', e qual é ele?",a:"A cabeça abraça o COLÉDOCO: a massa o obstrui → ICTERÍCIA obstrutiva (com colúria) como 1º sinal. Corpo/cauda crescem silenciosos → dx ainda mais tardio."},
+{area:"Adenocarcinoma",cat:"prof",q:"Na lâmina, o que separa adenocarcinoma ductal de pancreatite crônica (ambos fibróticos)?",a:"O PLEOMORFISMO nuclear acentuado ('a chave é o pleomorfismo') + glândulas desorganizadas INFILTRATIVAS + invasão perineural/angiolinfática. A desmoplasia do tumor imita a fibrose da crônica.",obs:"DDx também com autoimune IgG4 (responde a corticoide)."},
+{area:"Adenocarcinoma",cat:"conceito",q:"Vias de disseminação e marca histológica do adenocarcinoma pancreático?",a:"INVASÃO PERINEURAL (marca, relacionada à dor) + angiolinfática → linfonodos, FÍGADO (via porta), peritônio, pulmão; localmente duodeno/via biliar/vasos."},
+{area:"Adenocarcinoma",cat:"caso",q:"Caso da aula: homem 62a, tabagista, -11,3 kg em 3 meses, icterícia, massa na cabeça. Dx e desfecho?",a:"Adenocarcinoma ductal invasor (PAAF: pleomorfismo + invasão perineural). Faleceu ~8 meses após o dx — a maioria morre em <1 ano; sobrevida 5 anos <10%."},
+{area:"Adenocarcinoma",cat:"alerta",q:"Massa pancreática endurecida + função ruim: que entidade BENIGNA precisa ser lembrada antes do bisturi?",a:"PANCREATITE AUTOIMUNE (IgG4): mimetiza câncer clinicamente e na imagem, mas tem infiltrado IgG4 + venulite, SEM pleomorfismo — e responde a CORTICOIDE."},
+{area:"Aguda — clínica/dx",cat:"caso",q:"Caso da aula: mulher 48a, obesa, dor em faixa pós-refeição gordurosa, colelitíase, amilase 4×. Dx e conduta?",a:"Pancreatite AGUDA BILIAR (2 de 3: clínica + enzimas ≥3× + TC). Conduta: jejum + analgesia + fluidos IV; tratar a causa biliar. Lesão reversível se o estímulo cessa."},
+{area:"Proteções e secreção",cat:"alerta",q:"Erros de transcrição/nomes que NÃO podem sair errados na prova (5 pares)?",a:"Ducto de WIRSUNG (principal) / SANTORINI (acessório); esfíncter de ODDI; ampola de VATER; enteropeptidase = enteroquinase; PSTI = produto do gene SPINK1."},
+{area:"Crônica",cat:"caso",q:"Etilista 25 anos, esteatorreia + DM + calcificações, enzimas normais. Explique cada achado em 1 linha.",a:"Esteatorreia: ácinos destruídos → sem lipase no duodeno. DM: fibrose alcançou as ilhotas. Calcificações: concreções proteicas calcificadas. Enzimas normais: resta pouco parênquima produtor."},
+{area:"Histofisiologia",cat:"conceito",q:"Por que a tripsina é 'a chave' de toda a cascata enzimática?",a:"Uma vez formada, a tripsina ativa TODAS as demais pró-enzimas (pró-elastase, pró-fosfolipase, pró-carboxipeptidase…) e ainda pré-calicreína + cascatas de coagulação/complemento — um gatilho único que dispara tudo."},
+]},
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-pancreas-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
