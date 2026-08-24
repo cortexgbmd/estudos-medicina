@@ -1,0 +1,1679 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 03 — Patologia do Estômago · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 03 — Patologia do Estômago</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 03</p>
+  <h1 class="page-h1">Patologia do Estômago</h1>
+  <p class="lead">Histofisiologia gástrica, leitura de laudo de endoscopia e gastrite aguda — a aula da Profa. Veronica Yujra explicada do zero. Ela avisou: toda patologia gástrica do simpósio nasce da quebra do equilíbrio entre secreção ácida e proteção da mucosa. Esta aula é esse alicerce.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O estômago que a patologia usa: regiões e curvaturas</a></li>
+      <li><a href="#t2">A parede gástrica: 4 túnicas e o "liquidificador" de 3 fibras</a></li>
+      <li><a href="#t3">Mucosa em 2 compartimentos: fovéolas × glândulas (corpo × antro)</a></li>
+      <li><a href="#t4">Tipos celulares: quem produz o quê</a></li>
+      <li><a href="#t5">Fisiologia da secreção ácida: as 3 fases (liga e desliga)</a></li>
+      <li><a href="#t6">Mecanismos de proteção da mucosa — a chave do simpósio</a></li>
+      <li><a href="#t7">Farmacologia aplicada: IBP, AINEs e as "canetas"</a></li>
+      <li><a href="#t8">Gastropatia × gastrite</a></li>
+      <li><a href="#t9">EDA: lendo o laudo endoscópico (com urease e H. pylori)</a></li>
+      <li><a href="#t10">Gastrite aguda: etiologias, macro e micro</a></li>
+      <li><a href="#t11">Lâminas teórico-práticas + o que vem no simpósio</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O estômago que a patologia usa: regiões e curvaturas</h2>
+  <p>Por que revisar anatomia numa aula de patologia? Porque <b>cada região gástrica tem morfologia e função diferentes</b> — e isso muda o que você espera ver na endoscopia, no laudo e na lâmina. O estômago é a "área central" do trato gastrointestinal superior: um órgão <b>sacular (sacoliforme)</b> espremido entre duas junções.</p>
+  <ul>
+    <li><b>Limite superior:</b> a <b>junção esofagogástrica (JEG)</b> — encontro com o terço distal do esôfago.</li>
+    <li><b>Limite inferior:</b> a <b>junção gastroduodenal (JGD)</b> — encontro com a porção proximal do duodeno, guardada pelo <b>esfíncter pilórico</b>.</li>
+    <li><b>Regiões (microanatomia):</b> <b>cárdia</b> (logo abaixo da JEG) · <b>fundo</b> · <b>corpo</b> · <b>antro</b> · <b>piloro</b>. Na prática, <b>fundo + corpo</b> são tratados como uma região só (muito semelhantes) e <b>antro + piloro</b> como a <b>região antropilórica</b>.</li>
+    <li><b>Curvaturas:</b> menor (medial) e <b>maior</b> (lateral).</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O corte padrão da peça: pela curvatura MAIOR</p>
+  <p>Na macroscopia patológica, o estômago é aberto <b>pela curvatura maior</b> — a peça fica espalmada "como uma borboleta". Isso é padrão: permite traçar linhas de estudo do fundo até o piloro. A professora mostrou a peça fresca e cobrou na hora: <em>"todo mundo consegue enxergar onde foi feito o corte?"</em>. Repare também no <b>pregueado</b>: pregas exuberantes no fundo/corpo, bem menores no antro — isso reaparece na endoscopia.</p></div>
+  <figure class="fig"><img src="img/slide04-anatomia-regioes.jpg" alt="Anatomia do estômago com regiões e curvaturas">
+  <figcaption>Anatomia do estômago: cárdia, fundo, corpo gástrico, antro pilórico e canal pilórico; curvaturas menor e maior; na parede, as camadas musculares longitudinal, circular e oblíqua. As pregas gástricas aparecem na região do corpo.</figcaption></figure>
+  <figure class="fig"><img src="img/slide04-peca-curvatura-maior.jpg" alt="Peça fresca de estômago aberta pela curvatura maior">
+  <figcaption>Peça fresca aberta pelo corte padrão na curvatura maior ("borboleta"). Observe o pregueado nítido da parede na região de fundo/corpo — no antro as pregas são menores.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · A parede gástrica: 4 túnicas e o "liquidificador" de 3 fibras</h2>
+  <p>Todo o trato gastrointestinal é um tubo com as mesmas quatro paredes — e o estômago não é exceção:</p>
+  <div class="diagrama"><p class="t">Da luz para fora</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Mucosa</b> — <span class="d"><b>epitélio</b> (glandular secretório) + <b>lâmina própria</b> (conjuntivo frouxo, onde estão os vasos) + <b>muscular da mucosa</b> (camada discreta). Tudo o que a aula detalha de histologia está aqui.</span></div></li>
+    <li><span class="n">2</span><div><b>Submucosa</b> — <span class="d">tecido conjuntivo <b>aglandular</b> (diferente do esôfago!), às vezes com tecido adiposo.</span></div></li>
+    <li><span class="n">3</span><div><b>Muscular própria em TRÊS direções</b> — <span class="d"><b>oblíqua interna + circular média + longitudinal externa</b>. É uma exclusividade mecânica do estômago.</span></div></li>
+    <li><span class="n">4</span><div><b>Serosa</b> — <span class="d">revestimento externo com camada submesotelial.</span></div></li>
+  </ol></div>
+  <div class="box prof"><p class="h">🎯 Por que TRÊS camadas musculares?</p>
+  <p>"O estômago é o liquidificador do corpo" — <em>literalmente</em>: fibras em três direções permitem girar, comprimir e misturar em todos os sentidos, executando a <b>trituração</b> (digestão mecânica). E, quando o quimo está pronto, a mesma musculatura faz a <b>propulsão</b> pelo esfíncter pilórico. Guarde o par <b>trituração + propulsão</b>.</p></div>
+  <figure class="fig"><img src="img/slide06-parede-camadas.jpg" alt="Histologia da parede gástrica completa">
+  <figcaption>Parede gástrica completa em pequeno aumento: mucosa (fossetas + glândulas fúndicas + muscular da mucosa), submucosa conjuntiva aglandular, túnica muscular em três orientações (oblíqua interna, circular média, longitudinal externa) e serosa.</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · Mucosa em 2 compartimentos: fovéolas × glândulas (corpo × antro)</h2>
+  <p>A mucosa gástrica é um <b>epitélio colunar simples secretório</b> que se dobra. Essas dobras criam dois compartimentos que você PRECISA saber separar na lâmina:</p>
+  <ul>
+    <li><b>Compartimento foveolar</b> — as <b>fovéolas</b> (= fossetas, fóveas ou criptas gástricas): a porção <b>superficial</b>, presente em <b>todo</b> o estômago. Células colunares enfileiradas fazendo invaginações; entre elas ficam as <b>células-tronco (células-fonte)</b>.</li>
+    <li><b>Compartimento glandular</b> — a porção <b>profunda</b>: glândulas <b>tubulares ramificadas</b> que se emendam na base das fovéolas. É aqui que mora a diferença regional.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Região</th><th>Glândulas</th><th>Produto principal</th></tr>
+    <tr><td><b>Cárdia</b></td><td>pequenas glândulas mucosas</td><td>mucina (muco)</td></tr>
+    <tr><td><b>Fundo e corpo</b></td><td><b>grandes glândulas oxínticas</b> (parietais) e <b>zimogênicas</b> (principais)</td><td><b>HCl e pepsinas</b></td></tr>
+    <tr><td><b>Antro e piloro</b></td><td>glândulas mucosas <b>menores</b> + células <b>endócrinas</b></td><td>muco + hormônios (gastrina, somatostatina)</td></tr>
+  </table></div>
+  <div class="box prof"><p class="h">🎯 Corpo × antro na lâmina — e por que isso aparece no LAUDO</p>
+  <p>A professora colocou duas fotos lado a lado e perguntou o que mudava: no <b>corpo</b>, glândulas <b>compridas, enfileiradas</b>, densamente arrumadas; no <b>antro</b>, glândulas <b>menores e mais curtas</b> — tão curtas que parecem cortadas no transversal (e não é outro corte!). Consequência prática: <b>todo laudo de biópsia informa a região da amostra</b>, porque a densidade e a organização glandular esperadas mudam. Antes de dizer "isso está alterado", localize-se: de onde veio o fragmento?</p></div>
+  <div class="box alerta"><p class="h">⚠️ Quanta lâmina própria dá para ver no normal?</p>
+  <p><b>Quase nada</b> — as glândulas ficam "uma do ladinho da outra" e o conjuntivo entre elas é mínimo. Isso importa demais: os <b>vasos estão na lâmina própria</b>, então é POR ELA que chega a inflamação. Se você vê <b>edema separando as glândulas</b> e <b>infiltrado entre elas</b>, o tecido não está normal. É o primeiro olhar de qualquer gastrite.</p></div>
+  <figure class="fig"><img src="img/slide05-foveolar-glandular.jpg" alt="Esquema dos compartimentos foveolar e glandular">
+  <figcaption>Esquema da unidade mucosa: compartimento foveolar (fosseta) na superfície e compartimento glandular na profundidade, com istmo/colo e base. A proporção entre os dois varia conforme a região gástrica.</figcaption></figure>
+  <figure class="fig"><img src="img/slide05-fovea-colo-corpo.jpg" alt="Histologia com fovéola, colo e corpo da glândula">
+  <figcaption>Na lâmina: fovéola (superfície), colo e corpo da glândula. As células mais superficiais formam as fovéolas; as mais profundas constituem as glândulas — tudo isso, com a lâmina própria e a muscular da mucosa, é "mucosa".</figcaption></figure>
+
+  <h2 class="topic" id="t4">4 · Tipos celulares: quem produz o quê</h2>
+  <div class="diagrama"><p class="t">O elenco da mucosa gástrica</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Células mucosas superficiais (foveolares)</b> — <span class="d">produzem <b>muco</b> (sem armazenar como as caliciformes do intestino) <b>e BICARBONATO</b> — o tampão que neutraliza o pH após a digestão.</span></div></li>
+    <li><span class="n">2</span><div><b>Células parietais (oxínticas)</b> — <span class="d">eosinofílicas, poligonais, na metade superior/intermediária das glândulas do fundo e corpo. Produzem <b>HCl</b> (via <b>bomba de prótons</b>) e <b>FATOR INTRÍNSECO</b> (glicoproteína obrigatória para absorver <b>vitamina B12</b>).</span></div></li>
+    <li><span class="n">3</span><div><b>Células principais (zimogênicas)</b> — <span class="d">basofílicas, na <b>base</b> das glândulas. Produzem <b>pepsinogênios I e II</b> (→ pepsina ativa = digestão química de proteínas) e <b>lipase gástrica</b>.</span></div></li>
+    <li><span class="n">4</span><div><b>Células endócrinas</b> — <span class="d">dispersas. No <b>antro</b>: células <b>G → GASTRINA</b> (liga a digestão). No <b>corpo/fundo</b>: células produtoras de <b>HISTAMINA</b> (vasodilatação da digestão). <b>Células D (delta)</b>, principalmente no antro: <b>SOMATOSTATINA</b> (desliga a digestão).</span></div></li>
+    <li><span class="n">5</span><div><b>Células-tronco ("células-fonte")</b> — <span class="d">na entrada das glândulas (istmo/colo). Sustentam um <b>turnover altíssimo</b>: o epitélio gástrico se renova em <b>dias — no máximo ~1 semana</b>.</span></div></li>
+  </ol></div>
+  <div class="box prof"><p class="h">🎯 A ponte clínica que ela martelou: oxíntica destruída = anemia perniciosa</p>
+  <p>Existe gastrite que <b>destrói as células oxínticas</b> (vocês verão no simpósio — a autoimune). O paciente perde o HCl <em>e também o fator intrínseco</em>. Resultado: <b>não absorve B12</b> — <em>"posso tomar quilos de vitamina B12 que não vai funcionar"</em> — e evolui com <b>anemia perniciosa</b>. É por isso que fator intrínseco aparece nesta aula.</p></div>
+  <div class="box prof"><p class="h">🎯 MALT: linfócito residente SIM, neutrófilo residente NÃO</p>
+  <p>A mucosa gástrica tem <b>MALT</b> (tecido linfoide associado à mucosa): <b>linfócitos residentes são normais</b> — achar linfócito não assusta ninguém. Mas <b>neutrófilo residente NÃO existe</b> (vivem horas). Logo, <b>neutrófilo na mucosa gástrica = doença ATIVA</b> — é ele que faz o laudo dizer "gastrite ativa". Essa é A pergunta de prova desta aula.</p></div>
+  <figure class="fig"><img src="img/slide07-tipos-celulares.jpg" alt="Tipos celulares da glândula gástrica">
+  <figcaption>Da superfície à base da glândula: células mucosas, célula parietal (eosinofílica, poligonal) e célula principal (basofílica, na base).</figcaption></figure>
+  <figure class="fig"><img src="img/slide07-celula-parietal.jpg" alt="Esquema da célula parietal">
+  <figcaption>A célula parietal e sua maquinaria: canalículos e sistema tubulovesicular onde ficam as bombas de prótons que jogam H⁺ para a luz — a origem do HCl. A mesma célula produz o fator intrínseco.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Fisiologia da secreção ácida: as 3 fases (liga e desliga)</h2>
+  <p>A função primordial do estômago é <b>formar o quimo</b> pela digestão mecânica + química. A secreção ácida é regulada em três fases — e entender o "liga/desliga" é entender por que a mucosa não se destrói todos os dias:</p>
+  <div class="diagrama"><p class="t">Liga → potencializa → desliga</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Fase CEFÁLICA (pré-prandial)</b> — <span class="d">paladar, olfato, mastigação, deglutição (o "cheirinho da comida subindo a escada"). <b>Atividade vagal → acetilcolina (ACh)</b> estimula a célula parietal (↑Ca²⁺ citosólico) → ativa a <b>bomba de prótons</b>. A acidez gástrica chega a <b>3 MILHÕES de vezes mais H⁺ que o sangue</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>Fase GÁSTRICA (prandial)</b> — <span class="d">o alimento chegou: <b>estimulação mecânica (trituração)</b> + liberação de <b>GASTRINA (células G do antro)</b> → ativa receptores da parietal → <b>mais bombas de prótons</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>Fase INTESTINAL (pós-prandial)</b> — <span class="d">o quimo passou pelo esfíncter pilórico; proteínas digeridas chegam ao delgado proximal. Começa a <b>INIBIÇÃO dos estímulos gástricos: células D → SOMATOSTATINA</b> desliga o aparelho; as células superficiais secretam <b>bicarbonato</b> e o pH volta a ~7 até a próxima refeição.</span></div></li>
+  </ol></div>
+  <div class="box conexao"><p class="h">🔗 Conexão com o estilo de vida</p>
+  <p>O desenho fisiológico prevê <b>pH baixo durante a digestão e alto durante o descanso</b>. O cafezinho, o refrigerante e o beliscar constante 20 minutos após o almoço desregulam esses ciclos — a mucosa fica exposta ao ácido por mais tempo do que o mecanismo de proteção foi feito para aguentar. É o pano de fundo de muita "gastrite" do mundo real.</p></div>
+
+  <h2 class="topic" id="t6">6 · Mecanismos de proteção da mucosa — a chave do simpósio</h2>
+  <div class="box prof"><p class="h">🎯 "Para QUALQUER patologia gástrica, houve quebra dessas barreiras"</p>
+  <p>A professora chamou este esquema de chave do simpósio: a homeostase gástrica é o equilíbrio entre <b>estímulos de secreção ácida</b> e <b>mecanismos de proteção</b>, sob injúria constante (há ácido na cavidade o tempo todo). Toda doença que vocês apresentarem começa com a quebra de um destes quatro mecanismos:</p></div>
+  <div class="diagrama"><p class="t">As 4 linhas de defesa</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Barreira epitelial</b> — <span class="d"><b>muco</b> das células superficiais + <b>junções intercelulares muito fortes</b> (células justapostas: nada de HCl entrando entre elas) + <b>alto turnover</b> garantido pelas células-tronco (nunca falta população celular).</span></div></li>
+    <li><span class="n">2</span><div><b>Neutralização do pH</b> — <span class="d">após o esvaziamento, as células epiteliais superficiais secretam <b>bicarbonato</b> e o pH sobe para perto de 7.</span></div></li>
+    <li><span class="n">3</span><div><b>Vascularização e fluxo sanguíneo</b> — <span class="d">a <b>histamina</b> vasodilata; o alto fluxo traz O₂, íons e nutrientes para a trituração/digestão e, ao final, faz a <b>difusão retrógrada</b>: retira H⁺ da mucosa, ajudando o pH a subir.</span></div></li>
+    <li><span class="n">4</span><div><b>Prostaglandinas</b> — <span class="d">produzidas pelas células mucosas; <b>inibem o HCl, vasodilatam e aumentam o tônus muscular</b> (esvaziamento). Sim, prostaglandina é mediador inflamatório — e AO MESMO TEMPO essencial à proteção gástrica. Conceitos da Pato I podem ser ambíguos na clínica.</span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/slide09-fatores-agressores-defensores.png" alt="Esquema fatores agressores versus defensores da mucosa">
+  <figcaption>O cabo de guerra da mucosa: agressores (ácido + pepsina, AINEs/aspirina, H. pylori) contra defensores (camada de muco, gradiente iônico, bicarbonato, prostaglandinas, células epiteliais de superfície e fluxo sanguíneo). Ação dos AINEs = corte na produção de prostaglandinas.</figcaption></figure>
+
+  <h2 class="topic" id="t7">7 · Farmacologia aplicada: IBP, AINEs e as "canetas"</h2>
+  <h3>Inibidor de bomba de prótons (omeprazol, pantoprazol…)</h3>
+  <ul>
+    <li>Bloqueia o fluxo de íons da <b>bomba de prótons da célula parietal</b> — a célula <b>não é destruída</b>, apenas impedida de secretar H⁺ (diferente da doença que destrói a oxíntica!).</li>
+    <li>Sem HCl, a <b>gastrina continua tentando estimular</b> uma parietal bloqueada → <b>HIPERGASTRINEMIA</b> (dosável no sangue) no uso crônico.</li>
+    <li>Com indicação e por tempo definido, ótimo. "Porque o vizinho toma e diz que é bom" = uso sem indicação que <b>prejudica a digestão</b>.</li>
+  </ul>
+  <h3>AINEs (anti-inflamatórios não esteroidais)</h3>
+  <ul>
+    <li>Inibem a <b>COX-1</b>, uma das principais vias de produção de <b>prostaglandinas</b>.</li>
+    <li>Menos prostaglandina = menos dor, mas também <b>menos proteção gástrica e digestão ineficiente</b> — o elo direto entre "ibuprofeno da bolsa" e gastrite/gastropatia.</li>
+  </ul>
+  <h3>As "canetas" (análogos de GLP-1)</h3>
+  <ul>
+    <li>Lentificam a <b>movimentação gástrica e o esvaziamento</b> e reduzem a acidez/bombas ativas — ação local no TGI <em>e</em> componente central (saciedade).</li>
+    <li>Sob prescrição, é o mecanismo de controle do apetite; a mesma lentidão sem medicamento seria <b>dispepsia</b> (digestão ineficiente). Relatos de plenitude e digestão "parada" são esperados.</li>
+  </ul>
+
+  <h2 class="topic" id="t8">8 · Gastropatia × gastrite</h2>
+  <div class="def"><p><b>GASTROPATIA</b> = termo <b>genérico</b> para disfunções gástricas <b>SEM confirmação histológica</b>. <b>GASTRITE</b> = processo com história da doença e <b>confirmação por biópsia</b> da atividade inflamatória.</p></div>
+  <p>Por isso a gastrite aguda aparece em muitos livros como <b>"gastropatia ativa"</b>: quase nunca se biopsia um quadro agudo autolimitado — deduz-se clinicamente. "Ativa", você já sabe, aponta para <b>neutrófilos</b>. Guarde os dois nomes: os laudos e os livros alternam entre eles.</p>
+
+  <h2 class="topic" id="t9">9 · EDA: lendo o laudo endoscópico (com urease e H. pylori)</h2>
+  <p>O exame do trato digestório superior é a <b>EDA — esofagogastroduodenoscopia</b>. A professora fez questão de treinar a turma a <em>ler laudo com olhos de patologia</em>:</p>
+  <ul>
+    <li><b>Padronização de imagens:</b> desde <b>2001</b> a sociedade europeia propõe <b>8 imagens</b> dos pontos anatômicos principais; em <b>2020</b>, a World Endoscopy Organization publicou recomendação de <b>28 imagens</b> para o exame normal (mais, se houver achados).</li>
+    <li><b>"Boa distensibilidade à insuflação de ar":</b> a mucosa é pregueada — <b>insufla-se ar para estender as pregas</b> e enxergar a mucosa lisa (daí o desconforto pós-exame).</li>
+    <li><b>"Disposição do pregueado sem alterações":</b> cada região tem seu pregueado; <b>liso onde deveria ser pregueado = suspeita de ATROFIA</b>.</li>
+    <li><b>"Lago bilioso de aspecto claro":</b> o resíduo gástrico deve ser transparente, <b>sem restos alimentares nem sangue</b>.</li>
+    <li><b>"Retrovisão revela cárdia com boa tonicidade":</b> a cânula entra no estômago e faz uma <b>curva para olhar de dentro para o esôfago</b> — é assim que se avalia a cárdia/JEG.</li>
+    <li><b>"Hiperemia leve em fundo, corpo e antro, uniforme":</b> o órgão <b>quase todo</b> acometido = <b>PANGASTRITE</b> (pan- = panorâmica do dentista: pegou tudo). Conclusão do laudo: <b>pangastrite enantematosa leve</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O teste que virou rotina: UREASE</p>
+  <p>Durante a endoscopia, hoje é praxe fazer o <b>teste da urease</b> — o método <b>mais barato</b>, que entrou na rotina (não é o único). Urease <b>positiva → <i>Helicobacter pylori</i> positivo</b>. No exemplo da aula, o laudo trazia: "teste de urease para pesquisa de H. pylori que resultou POSITIVO". Quem apresentar gastrite crônica no simpósio vai explicar como o teste funciona.</p></div>
+  <figure class="fig"><img src="img/slide10-laudo-eda.jpg" alt="Laudo de esofagogastroduodenoscopia comentado em aula">
+  <figcaption>O laudo real lido em aula (identificação removida): esôfago normal; estômago com boa distensibilidade, pregueado sem alterações, lago bilioso claro, retrovisão com cárdia tônica, hiperemia leve uniforme em fundo/corpo/antro, piloro cêntrico; urease positiva. Conclusão: pangastrite enantematosa leve.</figcaption></figure>
+  <figure class="fig"><img src="img/slide11-eda-antro-normal.jpg" alt="EDA de mucosa antral normal">
+  <figcaption>EDA: mucosa antral normal — região naturalmente mais lisa (menos pregas), coloração rósea uniforme, epitélio íntegro.</figcaption></figure>
+  <figure class="fig"><img src="img/slide11-eda-enantemas.jpg" alt="EDA com enantemas e atrofia">
+  <figcaption>EDA alterada: pontilhado avermelhado = ENANTEMAS (hiperemia em mucosa interna; na pele seria exantema), com sugestão de atrofia/edema — as pregas esperadas sumiram.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Gastrite aguda: etiologias, macro e micro</h2>
+  <div class="def"><p><b>GASTRITE AGUDA (gastropatia ativa)</b> = processo inflamatório <b>agudo, transitório e autolimitante</b> da mucosa gástrica. <b>Patogênese:</b> consequência do <b>rompimento dos mecanismos citoprotetores</b> da mucosa (item 6). Quem já teve? "Todo mundo, né?"</p></div>
+  <h3>Principais agentes etiológicos</h3>
+  <ul>
+    <li><b>AINEs</b> (↓prostaglandinas) e <b>ingestão de ácidos e bases</b>;</li>
+    <li><b>Álcool</b> e <b>fumo</b>;</li>
+    <li><b>Estresse sistêmico AGUDO</b> — desafio sistêmico, não "nervoso": o grande queimado/politraumatizado desvia fluxo sanguíneo para a lesão → <b>isquemia transitória da mucosa</b> → atrofia e gastrite temporárias;</li>
+    <li><b>Trauma mecânico</b> — o exemplo que todo mundo esquece: a <b>SONDA NASOGÁSTRICA</b>. Enquanto durar a sonda, espera-se gastrite naquele paciente;</li>
+    <li><b>Quimioterapia e radioterapia localizada</b> — matam células de divisão rápida → <b>renovação epitelial ineficiente</b>;</li>
+    <li><b>Senescência</b> — envelhecer reduz produção de mucina/bicarbonato e o metabolismo celular: os mecanismos de proteção decaem.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ "Gastrite nervosa" NÃO é entidade patológica</p>
+  <p>A professora foi pesquisar depois que perguntaram: o que se chama popularmente de gastrite nervosa é <b>dispepsia</b> por alteração do parassimpático (digestão ineficiente) — não há gastrite "nervosa" como diagnóstico anatomopatológico. Estresse que causa gastrite aguda é o <b>sistêmico</b> (queimadura, trauma, choque), não o emocional.</p></div>
+  <h3>Aspecto clínico / macroscopia</h3>
+  <ul>
+    <li><b>Hiperemia</b> em pontos avermelhados = <b>ENANTEMAS</b> (mucosa interna; na pele = exantema);</li>
+    <li><b>Erosões</b> = perda <b>PARCIAL</b> do epitélio (úlcera = perda <b>total</b> — a diferenciação completa vem no simpósio);</li>
+    <li><b>Pequenos sangramentos localizados</b>; possível <b>atrofia + edema</b> visíveis (pregas somem) — e a atrofia aparece rápido justamente porque o turnover é de dias.</li>
+  </ul>
+  <h3>Microscopia</h3>
+  <ul>
+    <li>Alterações <b>sutis</b> até pequenas <b>erosões superficiais</b>; <b>arquitetura glandular tubular PRESERVADA</b>; pode haver <b>hiperplasia foveolar</b>;</li>
+    <li><b>Lâmina própria</b> com <b>edema</b> moderado e <b>congestão vascular</b> (vasos dilatados e congestos);</li>
+    <li><b>Infiltrado NEUTROFÍLICO</b> entre as células epiteliais (intraepitelial) e nas glândulas — <b>PMN = agudo = doença ativa</b>. Linfócitos podem aparecer junto (MALT), mas quem carimba "aguda/ativa" é o neutrófilo.</li>
+  </ul>
+  <h3>Tratamento</h3>
+  <ul>
+    <li><b>Remover o estímulo nocivo</b> (o fator etiológico) — respondem rapidamente;</li>
+    <li><b>IBP por período curto</b> para favorecer a cicatrização;</li>
+    <li>É <b>autolimitante</b>. EDA e biópsia ficam para <b>casos recidivantes</b>. (Gastrite <b>crônica</b> é outra doença, com outro tratamento — simpósio.)</li>
+  </ul>
+  <figure class="fig"><img src="img/slide12-gastrite-aguda-micro.jpg" alt="Microscopia da gastrite aguda">
+  <figcaption>Gastrite aguda (HE 100×): edema e exuberante congestão vascular na lâmina própria, com neutrófilos intraepiteliais e no córion. A arquitetura glandular está preservada.</figcaption></figure>
+  <figure class="fig"><img src="img/slide12-gastrite-erosiva.jpg" alt="Gastrite aguda erosiva">
+  <figcaption>Gastrite aguda EROSIVA (HE 200×): solução de continuidade do epitélio (perda parcial = erosão) com infiltrado neutrofílico intenso localizado.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Lâminas teórico-práticas + o que vem no simpósio</h2>
+  <h3>Lâmina 24 (caixa clara) — Gastrite crônica</h3>
+  <ul>
+    <li>Mucosa gástrica de tipo <b>pilórica hiperplasiada</b>;</li>
+    <li><b>Infiltrado inflamatório MISTO com neutrófilos</b> na lâmina própria, permeando o epitélio glandular <b>até a muscular da mucosa</b>;</li>
+    <li>Segmentos glandulares com áreas de <b>METAPLASIA INTESTINAL</b>;</li>
+    <li>Lâmina própria com edema, vasodilatação e congestão.</li>
+  </ul>
+  <h3>Lâmina 18 (caixa clara) — Úlcera gástrica</h3>
+  <ul>
+    <li>Mucosa de tipo <b>fúndica</b> com <b>DESCONTINUIDADE do revestimento</b> (perda total = úlcera);</li>
+    <li>Superfície <b>sero-fibrinosa</b> com áreas de <b>hemorragia</b>;</li>
+    <li><b>Tecido de granulação</b> subjacente com <b>angiogênese</b> e infiltrado inflamatório misto.</li>
+  </ul>
+  <div class="box conexao"><p class="h">🔗 O mapa do simpósio (o que vocês vão apresentar)</p>
+  <p><b>Inflamatórias:</b> gastrites crônicas · úlcera péptica · pólipos hiperplásicos inflamatórios. <b>Neoplásicas benignas</b> e <b>malignas:</b> TEGI/GIST (tumor estromal gastrointestinal) · <b>adenocarcinomas dos tipos intestinal e difuso</b>. Base bibliográfica: capítulos de TGI (13/17) e 22. Toda apresentação deve amarrar a doença à <b>quebra dos mecanismos de proteção</b> — a régua desta aula.</p></div>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Anatomia:</b> órgão sacular entre <b>JEG e JGD</b>; cárdia · fundo · corpo · antro · piloro (fundo+corpo juntos; antro+piloro = antropilórica); peça aberta pela <b>curvatura MAIOR</b> ("borboleta"); pregas grandes no corpo, menores no antro.</li>
+    <li><b>Parede:</b> mucosa (epitélio + lâmina própria + muscular da mucosa) · submucosa aglandular · <b>muscular em 3 direções</b> (trituração + propulsão) · serosa.</li>
+    <li><b>Mucosa:</b> compartimento <b>foveolar</b> (todo o estômago) × <b>glandular</b> (regional): cárdia = muco; fundo/corpo = <b>oxínticas + zimogênicas</b> (HCl + pepsina); antro = mucosas menores + endócrinas. <b>Laudo sempre diz a região da amostra.</b></li>
+    <li><b>Células:</b> superficiais = muco + <b>bicarbonato</b>; parietais = <b>HCl + fator intrínseco</b> (destruição → <b>anemia perniciosa</b>); principais = pepsinogênios + lipase; G = gastrina (liga); corpo/fundo = histamina; D = <b>somatostatina</b> (desliga); células-tronco = renovação em <b>dias</b>.</li>
+    <li><b>MALT:</b> linfócito residente É normal; <b>neutrófilo residente NÃO existe → neutrófilo = gastrite ATIVA</b>.</li>
+    <li><b>3 fases:</b> cefálica (vagal/ACh) → gástrica (gastrina) → intestinal (somatostatina desliga + bicarbonato neutraliza). Acidez até <b>3 milhões ×</b> o H⁺ do sangue.</li>
+    <li><b>4 proteções:</b> barreira epitelial (muco + junções + turnover) · bicarbonato · vascularização (histamina, difusão retrógrada) · <b>prostaglandinas</b>. AINEs cortam COX-1→prostaglandina; IBP bloqueia a bomba → <b>hipergastrinemia</b>.</li>
+    <li><b>Gastropatia</b> = sem confirmação histológica; <b>gastrite</b> = com biópsia. EDA: insuflação/distensibilidade, pregueado (liso = atrofia?), lago bilioso claro, <b>retrovisão</b> (cárdia), <b>pangastrite</b> = órgão todo; <b>urease + → H. pylori</b>.</li>
+    <li><b>Gastrite aguda:</b> transitória/autolimitante; quebra da citoproteção; etiologias: AINEs, ácidos/bases, álcool, fumo, <b>estresse sistêmico</b> (queimado), <b>sonda nasogástrica</b>, quimio/radio, senescência. Macro: <b>enantemas</b>, erosões (perda PARCIAL), sangramentos. Micro: <b>neutrófilos</b> + edema + congestão, arquitetura preservada. Tratamento: tirar a causa + IBP curto. <b>"Gastrite nervosa" não existe</b> (é dispepsia).</li>
+    <li><b>Práticas:</b> Lâmina 24 = gastrite crônica (infiltrado misto + <b>metaplasia intestinal</b>); Lâmina 18 = úlcera (descontinuidade + sero-fibrina + <b>tecido de granulação</b>).</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova — Patologia do Estômago</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Aula 03 (Profa. Veronica Yujra) · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-anato">Anatomia</a>
+    <a class="a1" href="#p-histo">Histologia</a>
+    <a class="a1" href="#p-cel">Células</a>
+    <a class="a1" href="#p-fisio">Fisiologia</a>
+    <a class="a1" href="#p-prot">Proteções</a>
+    <a class="a1" href="#p-eda">EDA/Laudo</a>
+    <a class="a1" href="#p-aguda">Gastrite aguda</a>
+    <a class="a1" href="#p-pratica">Lâminas</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-anato">
+  <span class="aula-tag t1">Anatomia aplicada</span>
+  <ul>
+    <li>Órgão <b class="k">sacular</b> entre <b>JEG</b> (esôfago distal) e <b>JGD</b> (duodeno/esfíncter pilórico).</li>
+    <li>Regiões: <b>cárdia · fundo · corpo · antro · piloro</b> — fundo+corpo viram uma região só; antro+piloro = antropilórica.</li>
+    <li><b class="k">Corte padrão da peça: curvatura MAIOR</b> ("borboleta") — linhas de estudo do fundo ao piloro.</li>
+    <li>Pregas: exuberantes no fundo/corpo; <b>antro é naturalmente mais liso</b>.</li>
+    <li>Parede: mucosa · submucosa <b>aglandular</b> · <b class="k">muscular em 3 direções</b> (oblíqua int. + circular média + longitudinal ext. = "liquidificador": trituração + propulsão) · serosa.</li>
+  </ul>
+</section>
+
+<section id="p-histo">
+  <span class="aula-tag t1">Histologia da mucosa</span>
+  <ul>
+    <li>Mucosa = epitélio <b>colunar simples secretório</b> + lâmina própria + muscular da mucosa.</li>
+    <li><b class="k">2 compartimentos:</b> FOVEOLAR (fossetas/criptas — todo o estômago) × GLANDULAR (regional).</li>
+  </ul>
+  <div class="tw"><table>
+    <thead><tr><th>Região</th><th>Glândulas</th><th>Produto</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cárdia</b></td><td>pequenas, mucosas</td><td>muco</td></tr>
+      <tr><td><b>Fundo/Corpo</b></td><td><b>grandes oxínticas + zimogênicas</b></td><td><b>HCl + pepsinas</b></td></tr>
+      <tr><td><b>Antro/Piloro</b></td><td>mucosas menores + endócrinas</td><td>muco + hormônios</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b>Corpo:</b> glândulas compridas, enfileiradas · <b>Antro:</b> glândulas curtas (parecem corte transversal). <b class="k">O laudo sempre diz a região da amostra</b> — localize-se antes de chamar de alterado.</li>
+    <li>Lâmina própria normal = <b>mínima</b>; os vasos estão nela → inflamação chega POR ela (edema separa glândulas).</li>
+  </ul>
+</section>
+
+<section id="p-cel">
+  <span class="aula-tag t1">Tipos celulares</span>
+  <div class="tw"><table>
+    <thead><tr><th>Célula</th><th>Onde</th><th>Produz</th></tr></thead>
+    <tbody>
+      <tr><td><b>Mucosa superficial (foveolar)</b></td><td>superfície</td><td>muco + <b>BICARBONATO</b></td></tr>
+      <tr><td><b>Parietal (oxíntica)</b></td><td>eosinofílica; metade sup. das glând. fundo/corpo</td><td><b>HCl</b> (bomba de prótons) + <b>FATOR INTRÍNSECO</b></td></tr>
+      <tr><td><b>Principal (zimogênica)</b></td><td>basofílica; base das glândulas</td><td><b>pepsinogênios I/II</b> + lipase gástrica</td></tr>
+      <tr><td><b>G (endócrina)</b></td><td>antro</td><td><b>gastrina</b> (LIGA)</td></tr>
+      <tr><td><b>Endócrinas corpo/fundo</b></td><td>corpo/fundo</td><td><b>histamina</b></td></tr>
+      <tr><td><b>D (delta)</b></td><td>principalmente antro</td><td><b>somatostatina</b> (DESLIGA)</td></tr>
+      <tr><td><b>Células-tronco (fonte)</b></td><td>istmo/colo da glândula</td><td>renovação em <b>dias (≤1 sem)</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="prof"><span class="box-h">🎯 Oxíntica destruída = anemia PERNICIOSA</span>Gastrite que destrói oxínticas → sem HCl E sem fator intrínseco → <b>B12 oral não resolve</b> → anemia perniciosa. Cai.</div>
+  <div class="prof"><span class="box-h">🎯 MALT × neutrófilo</span>Linfócito residente (MALT) = <b>normal</b> · <b>Neutrófilo residente NÃO existe</b> (vive horas) → neutrófilo no laudo = <b>gastrite ATIVA/aguda</b>.</div>
+</section>
+
+<section id="p-fisio">
+  <span class="aula-tag t1">Fisiologia — 3 fases</span>
+  <ul>
+    <li><b class="k">1 · Cefálica</b> (pré-prandial): olfato/paladar/mastigação → <b>vago/ACh</b> → parietal (↑Ca²⁺) → bomba de prótons. Acidez <b>3 milhões×</b> o H⁺ do sangue.</li>
+    <li><b class="k">2 · Gástrica</b> (prandial): trituração mecânica + <b>GASTRINA (cél. G)</b> → mais bombas ativas.</li>
+    <li><b class="k">3 · Intestinal</b> (pós-prandial): quimo no delgado → <b>SOMATOSTATINA (cél. D)</b> desliga + <b>bicarbonato</b> neutraliza (pH→~7 até a próxima refeição).</li>
+  </ul>
+</section>
+
+<section id="p-prot">
+  <span class="aula-tag t1">4 mecanismos de proteção (chave do simpósio)</span>
+  <ul>
+    <li><b class="k">1 · Barreira epitelial:</b> muco + <b>junções intercelulares fortes</b> + alto turnover (células-tronco).</li>
+    <li><b class="k">2 · Neutralização do pH:</b> bicarbonato das células superficiais após o esvaziamento.</li>
+    <li><b class="k">3 · Vascularização/fluxo:</b> histamina vasodilata; traz O₂/nutrientes; <b>difusão retrógrada</b> retira H⁺.</li>
+    <li><b class="k">4 · Prostaglandinas:</b> inibem HCl + vasodilatam + ↑tônus/esvaziamento (mediador inflamatório QUE protege).</li>
+  </ul>
+  <div class="prof"><span class="box-h">🎯 Farmacologia que ela cobrou</span><b>IBP</b> (omeprazol/pantoprazol): bloqueia a bomba da parietal (NÃO destrói a célula) → gastrina segue estimulando → <b>HIPERGASTRINEMIA</b> no uso crônico. <b>AINEs</b>: inibem <b>COX-1</b> → sem prostaglandina → quebra a proteção. <b>Canetas GLP-1</b>: esvaziamento lento + menos acidez (sem remédio, isso seria dispepsia).</div>
+</section>
+
+<section id="p-eda">
+  <span class="aula-tag t1">EDA e laudo</span>
+  <ul>
+    <li><b>EDA</b> = esofagogastroduodenoscopia. Padronização: <b>2001 = 8 imagens</b> (soc. europeia) → <b>2020 = 28 imagens</b> (World Endoscopy Organization).</li>
+    <li><b class="k">Distensibilidade à insuflação:</b> insufla-se ar p/ estender as pregas e ver a mucosa.</li>
+    <li><b class="k">Pregueado:</b> liso onde devia ser pregueado → pensar <b>ATROFIA</b> (e/ou edema).</li>
+    <li><b class="k">Lago bilioso claro:</b> resíduo transparente, sem restos/sangue.</li>
+    <li><b class="k">Retrovisão:</b> a cânula faz a curva DENTRO do estômago p/ olhar a cárdia/JEG → "cárdia com boa tonicidade".</li>
+    <li><b class="k">PANGASTRITE:</b> hiperemia uniforme em fundo+corpo+antro = órgão (quase) todo. Conclusão do laudo da aula: <b>pangastrite enantematosa leve</b>.</li>
+    <li><b class="k">Teste da UREASE</b> na endoscopia (o mais barato, rotina): positivo → <b><i>H. pylori</i></b>.</li>
+  </ul>
+</section>
+
+<section id="p-aguda">
+  <span class="aula-tag t1">Gastrite aguda (gastropatia ativa)</span>
+  <ul>
+    <li>Inflamação <b>aguda, transitória, AUTOLIMITANTE</b>. Patogênese = <b>rompimento dos mecanismos citoprotetores</b>.</li>
+    <li><b class="k">Etiologias:</b> AINEs · ácidos/bases · álcool · fumo · <b>estresse sistêmico agudo</b> (queimado → isquemia transitória) · <b>SONDA nasogástrica</b> (trauma mecânico que todos esquecem) · quimio/RxT localizada (renovação ineficiente) · senescência (↓mucina/bicarbonato).</li>
+    <li><b class="k">Macro:</b> hiperemia = <b>ENANTEMAS</b> · <b>erosões</b> (perda PARCIAL) · pequenos sangramentos · atrofia+edema (pregas somem rápido pois turnover é de dias).</li>
+    <li><b class="k">Micro:</b> <b>NEUTRÓFILOS</b> intraepiteliais e no córion · edema + <b>congestão vascular</b> na lâmina própria · <b>arquitetura glandular preservada</b> · possível hiperplasia foveolar.</li>
+    <li><b class="k">Tratamento:</b> remover o fator etiológico + <b>IBP por período curto</b>. Biópsia/EDA só em recidivantes. Crônica = outra doença.</li>
+  </ul>
+</section>
+
+<section id="p-pratica">
+  <span class="aula-tag t1">Lâminas teórico-práticas</span>
+  <div class="tw"><table>
+    <thead><tr><th>Lâmina</th><th>Diagnóstico</th><th>Marcas</th></tr></thead>
+    <tbody>
+      <tr><td><b>24</b> (caixa clara)</td><td><b>Gastrite crônica</b></td><td>mucosa pilórica hiperplasiada · infiltrado <b>misto c/ neutrófilos</b> até a muscular da mucosa · <b>METAPLASIA INTESTINAL</b> · edema+congestão</td></tr>
+      <tr><td><b>18</b> (caixa clara)</td><td><b>Úlcera gástrica</b></td><td>mucosa fúndica c/ <b>descontinuidade</b> · superfície <b>sero-fibrinosa</b> + hemorragia · <b>tecido de granulação</b> c/ angiogênese</td></tr>
+    </tbody>
+  </table></div>
+  <div class="caso"><span class="box-h">🩺 Palavras-gatilho → resposta</span>
+  <ul>
+    <li>"Neutrófilo na mucosa gástrica" → doença ATIVA (aguda).</li>
+    <li>"Grande queimado com dor epigástrica" → gastrite aguda por estresse sistêmico.</li>
+    <li>"Paciente com sonda nasogástrica" → gastrite esperada (trauma mecânico).</li>
+    <li>"Liso onde devia ter prega" → atrofia.</li>
+    <li>"Hiperemia uniforme fundo+corpo+antro" → pangastrite.</li>
+    <li>"Urease positiva" → H. pylori.</li>
+    <li>"Uso crônico de IBP + gastrina alta" → hipergastrinemia por bloqueio da bomba.</li>
+    <li>"Destruição de oxínticas + anemia" → sem fator intrínseco → perniciosa.</li>
+  </ul></div>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="alerta"><span class="box-h">Pares que derrubam na prova</span>
+  <ul>
+    <li><b>Gastropatia × gastrite:</b> sem confirmação histológica × confirmada por biópsia.</li>
+    <li><b>Erosão × úlcera:</b> perda PARCIAL do epitélio × perda TOTAL (descontinuidade).</li>
+    <li><b>Enantema × exantema:</b> hiperemia em MUCOSA interna × na PELE.</li>
+    <li><b>Linfócito × neutrófilo na mucosa:</b> residente do MALT (normal) × sempre patológico (ativa).</li>
+    <li><b>Estresse sistêmico × "gastrite nervosa":</b> queimado/trauma (existe) × NÃO é entidade patológica (é dispepsia).</li>
+    <li><b>Gastrina × somatostatina:</b> liga (cél. G, antro) × desliga (cél. D).</li>
+    <li><b>Parietal × principal:</b> eosinofílica, HCl+fator intrínseco × basofílica, pepsinogênio+lipase.</li>
+    <li><b>IBP × doença autoimune:</b> bloqueia a bomba (célula intacta) × destrói a oxíntica.</li>
+  </ul></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologia do Estômago</h2>
+    <p>Anato Pato II · Aula 03 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 03 — Patologia do Estômago</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">No laboratório de macroscopia, uma peça de gastrectomia chega fechada e o residente pergunta como abri-la para o exame padrão.</span><div class="pergunta">O corte padrão da patologia para abrir o estômago é feito:</div>`,
+ alts:["pela curvatura menor, preservando a região da cárdia","pela curvatura maior, espalmando a peça do fundo ao piloro","pela parede anterior, em incisão longitudinal mediana","pela junção esofagogástrica, em cortes transversais seriados","pelo canal pilórico, evertendo a mucosa para inspeção"], correta:1,
+ just:[
+  "A curvatura menor não é a via padrão — abrir por ela atrapalha o exame das duas faces da peça.",
+  "Correta. Abre-se pela curvatura MAIOR: a peça fica espalmada 'como uma borboleta', permitindo traçar linhas de estudo contínuas do fundo até o piloro. Foi o detalhe que a professora cobrou na peça fresca.",
+  "Incisão pela parede anterior não é o padrão descrito — perde-se a planificação simétrica da peça.",
+  "Cortes seriados na JEG são complemento para estudar a transição, não a abertura padrão do órgão.",
+  "Everter a mucosa pelo piloro não é técnica de macroscopia gástrica."],
+ ref:"Macroscopia — corte pela curvatura maior"},
+
+/* 2 */ {n:2,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A túnica muscular própria do estômago — o "liquidificador" da digestão mecânica — é organizada em:</div>`,
+ alts:["circular interna, oblíqua média e longitudinal externa","longitudinal interna, circular média e oblíqua externa","duas camadas apenas: circular interna e longitudinal externa","oblíqua interna, circular média e longitudinal externa","três camadas circulares concêntricas de espessura crescente"], correta:3,
+ just:[
+  "Trocou as posições: a oblíqua é a INTERNA, não a média.",
+  "Inverteu a ordem — a longitudinal é a camada EXTERNA.",
+  "Duas camadas é o padrão do restante do tubo digestivo; o estômago tem uma a mais, justamente pela demanda de trituração.",
+  "Correta. Oblíqua interna + circular média + longitudinal externa: fibras em três direções para girar, comprimir e misturar em todos os sentidos (trituração) e, ao final, fazer a propulsão do quimo pelo piloro.",
+  "Não existem três circulares concêntricas — as direções são diferentes entre si, e é isso que gera a mistura."],
+ ref:"Parede — muscular em 3 direções"},
+
+/* 3 */ {n:3,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre os dois compartimentos da mucosa gástrica, é correto afirmar:</div>`,
+ alts:["o foveolar existe em todo o órgão; o glandular varia conforme a região","o compartimento glandular tem a mesma estrutura da cárdia ao piloro","as fovéolas são revestidas por epitélio estratificado pavimentoso","as glândulas oxínticas concentram-se na cárdia e no canal pilórico","a lâmina própria abundante separa amplamente as glândulas normais"], correta:0,
+ just:[
+  "Correta. As fovéolas (fossetas/criptas) estão presentes em TODO o estômago; a diferença regional mora no compartimento GLANDULAR — cárdia (muco), fundo/corpo (oxínticas + zimogênicas), antro (mucosas menores + endócrinas).",
+  "É o contrário: o glandular é justamente o compartimento que muda de região para região.",
+  "O epitélio gástrico é COLUNAR SIMPLES secretório — estratificado pavimentoso é o do esôfago.",
+  "As grandes glândulas oxínticas ficam no FUNDO e CORPO — cárdia e piloro têm glândulas mucosas.",
+  "No normal a lâmina própria é MÍNIMA — glândulas 'uma do ladinho da outra'; lâmina própria alargada já sugere edema/inflamação."],
+ ref:"Mucosa — foveolar × glandular"},
+
+/* 4 */ {n:4,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Um interno compara duas biópsias gástricas do mesmo paciente. Na primeira, glândulas longas e enfileiradas; na segunda, glândulas curtas e pequenas, que parecem cortadas no transversal. Ele conclui que a segunda amostra tem atrofia.</span><div class="pergunta">A conduta correta diante dessa diferença é:</div>`,
+ alts:["confirmar atrofia glandular, pois as glândulas estão encurtadas","laudar metaplasia intestinal incipiente pela mudança do padrão","conferir a região da amostra: glândula curta é o normal do antro","atribuir a diferença a artefato e solicitar nova biópsia dirigida","laudar hiperplasia foveolar compensatória da mucosa antral"], correta:2,
+ just:[
+  "O encurtamento só seria atrofia se a amostra fosse de corpo — antes de laudar, é preciso saber de onde veio.",
+  "Metaplasia intestinal exige células caliciformes/padrão intestinal — não é o que a mudança de tamanho glandular indica.",
+  "Correta. Corpo = glândulas compridas e densas; ANTRO = glândulas menores e curtas (dão a impressão de corte transversal — e não é outro corte!). Por isso todo laudo informa a REGIÃO da amostra: a morfologia normal esperada muda.",
+  "Não é artefato — é a histologia regional normal; repetir a biópsia seria desnecessário.",
+  "Hiperplasia foveolar é alongamento das fovéolas em resposta a lesão — não explica glândulas curtas normais."],
+ ref:"Histologia regional — corpo × antro no laudo"},
+
+/* 5 */ {n:5,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A célula parietal (oxíntica) das glândulas do fundo e corpo produz:</div>`,
+ alts:["pepsinogênios I e II e lipase gástrica","muco de superfície e bicarbonato de sódio","gastrina e somatostatina reguladoras","histamina e mucina foveolar","ácido clorídrico e fator intrínseco"], correta:4,
+ just:[
+  "Pepsinogênios e lipase são produto das células PRINCIPAIS (zimogênicas), na base das glândulas.",
+  "Muco + bicarbonato vêm das células mucosas SUPERFICIAIS das fovéolas.",
+  "Gastrina (células G) e somatostatina (células D) são das ENDÓCRINAS.",
+  "Histamina vem de endócrinas do corpo/fundo; mucina, das células mucosas.",
+  "Correta. A oxíntica (eosinofílica, poligonal, metade superior das glândulas oxínticas) produz o HCl — via bombas de prótons — e o FATOR INTRÍNSECO, glicoproteína indispensável à absorção da vitamina B12."],
+ ref:"Células — parietal/oxíntica"},
+
+/* 6 */ {n:6,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente com gastrite que destrói as células oxínticas desenvolve anemia macrocítica que NÃO melhora com vitamina B12 por via oral, mesmo em altas doses.</span><div class="pergunta">A explicação fisiopatológica é:</div>`,
+ alts:["a perda do fator intrínseco impede a absorção da vitamina B12","a acloridria impede a absorção do ferro, causando ferropenia","a hipergastrinemia consome os estoques hepáticos de B12","a perda das células principais elimina a pepsina que libera a B12","o excesso de somatostatina bloqueia os receptores ileais de B12"], correta:0,
+ just:[
+  "Correta. A oxíntica produz HCl E fator intrínseco. Destruída a célula, não há fator intrínseco — e sem ele a B12 não é absorvida no íleo: 'posso tomar quilos de vitamina B12 que não vai funcionar'. É a anemia PERNICIOSA.",
+  "Acloridria atrapalha o ferro (anemia ferropriva microcítica) — mas o caso é macrocítico e refratário à B12 oral: o problema é o fator intrínseco.",
+  "Gastrina não consome B12 — hipergastrinemia é consequência do bloqueio/perda da secreção ácida, não causa da anemia.",
+  "A pepsina ajuda a liberar B12 dos alimentos, mas o passo OBRIGATÓRIO perdido aqui é o fator intrínseco da oxíntica.",
+  "Somatostatina desliga a secreção ácida — não bloqueia receptor ileal de B12."],
+ ref:"Fator intrínseco — anemia perniciosa"},
+
+/* 7 */ {n:7,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre as células principais (zimogênicas), é correto afirmar:</div>`,
+ alts:["são células eosinofílicas e poligonais que ocupam o colo das glândulas","produzem ácido clorídrico por meio de bombas de prótons","secretam o fator intrínseco em conjunto com as oxínticas","basofílicas, na base das glândulas, produzem pepsinogênios e lipase","são células endócrinas antrais produtoras de gastrina"], correta:3,
+ just:[
+  "Eosinofílica e poligonal é a descrição da PARIETAL — a principal é basofílica.",
+  "Bomba de prótons e HCl são a assinatura da célula PARIETAL.",
+  "Fator intrínseco é exclusivo da oxíntica — não há coprodução pelas principais.",
+  "Correta. As principais/zimogênicas ficam na BASE das glândulas do fundo/corpo, são basofílicas e produzem os PEPSINOGÊNIOS I e II (→ pepsina, digestão de proteínas) e a LIPASE gástrica.",
+  "Gastrina vem das células G — endócrinas do antro, outro grupo celular."],
+ ref:"Células — principal/zimogênica"},
+
+/* 8 */ {n:8,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre as células endócrinas da mucosa gástrica, é correto afirmar:</div>`,
+ alts:["as células G do corpo gástrico produzem somatostatina","células G antrais produzem gastrina; células D, somatostatina","a histamina é produto exclusivo das células D do antro","a somatostatina ativa diretamente as bombas de prótons","a gastrina é liberada pelas células parietais do fundo gástrico"], correta:1,
+ just:[
+  "Duplo erro: células G são do ANTRO e produzem GASTRINA.",
+  "Correta. Células G (antro) → GASTRINA, que LIGA a digestão ativando a parietal; células D/delta (principalmente antro) → SOMATOSTATINA, que DESLIGA os estímulos; e endócrinas do corpo/fundo produzem HISTAMINA (vasodilatação da digestão).",
+  "As células D produzem somatostatina; a histamina vem de endócrinas do CORPO/FUNDO.",
+  "É o oposto: somatostatina INIBE os estímulos gástricos — é o 'desliga' do sistema.",
+  "Parietal produz HCl e fator intrínseco — gastrina é hormônio de célula endócrina G."],
+ ref:"Células endócrinas — G, D e histamina"},
+
+/* 9 */ {n:9,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Graças às células-tronco ("células-fonte") do istmo/colo glandular, o epitélio gástrico se renova completamente em:</div>`,
+ alts:["cerca de seis meses, pela baixa atividade mitótica local","aproximadamente um mês, a partir da base das glândulas","em poucos dias — no máximo cerca de uma semana completa","apenas após lesão, por ser um tecido perene estável","poucas horas, no mesmo ritmo da vida dos neutrófilos"], correta:2,
+ just:[
+  "Seis meses subestima (e muito) a divisão celular gástrica — o epitélio vive sob ácido e precisa trocar rápido.",
+  "Um mês ainda é lento demais — e as células-fonte ficam na ENTRADA das glândulas, não na base.",
+  "Correta. O turnover é altíssimo: dias, no máximo ~1 semana. É o que permite atrofia visível rapidamente quando a renovação falha (quimio/radio, senescência) — e o que sustenta a barreira epitelial.",
+  "O epitélio gástrico é tecido LÁBIL, de renovação contínua — não perene.",
+  "Horas é a vida do neutrófilo — o epitélio renova em dias, não em horas."],
+ ref:"Células-tronco — turnover em dias"},
+
+/* 10 */ {n:10,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Biópsia gástrica mostra linfócitos esparsos na lâmina própria e alguns neutrófilos permeando o epitélio glandular.</span><div class="pergunta">Sobre o significado desses achados, é correto afirmar:</div>`,
+ alts:["os linfócitos são sempre patológicos na mucosa gástrica","nenhum dos dois preocupa: ambos residem normalmente no MALT","apenas linfócitos em folículos organizados indicam doença","os macrófagos do córion é que marcam atividade inflamatória","os neutrófilos — não há residentes; sua presença é doença ativa"], correta:4,
+ just:[
+  "Linfócitos residentes são NORMAIS: a mucosa gástrica tem MALT (tecido linfoide associado à mucosa).",
+  "Metade certa, metade errada: linfócito residente existe; NEUTRÓFILO residente, não.",
+  "Folículos linfoides chamam atenção (associação com H. pylori), mas a pergunta é sobre o que define ATIVIDADE — e é o neutrófilo.",
+  "Macrófagos participam, mas o marcador de atividade nos laudos é o infiltrado NEUTROFÍLICO.",
+  "Correta. Neutrófilos vivem horas — não há neutrófilo residente na mucosa. Encontrá-los (intraepiteliais ou nas glândulas) = doença ATIVA: é o que faz o laudo dizer 'gastrite ativa'. Linfócito sozinho não assusta; neutrófilo, sempre."],
+ ref:"MALT — neutrófilo = atividade"},
+
+/* 11 */ {n:11,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Você sobe a escada de casa e sente o cheiro do almoço pronto. Antes de qualquer garfada, o estômago já "desce" e a secreção ácida começa.</span><div class="pergunta">Essa resposta corresponde a:</div>`,
+ alts:["fase cefálica: estímulo vagal (ACh) sobre a célula parietal","fase gástrica: distensão mecânica liberando somatostatina","fase intestinal: proteínas no duodeno liberando gastrina","fase cefálica: liberação direta de histamina pelas células D","fase gástrica: bicarbonato neutralizando o pH pré-prandial"], correta:0,
+ just:[
+  "Correta. Fase CEFÁLICA (pré-prandial): olfato, paladar, mastigação e deglutição disparam atividade VAGAL → acetilcolina estimula a parietal (↑Ca²⁺ citosólico) → bomba de prótons ativa. A acidez chega a 3 milhões de vezes o H⁺ do sangue.",
+  "A fase gástrica começa com o ALIMENTO no órgão — e libera GASTRINA, não somatostatina.",
+  "A fase intestinal INIBE os estímulos (somatostatina) — não libera gastrina.",
+  "Células D produzem SOMATOSTATINA (desliga); histamina vem de endócrinas do corpo/fundo — e o gatilho cefálico é vagal.",
+  "Bicarbonato neutraliza APÓS o esvaziamento — não é evento pré-prandial."],
+ ref:"Fisiologia — fase cefálica"},
+
+/* 12 */ {n:12,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Terminada a digestão gástrica, o quimo passa pelo esfíncter pilórico. O principal evento regulatório da fase intestinal é:</div>`,
+ alts:["liberação máxima de gastrina pelas células G antrais","ativação vagal adicional das bombas de prótons parietais","aumento da secreção de pepsinogênio pelas células principais","a inibição dos estímulos gástricos pela somatostatina","queda adicional do pH gástrico para valores ainda menores"], correta:3,
+ just:[
+  "Gastrina é o motor das fases anteriores — na intestinal, o sistema é DESLIGADO.",
+  "A atividade vagal marca a fase CEFÁLICA — não há novo estímulo na intestinal.",
+  "Pepsinogênio acompanha a secreção ativa das fases anteriores, não o desligamento.",
+  "Correta. Com proteínas digeridas chegando ao delgado proximal, as células D liberam SOMATOSTATINA: desliga-se a secreção ácida, e as células superficiais secretam bicarbonato — o pH sobe para ~7 até a próxima refeição.",
+  "É o contrário: o pH SOBE no descanso — cavidade vazia com bomba ligada lesaria o próprio tecido."],
+ ref:"Fisiologia — fase intestinal desliga"},
+
+/* 13 */ {n:13,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">São mecanismos de proteção da mucosa gástrica, EXCETO:</div>`,
+ alts:["secreção de bicarbonato pelas células epiteliais superficiais","secreção contínua de pepsina ativa sobre o epitélio","junções intercelulares firmes entre as células justapostas","produção de prostaglandinas pelas células mucosas","alto fluxo sanguíneo mucoso com difusão retrógrada de H⁺"], correta:1,
+ just:[
+  "É proteção real: após o esvaziamento, o bicarbonato neutraliza o pH de volta a ~7.",
+  "Correta (é o item FALSO). Pepsina ativa é força AGRESSORA (junto com o HCl) — está do outro lado do cabo de guerra, não entre as defesas.",
+  "É proteção real: junções fortes impedem o HCl de penetrar entre as células — mesmo numa camada única.",
+  "É proteção real: prostaglandinas inibem HCl, vasodilatam e aumentam o tônus/esvaziamento.",
+  "É proteção real: a vascularização traz O₂/nutrientes e, na difusão retrógrada, retira H⁺ elevando o pH da mucosa."],
+ ref:"4 mecanismos de proteção"},
+
+/* 14 */ {n:14,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Estudante toma ibuprofeno quase diariamente por conta própria e desenvolve epigastralgia. Não usa outros medicamentos.</span><div class="pergunta">O mecanismo da lesão gástrica pelos AINEs é:</div>`,
+ alts:["estímulo direto das células G, com hipergastrinemia mantida","bloqueio irreversível das bombas de prótons das parietais","ativação da histamina com vasoconstrição da microcirculação","lesão cáustica direta do comprimido sobre o epitélio foveolar","inibição da COX-1, reduzindo as prostaglandinas protetoras"], correta:4,
+ just:[
+  "Hipergastrinemia é história de IBP crônico — não de AINE.",
+  "Bloquear bomba de prótons é o mecanismo dos IBPs (omeprazol/pantoprazol) — o AINE age em outra via.",
+  "Histamina VASODILATA (e é protetora no contexto digestivo) — não há vasoconstrição por histamina aqui.",
+  "Pode haver componente irritativo local, mas o mecanismo central ensinado é farmacológico, não cáustico.",
+  "Correta. AINEs inibem a COX-1, uma das principais vias de síntese das PROSTAGLANDINAS — que inibem HCl, vasodilatam e promovem esvaziamento. Sem elas, quebra-se a proteção: o elo direto entre 'ibuprofeno da bolsa' e gastrite/gastropatia."],
+ ref:"AINEs — COX-1 e prostaglandinas"},
+
+/* 15 */ {n:15,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Usuário crônico de omeprazol por conta própria ("porque o vizinho falou que é bom") faz exames e a gastrina sérica vem bem elevada.</span><div class="pergunta">A explicação para a hipergastrinemia é:</div>`,
+ alts:["o fármaco destruiu as células parietais, que não respondem mais","o IBP estimula diretamente as células G a secretarem gastrina","com a bomba bloqueada, o ciclo não fecha e a gastrina segue liberada","a somatostatina é inibida pelo fármaco, liberando as células G","o omeprazol reduz a degradação hepática da gastrina circulante"], correta:2,
+ just:[
+  "O IBP NÃO destrói a célula — apenas bloqueia o fluxo de íons da bomba. (Quem destrói a oxíntica é doença, como a gastrite autoimune.)",
+  "Não há estímulo direto do fármaco sobre a célula G — o efeito é indireto, pela falta de acidez.",
+  "Correta. Sem HCl sendo formado, o alimento chega e a GASTRINA é liberada normalmente — mas encontra uma parietal de bomba bloqueada. O eixo não 'fecha o ciclo' e a gastrina continua sendo produzida e se acumulando: HIPERGASTRINEMIA, dosável no sangue.",
+  "O IBP não age sobre as células D — a somatostatina não é o alvo do fármaco.",
+  "Não há efeito descrito sobre a depuração hepática — o acúmulo é por hiperestimulação contínua."],
+ ref:"IBP — hipergastrinemia"},
+
+/* 16 */ {n:16,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Nos livros e laudos, "gastropatia" e "gastrite" não são sinônimos. A distinção correta é:</div>`,
+ alts:["gastrite exige biópsia confirmando; gastropatia é o termo genérico","gastropatia é sempre mais grave e de tratamento cirúrgico","os dois termos são intercambiáveis nos laudos endoscópicos","gastrite é o achado endoscópico; gastropatia, o quadro clínico doloroso","gastropatia designa exclusivamente as lesões causadas por H. pylori"], correta:0,
+ just:[
+  "Correta. GASTRITE = há história da doença E confirmação por biópsia da atividade inflamatória. GASTROPATIA = termo genérico para disfunções gástricas NÃO confirmadas histologicamente. Por isso a gastrite aguda vive nos livros como 'gastropatia ativa' — quase nunca se biopsia quadro agudo autolimitado.",
+  "Gravidade e cirurgia não entram na definição — a diferença é a confirmação histológica.",
+  "Não são intercambiáveis: um exige biópsia, o outro é justamente a ausência dela.",
+  "A distinção não é endoscopia × clínica — é confirmação histológica × ausência dela.",
+  "Gastropatia não é termo restrito a H. pylori — é guarda-chuva genérico."],
+ ref:"Gastropatia × gastrite"},
+
+/* 17 */ {n:17,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Em um laudo de EDA lê-se: "A retrovisão revela cárdia com boa tonicidade."</span><div class="pergunta">Essa frase significa que:</div>`,
+ alts:["o aparelho foi retirado lentamente observando o esôfago distal","o exame usou contraste para avaliar a transição esofagogástrica","a insuflação foi repetida após o esvaziamento do lago bilioso","o endoscópio curvou-se dentro do estômago para olhar a cárdia","a cárdia foi biopsiada para confirmação da tonicidade muscular"], correta:3,
+ just:[
+  "A retirada lenta avalia o esôfago, mas 'retrovisão' é uma manobra específica DENTRO do estômago.",
+  "EDA é endoscopia — não usa contraste radiológico.",
+  "Lago bilioso é outro item do laudo (o resíduo deve ser claro) — não tem relação com a retrovisão.",
+  "Correta. Na retrovisão, a cânula transpassa a JEG, entra na cavidade e faz uma CURVA para olhar 'de baixo para cima' o próprio ponto de entrada — avaliando cárdia e junção por dentro, dos dois lados.",
+  "Tonicidade é avaliada visualmente pela manobra — não por biópsia."],
+ ref:"Laudo EDA — retrovisão"},
+
+/* 18 */ {n:18,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">EDA descreve: "mucosa de fundo, corpo e antro apresentam-se com hiperemia leve que se distribui uniformemente por todas as suas paredes".</span><div class="pergunta">A denominação correta desse achado é:</div>`,
+ alts:["gastrite antral enantematosa localizada","gastrite erosiva multifocal de padrão difuso","quadro de pangastrite enantematosa leve","bulboduodenite com refluxo biliar associado","gastrite atrófica difusa em estágio inicial"], correta:2,
+ just:[
+  "Não é só antral — fundo, corpo E antro estão acometidos.",
+  "Não há erosões descritas — apenas hiperemia (enantema).",
+  "Correta. Hiperemia uniforme em fundo + corpo + antro = o órgão (quase) todo acometido → PAN-gastrite (como a radiografia 'panorâmica' do dentista: pegou tudo). Com enantemas e intensidade leve: pangastrite enantematosa leve — a conclusão do laudo da aula.",
+  "Bulboduodenite é achado do DUODENO — a descrição é gástrica.",
+  "Atrofia apareceria como pregueado apagado/liso — o descrito é hiperemia."],
+ ref:"Laudo EDA — pangastrite"},
+
+/* 19 */ {n:19,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Na EDA, uma área do corpo gástrico que deveria ser pregueada apresenta-se lisa.</span><div class="pergunta">Esse achado deve levantar a suspeita de:</div>`,
+ alts:["espasmo da muscular própria durante a insuflação de ar","atrofia da mucosa (e/ou edema apagando as pregas)","boa distensibilidade da câmara gástrica ao exame","variação anatômica normal do fundo gástrico","hipertrofia compensatória da região antral"], correta:1,
+ just:[
+  "Espasmo muscular não é a leitura desse achado no laudo — a chave é o pregueado ausente.",
+  "Correta. Cada região tem seu pregueado esperado; LISO onde deveria haver pregas sugere ATROFIA (mucosa que não se renovou — e ela aparece rápido, pois o turnover é de dias) e/ou EDEMA apagando as pregas.",
+  "Boa distensibilidade é outro item do laudo (o órgão estende bem à insuflação) — não explica prega sumida em área específica.",
+  "O corpo é região de pregas exuberantes — liso ali NÃO é variação normal.",
+  "Hipertrofia antral não apaga pregas do corpo."],
+ ref:"Laudo EDA — pregueado liso = atrofia"},
+
+/* 20 */ {n:20,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Durante a endoscopia, o teste que virou rotina para pesquisa de H. pylori — por ser o mais barato — é:</div>`,
+ alts:["a cultura microbiológica do aspirado gástrico","a sorologia IgG anti-Helicobacter pylori","a pesquisa de antígeno fecal do H. pylori","o PCR do fragmento obtido por biópsia","o teste rápido da urease em fragmento"], correta:4,
+ just:[
+  "Cultura existe, mas é trabalhosa e não é o método de rotina intraendoscópico.",
+  "Sorologia é exame de sangue — não é feita durante a EDA e não distingue infecção ativa.",
+  "Antígeno fecal é método não invasivo, fora do momento da endoscopia.",
+  "PCR é possível, porém caro — não é o teste que 'entrou na rotina'.",
+  "Correta. O teste da UREASE é feito na própria endoscopia com o fragmento coletado: é o mais barato e virou praxe. Urease positiva → H. pylori positivo (no laudo da aula: 'resultou POSITIVO')."],
+ ref:"EDA — teste da urease"},
+
+/* 21 */ {n:21,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Grande queimado, internado em UTI, em uso de sonda nasogástrica, desenvolve epigastralgia e pequenos sangramentos gástricos na primeira semana.</span><div class="pergunta">Os fatores do caso que explicam a gastrite aguda são:</div>`,
+ alts:["a dieta hospitalar hiperproteica associada aos períodos de jejum prolongado","hipersecreção primária de gastrina pelo estresse emocional","colonização aguda por H. pylori adquirida na internação","estresse sistêmico com isquemia da mucosa + trauma mecânico da sonda","reação adversa aos antibióticos com lesão cáustica direta"], correta:3,
+ just:[
+  "Dieta e jejum não são as etiologias destacadas — o caso aponta dois agressores clássicos bem específicos.",
+  "'Estresse' aqui é SISTÊMICO (desafio orgânico), não emocional — e 'gastrite nervosa' nem é entidade patológica (o quadro popular é dispepsia).",
+  "H. pylori é história de gastrite CRÔNICA — não de lesão aguda de UTI na primeira semana.",
+  "Correta. O grande queimado desvia fluxo sanguíneo para a área lesada → ISQUEMIA TRANSITÓRIA da mucosa (estresse sistêmico agudo). E a SONDA nasogástrica é o trauma mecânico 'que todo mundo esquece' — enquanto ela estiver lá, espera-se gastrite.",
+  "Não há relato de antibiótico cáustico — os agressores do caso são isquemia e sonda."],
+ ref:"Gastrite aguda — etiologias (queimado + sonda)"},
+
+/* 22 */ {n:22,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Biópsia gástrica: edema moderado e congestão vascular na lâmina própria, neutrófilos entre as células epiteliais e nas glândulas, discreta hiperplasia foveolar. A arquitetura glandular tubular está preservada, sem metaplasia.</span><div class="pergunta">O quadro histológico é compatível com:</div>`,
+ alts:["gastrite aguda: neutrófilos com arquitetura glandular preservada","gastrite crônica atrófica com metaplasia intestinal estabelecida","úlcera péptica com tecido de granulação e superfície sero-fibrinosa","adenocarcinoma incipiente com desorganização glandular","mucosa gástrica normal com MALT apenas proeminente"], correta:0,
+ just:[
+  "Correta. É a tríade da gastrite AGUDA: infiltrado NEUTROFÍLICO (intraepitelial e glandular) + edema/congestão da lâmina própria + arquitetura PRESERVADA (podendo haver hiperplasia foveolar e pequenas erosões). Alterações sutis, doença ativa.",
+  "A crônica pediria atrofia e METAPLASIA INTESTINAL — que o laudo nega explicitamente.",
+  "Úlcera exigiria DESCONTINUIDADE do revestimento com sero-fibrina e tecido de granulação — não descritos.",
+  "Adenocarcinoma pediria atipia e desorganização glandular — a arquitetura aqui está preservada.",
+  "MALT explica linfócitos residentes — mas NEUTRÓFILO nunca é achado normal: há doença ativa."],
+ ref:"Gastrite aguda — microscopia"},
+
+/* 23 */ {n:23,aula:1,nivel:"dificil",
+ enun:`<div class="pergunta">Sobre os termos usados para as lesões da mucosa gástrica, é correto afirmar:</div>`,
+ alts:["erosão é perda total da mucosa; úlcera, só do epitélio superficial","erosão é perda parcial do epitélio; úlcera, perda total","enantema designa hiperemia na pele; exantema, nas mucosas internas","úlcera e erosão diferem apenas pelo diâmetro da lesão","toda erosão evolui obrigatoriamente para úlcera perfurada"], correta:1,
+ just:[
+  "Inverteu os conceitos — é a úlcera que representa a perda total.",
+  "Correta. EROSÃO = perda PARCIAL do epitélio (a gastrite aguda erosiva mostra isso); ÚLCERA = perda TOTAL do revestimento, com descontinuidade — como na Lâmina 18 (superfície sero-fibrinosa + tecido de granulação).",
+  "Inverteu: EXANTEMA é na pele; ENANTEMA, nas mucosas internas (os 'pontinhos vermelhos' da EDA).",
+  "A diferença é de PROFUNDIDADE da perda tecidual, não de diâmetro.",
+  "Erosões da gastrite aguda são autolimitadas na maioria — não há evolução obrigatória para úlcera."],
+ ref:"Erosão × úlcera · enantema × exantema"},
+
+/* 24 */ {n:24,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Na aula prática, duas lâminas: a PRIMEIRA com mucosa pilórica hiperplasiada, infiltrado misto com neutrófilos até a muscular da mucosa e áreas de metaplasia intestinal; a SEGUNDA com mucosa fúndica com descontinuidade do revestimento, superfície sero-fibrinosa com hemorragia e tecido de granulação com angiogênese.</span><div class="pergunta">Os diagnósticos são, respectivamente:</div>`,
+ alts:["gastrite aguda erosiva e adenocarcinoma gástrico ulcerado","úlcera gástrica e gastrite crônica em atividade","gastrite crônica em atividade e úlcera gástrica","gastrite autoimune e pólipo hiperplásico inflamatório","metaplasia intestinal isolada e erosão aguda superficial"], correta:2,
+ just:[
+  "A primeira não é aguda: METAPLASIA INTESTINAL é marca de cronicidade (adaptação após agressão prolongada).",
+  "Trocou as lâminas: a descontinuidade com granulação é a úlcera — que está na SEGUNDA descrição.",
+  "Correta. Lâmina 24 = GASTRITE CRÔNICA (mucosa pilórica hiperplasiada + infiltrado misto com neutrófilos = crônica EM ATIVIDADE + metaplasia intestinal). Lâmina 18 = ÚLCERA GÁSTRICA (perda total/descontinuidade + sero-fibrina + hemorragia + tecido de granulação com angiogênese).",
+  "Autoimune pediria destruição de oxínticas no corpo/fundo; pólipo pediria lesão elevada circunscrita — nada disso foi descrito.",
+  "Metaplasia isolada não explica o infiltrado inflamatório; e a segunda lâmina tem perda TOTAL (úlcera), não parcial (erosão)."],
+ ref:"Lâminas 24 e 18 — crônica × úlcera"}
+];
+
+
+
+const dissertativas=[
+{n:1,aula:1,
+ caso:`Você recebe o laudo de EDA de um paciente de 32 anos com queixas dispépticas: "Câmara gástrica em boas condições, apresentando boa distensibilidade à insuflação de ar e disposição de seu pregueado mucoso sem alterações. Lago bilioso de aspecto claro, sem restos alimentares. A retrovisão revela cárdia com boa tonicidade. Mucosa de fundo, corpo e antro com hiperemia leve que se distribui uniformemente por todas as paredes. Piloro cêntrico, sem deformidades. OBS: teste de urease para pesquisa de H. pylori POSITIVO. CONCLUSÃO: pangastrite enantematosa leve."`,
+ perg:[
+  "a) O que é a EDA e o que estabelecem as padronizações de 2001 e 2020 sobre a documentação do exame?",
+  "b) Explique, com a lógica anatômica/histológica, os termos: distensibilidade à insuflação, pregueado mucoso, lago bilioso e retrovisão.",
+  "c) Por que a conclusão usa o prefixo \"pan\" e o adjetivo \"enantematosa\"? O que seria um pregueado liso nesse laudo?",
+  "d) O que é o teste da urease, por que ele virou rotina e o que o resultado positivo implica?"],
+ resp:[
+  ["a) EDA e padronização",
+   `EDA = <b>esofagogastroduodenoscopia</b>, o exame endoscópico do trato digestório superior (esôfago, estômago, bulbo/duodeno). Desde <b>2001</b> a sociedade europeia recomenda padronizar a documentação com <b>8 imagens</b> dos principais pontos anatômicos (JEG, cárdia, corpo, região pilórica, início do duodeno…), além de registrar extensão, qualidade do preparo e visibilidade da mucosa. Em <b>2020</b>, a World Endoscopy Organization publicou recomendação de avaliação sistematizada com <b>28 imagens</b> para o exame normal — e mais imagens quando há achados alterados.`],
+  ["b) Traduzindo o laudo",
+   `<b>Distensibilidade à insuflação:</b> a mucosa gástrica é pregueada; insufla-se ar para <b>estender as pregas</b> e enxergar a mucosa "lisa" (daí o desconforto pós-exame). Um órgão que distende bem é sinal de parede complacente. <b>Pregueado mucoso:</b> cada região tem seu padrão (pregas exuberantes no fundo/corpo, discretas no antro) — por isso se descreve se está preservado. <b>Lago bilioso:</b> o resíduo líquido do estômago; deve ser <b>claro/transparente, sem restos alimentares nem sangue</b>. <b>Retrovisão:</b> a cânula entra na cavidade e faz uma <b>curva para olhar de dentro para a cárdia/JEG</b> ("de baixo para cima", dos dois lados) — é assim que se avalia a tonicidade da cárdia.`],
+  ["c) Pangastrite enantematosa; pregueado liso",
+   `"<b>Pan</b>" porque a hiperemia leve acomete <b>fundo + corpo + antro uniformemente</b> — o órgão praticamente todo (como a radiografia panorâmica: pegou tudo). "<b>Enantematosa</b>" porque a alteração é a hiperemia em mucosa interna — <b>enantema</b> (na pele seria exantema). Se o laudo descrevesse área <b>lisa onde deveria haver pregas</b>, a leitura seria suspeita de <b>ATROFIA</b> da mucosa (e/ou edema apagando as pregas) — e a atrofia pode aparecer em poucos dias, porque o turnover epitelial é de dias.`],
+  ["d) Teste da urease",
+   `Feito <b>durante a própria endoscopia</b> com fragmento da mucosa: o <i>H. pylori</i> produz <b>urease</b>, que hidrolisa a ureia do meio e muda o pH/indicador de cor. É o método <b>mais barato</b> — por isso "entrou na rotina" (não é o único). <b>Positivo → infecção por H. pylori</b>, que deverá ser correlacionada com o quadro (a bactéria é o grande agente da gastrite CRÔNICA, tema do simpósio) e tratada conforme indicação.`],
+ ],
+ ref:"EDA — leitura de laudo endoscópico"},
+
+{n:2,aula:1,
+ caso:`Numa discussão de caso, três pacientes aparecem em sequência: (1) uma estudante que toma ibuprofeno quase diariamente para cefaleia, por conta própria; (2) um senhor que usa omeprazol há anos "porque o vizinho falou que é bom", com gastrina sérica elevada; (3) uma paciente em uso de análogo de GLP-1 ("caneta") que se queixa de plenitude e digestão lenta.`,
+ perg:[
+  "a) Liste os quatro mecanismos de proteção da mucosa gástrica e explique cada um em uma frase.",
+  "b) Explique a lesão gástrica do paciente 1 (AINE), amarrando o fármaco ao mecanismo de proteção quebrado.",
+  "c) Explique a hipergastrinemia do paciente 2 (IBP crônico). O fármaco destrói a célula parietal?",
+  "d) Explique as queixas da paciente 3 e diga por que a prostaglandina ilustra a \"ambiguidade\" de conceitos da Pato I na clínica."],
+ resp:[
+  ["a) As 4 linhas de defesa",
+   `① <b>Barreira epitelial</b>: muco das células superficiais + <b>junções intercelulares muito fortes</b> entre células justapostas + <b>alto turnover</b> (células-tronco — nunca falta população celular). ② <b>Neutralização do pH</b>: após o esvaziamento, as células superficiais secretam <b>bicarbonato</b> e o pH volta a ~7. ③ <b>Vascularização/fluxo sanguíneo</b> (com histamina vasodilatando): traz O₂, íons e nutrientes e faz a <b>difusão retrógrada</b> de H⁺, elevando o pH da mucosa. ④ <b>Prostaglandinas</b> das células mucosas: <b>inibem o HCl, vasodilatam e aumentam o tônus muscular</b>/esvaziamento.`],
+  ["b) AINE — a proteção nº 4 quebrada",
+   `Os AINEs inibem a <b>COX-1</b>, uma das principais vias de síntese das <b>prostaglandinas</b>. Menos prostaglandina = menos inibição do HCl, menos vasodilatação, esvaziamento pior — ou seja, a <b>4ª linha de defesa cai</b> e a mucosa fica exposta à agressão ácida: gastrite/gastropatia por AINE. É o preço do uso frequente sem indicação ("quem nunca tirou o ibuprofeno da bolsa?").`],
+  ["c) IBP — bomba bloqueada, gastrina acumulando",
+   `O IBP <b>bloqueia o fluxo de íons da bomba de prótons</b> da célula parietal — a célula <b>NÃO é destruída</b> nem modificada estruturalmente (quem destrói a oxíntica é doença, como a gastrite autoimune). Sem HCl, a chegada do alimento continua liberando <b>gastrina</b> (células G), que estimula uma parietal incapaz de responder: o ciclo não se fecha e a gastrina segue sendo produzida → <b>HIPERGASTRINEMIA</b>, dosável no sangue. Uso com indicação e prazo definidos é adequado; uso crônico "por conta" prejudica a digestão.`],
+  ["d) Canetas e a prostaglandina ambígua",
+   `Os análogos de GLP-1 <b>lentificam a movimentação gástrica e o esvaziamento</b> e reduzem a atividade das bombas (ação local no TGI, somada ao componente central de saciedade). A plenitude e a "digestão parada" são o efeito esperado — a mesma lentidão, sem fármaco, configuraria <b>dispepsia</b>. E a prostaglandina resume a lição da professora: um <b>mediador inflamatório</b> (Pato I) que é, ao mesmo tempo, <b>essencial à proteção gástrica</b> — na clínica, o mesmo conceito pode ter dois valores, como a histamina (inflamatória E necessária à vasodilatação digestiva).`],
+ ],
+ ref:"Proteções da mucosa e farmacologia aplicada"},
+
+{n:3,aula:1,
+ caso:`Homem de 45 anos, vítima de queimaduras extensas, internado em UTI com sonda nasogástrica. No 5º dia, apresenta epigastralgia e resíduo com traços de sangue. A endoscopia mostra mucosa com enantemas difusos, áreas com apagamento de pregas e pequenas erosões no corpo gástrico. A equipe pergunta se é preciso biopsiar.`,
+ perg:[
+  "a) Qual o diagnóstico provável e sua definição? Por que muitos livros o chamam de \"gastropatia ativa\"?",
+  "b) Quais etiologias estão presentes NESTE caso e que outras completam a lista da gastrite aguda?",
+  "c) Descreva a patogênese e os achados macro e microscópicos esperados (inclua a diferença erosão × úlcera).",
+  "d) Qual a base do tratamento e o que responder sobre a biópsia? \"Gastrite nervosa\" seria um diagnóstico aceitável?"],
+ resp:[
+  ["a) Diagnóstico e nomenclatura",
+   `<b>Gastrite aguda</b>: processo inflamatório <b>agudo, transitório e autolimitante</b> da mucosa gástrica. Aparece como "<b>gastropatia ativa</b>" porque ① quase nunca se biopsia um quadro agudo (sem confirmação histológica → tecnicamente "gastropatia", o termo genérico) e ② "ativa" remete ao infiltrado <b>neutrofílico</b> — o marcador de atividade. Gastrite confirmada por biópsia + neutrófilos = ativa; sem biópsia, o rótulo genérico prevalece.`],
+  ["b) Etiologias",
+   `No caso: ① <b>estresse sistêmico agudo</b> — o grande queimado desvia fluxo sanguíneo para as áreas lesadas, gerando <b>isquemia transitória da mucosa</b> (com atrofia e gastrite temporárias); ② <b>trauma mecânico da SONDA nasogástrica</b> — o agressor "que todo mundo esquece": enquanto houver sonda, espera-se gastrite. Completam a lista: <b>AINEs</b> (↓prostaglandinas), <b>ingestão de ácidos e bases</b>, <b>álcool</b>, <b>fumo</b>, <b>quimioterapia e radioterapia localizada</b> (renovação epitelial ineficiente) e <b>senescência</b> (↓mucina e bicarbonato).`],
+  ["c) Patogênese e morfologia",
+   `Patogênese: <b>rompimento dos mecanismos citoprotetores</b> (barreira epitelial, bicarbonato, fluxo sanguíneo, prostaglandinas) → o ácido vence o cabo de guerra e lesa a mucosa. <b>Macro/EDA:</b> hiperemia em pontos = <b>ENANTEMAS</b>, <b>erosões</b>, pequenos sangramentos, atrofia/edema com apagamento de pregas (a atrofia aparece rápido porque o turnover é de dias). <b>Micro:</b> <b>neutrófilos intraepiteliais e nas glândulas</b>, edema moderado e <b>congestão vascular na lâmina própria</b> (é nela que estão os vasos — a inflamação chega por ela e separa as glândulas), possível hiperplasia foveolar, com <b>arquitetura glandular preservada</b>. <b>Erosão = perda PARCIAL do epitélio; úlcera = perda TOTAL</b> do revestimento (descontinuidade).`],
+  ["d) Tratamento, biópsia e \"gastrite nervosa\"",
+   `Base do tratamento: <b>remover o estímulo nocivo</b> (tratar o quadro sistêmico; retirar a sonda quando possível) + <b>IBP por período curto</b> para favorecer a cicatrização — o processo é <b>autolimitante</b> e responde rápido. <b>Biópsia não é rotina</b> na gastrite aguda; reserva-se EDA + biópsia para casos <b>recidivantes</b>/dúvida diagnóstica. E "gastrite nervosa" <b>não é entidade anatomopatológica</b> — o que se chama assim é <b>dispepsia</b> por alteração do parassimpático; o estresse que causa gastrite aguda é o <b>SISTÊMICO</b> (queimadura, trauma), exatamente o deste paciente.`],
+ ],
+ ref:"Gastrite aguda — caso do queimado com sonda"},
+
+{n:4,aula:1,
+ caso:`Prova prática de histologia gástrica: a bancada tem (1) uma lâmina de corpo gástrico normal, (2) uma lâmina de antro normal, (3) uma lâmina com linfócitos na lâmina própria e (4) uma lâmina com neutrófilos permeando o epitélio glandular. Ao lado, um caso clínico curto descreve paciente com anemia macrocítica refratária à reposição oral de B12.`,
+ perg:[
+  "a) Como diferenciar corpo × antro na lâmina, e por que o laudo de biópsia sempre informa a região da amostra?",
+  "b) Monte o \"mapa\" celular da mucosa: cada tipo celular, sua localização e seus produtos.",
+  "c) Interprete as lâminas 3 e 4: qual é normal e qual é patológica? Justifique com o conceito de MALT.",
+  "d) Conecte o caso clínico ao mapa celular: qual célula foi perdida, o que ela produzia e qual o nome da anemia?"],
+ resp:[
+  ["a) Corpo × antro",
+   `<b>Corpo:</b> glândulas <b>grandes, compridas, enfileiradas</b>, densamente arrumadas (oxínticas + zimogênicas). <b>Antro:</b> glândulas <b>menores e curtas</b> — tão curtas que parecem cortadas no transversal (não é outro corte!). Como a densidade e a organização glandular <b>normais</b> variam por região, o laudo <b>sempre informa de onde veio a amostra</b>: sem se localizar, o observador chama de "atrofia" o que é apenas antro normal.`],
+  ["b) O mapa celular",
+   `<b>Mucosas superficiais (foveolares):</b> superfície/fovéolas → <b>muco + BICARBONATO</b> (não armazenam como caliciformes). <b>Parietais (oxínticas):</b> eosinofílicas, poligonais, metade superior das glândulas do fundo/corpo → <b>HCl (bomba de prótons) + FATOR INTRÍNSECO</b>. <b>Principais (zimogênicas):</b> basofílicas, na <b>base</b> → <b>pepsinogênios I/II + lipase gástrica</b>. <b>Endócrinas:</b> células <b>G</b> (antro) → <b>gastrina</b> (liga); endócrinas de corpo/fundo → <b>histamina</b>; células <b>D/delta</b> (principalmente antro) → <b>somatostatina</b> (desliga). <b>Células-tronco ("fonte"):</b> istmo/colo das glândulas → renovação do epitélio em <b>dias (≤1 semana)</b>.`],
+  ["c) Linfócito × neutrófilo",
+   `A lâmina 3 (linfócitos) pode ser <b>NORMAL</b>: a mucosa gástrica possui <b>MALT</b> — tecido linfoide associado à mucosa — com <b>linfócitos residentes</b>; achá-los não configura doença. A lâmina 4 (neutrófilos) é <b>PATOLÓGICA</b>: <b>não existem neutrófilos residentes</b> (vivem horas). Neutrófilo intraepitelial/glandular = <b>doença ATIVA</b> — é o achado que faz o laudo dizer "gastrite ativa" e o marcador de agudização.`],
+  ["d) A anemia do caso",
+   `Anemia macrocítica refratária à B12 <b>oral</b> aponta para perda do <b>FATOR INTRÍNSECO</b> — produto da <b>célula parietal (oxíntica)</b>, a mesma que faz o HCl. Doenças que <b>destroem as oxínticas</b> (a gastrite autoimune, tema do simpósio) tiram do paciente a glicoproteína obrigatória para absorver B12 no íleo: "pode tomar quilos de B12 que não funciona". É a <b>ANEMIA PERNICIOSA</b> — o elo direto entre a histologia desta aula e a clínica.`],
+ ],
+ ref:"Histologia aplicada — mapa celular e MALT"},
+];
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 03</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 03</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 03 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 03 — Patologia do Estômago",kicker:"ANATO PATO II",desc:"Histofisiologia gástrica, EDA/laudo, proteções da mucosa e gastrite aguda — com as ênfases da Profa. Veronica.",cards:[
+{area:"Anatomia e parede",cat:"prof",q:"Como se abre o estômago na macroscopia patológica, e por quê?",a:"Pela CURVATURA MAIOR — a peça espalma 'como uma borboleta', permitindo linhas de estudo do fundo ao piloro. É o corte padrão.",obs:"Ela mostrou a peça fresca e perguntou onde foi o corte."},
+{area:"Anatomia e parede",cat:"conceito",q:"Limites e regiões do estômago?",a:"Entre a JEG (esôfago distal) e a JGD (duodeno). Regiões: cárdia, fundo, corpo, antro, piloro — fundo+corpo tratados juntos; antro+piloro = região antropilórica."},
+{area:"Anatomia e parede",cat:"conceito",q:"As 4 túnicas da parede gástrica?",a:"Mucosa (epitélio + lâmina própria + muscular da mucosa) → submucosa AGLANDULAR → muscular própria em 3 direções → serosa."},
+{area:"Anatomia e parede",cat:"prof",q:"Por que a muscular própria do estômago tem TRÊS camadas? Quais?",a:"Oblíqua interna + circular média + longitudinal externa. 'O estômago é o liquidificador do corpo': três direções para TRITURAR (digestão mecânica) e depois fazer a PROPULSÃO do quimo."},
+{area:"Histologia",cat:"conceito",q:"Os 2 compartimentos da mucosa gástrica?",a:"FOVEOLAR (fovéolas/fossetas/criptas — superficial, presente em TODO o estômago) e GLANDULAR (profundo — é o que varia por região)."},
+{area:"Histologia",cat:"conceito",q:"Glândulas por região: cárdia × fundo/corpo × antro?",a:"Cárdia: pequenas glândulas mucosas (muco). Fundo/corpo: GRANDES glândulas oxínticas + zimogênicas (HCl + pepsinas). Antro/piloro: glândulas mucosas MENORES + células endócrinas."},
+{area:"Histologia",cat:"prof",q:"Corpo × antro na lâmina — e a pegadinha do laudo?",a:"Corpo: glândulas compridas e enfileiradas. Antro: glândulas CURTAS (parecem corte transversal — e não é!). Por isso o laudo SEMPRE informa a região da amostra: sem se localizar, você chama antro normal de 'atrofia'."},
+{area:"Histologia",cat:"alerta",q:"Quanta lâmina própria se vê numa mucosa gástrica normal?",a:"Quase NADA — glândulas 'uma do ladinho da outra'. Os vasos estão na lâmina própria: a inflamação chega POR ela → edema separando glândulas + infiltrado = tecido alterado."},
+{area:"Células",cat:"prof",q:"Célula parietal (oxíntica): aspecto, local e produtos?",a:"Eosinofílica, poligonal, metade superior das glândulas do fundo/corpo. Produz HCl (bombas de prótons) e FATOR INTRÍNSECO (absorção de B12)."},
+{area:"Células",cat:"prof",q:"Destruição das células oxínticas → qual consequência hematológica?",a:"Sem fator intrínseco → B12 não é absorvida ('quilos de B12 oral não funcionam') → ANEMIA PERNICIOSA. Além da acloridria.",obs:"Ponte com a gastrite autoimune do simpósio."},
+{area:"Células",cat:"conceito",q:"Célula principal (zimogênica): aspecto, local e produtos?",a:"Basofílica, na BASE das glândulas. Produz pepsinogênios I e II (→ pepsina: digestão química de proteínas) e LIPASE gástrica."},
+{area:"Células",cat:"conceito",q:"Mapa das endócrinas gástricas: G, corpo/fundo e D?",a:"Células G (ANTRO) → GASTRINA (liga a digestão). Endócrinas do CORPO/FUNDO → HISTAMINA (vasodilatação). Células D/delta (principalmente antro) → SOMATOSTATINA (desliga)."},
+{area:"Células",cat:"conceito",q:"Células mucosas superficiais (foveolares) produzem o quê?",a:"MUCO (sem armazenar como caliciformes) + BICARBONATO — o tampão que neutraliza o pH da cavidade após o esvaziamento."},
+{area:"Células",cat:"prof",q:"Em quanto tempo o epitélio gástrico se renova, e quem garante isso?",a:"Em DIAS — no máximo ~1 semana. Garantido pelas células-tronco ('células-fonte') no istmo/colo das glândulas. Por isso a atrofia aparece rápido quando a renovação falha."},
+{area:"Células",cat:"prof",q:"Linfócito × neutrófilo na mucosa gástrica: qual assusta?",a:"Linfócito residente é NORMAL (MALT). NEUTRÓFILO residente NÃO existe (vive horas) → neutrófilo no laudo = gastrite ATIVA/doença ativa. É A pergunta desta aula.",obs:"'Se tiver neutrófilo, aparece no laudo como gastrite ativa.'"},
+{area:"Fisiologia",cat:"conceito",q:"Fase CEFÁLICA da secreção ácida?",a:"Pré-prandial: olfato, paladar, mastigação, deglutição → atividade VAGAL (acetilcolina) → célula parietal (↑Ca²⁺) → ativa bomba de prótons. O 'cheirinho subindo a escada'."},
+{area:"Fisiologia",cat:"conceito",q:"Fase GÁSTRICA e fase INTESTINAL?",a:"Gástrica (prandial): trituração mecânica + GASTRINA (células G) → mais bombas ativas. Intestinal (pós-prandial): quimo no delgado → SOMATOSTATINA desliga os estímulos + bicarbonato neutraliza (pH→~7)."},
+{area:"Fisiologia",cat:"prof",q:"Quão ácido fica o estômago na digestão?",a:"Até 3 MILHÕES de vezes mais íons H⁺ que o sangue — pH baixíssimo. O desenho fisiológico: pH baixo NA digestão, alto NO descanso (cafezinho e beliscos desregulam o ciclo)."},
+{area:"Proteções",cat:"prof",q:"Os 4 mecanismos de proteção da mucosa (a chave do simpósio)?",a:"① Barreira epitelial: muco + junções fortes + turnover alto; ② Bicarbonato neutralizando o pH; ③ Vascularização (histamina): nutre e faz difusão retrógrada de H⁺; ④ PROSTAGLANDINAS: inibem HCl, vasodilatam, ↑tônus/esvaziamento.",obs:"'Para QUALQUER patologia gástrica houve quebra dessas barreiras.'"},
+{area:"Proteções",cat:"conceito",q:"Por que o HCl não entra entre as células do epitélio?",a:"Junções intercelulares MUITO fortes entre células justapostas — mesmo numa camada única, separam o luminal do tecidual. Uma das barreiras que 'não pode ser quebrada'."},
+{area:"Proteções",cat:"prof",q:"Prostaglandina: inflamatória ou protetora?",a:"AS DUAS — mediador inflamatório (Pato I) que é essencial à proteção gástrica: inibe HCl, vasodilata, melhora esvaziamento. Na clínica, conceitos podem ser ambíguos (igual a histamina)."},
+{area:"Farmacologia",cat:"prof",q:"AINEs lesam o estômago por qual mecanismo?",a:"Inibem a COX-1 → caem as PROSTAGLANDINAS protetoras → menos inibição de HCl, menos vasodilatação, esvaziamento pior → gastrite/gastropatia. O preço do 'ibuprofeno da bolsa'."},
+{area:"Farmacologia",cat:"prof",q:"IBP crônico sem indicação → qual achado laboratorial e por quê?",a:"HIPERGASTRINEMIA: a bomba de prótons está bloqueada (célula parietal INTACTA), o alimento chega, a gastrina é liberada e segue estimulando uma célula que não responde — o ciclo nunca fecha.",obs:"IBP bloqueia a bomba; quem DESTRÓI a oxíntica é doença (autoimune)."},
+{area:"Farmacologia",cat:"conceito",q:"O que as 'canetas' (análogos de GLP-1) fazem no estômago?",a:"Lentificam a movimentação/esvaziamento gástrico e reduzem a acidez (ação local + saciedade central). Plenitude e digestão lenta são esperadas — sem fármaco, o mesmo quadro seria dispepsia."},
+{area:"EDA / laudo",cat:"conceito",q:"O que é EDA e o que dizem as padronizações de imagem?",a:"Esofagogastroduodenoscopia. 2001 (soc. europeia): 8 imagens dos pontos anatômicos principais. 2020 (World Endoscopy Organization): 28 imagens no exame normal — mais se houver achados."},
+{area:"EDA / laudo",cat:"conceito",q:"Por que se insufla ar na EDA ('boa distensibilidade')?",a:"A mucosa é PREGUEADA — o ar estende as pregas para visualizar a mucosa lisa. Daí o desconforto pós-exame."},
+{area:"EDA / laudo",cat:"prof",q:"'Liso onde deveria ser pregueado' no laudo → pensar em quê?",a:"ATROFIA da mucosa (e/ou edema apagando pregas). Cada região tem seu pregueado esperado; a atrofia aparece rápido porque o turnover é de dias."},
+{area:"EDA / laudo",cat:"conceito",q:"O que é a RETROVISÃO da endoscopia?",a:"A cânula entra na cavidade gástrica e faz uma CURVA para olhar de dentro, 'de baixo para cima', a cárdia/JEG (dos dois lados) — avaliando a tonicidade da cárdia."},
+{area:"EDA / laudo",cat:"conceito",q:"'Lago bilioso de aspecto claro' significa o quê?",a:"O resíduo líquido gástrico deve ser TRANSPARENTE, sem restos alimentares sobrenadantes nem sangue. Alterações do lago também entram no laudo."},
+{area:"EDA / laudo",cat:"prof",q:"Hiperemia leve uniforme em fundo + corpo + antro = qual conclusão?",a:"PANGASTRITE (pan = o órgão quase todo, como a 'panorâmica' do dentista) — no laudo da aula: pangastrite ENANTEMATOSA leve.",obs:"Enantema = hiperemia em mucosa interna."},
+{area:"EDA / laudo",cat:"prof",q:"Qual teste para H. pylori é feito DURANTE a endoscopia e por que virou rotina?",a:"Teste rápido da UREASE — o mais barato (não é o único). Urease positiva → H. pylori positivo. No laudo da aula: POSITIVO."},
+{area:"Gastrite aguda",cat:"conceito",q:"Defina gastrite aguda e sua patogênese.",a:"Processo inflamatório agudo, TRANSITÓRIO e AUTOLIMITANTE da mucosa. Patogênese: ROMPIMENTO dos mecanismos citoprotetores (as 4 barreiras) — o ácido vence o cabo de guerra."},
+{area:"Gastrite aguda",cat:"prof",q:"Por que a gastrite aguda aparece nos livros como 'gastropatia ativa'?",a:"Porque quase nunca se biopsia quadro agudo (sem histologia → 'gastropatia', termo genérico) e 'ativa' = NEUTRÓFILOS. Gastrite propriamente dita exige confirmação por biópsia."},
+{area:"Gastrite aguda",cat:"conceito",q:"Etiologias da gastrite aguda (a lista completa)?",a:"AINEs · ácidos e bases · álcool · fumo · ESTRESSE SISTÊMICO agudo (queimado → isquemia transitória) · TRAUMA MECÂNICO (sonda nasogástrica!) · quimio/radioterapia localizada (renovação ineficiente) · senescência (↓mucina/bicarbonato)."},
+{area:"Gastrite aguda",cat:"prof",q:"Qual trauma mecânico causador de gastrite 'todo mundo esquece'?",a:"A SONDA NASOGÁSTRICA — enquanto durar a sonda, espera-se gastrite naquele paciente. Totalmente atrelado à rotina hospitalar."},
+{area:"Gastrite aguda",cat:"alerta",q:"'Gastrite nervosa' existe como entidade patológica?",a:"NÃO — a professora foi pesquisar: o que chamam assim é DISPEPSIA (alteração parassimpática com digestão ineficiente). O estresse que causa gastrite aguda é o SISTÊMICO (queimadura, trauma), não o emocional."},
+{area:"Gastrite aguda",cat:"conceito",q:"Macroscopia/EDA da gastrite aguda?",a:"Hiperemia em pontos = ENANTEMAS, EROSÕES (perda parcial), pequenos sangramentos localizados; atrofia + edema podem apagar as pregas rapidamente."},
+{area:"Gastrite aguda",cat:"prof",q:"Microscopia da gastrite aguda (o conjunto que fecha o diagnóstico)?",a:"NEUTRÓFILOS intraepiteliais e nas glândulas + edema moderado e CONGESTÃO vascular na lâmina própria + arquitetura glandular PRESERVADA (± hiperplasia foveolar, ± erosões superficiais). PMN = agudo = ativa."},
+{area:"Gastrite aguda",cat:"conceito",q:"Tratamento da gastrite aguda?",a:"REMOVER o estímulo nocivo (fator etiológico) + IBP por período CURTO para cicatrizar. Autolimitante; EDA/biópsia só em recidivantes. Crônica = outro tratamento (simpósio)."},
+{area:"Não confundir",cat:"alerta",q:"Erosão × úlcera?",a:"EROSÃO = perda PARCIAL do epitélio. ÚLCERA = perda TOTAL do revestimento (descontinuidade). A diferenciação completa vem no simpósio."},
+{area:"Não confundir",cat:"alerta",q:"Enantema × exantema?",a:"ENANTEMA = hiperemia/pontos vermelhos em MUCOSA INTERNA (o que a EDA vê). EXANTEMA = na PELE."},
+{area:"Práticas",cat:"caso",q:"Lâmina 24 (caixa clara): descrição e diagnóstico?",a:"Mucosa PILÓRICA hiperplasiada + infiltrado MISTO com neutrófilos na lâmina própria até a muscular da mucosa + áreas de METAPLASIA INTESTINAL + edema/congestão = GASTRITE CRÔNICA (em atividade)."},
+{area:"Práticas",cat:"caso",q:"Lâmina 18 (caixa clara): descrição e diagnóstico?",a:"Mucosa FÚNDICA com DESCONTINUIDADE do revestimento + superfície SERO-FIBRINOSA com hemorragia + TECIDO DE GRANULAÇÃO com angiogênese e infiltrado misto = ÚLCERA GÁSTRICA."},
+{area:"Práticas",cat:"conceito",q:"O que os grupos vão apresentar no simpósio de patologias gástricas?",a:"Inflamatórias: gastrites CRÔNICAS, úlcera péptica, pólipos hiperplásicos inflamatórios. Neoplásicas: benignas + malignas — TEGI/GIST (tumor estromal) e ADENOCARCINOMAS (tipos intestinal e difuso). Tudo amarrado à quebra das 4 proteções."},
+]},
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-estomago-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
