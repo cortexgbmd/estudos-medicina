@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 04 — Patologias Hepáticas · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 04 — Patologias Hepáticas</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 04</p>
+  <h1 class="page-h1">Patologias Hepáticas</h1>
+  <p class="lead">Anatomia, funções, clínica do hepatopata, histologia lobular e diagnóstico — a aula da Profa. Janaina que abre o simpósio de Hepatites A, B, C e Cirrose. Tudo o que vier no simpósio se apoia neste alicerce: o que o fígado faz e o que o paciente perde quando ele adoece.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O fígado por fora: anatomia e vascularização dupla</a></li>
+      <li><a href="#t2">Metabolismo energético: glicogênio, triglicerídeos e a glicemia 70–99</a></li>
+      <li><a href="#t3">Proteínas plasmáticas: albumina, coagulação e trombopoetina</a></li>
+      <li><a href="#t4">Amônia → ureia: o preço do excesso de proteína</a></li>
+      <li><a href="#t5">Bilirrubina: da hemácia velha à papila duodenal</a></li>
+      <li><a href="#t6">Indireta × direta — e o kernicterus</a></li>
+      <li><a href="#t7">Função imune: Kupffer, PCR e complemento</a></li>
+      <li><a href="#t8">O hepatopata na prática: ascite, icterícia, colúria, acolia</a></li>
+      <li><a href="#t9">Histologia: lóbulo, tríade portal, sinusoides e centrolobular</a></li>
+      <li><a href="#t10">Célula estrelada (Ito): a chave da fibrose</a></li>
+      <li><a href="#t11">Doença inflamatória: cura × cronicidade e as causas</a></li>
+      <li><a href="#t12">Diagnóstico: sorologia, sondas moleculares e enzimas</a></li>
+      <li><a href="#t13">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O fígado por fora: anatomia e vascularização dupla</h2>
+  <ul>
+    <li>~<b>1.500 g</b>, no <b>quadrante superior direito</b> do abdome, encaixado no <b>domo do diafragma</b>; revestido por <b>cápsula de tecido conjuntivo</b>.</li>
+    <li><b>Macro: LOBOS</b> — direito, esquerdo, <b>quadrado e caudado</b>. <b>Micro: LÓBULOS</b> (não confunda os dois níveis — a professora repetiu: lobo é macro, lóbulo é micro).</li>
+    <li><b>Vesícula biliar:</b> órgão <b>piriforme e oco</b> — fundo, corpo, colo e <b>ducto cístico</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 A vascularização que explica a doença: DUPLA aferência</p>
+  <p>O fígado recebe sangue por <b>duas vias aferentes</b>: a <b>artéria hepática</b> (do <b>tronco celíaco</b>, sangue rico em O₂ — <b>30–40%</b> do fluxo) e a <b>veia PORTA</b> (junção das <b>mesentéricas + esplênica</b>, sangue venoso carregado de nutrientes — <b>60–70%</b> do fluxo). Dentro do lóbulo, esse sangue percorre os <b>capilares SINUSOIDES</b>, em contato íntimo com os hepatócitos, e sai pela <b>veia centrolobular</b> → <b>veias hepáticas</b> direita e esquerda → <b>veia cava inferior</b>. Guarde este trajeto: é ele que entope na cirrose (hipertensão portal) e que explica a circulação colateral.</p></div>
+
+  <h2 class="topic" id="t2">2 · Metabolismo energético: glicogênio, triglicerídeos e a glicemia 70–99</h2>
+  <ul>
+    <li>O fígado <b>armazena glicose como GLICOGÊNIO</b> (também há estoque muscular), faz <b>glicogenólise</b> (glicogênio → glicose) e <b>gliconeogênese</b> (glicose a partir de aminoácidos e outros substratos).</li>
+    <li>Glicemia normal: <b>70–99 mg/dL</b>. A OMS baixou o teto de 100 para <b>99</b> há alguns anos — tirar 1 mg parece pouco, mas tem efeito psicológico: <em>não deixar chegar à "casa da centena"</em>, um recado de risco diante da industrialização dos alimentos e do estilo de vida.</li>
+    <li><b>Excesso de carboidrato:</b> quando os estoques de glicogênio lotam, o hepatócito <b>recicla</b> — a estrutura bioquímica do carboidrato (C, H, O) é parecida com a do lipídio, e o excesso vira <b>TRIGLICERÍDEOS</b>, exportados nas lipoproteínas (VLDL/LDL/HDL — vesículas com proteína de endereçamento na superfície, cheias de colesterol e triglicérides).</li>
+  </ul>
+  <div class="box conexao"><p class="h">🔗 Conexão com a esteatose</p>
+  <p>Esse é o elo com a <b>esteatose hepática</b> vista na Pato I: excesso crônico de carboidrato/álcool → síntese de triglicérides além da capacidade de exportar → gordura acumulando no hepatócito. Doença de depósito que mata hepatócitos e deflagra inflamação — um dos temas de fundo do simpósio.</p></div>
+
+  <h2 class="topic" id="t3">3 · Proteínas plasmáticas: albumina, coagulação e trombopoetina</h2>
+  <h3>Albumina — a guardiã da água intravascular</h3>
+  <ul>
+    <li>A <b>pressão coloidosmótica</b> do plasma depende da <b>ALBUMINA</b>: molécula grande que não atravessa a parede íntegra do vaso e <b>atrai a água de volta</b> ao compartimento intravascular.</li>
+    <li>Síntese de albumina = papel do fígado, a partir dos <b>aminoácidos da dieta</b> (ovos, carnes, queijos…).</li>
+    <li>Fígado doente → sem albumina → <b>EDEMAS graves</b>: membros, face e — a marca registrada — <b>ASCITE</b>, o acúmulo em cavidade abdominal, que pode distender o abdome, formar hérnias e <b>comprimir o diafragma</b>, comprometendo a respiração.</li>
+  </ul>
+  <h3>Fatores de coagulação</h3>
+  <ul>
+    <li>≈<b>90% das proteínas da cascata da coagulação</b> são produzidas no fígado, secretadas como <b>ZIMOGÊNIOS</b> (circulam inativas até a cascata ser acionada — via intrínseca ou extrínseca, fator XII em diante).</li>
+    <li>Boa coagulação = quantidade satisfatória desses zimogênios na circulação = <b>função hepática + aminoácidos disponíveis</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Trombopoetina — e a lição da dengue</p>
+  <p>O fígado sintetiza a <b>TROMBOPOETINA</b>, o hormônio que manda a medula produzir <b>plaquetas</b>. A professora disse que quase cortava esse detalhe da aula — até os picos de <b>dengue</b>: no fígado infectado, caem <b>as proteínas da coagulação E o estímulo às plaquetas ao mesmo tempo</b>. Sem plaquetas não há fase primária da hemostasia; sem fatores, não há fase secundária — por isso as <b>hemorragias expressivas</b> que podem matar rápido.</p></div>
+
+  <h2 class="topic" id="t4">4 · Amônia → ureia: o preço do excesso de proteína</h2>
+  <ul>
+    <li><b>Proteína em excesso NÃO é armazenada.</b> O fígado degrada as proteínas a aminoácidos e depois <b>desamina</b> os aminoácidos, removendo os nitrogênios.</li>
+    <li>O nitrogênio (5 elétrons na última camada) liga-se rápido a hidrogênios → <b>AMÔNIA</b>: pequena, estável e <b>muito TÓXICA</b>.</li>
+    <li>O próprio fígado converte <b>amônia → UREIA</b> (ciclo da ureia, da bioquímica), que os rins conseguem excretar (transportadores tubulares decidem excreção/reabsorção).</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ "Se encharcar de aminoácidos é uma grande bobeira"</p>
+  <p>Suplementação proteica além do necessário = <b>estresse hepático</b> (desmontar tudo e fabricar ureia) seguido de <b>estresse renal</b> (excretar). O recado clínico: há muita gente de "forma atlética" com fígado doente — <em>"por fora, bela viola"</em>. Excesso alimentar de qualquer natureza cobra do fígado.</p></div>
+
+  <h2 class="topic" id="t5">5 · Bilirrubina: da hemácia velha à papila duodenal</h2>
+  <div class="diagrama"><p class="t">O caminho completo (guarde a sequência)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Hemácia envelhece</b> — <span class="d">vida média ~<b>120 dias</b>; a membrana fica rugosa e inflexível e ela não passa mais despercebida pelo <b>baço</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>Macrófagos esplênicos fagocitam</b> — <span class="d">o <b>ferro</b> volta para a medula (novas hemácias); a porção proteica do heme é degradada → <b>BILIRRUBINA INDIRETA</b> (não conjugada, <b>hidrofóbica</b>).</span></div></li>
+    <li><span class="n">3</span><div><b>Fígado CONJUGA</b> — <span class="d">enzimas dos hepatócitos ligam a bilirrubina ao <b>ácido glicurônico</b> → <b>BILIRRUBINA DIRETA</b> (conjugada, <b>solúvel em água</b>) — pronta para agir no ambiente aquoso do intestino.</span></div></li>
+    <li><span class="n">4</span><div><b>Via biliar</b> — <span class="d">canalículos biliares → ductos hepáticos <b>direito + esquerdo → comum</b>; pelo <b>cístico</b> a bile vai à <b>vesícula</b> (armazenamento); sob estímulo hormonal (contração), desce pelo <b>COLÉDOCO</b> até a <b>papila duodenal (ampola de Vater)</b>.</span></div></li>
+    <li><span class="n">5</span><div><b>Ação no duodeno</b> — <span class="d">emulsificação/digestão e absorção de gorduras. É a bile que dá cor às fezes.</span></div></li>
+  </ol></div>
+
+  <h2 class="topic" id="t6">6 · Indireta × direta — e o kernicterus</h2>
+  <div class="box prof"><p class="h">🎯 "Não basta pedir bilirrubina TOTAL"</p>
+  <p>Total = indireta + direta. Se o médico pede só a total, <b>perde a capacidade de interpretar</b>: não enxerga se o problema é de <b>produção/conjugação</b> (indireta alta) ou de <b>excreção/obstrução</b> (direta alta) — nem o risco de <b>toxicidade</b>. Peça sempre as frações.</p></div>
+  <ul>
+    <li><b>Indireta alta = perigo:</b> molécula hidrofóbica em ambiente aquoso procura onde a hidrofobicidade seja aceita — <b>membrana celular</b>. Ela se <b>deposita nos tecidos</b>, e o que mais preocupa é o <b>SNC</b>, pela incapacidade regenerativa.</li>
+    <li><b>Icterícia neonatal:</b> imaturidade transitória da conjugação — comum, mas precisa de <b>vigilância e fototerapia</b> ("banho de luz"). Sem tratar, a deposição no SNC gera o <b>KERNICTERUS</b>: a criança nasce com sistema nervoso pleno e sai com <b>sequelas neurológicas irreversíveis</b> (a professora citou o grupo "Mães dos Kernícteros").</li>
+    <li><b>Na doença hepática grave:</b> hepatócitos morrem <b>no meio do processamento</b> — a bilirrubina vaza como está, <b>ora conjugada, ora não (as duas)</b> → icterícia com risco de depósito.</li>
+  </ul>
+
+  <h2 class="topic" id="t7">7 · Função imune: Kupffer, PCR e complemento</h2>
+  <ul>
+    <li><b>Células de KUPFFER</b> = os <b>macrófagos residentes do fígado</b>, dentro dos sinusoides: vigiam, <b>fagocitam</b> bactérias/partículas e, ao detectar patógenos ou morte de hepatócitos, <b>deflagram a inflamação</b> — recrutando células e liberando mediadores.</li>
+    <li>O fígado é um órgão que <b>"inflama com gosto"</b> (como o intestino com seus agrupamentos linfoides): citocinas/interleucinas são abundantes nas patologias hepáticas — em especial <b>IL-6, IL-1 e interferon</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 PCR: a proteína (não a técnica!) — e por que o hepatopata infecta</p>
+  <p>Cuidado com a sigla: existe o <b>PCR molecular</b> (reação em cadeia da polimerase) e a <b>PROTEÍNA C-REATIVA</b>, produzida <b>pelo fígado</b> em resposta a citocinas inflamatórias — mesmo quando a inflamação é longe dele (pneumonia, infecção urinária, de garganta…). Função: <b>acelerar a ativação do sistema COMPLEMENTO</b>, dando eficácia ao reconhecimento e lise de patógenos. No <b>hepatopata</b>, a síntese de PCR cai → o complemento demora a ser acionado → <b>vulnerabilidade real a infecções</b> (o cirrótico é paciente crítico diante de gripes e infecções bacterianas).</p></div>
+
+  <h2 class="topic" id="t8">8 · O hepatopata na prática: ascite, icterícia, colúria, acolia</h2>
+  <p>A professora mostrou fotos que traduzem TUDO o que o fígado deixa de fazer:</p>
+  <ul>
+    <li><b>ASCITE</b> — sem albumina, a água sai do vaso e se acumula no abdome: a "marca registrada do hepatopata grave".</li>
+    <li><b>CIRCULAÇÃO COLATERAL</b> visível na parede abdominal — a arquitetura hepática alterada (hepatócitos balonizados, fibrose) <b>aumenta a pressão nos sinusoides → hipertensão PORTAL</b> → o sangue busca rotas alternativas (favorecidas pelo contexto inflamatório com fatores angiogênicos). As mesmas colaterais aparecem como <b>varizes de esôfago</b> e formações vasculares em borda anal (<b>hemorroidas</b>).</li>
+    <li><b>ICTERÍCIA</b> — procure <b>cedo</b>, nas <b>escleras e mucosas</b> (onde não há melanina competindo). Não se quer descobrir icterícia em grau avançado — nesse ponto o paciente talvez já curse com complicações maiores.</li>
+    <li><b>COLÚRIA</b> — a bilirrubina filtrada sai na urina: <b>"cor de Coca-Cola"</b>.</li>
+    <li><b>ACOLIA FECAL</b> — fezes claras, com <b>"cara de massa de vidraceiro"</b>: falta pigmento no duodeno. Ou há <b>ducto obstruído</b>, ou os hepatócitos <b>morrem antes de terminar a síntese/canalização</b> (nas hepatopatias graves, às vezes nem a vesícula tem bile).</li>
+    <li><b>Plasma ictérico</b> — no tubo de sangue, o pigmento é visível a olho nu.</li>
+    <li><b>Edemas</b> — de membros inferiores (fáceis de examinar) e também de <b>órgãos internos</b> (cérebro, pulmão) — estes só visíveis por imagem: apagamento de sulcos, alargamento de giros, desvio de linha média.</li>
+    <li><b>Astenia</b> — fraqueza absurda: o metabolismo energético inteiro está comprometido.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide04-ictericia-escleras.jpg" alt="Escleras ictéricas">
+  <figcaption>Icterícia nas escleras — o lugar de detectar CEDO, antes que a pele denuncie. Em pacientes de pele mais pigmentada, olhos e mucosas são ainda mais importantes.</figcaption></figure>
+  <figure class="fig"><img src="img/slide04-ascite.jpg" alt="Paciente com ascite">
+  <figcaption>Ascite: o grande edema em cavidade abdominal — perda da pressão coloidosmótica por falta de albumina.</figcaption></figure>
+  <figure class="fig"><img src="img/slide04-circulacao-colateral.jpg" alt="Ascite com circulação colateral">
+  <figcaption>Ascite COM circulação colateral visível na parede: assinatura da hipertensão portal — o sangue procurando rotas alternativas. Procurar também varizes de esôfago.</figcaption></figure>
+  <figure class="fig"><img src="img/slide04-plasma-icterico.jpg" alt="Tubo com plasma ictérico">
+  <figcaption>Plasma visivelmente pigmentado por bilirrubina no tubo de coleta — "onde o sangue estiver, sinais de icterícia".</figcaption></figure>
+  <figure class="fig"><img src="img/slide04-acolia-fecal.jpg" alt="Fezes acólicas">
+  <figcaption>Acolia fecal: fezes com "aparência de massa de vidraceiro" — o pigmento biliar não chegou ao intestino.</figcaption></figure>
+  <figure class="fig"><img src="img/slide04-edema-mmii.jpg" alt="Edema de membro inferior">
+  <figcaption>Edema importante de membro inferior — fácil de examinar; lembre que o mesmo edema pode existir em órgãos internos, visível só por imagem.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Histologia: lóbulo, tríade portal, sinusoides e centrolobular</h2>
+  <div class="diagrama"><p class="t">A arquitetura do lóbulo hepático</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Lóbulo delimitado por conjuntivo DELICADO</b> — <span class="d">estroma escasso de <b>colágeno tipo III (fibras reticulares)</b>: um arcabouço fino sustentando os cordões. Tem fibroblastos — e <b>não pode ser espesso nem fibrótico</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>TRÍADE PORTAL na periferia</b> — <span class="d">em cada canto do lóbulo chegam: <b>ramo da artéria hepática</b> (camada média mais espessa) + <b>ramo da veia porta</b> (maior calibre, parede fina) + <b>ducto biliar</b>. Artéria e veia = aferentes; o ducto <b>drena a bile para fora</b>. Nem todo corte flagra as três estruturas — depende do ângulo.</span></div></li>
+    <li><span class="n">3</span><div><b>Cordões de hepatócitos + SINUSOIDES</b> — <span class="d">hepatócitos <b>poliédricos, enfileirados</b> ("cordões"); entre <b>cada dois cordões</b>, um <b>capilar sinusoide</b> — ramificação fina da artéria e da veia trazendo o sangue (com amônia para virar ureia, triglicérides, glicose…) em contato íntimo com o hepatócito.</span></div></li>
+    <li><span class="n">4</span><div><b>VEIA CENTROLOBULAR no centro</b> — <span class="d">o sangue que percorreu os sinusoides cai nela → veias hepáticas → cava inferior. <b>Sangue: periferia → centro. Bile: hepatócito → canalículos → ductos da periferia</b> (sentidos opostos!).</span></div></li>
+  </ol></div>
+  <div class="box prof"><p class="h">🎯 Hepatócitos regeneram — mas não infinitamente</p>
+  <p>Os hepatócitos são <b>extremamente hábeis em regenerar</b>: necrose com cura rápida pode se resolver com regeneração completa. Mas a capacidade <b>não é ilimitada</b> — inflamação prolongada troca regeneração por <b>cicatriz</b>. É o pivô da diferença entre hepatite curada e cirrose.</p></div>
+  <figure class="fig"><img src="img/slide05-lobulo-demarcado.jpg" alt="Lóbulo hepático demarcado">
+  <figcaption>O lóbulo demarcado: faixa delicada de tecido conjuntivo na periferia (com as tríades) e veia centrolobular no centro.</figcaption></figure>
+  <figure class="fig"><img src="img/slide06-lobulo-panoramico.jpg" alt="Lóbulo em pequeno aumento">
+  <figcaption>Lóbulo em pequeno aumento: cordões de hepatócitos convergindo para a veia centrolobular.</figcaption></figure>
+  <figure class="fig"><img src="img/slide05-triade-portal.jpg" alt="Tríade portal">
+  <figcaption>Tríade portal na periferia do lóbulo: ramo de artéria hepática (média espessa), ramo de veia porta (calibrosa, parede fina) e ducto biliar.</figcaption></figure>
+  <figure class="fig"><img src="img/slide06-arteria-veia.jpg" alt="Artéria e veia no espaço porta">
+  <figcaption>Diferenciando artéria × veia na lâmina: compare a espessura da camada média e o calibre — nem sempre há sangue dentro para ajudar.</figcaption></figure>
+  <figure class="fig"><img src="img/slide05-veia-centrolobular.jpg" alt="Veia centrolobular">
+  <figcaption>Veia centrolobular: a via de saída no centro do lóbulo, recebendo o sangue dos sinusoides.</figcaption></figure>
+  <figure class="fig"><img src="img/slide08-cordoes-hepatocitos.jpg" alt="Cordões de hepatócitos">
+  <figcaption>Cordões de hepatócitos lado a lado; entre cada dois cordões corre um capilar sinusoide com suas células endoteliais.</figcaption></figure>
+  <figure class="fig"><img src="img/slide08-sinusoides-destacados.jpg" alt="Sinusoides destacados">
+  <figcaption>A mesma lâmina com os sinusoides pintados — treine "bater o lápis": luz do capilar, célula endotelial, cordões vizinhos.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Célula estrelada (Ito): a chave da fibrose</h2>
+  <div class="box prof"><p class="h">🎯 A célula que vira fibroblasto — o mesmo vilão da cirrose (e da pancreatite crônica)</p>
+  <p>Junto ao sinusoide vivem a <b>célula endotelial</b> (parede do capilar), a <b>célula de KUPFFER</b> (macrófago, dentro do lúmen) e a <b>CÉLULA ESTRELADA (de Ito)</b> — controladora da <b>permeabilidade</b> do sinusoide e <b>armazenadora de lipídio</b>. O problema: diante de <b>citocinas inflamatórias</b> (IL-6, IL-1, interferon), a estrelada <b>se transforma em (mio)fibroblasto</b> e passa a depositar colágeno <b>nas fenestras dos sinusoides</b> — exatamente onde a permeabilidade é vital. Fibrose ali = fim da perfusão do lóbulo. É o mesmo mecanismo celular já visto na pancreatite crônica: inflamação crônica → célula estrelada ativada → colágeno → órgão endurecido.</p></div>
+  <figure class="fig"><img src="img/slide07-sinusoide-esquema.jpg" alt="Esquema do sinusoide">
+  <figcaption>O esquema do lóbulo: veia centrolobular ao centro, tríade na periferia (artéria hepática, veia porta, ductículo biliar), sinusoides entre os cordões e canalículos biliares levando a bile no sentido oposto ao do sangue.</figcaption></figure>
+  <figure class="fig"><img src="img/slide08-organizacao-hepatocitos.jpg" alt="Organização dos hepatócitos">
+  <figcaption>Organização dos hepatócitos: lúmen sinusoidal com célula de Kupffer, células endoteliais fenestradas, espaço de Disse e a célula estrelada (Ito) — que sob citocinas inflamatórias assume papel de miofibroblasto.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Doença inflamatória: cura × cronicidade e as causas</h2>
+  <div class="diagrama"><p class="t">Os dois caminhos da lesão inflamatória hepática</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>CURA</b> — <span class="d">se o agente é eliminado rápido, a necrose se resolve com <b>REGENERAÇÃO</b> (hepatócitos hábeis).</span></div></li>
+    <li><span class="n">2</span><div><b>CRONICIDADE</b> — <span class="d">infecção/inflamação prolongada → agressão contínua → <b>necrose + cicatrização</b>: os efeitos cicatriciais (fibrose) aparecem e ficam <b>mesmo depois que o vírus se vai</b>. Desfecho final: <b>cirrose</b>.</span></div></li>
+  </ol></div>
+  <ul>
+    <li><b>Expressão clínica</b> (slide-síntese): icterícia, colúria, acolia fecal e astenia — mais as diarreias intensas que às vezes exigem hidratação/nutrição endovenosa, e a fraqueza do metabolismo energético afetado.</li>
+    <li><b>Causas VIRAIS</b> — o foco do simpósio: hepatites <b>A, B e C</b> têm vírus estruturalmente DIFERENTES entre si; a taxa de mutação de cada um determina a facilidade de o organismo eliminá-lo — e portanto o <b>prognóstico e o risco de cronificação</b>. As <b>enchentes do Rio Grande do Sul</b> trouxeram de volta diagnósticos de hepatite A que já eram raros.</li>
+    <li><b>Medicamentosas</b> — pela <b>carga/variedade</b> de fármacos (paciente oncológico, dor crônica) e pela <b>incapacidade individual de metabolizar</b>: mutações no <b>citocromo P450</b> são frequentes e transformam a droga em elemento tóxico. É o território da <b>medicina de precisão</b> — o paciente que "não responde" ao antidepressivo ou ao analgésico pode simplesmente não metabolizá-lo (mutações herdadas ou adquiridas/epigenéticas); insistir subindo dose só intoxica mais.</li>
+    <li><b>Autoimunes</b> — anticorpos contra estruturas do hepatócito; quadros de hepatite autoimune foram vistos inclusive na COVID.</li>
+    <li><b>Metabólicas</b> — esteatose e alcoolismo (o etanol é metabolizado no fígado E provoca esteatose).</li>
+  </ul>
+
+  <h2 class="topic" id="t12">12 · Diagnóstico: sorologia, sondas moleculares e enzimas</h2>
+  <p>O roteiro do simpósio pede: <b>etiologia → fisiopatogenia → alterações funcionais → alterações morfológicas</b> (macro e micro). No diagnóstico, três frentes:</p>
+  <h3>① Sorologia (anticorpos)</h3>
+  <ul>
+    <li><b>Fase aguda = IgM · fase crônica/memória = IgG.</b> Hepatite A: <b>anti-HAV total e IgG</b>. Hepatite B: painel de antígenos/anticorpos (<b>HBsAg</b> e companhia). Método antigo e "obsoleto", mas <b>o mais barato</b> — ainda é o que se usa.</li>
+    <li><b>Qualitativa × quantitativa</b> 🎯: teste rápido (tem/não tem anticorpo) serve para <b>TRIAGEM e diagnóstico</b> — mas para <b>ACOMPANHAR</b> o paciente é preciso <b>titulação</b>: IgG <b>crescente</b> + IgM <b>decrescente</b> = soroconversão esperada. A professora avisou: caso clínico do simpósio acompanhado com sorologia qualitativa <b>está errado</b>.</li>
+  </ul>
+  <h3>② Sondas moleculares</h3>
+  <ul>
+    <li>Conhecendo a sequência do vírus (A, B, C…), testa-se a <b>hibridização</b> com a amostra: detecta <b>em qualquer fase</b>, mesmo com carga viral baixa, <b>antes da soroconversão</b>. Limitação: <b>caro</b> — não é rotina; uso típico: <b>bancos de sangue</b> (não dá para esperar sorologia positivar para avisar o receptor).</li>
+  </ul>
+  <h3>③ Função e lesão do órgão</h3>
+  <ul>
+    <li><b>Enzimas hepáticas — TGO/TGP (transaminases), fosfatase alcalina, LDH:</b> moram dentro da célula; <b>sobem no sangue quando há NECROSE</b> de hepatócitos. Servem para <b>prognóstico</b>: um mês de hepatite com TGO/TGP só subindo (ou sem baixar) = evolução ruim.</li>
+    <li><b>Demais exames que contam a função:</b> albumina, proteínas da coagulação, <b>contagem de plaquetas</b>, PCR. Hepatite não é "só um problema do fígado": acompanha risco neurológico, coagulatório etc.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide10-diagnostico-esquema.jpg" alt="Esquema das frentes diagnósticas">
+  <figcaption>As frentes do diagnóstico das hepatites virais: detecção de anticorpos (sorologia/teste rápido), detecção de antígeno/ácido nucleico (sondas de hibridização, PCR molecular) e dosagem de enzimas hepáticas.</figcaption></figure>
+  <div class="box conexao"><p class="h">🔗 O simpósio</p>
+  <p>Temas sorteados: <b>Hepatite A · Hepatite B · Hepatite C · Cirrose</b> — "os fechos das hepatopatias mal-sucedidas". Cada grupo apresenta a doença + um <b>caso clínico</b>, amarrando causa → fisiopatogenia → sinais/sintomas → exames (com sorologia QUANTITATIVA no acompanhamento) → alterações macro e microscópicas.</p></div>
+
+  <div class="resumo" id="t13"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Anatomia:</b> ~1.500 g, QSD, domo do diafragma; macro = LOBOS (D, E, quadrado, caudado), micro = LÓBULOS; vesícula piriforme (fundo, corpo, colo, cístico). <b>Dupla aferência:</b> artéria hepática (O₂, 30–40%) + veia porta (mesentéricas+esplênica, 60–70%) → sinusoides → centrolobular → hepáticas → cava.</li>
+    <li><b>Funções:</b> glicogênio/glicogenólise/gliconeogênese (glicemia 70–99); excesso de carboidrato → triglicérides (VLDL/LDL/HDL); <b>albumina</b> (coloidosmótica — sem ela, edema/ASCITE); <b>90% dos fatores de coagulação</b> (zimogênios); <b>trombopoetina</b> (dengue = hemorragia dupla); amônia → <b>ureia</b>; <b>bilirrubina</b>; células de <b>Kupffer</b>; <b>PCR → complemento</b>.</li>
+    <li><b>Bilirrubina:</b> hemácia (120 d) → baço → indireta (hidrofóbica, tóxica — deposita no SNC → <b>kernicterus</b>; fototerapia no neonato) → conjugação com ácido glicurônico → direta (solúvel) → canalículos → ductos → vesícula → colédoco → papila. <b>Pedir INDIRETA + DIRETA, não só a total.</b></li>
+    <li><b>Hepatopata:</b> ascite + circulação colateral (hipertensão portal → varizes de esôfago/hemorroidas), icterícia (escleras primeiro), <b>colúria</b> ("Coca-Cola"), <b>acolia</b> ("massa de vidraceiro"), edemas internos (imagem), astenia, vulnerabilidade a infecções (sem PCR).</li>
+    <li><b>Histologia:</b> lóbulo com conjuntivo DELICADO (colágeno III); <b>tríade portal</b> na periferia (artéria + veia porta + ducto); cordões de hepatócitos com <b>sinusoide</b> entre cada dois; <b>centrolobular</b> no centro; sangue periferia→centro, bile centro→periferia.</li>
+    <li><b>Célula estrelada (Ito):</b> controla permeabilidade e armazena lipídio; com citocinas (IL-6, IL-1, IFN) <b>vira fibroblasto</b> → colágeno nas fenestras → fibrose → cirrose. Kupffer = macrófago do sinusoide.</li>
+    <li><b>Doença inflamatória:</b> cura (regeneração) × cronicidade (fibrose que fica mesmo sem o vírus). Causas: virais (A/B/C — mutabilidade define prognóstico), medicamentosas (carga + <b>citocromo P450</b>/medicina de precisão), autoimunes, metabólicas.</li>
+    <li><b>Diagnóstico:</b> sorologia IgM (aguda) × IgG (crônica); <b>qualitativa p/ triagem, QUANTITATIVA p/ acompanhar</b> (IgG↑ + IgM↓); sondas moleculares (qualquer fase; caras; banco de sangue); <b>TGO/TGP/FA/LDH sobem com necrose</b> (prognóstico); + albumina, coagulação, plaquetas, PCR.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova — Patologias Hepáticas</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Aula 04 (Profa. Janaina) · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-anato">Anatomia</a>
+    <a class="a1" href="#p-func">Funções</a>
+    <a class="a1" href="#p-bili">Bilirrubina</a>
+    <a class="a1" href="#p-clinica">Clínica</a>
+    <a class="a1" href="#p-histo">Histologia</a>
+    <a class="a1" href="#p-cel">Ito/Kupffer</a>
+    <a class="a1" href="#p-causas">Causas</a>
+    <a class="a1" href="#p-dx">Diagnóstico</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-anato">
+  <span class="aula-tag t1">Anatomia e vascularização</span>
+  <ul>
+    <li>~1.500 g · QSD · domo do diafragma · cápsula conjuntiva · vesícula piriforme (fundo, corpo, colo, cístico).</li>
+    <li><b class="k">Macro = LOBOS</b> (direito, esquerdo, quadrado, caudado) · <b class="k">micro = LÓBULOS</b>.</li>
+    <li><b class="k">Dupla aferência:</b> artéria hepática (tronco celíaco, O₂, <b>30–40%</b>) + <b>veia PORTA</b> (mesentéricas + esplênica, <b>60–70%</b>).</li>
+    <li>Trajeto: aferentes → <b>sinusoides</b> → <b>veia centrolobular</b> → veias hepáticas D/E → cava inferior.</li>
+  </ul>
+</section>
+
+<section id="p-func">
+  <span class="aula-tag t1">Funções (o que o hepatopata perde)</span>
+  <div class="tw"><table>
+    <thead><tr><th>Função</th><th>Se falhar…</th></tr></thead>
+    <tbody>
+      <tr><td>Glicogênio · glicogenólise · gliconeogênese (glicemia <b>70–99</b>)</td><td>metabolismo energético afetado → <b>astenia</b></td></tr>
+      <tr><td>Excesso de carboidrato → <b>triglicérides</b> (VLDL/LDL/HDL)</td><td>esteatose</td></tr>
+      <tr><td><b>Albumina</b> (pressão coloidosmótica)</td><td>edemas → <b>ASCITE</b> (marca do hepatopata grave)</td></tr>
+      <tr><td><b>~90% dos fatores de coagulação</b> (zimogênios)</td><td>hemorragias</td></tr>
+      <tr><td><b>Trombopoetina</b> → plaquetas na medula</td><td>plaquetopenia — na <b>dengue</b>, déficit duplo → hemorragia grave</td></tr>
+      <tr><td>Amônia → <b>UREIA</b> (excreção renal)</td><td>amônia tóxica acumula; excesso proteico = estresse hepático + renal</td></tr>
+      <tr><td><b>PCR (proteína C-reativa)</b> → acelera o <b>complemento</b></td><td>vulnerabilidade REAL a infecções</td></tr>
+      <tr><td>Conjugação da <b>bilirrubina</b></td><td>icterícia, colúria, acolia, kernicterus</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p-bili">
+  <span class="aula-tag t1">Bilirrubina</span>
+  <ul>
+    <li><b class="k">Caminho:</b> hemácia ~120 d → baço (macrófagos) → ferro volta à medula · heme → <b>INDIRETA</b> (não conjugada, hidrofóbica) → fígado conjuga c/ <b>ácido glicurônico</b> → <b>DIRETA</b> (solúvel) → canalículos → ductos D+E → comum → cístico/vesícula → <b>colédoco</b> → papila duodenal.</li>
+    <li><b class="k">Pedir INDIRETA + DIRETA</b> — só a total não permite interpretar (produção × excreção × toxicidade).</li>
+    <li><b class="k">Indireta alta</b> = deposita em tecido; pior no <b>SNC</b> → <b>KERNICTERUS</b> (sequela irreversível). Neonato: fototerapia + vigilância.</li>
+    <li>Hepatopatia grave: hepatócito morre no meio do processamento → vaza <b>conjugada E não conjugada</b>.</li>
+  </ul>
+</section>
+
+<section id="p-clinica">
+  <span class="aula-tag t1">Clínica do hepatopata</span>
+  <ul>
+    <li><b class="k">Ascite</b> ± <b>circulação colateral</b> na parede = <b>hipertensão PORTAL</b> → procurar <b>varizes de esôfago</b> e hemorroidas.</li>
+    <li><b class="k">Icterícia:</b> detectar CEDO em <b>escleras/mucosas</b> (sem melanina competindo).</li>
+    <li><b class="k">Colúria:</b> urina "cor de Coca-Cola" · <b class="k">Acolia:</b> fezes "massa de vidraceiro" (obstrução OU hepatócito morre antes de canalizar).</li>
+    <li>Plasma ictérico no tubo · edema de MMII e de órgãos internos (só por imagem: apagamento de sulcos, desvio de linha média) · astenia.</li>
+  </ul>
+</section>
+
+<section id="p-histo">
+  <span class="aula-tag t1">Histologia do lóbulo</span>
+  <ul>
+    <li>Lóbulo delimitado por conjuntivo <b class="k">DELICADO</b> (colágeno III/reticular) — nunca espesso/fibrótico.</li>
+    <li><b class="k">Tríade portal</b> (periferia): ramo de <b>artéria</b> (média espessa) + ramo de <b>veia porta</b> (calibrosa, parede fina) + <b>ducto biliar</b>. Nem todo corte mostra as três.</li>
+    <li><b class="k">Cordões de hepatócitos</b> (poliédricos, enfileirados); <b>1 sinusoide entre cada 2 cordões</b>; <b>veia centrolobular</b> no centro.</li>
+    <li><b class="k">Sentidos opostos:</b> sangue periferia→centro · bile centro→periferia (canalículos→ductos).</li>
+    <li>Hepatócito: regeneração excelente, <b>mas não infinita</b>.</li>
+  </ul>
+</section>
+
+<section id="p-cel">
+  <span class="aula-tag t1">Células do sinusoide</span>
+  <div class="prof"><span class="box-h">🎯 Célula ESTRELADA (Ito)</span>Controla a <b>permeabilidade</b> do sinusoide + armazena <b>lipídio</b>. Sob citocinas inflamatórias (<b>IL-6, IL-1, interferon</b>) → vira <b>(mio)fibroblasto</b> → colágeno nas fenestras → <b>fibrose → cirrose</b>. Mesmo mecanismo da pancreatite crônica.</div>
+  <div class="prof"><span class="box-h">🎯 Célula de KUPFFER</span>Macrófago residente no lúmen do sinusoide: fagocita, reconhece patógenos/morte celular e <b>deflagra a inflamação</b>. O fígado "inflama com gosto".</div>
+</section>
+
+<section id="p-causas">
+  <span class="aula-tag t1">Doença inflamatória — caminhos e causas</span>
+  <ul>
+    <li><b class="k">Cura</b> (agente eliminado rápido → regeneração) × <b class="k">Cronicidade</b> (agressão prolongada → necrose + cicatrização → fibrose que FICA mesmo sem o vírus → cirrose).</li>
+    <li><b class="k">Virais</b> (foco do simpósio): A, B, C — vírus estruturalmente diferentes; <b>mutabilidade define prognóstico/cronificação</b>. Enchentes do RS → hepatite A voltou.</li>
+    <li><b class="k">Medicamentosas:</b> carga/variedade de fármacos + <b>mutação do citocromo P450</b> (droga não metabolizada = tóxica; medicina de precisão; subir dose só intoxica).</li>
+    <li><b class="k">Autoimunes</b> (anticorpos anti-hepatócito; vistas na COVID) · <b class="k">Metabólicas</b> (esteatose, álcool).</li>
+  </ul>
+</section>
+
+<section id="p-dx">
+  <span class="aula-tag t1">Diagnóstico</span>
+  <ul>
+    <li><b class="k">Sorologia:</b> IgM = fase aguda · IgG = crônica/memória. Hep A: anti-HAV total/IgG · Hep B: HBsAg e painel. Barato, é o que se usa.</li>
+    <li><b class="k">Qualitativa × quantitativa:</b> teste rápido = TRIAGEM/diagnóstico; <b>acompanhamento exige TÍTULOS</b> (IgG↑ + IgM↓ = soroconversão). Caso clínico acompanhado com sorologia qualitativa = ERRADO.</li>
+    <li><b class="k">Sondas moleculares:</b> detectam em qualquer fase (antes da soroconversão, carga baixa); caras → uso em <b>banco de sangue</b>, não rotina.</li>
+    <li><b class="k">Enzimas (TGO/TGP, fosfatase alcalina, LDH):</b> sobem quando há <b>NECROSE</b> — prognóstico (1 mês com TGO/TGP subindo = ruim).</li>
+    <li>Completam: albumina, proteínas da coagulação, <b>plaquetas</b>, PCR.</li>
+    <li><b class="k">Roteiro do simpósio:</b> etiologia → fisiopatogenia → alterações funcionais → alterações morfológicas (macro/micro). Temas: <b>Hepatite A · B · C · Cirrose</b>.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="alerta"><span class="box-h">Pares que derrubam na prova</span>
+  <ul>
+    <li><b>Lobo × lóbulo:</b> macro (D/E/quadrado/caudado) × micro (unidade histológica).</li>
+    <li><b>Artéria hepática × veia porta:</b> O₂, 30–40%, média espessa × nutrientes, 60–70%, calibrosa.</li>
+    <li><b>Bilirrubina indireta × direta:</b> não conjugada/hidrofóbica/tóxica × conjugada (ác. glicurônico)/solúvel.</li>
+    <li><b>PCR proteína × PCR técnica:</b> proteína C-reativa (fígado → complemento) × reação em cadeia da polimerase.</li>
+    <li><b>Kupffer × estrelada (Ito):</b> macrófago do lúmen × pericito de permeabilidade/lipídio que VIRA fibroblasto.</li>
+    <li><b>Sorologia qualitativa × quantitativa:</b> triagem/diagnóstico × acompanhamento (títulos IgG/IgM).</li>
+    <li><b>IgM × IgG:</b> fase aguda × fase crônica/memória.</li>
+    <li><b>Sangue × bile no lóbulo:</b> periferia→centro × centro→periferia.</li>
+    <li><b>Enzimas altas × função baixa:</b> TGO/TGP = NECROSE em curso × albumina/coagulação/plaquetas = o que o fígado deixou de fazer.</li>
+  </ul></div>
+  <div class="caso"><span class="box-h">🩺 Palavras-gatilho → resposta</span>
+  <ul>
+    <li>"Abdome globoso + veias na parede" → ascite + colateral → hipertensão portal → varizes de esôfago.</li>
+    <li>"Urina Coca-Cola + fezes massa de vidraceiro" → colúria + acolia → bilirrubina não chega ao duodeno.</li>
+    <li>"RN ictérico não tratado + sequela neurológica" → kernicterus (indireta no SNC).</li>
+    <li>"Dengue + sangramento" → fígado: ↓fatores de coagulação + ↓trombopoetina.</li>
+    <li>"Hepatopata com infecções de repetição" → sem PCR → complemento lento.</li>
+    <li>"Citocinas + célula estrelada" → fibrose/cirrose.</li>
+    <li>"Não responde ao fármaco / hepatite por remédio" → citocromo P450 / medicina de precisão.</li>
+    <li>"Banco de sangue" → sonda molecular (detecta antes da soroconversão).</li>
+  </ul></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologias Hepáticas</h2>
+    <p>Anato Pato II · Aula 04 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 04 — Patologias Hepáticas</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre a organização anatômica e histológica do fígado, é correto afirmar:</div>`,
+ alts:["os lóbulos são as divisões macroscópicas visíveis à inspeção","os lobos hepáticos são quatro: direito, esquerdo, oval e piramidal","macro e micro usam o mesmo termo, pois lobo e lóbulo são sinônimos","o órgão não possui cápsula, apoiando-se direto no diafragma","na macroscopia há quatro LOBOS; na microscopia, os LÓBULOS"], correta:4,
+ just:[
+  "Inverteu os níveis: LÓBULO é a unidade MICROscópica.",
+  "Os quatro lobos são direito, esquerdo, QUADRADO e CAUDADO — 'oval' e 'piramidal' não existem.",
+  "Não são sinônimos — a professora repetiu: lobo é macro, lóbulo é micro. Confundir os dois derruba a questão.",
+  "O fígado é revestido por cápsula de tecido conjuntivo, inserida no domo do diafragma.",
+  "Correta. Macroscopia = 4 LOBOS (direito, esquerdo, quadrado e caudado); microscopia = LÓBULOS, delimitados por feixes delicados de conjuntivo. ~1.500 g, quadrante superior direito."],
+ ref:"Anatomia — lobos × lóbulos"},
+
+/* 2 */ {n:2,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre a dupla vascularização aferente do fígado, é correto afirmar:</div>`,
+ alts:["a veia porta traz 60–70% do fluxo, rico em nutrientes","a artéria hepática responde pela maior parte do fluxo sanguíneo","a veia porta nasce diretamente da veia cava inferior","as veias hepáticas são as vias aferentes de sangue oxigenado","a artéria hepática origina-se da junção das mesentéricas"], correta:0,
+ just:[
+  "Correta. A veia PORTA (junção das mesentéricas + esplênica) traz 60–70% do fluxo — sangue venoso carregado de nutrientes; a artéria hepática (do tronco celíaco) traz O₂ com 30–40%.",
+  "É o contrário: a maior parte do fluxo (60–70%) chega pela VEIA PORTA.",
+  "A porta nasce da junção das veias MESENTÉRICAS com a ESPLÊNICA — a cava é o destino final EFERENTE.",
+  "As veias hepáticas são EFERENTES: levam o sangue do fígado para a cava inferior.",
+  "A artéria hepática vem do TRONCO CELÍACO; a junção de mesentéricas + esplênica forma a veia porta."],
+ ref:"Vascularização — porta × artéria hepática"},
+
+/* 3 */ {n:3,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">O trajeto do sangue DENTRO do lóbulo hepático, da chegada à saída, é:</div>`,
+ alts:["veia centrolobular → sinusoides → tríade portal → cava","canalículos biliares → ductos → colédoco → duodeno","tríade na periferia → sinusoides → veia centrolobular","sinusoides → tríade portal → veia porta → mesentéricas","veia cava → veias hepáticas → sinusoides → periferia do lóbulo"], correta:2,
+ just:[
+  "Inverteu o sentido: a centrolobular é a SAÍDA, não a entrada.",
+  "Esse é o trajeto da BILE (e incompleto) — a pergunta é sobre o SANGUE.",
+  "Correta. Os ramos da artéria e da veia porta chegam pela PERIFERIA (tríade), ramificam-se nos capilares SINUSOIDES entre os cordões de hepatócitos e desembocam na veia CENTROLOBULAR, no centro — daí para as veias hepáticas e a cava.",
+  "O sangue não retorna dos sinusoides para a tríade — segue adiante, para o centro do lóbulo.",
+  "Cava e veias hepáticas são o fim do caminho eferente, não a porta de entrada."],
+ ref:"Lóbulo — periferia → centro"},
+
+/* 4 */ {n:4,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Hepatopata grave chega com abdome globoso, distendido, com macicez móvel — grande acúmulo de líquido em cavidade abdominal.</span><div class="pergunta">A base fisiopatológica desse achado é:</div>`,
+ alts:["excesso de albumina aumentando a viscosidade plasmática","queda da albumina, com perda da pressão coloidosmótica","aumento da trombopoetina com hiperagregação plaquetária","obstrução do colédoco com refluxo de bile ao peritônio","excesso de ureia atraindo água para a cavidade abdominal"], correta:1,
+ just:[
+  "Não há 'excesso' — a doença hepática REDUZ a albumina.",
+  "Correta. A albumina mantém a pressão coloidosmótica que atrai água para dentro do vaso. Fígado doente → sem albumina → a água extravasa: edemas e ASCITE — a 'marca registrada do hepatopata grave', que pode formar hérnias e comprimir o diafragma.",
+  "Trombopoetina regula plaquetas — não explica acúmulo de líquido peritoneal.",
+  "Bile no peritônio seria coleperitônio (quadro agudo grave) — não a ascite clássica do hepatopata.",
+  "A ureia é excretada pelos rins; não é mecanismo osmótico de ascite."],
+ ref:"Albumina — ascite"},
+
+/* 5 */ {n:5,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Durante um pico de dengue, um paciente com acometimento hepático importante evolui com hemorragias graves.</span><div class="pergunta">O mecanismo DUPLO que explica o sangramento é a queda simultânea de:</div>`,
+ alts:["albumina e bilirrubina conjugada","hemácias e leucócitos por invasão viral da medula","PCR e complemento sérico","fatores de coagulação e trombopoetina","glicogênio e ureia, com acidose hemorrágica"], correta:3,
+ just:[
+  "Albumina explica edema; bilirrubina, icterícia — nenhuma das duas causa a hemorragia.",
+  "O mecanismo destacado foi hepático, não invasão medular direta.",
+  "A queda de PCR explica vulnerabilidade a INFECÇÕES, não sangramento.",
+  "Correta. O fígado produz ~90% dos fatores da cascata (zimogênios) E a trombopoetina que estimula a medula a produzir plaquetas. Fígado doente = sem fase primária (plaquetas) E sem fase secundária (fatores) — hemorragias expressivas que podem matar rápido.",
+  "Glicogênio e ureia não participam da hemostasia."],
+ ref:"Coagulação + trombopoetina — a lição da dengue"},
+
+/* 6 */ {n:6,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Estudante passa a consumir suplementos proteicos muito acima da necessidade diária, "para garantir".</span><div class="pergunta">Sobre o destino metabólico desse excesso, é correto afirmar:</div>`,
+ alts:["o excedente é armazenado como reserva proteica hepática","as proteínas extras são excretadas intactas pelos rins","o fígado desamina aminoácidos e converte amônia em ureia","a amônia gerada é neutralizada diretamente nos túbulos renais","o excesso é convertido em glicogênio sem geração de resíduos"], correta:2,
+ just:[
+  "Proteína em excesso NÃO é armazenada — esse é o ponto de partida da questão.",
+  "Proteína intacta não passa pelo filtro renal em condições normais — precisa ser degradada antes.",
+  "Correta. O fígado degrada as proteínas, DESAMINA os aminoácidos e o nitrogênio forma AMÔNIA — pequena, estável e muito tóxica. O próprio fígado a converte em UREIA (ciclo da ureia), que os rins excretam. Excesso proteico = estresse hepático + renal: 'se encharcar de aminoácidos é uma grande bobeira'.",
+  "A conversão amônia→ureia é HEPÁTICA; o rim apenas excreta a ureia pronta.",
+  "Parte do esqueleto de carbono pode virar energia, mas o destino do NITROGÊNIO — o problema — é amônia → ureia."],
+ ref:"Amônia → ureia"},
+
+/* 7 */ {n:7,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A bilirrubina INDIRETA (não conjugada) origina-se:</div>`,
+ alts:["da degradação do glicogênio hepático acumulado","da lise de plaquetas senescentes no baço","do metabolismo do colesterol nas lipoproteínas","da secreção das células de Kupffer ativadas","do heme das hemácias velhas destruídas no baço"], correta:4,
+ just:[
+  "Glicogênio é reserva de glicose — nada a ver com pigmento biliar.",
+  "Plaquetas não geram bilirrubina — são as HEMÁCIAS.",
+  "Colesterol entra na composição da bile, mas não é a origem da bilirrubina.",
+  "Kupffer participa da vigilância imune — a fagocitose das hemácias velhas destacada em aula é ESPLÊNICA.",
+  "Correta. Hemácias vivem ~120 dias; velhas (rugosas, inflexíveis), são fagocitadas pelos macrófagos do BAÇO: o ferro volta à medula e a porção proteica do heme é degradada em BILIRRUBINA INDIRETA — hidrofóbica, que o fígado ainda precisará conjugar."],
+ ref:"Bilirrubina — origem"},
+
+/* 8 */ {n:8,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Médico solicita apenas "bilirrubina total" para um paciente ictérico. A professora criticou exatamente essa conduta.</span><div class="pergunta">O motivo da crítica é que, sem as frações:</div>`,
+ alts:["não se separa falha de conjugação de falha de excreção","o laboratório não consegue calibrar o método de dosagem","a bilirrubina total não se altera nas doenças hepáticas","o exame perde validade legal para fins de notificação","não é possível saber se o paciente está anêmico"], correta:0,
+ just:[
+  "Correta. Total = indireta + direta. Só a total esconde ONDE está o problema: INDIRETA alta = produção excessiva/conjugação deficiente — e é a fração hidrofóbica, que deposita em tecidos (risco de SNC); DIRETA alta = colestase/excreção. Sem frações, o médico 'perde a capacidade de fazer alguma coisa' com a informação.",
+  "A dosagem das frações é tecnicamente trivial — a questão é interpretativa, não analítica.",
+  "A total se altera, sim — o problema é que ela não LOCALIZA a falha.",
+  "Não há questão de validade legal envolvida.",
+  "Anemia se avalia por hemograma — não é o papel das frações de bilirrubina."],
+ ref:"Bilirrubina — indireta + direta, não só total"},
+
+/* 9 */ {n:9,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Recém-nascido ictérico não recebe fototerapia nem vigilância. Meses depois, apresenta sequelas neurológicas graves e irreversíveis.</span><div class="pergunta">Sobre esse desfecho, é correto afirmar:</div>`,
+ alts:["trata-se de colestase obstrutiva por atresia do colédoco","a causa é o acúmulo de bilirrubina direta, hidrossolúvel, no plasma","o quadro é reversível com reposição tardia de albumina","é kernicterus — a bilirrubina indireta depositou-se no SNC","a icterícia neonatal é sempre patológica e exige exsanguineotransfusão"], correta:3,
+ just:[
+  "A icterícia neonatal comum é por IMATURIDADE da conjugação — não por atresia (que é outra doença, colestática).",
+  "A fração perigosa é a INDIRETA — a direta é solúvel e não tem essa avidez por tecido.",
+  "Depósito no SNC é IRREVERSÍVEL — o sistema nervoso não regenera; por isso a vigilância precoce.",
+  "Correta. A bilirrubina INDIRETA, hidrofóbica, busca ambientes onde a hidrofobicidade é aceita — membranas celulares — e deposita-se nos tecidos; no SNC gera o KERNICTERUS. O neonato conjuga mal (imaturidade transitória): comum, mas exige vigilância + fototerapia ('banho de luz'). A professora citou o grupo 'Mães dos Kernícteros'.",
+  "É comum e transitória na maioria; o tratamento inicial é fototerapia — exsanguineotransfusão é exceção."],
+ ref:"Kernicterus — icterícia neonatal"},
+
+/* 10 */ {n:10,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Cirrótico interna repetidamente por infecções bacterianas graves. A equipe nota que a PCR dele quase não sobe, mesmo em sepse.</span><div class="pergunta">A explicação para a vulnerabilidade e para a PCR baixa é:</div>`,
+ alts:["a técnica de PCR molecular não funciona em hepatopatas","o fígado doente deixou de sintetizar a proteína C-reativa","o baço cirrótico sequestra os anticorpos circulantes","a bilirrubina elevada inativa diretamente os neutrófilos","as células de Kupffer produzem PCR em excesso, consumindo o complemento"], correta:1,
+ just:[
+  "Cuidado com a sigla: PCR aqui é a PROTEÍNA C-reativa — não a reação em cadeia da polimerase.",
+  "Correta. A proteína C-reativa é produzida PELO FÍGADO em resposta a citocinas (IL-6, IL-1, IFN) e sua função é ACELERAR a ativação do sistema COMPLEMENTO, dando eficácia ao reconhecimento/lise de patógenos. O hepatopata perde essa síntese → complemento lento → vulnerabilidade REAL a infecções (e a PCR 'não sobe' nos exames).",
+  "Não é sequestro esplênico de anticorpos — é falência de síntese hepática.",
+  "A bilirrubina não é o mecanismo imunossupressor destacado.",
+  "Kupffer deflagra inflamação, mas não produz PCR 'em excesso' — a PCR vem do hepatócito, e está em falta."],
+ ref:"PCR (proteína C-reativa) e complemento"},
+
+/* 11 */ {n:11,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">As células de Kupffer do fígado são:</div>`,
+ alts:["macrófagos residentes que fagocitam e deflagram inflamação","fibroblastos especializados na síntese de colágeno tipo III","células endoteliais fenestradas que revestem os capilares","hepatócitos binucleados com função regenerativa aumentada","células endócrinas produtoras de trombopoetina"], correta:0,
+ just:[
+  "Correta. Kupffer = os MACRÓFAGOS residentes do fígado, dentro dos sinusoides: vigiam, fagocitam bactérias/partículas e, detectando patógenos ou morte de hepatócitos, deflagram e propagam a inflamação — num órgão que 'inflama com gosto'.",
+  "Colágeno é papel de fibroblasto — e, no fígado doente, da célula ESTRELADA transformada.",
+  "As endoteliais formam a parede do sinusoide — Kupffer vive no LÚMEN.",
+  "Hepatócito é a célula do parênquima — outra linhagem.",
+  "A trombopoetina é produto do hepatócito, não de célula imune."],
+ ref:"Células de Kupffer"},
+
+/* 12 */ {n:12,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Numa hepatopatia crônica, a biópsia mostra deposição de colágeno ao longo dos sinusoides, comprometendo a perfusão dos cordões de hepatócitos.</span><div class="pergunta">A célula responsável por essa deposição e seu gatilho são:</div>`,
+ alts:["célula de Kupffer, ativada pela fagocitose de hemácias","célula endotelial, em metaplasia mesenquimal espontânea","hepatócito periportal, sob estímulo direto da insulina","célula estrelada (Ito), virando fibroblasto sob citocinas","colangiócito do ducto biliar, sob ação da bilirrubina"], correta:3,
+ just:[
+  "Kupffer deflagra a inflamação, mas não é ela quem deposita colágeno.",
+  "A endotelial compõe a parede do capilar — não é a efetora da fibrose descrita.",
+  "Hepatócito não fabrica a matriz fibrótica; e insulina não é o gatilho.",
+  "Correta. A célula ESTRELADA (de Ito) — controladora da permeabilidade do sinusoide e armazenadora de lipídio — sob citocinas inflamatórias (IL-6, IL-1, interferon) TRANSFORMA-SE em (mio)fibroblasto e deposita colágeno nas fenestras, matando a permeabilidade de um ambiente onde a perfusão é vital. É o motor celular da fibrose → cirrose (mesmo mecanismo da pancreatite crônica).",
+  "Colangiócitos revestem ductos — não fazem fibrose sinusoidal."],
+ ref:"Célula estrelada — fibrose"},
+
+/* 13 */ {n:13,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">A tríade portal, na periferia do lóbulo hepático, é composta por:</div>`,
+ alts:["veia centrolobular, sinusoide e canalículo biliar","ramo arterial hepático, ramo portal e ducto biliar","artéria hepática, veia hepática e vesícula biliar","dois ramos arteriais e um linfático interlobular","veia porta, veia cava e ducto cístico"], correta:1,
+ just:[
+  "A centrolobular fica no CENTRO do lóbulo; sinusoide e canalículo são estruturas intralobulares.",
+  "Correta. Em cada canto da periferia chegam: ramo da ARTÉRIA HEPÁTICA + ramo da VEIA PORTA (aferentes, trazendo o sangue) + DUCTO BILIAR (drenando a bile para fora). Nem todo corte flagra as três — depende do ângulo.",
+  "As veias HEPÁTICAS são eferentes e ficam fora do espaço porta; a vesícula nem é intra-hepática.",
+  "Não há dois ramos arteriais; o terceiro elemento é o ducto biliar.",
+  "Cava e cístico não entram na tríade."],
+ ref:"Tríade portal"},
+
+/* 14 */ {n:14,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Na lâmina, dois vasos aparecem lado a lado no espaço porta, sem sangue no interior para ajudar.</span><div class="pergunta">Para diferenciar a artéria da veia, deve-se observar que:</div>`,
+ alts:["a artéria tem sempre o dobro do diâmetro da veia","a veia possui camada média muito mais espessa e organizada que a artéria","apenas a artéria apresenta revestimento endotelial","os dois vasos são indistinguíveis sem coloração especial","a artéria tem média espessa; a veia, calibre maior e parede fina"], correta:4,
+ just:[
+  "É o inverso: as VEIAS tendem a ser mais volumosas que as artérias.",
+  "Camada média espessa é assinatura da ARTÉRIA.",
+  "Ambos os vasos têm endotélio — isso não diferencia.",
+  "Dá para diferenciar em HE pela morfologia da parede — sem coloração especial.",
+  "Correta. Compare a CAMADA MÉDIA (mais espessa e organizada na artéria) e o CALIBRE (a veia é mais volumosa, de parede delicada). O sangue no lúmen ajuda quando presente, mas a morfologia da parede decide."],
+ ref:"Artéria × veia na lâmina"},
+
+/* 15 */ {n:15,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre sinusoides, cordões de hepatócitos e o fluxo da bile, é correto afirmar:</div>`,
+ alts:["os sinusoides correm por fora do lóbulo, embutidos na cápsula conjuntiva externa","a bile cai diretamente nos sinusoides e segue com o sangue","há um sinusoide entre cada dois cordões, e a bile corre em sentido oposto","cada hepatócito toca um único sinusoide por sua face basal","os canalículos biliares desembocam na veia centrolobular"], correta:2,
+ just:[
+  "Os sinusoides são INTRAlobulares — correm entre os cordões, não na cápsula.",
+  "Bile e sangue NUNCA se misturam no fluxo normal — seguem por vias separadas.",
+  "Correta. Os hepatócitos (poliédricos) formam CORDÕES enfileirados; entre cada DOIS cordões passa um capilar SINUSOIDE (sangue: periferia → centrolobular). A bile produzida pelo hepatócito cai nos CANALÍCULOS e segue para os ductos da PERIFERIA — sentido OPOSTO ao do sangue.",
+  "O hepatócito comunica-se com sinusoides vizinhos E com canalículos — múltiplas faces funcionais.",
+  "Os canalículos drenam para os DUCTOS biliares da tríade — jamais para a veia."],
+ ref:"Sinusoides e sentido da bile"},
+
+/* 16 */ {n:16,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Hepatopata com ascite volumosa exibe veias dilatadas e tortuosas visíveis na parede abdominal.</span><div class="pergunta">Sobre esse achado, é correto afirmar:</div>`,
+ alts:["é um sinal benigno de bom fluxo hepático preservado","indica trombose das veias hepáticas com fluxo invertido agudo","resulta do excesso de albumina espessando o sangue","é colateral da hipertensão portal — procurar varizes de esôfago","é linfedema da parede por obstrução do ducto torácico"], correta:3,
+ just:[
+  "Nada benigno: é a assinatura visível de uma pressão portal patológica.",
+  "Trombose de hepáticas (Budd-Chiari) é outra entidade — o mecanismo geral ensinado foi a arquitetura lobular alterada elevando a pressão.",
+  "Albumina está BAIXA no hepatopata — e não 'espessa' o sangue.",
+  "Correta. Hepatócitos balonizados/fibrose alteram a arquitetura → sobe a pressão nos sinusoides → HIPERTENSÃO PORTAL → o sangue busca rotas alternativas (favorecidas por fatores angiogênicos do contexto inflamatório): colaterais na parede abdominal, VARIZES DE ESÔFAGO (risco de hemorragia) e formações em borda anal (hemorroidas).",
+  "Não é linfedema — são VEIAS colaterais do sistema porta."],
+ ref:"Hipertensão portal — colaterais"},
+
+/* 17 */ {n:17,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Paciente ictérico relata urina "cor de Coca-Cola" e fezes claras, com "aparência de massa de vidraceiro".</span><div class="pergunta">Esses dois achados indicam que:</div>`,
+ alts:["a bilirrubina está sendo consumida em excesso no intestino","a bilirrubina circula alta e não está chegando ao duodeno","há sangramento digestivo alto com melena em formação","o paciente tem infecção urinária associada a má digestão","a vesícula está hipercontraída, despejando bile demais no intestino"], correta:1,
+ just:[
+  "Não existe 'consumo intestinal excessivo' — o problema é a bile que NÃO chega.",
+  "Correta. COLÚRIA: bilirrubina elevada na circulação é filtrada pelo rim e escurece a urina. ACOLIA: sem pigmento chegando ao duodeno — por ducto obstruído OU porque os hepatócitos morrem antes de terminar síntese/canalização — as fezes ficam claras, 'massa de vidraceiro'. O par é a dupla clássica do fluxo biliar interrompido.",
+  "Melena é fezes ESCURAS (sangue digerido) — o oposto do descrito.",
+  "Colúria não é infecção urinária: é pigmento filtrado.",
+  "Vesícula despejando bile demais daria fezes normais ou mais coradas — não acolia."],
+ ref:"Colúria + acolia fecal"},
+
+/* 18 */ {n:18,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre os dois caminhos da doença inflamatória hepática, é correto afirmar:</div>`,
+ alts:["a cura só é possível com transplante, dada a incapacidade regenerativa","toda hepatite viral evolui obrigatoriamente para cirrose","a cronicidade é benigna, pois o vírus se torna inativo com o tempo","os efeitos cicatriciais desaparecem quando o vírus é eliminado","na cronicidade, a fibrose persiste mesmo depois que o vírus se vai"], correta:4,
+ just:[
+  "É o oposto: hepatócitos são EXTREMAMENTE hábeis em regenerar — cura com regeneração é um desfecho real.",
+  "Não: a evolução depende do agente (mutabilidade) e da duração — muitos casos curam.",
+  "Cronicidade significa agressão CONTINUADA — nada benigno: é o caminho da fibrose.",
+  "A cicatriz NÃO regride com a saída do vírus — esse é o ponto central.",
+  "Correta. Inflamação prolongada = necrose + cicatrização repetidas; os efeitos cicatriciais (FIBROSE) se expressam e PERMANECEM mesmo sem o vírus. A regeneração é excelente, mas não infinita — o desfecho final da cronicidade malsucedida é a cirrose."],
+ ref:"Cura × cronicidade"},
+
+/* 19 */ {n:19,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente oncológico em polifarmácia desenvolve hepatite medicamentosa. A investigação revela mutação em enzima de metabolização de fármacos.</span><div class="pergunta">Sobre a hepatite medicamentosa e a medicina de precisão, é correto afirmar:</div>`,
+ alts:["a dose alta é o único fator: quem toma pouco nunca tem hepatite por fármaco","mutações no citocromo P450 são raríssimas e clinicamente irrelevantes","sem metabolização (P450 mutado), o fármaco vira elemento tóxico","a conduta correta diante da falha terapêutica é sempre aumentar a dose","apenas fármacos oncológicos causam lesão hepática medicamentosa"], correta:2,
+ just:[
+  "Carga e variedade contam, mas a CAPACIDADE INDIVIDUAL de metabolizar é o outro pilar — dose baixa pode intoxicar quem não metaboliza.",
+  "É o contrário: o número de pessoas com mutação no P450 é 'bizarro' de tão frequente.",
+  "Correta. O citocromo P450 metaboliza uma quantidade enorme de drogas; mutado (herdado ou por lesão epigenética adquirida), o fármaco não é processado e torna-se TÓXICO. Explica o paciente que 'não responde' a antidepressivo/analgésico e a quimioterápico — e por que subir dose às cegas só intoxica mais. É o território da medicina de precisão.",
+  "Subir a dose de quem não metaboliza = intoxicar mais e mais — exatamente a crítica da professora à 'medicina de ajuste de dose'.",
+  "Qualquer classe pode lesar — polifarmácia de dor, psicofármacos etc."],
+ ref:"Hepatite medicamentosa — P450"},
+
+/* 20 */ {n:20,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Por que a distinção estrutural entre os vírus das hepatites A, B e C importa para o prognóstico?</div>`,
+ alts:["porque a taxa de mutação de cada vírus define o risco de cronificação","porque todos os três compartilham o mesmo genoma, mudando apenas o envelope","porque apenas o vírus A possui material genético próprio","porque vírus que mutam muito são sempre eliminados mais rápido","porque a estrutura viral define a cor da icterícia resultante"], correta:0,
+ just:[
+  "Correta. A, B e C são vírus estruturalmente DIFERENTES, com comportamentos genômicos distintos — vírus que mutam mais escapam do reconhecimento imune, dificultando a eliminação e elevando o risco de CRONIFICAÇÃO; vírus estáveis são eliminados com mais facilidade (a hepatite A é 'de fácil cura'). A estrutura do agente dita o prognóstico.",
+  "Não compartilham genoma — são famílias virais diferentes entre si.",
+  "Todos têm material genético próprio, obviamente.",
+  "É o CONTRÁRIO: alta mutação = escape imune = eliminação mais difícil.",
+  "Icterícia é consequência hepática — não tem 'cor por vírus'."],
+ ref:"Mutabilidade viral — prognóstico"},
+
+/* 21 */ {n:21,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">No caso clínico do simpósio, um grupo descreve o acompanhamento mensal de uma hepatite com testes rápidos qualitativos ("tem/não tem anticorpo").</span><div class="pergunta">Segundo a professora, essa conduta:</div>`,
+ alts:["está correta, pois o teste rápido é o padrão para qualquer fase","está errada: acompanhar exige titulação — IgG subindo e IgM caindo","está correta, desde que o teste seja repetido em dois metrôs diferentes","está errada: o acompanhamento correto é repetir apenas a bilirrubina total","está correta, porque a titulação de anticorpos não muda ao longo da doença"], correta:1,
+ just:[
+  "O rápido serve para TRIAGEM/diagnóstico (campanhas, metrô) — não para seguimento.",
+  "Correta. Qualitativa = 'tem ou não tem' — útil para triar e diagnosticar. Para ACOMPANHAR, é preciso DOSAR: a soroconversão esperada é concentração CRESCENTE de IgG (memória/crônica) com DECRESCENTE de IgM (aguda). A professora avisou textualmente: caso clínico acompanhado com sorologia qualitativa 'está errado'.",
+  "Repetir o mesmo teste qualitativo não cria informação de titulação.",
+  "Bilirrubina total sozinha já foi criticada em outro contexto — e não substitui a sorologia.",
+  "A titulação MUDA — é justamente essa curva que se acompanha."],
+ ref:"Sorologia qualitativa × quantitativa"},
+
+/* 22 */ {n:22,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Um banco de sangue precisa garantir que uma bolsa não transmita hepatite — inclusive de doador recém-infectado, ainda sem anticorpos.</span><div class="pergunta">O método indicado e sua limitação são:</div>`,
+ alts:["teste rápido qualitativo — limitado pela demora do resultado","dosagem de TGO/TGP — limitada pela variação circadiana","sonda molecular — detecta qualquer fase, mas é cara","anti-HAV IgG — limitado a infecções passadas","contagem de plaquetas — limitada pela baixa especificidade"], correta:2,
+ just:[
+  "O teste rápido depende de o título de anticorpos alcançar a sensibilidade — falha exatamente na janela do recém-infectado.",
+  "Transaminases marcam NECROSE hepática — não detectam o vírus na bolsa.",
+  "Correta. Conhecendo a sequência molecular do vírus (A, B, C…), testa-se a HIBRIDIZAÇÃO com a amostra: detecta a infecção EM QUALQUER FASE, mesmo com carga viral baixa e ANTES da soroconversão — essencial para banco de sangue ('não dá para esperar a sorologia positivar'). Limitação: preço — por isso não é exame de rotina popular.",
+  "IgG marca fase crônica/memória — não pega o recém-infectado.",
+  "Plaquetas não dizem nada sobre presença viral na bolsa."],
+ ref:"Sondas moleculares — banco de sangue"},
+
+/* 23 */ {n:23,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente com hepatite há um mês mantém TGO e TGP subindo a cada coleta, sem tendência de queda.</span><div class="pergunta">Sobre a interpretação dessas enzimas, é correto afirmar:</div>`,
+ alts:["sobem no sangue quando há necrose; a curva persistente é sinal ruim","elas medem a capacidade de síntese proteica do fígado","valores altos indicam boa regeneração em curso","são específicas do fígado, sem qualquer outra origem tecidual possível conhecida","a queda delas confirmaria falência hepática terminal"], correta:0,
+ just:[
+  "Correta. Transaminases (TGO/TGP), fosfatase alcalina e LDH moram DENTRO da célula: passam ao sangue quando o hepatócito MORRE. Servem de termômetro da necrose: um mês de doença com enzimas 'só subindo, ou pelo menos não baixando' = comportamento da infecção ruim, prognóstico preocupante.",
+  "Síntese se avalia por ALBUMINA, fatores da coagulação, plaquetas — as enzimas medem LESÃO.",
+  "Alto e subindo = necrose ATIVA, não regeneração.",
+  "TGO, por exemplo, também existe em músculo/coração — a interpretação é contextual.",
+  "Queda das enzimas geralmente acompanha a resolução da necrose — na falência terminal extrema, podem cair por falta de células, mas isso não é 'confirmação' isolada."],
+ ref:"TGO/TGP — necrose e prognóstico"},
+
+/* 24 */ {n:24,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Cirrótico interna com: ascite volumosa, equimoses espontâneas, plaquetas baixas, urina escura com fezes claras, e terceira pneumonia no ano. Um interno pergunta como UM órgão explica TUDO isso.</span><div class="pergunta">A correspondência correta entre achados e funções hepáticas perdidas é:</div>`,
+ alts:["ascite = falta de ureia; equimoses = falta de bile; pneumonias = falta de glicogênio","todos os achados decorrem exclusivamente da hipertensão portal mecânica","ascite = albumina; equimoses = fatores de coagulação; plaquetopenia = excesso de trombopoetina","ascite = albumina; sangramentos = fatores + trombopoetina; infecções = PCR/complemento","os achados indicam doença multissistêmica primária, não hepática"], correta:3,
+ just:[
+  "Trocou tudo: ureia não segura água no vaso, bile não coagula, glicogênio não defende de pneumonia.",
+  "A hipertensão portal explica colaterais/varizes — mas não a plaquetopenia, a acolia nem as infecções de repetição.",
+  "Quase — mas plaquetopenia é por FALTA de trombopoetina, não excesso.",
+  "Correta. O fígado costura o caso inteiro: sem ALBUMINA → ascite; sem FATORES DE COAGULAÇÃO (zimogênios) e sem TROMBOPOETINA → equimoses + plaquetas baixas; BILIRRUBINA vazando sem chegar ao duodeno → colúria + acolia; sem PCR → complemento lento → pneumonias de repetição. 'Hepatite não é só um problema do fígado.'",
+  "Um único órgão insuficiente explica o conjunto — é exatamente a lição da aula."],
+ ref:"Caso integrador — o hepatopata"}
+];
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,
+ caso:`Homem, 58 anos, etilista de longa data, chega ao ambulatório com abdome globoso e tenso, veias dilatadas visíveis na parede abdominal, escleras amareladas, urina escura "cor de Coca-Cola" e fezes claras "como massa de vidraceiro". A esposa relata fraqueza extrema ("dorme o dia inteiro") e duas internações recentes por pneumonia. Exames: albumina baixa, plaquetas baixas, atividade de protrombina reduzida, bilirrubinas total, direta e indireta elevadas.`,
+ perg:[
+  "a) Explique a ascite e a circulação colateral deste paciente, incluindo o conceito de hipertensão portal e onde mais procurar vasos colaterais.",
+  "b) Explique a icterícia, a colúria e a acolia fecal pelo trajeto normal da bilirrubina — e por que as DUAS frações estão elevadas.",
+  "c) Por que ele sangra fácil (protrombina baixa + plaquetopenia) e por que tem pneumonias de repetição?",
+  "d) Por que a astenia? Cite as funções metabólicas do fígado comprometidas."],
+ resp:[
+  ["a) Ascite, colateral e hipertensão portal",
+   `A <b>ascite</b> tem base dupla: sem <b>ALBUMINA</b> (síntese hepática), cai a pressão coloidosmótica e a água deixa o vaso — acumulando-se na cavidade abdominal (pode formar hérnias e comprimir o diafragma). Ao mesmo tempo, a arquitetura lobular alterada (hepatócitos balonizados, fibrose) <b>aumenta a pressão nos sinusoides → HIPERTENSÃO PORTAL</b>: o sangue da veia porta busca <b>rotas alternativas</b> (favorecidas pelos fatores angiogênicos do ambiente inflamatório) — as veias visíveis na parede abdominal. Procurar também <b>VARIZES DE ESÔFAGO</b> (risco de hemorragia digestiva) e formações vasculares em borda anal (hemorroidas).`],
+  ["b) Icterícia, colúria e acolia",
+   `Trajeto normal: hemácias velhas (~120 dias) são fagocitadas no <b>baço</b> → heme vira <b>bilirrubina INDIRETA</b> (hidrofóbica) → o fígado <b>conjuga com ácido glicurônico</b> → <b>DIRETA</b> (solúvel) → canalículos → ductos → vesícula → colédoco → papila duodenal. No hepatopata grave, os hepatócitos <b>morrem no meio do processamento</b>: vaza bilirrubina <b>ora conjugada, ora não — as duas</b> (por isso ambas as frações sobem). Na circulação alta → pigmenta escleras/mucosas (<b>icterícia</b>) e é filtrada pelo rim (<b>colúria</b>). E como pouca ou nenhuma bile chega ao duodeno (hepatócito morre antes de canalizar, ou há obstrução), as fezes perdem o pigmento: <b>acolia</b>, a "massa de vidraceiro". Lembrete da professora: sempre pedir <b>indireta + direta</b>, não só a total.`],
+  ["c) Sangramento duplo e infecções",
+   `O fígado produz <b>~90% dos fatores da cascata da coagulação</b> (como zimogênios) — sem eles, a fase secundária falha (protrombina baixa). E produz a <b>TROMBOPOETINA</b>, que estimula a medula a fabricar plaquetas — sem ela, plaquetopenia e falha da fase primária (a lição da dengue: o déficit é <b>duplo</b>). As pneumonias de repetição vêm da perda da <b>PROTEÍNA C-REATIVA</b>: produzida pelo fígado sob citocinas (IL-6, IL-1, IFN), ela <b>acelera a ativação do sistema COMPLEMENTO</b>; sem ela, o reconhecimento/lise de patógenos é lento — vulnerabilidade REAL a infecções.`],
+  ["d) Astenia e metabolismo",
+   `O fígado é o centro do <b>metabolismo energético</b>: armazena glicogênio, faz <b>glicogenólise e gliconeogênese</b> (sustentam a glicemia 70–99 mg/dL entre as refeições), converte excessos de carboidrato em triglicérides (VLDL/LDL/HDL) e converte <b>amônia em ureia</b>. Com o parênquima falido, o suprimento energético desregula e as toxinas nitrogenadas tendem a acumular — o paciente vive em <b>fraqueza absurda</b>, com sonolência e incapacidade de se alimentar direito. "Todo o metabolismo energético está completamente afetado."`],
+ ],
+ ref:"O hepatopata integrado — caso do cirrótico"},
+
+{n:2,aula:1,
+ caso:`Na prova prática, uma lâmina de fígado normal. O roteiro pede: identificar a unidade estrutural, suas vias de entrada e saída, os capilares e as células que vivem neles — e explicar por que a delimitação conjuntiva do lóbulo "não pode ser espessa".`,
+ perg:[
+  "a) Descreva a arquitetura do lóbulo hepático: delimitação, tríade portal, cordões, sinusoides e veia centrolobular.",
+  "b) Como diferenciar, na lâmina, o ramo da artéria hepática do ramo da veia porta? E o sentido do sangue × o da bile?",
+  "c) Apresente as células do sinusoide (endotelial, Kupffer, estrelada/Ito) com suas funções.",
+  "d) Por que o conjuntivo do lóbulo 'não pode ser espesso'? Explique a transformação da célula estrelada e o desfecho."],
+ resp:[
+  ["a) Arquitetura do lóbulo",
+   `O <b>LÓBULO</b> (unidade microscópica; na macro são LOBOS) é delimitado por uma faixa <b>DELICADA de tecido conjuntivo</b> — estroma escasso de <b>colágeno tipo III (fibras reticulares)</b>, um arcabouço fino. Na <b>periferia</b>, as <b>TRÍADES PORTAIS</b>: ramo da artéria hepática + ramo da veia porta + ducto biliar. Os <b>hepatócitos</b> (poliédricos) formam <b>cordões enfileirados</b> convergindo ao centro; entre <b>cada dois cordões</b> corre um <b>capilar SINUSOIDE</b>; no centro, a <b>VEIA CENTROLOBULAR</b> recebe o sangue e o envia às veias hepáticas → cava inferior.`],
+  ["b) Artéria × veia; sangue × bile",
+   `<b>Artéria</b>: camada média mais <b>espessa</b> e organizada. <b>Veia</b>: mais <b>calibrosa</b>, parede fina — e nem sempre há sangue no lúmen para ajudar; decida pela morfologia da parede (nem todo corte flagra as três estruturas da tríade — depende do ângulo). Sentidos: o <b>SANGUE</b> entra pela periferia (tríade) e corre pelos sinusoides <b>até o centro</b> (centrolobular); a <b>BILE</b> nasce no hepatócito, cai nos <b>canalículos</b> e caminha <b>para a periferia</b>, onde o ducto da tríade a drena — <b>sentidos OPOSTOS</b>.`],
+  ["c) As células do sinusoide",
+   `<b>Célula ENDOTELIAL</b>: compõe a parede fenestrada do sinusoide — permeabilidade seletiva para o contato sangue-hepatócito. <b>Célula de KUPFFER</b>: o <b>macrófago residente</b>, no lúmen — fagocita bactérias/partículas, reconhece sinais de morte de hepatócitos e <b>deflagra a inflamação</b> (o fígado "inflama com gosto"; citocinas IL-6, IL-1 e interferon abundam nas hepatopatias). <b>Célula ESTRELADA (de Ito)</b>: junto ao endotélio, <b>controla a permeabilidade</b> do sinusoide e <b>armazena lipídio</b>.`],
+  ["d) O conjuntivo fino e a fibrose",
+   `Se o conjuntivo tem <b>fibroblastos</b>, ele pode crescer — e é isso que não pode acontecer: numa cicatriz de pele, a inflamação que ativa fibroblastos é desejável ("cura e reparo" da Pato I); numa <b>hepatopatia crônica</b>, inflamação prolongada + citocinas <b>transformam a célula ESTRELADA em (mio)fibroblasto</b>, que deposita colágeno <b>nas fenestras dos sinusoides</b> — exatamente onde a perfusão é vital — e engrossa os feixes conjuntivos em <b>grandes traves fibróticas</b>. Perfusão morta + arquitetura remodelada = <b>CIRROSE</b>, o desfecho irreversível. Por isso a delimitação do lóbulo saudável precisa ser <b>delicada</b>.`],
+ ],
+ ref:"Histologia do lóbulo e células do sinusoide"},
+
+{n:3,aula:1,
+ caso:`Recém-nascido a termo, 4 dias de vida, com icterícia progressiva desde o 2º dia. A mãe pergunta se "é normal" e se pode esperar em casa. Em outro leito da mesma enfermaria, um adulto com hepatite viral aguda apresenta bilirrubina total de 9 mg/dL, sem que o médico tenha pedido as frações.`,
+ perg:[
+  "a) Explique por que o recém-nascido fica ictérico e qual o risco de 'esperar em casa' sem vigilância.",
+  "b) Por que a bilirrubina INDIRETA é a fração perigosa? Inclua o conceito físico-químico.",
+  "c) Critique o pedido de 'bilirrubina total' isolado no adulto: o que cada padrão de frações indicaria?",
+  "d) No hepatopata grave, por que AS DUAS frações costumam subir juntas?"],
+ resp:[
+  ["a) Icterícia neonatal — comum, mas vigiada",
+   `O sistema de <b>conjugação hepática do RN é IMATURO</b>: é "questão de dar tempo ao tempo" até o fígado aprender a conjugar e excretar. Por isso a icterícia neonatal é <b>comum</b> (não exatamente "normal") — MAS exige <b>vigilância e fototerapia</b> ("banho de luz") quando indicada. O risco de esperar sem controle: a bilirrubina indireta livre se deposita no <b>SNC</b> → <b>KERNICTERUS</b> — a criança que nasceu com sistema nervoso pleno sai com <b>sequelas neurológicas irreversíveis</b> (a professora citou o grupo "Mães dos Kernícteros"). Sistema nervoso não regenera.`],
+  ["b) Por que a indireta é a vilã",
+   `A bilirrubina <b>indireta é NÃO conjugada e HIDROFÓBICA</b>. Em ambiente aquoso (plasma), uma molécula hidrofóbica "procura um lugar onde a hidrofobicidade seja aceita" — as <b>membranas celulares</b>. Resultado: <b>deposição tecidual</b>, com predileção preocupante pelo <b>SNC</b>, justamente o tecido sem capacidade regenerativa. A <b>direta</b> (conjugada ao <b>ácido glicurônico</b>) é solúvel: circula, filtra e excreta sem essa avidez por tecido.`],
+  ["c) A crítica ao 'só a total'",
+   `Total = indireta + direta: sozinha, <b>não localiza a falha</b>. <b>INDIRETA predominante</b> → produção aumentada (hemólise) ou <b>falha de conjugação</b> (imaturidade, lesão hepatocelular precoce) — e risco de depósito. <b>DIRETA predominante</b> → o fígado conjugou, mas não excretou: <b>colestase/obstrução</b> (com colúria e acolia marcadas). Sem as frações, "o médico perde a capacidade de fazer alguma coisa com a informação" — não distingue mecanismo, não estima toxicidade, não direciona conduta.`],
+  ["d) As duas juntas no hepatopata grave",
+   `Porque a morte de hepatócitos acontece <b>em qualquer ponto do processamento</b>: "a morte não espera a bilirrubina conjugar". Células que morrem ANTES de conjugar vazam <b>indireta</b>; células que já conjugaram mas morrem antes de canalizar (ou têm canalículos desorganizados) vazam <b>direta</b>. Alcoolismo, hepatites, câncer — altos índices de morte celular = vazamento <b>misto</b>, com icterícia franca e risco de depósito.`],
+ ],
+ ref:"Bilirrubina — do RN ao hepatopata"},
+
+{n:4,aula:1,
+ caso:`Grupo do simpósio apresenta um caso de hepatite viral: homem, 34 anos, icterícia + astenia após enchente na sua cidade. No caso, o grupo propõe: (1) diagnóstico por teste rápido; (2) acompanhamento mensal repetindo o mesmo teste rápido; (3) "hepatograma" com TGO/TGP para avaliar a evolução; (4) transfusão eventual usando sangue testado apenas por sorologia.`,
+ perg:[
+  "a) O contexto (enchente) sugere qual hepatite, e por quê? O que a estrutura do vírus diz sobre o prognóstico?",
+  "b) Avalie as propostas (1) e (2) do grupo à luz da diferença qualitativa × quantitativa.",
+  "c) O que TGO/TGP realmente medem, e como usá-las para prognóstico neste paciente?",
+  "d) Critique a proposta (4): que método o banco de sangue deve usar e por quê? Cite a limitação."],
+ resp:[
+  ["a) Enchente → hepatite A",
+   `Transmissão fecal-oral por água contaminada aponta para <b>HEPATITE A</b> — as <b>enchentes do Rio Grande do Sul</b> trouxeram de volta diagnósticos que já eram raros ("a natureza obriga a estudar o que a gente já não apostava"). O vírus A é <b>estruturalmente estável (muta pouco)</b> → o organismo o reconhece e elimina com facilidade → <b>"quadro de fácil cura"</b>, alta possibilidade de resolução sem cronificar — diferente de B e C, cuja mutabilidade dificulta a eliminação e abre a porta da cronicidade.`],
+  ["b) Qualitativa × quantitativa",
+   `Proposta (1) — <b>correta</b>: o teste rápido qualitativo ("tem/não tem anticorpo") serve para <b>TRIAGEM e diagnóstico</b>, desde que os títulos alcancem a sensibilidade do teste (é o teste "de campanha, de metrô"). Proposta (2) — <b>ERRADA</b>, e a professora avisou que reprovaria exatamente isso: <b>acompanhamento exige sorologia QUANTITATIVA</b> — dosar os títulos e ver a curva: <b>IgG CRESCENTE</b> (memória) com <b>IgM DECRESCENTE</b> (fase aguda) = soroconversão favorável. Repetir o rápido não gera curva nenhuma.`],
+  ["c) Enzimas = necrose",
+   `TGO/TGP (transaminases), fosfatase alcalina e LDH <b>moram dentro do hepatócito</b> e só aparecem altas no sangue <b>quando a célula morre</b> — medem NECROSE, não função. Uso prognóstico: acompanhar a <b>curva</b> — enzimas caindo = agressão cedendo; "um mês de hepatite com TGO/TGP só subindo, ou pelo menos não baixando, é prognóstico ruim". Completar SEMPRE com os exames de <b>função</b>: albumina, proteínas da coagulação, plaquetas, PCR — porque hepatite não é só um problema do fígado (risco coagulatório, neurológico…).`],
+  ["d) Banco de sangue → sonda molecular",
+   `Sorologia falha na <b>janela imunológica</b>: o doador recém-infectado ainda não soroconverteu — a bolsa passaria "limpa". O banco de sangue usa <b>SONDAS MOLECULARES</b>: conhecendo a sequência do genoma viral (A, B, C…), testa-se a <b>hibridização</b> com a amostra — detecta a infecção <b>em qualquer fase</b>, mesmo com carga viral baixa, ANTES dos anticorpos ("não dá para esperar a sorologia positivar para avisar o receptor"). Limitação: <b>custo</b> — por isso não é exame de rotina ambulatorial, ficando para situações especiais como triagem transfusional.`],
+ ],
+ ref:"Hepatites virais — sorologia, enzimas e banco de sangue"},
+];
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 04</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 04</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 04 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 04 — Patologias Hepáticas",kicker:"ANATO PATO II",desc:"Anatomia, funções, clínica do hepatopata, histologia lobular e diagnóstico — o alicerce do simpósio de Hepatites A, B, C e Cirrose.",cards:[
+{area:"Anatomia",cat:"prof",q:"Lobo × lóbulo: qual é macro e qual é micro? Quais são os lobos?",a:"MACRO = LOBOS: direito, esquerdo, QUADRADO e CAUDADO. MICRO = LÓBULOS (unidade histológica). Não confundir os níveis — ênfase repetida da professora."},
+{area:"Anatomia",cat:"conceito",q:"Peso, posição e revestimento do fígado? E a vesícula?",a:"~1.500 g, quadrante superior direito, inserido no domo do diafragma, revestido por cápsula conjuntiva. Vesícula: órgão PIRIFORME e oco — fundo, corpo, colo e ducto cístico."},
+{area:"Anatomia",cat:"prof",q:"A dupla aferência vascular do fígado (vasos, origem, % e conteúdo)?",a:"ARTÉRIA HEPÁTICA (tronco celíaco): O₂, 30–40% do fluxo. VEIA PORTA (junção mesentéricas + esplênica): nutrientes, 60–70%. Eferência: sinusoides → veia centrolobular → veias hepáticas D/E → cava inferior."},
+{area:"Funções",cat:"conceito",q:"Papéis do fígado no metabolismo da glicose? Glicemia normal?",a:"Armazena glicogênio; GLICOGENÓLISE (glicogênio→glicose) e GLICONEOGÊNESE (glicose de aminoácidos etc.). Glicemia normal 70–99 mg/dL — a OMS baixou o teto de 100 p/ 99 (efeito psicológico: não chegar à 'casa da centena')."},
+{area:"Funções",cat:"conceito",q:"O que o fígado faz com o EXCESSO de carboidrato?",a:"Recicla: estrutura de carboidrato (C,H,O) é parecida com lipídio → converte em TRIGLICERÍDEOS, exportados nas lipoproteínas (VLDL/LDL/HDL). Elo com a ESTEATOSE."},
+{area:"Funções",cat:"prof",q:"Por que a albumina importa e o que acontece sem ela?",a:"Mantém a pressão COLOIDOSMÓTICA — atrai água para dentro do vaso (molécula grande, não sai do vaso íntegro). Sem albumina: EDEMAS → ASCITE, a 'marca registrada do hepatopata grave' (hérnias, compressão do diafragma)."},
+{area:"Funções",cat:"prof",q:"A lição da DENGUE: por que o fígado doente sangra em dobro?",a:"O fígado faz ~90% dos FATORES DE COAGULAÇÃO (como zimogênios) E a TROMBOPOETINA (estimula plaquetas na medula). Doente: sem fase primária (plaquetas) NEM secundária (fatores) → hemorragias que matam rápido."},
+{area:"Funções",cat:"prof",q:"Excesso de proteína na dieta: qual o destino e o preço?",a:"NÃO se armazena. Fígado desamina os aminoácidos → nitrogênio vira AMÔNIA (pequena, estável, MUITO tóxica) → o próprio fígado converte em UREIA → rim excreta. Suplementação exagerada = estresse hepático + renal ('grande bobeira')."},
+{area:"Bilirrubina",cat:"prof",q:"O caminho completo da bilirrubina (da hemácia à papila)?",a:"Hemácia ~120 d → fagocitose no BAÇO (ferro volta à medula) → heme vira INDIRETA (hidrofóbica) → fígado CONJUGA com ácido glicurônico → DIRETA (solúvel) → canalículos → ductos D+E → comum → cístico/vesícula → COLÉDOCO → papila duodenal."},
+{area:"Bilirrubina",cat:"prof",q:"Por que pedir bilirrubina INDIRETA + DIRETA, e não só a total?",a:"Total não localiza a falha: INDIRETA alta = produção/conjugação (e risco de DEPÓSITO tecidual); DIRETA alta = colestase/excreção. Só a total → 'o médico perde a capacidade de fazer alguma coisa com a informação'."},
+{area:"Bilirrubina",cat:"alerta",q:"Qual fração da bilirrubina é tóxica e por quê?",a:"A INDIRETA: hidrofóbica, em ambiente aquoso procura membranas celulares → DEPOSITA em tecidos. O pior alvo é o SNC (não regenera)."},
+{area:"Bilirrubina",cat:"prof",q:"Icterícia neonatal: mecanismo, conduta e o risco se negligenciada?",a:"IMATURIDADE transitória da conjugação — comum, mas exige VIGILÂNCIA + FOTOTERAPIA ('banho de luz'). Sem tratar: indireta deposita no SNC = KERNICTERUS — sequelas neurológicas IRREVERSÍVEIS ('Mães dos Kernícteros')."},
+{area:"Bilirrubina",cat:"conceito",q:"Por que no hepatopata grave AS DUAS frações sobem?",a:"Hepatócitos morrem EM QUALQUER ponto do processamento — 'a morte não espera conjugar'. Vaza bilirrubina ora conjugada, ora não → icterícia mista. Às vezes nem a vesícula tem bile."},
+{area:"Imunidade",cat:"prof",q:"Células de Kupffer: o que são e o que fazem?",a:"MACRÓFAGOS residentes do fígado, no lúmen dos sinusoides: fagocitam bactérias/partículas, detectam patógenos e morte de hepatócitos e DEFLAGRAM a inflamação. O fígado 'inflama com gosto' (IL-6, IL-1, interferon abundantes)."},
+{area:"Imunidade",cat:"prof",q:"PCR: qual a pegadinha da sigla e a função da proteína?",a:"PCR molecular = reação em cadeia da polimerase (técnica). PROTEÍNA C-REATIVA = produzida PELO FÍGADO sob citocinas, mesmo com inflamação longe dele. Função: ACELERAR a ativação do sistema COMPLEMENTO."},
+{area:"Imunidade",cat:"alerta",q:"Por que o hepatopata vive tendo infecções?",a:"Fígado doente não sintetiza PCR → complemento ativa devagar → reconhecimento/lise de patógenos ineficaz → vulnerabilidade REAL (cirrótico = paciente crítico em gripes e infecções bacterianas)."},
+{area:"Clínica",cat:"prof",q:"Ascite + veias dilatadas na parede abdominal: qual o mecanismo?",a:"Sem albumina → água sai do vaso (ascite). Arquitetura lobular alterada → pressão sobe nos sinusoides → HIPERTENSÃO PORTAL → circulação COLATERAL (parede, VARIZES DE ESÔFAGO, hemorroidas), favorecida por fatores angiogênicos da inflamação."},
+{area:"Clínica",cat:"prof",q:"Onde detectar icterícia CEDO e por quê?",a:"ESCLERAS e MUCOSAS — onde não há melanina competindo. Não se quer descobrir icterícia em grau avançado; na dúvida dos olhos, a COLÚRIA ajuda."},
+{area:"Clínica",cat:"conceito",q:"Colúria e acolia fecal: o que são e o que indicam?",a:"COLÚRIA: urina 'cor de Coca-Cola' — bilirrubina alta filtrada pelo rim. ACOLIA: fezes claras 'massa de VIDRACEIRO' — pigmento não chegou ao duodeno (obstrução OU hepatócito morre antes de canalizar)."},
+{area:"Clínica",cat:"conceito",q:"Além do subcutâneo, onde mais o hepatopata faz edema — e como ver?",a:"Em ÓRGÃOS INTERNOS (cérebro, pulmão) — visível só por IMAGEM: apagamento de sulcos, alargamento de giros, desvio de linha média. + plasma ictérico no tubo e astenia (metabolismo energético afetado)."},
+{area:"Histologia",cat:"prof",q:"Como é a delimitação do lóbulo hepático normal — e por que isso importa?",a:"Faixa DELICADA de conjuntivo (colágeno III/fibras reticulares, estroma escasso). Tem fibroblastos: se a inflamação persistir, engrossa em traves FIBRÓTICAS — não pode ser espessa. É o termômetro da cronicidade."},
+{area:"Histologia",cat:"prof",q:"Componentes da TRÍADE PORTAL e função de cada um?",a:"Ramo da ARTÉRIA HEPÁTICA + ramo da VEIA PORTA (aferentes: trazem o sangue) + DUCTO BILIAR (drena a bile para fora). Fica na PERIFERIA do lóbulo; nem todo corte mostra as três (ângulo)."},
+{area:"Histologia",cat:"conceito",q:"Como diferenciar artéria × veia na lâmina sem sangue no lúmen?",a:"ARTÉRIA: camada média mais ESPESSA. VEIA: mais CALIBROSA, parede fina. Decida pela morfologia da parede."},
+{area:"Histologia",cat:"prof",q:"Onde correm os sinusoides e qual o trajeto do sangue no lóbulo?",a:"1 sinusoide entre CADA 2 CORDÕES de hepatócitos (poliédricos, enfileirados). Sangue: tríade (periferia) → sinusoides → VEIA CENTROLOBULAR (centro) → hepáticas → cava."},
+{area:"Histologia",cat:"alerta",q:"Sangue × bile no lóbulo: qual o sentido de cada um?",a:"SENTIDOS OPOSTOS: sangue periferia→centro (sinusoides→centrolobular); BILE hepatócito→canalículos→ductos da PERIFERIA. Nunca se misturam no fluxo normal."},
+{area:"Histologia",cat:"conceito",q:"Hepatócitos regeneram?",a:"SIM — extremamente hábeis: necrose com cura rápida resolve com regeneração. MAS a capacidade NÃO é infinita: agressão prolongada troca regeneração por cicatriz."},
+{area:"Células do sinusoide",cat:"prof",q:"Célula estrelada (Ito): funções normais e transformação patológica?",a:"Normal: controla a PERMEABILIDADE do sinusoide + armazena LIPÍDIO. Sob citocinas inflamatórias (IL-6, IL-1, IFN): vira (MIO)FIBROBLASTO → colágeno nas FENESTRAS → fibrose → CIRROSE. Mesmo mecanismo da pancreatite crônica.",obs:"A pergunta mais quente da aula."},
+{area:"Células do sinusoide",cat:"conceito",q:"Quem vive no/junto ao sinusoide hepático?",a:"Célula ENDOTELIAL (parede fenestrada), célula de KUPFFER (macrófago, no lúmen) e célula ESTRELADA/Ito (pericito de permeabilidade + lipídio). No sangue do lúmen: hemácias, plasma, plaquetas, leucócitos."},
+{area:"Doença inflamatória",cat:"prof",q:"Os DOIS caminhos da lesão inflamatória hepática?",a:"① CURA: agente eliminado rápido → necrose resolve com REGENERAÇÃO. ② CRONICIDADE: agressão prolongada → necrose + cicatrização → FIBROSE que fica MESMO SEM O VÍRUS → cirrose."},
+{area:"Doença inflamatória",cat:"conceito",q:"Expressão clínica clássica da doença hepática inflamatória (o slide-síntese)?",a:"ICTERÍCIA, COLÚRIA, ACOLIA FECAL e ASTENIA. + diarreias intensas que podem exigir hidratação/nutrição endovenosa."},
+{area:"Doença inflamatória",cat:"prof",q:"Por que a mutabilidade do vírus define o prognóstico da hepatite?",a:"Vírus que MUTA muito escapa do reconhecimento imune → difícil eliminar → CRONIFICA. Vírus estável (hepatite A) → eliminação fácil → 'quadro de fácil cura'. A, B e C são estruturalmente DIFERENTES entre si."},
+{area:"Doença inflamatória",cat:"caso",q:"Que evento recente trouxe a hepatite A de volta aos diagnósticos?",a:"As ENCHENTES (Rio Grande do Sul): transmissão fecal-oral por água contaminada. 'A natureza obriga a estudar o que a gente já não apostava.'"},
+{area:"Doença inflamatória",cat:"prof",q:"Hepatite medicamentosa: os dois mecanismos?",a:"① CARGA/variedade de fármacos (oncológico, dor crônica). ② Incapacidade INDIVIDUAL de metabolizar: mutação do CITOCROMO P450 (frequência 'bizarra') → droga não metabolizada = TÓXICA. Medicina de precisão; subir dose às cegas = intoxicar mais."},
+{area:"Doença inflamatória",cat:"conceito",q:"Causas não virais de hepatite citadas em aula?",a:"MEDICAMENTOSAS (P450/polifarmácia), AUTOIMUNES (anticorpos anti-hepatócito; vistas na COVID) e METABÓLICAS (esteatose, alcoolismo — o etanol é metabolizado no fígado)."},
+{area:"Diagnóstico",cat:"prof",q:"IgM × IgG na sorologia das hepatites?",a:"IgM = fase AGUDA. IgG = fase CRÔNICA/memória. Hepatite A: anti-HAV total e IgG. Hepatite B: painel HBsAg etc. Método antigo e barato — ainda é o que se usa."},
+{area:"Diagnóstico",cat:"prof",q:"Sorologia qualitativa × quantitativa: quando cada uma vale?",a:"QUALITATIVA (teste rápido, 'de metrô'): TRIAGEM/diagnóstico. ACOMPANHAMENTO exige QUANTITATIVA: títulos IgG CRESCENDO + IgM CAINDO = soroconversão. Caso clínico acompanhado com qualitativa = ERRADO.",obs:"Aviso literal para o simpósio."},
+{area:"Diagnóstico",cat:"prof",q:"Sondas moleculares: vantagem, limitação e uso típico?",a:"Hibridização com o genoma viral: detecta em QUALQUER fase (carga baixa, ANTES da soroconversão). Limitação: CARO. Uso típico: BANCO DE SANGUE — não dá pra esperar a sorologia positivar."},
+{area:"Diagnóstico",cat:"prof",q:"O que TGO/TGP (e FA, LDH) medem e como usar no prognóstico?",a:"Enzimas intracelulares: sobem no sangue quando há NECROSE de hepatócitos. Curva subindo por semanas = prognóstico ruim; caindo = agressão cedendo. NÃO medem função (essa é albumina/coagulação/plaquetas/PCR)."},
+{area:"Diagnóstico",cat:"conceito",q:"Roteiro do simpósio (a ordem de apresentação exigida)?",a:"ETIOLOGIA → FISIOPATOGENIA → alterações FUNCIONAIS → alterações MORFOLÓGICAS (macro e micro) + caso clínico. Temas: Hepatite A · B · C · CIRROSE ('os fechos das hepatopatias mal-sucedidas')."},
+{area:"Clínica",cat:"caso",q:"Caso integrador: cirrótico com ascite + equimoses + plaquetopenia + colúria/acolia + pneumonias. Amarre cada achado à função perdida.",a:"Ascite = ALBUMINA. Equimoses = FATORES de coagulação. Plaquetopenia = TROMBOPOETINA. Colúria/acolia = BILIRRUBINA sem chegar ao duodeno. Pneumonias = PCR→COMPLEMENTO lento. 'Hepatite não é só um problema do fígado.'"},
+{area:"Funções",cat:"alerta",q:"'Por fora, bela viola': qual o recado clínico?",a:"Forma atlética NÃO garante fígado saudável: excessos (carboidrato, suplementação proteica, álcool) cobram do fígado — há 'muita gente doente com formas extremamente atléticas perambulando por aí'."},
+{area:"Histologia",cat:"caso",q:"Prova prática: estrutura vascular no CENTRO do lóbulo, recebendo os sinusoides. Quem é e para onde envia o sangue?",a:"VEIA CENTROLOBULAR — recolhe o sangue dos sinusoides e envia às veias hepáticas direita/esquerda → veia CAVA INFERIOR."},
+]},
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-figado-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
