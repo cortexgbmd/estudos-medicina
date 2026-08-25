@@ -1,0 +1,1657 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Aula 04 — Mama · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Aula 04 — Mama</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula 04</p>
+  <h1 class="page-h1">Mama</h1>
+  <p class="lead">Localização, quadrantes, arquitetura em camadas, ligamentos de Cooper, embriologia da crista mamária, irrigação, drenagem venosa e — o mais importante — a drenagem linfática que decide o destino do tumor de mama. A aula inteira explicada do zero, com as pontes clínicas que o professor fez.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">Desenvolvimento: do rudimento à lactação</a></li>
+      <li><a href="#t2">Forma e localização: os números de prova</a></li>
+      <li><a href="#t3">Quadrantes — e onde moram os tumores</a></li>
+      <li><a href="#t4">Nomenclatura: papila, aréola, lobos e seios lactíferos</a></li>
+      <li><a href="#t5">Relações topográficas e a "mama fixa"</a></li>
+      <li><a href="#t6">Arquitetura em camadas: Camper, Scarpa e o tecido glandular</a></li>
+      <li><a href="#t7">Ligamentos suspensores (Cooper) e a ptose</a></li>
+      <li><a href="#t8">Aréola, músculo mamilo-areolar e telotismo</a></li>
+      <li><a href="#t9">Embriologia: a crista mamária e as anomalias</a></li>
+      <li><a href="#t10">Irrigação arterial</a></li>
+      <li><a href="#t11">Drenagem venosa (e a toracoepigástrica)</a></li>
+      <li><a href="#t12">Drenagem LINFÁTICA: o mapa do tumor</a></li>
+      <li><a href="#t13">Inervação</a></li>
+      <li><a href="#t14">Clínica: mastite, cistos, mamografia</a></li>
+      <li><a href="#t15">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Desenvolvimento: do rudimento à lactação</h2>
+  <ul>
+    <li>A mama é característica da classe dos <b>mamíferos</b> e existe <b>nos dois sexos</b>: no homem, <b>rudimentar</b> (quando o homem forma tecido glandular mamário, chama-se <b>GINECOMASTIA</b>).</li>
+    <li>Na infância (menino e menina), há apenas um <b>rudimento de tecido ectodérmico</b> na altura do <b>4º espaço intercostal</b> de cada lado.</li>
+    <li><b>Puberdade:</b> o <b>ESTRÓGENO ovariano</b> dispara o desenvolvimento do tecido glandular (há 5 estágios de desenvolvimento — vocês verão na ginecologia).</li>
+    <li>🎯 <b>Desenvolvimento MÁXIMO: nos 2 últimos meses de GRAVIDEZ até a lactação</b> — quando o tecido glandular precisa estar totalmente formado para produzir leite. Após ~6 meses de amamentação a produção cai e o tecido regride — mas a mama normalmente fica <b>maior</b> que antes da gestação.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide03-estagios-desenvolvimento.jpg" alt="Estágios de desenvolvimento da mama">
+  <figcaption>Os estágios de desenvolvimento da mama: do botão puberal à mama adulta formada — o detalhamento (5 estágios) vem na ginecologia/mastologia.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · Forma e localização: os números de prova</h2>
+  <div class="diagrama"><p class="t">O endereço da mama</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Entre a 2ª e a 6ª COSTELA</b> — <span class="d">eminência arredondada na face anterior do tórax.</span></div></li>
+    <li><span class="n">2</span><div><b>LATERAL à margem lateral do ESTERNO</b> — <span class="d">nunca há corpo mamário SOBRE o esterno; o espaço entre as mamas é o <b>SEIO MAMÁRIO</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>Prolonga-se até a linha axilar anterior ou MÉDIA</b> — <span class="d">linha axilar ANTERIOR = borda lateral do peitoral maior; POSTERIOR = borda lateral do latíssimo do dorso; a MÉDIA fica entre as duas. O tecido pode entrar na axila (processo axilar) — por isso a palpação axilar é obrigatória.</span></div></li>
+    <li><span class="n">4</span><div><b>Mamilo: ± no centro, na altura da 4ª COSTELA (ou 4º EIC)</b> — <span class="d">papilas em alturas ligeiramente diferentes entre os lados = NORMAL.</span></div></li>
+  </ol></div>
+  <div class="box prof"><p class="h">🎯 "Seio" não é a mama</p>
+  <p>A população chama a mama de "seio" — mas anatomicamente o <b>SEIO MAMÁRIO é o ESPAÇO ENTRE as duas mamas</b> (sobre o esterno). E embaixo da mama fica o <b>SULCO SUBMAMÁRIO</b> — tão mais acentuado quanto maior/mais baixa a mama (e após a lactação): no exame físico, levante a mama e examine o sulco (infecção, alergia de sutiã).</p></div>
+  <ul>
+    <li><b>Forma:</b> esférica, cônica, <b>piriforme</b> (de pera) ou achatada — varia com <b>grupo étnico</b>, <b>tipo morfológico constitucional</b> (longilínea → menor; brevilínea → maior; mediolínea intermediária), <b>idade</b> e obesidade. Descreva o tipo no exame físico.</li>
+    <li>Estatisticamente, a mama <b>direita</b> costuma ser um pouco <b>maior e mais baixa</b> — dado estatístico, não regra.</li>
+    <li>Na idosa, a mama "desaba": não é só a pele — são os <b>ligamentos suspensores</b> (tecido conjuntivo) afrouxando.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide13-localizacao-torax.jpg" alt="Localização da mama no tórax">
+  <figcaption>A mama no tórax feminino, com as referências: articulação esternoclavicular, ângulo do esterno, arco costal — o corpo mamário entre a 2ª e a 6ª costela, lateral ao esterno.</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · Quadrantes — e onde moram os tumores</h2>
+  <ul>
+    <li>Trace uma linha <b>vertical</b> e uma <b>horizontal sobre a PAPILA</b>: quadrantes <b>SUPEROLATERAL, SUPEROMEDIAL, INFEROLATERAL e INFEROMEDIAL</b>. (Descrever por "horas de relógio" também é aceito — o padrão é o quadrante.)</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Superolateral: o quadrante que concentra tudo</p>
+  <p>A <b>maior concentração de tecido GLANDULAR</b> está no quadrante <b>SUPEROLATERAL</b> (que ainda ganha o <b>processo axilar</b>). Mais tecido glandular = <b>maior chance de tumoração</b>: os tumores de mama são <b>mais frequentes no quadrante superolateral</b>. E o detalhe do volume: quem dá o <b>volume</b> da mama é o tecido <b>GORDUROSO</b> — exceto na <b>lactação</b>, quando o glandular cresce mais.</p></div>
+  <div class="box caso"><p class="h">🩺 Por que descrever por quadrante</p>
+  <p>"Tumoração indurada, fixa, no quadrante inferolateral da mama direita" — essa descrição no pedido de mamografia/ultrassom faz o radiologista se fixar na região certa. E estimule o <b>autoexame</b>: ninguém conhece o próprio corpo melhor que a paciente.</p></div>
+
+  <h2 class="topic" id="t4">4 · Nomenclatura: papila, aréola, lobos e seios lactíferos</h2>
+  <ul>
+    <li><b>PAPILA mamária</b> (mamilo): projeção cilíndrica no centro da aréola, na altura da 4ª costela, <b>perfurada por 15–20 DUCTOS LACTÍFEROS</b>.</li>
+    <li><b>SEIOS LACTÍFEROS</b> 🎯: <b>dilatações nas extremidades dos ductos</b>, antes de desembocarem na papila — facilitam o fluxo do leite na sucção.</li>
+    <li><b>ARÉOLA:</b> pele mais escura ao redor da papila; <b>glândulas areolares</b> (sebáceas) podem formar relevos — os <b>tubérculos</b> — que aumentam na gravidez (sem exteriorizar secreção).</li>
+    <li><b>Corpo da mama</b> = onde vive o tecido glandular (a "parte nobre"), organizado em <b>LOBOS → LÓBULOS → ductos lactíferos</b>; o prolongamento axilar do tecido = <b>processo lateral (axilar)</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide28-lobulos-ductos.jpg" alt="Lóbulos e ductos lactíferos">
+  <figcaption>Do lóbulo ao mamilo: lobos da glândula mamária → ductos lactíferos → dilatação (seio lactífero) → papila. A unidade ducto-terminal é o berço da patologia mamária.</figcaption></figure>
+  <figure class="fig"><img src="img/slide25-papila-areola.jpg" alt="Papila e aréola">
+  <figcaption>Papila projetada e aréola mais escura que a pele, com as glândulas areolares; no corte, os seios lactíferos desembocando na papila.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Relações topográficas e a "mama fixa"</h2>
+  <ul>
+    <li>A mama está <b>assentada sobre o M. PEITORAL MAIOR</b> (sobre a fáscia dele); relaciona-se lateralmente com o <b>SERRÁTIL ANTERIOR</b> e, inferiormente, com a aponeurose do <b>OBLÍQUO EXTERNO</b>.</li>
+    <li>A mama normal tem <b>mobilidade</b> (látero-lateral e súpero-inferior) sobre a fáscia.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Mama fixa × tumor infiltrativo</p>
+  <p>Raramente o tecido mamário <b>perfura a fáscia do peitoral maior</b> e a mama fica <b>RÍGIDA E FIXA</b> — perde a mobilidade. Isso <b>confunde com tumor</b>: os tumores malignos são <b>infiltrativos</b>, invadem a fáscia (e o músculo), fixam a mama e <b>retraem a pele</b>. Diferença que pode exigir biópsia.</p></div>
+
+  <h2 class="topic" id="t6">6 · Arquitetura em camadas: Camper, Scarpa e o tecido glandular</h2>
+  <div class="diagrama"><p class="t">O corte sagital, da pele ao músculo</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Epiderme e derme</b> — <span class="d">a pele.</span></div></li>
+    <li><span class="n">2</span><div><b>CAMADA AREOLAR</b> — <span class="d">gordura <b>amarela, "redondinha"</b>, mais superficial (epônimo: <b>fáscia de CAMPER</b>).</span></div></li>
+    <li><span class="n">3</span><div><b>FÁSCIA SUPERFICIAL</b> — <span class="d">tecido conjuntivo <b>entremeado</b> entre (e dentro) das camadas de gordura — é ela que forma os <b>ligamentos suspensores</b>. Quanto maior a tela subcutânea, mais móvel a pele.</span></div></li>
+    <li><span class="n">4</span><div><b>CAMADA LAMELAR</b> — <span class="d">gordura <b>esbranquiçada, em lamelas</b> (epônimo: <b>fáscia de SCARPA</b>). 🎯 <b>É NA CAMADA LAMELAR QUE ESTÁ O TECIDO GLANDULAR</b> — róseo na peça ("cortou a mama no sagital: o tecido rosado é o glandular; a areolar é amarela, a lamelar é branca").</span></div></li>
+    <li><span class="n">5</span><div><b>Fáscia do peitoral maior → músculo</b> — <span class="d">a mama se assenta sobre eles, mas <b>eles NÃO fazem parte da arquitetura da mama</b> (mama = epiderme, derme, camada gordurosa e camada glandular).</span></div></li>
+  </ol></div>
+  <div class="box conexao"><p class="h">🔗 Extrapolando as camadas</p>
+  <p>O mesmo esquema areolar/fáscia/lamelar vale para a <b>parede abdominal</b> e a <b>raiz da coxa</b>; no dorso, pode faltar a lamelar. Camper e Scarpa voltarão muitas vezes na topográfica.</p></div>
+  <figure class="fig"><img src="img/slide17-corte-sagital-cooper.jpg" alt="Corte sagital da mama">
+  <figcaption>O corte sagital: fáscia peitoral, mm. peitorais maior e menor, ligamentos suspensores (de Cooper), lobos das glândulas mamárias, papila, seio lactífero, ducto lactífero, tecido conjuntivo interlobular e a fáscia abdominal superficial.</figcaption></figure>
+
+  <h2 class="topic" id="t7">7 · Ligamentos suspensores (Cooper) e a ptose</h2>
+  <div class="box prof"><p class="h">🎯 Quem segura a mama — e por que ela cai</p>
+  <p>As fáscias da tela subcutânea que envolvem a camada areolar, a lamelar e a própria glândula <b>emitem septos</b>, unem-se e <b>se prendem na CLAVÍCULA</b>: são os <b>LIGAMENTOS SUSPENSORES DA MAMA (de Cooper)</b>. Com os anos, esse tecido conjuntivo <b>afrouxa</b> → a mama "desaba" (ptose). Não há como reconstruir ligamento: a <b>plástica</b> apenas coloca o silicone (hoje, geralmente <b>abaixo da fáscia do peitoral</b>) para projetar — os ligamentos ficam como estão.</p></div>
+
+  <h2 class="topic" id="t8">8 · Aréola, músculo mamilo-areolar e telotismo</h2>
+  <ul>
+    <li>Sob a aréola há <b>pouca gordura</b>: o tecido vira <b>fibroso + fibras musculares LISAS</b> — o <b>M. MAMILO-AREOLAR</b>, a "musculatura sexual", com fibras <b>circulares e longitudinais</b>.</li>
+    <li><b>Inervação AUTÔNOMA:</b> a contração <b>projeta</b> a papila; o relaxamento a deixa no nível da aréola ou <b>invertida</b>. 🎯 No <b>FRIO</b>, a contração deixa o mamilo túrgido/projetado = <b>TELOTISMO</b>.</li>
+    <li>Variações normais: papila protrusa, plana ou invertida. Na gestação com papila não projetada, <b>estimular a protrusão</b> para a sucção adequada (nas primeiras horas o bebê pode não pegar — risco de hipoglicemia neonatal se ficar muitas horas sem mamar).</li>
+    <li><b>Cor:</b> aréola <b>mais rosada na nulípara</b>; <b>escurece a partir do 2º mês de gestação</b> (papila também) — sempre mais escura que a pele, modulada pelo grupo étnico. Papila e aréola crescem na gestação e regridem.</li>
+  </ul>
+
+  <h2 class="topic" id="t9">9 · Embriologia: a crista mamária e as anomalias</h2>
+  <ul>
+    <li><b>Embrião de 6 SEMANAS:</b> espessamento <b>ECTODÉRMICO</b> (5–6 camadas) forma o <b>CORDÃO MAMÁRIO</b> — também chamado <b>CRISTA MAMÁRIA ou cordão lácteo</b> — que vai <b>da AXILA à PREGA INGUINAL</b>, dos dois lados.</li>
+    <li>A crista <b>INVOLUI</b>, permanecendo apenas no <b>4º EIC</b> — as futuras mamas. Mas o ectoderma guarda a potencialidade: pode formar papila, aréola ou mama inteira <b>em qualquer ponto do trajeto</b> (pense no cachorro e no gato, com várias mamas ao longo da crista).</li>
+  </ul>
+  <div class="diagrama"><p class="t">O vocabulário das anomalias (adora cair em prova)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>POLITELIA</b> — <span class="d">papila + aréola <b>extranumerárias</b> (além das duas normais).</span></div></li>
+    <li><span class="n">2</span><div><b>POLIMASTIA</b> — <span class="d"><b>mama COMPLETA a mais</b> — o local clássico é a <b>AXILA</b> (onde sobra mais tecido da crista).</span></div></li>
+    <li><span class="n">3</span><div><b>AMASTIA</b> — <span class="d">ausência total da mama (resta mancha escura no local do mamilo).</span></div></li>
+    <li><span class="n">4</span><div><b>ATELIA</b> — <span class="d">falta da papila (e aréola).</span></div></li>
+    <li><span class="n">5</span><div><b>MICRO/MACROMASTIA</b> — <span class="d">alterações de volume (uma mama pode crescer e a outra não).</span></div></li>
+    <li><span class="n">6</span><div><b>Mamilos ECTÓPICOS</b> — <span class="d">fora da crista mamária — raridade pela potencialidade do ectoderma.</span></div></li>
+  </ol></div>
+  <div class="box caso"><p class="h">🩺 O caso do consultório: "caroço na axila que piora na menstruação"</p>
+  <p>Moça com tumoração axilar que <b>piorava no período menstrual</b> — por quê? Ação <b>hormonal</b> sobre tecido <b>GLANDULAR</b>. Ressecada: era <b>tecido glandular mamário extranumerário</b> (mama acessória da crista), não linfonodo nem tumor. A crista mamária explica.</p></div>
+  <figure class="fig"><img src="img/slide30-crista-mamaria.jpg" alt="Crista mamária">
+  <figcaption>A crista mamária (cordão lácteo): da axila à prega inguinal — o trajeto onde politelia e polimastia podem aparecer.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Irrigação arterial</h2>
+  <p>Regra do professor: <b>"a irrigação da mama é praticamente a da parede torácica"</b>. Quatro fontes:</p>
+  <div class="diagrama"><p class="t">De onde vem o sangue</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>A. TORÁCICA INTERNA (mamária interna)</b> — <span class="d">ramo da <b>SUBCLÁVIA</b>, desce ao lado do esterno e origina as <b>intercostais ANTERIORES do 2º ao 6º EIC</b> — ramos finos que <b>se avolumam na lactação</b>; chegam à mama por ramos <b>perfurantes</b> (atravessam a musculatura). 🔗 É a "mamária" que a cirurgia cardíaca usa na <b>ponte de coronária</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>A. TORÁCICA LATERAL</b> — <span class="d">da <b>AXILAR</b>, desce pela <b>margem LATERAL do peitoral menor</b> (sintopia com o n. torácico longo) → <b>ramos mamários LATERAIS</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>A. TORÁCICA SUPERIOR</b> — <span class="d">da <b>AXILAR</b>, pela <b>margem MEDIAL do peitoral menor</b> → <b>ramos mamários MEDIAIS</b>.</span></div></li>
+    <li><span class="n">4</span><div><b>AA. INTERCOSTAIS POSTERIORES</b> — <span class="d">ramos <b>diretos da AORTA torácica</b>, emitem ramos mamários que também aumentam na lactação.</span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/slide37-irrigacao-parede.jpg" alt="Irrigação da parede torácica e mama">
+  <figcaption>A parede torácica irrigada: torácica interna com os ramos intercostais anteriores e perfurantes, torácica lateral descendo junto ao peitoral menor — as fontes da mama.</figcaption></figure>
+  <figure class="fig"><img src="img/slide38-vasos-mama.jpg" alt="Vasos da mama">
+  <figcaption>Os vasos chegando ao corpo mamário: ramos perfurantes da torácica interna (mediais) e ramos mamários laterais da torácica lateral.</figcaption></figure>
+  <figure class="fig"><img src="img/slide40-axila.jpg" alt="Axila e artéria torácica lateral">
+  <figcaption>A axila aberta: a. axilar originando a torácica superior (medial ao peitoral menor) e a torácica lateral (lateral a ele) — e a sintopia com o n. torácico longo.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Drenagem venosa (e a toracoepigástrica)</h2>
+  <ul>
+    <li>As veias <b>acompanham as artérias</b>; a diferença é a desembocadura: <b>v. torácica interna ESQUERDA → v. braquiocefálica</b>; <b>DIREITA → mais frequentemente na VCS</b>. As vv. torácicas (laterais) → <b>vv. axilares</b>.</li>
+    <li><b>Intercostais:</b> as ANTERIORES drenam para a torácica interna; as <b>POSTERIORES → sistema ÁZIGO</b> 🎯: à direita, direto para a <b>ázigo</b>; à esquerda, <b>hemiázigo</b> (abaixo do 5º EIC) ou <b>hemiázigo acessório</b> (acima) — tudo desembocando na ázigo → VCS.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 A veia TORACOEPIGÁSTRICA — a colateral que salva</p>
+  <p>Veia <b>SUPERFICIAL</b> (no subcutâneo, acima das fáscias): drena a pele da parte lateral da mama e <b>desemboca na AXILAR</b>; embaixo, suas tributárias <b>anastomosam com a epigástrica superficial</b> (→ safena magna → femoral → cava INFERIOR). Ou seja, ela liga o território da <b>cava superior ao da cava inferior</b> pela parede: na <b>trombose de cava</b>, vira via de <b>circulação colateral</b> visível — o fluxo desce ou sobe conforme onde está a obstrução. "Veia importante de ser vista na prática."</p></div>
+  <figure class="fig"><img src="img/slide42-veias-superficiais.jpg" alt="Veias superficiais do tórax">
+  <figcaption>A drenagem venosa da parede: torácica interna desembocando no sistema braquiocefálico/VCS, axilar recebendo as torácicas — e a toracoepigástrica correndo no subcutâneo, ponte entre os territórios das cavas.</figcaption></figure>
+
+  <h2 class="topic" id="t12">12 · Drenagem LINFÁTICA: o mapa do tumor</h2>
+  <div class="box prof"><p class="h">🎯 "É o mais importante — é por onde disseminam as células tumorais"</p>
+  <p>Origem: plexos no <b>tecido conjuntivo interlobular</b> e nas <b>paredes dos ductos lactíferos</b> — os dois se comunicam com o <b>PLEXO SUBAREOLAR</b> (drena aréola e mamilo). Daí os vasos eferentes seguem: <b>~75% para os linfonodos AXILARES</b> (principalmente dos quadrantes LATERAIS); o restante (~25%) <b>perfura a fáscia do peitoral maior</b> para os <b>linfonodos PARAESTERNAIS (torácicos internos)</b> — rota dos quadrantes MEDIAIS — e para os <b>intercostais</b>, que se comunicam com os <b>MEDIASTINAIS</b>. Atenção: o fluxo <b>não é 100% garantido</b> — lateral pode drenar medial e vice-versa.</p></div>
+  <div class="box alerta"><p class="h">⚠️ A consequência cirúrgica que ele desenhou</p>
+  <p>Tumor no quadrante <b>superoMEDIAL</b> → drena aos <b>paraesternais → mediastinais</b> → a doença entra <b>na cavidade torácica</b>: linfonodos mediastinais <b>não se esvaziam cirurgicamente</b> — resta quimio/radioterapia, e a <b>sobrevida é menor</b>. Já o acometimento <b>axilar</b> permite o <b>ESVAZIAMENTO AXILAR</b> (retirada dos linfonodos comprometidos). A topografia do quadrante muda o prognóstico.</p></div>
+  <ul>
+    <li><b>Grupamentos AXILARES</b> 🎯: <b>peitoral (anterior)</b> · <b>subescapular (posterior)</b> · <b>central</b> (meio da axila) · <b>apical</b> (sobre a v. axilar/subclávia) · <b>infraclavicular</b>.</li>
+    <li><b>Destino final:</b> lado direito → <b>ducto linfático direito</b>; esquerdo → <b>ducto TORÁCICO</b> — ambos desembocando na região da subclávia/jugular (ângulo venoso).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide45-drenagem-linfatica.jpg" alt="Drenagem linfática da mama">
+  <figcaption>O mapa linfático da mama: plexo subareolar, cadeia axilar (a via de ~75%) e a cadeia paraesternal ao lado do esterno — com a mamografia ao lado, o exame que rastreia o que essa rede pode espalhar.</figcaption></figure>
+  <figure class="fig"><img src="img/slide46-linfatica-quadrantes.jpg" alt="Drenagem linfática por quadrantes">
+  <figcaption>Por quadrantes: os laterais drenam predominantemente para a axila; os mediais, para os paraesternais/torácicos internos — sem garantia de exclusividade.</figcaption></figure>
+
+  <h2 class="topic" id="t13">13 · Inervação</h2>
+  <ul>
+    <li><b>NN. INTERCOSTAIS do 2º ao 6º EIC</b> (acompanham os vasos) + <b>ramos ventrais CUTÂNEOS anteriores</b> — sensibilidade da pele, epiderme/derme e tela subcutânea.</li>
+    <li>Lembre: a musculatura mamilo-areolar tem inervação <b>autônoma</b> (telotismo).</li>
+  </ul>
+
+  <h2 class="topic" id="t14">14 · Clínica: mastite, cistos, mamografia</h2>
+  <ul>
+    <li>🎯 <b>MASTITE aguda:</b> criança não mamou, leite não foi retirado → <b>"leite empedrado"</b> → processo inflamatório/infeccioso: pele <b>vermelha, quente, endurecida</b>. Tratamento: <b>anti-inflamatório + antibiótico</b>; <b>drenar SÓ se houver abscesso</b> (coleção de pus — que, não drenado, pode fistulizar). Por isso o esvaziamento (bombinhas) importa quando o bebê não suga.</li>
+    <li><b>Cistos de gordura</b> na camada areolar: aspirados/comprimidos; podem recidivar.</li>
+    <li><b>Tumores:</b> dos benignos pequenos aos que exigem ressecção + análise de malignidade; tumor infiltrativo fixa a mama e <b>retrai a pele</b> — biópsia decide.</li>
+    <li><b>Mamografia:</b> radiopacidade aumentada com <b>concentração de CÁLCIO</b> → pensar em tumoração.</li>
+    <li><b>Estética:</b> silicone (subfascial do peitoral) e <b>preenchimento com gordura autóloga</b> no corpo da mama — nenhum dos dois reconstrói os ligamentos.</li>
+  </ul>
+
+  <div class="resumo" id="t15"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Localização:</b> 2ª–6ª costela · lateral ao esterno (seio mamário = ESPAÇO entre as mamas) · até linha axilar anterior/média · mamilo na 4ª costela/4º EIC · sulco submamário embaixo.</li>
+    <li><b>Quadrantes</b> (linhas sobre a papila): tumores mais frequentes no <b>SUPEROLATERAL</b> (mais tecido glandular + processo axilar). Volume da mama = <b>GORDURA</b> (exceto lactação).</li>
+    <li><b>Camadas:</b> epiderme → derme → <b>areolar (Camper, amarela)</b> → fáscia superficial → <b>lamelar (Scarpa, branca) = onde está o TECIDO GLANDULAR (róseo)</b> → fáscia do peitoral maior (fora da arquitetura da mama).</li>
+    <li><b>Cooper:</b> fáscias → septos → <b>clavícula</b>; afrouxam com a idade → ptose (plástica não reconstrói ligamento).</li>
+    <li><b>Papila:</b> 15–20 ductos lactíferos; <b>seios lactíferos = dilatações</b>; m. mamilo-areolar (liso, autônomo) → <b>TELOTISMO</b> no frio; aréola escurece do 2º mês de gestação; tubérculos areolares.</li>
+    <li><b>Embriologia:</b> 6ª semana, <b>crista mamária</b> (ectoderma) da axila à prega inguinal; involui exceto 4º EIC. <b>Politelia</b> (papila extra) · <b>polimastia</b> (mama extra — axila!) · amastia · atelia · micro/macromastia.</li>
+    <li><b>Irrigação:</b> torácica interna (subclávia; intercostais anteriores 2º–6º; perfurantes; a "mamária" da ponte) · torácica lateral (axilar, lateral ao peitoral menor) · torácica superior (axilar, medial) · intercostais posteriores (aorta).</li>
+    <li><b>Veias:</b> acompanham; torácica interna E→braquiocefálica, D→VCS; posteriores → <b>ázigo/hemiázigo</b>; <b>TORACOEPIGÁSTRICA</b> superficial → axilar + anastomose com epigástrica superficial = colateral cava sup ↔ inf (trombose de cava).</li>
+    <li><b>LINFÁTICA (o mais importante):</b> plexos interlobular + ductos → <b>subareolar</b> → <b>75% AXILARES</b> (laterais); mediais → <b>paraesternais → mediastinais</b> (sem esvaziamento, pior prognóstico). Grupos axilares: peitoral, subescapular, central, apical, infraclavicular. Direita → ducto linfático direito; esquerda → ducto torácico.</li>
+    <li><b>Inervação:</b> intercostais 2º–6º + ramos cutâneos anteriores.</li>
+    <li><b>Clínica:</b> mastite (leite empedrado; ATB + anti-inflamatório; drenar só abscesso) · mama fixa × tumor infiltrativo (pele retraída) · mamografia (cálcio) · ginecomastia.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Mama</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aula 04 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-local">Localização</a>
+    <a class="a1" href="#p-quad">Quadrantes</a>
+    <a class="a1" href="#p-camadas">Camadas</a>
+    <a class="a1" href="#p-papila">Papila/Aréola</a>
+    <a class="a1" href="#p-embrio">Embriologia</a>
+    <a class="a1" href="#p-irrig">Irrigação</a>
+    <a class="a1" href="#p-veias">Veias</a>
+    <a class="a1" href="#p-linfa">Linfática</a>
+    <a class="a1" href="#p-clinica">Clínica</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-local">
+  <span class="aula-tag t1">Localização (números de prova)</span>
+  <ul>
+    <li><b class="k">2ª–6ª costela</b> · <b class="k">lateral à margem lateral do esterno</b> (nunca sobre ele) · até <b>linha axilar anterior ou MÉDIA</b>.</li>
+    <li><b class="k">Mamilo: 4ª costela / 4º EIC</b> (alturas diferentes entre os lados = normal).</li>
+    <li>Linhas axilares: ANTERIOR = borda lateral do peitoral maior · POSTERIOR = borda lateral do latíssimo · MÉDIA no meio.</li>
+    <li><b class="k">SEIO MAMÁRIO = espaço ENTRE as mamas</b> (não é "a mama"!) · <b>sulco submamário</b> embaixo (examinar: infecção/alergia).</li>
+    <li>Forma: esférica/cônica/piriforme/achatada — étnico, constitucional (longilínea menor, brevilínea maior), idade. Direita costuma ser maior e mais baixa (estatística).</li>
+    <li>Relações: assentada no <b>PEITORAL MAIOR</b>; serrátil anterior (lateral); aponeurose do oblíquo externo (inferior). Mobilidade normal; fáscia perfurada = <b>mama FIXA</b>.</li>
+  </ul>
+</section>
+
+<section id="p-quad">
+  <span class="aula-tag t1">Quadrantes</span>
+  <ul>
+    <li>Linhas vertical + horizontal SOBRE A PAPILA → superolateral · superomedial · inferolateral · inferomedial.</li>
+    <li><b class="k">SUPEROLATERAL:</b> maior concentração de tecido GLANDULAR + processo axilar → <b>tumores mais frequentes</b>.</li>
+    <li><b class="k">Volume da mama = tecido GORDUROSO</b> — exceto na LACTAÇÃO (glandular cresce mais).</li>
+    <li>Exame físico: descrever tumoração POR QUADRANTE (orienta o radiologista) + palpar AXILA (processo axilar + linfonodos) + estimular autoexame.</li>
+  </ul>
+</section>
+
+<section id="p-camadas">
+  <span class="aula-tag t1">Arquitetura em camadas</span>
+  <div class="tw"><table>
+    <thead><tr><th>Camada</th><th>Característica</th><th>Epônimo</th></tr></thead>
+    <tbody>
+      <tr><td>Epiderme + derme</td><td>pele</td><td>—</td></tr>
+      <tr><td><b>AREOLAR</b></td><td>gordura AMARELA, redondinha, superficial</td><td><b>Camper</b></td></tr>
+      <tr><td><b>Fáscia superficial</b></td><td>conjuntivo entremeado → forma os ligamentos suspensores</td><td>—</td></tr>
+      <tr><td><b>LAMELAR</b></td><td>gordura BRANCA em lamelas · <b>AQUI está o tecido GLANDULAR (róseo)</b></td><td><b>Scarpa</b></td></tr>
+      <tr><td>Fáscia do peitoral + músculo</td><td>base de assentamento — <b>NÃO é arquitetura da mama</b></td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prof"><span class="box-h">🎯 Ligamentos de COOPER</span>Fáscias da tela subcutânea → septos → unem-se → prendem na <b>CLAVÍCULA</b>. Afrouxam com a idade → PTOSE ("desabamento"). Plástica coloca silicone (subfascial do peitoral) — NÃO reconstrói ligamento.</div>
+</section>
+
+<section id="p-papila">
+  <span class="aula-tag t1">Papila, aréola e músculo</span>
+  <ul>
+    <li><b class="k">Papila:</b> projeção cilíndrica no 4º EIC, perfurada por <b>15–20 DUCTOS LACTÍFEROS</b>; <b>SEIOS LACTÍFEROS = dilatações</b> das extremidades (facilitam o fluxo do leite).</li>
+    <li><b class="k">Aréola:</b> mais escura que a pele; ROSADA na nulípara; <b>escurece do 2º mês de gestação</b>; glândulas areolares (sebáceas) → <b>tubérculos</b> na gravidez (sem exteriorizar secreção).</li>
+    <li><b class="k">M. mamilo-areolar:</b> músculo LISO ("musculatura sexual"), fibras circulares + longitudinais, inervação <b>AUTÔNOMA</b>. Contração projeta a papila; frio → mamilo túrgido = <b>TELOTISMO</b>.</li>
+    <li>Papila protrusa/plana/invertida = variação; na gestação, estimular protrusão p/ sucção.</li>
+    <li>Organização: LOBOS → LÓBULOS → ductos lactíferos → seios → papila. Parte nobre = tecido glandular (camada lamelar).</li>
+  </ul>
+</section>
+
+<section id="p-embrio">
+  <span class="aula-tag t1">Embriologia + anomalias</span>
+  <ul>
+    <li><b class="k">6ª semana:</b> espessamento ECTODÉRMICO = <b>CRISTA MAMÁRIA</b> (cordão mamário/lácteo), da <b>AXILA à PREGA INGUINAL</b>; involui, restando o <b>4º EIC</b>.</li>
+    <li><b class="k">POLITELIA</b> = papila+aréola EXTRA · <b class="k">POLIMASTIA</b> = MAMA completa extra (clássico: AXILA) · <b>AMASTIA</b> = ausência total · <b>ATELIA</b> = sem papila · micro/macromastia · mamilos ectópicos (fora da crista — raríssimo).</li>
+    <li>Desenvolvimento: rudimento (4º EIC) → puberdade/ESTRÓGENO → máximo nos <b>2 últimos meses de gestação</b>; regride pós-lactação (fica maior que antes). Homem com tecido glandular = <b>GINECOMASTIA</b>.</li>
+  </ul>
+</section>
+
+<section id="p-irrig">
+  <span class="aula-tag t1">Irrigação (= parede torácica)</span>
+  <div class="tw"><table>
+    <thead><tr><th>Artéria</th><th>Origem</th><th>Território</th></tr></thead>
+    <tbody>
+      <tr><td><b>Torácica INTERNA</b> ("mamária" da ponte de coronária)</td><td>SUBCLÁVIA</td><td>intercostais ANTERIORES 2º–6º EIC → ramos perfurantes mediais (avolumam na lactação)</td></tr>
+      <tr><td><b>Torácica LATERAL</b></td><td>AXILAR (margem LATERAL do peitoral menor)</td><td>ramos mamários LATERAIS</td></tr>
+      <tr><td><b>Torácica SUPERIOR</b></td><td>AXILAR (margem MEDIAL do peitoral menor)</td><td>ramos mamários MEDIAIS</td></tr>
+      <tr><td><b>Intercostais POSTERIORES</b></td><td>AORTA torácica (diretos)</td><td>ramos mamários posteriores</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p-veias">
+  <span class="aula-tag t1">Drenagem venosa</span>
+  <ul>
+    <li>Acompanham as artérias. <b class="k">Torácica interna: ESQUERDA → braquiocefálica · DIREITA → VCS</b>. Torácicas (laterais) → axilares.</li>
+    <li><b class="k">Intercostais posteriores → sistema ÁZIGO:</b> direita → ázigo; esquerda → hemiázigo (abaixo do 5º EIC) / hemiázigo acessório (acima) → ázigo → VCS.</li>
+    <li><b class="k">TORACOEPIGÁSTRICA:</b> SUPERFICIAL (subcutâneo), drena pele lateral da mama → AXILAR; anastomosa com epigástrica superficial (→ safena magna → cava INFERIOR) = ponte cava sup ↔ inf → <b>circulação colateral na trombose de cava</b>.</li>
+  </ul>
+</section>
+
+<section id="p-linfa">
+  <span class="aula-tag t1">Drenagem linfática (O MAIS IMPORTANTE)</span>
+  <ul>
+    <li>Origem: plexos INTERLOBULAR + paredes dos DUCTOS lactíferos → <b class="k">plexo SUBAREOLAR</b> (drena aréola/mamilo).</li>
+    <li><b class="k">~75% → linfonodos AXILARES</b> (quadrantes LATERAIS) · ~25%: <b>paraesternais/torácicos internos</b> (quadrantes MEDIAIS, perfurando a fáscia do peitoral) + intercostais → <b>MEDIASTINAIS</b>. Fluxo NÃO é 100% garantido.</li>
+    <li><b class="k">Grupos axilares:</b> peitoral (anterior) · subescapular (posterior) · central · apical (sobre a v. axilar) · infraclavicular.</li>
+    <li>Destino final: direita → <b>ducto linfático direito</b> · esquerda → <b>ducto TORÁCICO</b> (ângulo venoso subclávia/jugular).</li>
+  </ul>
+  <div class="prof"><span class="box-h">🎯 A consequência cirúrgica</span>Tumor MEDIAL → paraesternais → MEDIASTINAIS = dentro do tórax: <b>não há esvaziamento</b> (só quimio/radio) → sobrevida MENOR. Tumor LATERAL → axila = <b>ESVAZIAMENTO AXILAR</b> possível. O quadrante muda o prognóstico.</div>
+</section>
+
+<section id="p-clinica">
+  <span class="aula-tag t1">Inervação + clínica</span>
+  <ul>
+    <li><b class="k">Inervação:</b> nn. INTERCOSTAIS 2º–6º EIC + ramos ventrais cutâneos anteriores (pele/tela subcutânea).</li>
+    <li><b class="k">MASTITE aguda:</b> leite não retirado → "empedrado" → pele vermelha, quente, endurecida. TTO: <b>anti-inflamatório + ANTIBIÓTICO; drenar SÓ se abscesso</b> (não drenado → fístula).</li>
+    <li><b class="k">Mama fixa × tumor:</b> glandular perfurando a fáscia = fixa (benigno) × tumor INFILTRATIVO fixa E RETRAI A PELE → biópsia.</li>
+    <li>Cistos de gordura (camada areolar): aspirados, recidivam · Mamografia: radiopacidade + <b>CÁLCIO</b> → pensar tumor.</li>
+  </ul>
+  <div class="caso"><span class="box-h">🩺 Palavras-gatilho → resposta</span>
+  <ul>
+    <li>"Caroço na axila que piora na menstruação" → tecido glandular ectópico (polimastia/crista mamária).</li>
+    <li>"Tumor no quadrante superolateral" → o mais comum (mais tecido glandular) → drena p/ AXILA.</li>
+    <li>"Tumor no quadrante superomedial" → paraesternais → mediastinais → pior prognóstico.</li>
+    <li>"Mamilo túrgido no frio" → telotismo (m. mamilo-areolar, autônomo).</li>
+    <li>"Mama caída na idosa" → ligamentos de Cooper frouxos.</li>
+    <li>"Veia visível da axila ao abdome em trombose de cava" → toracoepigástrica (colateral).</li>
+    <li>"Ponte de safena... ou de MAMÁRIA" → a. torácica interna.</li>
+    <li>"Puérpera com mama vermelha, quente, dura" → mastite (ATB + anti-inflamatório; drenar só abscesso).</li>
+  </ul></div>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="alerta"><span class="box-h">Pares que derrubam na prova</span>
+  <ul>
+    <li><b>Seio mamário × mama:</b> espaço ENTRE as mamas × o órgão (a população inverte).</li>
+    <li><b>Politelia × polimastia:</b> papila/aréola extra × MAMA COMPLETA extra.</li>
+    <li><b>Amastia × atelia:</b> sem mama × sem papila.</li>
+    <li><b>Camada areolar × lamelar:</b> amarela/Camper × branca/Scarpa — o GLANDULAR mora na LAMELAR.</li>
+    <li><b>Ducto × seio lactífero:</b> o canal × a DILATAÇÃO terminal (15–20 de cada).</li>
+    <li><b>Torácica lateral × superior:</b> lateral ao peitoral menor (ramos laterais) × medial (ramos mediais) — ambas da AXILAR.</li>
+    <li><b>Torácica interna E × D (veias):</b> braquiocefálica × VCS.</li>
+    <li><b>Quadrante lateral × medial (linfa):</b> axila/esvaziamento × paraesternal/mediastino (sem esvaziamento).</li>
+    <li><b>Mama fixa × tumor infiltrativo:</b> fáscia perfurada pelo glandular × invasão com retração de pele.</li>
+  </ul></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Mama</h2>
+    <p>Anatomia Topográfica · Aula 04 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 04 — Mama</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre a localização anatômica da mama, é correto afirmar:</div>`,
+ alts:["estende-se da 1ª à 8ª costela, cobrindo parte do esterno","entre a 2ª e a 6ª costela, com o mamilo na altura da 4ª costela","é exclusivamente axilar, sem contato com a parede anterior","o mamilo localiza-se sempre na altura da 2ª costela","apoia-se diretamente sobre o esterno, entre as clavículas"], correta:1,
+ just:[
+  "Os limites são 2ª–6ª costela — e NUNCA há corpo mamário sobre o esterno.",
+  "Correta. Eminência arredondada na face anterior do tórax, entre a 2ª e a 6ª COSTELA, LATERAL à margem lateral do esterno, prolongando-se até a linha axilar anterior ou média; o MAMILO fica ± no centro, na altura da 4ª COSTELA (ou 4º espaço intercostal).",
+  "O prolongamento axilar existe (processo axilar), mas a mama é da parede anterior.",
+  "A referência do mamilo é a 4ª costela/4º EIC.",
+  "Entre as mamas, sobre o esterno, há apenas o SEIO mamário — espaço sem corpo mamário."],
+ ref:"Localização — 2ª–6ª costela, mamilo na 4ª"},
+
+/* 2 */ {n:2,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">"Meu seio direito está doendo", diz a paciente. O professor aproveitou para corrigir a nomenclatura.</span><div class="pergunta">Anatomicamente, o SEIO MAMÁRIO é:</div>`,
+ alts:["sinônimo exato de mama, como usa a população","a dilatação terminal dos ductos lactíferos","o sulco localizado abaixo de cada mama","o espaço situado ENTRE as duas mamas","o prolongamento glandular em direção à axila"], correta:3,
+ just:[
+  "A população usa assim — mas a anatomia não: seio é o espaço, não o órgão.",
+  "A dilatação dos ductos é o seio LACTÍFERO — outra estrutura.",
+  "Abaixo da mama fica o SULCO SUBMAMÁRIO (examinar embaixo dele: infecção, alergia de sutiã).",
+  "Correta. SEIO MAMÁRIO = o espaço entre as duas mamas, na frente do esterno (onde nunca há corpo mamário). 'A população fala que a mama é o seio — mas o seio, na realidade, é o espaço entre elas.'",
+  "O prolongamento axilar é o PROCESSO LATERAL (axilar) do tecido glandular."],
+ ref:"Seio mamário × mama"},
+
+/* 3 */ {n:3,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">No exame físico, uma tumoração é palpada onde os tumores de mama são estatisticamente mais frequentes.</span><div class="pergunta">Esse local, e a razão anatômica, são:</div>`,
+ alts:["quadrante superolateral, o mais rico em tecido glandular","quadrante inferomedial — onde a gordura é mais abundante","quadrante superomedial — pela proximidade com o esterno","região do sulco submamário — pelo atrito constante","aréola — pela abundância de glândulas sebáceas"], correta:0,
+ just:[
+  "Correta. Os quadrantes nascem de uma linha vertical + uma horizontal SOBRE A PAPILA. O SUPEROLATERAL concentra a maior quantidade de tecido GLANDULAR — e ainda recebe o processo axilar. Mais tecido glandular = mais chance de tumoração: é o quadrante mais frequente dos tumores de mama.",
+  "A gordura dá o VOLUME da mama, mas tumor nasce do tecido glandular.",
+  "O superomedial importa pela DRENAGEM (paraesternais), não pela frequência.",
+  "O sulco é área de exame (infecções, alergias) — não o berço dos tumores.",
+  "As glândulas areolares são sebáceas — outro contexto."],
+ ref:"Quadrante superolateral — tumores"},
+
+/* 4 */ {n:4,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">O VOLUME da mama, na maioria das situações, é dado principalmente:</div>`,
+ alts:["pelo tecido glandular, em qualquer fase da vida","pelos ligamentos suspensores e suas fáscias","pela musculatura peitoral subjacente","pelo conteúdo dos seios lactíferos","pelo tecido GORDUROSO — exceto na lactação"], correta:4,
+ just:[
+  "O glandular é a parte NOBRE (produz leite), mas não o volume — salvo na lactação.",
+  "Os ligamentos sustentam, não dão volume.",
+  "O peitoral está POR BAIXO da mama — nem faz parte da arquitetura dela.",
+  "Os seios lactíferos são dilatações de ductos — volume desprezível.",
+  "Correta. Quem dá o volume da mama é o tecido GORDUROSO ('pessoa mais obesa tende a ter mama maior'). EXCEÇÃO: na LACTAÇÃO, o tecido glandular aumenta mais que o gorduroso."],
+ ref:"Volume — gordura × glandular"},
+
+/* 5 */ {n:5,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Na peça, o corte sagital da mama mostra uma gordura amarela superficial, uma fáscia entremeada e uma gordura esbranquiçada profunda com tecido róseo dentro.</span><div class="pergunta">Sobre a arquitetura em camadas, é correto afirmar:</div>`,
+ alts:["o tecido glandular ocupa a camada areolar, superficial","a fáscia de Scarpa é a camada de gordura amarela","o tecido glandular (róseo) está na camada LAMELAR","o músculo peitoral maior faz parte da arquitetura da mama","a camada lamelar é a mais superficial da tela subcutânea"], correta:2,
+ just:[
+  "A areolar (amarela, superficial) é só gordura — o glandular mora mais fundo.",
+  "Scarpa é o epônimo da LAMELAR (branca); a amarela superficial é Camper.",
+  "Correta. Ordem: epiderme → derme → camada AREOLAR (gordura amarela, 'redondinha' — fáscia de CAMPER) → fáscia superficial entremeada → camada LAMELAR (gordura branca em lamelas — fáscia de SCARPA), ONDE ESTÁ O TECIDO GLANDULAR (róseo na peça). O esquema se extrapola para parede abdominal e raiz da coxa.",
+  "Peitoral e sua fáscia são a BASE de assentamento — 'não fazem parte da arquitetura da mama'.",
+  "É o inverso: a areolar é a superficial; a lamelar, a profunda."],
+ ref:"Camadas — Camper × Scarpa"},
+
+/* 6 */ {n:6,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente idosa pergunta por que "a mama cai" com a idade e se a plástica resolve de vez.</span><div class="pergunta">Sobre os ligamentos suspensores da mama, é correto afirmar:</div>`,
+ alts:["septos da fáscia superficial que se prendem na CLAVÍCULA","são feixes do músculo peitoral maior que se inserem na papila","prendem a mama diretamente nas costelas e no esterno","a mamoplastia moderna reconstrói esses ligamentos com sutura","só existem durante a lactação, involuindo depois"], correta:0,
+ just:[
+  "Correta. A fáscia da tela subcutânea que envolve as camadas areolar e lamelar e a glândula emite SEPTOS (ligamentos suspensores — de Cooper) que se unem e se PRENDEM NA CLAVÍCULA. Com os anos, o tecido conjuntivo afrouxa → a mama 'desaba' (ptose). A plástica apenas projeta com silicone (hoje, sob a fáscia do peitoral) — 'não tem como fazer reconstrução ligamentar'.",
+  "São tecido CONJUNTIVO (fáscias), não músculo.",
+  "O ponto de fixação enfatizado é a CLAVÍCULA.",
+  "É justamente o que NÃO se consegue: ligamento não se reconstrói.",
+  "Existem sempre — a lactação não os cria nem os desfaz."],
+ ref:"Ligamentos de Cooper — ptose"},
+
+/* 7 */ {n:7,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A papila mamária é atravessada por:</div>`,
+ alts:["um ducto lactífero único e calibroso, que drena toda a glândula","15 a 20 ductos lactíferos com seus seios lactíferos","50 a 60 canalículos microscópicos","3 a 5 ductos lactíferos de grande calibre","ductos que se abrem apenas durante a lactação"], correta:1,
+ just:[
+  "Não é ducto único — cada LOBO manda o seu.",
+  "Correta. A papila é perfurada por 15–20 DUCTOS LACTÍFEROS que, antes de desembocar, apresentam DILATAÇÕES — os SEIOS LACTÍFEROS — que facilitam o fluxo do leite durante a sucção. Se o leite não é retirado, 'empedra' → inflamação (mastite).",
+  "A ordem de grandeza é dezena e meia — e são ductos, não canalículos.",
+  "São bem mais: 15 a 20.",
+  "Os óstios existem sempre — a lactação só os põe para trabalhar."],
+ ref:"Papila — 15–20 ductos e seios lactíferos"},
+
+/* 8 */ {n:8,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">No frio, o mamilo se projeta e fica túrgido. O professor deu nome e mecanismo ao fenômeno.</span><div class="pergunta">Trata-se de:</div>`,
+ alts:["ereção papilar voluntária, por músculo estriado esquelético","reflexo de sucção, mediado por ocitocina","congestão venosa passiva da aréola","resposta exclusiva da gestação, ausente fora dela","TELOTISMO — contração do músculo mamilo-areolar"], correta:4,
+ just:[
+  "Não há controle voluntário: o músculo é LISO, autonômico.",
+  "Ocitocina participa da ejeção do leite — outro reflexo.",
+  "É contração muscular ativa, não congestão passiva.",
+  "Acontece em qualquer fase — o frio basta.",
+  "Correta. Sob a aréola há pouca gordura: o tecido é fibroso + fibras musculares LISAS circulares e longitudinais — o M. MAMILO-AREOLAR ('musculatura sexual'), de inervação AUTÔNOMA. No FRIO, a contração projeta e deixa túrgida a papila = TELOTISMO. O relaxamento deixa a papila plana ou invertida (variação normal — na gestação, estimular a protrusão para a sucção)."],
+ ref:"Telotismo — m. mamilo-areolar"},
+
+/* 9 */ {n:9,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Duas pacientes com mama "endurecida e fixa": numa, o tecido glandular perfurou a fáscia do peitoral maior; na outra, há um tumor infiltrativo.</span><div class="pergunta">Sobre as relações topográficas e essa diferenciação, é correto afirmar:</div>`,
+ alts:["a mama normal é imóvel sobre a fáscia do peitoral","a perfuração da fáscia pelo glandular é achado comum e sem importância","a distinção é que o tumor infiltrativo costuma RETRAIR a pele","a mama não tem relação com o serrátil anterior nem com o oblíquo externo","ambos os quadros dispensam qualquer investigação"], correta:2,
+ just:[
+  "A mama normal tem MOBILIDADE (látero-lateral, súpero-inferior) sobre a fáscia.",
+  "É RARO — e importa muito, porque mimetiza a fixação tumoral.",
+  "Correta. A mama assenta no PEITORAL MAIOR e se relaciona com o SERRÁTIL ANTERIOR (lateral) e a aponeurose do OBLÍQUO EXTERNO (inferior). Raramente o glandular perfura a fáscia → mama RÍGIDA/FIXA — que confunde com tumor, pois os malignos são INFILTRATIVOS (invadem fáscia e músculo). A pista: o tumor costuma também RETRAIR A PELE; na dúvida, biópsia.",
+  "Relaciona-se com os dois — são as relações topográficas da aula.",
+  "É o oposto: fixação é sinal que exige investigação."],
+ ref:"Mama fixa × tumor infiltrativo"},
+
+/* 10 */ {n:10,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre o desenvolvimento embrionário da mama, é correto afirmar:</div>`,
+ alts:["deriva do mesoderma da parede torácica, na 12ª semana","a crista mamária persiste inteira até a puberdade","o cordão mamário estende-se do pescoço ao umbigo","na 6ª semana o ectoderma forma a crista mamária","forma-se apenas em embriões do sexo feminino"], correta:3,
+ just:[
+  "É ECTODERMA — e o marco é a 6ª semana.",
+  "A crista INVOLUI, restando apenas o ponto do 4º EIC.",
+  "O trajeto é da AXILA à PREGA INGUINAL, dos dois lados.",
+  "Correta. Embrião de 6 SEMANAS: espessamento ECTODÉRMICO (5–6 camadas) = CORDÃO MAMÁRIO (crista mamária/cordão lácteo), da AXILA à PREGA INGUINAL. A crista involui, permanecendo só no 4º EIC — as futuras mamas. Mas o ectoderma do trajeto guarda potencial: papilas, aréolas ou mamas inteiras podem surgir ao longo dele (como nos outros mamíferos).",
+  "Forma-se nos DOIS sexos — no menino fica o rudimento (sem estrógeno, não desenvolve)."],
+ ref:"Crista mamária — 6ª semana"},
+
+/* 11 */ {n:11,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Associe corretamente a anomalia à definição:</div>`,
+ alts:["politelia = presença de uma mama completa extranumerária","amastia = ausência apenas da papila","papila extra = politelia; mama extra = polimastia","polimastia = papila e aréola extranumerárias","macromastia = presença de mamilos ectópicos"], correta:2,
+ just:[
+  "Inverteu: papila/aréola extra é POLITELIA.",
+  "Ausência apenas da papila é ATELIA; AMASTIA é a ausência total da mama (resta mancha escura).",
+  "Correta. POLITELIA = papila + aréola EXTRANUMERÁRIAS; POLIMASTIA = MAMA COMPLETA a mais (local clássico: AXILA, onde sobra mais tecido da crista); ATELIA = falta da papila; AMASTIA = ausência total; MICRO/MACROMASTIA = alterações de volume; mamilos ECTÓPICOS = fora da crista (raríssimos).",
+  "Inverteu: mama completa a mais é POLIMASTIA.",
+  "Macromastia é mama GRANDE — nada a ver com ectopia."],
+ ref:"Anomalias — o vocabulário"},
+
+/* 12 */ {n:12,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Mulher jovem com "caroço" na axila que PIORA no período menstrual. Ressecado, o exame revelou o diagnóstico que o professor viu no consultório.</span><div class="pergunta">A explicação anatômica do achado é:</div>`,
+ alts:["tecido glandular mamário extranumerário da crista","linfonodo axilar reacional a processo viral","lipoma axilar comprimido pelo sutiã","hidrosadenite das glândulas sudoríparas axilares","aneurisma da artéria torácica lateral"], correta:0,
+ just:[
+  "Correta. A pista foi a PIORA MENSTRUAL: ação hormonal (estrógeno) → turgência DOLOROSA de tecido GLANDULAR. Na axila — o ponto clássico da crista mamária — havia tecido glandular mamário EXTRANUMERÁRIO (mama acessória/polimastia). A ressecção confirmou: 'era tecido glandular mamário, não um processo tumoral'.",
+  "Linfonodo reacional não flutua com o ciclo menstrual.",
+  "Lipoma é gordura — indolente ao ciclo hormonal.",
+  "Hidrosadenite inflama e dói, mas não 'piora na menstruação' como marca — e a peça mostrou glândula MAMÁRIA.",
+  "Aneurisma seria pulsátil — outra semiologia."],
+ ref:"Caso — mama acessória axilar"},
+
+/* 13 */ {n:13,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre a irrigação arterial da mama, é correto afirmar:</div>`,
+ alts:["a torácica lateral origina-se diretamente da aorta torácica","as intercostais anteriores do 2º–6º EIC irrigam a mama apenas na lactação","a torácica interna é ramo da axilar, correndo lateral ao peitoral menor","vem das torácicas interna, lateral e superior e das intercostais posteriores","a mama não recebe ramos das intercostais posteriores"], correta:3,
+ just:[
+  "A torácica LATERAL vem da AXILAR — quem manda ramos diretos da aorta são as intercostais POSTERIORES.",
+  "Irrigam sempre — na lactação apenas SE AVOLUMAM.",
+  "A torácica INTERNA é ramo da SUBCLÁVIA, descendo ao lado do esterno.",
+  "Correta. 'A irrigação da mama é praticamente a da parede torácica': ① TORÁCICA INTERNA (da SUBCLÁVIA) → intercostais ANTERIORES do 2º–6º EIC, com ramos perfurantes; ② TORÁCICA LATERAL (da AXILAR, margem lateral do peitoral menor) → ramos mamários laterais; ③ TORÁCICA SUPERIOR (da AXILAR, margem medial) → ramos mediais; ④ INTERCOSTAIS POSTERIORES (diretas da AORTA torácica).",
+  "Recebe: as intercostais posteriores emitem ramos mamários (que aumentam na lactação)."],
+ ref:"Irrigação — as 4 fontes"},
+
+/* 14 */ {n:14,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">"O pessoal da cirurgia cardíaca chama essa artéria de mamária", comentou o professor.</span><div class="pergunta">A artéria em questão, e sua origem, são:</div>`,
+ alts:["artéria torácica lateral, ramo direto da artéria subclávia","torácica interna (mamária interna), ramo da subclávia","artéria torácica superior, ramo direto da parte torácica da aorta","intercostal anterior, ramo da axilar","toracoacromial, ramo da carótida externa"], correta:1,
+ just:[
+  "A torácica lateral vem da AXILAR.",
+  "Correta. A A. TORÁCICA INTERNA (= MAMÁRIA INTERNA) é ramo da SUBCLÁVIA, desce ao lado do esterno originando as intercostais anteriores do 2º ao 6º EIC (fontes da mama). É ela que a cirurgia cardíaca usa como enxerto na PONTE para a coronária. Seus ramos terminais: musculofrênica e epigástrica superior.",
+  "A torácica superior vem da AXILAR (margem medial do peitoral menor).",
+  "As intercostais anteriores nascem DA torácica interna.",
+  "A toracoacromial vem da axilar — e não é a 'mamária'."],
+ ref:"Torácica interna — a 'mamária' da ponte"},
+
+/* 15 */ {n:15,aula:1,nivel:"dificil",
+ enun:`<div class="pergunta">Sobre a drenagem venosa da mama e da parede torácica, é correto afirmar:</div>`,
+ alts:["as veias torácicas internas dos dois lados desembocam na cava inferior","as intercostais posteriores drenam diretamente para as jugulares","todo o sangue venoso da mama vai exclusivamente para a veia axilar","o sistema ázigo não participa da drenagem da região","torácica interna E → braquiocefálica, D → VCS; intercostais posteriores → ázigo"], correta:4,
+ just:[
+  "Nada de cava inferior: o destino é braquiocefálica/VCS.",
+  "As posteriores vão ao sistema ÁZIGO, não às jugulares.",
+  "A axilar recebe as torácicas (laterais) e a toracoepigástrica — mas há também o caminho torácica interna/ázigo.",
+  "Participa, e muito: é o destino das intercostais posteriores.",
+  "Correta. As veias acompanham as artérias; a diferença é a desembocadura: V. TORÁCICA INTERNA ESQUERDA → braquiocefálica; DIREITA → mais frequentemente VCS. Intercostais ANTERIORES → torácica interna; POSTERIORES → sistema ÁZIGO (direita → ázigo; esquerda → hemiázigo abaixo do 5º EIC ou hemiázigo acessório acima) → ázigo → VCS."],
+ ref:"Drenagem venosa — braquiocefálica, VCS e ázigo"},
+
+/* 16 */ {n:16,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Paciente com trombose de veia cava desenvolve uma veia visível e dilatada no subcutâneo, da axila em direção ao abdome.</span><div class="pergunta">A veia em questão é:</div>`,
+ alts:["a ázigo, que se superficializou pela hipertensão","a torácica interna, perfurando os espaços intercostais","a cefálica, desviada do sulco deltopeitoral","a TORACOEPIGÁSTRICA, a superficial que desemboca na axilar","a intercostal superior esquerda, varicosa"], correta:3,
+ just:[
+  "A ázigo é profunda, dentro do tórax — não aparece no subcutâneo.",
+  "A torácica interna é profunda, ao lado do esterno.",
+  "A cefálica é do membro superior — outro território.",
+  "Correta. A V. TORACOEPIGÁSTRICA corre no SUBCUTÂNEO (acima das fáscias), drena a pele da parte lateral da mama e desemboca na AXILAR; embaixo, anastomosa-se com a EPIGÁSTRICA SUPERFICIAL (→ safena magna → femoral → cava INFERIOR). Ligando os territórios das duas cavas, vira via de CIRCULAÇÃO COLATERAL na trombose de cava — o fluxo sobe ou desce conforme a obstrução. 'Veia importante de ser vista na prática.'",
+  "Não é a via colateral superficial descrita na aula."],
+ ref:"Toracoepigástrica — colateral das cavas"},
+
+/* 17 */ {n:17,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre a drenagem linfática da mama — "o mais importante da aula" — é correto afirmar:</div>`,
+ alts:["distribui-se igualmente: 50% axila, 50% paraesternais","os quadrantes mediais drenam exclusivamente para a axila","cerca de 75% drena aos linfonodos AXILARES, via subareolar","não há comunicação entre os plexos dos ductos e o subareolar","a linfa da mama vai direto ao ducto torácico, sem linfonodos"], correta:2,
+ just:[
+  "A divisão é ~75% axila × ~25% restante (paraesternais, intercostais).",
+  "Os MEDIAIS drenam preferencialmente aos PARAESTERNAIS — mas nada é exclusivo ('não é 100% garantido').",
+  "Correta. Os linfáticos nascem nos plexos do tecido conjuntivo INTERLOBULAR e nas paredes dos DUCTOS lactíferos; ambos se comunicam com o PLEXO SUBAREOLAR (drena aréola e mamilo). Daí, ~75% segue para os LINFONODOS AXILARES (quadrantes laterais); o restante perfura a fáscia do peitoral para os PARAESTERNAIS (torácicos internos) e intercostais. É por essa rede que o tumor dissemina.",
+  "Comunicam-se — é a base do sistema.",
+  "Passa pelas cadeias linfonodais; o destino final é o ducto torácico (esquerda) ou o ducto linfático direito."],
+ ref:"Linfática — 75% axilar"},
+
+/* 18 */ {n:18,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Dois tumores do mesmo tamanho: um no quadrante superolateral, outro no superomedial. O professor explicou por que o prognóstico pode ser diferente.</span><div class="pergunta">A razão anatômica é:</div>`,
+ alts:["o quadrante medial tem mais tecido glandular, gerando tumores maiores","o medial drena aos paraesternais/mediastinais, onde não há esvaziamento","os linfonodos axilares não podem ser abordados cirurgicamente","o tumor lateral sempre gera metástases pulmonares precoces","não há diferença: a drenagem é idêntica nos dois casos"], correta:1,
+ just:[
+  "O glandular concentra-se no LATERAL — e o ponto não é tamanho, é DRENAGEM.",
+  "Correta. Tumor MEDIAL → linfonodos PARAESTERNAIS → MEDIASTINAIS: a doença entra na cavidade torácica, onde 'não se mexe' cirurgicamente — restam quimio/radioterapia e a sobrevida é menor. Tumor LATERAL → cadeia AXILAR → possível ESVAZIAMENTO AXILAR (retirada dos linfonodos comprometidos). A topografia do quadrante muda o desfecho — lembrando que o fluxo não é 100% garantido.",
+  "É o contrário: a axila é justamente a cadeia esvaziável.",
+  "Metástase pulmonar não é regra do quadrante lateral — o risco descrito é do caminho mediastinal.",
+  "A diferença de rota é o coração da questão."],
+ ref:"Medial × lateral — prognóstico"},
+
+/* 19 */ {n:19,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Compõem o grupamento linfonodal AXILAR:</div>`,
+ alts:["peitoral, subescapular, central, apical e infraclavicular","paraesternal, mediastinal, intercostal e diafragmático","cervical profundo, occipital e submandibular","inguinal superficial e ilíaco externo","apenas um linfonodo sentinela, sem subdivisões"], correta:0,
+ just:[
+  "Correta. O grupo axilar é grande e subdividido: PEITORAL (anterior), SUBESCAPULAR (posterior), CENTRAL (meio da axila), APICAL (sobre a veia axilar/subclávia) e INFRACLAVICULAR. Recebem a linfa da parte lateral da mama; destino final: ducto linfático direito (direita) ou ducto torácico (esquerda), no ângulo venoso.",
+  "Esses são as cadeias TORÁCICAS internas/mediastinais — o outro caminho (~25%).",
+  "Cadeias da cabeça e pescoço — fora do circuito mamário.",
+  "Cadeias do membro inferior/pelve.",
+  "O 'sentinela' é conceito cirúrgico (o primeiro a receber) — anatomicamente há vários grupos."],
+ ref:"Grupamentos axilares"},
+
+/* 20 */ {n:20,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A inervação da mama é feita por:</div>`,
+ alts:["nervo torácico longo e nervo toracodorsal","plexo braquial, pelos fascículos medial e lateral","nervo frênico e nervos supraclaviculares","nervo intercostobraquial exclusivamente","nervos intercostais do 2º ao 6º EIC e ramos cutâneos"], correta:4,
+ just:[
+  "Torácico longo (serrátil) e toracodorsal (latíssimo) são motores de músculos vizinhos.",
+  "O plexo braquial é do membro superior.",
+  "Frênico é do diafragma; supraclaviculares pegam só a pele alta do tórax.",
+  "O intercostobraquial é um ramo do 2º intercostal para o braço — não 'exclusivamente'.",
+  "Correta. NN. INTERCOSTAIS do 2º ao 6º EIC (acompanhando os vasos) + RAMOS VENTRAIS CUTÂNEOS ANTERIORES — sensibilidade da pele, epiderme/derme e tela subcutânea. (A musculatura mamilo-areolar tem inervação AUTÔNOMA — o telotismo.)"],
+ ref:"Inervação — intercostais 2º–6º"},
+
+/* 21 */ {n:21,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre o desenvolvimento da mama ao longo da vida, é correto afirmar:</div>`,
+ alts:["no homem não existe tecido mamário de nenhum tipo","o desenvolvimento máximo ocorre na menarca","antes da puberdade a mama feminina já está completa","atinge o máximo nos 2 últimos meses de gravidez","o estrógeno não participa do desenvolvimento glandular"], correta:3,
+ just:[
+  "Existe o RUDIMENTO no 4º EIC — e quando o homem forma tecido glandular, é GINECOMASTIA.",
+  "Na puberdade COMEÇA (estrógeno ovariano) — o máximo vem depois.",
+  "Antes da puberdade há só o rudimento ectodérmico.",
+  "Correta. Rudimento na infância → puberdade: ESTRÓGENO ovariano inicia o desenvolvimento (5 estágios — gineco) → MÁXIMO nos 2 ÚLTIMOS MESES DE GRAVIDEZ até a lactação, quando o glandular precisa produzir leite. Após ~6 meses de amamentação, regride — mas a mama costuma ficar maior que antes.",
+  "É o ESTRÓGENO que dispara o desenvolvimento glandular na puberdade."],
+ ref:"Desenvolvimento — puberdade → gestação"},
+
+/* 22 */ {n:22,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre a ARÉOLA mamária, é correto afirmar:</div>`,
+ alts:["é mais rosada na nulípara e escurece a partir do 2º mês de gestação","tem a mesma cor da pele adjacente em todas as fases","suas glândulas areolares exteriorizam grande volume de secreção","os tubérculos areolares desaparecem na gravidez","é rica em gordura, a mais espessa camada adiposa da mama"], correta:0,
+ just:[
+  "Correta. A aréola circunda a base da papila com pele MAIS ESCURA que a adjacente: mais ROSADA na NULÍPARA, ESCURECENDO a partir do 2º MÊS de gestação (papila também; o tom final depende do grupo étnico). Contém as GLÂNDULAS AREOLARES (sebáceas), cujos relevos — os TUBÉRCULOS — aumentam na gravidez, sem exteriorizar secreção.",
+  "É sempre mais escura que a pele ao redor.",
+  "As glândulas areolares NÃO exteriorizam sua produção — a secreção fica sob a pele.",
+  "É o contrário: os tubérculos AUMENTAM na gravidez.",
+  "Sob a aréola há POUCA gordura — o tecido é fibroso + músculo liso (mamilo-areolar)."],
+ ref:"Aréola — cor e tubérculos"},
+
+/* 23 */ {n:23,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Puérpera cujo bebê parou de mamar; o leite não foi esvaziado. Dias depois: mama vermelha, quente e endurecida.</span><div class="pergunta">O diagnóstico e a conduta corretos são:</div>`,
+ alts:["ingurgitamento fisiológico — apenas compressas, sem medicação","abscesso mamário — drenagem cirúrgica imediata em todos os casos","mastite aguda — anti-inflamatório + antibiótico; drenar só se abscesso","carcinoma inflamatório — mastectomia de urgência","telotismo — orientar aquecimento local"], correta:2,
+ just:[
+  "Já há sinais flogísticos francos (rubor, calor, endurecimento) — passou do ingurgitamento.",
+  "Drenagem é só PARA ABSCESSO (coleção de pus) — que, aliás, não drenado pode fistulizar.",
+  "Correta. Leite retido 'EMPEDRA' → processo inflamatório/infeccioso = MASTITE AGUDA (pele vermelha, quente, endurecida; pode destruir tecido gorduroso). Conduta: ANTI-INFLAMATÓRIO + ANTIBIÓTICO; DRENAR apenas se houver ABSCESSO. Prevenção: esvaziar a mama (sucção ou bombinha) quando o bebê não mama.",
+  "Carcinoma inflamatório entra no diferencial de mama vermelha, mas o contexto (puerpério + estase láctea) fecha mastite — e a conduta inicial não é mastectomia.",
+  "Telotismo é a projeção do mamilo no frio — nada a ver."],
+ ref:"Mastite aguda"},
+
+/* 24 */ {n:24,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Exame físico: tumoração indurada e FIXA no quadrante superolateral da mama direita, com discreta retração da pele. O interno escreve no pedido de mamografia apenas "nódulo na mama direita".</span><div class="pergunta">Sobre o caso e a descrição, é correto afirmar:</div>`,
+ alts:["a descrição está adequada — localizar não muda a conduta","faltou o quadrante; fixação + retração sugerem tumor infiltrativo","como o quadrante é lateral, a drenagem esperada é paraesternal","por ser o quadrante mais raro, a suspeita de malignidade cai","fixação e retração de pele são típicas de lesões benignas"], correta:1,
+ just:[
+  "Localizar MUDA tudo: orienta o radiologista ('ele vai se fixar naquela imagem') e antecipa a rota de drenagem.",
+  "Correta. A descrição deve dar o QUADRANTE ('tumoração indurada, fixa, no quadrante superolateral da mama direita'). Fixação + retração de pele apontam tumor INFILTRATIVO (invade fáscia do peitoral) — diferencial com a rara mama fixa por perfuração benigna da fáscia; biópsia decide. E, sendo superolateral (com processo axilar), a PALPAÇÃO DA AXILA é obrigatória: tecido glandular + linfonodos (rota de 75% da linfa).",
+  "Lateral drena preferencialmente para a AXILA (esvaziável); paraesternal é rota dos MEDIAIS.",
+  "É o quadrante MAIS COMUM dos tumores — mais tecido glandular + processo axilar.",
+  "É o oposto: FIXAÇÃO (invasão da fáscia/músculo) + RETRAÇÃO da pele são marcas do tumor INFILTRATIVO."],
+ ref:"Caso integrador — exame físico"}
+
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,
+ caso:`Prova prática: peça de mama seccionada no plano sagital. O roteiro pede para identificar as camadas da pele ao músculo, dizer onde está o tecido glandular, explicar o que sustenta a mama — e por que ela "cai" com a idade.`,
+ perg:[
+  "a) Descreva a arquitetura da mama em camadas (com as cores da peça e os epônimos das fáscias).",
+  "b) Onde está o tecido glandular e como ele se organiza até desembocar na papila?",
+  "c) O que são os ligamentos suspensores, onde se prendem e por que ocorre a ptose senil?",
+  "d) O peitoral maior faz parte da arquitetura da mama? Que estruturas se relacionam com ela lateral e inferiormente?"],
+ resp:[
+  ["a) As camadas",
+   `Da superfície à profundidade: <b>EPIDERME → DERME → tela subcutânea</b>, que tem três partes: <b>camada AREOLAR</b> — gordura <b>AMARELA</b>, "redondinha", superficial (epônimo: <b>fáscia de CAMPER</b>); <b>FÁSCIA SUPERFICIAL</b> — tecido conjuntivo <b>entremeado</b> entre (e dentro) das gorduras; e <b>camada LAMELAR</b> — gordura <b>BRANCA</b>, em lamelas (epônimo: <b>fáscia de SCARPA</b>). Abaixo, a fáscia do peitoral maior e o músculo. O esquema se extrapola para a parede abdominal e a raiz da coxa (no dorso pode faltar a lamelar).`],
+  ["b) O tecido glandular",
+   `🎯 <b>O tecido glandular está na camada LAMELAR</b> — na peça, é o tecido <b>RÓSEO</b> (areolar = amarela; lamelar = branca). É a "parte nobre" da mama. Organização: <b>LOBOS → LÓBULOS → DUCTOS LACTÍFEROS</b> (15–20), que antes de desembocar na papila se dilatam nos <b>SEIOS LACTÍFEROS</b> (facilitam o fluxo do leite). O tecido pode se prolongar para a axila = <b>processo lateral (axilar)</b>. Sob a aréola há pouca gordura: tecido fibroso + o <b>m. mamilo-areolar</b> (liso).`],
+  ["c) Cooper e a ptose",
+   `Os <b>LIGAMENTOS SUSPENSORES (de Cooper)</b> são <b>septos da fáscia superficial</b> que envolvem a camada areolar, a lamelar e a própria glândula, unem-se e <b>se prendem na CLAVÍCULA</b>. São tecido conjuntivo: com os anos, <b>afrouxam</b> — e a mama "desaba" (ptose senil; não é só a pele perdendo elasticidade). Não há reconstrução ligamentar: a <b>mamoplastia</b> apenas projeta com silicone (hoje, geralmente <b>sob a fáscia do peitoral</b>) — os ligamentos ficam como estão.`],
+  ["d) Relações",
+   `<b>NÃO</b>: "a mama é epiderme, derme, camada gordurosa e camada glandular" — a <b>fáscia do peitoral maior e o músculo são a BASE de assentamento</b>, não arquitetura da mama. Relações: <b>lateralmente com o SERRÁTIL ANTERIOR</b>; <b>inferiormente com a aponeurose do OBLÍQUO EXTERNO</b>. A mama normal tem <b>mobilidade</b> sobre a fáscia; raramente o glandular a perfura → <b>mama fixa</b> (diferencial com tumor infiltrativo, que fixa E retrai a pele).`],
+ ],
+ ref:"Arquitetura em camadas e sustentação"},
+
+{n:2,aula:1,
+ caso:`Ambulatório: (1) adolescente com uma "terceira papila" pequena abaixo da mama esquerda; (2) mulher com tumoração axilar dolorosa que piora no período menstrual; (3) recém-nascido examinado com ausência completa de uma das mamas. Os três casos têm a mesma raiz embriológica.`,
+ perg:[
+  "a) Descreva a formação embriológica da mama (semana, folheto, trajeto da crista) e o que acontece com a crista no humano.",
+  "b) Dê o nome de cada achado dos casos 1, 2 e 3 e diferencie politelia × polimastia × amastia × atelia.",
+  "c) No caso 2, por que a tumoração piora na menstruação e qual foi o diagnóstico do caso real do professor?",
+  "d) Por que a axila é o local clássico da mama acessória — e o que isso exige no exame físico de TODA mama?"],
+ resp:[
+  ["a) A crista mamária",
+   `No <b>embrião de 6 SEMANAS</b>, um espessamento <b>ECTODÉRMICO</b> (5–6 camadas de células) forma o <b>CORDÃO MAMÁRIO</b> — também chamado <b>CRISTA MAMÁRIA ou cordão lácteo</b> — que se estende <b>da AXILA à PREGA INGUINAL</b>, bilateralmente. No humano, a crista <b>INVOLUI</b>, permanecendo apenas o ponto do <b>4º espaço intercostal</b> de cada lado — as futuras mamas (nos demais mamíferos, como cadela e gata, a crista persiste com várias mamas). O ectoderma do trajeto, porém, guarda a POTENCIALIDADE de formar papila, aréola ou mama inteira em qualquer ponto.`],
+  ["b) Nomeando os casos",
+   `Caso 1 = <b>POLITELIA</b>: papila (e aréola) <b>extranumerária</b>, na topografia da crista. Caso 2 = <b>POLIMASTIA</b>: <b>mama COMPLETA</b> a mais (tecido glandular funcional). Caso 3 = <b>AMASTIA</b>: ausência total da mama (resta mancha escura no local do mamilo). Completa o vocabulário: <b>ATELIA</b> = falta apenas da papila/aréola; <b>MICRO/MACROMASTIA</b> = alterações de volume (uma mama pode crescer e a outra não); <b>mamilos ECTÓPICOS</b> = fora da crista (raridade, pela potencialidade do ectoderma).`],
+  ["c) O caso do consultório",
+   `A piora no <b>período menstrual</b> é a assinatura de tecido <b>GLANDULAR hormônio-responsivo</b>: a ação hormonal do ciclo (estrógeno) causa turgência e <b>dor no tecido glandular</b> — linfonodo, lipoma ou hidrosadenite não "menstruam". No caso real, a ressecção mostrou <b>tecido glandular mamário extranumerário</b> — uma mama acessória da crista — e não um processo tumoral. A pergunta-chave da anamnese ("piora na menstruação?") direcionou tudo.`],
+  ["d) A axila e o exame",
+   `A axila é o <b>início da crista mamária</b> — o ponto onde mais sobra tecido — e para onde o próprio tecido glandular normal se prolonga (<b>processo axilar</b> do quadrante superolateral). Consequência prática: <b>a palpação da AXILA é parte obrigatória do exame da mama</b> — nela podem estar ① tecido glandular (normal ou acessório) e ② os <b>LINFONODOS AXILARES</b>, destino de ~75% da drenagem linfática (a rota do tumor).`],
+ ],
+ ref:"Embriologia — crista mamária e anomalias"},
+
+{n:3,aula:1,
+ caso:`Discussão de vascularização: um cirurgião cardíaco comenta que vai "usar a mamária" na ponte de um paciente; no leito ao lado, uma paciente com trombose de veia cava superior exibe uma veia dilatada e visível no subcutâneo do tórax lateral, descendo ao abdome.`,
+ perg:[
+  "a) Descreva as 4 fontes de irrigação arterial da mama, com a origem de cada uma.",
+  "b) Que artéria é 'a mamária' da cirurgia cardíaca? Descreva seu trajeto e seus ramos para a mama.",
+  "c) Descreva a drenagem venosa profunda (torácicas internas e intercostais posteriores) com as desembocaduras de cada lado.",
+  "d) Identifique a veia visível da paciente e explique por que ela dilata na trombose de cava."],
+ resp:[
+  ["a) As 4 fontes",
+   `"A irrigação da mama é praticamente a da parede torácica": ① <b>A. TORÁCICA INTERNA</b> (da <b>SUBCLÁVIA</b>) → <b>intercostais ANTERIORES do 2º ao 6º EIC</b>, com ramos <b>perfurantes</b> que atravessam a musculatura até a mama (ramos finos que <b>se avolumam na lactação</b>); ② <b>A. TORÁCICA LATERAL</b> (da <b>AXILAR</b>, descendo pela <b>margem LATERAL do peitoral menor</b>, em sintopia com o n. torácico longo) → ramos mamários LATERAIS; ③ <b>A. TORÁCICA SUPERIOR</b> (da <b>AXILAR</b>, margem MEDIAL do peitoral menor) → ramos mamários MEDIAIS; ④ <b>AA. INTERCOSTAIS POSTERIORES</b> (ramos <b>diretos da AORTA torácica</b>) → ramos mamários posteriores.`],
+  ["b) A 'mamária'",
+   `É a <b>A. TORÁCICA INTERNA (mamária interna)</b>: ramo da subclávia que desce <b>ao lado do esterno</b>, origina as intercostais anteriores (2º–6º EIC) e termina em <b>musculofrênica + epigástrica superior</b>. A cirurgia cardíaca a usa como <b>enxerto da ponte para a coronária</b> — por isso o apelido. Para a mama, seus ramos chegam como <b>perfurantes mediais</b>.`],
+  ["c) Drenagem venosa profunda",
+   `As veias <b>acompanham as artérias</b>; muda a desembocadura: <b>v. torácica interna ESQUERDA → v. braquiocefálica</b>; <b>DIREITA → mais frequentemente na VCS</b>. As torácicas (laterais) → <b>vv. axilares</b>. Intercostais <b>ANTERIORES</b> → torácica interna. Intercostais <b>POSTERIORES → sistema ÁZIGO</b>: à direita, direto na <b>ázigo</b>; à esquerda, <b>hemiázigo</b> (abaixo do 5º EIC) ou <b>hemiázigo acessório</b> (acima) — ambos desembocando na ázigo → VCS. (O sentido do fluxo nas anastomoses segue a pressão — na coarctação da aorta, por exemplo, as intercostais se desenvolvem para devolver sangue à aorta.)`],
+  ["d) A toracoepigástrica",
+   `É a <b>V. TORACOEPIGÁSTRICA</b>: veia <b>SUPERFICIAL</b> (corre no subcutâneo, acima das fáscias), drena a pele da parte lateral da mama e desemboca na <b>AXILAR</b>; suas tributárias inferiores <b>anastomosam-se com a epigástrica superficial</b> → safena magna → femoral → <b>cava INFERIOR</b>. Ela conecta, pela parede, os territórios da <b>cava superior e da inferior</b>: na trombose de cava, o sangue busca essa rota — a veia <b>dilata e aparece</b> (circulação colateral), com o fluxo descendo ou subindo conforme o lado obstruído. "Veia importante de ser vista na prática."`],
+ ],
+ ref:"Vascularização — artérias, veias e a colateral"},
+
+{n:4,aula:1,
+ caso:`Mulher, 48 anos, com tumoração indurada e fixa no quadrante superomedial da mama esquerda, com retração cutânea. A equipe discute: por que a drenagem linfática é "o mais importante" dessa aula, para onde esse tumor tende a drenar e o que muda no prognóstico em relação a um tumor lateral.`,
+ perg:[
+  "a) Descreva a origem e o trajeto da drenagem linfática da mama (plexos, subareolar e as porcentagens).",
+  "b) Liste os grupamentos linfonodais axilares e o destino final da linfa de cada lado do corpo.",
+  "c) Para onde tende a drenar o tumor DESTA paciente, e por que isso piora o prognóstico em relação ao tumor lateral?",
+  "d) O que a fixação + retração cutânea sugerem, e como o exame físico completo desta mama deveria ser descrito?"],
+ resp:[
+  ["a) O mapa linfático",
+   `Os linfáticos da glândula nascem de <b>dois sistemas</b>: o plexo do <b>tecido conjuntivo INTERLOBULAR</b> e o das <b>paredes dos DUCTOS LACTÍFEROS</b>. Ambos se comunicam com o <b>PLEXO SUBAREOLAR</b> (que drena aréola e mamilo). Dali, os vasos eferentes seguem: ~<b>75% para os linfonodos AXILARES</b> (preferência dos quadrantes LATERAIS); ~25% <b>perfuram a fáscia do peitoral maior</b> para os <b>PARAESTERNAIS (torácicos internos)</b> — rota preferencial dos quadrantes MEDIAIS — e para os <b>intercostais</b>, comunicando-se com os <b>MEDIASTINAIS</b>. Ressalva da aula: <b>"não é 100% garantido"</b> — lateral pode drenar medial e vice-versa. É por essa rede que as células tumorais disseminam — daí ser "o mais importante".`],
+  ["b) Grupos axilares e destino final",
+   `Grupamentos AXILARES: <b>PEITORAL (anterior) · SUBESCAPULAR (posterior) · CENTRAL</b> (meio da axila) · <b>APICAL</b> (sobre a veia axilar/subclávia) · <b>INFRACLAVICULAR</b>. Destino final da linfa: lado <b>DIREITO → ducto linfático direito</b>; lado <b>ESQUERDO → ducto TORÁCICO</b> — ambos desembocando na região do ângulo venoso (subclávia/jugular).`],
+  ["c) O tumor medial",
+   `Quadrante superoMEDIAL → drenagem preferencial aos <b>PARAESTERNAIS → MEDIASTINAIS</b>: a doença entra <b>na cavidade torácica</b>. Linfonodos mediastinais <b>não se esvaziam cirurgicamente</b> — restam quimio e radioterapia, e a <b>sobrevida é menor</b>. Já um tumor LATERAL drena à <b>AXILA</b>, onde é possível o <b>ESVAZIAMENTO AXILAR</b> (retirada dos linfonodos comprometidos). Mesma doença, quadrantes diferentes, prognósticos diferentes — a anatomia decide.`],
+  ["d) O exame físico",
+   `<b>Fixação + retração de pele = tumor INFILTRATIVO</b> até prova em contrário: invade a fáscia do peitoral (fixa a mama, que perde a mobilidade normal) e repuxa a pele (diferencial com a rara mama fixa benigna por perfuração da fáscia — biópsia decide). Descrição adequada: <b>"tumoração indurada, fixa, com retração cutânea, no quadrante superomedial da mama esquerda"</b> — o quadrante orienta o radiologista na mamografia/US. Completar SEMPRE com: <b>palpação da AXILA</b> (linfonodos + processo axilar), inspeção do <b>sulco submamário</b>, comparação com a mama contralateral — e estímulo ao autoexame.`],
+ ],
+ ref:"Linfática e o caso do tumor medial"},
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 04</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 04</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 04 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 04 — Mama",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Localização, quadrantes, camadas, Cooper, crista mamária, vascularização e a drenagem linfática que decide o prognóstico.",cards:[
+{area:"Localização",cat:"prof",q:"O 'endereço' completo da mama (limites e referências)?",a:"Entre a 2ª e 6ª COSTELA · LATERAL à margem lateral do esterno (nunca sobre ele) · até a linha axilar anterior ou MÉDIA · MAMILO ± no centro, na altura da 4ª COSTELA / 4º EIC."},
+{area:"Localização",cat:"prof",q:"Seio mamário × sulco submamário?",a:"SEIO MAMÁRIO = o ESPAÇO ENTRE as duas mamas (a população chama a mama de 'seio' — errado). SULCO SUBMAMÁRIO = a dobra EMBAIXO da mama (maior quanto maior/mais baixa a mama; examinar: infecção, alergia de sutiã)."},
+{area:"Localização",cat:"conceito",q:"Como se delimitam as linhas axilares?",a:"ANTERIOR: borda lateral do PEITORAL MAIOR · POSTERIOR: borda lateral do LATÍSSIMO DO DORSO · MÉDIA: entre as duas. A mama pode chegar à anterior ou à média (processo axilar)."},
+{area:"Localização",cat:"conceito",q:"O que faz a forma da mama variar? E o dado estatístico?",a:"Grupo étnico, tipo morfológico constitucional (LONGILÍNEA = menor; BREVILÍNEA = maior), idade, obesidade. Formas: esférica, cônica, PIRIFORME (pera), achatada. Estatística: a DIREITA costuma ser maior e mais baixa."},
+{area:"Quadrantes",cat:"prof",q:"Como se traçam os quadrantes e qual concentra os tumores?",a:"Linha vertical + horizontal SOBRE A PAPILA → superolateral, superomedial, inferolateral, inferomedial. O SUPEROLATERAL tem a maior concentração de tecido GLANDULAR (+ processo axilar) → TUMORES MAIS FREQUENTES ali."},
+{area:"Quadrantes",cat:"prof",q:"Quem dá o VOLUME da mama?",a:"O tecido GORDUROSO (obesa = mama maior) — EXCETO na LACTAÇÃO, quando o tecido glandular aumenta mais que o gorduroso."},
+{area:"Quadrantes",cat:"caso",q:"Por que descrever a tumoração POR QUADRANTE no pedido de exame?",a:"'Tumoração indurada, fixa, no quadrante inferolateral da mama direita' → o radiologista se fixa na região certa na mamografia/US. + Estimular o AUTOEXAME."},
+{area:"Camadas",cat:"prof",q:"A arquitetura da mama em camadas (com epônimos)?",a:"Epiderme → derme → camada AREOLAR (gordura AMARELA — fáscia de CAMPER) → FÁSCIA SUPERFICIAL (entremeada) → camada LAMELAR (gordura BRANCA em lamelas — fáscia de SCARPA) → [fáscia do peitoral + músculo = base, NÃO arquitetura da mama]."},
+{area:"Camadas",cat:"prof",q:"Onde está o tecido glandular e que cor tem na peça?",a:"Na camada LAMELAR (Scarpa). Na peça: glandular = RÓSEO · areolar = amarela · lamelar = branca. É a 'parte nobre' da mama.",obs:"'Isso é importante, hein?' — ênfase literal."},
+{area:"Camadas",cat:"conceito",q:"As camadas da mama valem para outras regiões?",a:"SIM: parede abdominal e raiz da coxa têm o mesmo esquema areolar/fáscia/lamelar; no dorso pode faltar a lamelar. Camper e Scarpa voltarão na topográfica."},
+{area:"Cooper",cat:"prof",q:"Ligamentos suspensores da mama: o que são, onde prendem, por que a mama cai?",a:"Septos da FÁSCIA SUPERFICIAL que envolvem areolar + lamelar + glândula, unem-se e PRENDEM NA CLAVÍCULA (ligamentos de Cooper). Com a idade o conjuntivo AFROUXA → PTOSE. Plástica só projeta (silicone subfascial) — ligamento NÃO se reconstrói."},
+{area:"Papila/Aréola",cat:"prof",q:"Quantos ductos atravessam a papila e o que são os seios lactíferos?",a:"15–20 DUCTOS LACTÍFEROS perfuram a papila. SEIOS LACTÍFEROS = DILATAÇÕES das extremidades dos ductos, antes de desembocar — facilitam o fluxo do leite na sucção."},
+{area:"Papila/Aréola",cat:"prof",q:"O que é TELOTISMO e qual músculo o produz?",a:"Projeção/turgência do mamilo NO FRIO, por contração do M. MAMILO-AREOLAR: músculo LISO ('musculatura sexual'), fibras circulares + longitudinais, inervação AUTÔNOMA. Relaxado: papila plana ou invertida (variação normal)."},
+{area:"Papila/Aréola",cat:"conceito",q:"A cor da aréola: nulípara × gestante?",a:"Mais ROSADA na NULÍPARA; ESCURECE a partir do 2º MÊS de gestação (a papila também) — sempre mais escura que a pele, modulada pelo grupo étnico. Papila e aréola crescem na gestação e regridem."},
+{area:"Papila/Aréola",cat:"conceito",q:"O que são os tubérculos areolares?",a:"Relevos das GLÂNDULAS AREOLARES (sebáceas) da aréola, que AUMENTAM na gravidez — sem exteriorizar secreção (a secreção fica sob a pele, dando fluidez ao tecido fibroso)."},
+{area:"Desenvolvimento",cat:"prof",q:"Linha do tempo do desenvolvimento da mama?",a:"Infância: RUDIMENTO ectodérmico no 4º EIC (2 sexos) → puberdade: ESTRÓGENO ovariano inicia o glandular (5 estágios — gineco) → MÁXIMO nos 2 ÚLTIMOS MESES DE GRAVIDEZ até a lactação → regride após ~6 meses de amamentação (mama fica maior que antes)."},
+{area:"Desenvolvimento",cat:"conceito",q:"O que é ginecomastia?",a:"Formação de TECIDO GLANDULAR MAMÁRIO NO HOMEM (que normalmente tem só o rudimento, sem estrógeno para desenvolvê-lo)."},
+{area:"Relações",cat:"prof",q:"Sobre o que a mama assenta e com o que se relaciona?",a:"ASSENTA sobre o M. PEITORAL MAIOR (sobre a fáscia — com mobilidade normal). Lateral: SERRÁTIL ANTERIOR. Inferior: aponeurose do OBLÍQUO EXTERNO. Peitoral/fáscia NÃO são arquitetura da mama."},
+{area:"Relações",cat:"alerta",q:"Mama FIXA: as duas causas que se confundem?",a:"① RARA e benigna: tecido glandular PERFURA a fáscia do peitoral → mama rígida/fixa. ② TUMOR INFILTRATIVO: invade fáscia/músculo → fixa E RETRAI A PELE. A retração pende para malignidade; biópsia decide."},
+{area:"Embriologia",cat:"prof",q:"A crista mamária: quando, de quê, de onde a onde?",a:"6ª SEMANA embrionária · espessamento ECTODÉRMICO (5–6 camadas) = cordão mamário/crista mamária/cordão lácteo · da AXILA à PREGA INGUINAL, bilateral · INVOLUI restando só o 4º EIC (futuras mamas)."},
+{area:"Embriologia",cat:"prof",q:"Politelia × polimastia × amastia × atelia?",a:"POLITELIA = papila+aréola EXTRA · POLIMASTIA = MAMA COMPLETA extra (clássico: AXILA) · AMASTIA = ausência total (fica mancha escura) · ATELIA = falta da papila. + micro/macromastia (volume) e mamilos ectópicos (fora da crista, raríssimos)."},
+{area:"Embriologia",cat:"caso",q:"'Caroço na axila que piora na menstruação' — qual o diagnóstico do caso do professor?",a:"TECIDO GLANDULAR MAMÁRIO EXTRANUMERÁRIO (mama acessória da crista): a piora menstrual denuncia tecido GLANDULAR hormônio-responsivo. Ressecado e confirmado — não era tumor nem linfonodo."},
+{area:"Irrigação",cat:"prof",q:"As 4 fontes arteriais da mama?",a:"① TORÁCICA INTERNA (da SUBCLÁVIA) → intercostais ANTERIORES 2º–6º EIC (perfurantes; avolumam na lactação); ② TORÁCICA LATERAL (da AXILAR, lateral ao peitoral menor) → ramos laterais; ③ TORÁCICA SUPERIOR (da AXILAR, medial ao peitoral menor) → ramos mediais; ④ INTERCOSTAIS POSTERIORES (diretas da AORTA)."},
+{area:"Irrigação",cat:"prof",q:"Qual artéria é a 'mamária' da cirurgia cardíaca?",a:"A TORÁCICA INTERNA (mamária interna) — ramo da subclávia, desce ao lado do esterno; é o enxerto da PONTE de coronária. Ramos terminais: musculofrênica + epigástrica superior."},
+{area:"Irrigação",cat:"conceito",q:"Torácica lateral × torácica superior: como não confundir?",a:"Ambas da AXILAR. LATERAL: margem LATERAL do peitoral menor → ramos mamários LATERAIS (sintopia com o n. torácico longo). SUPERIOR: margem MEDIAL do peitoral menor → ramos mamários MEDIAIS."},
+{area:"Veias",cat:"prof",q:"Desembocadura das veias torácicas internas?",a:"ESQUERDA → v. BRAQUIOCEFÁLICA · DIREITA → mais frequentemente na VCS. As torácicas (laterais) → vv. AXILARES. As veias acompanham as artérias."},
+{area:"Veias",cat:"prof",q:"Para onde drenam as intercostais posteriores?",a:"SISTEMA ÁZIGO: direita → ÁZIGO direto · esquerda → HEMIÁZIGO (abaixo do 5º EIC) ou HEMIÁZIGO ACESSÓRIO (acima) → ázigo → VCS. As anteriores drenam para a torácica interna."},
+{area:"Veias",cat:"prof",q:"A veia TORACOEPIGÁSTRICA: trajeto e importância clínica?",a:"SUPERFICIAL (subcutâneo): drena a pele lateral da mama → AXILAR; anastomosa com a EPIGÁSTRICA SUPERFICIAL (→ safena magna → cava INFERIOR). Ponte entre as CAVAS → via de CIRCULAÇÃO COLATERAL visível na trombose de cava.",obs:"'Veia importante de ser vista na prática.'"},
+{area:"Linfática",cat:"prof",q:"Por que a drenagem linfática é 'o mais importante' da aula?",a:"É POR ELA que as células do tumor de mama DISSEMINAM. Todo raciocínio de estadiamento e cirurgia (esvaziamento) parte desse mapa."},
+{area:"Linfática",cat:"prof",q:"O mapa linfático completo da mama?",a:"Plexos INTERLOBULAR + paredes dos DUCTOS → plexo SUBAREOLAR (drena aréola/mamilo) → ~75% LINFONODOS AXILARES (quadrantes laterais) · ~25% PARAESTERNAIS/torácicos internos (mediais, perfurando a fáscia do peitoral) + intercostais → MEDIASTINAIS. Fluxo NÃO é 100% garantido."},
+{area:"Linfática",cat:"prof",q:"Grupamentos do grupo AXILAR?",a:"PEITORAL (anterior) · SUBESCAPULAR (posterior) · CENTRAL (meio da axila) · APICAL (sobre a v. axilar/subclávia) · INFRACLAVICULAR."},
+{area:"Linfática",cat:"conceito",q:"Destino final da linfa de cada lado?",a:"DIREITA → ducto linfático DIREITO · ESQUERDA → ducto TORÁCICO — ambos no ângulo venoso (subclávia/jugular)."},
+{area:"Linfática",cat:"prof",q:"Tumor MEDIAL × LATERAL: por que o prognóstico muda?",a:"MEDIAL → paraesternais → MEDIASTINAIS = dentro do tórax: NÃO há esvaziamento (só quimio/radio) → sobrevida MENOR. LATERAL → AXILA: ESVAZIAMENTO AXILAR possível (retirar os linfonodos comprometidos). O quadrante decide.",obs:"O raciocínio-chave da aula."},
+{area:"Inervação",cat:"conceito",q:"Inervação da mama?",a:"NN. INTERCOSTAIS do 2º ao 6º EIC (com os vasos) + RAMOS VENTRAIS CUTÂNEOS ANTERIORES (pele/tela subcutânea). Musculatura mamilo-areolar: inervação AUTÔNOMA (telotismo)."},
+{area:"Clínica",cat:"prof",q:"Mastite aguda: causa, quadro e conduta?",a:"Leite não retirado 'EMPEDRA' → inflamação/infecção: mama VERMELHA, QUENTE, ENDURECIDA. TTO: ANTI-INFLAMATÓRIO + ANTIBIÓTICO; DRENAR SÓ SE ABSCESSO (não drenado pode fistulizar). Prevenção: esvaziar (sucção/bombinha)."},
+{area:"Clínica",cat:"conceito",q:"Bebê que não pega o peito nas primeiras horas: qual o risco?",a:"HIPOGLICEMIA neonatal se ficar muitas horas sem mamar → estimular a pega, estimular a protrusão da papila (se plana/invertida) e repor se necessário."},
+{area:"Clínica",cat:"conceito",q:"Mamografia: o que levanta suspeita de tumoração?",a:"RADIOPACIDADE aumentada com CONCENTRAÇÃO DE CÁLCIO (calcificações) → pensar em tumoração e investigar."},
+{area:"Clínica",cat:"conceito",q:"Cistos de gordura da mama: onde e como tratar?",a:"Na CAMADA AREOLAR (gordura superficial); aspirados/comprimidos — podem recidivar."},
+{area:"Clínica",cat:"conceito",q:"Onde se coloca o silicone na mamoplastia atual?",a:"Geralmente ABAIXO DA FÁSCIA DO PEITORAL maior (subfascial) — apenas projeta a mama; NÃO reconstrói os ligamentos de Cooper. Alternativa estética: preenchimento com GORDURA AUTÓLOGA no corpo da mama."},
+{area:"Localização",cat:"caso",q:"Exame físico completo da mama: os 5 passos que a aula amarrou?",a:"① Inspeção (forma, simetria, pele/retração) · ② dividir em QUADRANTES e palpar · ③ palpar a AXILA (processo axilar + linfonodos) · ④ levantar a mama e ver o SULCO submamário · ⑤ descrever tumoração POR QUADRANTE no pedido. + autoexame."},
+]},
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-mama-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
