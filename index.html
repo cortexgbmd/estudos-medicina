@@ -31,7 +31,6 @@
     --chip-bg:#e7e6ef; --chip-ink:#3b4160; --chip-on-bg:#181b2e; --chip-on-ink:#ffffff;
     --accent:#4f46e5; --on-accent:#ffffff; --gold:#b7852a;
   }
-  html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;min-height:100vh}
   a{color:inherit;text-decoration:none}
   ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
@@ -94,7 +93,7 @@
   .card .body{position:absolute;inset:0;z-index:2;padding:16px;display:flex;flex-direction:column}
   .card .mat{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.82)}
   .card .ttl{margin-top:auto;font-size:15px;font-weight:700;line-height:1.2;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
-  .card .pill{margin-top:10px;align-self:flex-start;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;backdrop-filter:blur(3px)}
+  .card .pill{margin-top:10px;align-self:flex-start;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px}
   .card .sem{position:absolute;top:12px;right:12px;z-index:2;background:rgba(0,0,0,.42);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.2)}
   .card .play{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s}
   .card:hover .play,.card:focus-visible .play{opacity:1}
@@ -651,9 +650,11 @@ function row(title, items){
   return `<section class="row"><h2>${esc(title)}</h2><div class="track">${items.map(poster).join('')}</div></section>`;
 }
 function semestres(){ return [...new Set(MATS.map(m=>m.semestre).filter(Boolean))].sort((a,b)=>a-b); }
+function ordAula(m){ const x=/Aulas?\s*0?(\d+)/i.exec(m.title||''); return x?Number(x[1]):999; }
+function sortAulas(arr){ return [...arr].sort((a,b)=>ordAula(a)-ordAula(b)); }
 function materiasDe(sem){
   const by={}; MATS.filter(m=>String(m.semestre)===String(sem)).forEach(m=>{(by[m.materia]=by[m.materia]||[]).push(m)});
-  return Object.entries(by).sort((a,b)=>b[1].length-a[1].length);
+  return Object.entries(by).sort((a,b)=>b[1].length-a[1].length).map(([mat,its])=>[mat,sortAulas(its)]);
 }
 
 const SEMS = semestres();
@@ -699,7 +700,7 @@ function render(){
   }
   const doSem=MATS.filter(m=>String(m.semestre)===String(fSem));
   if(fMat){
-    const sel=doSem.filter(m=>m.materia===fMat);
+    const sel=sortAulas(doSem.filter(m=>m.materia===fMat));
     wrap.className='results';
     wrap.innerHTML=`<div class="results-head">${sel[0]?cfg(sel[0]).e+' ':''}${esc(fMat)} · ${sel.length} materiai(s)</div>`+
       `<div class="grid">${sel.map(poster).join('')}</div>`;
@@ -712,14 +713,18 @@ function render(){
 
 document.getElementById('chips').addEventListener('click',e=>{
   const t=e.target.closest('.semtab'), c=e.target.closest('.chip');
-  if(t){ fSem=Number(t.getAttribute('data-sem')); fMat=null; render(); window.scrollTo({top:0,behavior:'smooth'}); }
-  else if(c){ fMat=c.getAttribute('data-mat')||null; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+  if(t){ fSem=Number(t.getAttribute('data-sem')); fMat=null; render(); window.scrollTo(0,0); }
+  else if(c){ fMat=c.getAttribute('data-mat')||null; render(); window.scrollTo(0,0); }
 });
 document.getElementById('inicio').addEventListener('click',e=>{
   e.preventDefault(); fSem=SEM_DEFAULT; fMat=null; termo=''; document.getElementById('busca').value=''; render();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo(0,0);
 });
-document.getElementById('busca').addEventListener('input',e=>{termo=e.target.value.trim(); render();});
+let buscaT=null;
+document.getElementById('busca').addEventListener('input',e=>{
+  clearTimeout(buscaT);
+  buscaT=setTimeout(()=>{termo=e.target.value.trim(); render();},120);
+});
 document.addEventListener('click',e=>{ const a=e.target.closest('a.card, a.btn.play'); if(a) marcarAberto(a.getAttribute('href')); });
 function toggleTema(){
   const cur=document.documentElement.dataset.theme==='light'?'dark':'light';
