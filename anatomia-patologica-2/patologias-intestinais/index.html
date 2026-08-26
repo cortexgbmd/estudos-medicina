@@ -1,0 +1,1479 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 05 — Patologias Intestinais · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 05 — Patologias Intestinais</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 05 (dupla — 19 e 24/08)</p>
+  <h1 class="page-h1">Patologias Intestinais</h1>
+  <p class="lead">Da histologia normal ao adenocarcinoma invasivo, passando por colite ulcerativa × Crohn, pólipos, displasia e polipose adenomatosa familiar. É a aula que a Profa. Janaina encerrou anunciando as duas lâminas da prova prática: <b>pólipo hiperplásico com inflamação</b> e <b>adenocarcinoma invasivo</b> — "dois extremos, conceitos bem escrachados". Este hub cobre a teoria inteira que sustenta esse laudo.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">Histologia normal: o mapa que a patologia consulta</a></li>
+      <li><a href="#t2">Doença inflamatória intestinal: os 3 pilares da etiopatogênese</a></li>
+      <li><a href="#t3">Colite ulcerativa × Doença de Crohn</a></li>
+      <li><a href="#t4">Granuloma, fibrose e as marcas do Crohn na lâmina</a></li>
+      <li><a href="#t5">Complicações: fístulas, bridas, volvo e megacólon tóxico</a></li>
+      <li><a href="#t6">DII e câncer + exames de apoio (ANCA, calprotectina)</a></li>
+      <li><a href="#t7">Pólipos I: inflamatório e hiperplásico</a></li>
+      <li><a href="#t8">Zonas proliferativas, displasia e adenomas</a></li>
+      <li><a href="#t9">Adenocarcinoma: microambiente, invasão e imuno-histoquímica</a></li>
+      <li><a href="#t10">Polipose adenomatosa familiar e a via molecular</a></li>
+      <li><a href="#t11">A prova prática: como laudar as lâminas 31 e 61</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Histologia normal: o mapa que a patologia consulta</h2>
+  <p>Antes de qualquer doença, a professora refez o trajeto histológico do intestino — porque <b>todo laudo de patologia intestinal começa perguntando "isso aqui deveria ser o quê?"</b>. As quatro camadas são sempre as mesmas (mucosa → submucosa → muscular do órgão → serosa), e a <b>muscular da mucosa</b> é a linha divisória que vai separar colite de Crohn mais adiante.</p>
+  <h3>Duodeno — o segmento que neutraliza ácido</h3>
+  <ul>
+    <li>Recebe o quimo ácido do estômago <b>e</b> as enzimas pancreáticas, que só funcionam em pH adequado. Quem resolve são as <b>glândulas de Brunner</b>, na <b>submucosa</b>: secretam <b>muco alcalino</b> que sobe e é drenado <b>abrindo-se nas criptas de Lieberkühn</b> — equalizando o pH para as enzimas do pâncreas agirem.</li>
+    <li>Vilosidades <b>em forma de folha</b>, mais largas e baixas que as do jejuno.</li>
+  </ul>
+  <figure class="fig"><img src="img/duodeno-anotado.jpg" alt="Histologia do duodeno anotada">
+  <figcaption><b>Duodeno anotado</b> — vilosidades em forma de folhas, criptas de Lieberkühn e as glândulas de Brunner na submucosa, "abrindo-se nas criptas" para lançar o muco alcalino. Só o duodeno tem Brunner — guarde isso: é o que denuncia invasão no intestino grosso (tópico 9).</figcaption></figure>
+  <h3>Jejuno e íleo</h3>
+  <ul>
+    <li><b>Jejuno:</b> vilosidades longas e digitiformes — o auge da absorção. Epitélio simples colunar com <b>enterócitos</b> (absorção) e <b>células caliciformes</b> (muco).</li>
+    <li><b>Íleo:</b> a marca registrada são as <b>placas de Peyer</b> — grandes agregados linfoides na mucosa/submucosa, vigiando o conteúdo antes da válvula ileocecal.</li>
+    <li>A quantidade de caliciformes <b>aumenta ao longo do trajeto</b>, proporcional à abrasão: quanto mais sólido e agressivo o conteúdo, mais muco é preciso.</li>
+  </ul>
+  <figure class="fig"><img src="img/ileo-peyer.jpg" alt="Íleo com placas de Peyer destacadas">
+  <figcaption><b>Íleo</b> — placas de Peyer (destacadas em azul) ocupando mucosa e submucosa. É o tecido linfoide que identifica o íleo na lâmina.</figcaption></figure>
+  <h3>Intestino grosso</h3>
+  <ul>
+    <li><b>Sem vilosidades</b> — só <b>glândulas de Lieberkühn</b> retas e profundas, riquíssimas em <b>caliciformes</b> (as fezes já estão sólidas; o muco é o lubrificante).</li>
+    <li>O tecido linfoide aqui é o <b>GALT</b> — folículos linfoides difusos na mucosa/submucosa. Na dúvida entre delgado e grosso na lâmina, o patologista procura: <b>Peyer = íleo · GALT = grosso · Brunner = duodeno</b>.</li>
+    <li>O epitélio do trato digestivo se renova a cada <b>3–5 dias</b> — uma das maiores taxas proliferativas do corpo. Essa vocação regenerativa é bênção (cura rápido) e maldição (prolifera demais quando estimulado cronicamente).</li>
+  </ul>
+  <figure class="fig"><img src="img/grosso-histologia.jpg" alt="Histologia do intestino grosso">
+  <figcaption><b>Intestino grosso</b> — glândulas de Lieberkühn retas, carregadas de células caliciformes, sem vilosidades. Abaixo, a submucosa.</figcaption></figure>
+  <figure class="fig"><img src="img/galt-foliculo.jpg" alt="Folículo linfoide do GALT">
+  <figcaption><b>GALT</b> — folículo linfoide (azul) atravessando mucosa e submucosa do intestino grosso. Não confundir com placa de Peyer (essa é do íleo).</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Microbiota: 200 g de bactérias por quilo de fezes</p>
+  <p>A professora insistiu: o intestino não trabalha sozinho. A <b>microbiota</b> participa da digestão, da educação imune e da proteção de nicho — e cada quilo de fezes carrega cerca de <b>200 g de bactérias</b>. Dieta industrializada, antibióticos e estresse produzem <b>DISBIOSE</b> (microbiota desequilibrada), que é um dos três pilares da doença inflamatória intestinal logo abaixo. Nos casos graves chega-se a "zerar e reflorestar": antibioticoterapia intensa seguida de lactobacilos ou <b>transplante de fezes</b> — bactérias purificadas de um doador de convívio íntimo, infundidas por sonda até o duodeno.</p></div>
+
+  <h2 class="topic" id="t2">2 · Doença inflamatória intestinal: os 3 pilares da etiopatogênese</h2>
+  <p>Doença inflamatória intestinal (DII) é o guarda-chuva que cobre <b>colite ulcerativa</b> e <b>doença de Crohn</b>: inflamações <b>crônicas, idiopáticas e recidivantes</b> do trato digestivo. Não há causa única — há um tripé:</p>
+  <div class="diagrama"><p class="t">Os 3 pilares da DII (os três precisam conversar)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Predisposição genética</b> — <span class="d">o gene mais citado é o <b>NOD2</b>, no <b>cromossomo 16</b>, associado ao Crohn: altera o reconhecimento de padrões bacterianos pelo sistema imune inato.</span></div></li>
+    <li><span class="n">2</span><div><b>Microbiota alterada (disbiose)</b> — <span class="d">dieta industrializada, conservantes, antibióticos → flora desequilibrada que apresenta antígenos errados na hora errada.</span></div></li>
+    <li><span class="n">3</span><div><b>Resposta imune desregulada</b> — <span class="d">a mucosa responde à própria flora com inflamação desproporcional e <b>não desliga mais</b>.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>A inflamação crônica é <b>lesiva por natureza</b>: neutrófilos e macrófagos despejam <b>colagenases, elastases e radicais livres</b> que digerem o tecido do próprio hospedeiro. Resultado: <b>erosão</b> (perda do epitélio, rasa) e <b>úlcera</b> (lesão profunda, que invade o conjuntivo).</li>
+    <li>Clínica: diarreia crônica (muitas vezes <b>com sangue e muco</b>), cólica, urgência, tenesmo, emagrecimento, <b>anemia ferropriva</b> pelas perdas contínuas.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Gravidade da colite</th><th>Evacuações/dia</th><th>Sangue nas fezes</th></tr>
+    <tr><td><b>Branda</b></td><td>&lt; 4 (geralmente no início do dia), urgência mínima</td><td>intermitente</td></tr>
+    <tr><td><b>Moderada</b></td><td>4–8, cólicas e urgência</td><td>frequente</td></tr>
+    <tr><td><b>Severa</b></td><td>&gt; 8, movimentos noturnos, urgência ± incontinência</td><td>frequente</td></tr>
+    <tr><td><b>Fulminante</b></td><td>&gt; 10, tenesmo, dor abdominal severa</td><td>continuamente</td></tr>
+  </table></div>
+  <div class="box prof"><p class="h">🎯 "Sangue oculto custa centavos" — e anemia crônica é inaceitável</p>
+  <p>A professora bateu duro na investigação preguiçosa: paciente com queixa intestinal arrastada merece <b>pesquisa de sangue oculto nas fezes</b> ("custa centavos") e ninguém deveria conviver anos com <b>anemia crônica</b> sem que alguém pergunte para onde o ferro está indo. Qualquer médico pode pedir a colonoscopia — "não precisa ser gastro". Ela contou o caso de uma professora colega, com sintomas antigos, cujo diagnóstico veio tardio: <em>"a clínica é soberana — mas só para quem FAZ clínica: anamnese, pergunta, histórico"</em>.</p></div>
+
+  <h2 class="topic" id="t3">3 · Colite ulcerativa × Doença de Crohn</h2>
+  <p>É O quadro comparativo da aula — a professora avisou que a distinção cai em todas as provas dela. A chave dupla: <b>distribuição</b> (contínua × salteada) e <b>profundidade</b> (mucosa × transmural).</p>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>Colite ulcerativa (CU)</th><th>Doença de Crohn</th></tr>
+    <tr><td><b>Onde</b></td><td>só <b>cólon e reto</b>; <b>começa no reto</b> e sobe</td><td><b>boca ao ânus</b> — predileção por <b>íleo terminal</b></td></tr>
+    <tr><td><b>Padrão</b></td><td><b>contínuo e difuso</b>, sem áreas poupadas</td><td><b>salteado</b> (skip lesions): lesão–mucosa sã–lesão</td></tr>
+    <tr><td><b>Profundidade</b></td><td>limitada à <b>mucosa</b> (respeita a muscular da mucosa)</td><td><b>transmural</b> — pode atravessar todas as camadas e perfurar</td></tr>
+    <tr><td><b>Histologia típica</b></td><td>úlceras, <b>pseudopólipos</b>, abscessos de cripta</td><td><b>granulomas epitelioides</b>, fissuras, fibrose</td></tr>
+    <tr><td><b>Complicações próprias</b></td><td><b>megacólon tóxico</b></td><td><b>fístulas, bridas, estenoses</b></td></tr>
+  </table></div>
+  <figure class="fig"><img src="img/crohn-vs-cu.jpg" alt="Diagrama comparativo Crohn versus colite ulcerativa">
+  <figcaption><b>O diagrama do slide</b> — Crohn com lesões salteadas (skip lesions), inflamação transmural, ulcerações e fissuras; colite ulcerativa com acometimento colônico contínuo começando no reto, úlceras e pseudopólipos.</figcaption></figure>
+  <ul>
+    <li><b>Pseudopólipo</b> (marca da CU): quando a ulceração destrói a mucosa ao redor, a ilha de mucosa <b>sã</b> que sobrou fica saliente — parece pólipo, mas é o tecido normal cercado de destruição. Por isso "pseudo".</li>
+    <li>Na colonoscopia da CU: mucosa contínua e difusamente vermelha, friável, sangrante. No Crohn: áreas doentes intercaladas com trechos normais + úlceras <b>aftoides</b> profundas.</li>
+  </ul>
+  <figure class="fig"><img src="img/colono-dii.jpg" alt="Colonoscopias de doença inflamatória em atividade">
+  <figcaption><b>DII em atividade na colonoscopia</b> — mucosa eritematosa, friável, com ulcerações e sangramento ao toque do aparelho.</figcaption></figure>
+  <figure class="fig"><img src="img/pseudopolipos-endo.jpg" alt="Pseudopólipos vistos na endoscopia">
+  <figcaption><b>Pseudopólipos</b> — ilhas pálidas de mucosa preservada salientes em meio à mucosa doente da colite ulcerativa.</figcaption></figure>
+  <figure class="fig"><img src="img/pseudopolipos-micro.jpg" alt="Pseudopólipos e abscessos em cripta na microscopia">
+  <figcaption><b>Na lâmina</b> — pseudopólipos, abscessos em cripta e neutrófilos: a tríade histológica da colite ulcerativa em crise.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 "Diagnóstico é momento, não erro"</p>
+  <p>A professora repetiu uma ideia importante para levar para a vida clínica: a biópsia colhe <b>amostras</b> — e a doença pode se declarar aos poucos. Um laudo de "colite inespecífica" que dois anos depois vira Crohn <b>não foi um erro</b>: foi o que a lâmina permitia afirmar naquele momento. Por isso o colonoscopista <b>biopsia múltiplos pontos</b>, inclusive de mucosa aparentemente sã.</p></div>
+
+  <h2 class="topic" id="t4">4 · Granuloma, fibrose e as marcas do Crohn na lâmina</h2>
+  <h3>Por que o Crohn faz granuloma?</h3>
+  <ul>
+    <li>Sequência da inflamação: <b>aguda → crônica → granulomatosa</b>. Quando nem a aguda nem a crônica resolvem, os <b>macrófagos "desistem" da fagocitose</b> e, sob ação das citocinas, se transformam em <b>células epitelioides</b>, que se organizam em círculo ao redor da agressão — o <b>granuloma</b>.</li>
+    <li>O granuloma do Crohn pode aparecer <b>em qualquer camada</b> (mucosa, submucosa, muscular) — coerente com a doença transmural. <b>Granuloma = fechou Crohn</b>, mesmo sem ver as demais camadas. Colite ulcerativa NÃO faz granuloma.</li>
+    <li>Células epitelioides podem se fundir em <b>células gigantes multinucleadas tipo Langhans</b> — as mesmas da lâmina de tuberculose. Daí a importância da anamnese: histórico de TB muda a leitura de um granuloma intestinal.</li>
+  </ul>
+  <figure class="fig"><img src="img/granuloma-criptas.jpg" alt="Granuloma epitelioide entre criptas">
+  <figcaption><b>Granuloma epitelioide</b> (setas) entre duas criptas intactas do cólon — o achado que fecha doença de Crohn.</figcaption></figure>
+  <figure class="fig"><img src="img/granuloma-langhans.jpg" alt="Granuloma com célula gigante tipo Langhans">
+  <figcaption><b>Granuloma com célula gigante tipo Langhans</b> (G) — a mesma organização vista na tuberculose; no intestino, aponta Crohn (após a clínica excluir TB).</figcaption></figure>
+  <h3>Fibrose: a cicatriz que não absorve</h3>
+  <ul>
+    <li>Mucosa com vida média de 3–5 dias regenera muito — mas sob inflamação persistente a capacidade regenerativa <b>cai</b>, e o corpo troca mucosa por <b>cicatriz (fibrose)</b>.</li>
+    <li><b>Mucosa em paralelepípedo:</b> na macroscopia, faixas de mucosa funcional alternadas com faixas de fibrose — os "blocos" do calçamento. <b>Mucosa careca:</b> trechos longos sem epitélio, substituídos por fibrose — <b>área de absorção zero, sem volta</b>. Pacientes com grandes extensões carecas podem precisar de suplementação de nutrientes para o resto da vida.</li>
+    <li>Na dúvida entre mucosa e cicatriz, usa-se o <b>tricrômico de Masson</b> — cora colágeno e evidencia as faixas de conjuntivo onde deveria haver mucosa.</li>
+  </ul>
+  <figure class="fig"><img src="img/crohn-macro.jpg" alt="Macroscopia do Crohn com fissuras e aspecto em paralelepípedos">
+  <figcaption><b>Crohn na macroscopia</b> — fissuras longitudinais profundas e o clássico aspecto em paralelepípedos (cobblestone): mucosa sobrevivente formando "blocos" entre fendas ulceradas e fibrose.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Complicações: fístulas, bridas, volvo e megacólon tóxico</h2>
+  <h3>Complicações do Crohn (doença transmural)</h3>
+  <ul>
+    <li><b>Fístulas:</b> a lesão perfura e a cicatrização une um órgão ao outro. Exemplo marcante da aula: paciente que <b>urinava fezes</b> — fístula entre intestino e bexiga (enterovesical), com infecções urinárias de repetição.</li>
+    <li><b>Bridas:</b> citocinas transmurais ativam fibroblastos <b>fora</b> do intestino → traves fibróticas ligando alças (ou alça a bexiga/útero). Movimento peristáltico arrasta tudo junto: dor absurda + trânsito comprometido → cirurgia exploratória para desfazer.</li>
+    <li><b>Estenose → obstrução → volvo:</b> a fibrose transmural faz uma "cintura" no intestino. Para vencer a passagem estreita, o peristaltismo aumenta (cólicas) e a alça pode <b>torcer</b> (volvo). No raio-X, a alça torcida e distendida dá a <b>"imagem do feijão"</b>. Torção → isquemia das ramificações mesentéricas → necrose → ressecção do segmento. As fotos da aula eram do Prof. Tadeu, da emergência cirúrgica: mulher de 36 anos, desconforto intestinal "da vida inteira", abdome agudo, alça gigante torcida.</li>
+    <li><b>Intussuscepção:</b> a onda peristáltica forte demais faz um segmento <b>engolir</b> o segmento da frente. Dois pontos de dobra = dois pontos de possível isquemia. Se desengatar sozinha, resolve — mas é preciso procurar a causa do peristaltismo alterado.</li>
+  </ul>
+  <h3>Megacólon tóxico (marca da CU)</h3>
+  <ul>
+    <li>Na CU em crise, grandes segmentos <b>continuamente</b> inflamados despejam um volume enorme de citocinas → efeito <b>tóxico sobre o plexo mioentérico</b>, que controla o peristaltismo e o tônus.</li>
+    <li>Plexo intoxicado → o segmento <b>perde o tônus e afrouxa</b> → dilatação bizarra, sem torção, com material fecal impactando. Conduta: <b>remoção do segmento</b> + colostomia temporária.</li>
+    <li>Por que na CU e não no Crohn? Porque a CU é <b>contínua</b> — a extensão continuamente inflamada gera o pulso maciço de citocinas. A colite <b>aguda</b> (a bactéria do "lanche de pernil na porta do estádio") não dura o suficiente para isso.</li>
+  </ul>
+
+  <h2 class="topic" id="t6">6 · DII e câncer + exames de apoio</h2>
+  <div class="box alerta"><p class="h">⚠️ Risco de câncer: 20–30× maior — e cresce com o tempo descontrolado</p>
+  <p>Paciente com colite ulcerativa <b>descontrolada</b> tem risco de câncer colorretal <b>20 a 30 vezes maior</b> que a população geral — vale para a DII como um todo (colite ou Crohn). E o tempo de doença <b>mal controlada</b> soma: aos 10 anos ≈ +1% (chegando a ~31%), aos 15 anos +3,5%, e aos <b>30 anos de doença não controlada ≈ 60% de chance</b> de câncer de intestino. O mecanismo é o tema dos tópicos seguintes: regeneração forçada + fatores de crescimento inflamatórios = proliferação com erro.</p></div>
+  <h3>P-ANCA e X-ANCA: quando a inflamação vira o "patógeno"</h3>
+  <ul>
+    <li>Na DII persistente acontece uma loucura imunológica: as <b>próprias células inflamatórias</b> passam a ser vistas pelo organismo <b>como o agente causal da doença</b> — e o sistema imune fabrica <b>anticorpos contra as enzimas do citoplasma dos próprios neutrófilos</b>: são os <b>ANCA</b> (P-ANCA e X-ANCA).</li>
+    <li>A doença <b>não nasce autoimune</b> — ela <b>adquire comportamento autoimune</b> no meio do caminho (por isso ANCA é negativo no início). E por isso o tratamento se parece com o de doença autoimune: corticoide.</li>
+    <li>Positividade (números do slide): <b>~75% no Crohn</b> e <b>~11% na colite</b>. Não fecha diagnóstico — mas <b>justifica a colonoscopia</b> frente ao convênio.</li>
+  </ul>
+  <h3>Calprotectina fecal</h3>
+  <ul>
+    <li>Enzima presente nos <b>neutrófilos</b>; se aparece nas <b>fezes</b>, é porque há neutrófilos infiltrando a luz intestinal → inflamação ativa. Não é específica de CU nem de Crohn (positiva até em colite aguda) — é mais um argumento para indicar a colono.</li>
+    <li>Por que neutrófilo, se a doença é crônica (linfócitos)? Porque a superfície ulcerada em contato com o bolo fecal <b>reagudiza todo dia</b>: linfócitos predominam nas camadas, neutrófilos abundam na superfície.</li>
+  </ul>
+  <figure class="fig"><img src="img/calprotectina.jpg" alt="Tabela de interpretação da calprotectina fecal">
+  <figcaption><b>Interpretação da calprotectina fecal</b> — &lt;100: inflamação improvável; 100–250: sugestivo de inflamação de baixo grau, repetir; &gt;250: inflamação muito provável — afastar infecções e encaminhar para colonoscopia.</figcaption></figure>
+  <div class="box conexao"><p class="h">🔗 Congestão + inflamação = risco de trombo</p>
+  <p>A estase vascular da mucosa inflamada lesiona o endotélio → exposição do subendotélio e do fator de von Willebrand → adesão plaquetária → <b>microtrombos</b> e isquemia focal. É a cascata da hemostasia da Pato I aplicada: <b>inflamação é fator de risco para trombose</b> — mais um motivo para silenciar a DII.</p></div>
+
+  <h2 class="topic" id="t7">7 · Pólipos I: inflamatório e hiperplásico</h2>
+  <div class="box prof"><p class="h">🎯 Definição que abre a segunda aula</p>
+  <p><b>Pólipo é toda formação tecidual saliente em direção à luz de um órgão cavitário</b> — intestino, estômago, útero, nariz. O nome não diz a natureza: a natureza <b>só a microscopia revela</b>. Com o paciente, aliás, evite "tumoração" — "os caras piram antes da hora"; prefira "massa saliente".</p></div>
+  <h3>Pólipo inflamatório — o checklist da lâmina</h3>
+  <ul>
+    <li><b>Infiltrado inflamatório:</b> polimorfonuclear (neutrófilos) se agudo · mononuclear (linfócitos) se crônico. O laudo escreve "infiltrado polimorfonuclear/mononuclear" — traduza.</li>
+    <li><b>Onde está o infiltrado?</b> Limitado à mucosa → pensa colite. <b>Ultrapassou a muscular da mucosa → pensa Crohn.</b> A mesma régua de sempre.</li>
+    <li><b>Congestão vascular</b> (capilares entupidos de hemácias — os "laguinhos vermelhos"), <b>edema</b> (clarões entre as fibras), <b>exsudato</b> (líquido rico em proteínas E células — diferente do transudato, pobre em ambos), eventualmente <b>neoangiogênese</b> e <b>fibrose</b> se crônico.</li>
+    <li><b>Erosão × úlcera:</b> erosão = perda do epitélio, rasa; úlcera = aprofundou no conjuntivo. Só existem se houve <b>morte celular</b> — "a erosão é o achado da morte".</li>
+    <li><b>Abscesso de cripta:</b> leucócitos extravasam para <b>dentro da luz da glândula</b> de Lieberkühn — coleção inflamatória em ambiente cavitário. Clássico de DII em atividade.</li>
+  </ul>
+  <figure class="fig"><img src="img/abscesso-cripta.jpg" alt="Abscesso em cripta">
+  <figcaption><b>Abscesso em cripta</b> — coleção de neutrófilos dentro da glândula, aqui numa inflamação que já alcança a submucosa (transmural → Crohn).</figcaption></figure>
+  <h3>Pólipo hiperplásico — proliferou, mas sem atipia</h3>
+  <ul>
+    <li>O epitélio intestinal é <b>unistratificado</b>. Bastou ver <b>sobreposição</b> (caliciforme sobre caliciforme, enterócito sobre enterócito) → epitélio proliferado.</li>
+    <li>Na hiperplasia a <b>única</b> alteração nuclear aceitável é o <b>núcleo alongado por falta de espaço</b> ("é a gente no metrô de manhã"). <b>Sem</b> hipercromasia, <b>sem</b> nucléolo, <b>sem</b> perda de polaridade, <b>sem</b> pleomorfismo.</li>
+    <li>A glândula proliferada pode ter <b>lúmen irregular/cribriforme</b> — o empilhamento celular avança sobre a luz.</li>
+    <li>Causa habitual: <b>fatores de crescimento liberados pela inflamação crônica</b>. Mas pode ocorrer sem inflamação visível — fatores de crescimento da dieta (hormônios da pecuária, "o pintinho que cresce em 45 dias").</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 A regra de ouro do laudo: o status MAIS GRAVE dá o nome</p>
+  <p>Se o pólipo tem inflamação <b>e</b> hiperplasia, o laudo descreve tudo — mas <b>conclui pelo mais grave: pólipo hiperplásico</b>. É "uma doença levando à outra": a inflamação é a base, a proliferação é a consequência mais preocupante. E o médico que lê só a conclusão perde o principal: <b>tratar a inflamação</b> que está demandando a hiperplasia. "Pólipo hiperplásico, fica tranquilo" NÃO existe — é um órgão em sofrimento avisando a tempo.</p></div>
+  <h3>Séssil × pediculado · liso × rugoso · hamartomatoso</h3>
+  <ul>
+    <li><b>Séssil:</b> cresce 100% aderido à mucosa. Se for maligno, tem caminho curto para <b>invadir camadas profundas</b> (submucosa vascularizada) → <b>pior prognóstico</b>.</li>
+    <li><b>Pediculado:</b> forma uma <b>haste de conjuntivo vascularizado</b>; as atipias ficam na ponta → a haste "compra tempo" até a invasão. Séssil não vira pediculado — cada um nasce com sua forma.</li>
+    <li>Superfície na colono: <b>lisa</b> → não sugere proliferação · <b>rugosa</b> → sugere sobreposição celular (pólipo proliferativo).</li>
+    <li><b>Pólipo hamartomatoso:</b> arquitetura da mucosa <b>congenitamente bizarra</b> (vilos e glândulas de tamanho/forma alterados), mas <b>histologia celular normal, sem atipia</b> — benigno. Feio no tamanho, inocente na célula.</li>
+  </ul>
+  <figure class="fig"><img src="img/polipo-sessil-pediculado.jpg" alt="Pólipo séssil e pólipo pediculado na colonoscopia">
+  <figcaption><b>Na colonoscopia</b> — à esquerda, pólipo séssil (chapado na mucosa); à direita, pediculado (a bola na ponta da haste). O séssil maligno desce rápido; o pediculado dá tempo.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Zonas proliferativas, displasia e adenomas</h2>
+  <h3>O mapa das zonas (o "artigo fofo" da aula)</h3>
+  <div class="diagrama"><p class="t">Onde a mitose PODE acontecer no vilo/glândula</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Zona 1 — fundo da glândula</b> — <span class="d">o "armazém" das <b>células germinativas</b> indiferenciadas. Aqui NÃO se flagra mitose em atividade.</span></div></li>
+    <li><span class="n">2</span><div><b>Zona 2 — laterais da glândula</b> — <span class="d">é AQUI que a mitose é fisiológica: diferenciação e multiplicação para renovar o epitélio a cada 3–5 dias. Uma ou outra figura de mitose = normal.</span></div></li>
+    <li><span class="n">3</span><div><b>Zona 3 — ápice do vilo</b> — <span class="d">células <b>maduras</b>, que não se multiplicam mais: aqui o normal é <b>apoptose</b> (picnose, cariólise). <b>Mitose no ápice = estímulo mitogênico fora de controle.</b></span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/zonas-proliferativas.jpg" alt="Zonas proliferativas da cripta normal">
+  <figcaption><b>As zonas na cripta normal</b> — zona proliferativa 1 (células indiferenciadas, fundo), zona 2 (atividade mitótica + produção de muco) e o ápice com apoptose e sem mitose. No adenoma, esse mapa se perde.</figcaption></figure>
+  <h3>Displasia: o checklist de atipias (a "tabela de cruzes")</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Item do checklist</th><th>Hiperplasia</th><th>Displasia</th><th>Adenocarcinoma</th></tr>
+    <tr><td>Relação núcleo/citoplasma (no intestino, 1/3)</td><td>normal (núcleo só <b>alongado por aperto</b>)</td><td>aumentada</td><td>bizarra</td></tr>
+    <tr><td>Pleomorfismo (variação de forma)</td><td>ausente</td><td>presente, discreto a moderado</td><td>extremo</td></tr>
+    <tr><td>Hipercromasia</td><td>ausente (ou discretíssima)</td><td>presente</td><td>intensa</td></tr>
+    <tr><td>Nucléolo evidente</td><td>não</td><td>pode aparecer</td><td>múltiplos, evidentes</td></tr>
+    <tr><td>Figuras de mitose fora de lugar</td><td>não</td><td>ocasionais</td><td>francas e frequentes</td></tr>
+    <tr><td>Polaridade (núcleos na base)</td><td>mantida</td><td>parcialmente perdida</td><td>perdida — "ninguém do lado de ninguém"</td></tr>
+  </table></div>
+  <ul>
+    <li>Quanto mais itens marcados e mais intensos, mais o laudo caminha de <b>displasia leve → moderada → severa → adenocarcinoma</b>. Displasia ainda é <b>reversível</b>; por isso vigiar + tratar a causa (dieta, fibras, estilo de vida, inflamação).</li>
+    <li><b>A briga dos patologistas:</b> a professora mostrou lâminas do mesmo artigo laudadas diferente por três laboratórios (baixo grau × alto grau × adenocarcinoma). A linha é tênue — e hoje o <b>desempate é molecular</b> (imuno-histoquímica), não o olho.</li>
+    <li>Uma célula maligna carrega em média <b>~100 genes mutados</b> até a morfologia denunciar. Hiperplasia "de aparência normal" pode já colecionar mutações invisíveis — por isso proliferação exagerada nunca é desprezada.</li>
+  </ul>
+  <figure class="fig"><img src="img/displasia-alto-grau.jpg" alt="Displasia de alto grau em maior aumento">
+  <figcaption><b>Displasia de alto grau</b> — núcleos aumentados e hipercromáticos, nucléolos, pseudoestratificação e perda de polaridade. A professora discordou do laudo original de "baixo grau": "não acho que isso é protetor do doente".</figcaption></figure>
+  <h3>Adenomas: a displasia com nome de pólipo</h3>
+  <ul>
+    <li><b>Adenoma = pólipo displásico = neoplasia BENIGNA</b> (adenocarcinoma é a maligna). Classifica-se pelo lugar da alteração: <b>tubular</b> (na glândula — o mais comum), <b>viloso</b> (no vilo) e <b>tubuloviloso</b> (nos dois).</li>
+    <li>Não neoplásicos: inflamatório, hiperplásico e hamartomatoso. Serrilhado séssil: variante hiperplásica/serrilhada que merece vigilância.</li>
+    <li>Se o pólipo pequeno sai <b>inteiro</b> na colonoscopia, ótimo — vigilância anual. Se é grande, sai por partes e a histologia mostrar malignidade invadindo camadas → <b>reopera para garantir margem</b> (a colono não é cirurgia de margem).</li>
+  </ul>
+  <figure class="fig"><img src="img/serrilhado-sessil.jpg" alt="Pólipo serrilhado séssil">
+  <figcaption><b>Pólipo serrilhado séssil</b> — criptas com luz "serrilhada" e abundância de caliciformes, sem atipia franca.</figcaption></figure>
+  <figure class="fig"><img src="img/adenoma-viloso.jpg" alt="Adenoma viloso em panorâmica">
+  <figcaption><b>Adenoma viloso</b> — projeções digitiformes displásicas, hipercromáticas, em toda a superfície. Viloso × tubular <b>cai na prova teórica</b>; o grau da displasia, não.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Adenocarcinoma: microambiente, invasão e imuno-histoquímica</h2>
+  <h3>A lâmina que "gabarita o checklist"</h3>
+  <ul>
+    <li>Núcleos <b>bizarramente grandes</b>, <b>nucléolos evidentes</b>, <b>hipercromasia</b>, <b>figuras de mitose francas</b> (cromossomos esparramados, citocinese à vista), <b>perda total de polaridade</b> — e nada mais lembra enterócito ou caliciforme.</li>
+    <li><b>Eosinofilia intensa:</b> metabolismo altíssimo. E aqui entra a bioquímica: a proliferação supera a vascularização → <b>hipóxia</b> → ativação do <b>HIF</b> → a célula liga as enzimas da <b>glicólise</b> (fosfofrutoquinase, isomerases) → produção maciça de <b>ácido lático</b>.</li>
+    <li><b>Efeito Warburg / microambiente tumoral:</b> o ácido lático <b>repele as células inflamatórias</b> — na lâmina do câncer há MENOS inflamação que na displasia. Isso favorece o tumor (sem linfócitos T induzindo apoptose) e piora o prognóstico: neoplasia maligna <b>com</b> inflamação crônica ao redor tem vigilância; <b>sem</b> inflamação, "a chance de escapar dali é gigante".</li>
+    <li><b>Desmoplasia:</b> a inflamação crônica que acompanha a neoplasia ativa fibroblastos → deposição de conjuntivo entre as glândulas → o tumor vira "bolota dura" que comprime órgãos.</li>
+  </ul>
+  <h3>Invasão e metástase</h3>
+  <ul>
+    <li><b>Glândula na submucosa do intestino grosso = glândula invasora.</b> A submucosa do grosso não tem glândula nenhuma (Brunner é só duodeno!) — se há glândulas atípicas ali, são Lieberkühn cancerígenas que romperam o limite: <b>adenocarcinoma invasivo</b>.</li>
+    <li>A submucosa é <b>extremamente vascularizada</b>: célula que perdeu genes de adesão se solta, ganha a circulação e o primeiro alojamento do câncer de intestino é o <b>FÍGADO</b> (drenagem portal).</li>
+    <li>Margem: "células inflamatórias são como formigas — vai que tem": inflamação crônica além da área visível de tumor sugere tumor além da visão → <b>ampliar margem</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/lamina-prova.jpg" alt="Adenocarcinoma: arquitetura desorganizada e mitose">
+  <figcaption><b>O roteiro da prática</b> — arquitetura desorganizada, ausência de células caliciformes e figura de mitose apontada: exatamente os termos que o roteiro da Lâmina 61 (adenocarcinoma de intestino grosso) pede para você reconhecer.</figcaption></figure>
+  <h3>Imuno-histoquímica: Ki-67 e p53</h3>
+  <ul>
+    <li>Quando a lâmina é duvidosa, o desempate é a <b>imuno-histoquímica</b>: anticorpos coloridos que se ligam a proteínas específicas (mesmo bloco de parafina — não precisa rebiopsiar).</li>
+    <li><b>Ki-67</b> = índice de proliferação. <b>Alto = a favor de malignidade</b> ("70% onde deveria ser 10 — segura").</li>
+    <li><b>p53</b> = supressor tumoral, induz apoptose. <b>Expressão diminuída = a favor de malignidade.</b> Regra da professora: "mais p53, melhor; menos, pior".</li>
+    <li>Ki-67 alto + p53 baixo + morfologia = não tem mais o que esperar: trata como maligno. E o horizonte: <b>biópsia líquida</b> (DNA de células tumorais soltas no sangue — amostra mais representativa que o fragmento de pinça) e leitura primária de lâminas por <b>scanner + IA</b> (~70% dos casos), com o patologista nos 30% difíceis.</li>
+  </ul>
+  <figure class="fig"><img src="img/ihq-p53.jpg" alt="Imuno-histoquímica para p53">
+  <figcaption><b>Imuno-histoquímica</b> — padrão nuclear castanho da marcação (aqui, p53). Cada anticorpo tem uma cor; o percentual de células marcadas é comparado ao padrão de normalidade do órgão.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Polipose adenomatosa familiar e a via molecular</h2>
+  <ul>
+    <li><b>PAF:</b> herança <b>autossômica dominante</b> — mutação do gene <b>APC</b>, no <b>cromossomo 5</b> (o nome vem de <i>Adenomatous Polyposis Coli</i>). Resultado: atividade multiplicativa exacerbada com <b>500 a 2.500 pólipos</b> adenomatosos.</li>
+    <li>Menos de ~100 pólipos torna PAF improvável — mas o diagnóstico <b>só fecha com o teste genético</b>. E sendo dominante: <b>aconselhamento genético</b> e rastreio dos familiares.</li>
+    <li>Malignização em função do <b>tempo</b> de doença: <b>10 anos → 10% · 20 anos → 50% · 30 anos → 100%</b> de chance de câncer. Por isso a conduta de eleição é a <b>colectomia profilática</b> — remover o cólon antes do câncer, com acompanhamento semestral enquanto se espera. A professora comparou com a Angelina Jolie: retirar o órgão-alvo de quem carrega a mutação é tirar o paciente da condição de risco.</li>
+  </ul>
+  <figure class="fig"><img src="img/paf-macro.jpg" alt="Macroscopia de polipose adenomatosa familiar">
+  <figcaption><b>PAF na macroscopia</b> — cólon literalmente atapetado de pólipos ("de tudo que é tamanho, cor e aparência"). É a peça que a professora leva para a aula prática.</figcaption></figure>
+  <figure class="fig"><img src="img/paf-colono.jpg" alt="Colonoscopia da PAF em vários segmentos">
+  <figcaption><b>PAF na colonoscopia</b> — pólipos em reto, sigmoide e transverso: múltiplos, em todos os segmentos, impossíveis de remover um a um.</figcaption></figure>
+  <h3>A via molecular do câncer colorretal</h3>
+  <div class="diagrama"><p class="t">Os genes da aula (e onde moram)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>APC — cromossomo 5</b> — <span class="d">degrada a <b>β-catenina</b> (fator de transcrição). APC mutado = ninguém desliga a transcrição → "sai besteira, cópias erradas".</span></div></li>
+    <li><span class="n">2</span><div><b>RAS — cromossomo 12</b> — <span class="d">sinaliza proliferação; mutado, ninguém o desliga.</span></div></li>
+    <li><span class="n">3</span><div><b>SMAD — cromossomo 18</b> — <span class="d">inibidor da proliferação; mutado, o freio some.</span></div></li>
+    <li><span class="n">4</span><div><b>p53</b> — <span class="d">o guardião: induz apoptose da célula errada. "Casou APC mutado com p53 mutado, danou-se" — multiplica e não morre.</span></div></li>
+  </ol></div>
+
+  <h2 class="topic" id="t11">11 · A prova prática: como laudar as lâminas 31 e 61</h2>
+  <div class="box prof"><p class="h">🎯 As regras que a professora ditou</p>
+  <p>Na prática caem <b>duas condições extremas</b> — sem displasias intermediárias ("a gente não vai virar o Linde"): <b>Lâmina 31 = pólipo intestinal HIPERPLÁSICO</b> (com inflamação) e <b>Lâmina 61 = ADENOCARCINOMA de intestino grosso</b>. São <b>3 perguntas</b>: <b>(1) o órgão</b> — basta escrever "intestino", sem precisar dizer delgado/grosso; <b>(2) processos patológicos 1 e 2</b> apontados na projeção (ex.: "hiperplasia de enterócitos", "congestão vascular", "infiltrado inflamatório"); <b>(3) conclusão diagnóstica</b>. A regra sagrada: <b>os processos apontados têm que SUSTENTAR a conclusão</b> — "se você olhou dois processos e concluiu errado, não está certo". Quem aponta displasia tem que laudar displásico; quem só viu hiperplasia + inflamação fecha hiperplásico.</p></div>
+  <ul>
+    <li>Também vale para a teórica: diferenciar <b>adenoma tubular × viloso × tubuloviloso</b> CAI; graduar displasia (leve/moderada/severa) <b>NÃO cai</b> — "é uma linha muito tênue, não é justo".</li>
+    <li>Roteiros liberados antes da prática: familiarize-se com os termos — "arquitetura desorganizada", "ausência de células caliciformes", "figura de mitose". Se não souber o que é organizado, volte na histologia normal (tópico 1).</li>
+  </ul>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Histologia:</b> Brunner = duodeno (muco alcalino via Lieberkühn) · Peyer = íleo · GALT = grosso · caliciformes ∝ abrasão · renovação 3–5 dias · muscular da mucosa = divisor de águas.</li>
+    <li><b>DII:</b> 3 pilares (NOD2/crom.16 + disbiose + imunidade desregulada). <b>CU:</b> contínua, começa no reto, só mucosa, pseudopólipos, abscessos de cripta, megacólon tóxico. <b>Crohn:</b> salteado, transmural, boca-ânus, GRANULOMA (fecha o diagnóstico), paralelepípedo, mucosa careca (Masson), fístulas/bridas/estenose→volvo.</li>
+    <li><b>Exames:</b> ANCA (autoimunidade adquirida — 75% Crohn, 11% colite) e calprotectina fecal (neutrófilos nas fezes; &gt;250 → colono) apoiam, biópsia fecha. Câncer: risco 20–30×; 30 anos descontrolados ≈ 60%.</li>
+    <li><b>Pólipos:</b> saliência na luz; natureza = microscopia. Inflamatório (infiltrado, congestão, edema, erosão/úlcera, abscesso de cripta) · hiperplásico (sobreposição SEM atipia; núcleo alongado só por aperto) · hamartomatoso (arquitetura bizarra, célula normal) · adenoma = displásico = neoplasia benigna (tubular/viloso/tubuloviloso). <b>Laudo = status mais grave.</b> Séssil pior que pediculado.</li>
+    <li><b>Displasia → CA:</b> checklist (núcleo/citoplasma, pleomorfismo, hipercromasia, nucléolo, mitose ectópica, polaridade). Mitose no ápice do vilo = alarme. Adenocarcinoma gabarita tudo + Warburg (HIF → glicólise → lactato repele imunidade) + desmoplasia + invasão (glândula na submucosa do grosso) → metástase no FÍGADO. IHQ: Ki-67 ALTO + p53 BAIXO = maligno.</li>
+    <li><b>PAF:</b> APC, crom. 5, autossômica dominante, 500–2.500 pólipos; câncer 10%/10a → 50%/20a → 100%/30a → colectomia profilática + aconselhamento. Via: APC–β-catenina · RAS (12) · SMAD (18) · p53.</li>
+    <li><b>Prova prática:</b> Lâmina 31 = pólipo hiperplásico · Lâmina 61 = adenocarcinoma de grosso · órgão = "intestino" · processos apontados devem sustentar a conclusão.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova — Patologias Intestinais</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Aula 05 dupla (Profa. Janaina) · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-histo">Histologia</a>
+    <a class="a1" href="#p-dii">CU × Crohn</a>
+    <a class="a1" href="#p-compl">Complicações</a>
+    <a class="a1" href="#p-exames">Exames</a>
+    <a class="a1" href="#p-polipos">Pólipos</a>
+    <a class="a1" href="#p-displasia">Displasia/CA</a>
+    <a class="a1" href="#p-paf">PAF</a>
+    <a class="a1" href="#p-prova">Prova prática</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-histo">
+  <span class="aula-tag t1">Histologia normal (as âncoras do laudo)</span>
+  <ul>
+    <li><b class="k">Brunner = duodeno</b> (submucosa, muco alcalino, abre nas criptas de Lieberkühn) · <b class="k">Peyer = íleo</b> · <b class="k">GALT = grosso</b>.</li>
+    <li>Grosso: <b>sem vilosidades</b>, Lieberkühn + muitas caliciformes. Caliciformes ∝ abrasão do conteúdo.</li>
+    <li>Renovação epitelial em <b class="k">3–5 dias</b> · microbiota ≈ <b>200 g de bactérias/kg de fezes</b> · disbiose = pilar de DII.</li>
+    <li><b class="k">Muscular da mucosa</b> = régua: inflamação limitada a ela → colite · ultrapassou → Crohn.</li>
+  </ul>
+</section>
+
+<section id="p-dii">
+  <span class="aula-tag t1">Colite ulcerativa × Doença de Crohn</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>CU</th><th>Crohn</th></tr></thead>
+    <tbody>
+      <tr><td>Local</td><td>cólon+reto; <b>começa no reto</b>, sobe</td><td><b>boca→ânus</b>, predileção íleo terminal</td></tr>
+      <tr><td>Padrão</td><td><b>contínuo/difuso</b></td><td><b>salteado</b> (skip lesions)</td></tr>
+      <tr><td>Profundidade</td><td><b>só mucosa</b></td><td><b>transmural</b> (pode perfurar)</td></tr>
+      <tr><td>Marca histológica</td><td>pseudopólipos, abscessos de cripta</td><td><b>GRANULOMA epitelioide</b> (fecha dx!), Langhans</td></tr>
+      <tr><td>Macro</td><td>mucosa vermelha contínua, friável</td><td>paralelepípedo, fissuras, mucosa careca</td></tr>
+      <tr><td>Complicação própria</td><td><b>megacólon tóxico</b></td><td>fístulas, bridas, estenose→volvo</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Etiopatogênese: <b class="k">NOD2 (crom. 16)</b> + disbiose + imunidade desregulada.</li>
+    <li>Inflamação granulomatosa = macrófagos → <b>células epitelioides</b> (aguda e crônica falharam).</li>
+    <li><b class="k">Pseudopólipo</b> = ilha de mucosa SÃ saliente entre ulcerações (CU).</li>
+    <li><b class="k">Mucosa careca</b> = fibrose no lugar de mucosa → absorção ZERO, sem volta → confirma no <b>tricrômico de Masson</b>.</li>
+    <li>Gravidade da colite: branda &lt;4/dia · moderada 4–8 · severa &gt;8 (noturnos) · fulminante &gt;10.</li>
+  </ul>
+</section>
+
+<section id="p-compl">
+  <span class="aula-tag t1">Complicações</span>
+  <ul>
+    <li><b class="k">Fístula</b> (Crohn transmural): ex. enterovesical → paciente que "urinava fezes".</li>
+    <li><b class="k">Brida</b>: fibrose extra-intestinal ligando alças → dor + obstrução → cirurgia.</li>
+    <li><b class="k">Estenose → volvo</b>: cintura fibrótica → peristaltismo forçado → torção → <b>"imagem do feijão"</b> no RX → isquemia mesentérica → ressecção.</li>
+    <li><b class="k">Intussuscepção</b>: alça engole a da frente; 2 pontos de dobra = 2 riscos de isquemia.</li>
+    <li><b class="k">Megacólon tóxico</b> (CU): citocinas em massa intoxicam o <b>plexo mioentérico</b> → perde TÔNUS → dilatação flácida → ressecção. Só a CU (contínua) gera esse pulso de citocinas.</li>
+  </ul>
+</section>
+
+<section id="p-exames">
+  <span class="aula-tag t1">Exames de apoio + risco de câncer</span>
+  <ul>
+    <li><b class="k">ANCA (P/X)</b>: anticorpos contra enzimas do citoplasma dos <b>próprios neutrófilos</b> — a doença ADQUIRE comportamento autoimune (negativo no início). <b>75% Crohn · 11% colite</b>. Não fecha dx; justifica colono.</li>
+    <li><b class="k">Calprotectina fecal</b>: enzima de neutrófilo nas fezes = inflamação ativa. &lt;100 improvável · 100–250 repetir · <b>&gt;250 → colono</b>. Não específica.</li>
+    <li>Sangue oculto "custa centavos" · anemia crônica sem investigação = inaceitável · biópsia = padrão-ouro.</li>
+    <li>Risco de CA na DII descontrolada: <b class="k">20–30×</b> · 10 anos ≈31% · 30 anos ≈ <b>60%</b>.</li>
+  </ul>
+</section>
+
+<section id="p-polipos">
+  <span class="aula-tag t1">Pólipos</span>
+  <div class="tw"><table>
+    <thead><tr><th>Tipo</th><th>O que a lâmina mostra</th><th>Natureza</th></tr></thead>
+    <tbody>
+      <tr><td><b>Inflamatório</b></td><td>infiltrado (PMN=agudo/MN=crônico), congestão, edema, exsudato, erosão/úlcera, <b>abscesso de cripta</b></td><td>não neoplásico</td></tr>
+      <tr><td><b>Hiperplásico</b></td><td><b>sobreposição celular SEM atipia</b>; núcleo alongado só por aperto; lúmen cribriforme</td><td>não neoplásico</td></tr>
+      <tr><td><b>Hamartomatoso</b></td><td>arquitetura congênita bizarra, <b>célula normal</b></td><td>não neoplásico</td></tr>
+      <tr><td><b>Adenoma</b> (tubular · viloso · tubuloviloso)</td><td>displasia na glândula, no vilo ou em ambos</td><td>neoplasia <b>benigna</b></td></tr>
+      <tr><td><b>Adenocarcinoma</b></td><td>checklist completo de atipias ± invasão</td><td>neoplasia <b>maligna</b></td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b class="k">Laudo = status MAIS GRAVE</b> (inflamação + hiperplasia → conclui hiperplásico; descreve tudo).</li>
+    <li><b class="k">Séssil</b> (colado, desce rápido se maligno — pior) × <b class="k">pediculado</b> (haste compra tempo). Rugoso = proliferativo · liso = não.</li>
+    <li>Tubular = o mais comum. Pólipo grande que não sai inteiro + malignidade invadindo → reopera por margem.</li>
+  </ul>
+</section>
+
+<section id="p-displasia">
+  <span class="aula-tag t1">Zonas, displasia e adenocarcinoma</span>
+  <ul>
+    <li>Zona 1 (fundo) = germinativas, sem mitose · Zona 2 (laterais) = <b>mitose fisiológica</b> · Zona 3 (ápice) = apoptose. <b class="k">Mitose no ápice = descontrole</b>.</li>
+    <li>Checklist de atipia: núcleo/citoplasma (1/3 no intestino) · pleomorfismo · hipercromasia · nucléolo · mitoses ectópicas · <b>polaridade</b>.</li>
+    <li>Hiperplasia: só núcleo alongado por aperto. Displasia: marca alguns itens (reversível!). CA: gabarita tudo.</li>
+    <li>Célula maligna ≈ <b>100 genes mutados</b> até a morfologia denunciar.</li>
+    <li>Microambiente: hipóxia → <b class="k">HIF</b> → glicólise → <b>lactato</b> → repele imunidade (<b>efeito Warburg</b>) · CA com POUCA inflamação = pior · <b class="k">desmoplasia</b> = fibrose peritumoral (bolota dura).</li>
+    <li><b class="k">Invasão</b>: glândula na submucosa do GROSSO = invasora (grosso não tem Brunner!) · submucosa vascularizada → metástase 1º no <b>FÍGADO</b>.</li>
+    <li>IHQ: <b class="k">Ki-67 ALTO + p53 BAIXO = maligno</b> ("mais p53, melhor"). Mesmo bloco de parafina. Biópsia líquida = DNA tumoral no sangue.</li>
+  </ul>
+</section>
+
+<section id="p-paf">
+  <span class="aula-tag t1">Polipose adenomatosa familiar</span>
+  <ul>
+    <li><b class="k">APC · cromossomo 5 · autossômica DOMINANTE</b> · <b>500–2.500 pólipos</b> (&lt;100 = improvável; dx fecha no teste genético).</li>
+    <li>Malignização por tempo: <b class="k">10a→10% · 20a→50% · 30a→100%</b> → <b>colectomia profilática</b> + vigilância semestral + <b>aconselhamento genético</b> (analogia Angelina Jolie).</li>
+    <li>Via molecular: APC degrada <b>β-catenina</b> (fator de transcrição) · RAS (crom. 12) acelera · SMAD (crom. 18) freia · p53 mata a célula errada. APC+p53 mutados = "danou-se".</li>
+  </ul>
+</section>
+
+<section id="p-prova">
+  <span class="aula-tag t1">Prova prática (regras ditadas)</span>
+  <ul>
+    <li><b class="k">Lâmina 31</b> = pólipo intestinal HIPERPLÁSICO (com inflamação) · <b class="k">Lâmina 61</b> = ADENOCARCINOMA de intestino grosso.</li>
+    <li>3 perguntas: <b>órgão</b> (basta "intestino") · <b>processos patológicos 1 e 2</b> apontados · <b>conclusão</b>.</li>
+    <li><b class="k">Coerência</b>: os processos apontados devem SUSTENTAR a conclusão. Apontou displasia → laude displásico. Viu só hiperplasia+inflamação → hiperplásico.</li>
+    <li>Teórica: tubular × viloso × tubuloviloso CAI · graus de displasia NÃO caem.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <ul>
+    <li><b class="k">Pseudopólipo</b> (mucosa SÃ saliente na CU) ≠ <b>pólipo</b> (tecido crescido para a luz).</li>
+    <li><b class="k">Erosão</b> (rasa, só epitélio) ≠ <b>úlcera</b> (profunda, entra no conjuntivo). Ambas exigem morte celular.</li>
+    <li><b class="k">Núcleo alongado por aperto</b> (hiperplasia) ≠ <b>pleomorfismo/hipercromasia</b> (displasia).</li>
+    <li><b class="k">Adenoma</b> = neoplasia BENIGNA (displásico) ≠ <b>adenocarcinoma</b> = maligna.</li>
+    <li><b class="k">Megacólon tóxico</b> (perda de tônus, CU) ≠ <b>volvo</b> (torção por estenose, Crohn).</li>
+    <li><b class="k">Exsudato</b> (rico em proteína e células) ≠ <b>transudato</b> (pobre nos dois).</li>
+    <li><b class="k">Peyer</b> = íleo ≠ <b>GALT</b> = grosso ≠ <b>Brunner</b> = duodeno (e glândula na submucosa do grosso = INVASÃO).</li>
+    <li><b class="k">ANCA</b>: mais positivo no <b>Crohn (75%)</b> que na colite (11%) — números do slide.</li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologias Intestinais</h2>
+    <p>Anato Pato II · Aula 05 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 05 — Patologias Intestinais</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:"facil",enun:`<span class="vinheta">Durante a aula prática, um monitor projeta uma lâmina de intestino delgado em que se observam glândulas na SUBMUCOSA, produtoras de muco alcalino que é drenado abrindo-se nas criptas de Lieberkühn.</span><div class="pergunta">Essas glândulas identificam qual segmento — e qual é a função desse muco?</div>`,alts:["Placas de Peyer no íleo, vigiando antígenos antes da válvula ileocecal","Glândulas de Lieberkühn ectópicas do jejuno, secretando enzimas digestivas","Glândulas de Brunner no duodeno, equalizando o pH para as enzimas pancreáticas","Folículos do GALT no intestino grosso, organizando a resposta imune local","Glândulas pilóricas herniadas do estômago através da muscular da mucosa"],correta:2,just:["Errada — placas de Peyer são agregados LINFOIDES (não glândulas secretoras) e marcam o íleo, não o duodeno.","Errada — as glândulas de Lieberkühn ficam na MUCOSA de todo o intestino; glândula em submucosa de delgado é Brunner, e quem produz enzimas é o pâncreas.","Correta — só o duodeno tem glândulas na submucosa: as de Brunner, cujo muco ALCALINO sobe pelas criptas de Lieberkühn e neutraliza o quimo ácido, criando o pH em que as enzimas pancreáticas conseguem agir.","Errada — GALT é tecido linfoide difuso do intestino grosso, não glândula secretora de muco em submucosa de delgado.","Errada — não existe herniação glandular gástrica como achado normal; a estrutura descrita é anatomia normal do duodeno."],ref:"Aula 05 — Histologia normal (duodeno e Brunner)"},
+
+{n:2,aula:1,nivel:"facil",enun:`<span class="vinheta">O colonoscopista colheu uma amostra próximo à válvula ileocecal e não informou o local exato. Na lâmina, o patologista encontra vilosidades e grandes agregados linfoides ocupando mucosa e submucosa.</span><div class="pergunta">Que estrutura é essa e a qual segmento ela pertence?</div>`,alts:["Placas de Peyer — o fragmento pertence ao íleo","Folículos do GALT — o fragmento pertence ao cólon","Glândulas de Brunner — o fragmento pertence ao duodeno","Tecido linfoide reacional — o fragmento é de reto inflamado","Criptas de Lieberkühn hipertrofiadas — o fragmento é de jejuno"],correta:0,just:["Correta — grandes agregados linfoides organizados em delgado (com vilosidades) são as placas de Peyer, assinatura histológica do ÍLEO. É exatamente assim que o patologista se localiza quando o colonoscopista não informa o sítio.","Errada — o GALT marca o intestino GROSSO, que não tem vilosidades; a presença de vilos exclui cólon.","Errada — Brunner são glândulas SECRETORAS na submucosa do duodeno, não agregados linfoides.","Errada — reto é intestino grosso, sem vilosidades; além disso tecido linfoide reacional não forma as grandes placas organizadas descritas.","Errada — criptas de Lieberkühn são glândulas, não tecido linfoide; e o jejuno não carrega grandes placas linfoides."],ref:"Aula 05 — Histologia normal (íleo e Peyer)"},
+
+{n:3,aula:1,nivel:"facil",enun:`<span class="vinheta">Mulher, 28 anos, diarreia sanguinolenta há 8 meses. Colonoscopia: mucosa contínua e difusamente eritematosa e friável do reto ao cólon descendente, sem áreas poupadas. Biópsias: inflamação restrita à mucosa, respeitando a muscular da mucosa.</span><div class="pergunta">Qual o diagnóstico mais provável e o que o sustenta?</div>`,alts:["Doença de Crohn, pelo acometimento contínuo iniciado no reto","Colite infecciosa aguda, pela distribuição difusa do eritema","Doença de Crohn, pela inflamação restrita à camada mucosa","Colite ulcerativa: padrão contínuo desde o reto, restrito à mucosa","Colite ulcerativa, pelas lesões salteadas entre áreas de mucosa sã"],correta:3,just:["Errada — Crohn é SALTEADO (skip lesions); acometimento contínuo começando no reto é a assinatura da colite ulcerativa.","Errada — 8 meses de evolução afastam colite aguda, que é limitada no tempo e costuma ter contexto infeccioso claro.","Errada — inflamação limitada à mucosa é típica de COLITE ULCERATIVA; o Crohn é transmural.","Correta — a colite ulcerativa acomete cólon e reto de forma CONTÍNUA e difusa, começando no reto e subindo, com lesão LIMITADA à mucosa (respeita a muscular da mucosa). As duas chaves do caso apontam para ela.","Errada — a distribuição salteada descreve o Crohn; o caso descreve exatamente o oposto (contínuo, sem áreas poupadas)."],ref:"Aula 05 — CU × Crohn"},
+
+{n:4,aula:1,nivel:"medio",enun:`<span class="vinheta">Biópsia de cólon com inflamação crônica que ultrapassa a muscular da mucosa. Na submucosa, o patologista encontra agrupamentos circunferenciais de células epitelioides, com uma célula gigante multinucleada tipo Langhans.</span><div class="pergunta">Qual o significado desse achado?</div>`,alts:["É um folículo linfoide do GALT, achado normal da submucosa colônica","Granuloma epitelioide: praticamente fecha doença de Crohn nesse contexto","Abscesso de cripta, indicando colite ulcerativa em atividade intensa","Reação sarcoide inespecífica, sem valor para o diagnóstico diferencial","Metaplasia escamosa da mucosa em resposta à inflamação persistente"],correta:1,just:["Errada — folículo linfoide tem linfócitos organizados, não células epitelioides em arranjo circunferencial com célula de Langhans.","Correta — granuloma (macrófagos transformados em células epitelioides quando aguda e crônica falham) em qualquer camada da parede, somado à lesão transmural, fecha doença de Crohn — colite ulcerativa NÃO forma granuloma. A anamnese só precisa afastar tuberculose, que faz o mesmo arranjo.","Errada — abscesso de cripta é coleção de neutrófilos DENTRO da luz glandular, outro achado; e a lesão transmural fala contra CU.","Errada — no contexto de DII transmural o granuloma tem enorme valor: é o achado que define Crohn.","Errada — não há epitélio escamoso descrito; o achado é inflamatório granulomatoso, não metaplásico."],ref:"Aula 05 — Granuloma no Crohn"},
+
+{n:5,aula:1,nivel:"facil",enun:`<span class="vinheta">Na colonoscopia de um paciente com colite ulcerativa grave, o examinador descreve múltiplas projeções polipoides pálidas salientes em meio a extensas áreas ulceradas.</span><div class="pergunta">Essas projeções correspondem a quê?</div>`,alts:["Adenomas tubulares múltiplos induzidos pela inflamação de longa data","Pólipos hamartomatosos, de arquitetura congênita alterada","Pólipos hiperplásicos em resposta aos fatores de crescimento locais","Metástases polipoides de um adenocarcinoma ainda não localizado","Pseudopólipos: ilhas de mucosa preservada entre áreas destruídas"],correta:4,just:["Errada — adenoma é lesão DISPLÁSICA; o que se descreve na CU em crise são ilhas de mucosa normal remanescente.","Errada — hamartoma é malformação congênita da arquitetura, não achado de colite em atividade.","Errada — hiperplasia é sobreposição celular proliferativa; o pseudopólipo é mucosa SÃ que apenas parece saliente.","Errada — metástase polipoide múltipla não é o quadro; a CU ulcerada cria a falsa impressão de pólipos.","Correta — quando a ulceração destrói a mucosa ao redor, a ilha de mucosa SÃ que sobrou fica saliente e parece pólipo — por isso PSEUDOpólipo, a marca endoscópica da colite ulcerativa."],ref:"Aula 05 — Pseudopólipos na CU"},
+
+{n:6,aula:1,nivel:"medio",enun:`<span class="vinheta">Pólipo colônico removido por completo. Histologia: infiltrado inflamatório mononuclear intenso que atravessa a muscular da mucosa e alcança a submucosa, com congestão e edema, sem atipias epiteliais.</span><div class="pergunta">Além de laudar o pólipo inflamatório, o que essa profundidade sugere sobre a doença de base?</div>`,alts:["Sugere doença de Crohn, pois a inflamação ultrapassou a muscular da mucosa","Sugere colite ulcerativa, pois o infiltrado mononuclear indica cronicidade","Sugere colite aguda autolimitada, pelo predomínio de células mononucleares","Sugere adenocarcinoma inicial, pela invasão inflamatória da submucosa","Sugere pólipo hamartomatoso, pela desorganização das camadas da parede"],correta:0,just:["Correta — a muscular da mucosa é a régua: inflamação LIMITADA à mucosa aponta colite; inflamação que a ULTRAPASSA perde as características de colite e faz pensar em Crohn (doença transmural).","Errada — mononuclear indica cronicidade, mas a colite ulcerativa fica restrita à mucosa; a profundidade descrita fala contra ela.","Errada — colite aguda teria predomínio de POLIMORFOnucleares (neutrófilos) e curso curto.","Errada — invasão neoplásica exige células EPITELIAIS atípicas na submucosa; aqui só há células inflamatórias.","Errada — hamartoma é alteração arquitetural congênita sem relação com infiltrado inflamatório profundo."],ref:"Aula 05 — Pólipo inflamatório e a régua da muscular da mucosa"},
+
+{n:7,aula:1,nivel:"medio",enun:`<span class="vinheta">Paciente com colite ulcerativa em crise grave evolui com distensão abdominal maciça. A imagem mostra dilatação colônica acentuada, sem sinais de torção ou obstrução mecânica.</span><div class="pergunta">Qual o mecanismo dessa complicação?</div>`,alts:["Estenose fibrótica transmural forçando dilatação do segmento a montante","Torção da alça sobre o mesentério com isquemia das ramificações arteriais","Citocinas em grande volume intoxicam o plexo mioentérico, com perda do tônus","Intussuscepção do segmento inflamado com dois pontos de dobra isquêmicos","Hipertrofia compensatória da muscular própria com espasmo persistente"],correta:2,just:["Errada — estenose fibrótica é complicação do CROHN transmural e geraria obstrução mecânica, ausente no caso.","Errada — torção (volvo) foi excluída pela imagem; o megacólon dilata SEM torcer.","Correta — é o MEGACÓLON TÓXICO: a colite ulcerativa contínua, em crise, libera citocinas em volume tão alto que elas intoxicam o plexo mioentérico; o segmento perde o TÔNUS (não só o peristaltismo), afrouxa e dilata de forma bizarra. Conduta: ressecção do segmento.","Errada — intussuscepção é alça engolindo a da frente por peristaltismo exagerado — o oposto da perda de tônus descrita.","Errada — o problema é neural (plexo intoxicado) com FLACIDEZ, não hipertrofia muscular com espasmo."],ref:"Aula 05 — Megacólon tóxico"},
+
+{n:8,aula:1,nivel:"medio",enun:`<span class="vinheta">Homem com doença de Crohn há 6 anos apresenta P-ANCA positivo. Ele pergunta ao médico: "então minha doença sempre foi autoimune?"</span><div class="pergunta">Qual a explicação correta para esse anticorpo?</div>`,alts:["Sim: a DII nasce autoimune e o ANCA apenas confirma o mecanismo inicial","O ANCA surge na evolução: a própria inflamação passa a virar o antígeno","O ANCA é anticorpo contra a microbiota, marcador direto de disbiose grave","O ANCA indica infecção bacteriana ativa sobreposta à doença de Crohn","O ANCA é exame confirmatório que substitui a colonoscopia no diagnóstico"],correta:1,just:["Errada — a DII NÃO começa autoimune; o ANCA é negativo no início da doença.","Correta — na inflamação crônica persistente, as próprias células inflamatórias passam a ser vistas pelo organismo como o agente causal; o sistema imune fabrica anticorpos contra enzimas do citoplasma dos PRÓPRIOS neutrófilos (P-ANCA/X-ANCA). A doença ADQUIRE comportamento autoimune no meio do caminho — por isso responde a corticoide. Positivo em ~75% no Crohn e ~11% na colite.","Errada — o alvo do ANCA são enzimas dos neutrófilos do próprio paciente, não bactérias.","Errada — ANCA não marca infecção; marca autoimunidade adquirida contra células inflamatórias.","Errada — ANCA não fecha diagnóstico: serve de argumento para JUSTIFICAR a colonoscopia; a biópsia continua padrão-ouro."],ref:"Aula 05 — P-ANCA e X-ANCA"},
+
+{n:9,aula:1,nivel:"medio",enun:`<span class="vinheta">Mulher, 41 anos, diarreia crônica. Calprotectina fecal: 320 mg/kg (normal até 50; indeterminado 50–200; positivo acima de 200).</span><div class="pergunta">O que esse resultado significa e qual o próximo passo?</div>`,alts:["Confirma colite ulcerativa, dispensando a colonoscopia diagnóstica","Indica sangramento digestivo alto, exigindo endoscopia digestiva alta","Resultado inespecífico sem valor: repetir em 6 meses antes de qualquer conduta","Há neutrófilos na luz intestinal: afastar infecção e indicar colonoscopia","Confirma doença de Crohn, pois a calprotectina é específica dessa doença"],correta:3,just:["Errada — calprotectina não diferencia CU de Crohn nem fecha diagnóstico algum; ela INDICA a colono, não a dispensa.","Errada — calprotectina não mede sangue; é uma enzima de neutrófilo detectada nas fezes.","Errada — acima de 250 a inflamação é MUITO provável; adiar 6 meses seria negligenciar um exame francamente alterado.","Correta — calprotectina é enzima dos NEUTRÓFILOS; presente nas fezes, revela que a luz intestinal está infiltrada por eles — inflamação ativa. Acima de 200–250: afastar infecções e encaminhar para colonoscopia com biópsia, que é quem fecha o diagnóstico.","Errada — não é específica nem de Crohn nem de colite; positiva até em colite aguda."],ref:"Aula 05 — Calprotectina fecal"},
+
+{n:10,aula:1,nivel:"medio",enun:`<span class="vinheta">Mulher, 36 anos, desconforto intestinal crônico, dá entrada com abdome agudo e distensão. A radiografia mostra alça intestinal muito dilatada com a clássica "imagem do feijão".</span><div class="pergunta">Qual a sequência fisiopatológica mais provável até esse quadro?</div>`,alts:["Perda de tônus por citocinas → dilatação flácida → impactação fecal","Adenoma viloso obstrutivo → supercrescimento bacteriano → distensão","Fístula enterovesical → infecção urinária → íleo paralítico reflexo","Pseudopólipos confluentes → oclusão da luz → dilatação a montante","Estenose fibrótica → peristaltismo forçado → torção da alça (volvo)"],correta:4,just:["Errada — essa é a via do megacólon tóxico, que dilata SEM torcer; a imagem do feijão é a silhueta de uma TORÇÃO.","Errada — adenoma viloso obstrutivo não explica a silhueta de alça torcida; a imagem do feijão aponta volvo.","Errada — fístula causa fecalúria e infecções, mas não produz a alça torcida da imagem do feijão.","Errada — pseudopólipos são ilhas de mucosa sã; não ocluem a luz.","Correta — a fibrose transmural (Crohn) faz uma cintura estenótica; para vencer a passagem o intestino gera peristaltismo cada vez mais forte (cólicas) e a alça acaba TORCENDO — volvo, cuja silhueta radiológica é a imagem do feijão. Torção → isquemia mesentérica → risco de necrose e ressecção; é emergência cirúrgica."],ref:"Aula 05 — Estenose, volvo e a imagem do feijão"},
+
+{n:11,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente com doença intestinal de longa data procura o pronto-socorro relatando eliminação de fezes pela urina, com infecções urinárias de repetição.</span><div class="pergunta">Qual a explicação anatomopatológica mais provável?</div>`,alts:["Fístula enterovesical por doença de Crohn transmural","Megacólon tóxico comprimindo o trígono vesical","Bexiga neurogênica secundária à colite ulcerativa","Divertículo vesical colonizado por bactérias entéricas","Refluxo vesicoureteral com contaminação retrógrada"],correta:0,just:["Correta — o Crohn é transmural: pode perfurar todas as camadas, e no processo cicatricial a lesão une o intestino à bexiga — fístula enterovesical. Foi o caso citado em aula do paciente que 'urinava fezes', com infecções de repetição.","Errada — megacólon dilata o cólon, mas não cria comunicação com a bexiga.","Errada — bexiga neurogênica altera esvaziamento; não explica fezes na urina.","Errada — divertículo vesical não se comunica com a luz intestinal.","Errada — refluxo vesicoureteral é via urinária–urinária; não traz conteúdo fecal."],ref:"Aula 05 — Fístulas no Crohn"},
+
+{n:12,aula:1,nivel:"medio",enun:`<span class="vinheta">Na macroscopia de um cólon com DII antiga, faixas brilhantes de mucosa alternam com faixas opacas. O patologista pede a coloração de tricrômico de Masson, que cora fortemente as faixas opacas.</span><div class="pergunta">O que esse resultado demonstra?</div>`,alts:["Metaplasia intestinal completa, reversível com o controle da doença","Depósito de mucina extravasada das caliciformes destruídas","Fibrose substituindo a mucosa: área sem absorção e sem volta","Amiloidose secundária à inflamação crônica de longa data","Hiperplasia da muscular da mucosa em resposta à inflamação"],correta:2,just:["Errada — metaplasia é troca de um epitélio por outro; o Masson corou COLÁGENO, não epitélio.","Errada — mucina não é o alvo do tricrômico de Masson; ele destaca fibras colágenas.","Correta — é a 'mucosa careca' / mucosa em paralelepípedo: a inflamação destruiu o epitélio além da capacidade regenerativa e o corpo cicatrizou com FIBROSE. O Masson cora o colágeno e confirma tecido conjuntivo onde deveria haver mucosa — área de absorção negativa, irreversível; grandes extensões podem exigir suplementação nutricional pela vida.","Errada — amiloidose exigiria vermelho Congo, e não é o fenômeno discutido na DII da aula.","Errada — o achado é substituição da MUCOSA por conjuntivo, não espessamento muscular."],ref:"Aula 05 — Mucosa careca e tricrômico de Masson"},
+
+{n:13,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente com colite ulcerativa mal controlada há décadas pergunta sobre seu risco de câncer de intestino.</span><div class="pergunta">Segundo os números apresentados em aula, qual a resposta correta?</div>`,alts:["O risco é igual ao da população geral se não houver história familiar","Risco 20–30× maior, chegando a ~60% após 30 anos sem controle","O risco só existe na doença de Crohn, por ser transmural","Risco aumentado apenas se houver mutação herdada do gene APC","O corticoide elimina o risco oncológico mesmo sem controle clínico"],correta:1,just:["Errada — a DII descontrolada é um dos maiores fatores de risco adquiridos para câncer colorretal.","Correta — colite ulcerativa descontrolada: risco 20 a 30 vezes maior que o da população; e o tempo de doença MAL CONTROLADA soma — aos 10 anos ≈31%, e aos 30 anos de descontrole ≈60% de chance de câncer. O mecanismo: regeneração forçada + fatores de crescimento inflamatórios = proliferação com erro.","Errada — o risco vale para a doença inflamatória como um todo — colite ou Crohn.","Errada — APC é a via da polipose adenomatosa FAMILIAR; o risco da DII é adquirido, pela inflamação crônica.","Errada — o que reduz risco é CONTROLE da inflamação; nenhum fármaco zera risco sem controle clínico."],ref:"Aula 05 — DII e risco de câncer"},
+
+{n:14,aula:1,nivel:"medio",enun:`<span class="vinheta">Laudo de pólipo colônico: "infiltrado inflamatório crônico em lâmina própria, vasos congestos, edema — abaixo de intensa hiperplasia epitelial de enterócitos e caliciformes". Conclusão: pólipo hiperplásico.</span><div class="pergunta">Por que a conclusão é "hiperplásico" e não "inflamatório", e qual a consequência prática?</div>`,alts:["A conclusão está errada: a base inflamatória deveria dar nome ao laudo","O laudo é contraditório: inflamação e hiperplasia não coexistem no mesmo pólipo","Hiperplásico dispensa conduta: basta repetir a colonoscopia em dez anos","O laudo conclui pelo status mais grave; a conduta é tratar a inflamação de base","A conclusão exige imuno-histoquímica antes de qualquer definição diagnóstica"],correta:3,just:["Errada — a regra é o oposto: descreve-se tudo, mas a CONCLUSÃO leva o status mais grave.","Errada — coexistem o tempo todo: é 'uma doença levando à outra' — a inflamação crônica libera fatores de crescimento que provocam a hiperplasia.","Errada — 'pólipo hiperplásico, fica tranquilo' NÃO existe: é um órgão em sofrimento avisando a tempo; a inflamação precisa ser tratada e o paciente vigiado.","Correta — o laudo sempre conclui pelo STATUS MAIS GRAVE (aqui, a proliferação), mas o médico que sabe LER o laudo inteiro entende que a causa é a inflamação persistente — e é ela que se trata (estilo de vida, dieta, controle da DII) para interromper a cadeia adaptativa.","Errada — IHQ é ferramenta de desempate para lâminas duvidosas de displasia/neoplasia, não pré-requisito de laudo hiperplásico."],ref:"Aula 05 — A regra do status mais grave"},
+
+{n:15,aula:1,nivel:"medio",enun:`<span class="vinheta">Epitélio colônico com nítida sobreposição de enterócitos e caliciformes. Os núcleos estão alongados, mas sem hipercromasia, sem nucléolos, com relação núcleo/citoplasma preservada e polaridade basal mantida.</span><div class="pergunta">Como classificar essa lesão?</div>`,alts:["Hiperplasia: o núcleo alongado reflete apenas a falta de espaço","Displasia de baixo grau, pelo alongamento nuclear difuso","Displasia de alto grau, pela estratificação do epitélio","Adenocarcinoma in situ, pela perda da arquitetura em camada única","Epitélio normal: sobreposição celular é variação da normalidade"],correta:0,just:["Correta — na hiperplasia a ÚNICA alteração nuclear aceitável é o alongamento por aperto ('é a gente no metrô de manhã'): muitas células no espaço de poucas. Sem hipercromasia, sem nucléolo, sem pleomorfismo e com polaridade mantida, o checklist de atipia está limpo → hiperplasia.","Errada — displasia exige atipia real (hipercromasia, pleomorfismo, alteração da relação núcleo/citoplasma), ausente aqui.","Errada — a estratificação isolada indica proliferação; alto grau exigiria atipias marcadas e perda de polaridade.","Errada — carcinoma exige o checklist gabaritado: núcleos bizarros, nucléolos, mitoses francas.","Errada — o epitélio intestinal normal é UNIstratificado; sobreposição já é anormal (proliferação)."],ref:"Aula 05 — Hiperplasia × displasia"},
+
+{n:16,aula:1,nivel:"facil",enun:`<span class="vinheta">Dois pólipos malignos do mesmo tamanho: um séssil, crescendo 100% aderido à mucosa; outro pediculado, com haste de tecido conjuntivo vascularizado e as atipias concentradas na ponta.</span><div class="pergunta">Qual tem pior prognóstico e por quê?</div>`,alts:["O pediculado, porque a haste vascularizada acelera a metástase","O pediculado, porque a haste impede a ressecção endoscópica completa","Ambos têm o mesmo prognóstico, pois o que importa é só a histologia","O pediculado tende a se converter em séssil conforme a lesão cresce","O séssil, porque está próximo das camadas profundas vascularizadas"],correta:4,just:["Errada — a haste é conjuntivo com vasos, mas as ATIPIAS ficam na ponta: a distância até a submucosa é maior, não menor.","Errada — o pediculado costuma ser o MAIS fácil de remover por completo (corta-se a haste).","Errada — a forma de adesão importa muito: define o caminho até as camadas vascularizadas.","Errada — séssil não vira pediculado nem o contrário; cada um nasce com sua morfologia.","Correta — o séssil cresce colado na mucosa: se maligno, tem caminho curto para descer e atravessar camadas ricas em vasos (submucosa, muscular), invadindo. O pediculado 'compra tempo' — as atipias estão na ponta da haste, longe das camadas profundas."],ref:"Aula 05 — Séssil × pediculado"},
+
+{n:17,aula:1,nivel:"medio",enun:`<span class="vinheta">Em uma biópsia de delgado, o patologista flagra três figuras de mitose no ÁPICE das vilosidades, entre células maduras voltadas para a luz.</span><div class="pergunta">Qual a interpretação correta desse achado?</div>`,alts:["Fisiológico: o ápice é a zona proliferativa natural do epitélio","Alarme: no ápice o esperado é apoptose — mitose ali indica estímulo descontrolado","Artefato de fixação: mitoses não são visualizáveis em biópsias de rotina","Fisiológico: com renovação a cada 3–5 dias, mitoses aparecem em qualquer zona","Indica apenas regeneração pós-erosão, sem qualquer valor patológico"],correta:1,just:["Errada — a zona proliferativa fisiológica é a zona 2, nas LATERAIS da glândula; o ápice é zona de células maduras.","Correta — o mapa das zonas: zona 1 (fundo) guarda as germinativas sem mitose ativa; zona 2 (laterais) é onde a mitose é fisiológica; zona 3 (ápice) tem células maduras que NÃO se multiplicam — ali o esperado é apoptose (picnose, cariólise). Mitose no ápice = estímulo mitogênico fora de controle → adaptação proliferativa patológica.","Errada — figuras de mitose são visíveis e ativamente procuradas; contam pontos no checklist de atipia.","Errada — a renovação rápida acontece pelo fluxo ordenado zona 2 → ápice; ela não autoriza mitose em zona errada.","Errada — regeneração usa as zonas proliferativas corretas; mitose apical segue sendo achado anormal."],ref:"Aula 05 — Zonas proliferativas"},
+
+{n:18,aula:1,nivel:"medio",enun:`<span class="vinheta">Lâmina de cólon em DII ativa: uma glândula de Lieberkühn está com a luz preenchida por denso material celular; no maior aumento, são neutrófilos ocupando a cavidade glandular, e o epitélio do fundo da glândula está necrótico.</span><div class="pergunta">Como se denomina e o que representa esse achado?</div>`,alts:["Metaplasia pilórica: glândula colonizada por células de padrão gástrico","Cripta cribriforme, indicando adenoma tubular em transformação","Abscesso de cripta: leucócitos extravasados para a luz glandular","Muco espessado retido por hiperplasia de células caliciformes","Granuloma intraluminal, patognomônico de doença de Crohn"],correta:2,just:["Errada — metaplasia trocaria o TIPO de epitélio; aqui a luz está ocupada por células inflamatórias.","Errada — cribriforme descreve o lúmen irregular da glândula PROLIFERADA, não coleção de neutrófilos.","Correta — quando os leucócitos extravasam para DENTRO da cavidade glandular forma-se o abscesso de cripta — coleção inflamatória em ambiente cavitário, clássico da DII em atividade (muito associado à colite ulcerativa). A hostilidade enzimática ao redor leva o epitélio glandular à necrose.","Errada — muco retido seria material amorfo PAS+, não celularidade neutrofílica densa.","Errada — granuloma é agrupamento de células EPITELIOIDES no tecido, não neutrófilos na luz da glândula."],ref:"Aula 05 — Abscesso de cripta"},
+
+{n:19,aula:1,nivel:"medio",enun:`<span class="vinheta">Pólipo colônico ressecado mostra displasia tanto nas estruturas vilosas da superfície quanto nas glândulas tubulares profundas.</span><div class="pergunta">Qual a classificação correta dessa lesão?</div>`,alts:["Pólipo hiperplásico misto, sem potencial de malignização","Pólipo hamartomatoso, pela arquitetura alterada em duas estruturas distintas","Adenocarcinoma in situ, pois a displasia em duas estruturas define malignidade","Adenoma tubuloviloso: neoplasia benigna com displasia nas duas estruturas","Pólipo inflamatório florido com regeneração atípica reacional"],correta:3,just:["Errada — hiperplásico não tem displasia; a presença de atipia muda a categoria para adenoma.","Errada — hamartoma tem arquitetura bizarra com CÉLULAS NORMAIS; aqui há displasia.","Errada — displasia (mesmo dupla) segue sendo neoplasia BENIGNA; maligno exige o checklist completo/invasão.","Correta — adenoma é o pólipo displásico (neoplasia benigna): VILOSO quando a displasia está no vilo, TUBULAR quando está na glândula (o mais comum) e TUBULOVILOSO quando está nos dois — exatamente o caso. Essa distinção cai na prova teórica; o GRAU da displasia, não.","Errada — pólipo inflamatório mostra infiltrado, congestão e edema, não displasia estabelecida em vilos e túbulos."],ref:"Aula 05 — Adenomas: tubular, viloso, tubuloviloso"},
+
+{n:20,aula:1,nivel:"dificil",enun:`<span class="vinheta">Biópsia profunda de intestino GROSSO: na submucosa, abaixo de uma muscular da mucosa rompida, há glândulas atípicas em meio a intenso infiltrado linfocitário.</span><div class="pergunta">Por que esse achado define adenocarcinoma INVASIVO?</div>`,alts:["Porque a submucosa do grosso não tem glândulas: as que estão lá são invasoras","Porque as glândulas de Brunner da submucosa sofreram transformação maligna","Porque o infiltrado linfocitário denso na submucosa já define malignidade","Porque toda ruptura da muscular da mucosa é sinônimo de neoplasia maligna","Porque glândulas heterotópicas benignas nunca ocorrem no tubo digestivo"],correta:0,just:["Correta — a submucosa do intestino grosso NÃO tem glândula nenhuma (Brunner existe só no duodeno). Glândulas atípicas ali só podem ser Lieberkühn cancerígenas que romperam o limite entre as camadas e se alojaram na submucosa: invasão. E a submucosa é riquíssima em vasos — dali as células que perderam adesão caem na circulação portal rumo ao FÍGADO.","Errada — Brunner é glândula do DUODENO; no grosso não existe glândula submucosa para 'transformar'.","Errada — inflamação sozinha não define malignidade; o critério é a glândula neoplásica em camada onde não deveria existir.","Errada — a muscular da mucosa pode romper por inflamação intensa; o que define invasão é o epitélio neoplásico além dela.","Errada — heterotopias existem no tubo digestivo, mas não explicam glândulas ATÍPICAS na submucosa colônica com muscular rompida."],ref:"Aula 05 — Adenocarcinoma invasivo"},
+
+{n:21,aula:1,nivel:"dificil",enun:`<span class="vinheta">Comparando lâminas, o professor nota: a displasia tinha lâmina própria intensamente inflamada; o adenocarcinoma francamente eosinofílico tem POUCA inflamação ao redor.</span><div class="pergunta">Qual o mecanismo desse "recuo" das células inflamatórias no câncer?</div>`,alts:["Corticoterapia prévia suprimiu seletivamente a resposta inflamatória peritumoral","Hipóxia ativa o HIF; o lactato da glicólise acidifica e repele a imunidade","Os linfócitos migraram todos para os linfonodos de drenagem regional","A desmoplasia forma barreira mecânica impenetrável para leucócitos","O tumor secreta muco em excesso, diluindo as células inflamatórias"],correta:1,just:["Errada — o fenômeno é da biologia tumoral, observado independentemente de tratamento.","Correta — a proliferação supera a vascularização → hipóxia → ativação do HIF → a célula liga as enzimas da glicólise → produção maciça de ÁCIDO LÁTICO. O meio ácido repele/mata as células inflamatórias (efeito Warburg / microambiente tumoral): sem linfócitos T induzindo apoptose, o tumor prospera — por isso câncer com POUCA inflamação ao redor tem pior prognóstico ('a chance de escapar dali é gigante').","Errada — não é migração fisiológica: é o microambiente ácido impedindo a permanência das células imunes.","Errada — desmoplasia dá rigidez à massa, mas o mecanismo do recuo imune discutido é bioquímico (acidose).","Errada — a eosinofilia refere-se ao citoplasma ávido por eosina (metabolismo alto), não a muco diluindo células."],ref:"Aula 05 — Efeito Warburg e microambiente tumoral"},
+
+{n:22,aula:1,nivel:"medio",enun:`<span class="vinheta">Lâmina duvidosa entre displasia de alto grau e adenocarcinoma. A imuno-histoquímica (mesmo bloco de parafina) mostra: Ki-67 expresso em 70% das células (esperado ~10%) e p53 com expressão muito diminuída.</span><div class="pergunta">Como interpretar esse painel?</div>`,alts:["Padrão benigno: Ki-67 alto indica regeneração fisiológica saudável","Painel inconclusivo: Ki-67 e p53 medem o mesmo fenômeno proliferativo","Padrão favorável: p53 baixo significa menos estímulo à divisão celular","A favor de malignidade: proliferação altíssima sem o freio da apoptose","Necessária nova biópsia, pois IHQ não se aplica a material parafinado"],correta:3,just:["Errada — 70% onde o esperado é ~10% é proliferação francamente anormal ('era pra ser 10 — epa, segura').","Errada — medem eixos diferentes e complementares: Ki-67 = proliferação; p53 = supressão tumoral/apoptose.","Errada — é o inverso: p53 é o guardião que INDUZ apoptose da célula errada; menos p53 = menos proteção ('mais p53, melhor; menos, pior').","Correta — Ki-67 ALTO (índice mitótico anormal) + p53 BAIXO (supressor de tumor silenciado) somados à morfologia fecham o desempate a favor de malignidade: a lesão vai crescer rápido e tende a migrar para outras camadas. É assim que a biologia molecular encerrou as 'brigas de patologistas'.","Errada — a IHQ usa exatamente o material parafinado já existente: tira da parafina e marca com os anticorpos — sem rebiopsiar."],ref:"Aula 05 — Imuno-histoquímica Ki-67 e p53"},
+
+{n:23,aula:1,nivel:"dificil",enun:`<span class="vinheta">Jovem de 22 anos, colonoscopia com ~800 pólipos adenomatosos. O pai fez colectomia aos 35 anos. Teste genético: mutação do APC, cromossomo 5.</span><div class="pergunta">Qual conjunto de afirmativas está correto sobre essa doença?</div>`,alts:["Herança autossômica recessiva; risco de câncer estabilizado em 10% ao longo da vida","Doença adquirida por disbiose; a conduta é anti-inflamatório contínuo","Herança dominante ligada ao X; vigilância anual dispensa cirurgia","Mutação esporádica do p53; remoção endoscópica de todos os pólipos","Autossômica dominante; malignização de 100% aos 30 anos; colectomia profilática"],correta:4,just:["Errada — a PAF é autossômica DOMINANTE (o pai afetado com filho afetado ilustra); e o risco SOBE com o tempo, não estabiliza.","Errada — é doença GENÉTICA herdada, não adquirida; anti-inflamatório não altera a história natural.","Errada — é autossômica (não ligada ao X) e a vigilância NÃO substitui a colectomia: com centenas de pólipos, tirar um a um é impossível.","Errada — o gene da PAF é o APC (cromossomo 5); p53 pode se somar depois ('APC + p53 mutados, danou-se'), e a remoção endoscópica completa é inviável com 500–2.500 pólipos.","Correta — polipose adenomatosa familiar: autossômica dominante, APC no cromossomo 5, 500–2.500 pólipos; malignização em função do tempo — 10%/10 anos, 50%/20 anos, 100%/30 anos —, por isso colectomia PROFILÁTICA com vigilância semestral até lá + aconselhamento genético da família."],ref:"Aula 05 — Polipose adenomatosa familiar"},
+
+{n:24,aula:1,nivel:"dificil",enun:`<span class="vinheta">Na prova teórica, a professora pede o mecanismo molecular pelo qual a mutação do APC leva à proliferação descontrolada no câncer colorretal.</span><div class="pergunta">Qual a resposta correta?</div>`,alts:["APC ativa diretamente o RAS no cromossomo 12, acelerando a mitose","APC codifica a calprotectina, cuja falta permite inflamação persistente","APC mutado deixa de degradar a β-catenina, e a transcrição não desliga","APC é o receptor do fator de crescimento epidérmico nos enterócitos","APC repara o DNA; sua perda acumula mutações apenas no gene SMAD"],correta:2,just:["Errada — RAS (cromossomo 12) é OUTRO gene da via, com mutação própria; APC não o ativa.","Errada — calprotectina é enzima de neutrófilo usada como exame de fezes; nada a ver com o APC.","Correta — a função do APC é DEGRADAR o complexo com a β-catenina, que é um FATOR DE TRANSCRIÇÃO. Com APC mutado, ninguém desliga a transcrição — 'sai besteira, cópias erradas': proliferação contínua. Somam-se na via o RAS (crom. 12, acelerador sem freio quando mutado), o SMAD (crom. 18, inibidor perdido) e o p53 (guardião da apoptose).","Errada — APC é proteína citoplasmática reguladora da β-catenina, não receptor de membrana.","Errada — APC não é gene de reparo; e as mutações da via se acumulam em vários genes, não só no SMAD."],ref:"Aula 05 — Via APC–β-catenina"}
+];
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Paciente E.C.S., feminina, 34 anos, fisioterapeuta, com diarreia constante (até 5×/dia), fístula anal, cansaço extremo, náuseas, dor articular e fortes dores abdominais. Laboratório: Hb 9,1 g/dL (ref. 12–16) · Ht 26% · PCR 2,1 mg/dL (ref. até 1,0) · ANCA positivo · calprotectina fecal 278 mg/kg (positivo &gt;200) · sangue oculto positivo. Colonoscopia: íleo terminal com erosões planas esparsas; válvula ileocecal deformada; do ceco ao reto, múltiplas úlceras aftoides com fundo de fibrina INTERCALADAS por mucosa normal; retrações fibróticas deformantes. Biópsias: ileíte crônica; colite crônica intensa ulcerada à direita; à esquerda, colite estendendo-se até a submucosa com esboço GRANULOMATOSO e células gigantes multinucleadas em mucosa e submucosa. (Caso 2 do slide da professora.)`,
+perg:["Qual o diagnóstico e quais achados da colonoscopia o sinalizam?","Quais informações da biópsia são clássicas dessa doença?","Justifique cada alteração laboratorial com base no diagnóstico.","A paciente pergunta se a doença 'sempre foi autoimune'. Como responder tecnicamente?"],
+resp:[["Doença de Crohn — pela distribuição e pela profundidade","O padrão SALTEADO é a chave: úlceras aftoides intercaladas por mucosa NORMAL do ceco ao reto (skip lesions), somadas ao acometimento do ÍLEO TERMINAL (predileção clássica do Crohn — a colite ulcerativa não sobe além do cólon) e às retrações fibróticas deformantes (cicatrização transmural). A válvula ileocecal deformada reforça a doença regional. Colite ulcerativa faria lesão CONTÍNUA começando no reto, sem áreas poupadas e sem íleo."],
+["Granuloma + lesão além da mucosa","Dois achados fecham: (1) a inflamação ESTENDENDO-SE ATÉ A SUBMUCOSA — Crohn é transmural, a colite respeita a muscular da mucosa; (2) o ESBOÇO GRANULOMATOSO com CÉLULAS GIGANTES MULTINUCLEADAS em mucosa e submucosa — o granuloma epitelioide (macrófagos convertidos em células epitelioides quando as inflamações aguda e crônica falham) é o achado que praticamente define Crohn, pois a colite ulcerativa não o forma. Granuloma em qualquer camada + clínica compatível = laudo seguro."],
+["Cada exame conta a mesma história","Hb 9,1 e Ht 26%: ANEMIA por perda crônica de sangue nas ulcerações (sangue oculto positivo confirma a perda) — a professora insiste: anemia crônica nunca é 'normal'. PCR elevada: inflamação sistêmica ativa. CALPROTECTINA 278 (&gt;200): enzima de neutrófilos nas fezes = luz intestinal infiltrada por neutrófilos (a superfície ulcerada reagudiza todo dia). ANCA positivo: a inflamação persistente passou a ser tratada como antígeno — anticorpos contra enzimas dos próprios neutrófilos (positivo em ~75% dos Crohn). Fístula anal: consequência direta da doença transmural que perfura e cicatriza unindo estruturas."],
+["Autoimunidade ADQUIRIDA na evolução","Não. A DII não nasce autoimune — nasce do tripé genética (NOD2, cromossomo 16) + disbiose + resposta imune desregulada. Com a persistência, as próprias células inflamatórias passam a ser vistas pelo organismo como agente causal, e o sistema imune fabrica anticorpos contra elas (P-ANCA/X-ANCA) — ou seja, a doença ADQUIRE comportamento autoimune no meio do caminho. Por isso o ANCA é negativo no início e por isso o tratamento se parece com o de doença autoimune (corticoide): é um descontrole da resposta imune."]],
+ref:"Aula 05 — CU × Crohn, granuloma, exames de apoio"},
+
+{n:2,aula:1,caso:`C.M.A., feminina, 9 anos, admitida com história de 5–6 evacuações diarreicas diárias COM SANGUE VIVO há ~1 ano; emagrecida, descorada e apática. Exames: Hb 8,2 · Ht 28,7% · leucócitos 11.700 · VHS 30 mm · albumina 3,3 g/dL · coproparasitológico e coprocultura NEGATIVOS · trânsito intestinal normal. Colonoscopia: reto, sigmoide e descendente com perda de haustrações e do padrão vascular, mucosa esbranquiçada e espessada; transverso e ceco com extensa área de ulcerações rasas; ÍLEO TERMINAL NORMAL. Biópsia: íleo normal; cólons com colite crônica com infiltrado linfoplasmocitário; reto com alargamento de criptas, epitélio regenerativo, edema e infiltrado linfoplasmocitário em lâmina própria. (Caso 3 do slide da professora.)`,
+perg:["Qual o diagnóstico e que dados da colonoscopia e da biópsia o sustentam?","Explique os resultados do exame de sangue desta criança.","Por que coprocultura negativa e 1 ano de evolução afastam colite aguda infecciosa?","Se esta doença ficar descontrolada por décadas, quais as duas complicações temidas discutidas em aula?"],
+resp:[["Colite ulcerativa — contínua, do reto para cima, poupando o íleo","O acometimento é CONTÍNUO e começa no reto subindo (reto→sigmoide→descendente, depois transverso/ceco), com ulcerações RASAS — lesão limitada à mucosa — e ÍLEO TERMINAL NORMAL na colono e na biópsia: o conjunto oposto ao Crohn (salteado, transmural, íleo). A biópsia confirma: inflamação crônica (linfoplasmocitária) restrita à mucosa, epitélio regenerativo e alargamento de criptas, SEM granulomas. Perda de haustrações e do padrão vascular = doença crônica remodelando o cólon."],
+["O hemograma da perda e da inflamação","Hb 8,2/Ht 28,7%: anemia por perda crônica de sangue vivo nas evacuações há um ano — perda contínua em criança em crescimento. Leucócitos 11.700 e VHS 30: resposta inflamatória sistêmica ativa. ALBUMINA 3,3 baixa: soma da má absorção/perda proteica pela mucosa ulcerada com o consumo inflamatório crônico — coerente com o emagrecimento e a apatia. É o retrato laboratorial de uma DII ativa de longa data."],
+["Tempo + cultura negativa = doença crônica idiopática","A colite aguda ('comi um lanche estragado') é LIMITADA NO TEMPO: começa e termina em dias, melhora com tratamento e quase nunca chega à histologia. Um ano de diarreia sanguinolenta é incompatível com esse curso. A coprocultura e o coproparasitológico negativos afastam o agente infeccioso/parasitário identificável. Sobra a inflamação crônica idiopática — DII — cuja histologia mostra exatamente o infiltrado MONOnuclear (linfoplasmocitário) da cronicidade, e não o polimorfonuclear puro da colite aguda."],
+["Megacólon tóxico e câncer colorretal","(1) MEGACÓLON TÓXICO: a CU em crise, por ser contínua, libera citocinas em volume maciço que intoxicam o plexo mioentérico → o segmento perde o TÔNUS, afrouxa e dilata — conduta de ressecção. (2) CÂNCER: risco 20–30× maior na doença descontrolada, somando com o tempo (≈31% aos 10 anos; ≈60% aos 30 anos de mau controle) — regeneração forçada sob fatores de crescimento inflamatórios = proliferação colecionando erros. Por isso controle rigoroso + vigilância colonoscópica pela vida."]],
+ref:"Aula 05 — Colite ulcerativa e complicações"},
+
+{n:3,aula:1,caso:`Masculino, 63 anos, hipertenso, cardiomiopatia alcoólica, internado com cólica intestinal e sangramento ao defecar. Colonoscopia: LESÃO VEGETANTE a 8 cm da margem anal, bordos infiltrativos, semicircunferencial, superfície lobulada, limites mal definidos, ~10 cm de diâmetro, não impedindo a passagem do aparelho. Sigmoide: pólipo SÉSSIL de superfície RUGOSA, 1,5 cm. Transverso: dois pólipos sésseis de 0,3 cm recobertos por mucosa normal. Ascendente: pólipo séssil de 0,3 cm, mucosa normal. Ceco: sem alterações. (Caso 1 do slide da professora.)`,
+perg:["Com base na colonoscopia, qual a conduta para cada achado?","O que a superfície RUGOSA do pólipo de 1,5 cm sugere, em contraste com os pólipos recobertos por mucosa normal?","Compare os riscos de adenomas sésseis e pediculados.","Se a biópsia da lesão retal confirmar adenocarcinoma invadindo a submucosa, por que o fígado é o primeiro alvo de metástase — e o que a imuno-histoquímica acrescentaria?"],
+resp:[["Biopsiar a lesão principal + ressecar os pólipos","A lesão vegetante de 10 cm com bordos infiltrativos e limites mal definidos é altamente suspeita de MALIGNIDADE: biópsias múltiplas obrigatórias (a colono não remove uma lesão desse porte com margem — se maligna, o tratamento é cirúrgico com margem e estadiamento). Os pólipos menores (0,3–1,5 cm) devem ser REMOVIDOS por completo na própria colonoscopia e TODOS enviados à histologia — a natureza do pólipo só a microscopia revela. Vigilância colonoscópica programada depois."],
+["Rugoso = proliferado; liso = provavelmente não","Superfície RUGOSA na colonoscopia sugere SOBREPOSIÇÃO CELULAR — o vai-e-vem áspero da proliferação epitelial (pólipo hiperplásico e/ou displásico). Pólipos LISOS, recobertos por mucosa normal, não sugerem proliferação (podem ser inflamatórios, por exemplo). É impressão macroscópica, não diagnóstico: quem fecha é a lâmina — mas orienta a suspeita e a pressa do endoscopista."],
+["Séssil desce; pediculado compra tempo","SÉSSIL cresce 100% aderido à mucosa: se maligno, tem caminho curto para atravessar a muscular da mucosa e alcançar a SUBMUCOSA riquíssima em vasos — invasão e disseminação precoces = pior prognóstico. PEDICULADO forma haste de conjuntivo vascularizado com as atipias concentradas na PONTA: a distância até as camadas profundas 'compra tempo'. Detalhe da aula: um não vira o outro — cada pólipo nasce com sua forma de adesão. Neste caso, todos os pólipos são sésseis, o que aumenta a atenção."],
+["Drenagem portal + Ki-67/p53","A submucosa invadida é altamente vascularizada e o sangue venoso do intestino converge pela veia PORTA para o FÍGADO — primeiro filtro capilar que as células soltas (que perderam genes de adesão) encontram: primeiro sítio de metástase do câncer colorretal. A imuno-histoquímica (no mesmo bloco de parafina) acrescentaria o desempate/prognóstico: Ki-67 ALTO = índice proliferativo anormal ('70% onde deveria ser 10'); p53 DIMINUÍDO = supressor tumoral perdido, sem freio apoptótico. Ki-67 alto + p53 baixo = lesão que cresce rápido e tende a migrar — pressa terapêutica e mapeamento corporal."]],
+ref:"Aula 05 — Pólipos, adenocarcinoma e conduta"},
+
+{n:4,aula:1,caso:`Homem, 24 anos, assintomático, procura aconselhamento: o pai fez colectomia total aos 32 anos e um tio paterno morreu de câncer colorretal aos 38. Colonoscopia do paciente: centenas de pólipos (estimados &gt;700) em todos os segmentos, do reto ao ceco. Teste genético: mutação germinativa do gene APC, cromossomo 5.`,
+perg:["Qual o diagnóstico e o padrão de herança? O que isso implica para a família?","Explique molecularmente por que a mutação do APC gera essa 'floresta' de pólipos.","Por que a conduta de eleição é a colectomia profilática — e não a polipectomia seriada?","Que outros genes da via do câncer colorretal foram citados em aula e qual o papel de cada um?"],
+resp:[["PAF — autossômica dominante","Polipose adenomatosa familiar: mutação do APC (Adenomatous Polyposis Coli), cromossomo 5, herança AUTOSSÔMICA DOMINANTE — basta um alelo mutado, e cada filho de afetado tem 50% de risco, sem pular gerações (pai e tio afetados ilustram). Implicação: ACONSELHAMENTO GENÉTICO e teste de todos os familiares de primeiro grau — irmãos e futuros filhos — para vigilância precoce. Menos de ~100 pólipos torna PAF improvável, mas o diagnóstico só FECHA com o teste genético."],
+["β-catenina sem freio","O APC normal DEGRADA o complexo com a β-CATENINA, que é um FATOR DE TRANSCRIÇÃO. APC mutado = ninguém desliga a transcrição — 'sai besteira, cópias erradas': atividade multiplicativa exacerbada em todo o epitélio colônico, gerando 500–2.500 pólipos adenomatosos (displásicos) que podem mudar de fase rapidamente pelo altíssimo índice de multiplicação."],
+["A matemática do tempo não perdoa","Com centenas a milhares de pólipos é IMPOSSÍVEL remover todos ('vai dar para tirar tudo? não') e a malignização é função do TEMPO de multiplicação: 10 anos de doença → 10% de chance de câncer; 20 anos → 50%; 30 anos → 100%. Ou seja: se nada for feito, o câncer é questão de quando — e não é 'um cancerzinho': múltiplos pólipos malignizando simultaneamente. Por isso: vigilância semestral com remoção de suspeitos enquanto se programa a COLECTOMIA PROFILÁTICA — a analogia da aula foi a mastectomia da Angelina Jolie: retirar o órgão-alvo de quem carrega a mutação é tirar o paciente da condição de risco."],
+["RAS, SMAD e p53 — aceleradores e freios","RAS (cromossomo 12): sinalizador de proliferação — mutado, ninguém o desliga (acelerador travado). SMAD (cromossomo 18): INIBIDOR da proliferação — mutado, o freio some. p53: o guardião — supressor tumoral que induz APOPTOSE da célula errada; expressão perdida = célula que multiplica e não morre. A soma é a via clássica do câncer colorretal: APC–β-catenina ligando a transcrição, RAS acelerando, SMAD e p53 desativados — 'casou APC mutado com p53, danou-se'."]],
+ref:"Aula 05 — PAF e via molecular"}
+];
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 05</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 05</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 05 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 05 — Patologias Intestinais",kicker:"ANATO PATO II",desc:"Histologia normal, CU × Crohn, complicações, pólipos, displasia, adenocarcinoma, PAF e as lâminas 31 e 61 da prova prática.",cards:[
+{area:"Histologia",cat:"conceito",q:"Glândulas de Brunner: onde ficam, o que fazem e por onde drenam?",a:"Exclusivas do DUODENO, na SUBMUCOSA. Secretam muco ALCALINO que é drenado abrindo-se nas criptas de Lieberkühn — equaliza o pH do quimo ácido para as enzimas pancreáticas agirem."},
+{area:"Histologia",cat:"prof",q:"As 3 âncoras que localizam o segmento na lâmina?",a:"BRUNNER = duodeno · PLACAS DE PEYER = íleo · GALT = intestino grosso. É assim que o patologista se acha quando o colonoscopista não informa o sítio da biópsia.",obs:"E lembre: grosso NÃO tem vilosidades."},
+{area:"Histologia",cat:"conceito",q:"Por que as células caliciformes aumentam ao longo do trajeto intestinal?",a:"A quantidade de caliciformes é proporcional à ABRASÃO: quanto mais sólido e agressivo o conteúdo (fezes formadas no grosso), mais muco lubrificante é necessário."},
+{area:"Histologia",cat:"conceito",q:"Vida média do epitélio do trato gastrointestinal? Consequência dupla?",a:"3–5 DIAS — uma das maiores taxas proliferativas do corpo. Bênção: regenera rápido. Maldição: sob estímulo crônico, prolifera demais e coleciona erros de cópia."},
+{area:"Histologia",cat:"prof",q:"Qual estrutura é a 'régua' que separa colite de Crohn na lâmina?",a:"A MUSCULAR DA MUCOSA. Inflamação LIMITADA a ela → colite. Inflamação que a ULTRAPASSA (submucosa, muscular) → doença de Crohn (transmural)."},
+{area:"Histologia",cat:"conceito",q:"Microbiota: massa por kg de fezes e o nome do desequilíbrio?",a:"~200 g de bactérias por quilo de fezes. O desequilíbrio (dieta industrializada, antibióticos) é a DISBIOSE — um dos 3 pilares da DII.",obs:"Casos graves: 'zerar e reflorestar' — antibioticoterapia + lactobacilos ou transplante de fezes."},
+{area:"DII",cat:"conceito",q:"Os 3 pilares da etiopatogênese da doença inflamatória intestinal?",a:"1) PREDISPOSIÇÃO GENÉTICA — NOD2, cromossomo 16 (Crohn); 2) MICROBIOTA ALTERADA (disbiose); 3) RESPOSTA IMUNE DESREGULADA que não desliga mais."},
+{area:"DII",cat:"conceito",q:"Por que a inflamação crônica LESIONA o intestino?",a:"Neutrófilos e macrófagos despejam COLAGENASES, ELASTASES e RADICAIS LIVRES que digerem o tecido do hospedeiro → erosão (rasa, só epitélio) e úlcera (profunda, invade o conjuntivo)."},
+{area:"DII",cat:"prof",q:"CU × Crohn: as duas chaves da distinção?",a:"DISTRIBUIÇÃO: CU contínua/difusa começando no RETO × Crohn SALTEADO (skip lesions), boca ao ânus, predileção por íleo terminal. PROFUNDIDADE: CU limitada à MUCOSA × Crohn TRANSMURAL (pode perfurar)."},
+{area:"DII",cat:"conceito",q:"O que é pseudopólipo e de qual doença é marca?",a:"Ilha de mucosa SÃ que ficou saliente porque a ulceração destruiu tudo ao redor — parece pólipo, mas é tecido normal. Marca da COLITE ULCERATIVA."},
+{area:"DII",cat:"prof",q:"Que achado histológico praticamente FECHA doença de Crohn?",a:"O GRANULOMA EPITELIOIDE — em QUALQUER camada da parede. Macrófagos 'desistem' da fagocitose e viram células epitelioides em arranjo circunferencial. CU não faz granuloma.",obs:"Células epitelioides podem fundir em célula gigante tipo LANGHANS — a mesma da TB: anamnese afasta."},
+{area:"DII",cat:"conceito",q:"Sequência dos padrões de inflamação até o granuloma?",a:"AGUDA → CRÔNICA → GRANULOMATOSA: quando aguda e crônica não resolvem, as citocinas transformam macrófagos em células epitelioides que cercam a agressão."},
+{area:"DII",cat:"conceito",q:"Mucosa em paralelepípedo e mucosa careca: o que são?",a:"PARALELEPÍPEDO: faixas de mucosa funcional alternando com faixas de fibrose (os 'blocos'). CARECA: trecho SEM epitélio, substituído por fibrose — absorção ZERO, sem volta.",obs:"Grandes extensões carecas → suplementação de nutrientes pela vida."},
+{area:"DII",cat:"conceito",q:"Qual coloração confirma fibrose no lugar de mucosa?",a:"TRICRÔMICO DE MASSON — cora as fibras colágenas e evidencia as faixas de conjuntivo onde deveria haver mucosa."},
+{area:"DII",cat:"prof",q:"'Diagnóstico é momento, não erro' — o que a professora quis dizer?",a:"A biópsia colhe AMOSTRAS e a doença se declara aos poucos: um laudo de colite inespecífica que anos depois vira Crohn não foi erro — era o que a lâmina permitia afirmar. Por isso biopsiar MÚLTIPLOS pontos."},
+{area:"Complicações",cat:"caso",q:"Paciente 'urinava fezes'. Qual a lesão e por que ela é possível?",a:"FÍSTULA ENTEROVESICAL: o Crohn é transmural — perfura todas as camadas e a cicatrização une intestino à bexiga. Cursa com infecções urinárias de repetição."},
+{area:"Complicações",cat:"conceito",q:"O que são bridas intestinais e qual a consequência?",a:"Traves FIBRÓTICAS ligando alças (ou alça a bexiga/útero), induzidas por citocinas transmurais que ativam fibroblastos fora do intestino. Peristaltismo arrasta tudo junto: dor intensa + trânsito comprometido → cirurgia."},
+{area:"Complicações",cat:"caso",q:"'Imagem do feijão' no RX de abdome agudo: o que é e qual a cadeia causal?",a:"Silhueta de VOLVO (torção de alça). Cadeia: estenose fibrótica (Crohn) → peristaltismo forçado (cólicas) → torção → ISQUEMIA mesentérica → risco de necrose e ressecção.",obs:"Caso do Prof. Tadeu: mulher de 36 anos, desconforto intestinal 'da vida inteira'."},
+{area:"Complicações",cat:"conceito",q:"O que é intussuscepção?",a:"A onda peristáltica forte demais faz um segmento ENGOLIR o da frente. Dois pontos de dobra = dois pontos de possível isquemia. Se desengatar, resolve — mas investigue a causa do peristaltismo alterado."},
+{area:"Complicações",cat:"prof",q:"Megacólon tóxico: mecanismo e por que é da CU (e não do Crohn)?",a:"Citocinas em volume maciço INTOXICAM O PLEXO MIOENTÉRICO → o segmento perde o TÔNUS, afrouxa e dilata (sem torção). Só a CU gera esse pulso: é CONTÍNUA — grandes extensões inflamadas ao mesmo tempo. Conduta: ressecção."},
+{area:"Exames",cat:"prof",q:"P-ANCA/X-ANCA: o que são e o que revelam sobre a DII?",a:"Anticorpos contra ENZIMAS DO CITOPLASMA DOS PRÓPRIOS NEUTRÓFILOS. A DII não nasce autoimune: ADQUIRE comportamento autoimune quando a inflamação persistente passa a ser vista como o próprio patógeno.",obs:"Números do slide: ~75% no Crohn · ~11% na colite. Negativo no início da doença."},
+{area:"Exames",cat:"conceito",q:"Calprotectina fecal: o que é e como interpretar?",a:"Enzima dos NEUTRÓFILOS detectada nas fezes = luz intestinal infiltrada (inflamação ativa). Abaixo de 100: improvável · 100–250: repetir · acima de 250: afastar infecção e COLONOSCOPIA. Não específica de CU/Crohn."},
+{area:"Exames",cat:"conceito",q:"Se a DII é crônica (linfócitos), por que há neutrófilos nas fezes?",a:"A superfície ulcerada em contato com o bolo fecal REAGUDIZA TODO DIA: linfócitos predominam nas camadas profundas, neutrófilos abundam na superfície — e caem nas fezes."},
+{area:"Exames",cat:"prof",q:"As duas frases da professora sobre investigação básica?",a:"'SANGUE OCULTO CUSTA CENTAVOS' — pedir sempre na queixa intestinal arrastada. E anemia crônica SEM investigação é inaceitável. Qualquer médico pode pedir colonoscopia — 'não precisa ser gastro'."},
+{area:"DII",cat:"alerta",q:"Risco de câncer na DII descontrolada: números?",a:"20–30× o da população. Tempo de MAU controle soma: 10 anos ≈31% · 30 anos ≈60%. Mecanismo: regeneração forçada + fatores de crescimento inflamatórios = proliferação com erro."},
+{area:"Pólipos",cat:"conceito",q:"Definição de pólipo — e quem revela sua natureza?",a:"Toda formação tecidual SALIENTE EM DIREÇÃO À LUZ de órgão cavitário (intestino, estômago, útero, nariz). A natureza SÓ a microscopia revela.",obs:"Com o paciente, evite 'tumoração' — 'os caras piram antes da hora'."},
+{area:"Pólipos",cat:"conceito",q:"Checklist do pólipo INFLAMATÓRIO na lâmina?",a:"Infiltrado (PMN = agudo · MN = crônico) + CONGESTÃO vascular + EDEMA + EXSUDATO (rico em proteína E células) ± erosão/úlcera ± neoangiogênese/fibrose se crônico."},
+{area:"Pólipos",cat:"conceito",q:"O que é abscesso de cripta?",a:"Leucócitos extravasados para DENTRO da luz da glândula de Lieberkühn — coleção inflamatória em ambiente cavitário. Clássico de DII em atividade; o epitélio glandular ao redor morre."},
+{area:"Pólipos",cat:"prof",q:"Pólipo hiperplásico: qual a ÚNICA alteração nuclear aceitável?",a:"Núcleo ALONGADO POR FALTA DE ESPAÇO ('é a gente no metrô de manhã'). SEM hipercromasia, SEM nucléolo, SEM pleomorfismo, polaridade MANTIDA. Sobreposição celular = epitélio proliferado."},
+{area:"Pólipos",cat:"prof",q:"Pólipo com inflamação E hiperplasia: como conclui o laudo?",a:"Pelo STATUS MAIS GRAVE: pólipo HIPERPLÁSICO — descrevendo tudo. E a conduta é tratar a INFLAMAÇÃO de base ('uma doença levando à outra'). 'Hiperplásico, fica tranquilo' NÃO existe."},
+{area:"Pólipos",cat:"conceito",q:"Séssil × pediculado: forma e prognóstico?",a:"SÉSSIL: 100% aderido à mucosa — se maligno, caminho curto até a submucosa vascularizada = PIOR prognóstico. PEDICULADO: haste de conjuntivo com atipias na PONTA — 'compra tempo'. Um não vira o outro."},
+{area:"Pólipos",cat:"conceito",q:"Superfície do pólipo na colono: liso × rugoso?",a:"RUGOSO → sugere sobreposição celular (pólipo proliferativo: hiperplásico/displásico). LISO → não sugere proliferação. Impressão macroscópica — quem fecha é a lâmina."},
+{area:"Pólipos",cat:"conceito",q:"Pólipo hamartomatoso: o que é?",a:"Variação GENÉTICA da arquitetura da mucosa: vilos e glândulas bizarros em tamanho/forma, mas SEM NENHUMA ATIPIA celular. Benigno — feio no tamanho, inocente na célula."},
+{area:"Displasia",cat:"prof",q:"O mapa das zonas proliferativas: onde a mitose PODE acontecer?",a:"ZONA 1 (fundo da glândula): germinativas — sem mitose ativa. ZONA 2 (laterais): mitose FISIOLÓGICA (renovação 3–5 dias). ZONA 3 (ápice do vilo): células maduras — só APOPTOSE. Mitose no ápice = descontrole."},
+{area:"Displasia",cat:"conceito",q:"Os 6 itens do checklist de atipia (a 'tabela de cruzes')?",a:"1) Relação núcleo/citoplasma (intestino = 1/3) · 2) Pleomorfismo · 3) Hipercromasia · 4) Nucléolo evidente · 5) Mitoses fora de lugar · 6) Perda de POLARIDADE. Mais itens e mais intensos = displasia → adenocarcinoma."},
+{area:"Displasia",cat:"alerta",q:"Displasia é reversível? E quantos genes até a morfologia denunciar a célula maligna?",a:"Displasia ainda é REVERSÍVEL — vigiar + tratar a causa. A célula maligna carrega em média ~100 GENES MUTADOS até o microscópio mostrar: hiperplasia 'normal de aparência' já pode colecionar mutações invisíveis."},
+{area:"Displasia",cat:"conceito",q:"Adenoma: definição e os 3 tipos?",a:"Pólipo DISPLÁSICO = neoplasia BENIGNA. TUBULAR (displasia na glândula — o mais comum) · VILOSO (no vilo) · TUBULOVILOSO (nos dois).",obs:"Tubular × viloso CAI na teórica; GRAU de displasia NÃO cai."},
+{area:"Displasia",cat:"prof",q:"A 'briga dos patologistas' e quem desempata hoje?",a:"Lâminas iguais laudadas como baixo grau × alto grau × adenocarcinoma por laboratórios diferentes. Hoje o desempate é MOLECULAR: imuno-histoquímica (mesmo bloco de parafina) — 'não se vai mais só nos olhos'."},
+{area:"Câncer",cat:"conceito",q:"Efeito Warburg no microambiente tumoral: cadeia completa?",a:"Proliferação supera vascularização → HIPÓXIA → ativa HIF → liga enzimas da GLICÓLISE → ÁCIDO LÁTICO em massa → o meio ácido REPELE as células imunes → tumor sem vigilância prospera."},
+{area:"Câncer",cat:"alerta",q:"Câncer com POUCA inflamação ao redor: bom ou ruim?",a:"RUIM. Neoplasia maligna COM inflamação crônica ao redor tem vigilância imune ('gostamos muito'). SEM inflamação = microambiente já venceu — 'a chance de escapar dali é gigante'."},
+{area:"Câncer",cat:"conceito",q:"O que é desmoplasia?",a:"Deposição de tecido conjuntivo ENTRE as glândulas neoplásicas, induzida pela inflamação crônica que ativa fibroblastos → o tumor vira 'bolota dura' que comprime órgãos."},
+{area:"Câncer",cat:"prof",q:"Glândula na submucosa do intestino GROSSO: qual a leitura?",a:"INVASÃO. A submucosa do grosso NÃO tem glândulas (Brunner é só duodeno!). Glândulas atípicas ali = Lieberkühn cancerígenas que romperam o limite → ADENOCARCINOMA INVASIVO → risco de metástase no FÍGADO (drenagem portal)."},
+{area:"Câncer",cat:"prof",q:"IHQ do câncer de intestino: Ki-67 e p53 — como ler?",a:"Ki-67 = índice de proliferação: ALTO a favor de malignidade ('70% onde era pra ser 10 — segura'). p53 = supressor tumoral/apoptose: expressão DIMINUÍDA a favor de malignidade. 'Mais p53, melhor; menos, pior.'",obs:"Mesmo bloco de parafina — não rebiopsia. Futuro: biópsia líquida e leitura primária por scanner+IA."},
+{area:"PAF",cat:"conceito",q:"Polipose adenomatosa familiar: gene, cromossomo, herança e número de pólipos?",a:"Gene APC (Adenomatous Polyposis Coli) · CROMOSSOMO 5 · autossômica DOMINANTE · 500–2.500 pólipos. Menos de ~100 pólipos = improvável; diagnóstico fecha com TESTE GENÉTICO + aconselhamento familiar."},
+{area:"PAF",cat:"alerta",q:"PAF: malignização em função do tempo e conduta de eleição?",a:"10 anos → 10% · 20 anos → 50% · 30 anos → 100% de chance de câncer. Conduta: COLECTOMIA PROFILÁTICA (vigilância semestral até lá).",obs:"Analogia da aula: a mastectomia profilática da Angelina Jolie — tirar o órgão-alvo de quem carrega a mutação."},
+{area:"PAF",cat:"conceito",q:"A via molecular: papel de APC, RAS, SMAD e p53?",a:"APC (crom. 5) degrada a β-CATENINA (fator de transcrição) — mutado, transcrição não desliga. RAS (crom. 12): acelerador sem freio. SMAD (crom. 18): inibidor perdido. p53: guardião da apoptose — 'APC + p53 mutados, danou-se'."},
+{area:"Prova",cat:"prof",q:"As duas lâminas da prova prática e as 3 perguntas?",a:"LÂMINA 31 = pólipo intestinal HIPERPLÁSICO (com inflamação) · LÂMINA 61 = ADENOCARCINOMA de intestino grosso. Perguntas: (1) órgão — basta 'INTESTINO'; (2) processos patológicos 1 e 2 apontados; (3) conclusão diagnóstica."},
+{area:"Prova",cat:"alerta",q:"A regra de coerência do laudo na prova prática?",a:"Os processos apontados devem SUSTENTAR a conclusão: apontou displasia → laude displásico; viu só hiperplasia + inflamação → hiperplásico. 'Se olhou dois processos e concluiu errado, não está certo.'"}
+]}};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-intestino-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
