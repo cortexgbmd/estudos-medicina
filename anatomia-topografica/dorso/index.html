@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Aula 03 — Dorso · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Aula 03 — Dorso</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula 03</p>
+  <h1 class="page-h1">Dorso</h1>
+  <p class="lead">Regiões, coluna vertebral, região suboccipital, manguito rotador, os grandes músculos extrínsecos e intrínsecos, a aponeurose toracolombar e os três trígonos (ausculta, Grynfeltt e Petit). A aula inteira gira em torno de uma lógica: <b>entender POR QUE cada músculo faz o movimento que faz</b> — o professor avisou que não cobra origem e inserção decoradas, cobra o raciocínio, a inervação e a vascularização.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O dorso e suas regiões (e por que a semiologia precisa delas)</a></li>
+      <li><a href="#t2">Coluna vertebral: o eixo biomecânico</a></li>
+      <li><a href="#t3">Região suboccipital e o trígono suboccipital</a></li>
+      <li><a href="#t4">Escápula, manguito rotador e o plexo braquial</a></li>
+      <li><a href="#t5">Extrínsecos I: trapézio e o nervo acessório</a></li>
+      <li><a href="#t6">Extrínsecos II: latíssimo, romboides, levantador e serráteis</a></li>
+      <li><a href="#t7">Intrínsecos: esplênios, eretores da espinha e transversoespinais</a></li>
+      <li><a href="#t8">Aponeurose toracolombar: as 3 lâminas</a></li>
+      <li><a href="#t9">Trígonos: ausculta, Grynfeltt e Petit — e as hérnias lombares</a></li>
+      <li><a href="#t10">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O dorso e suas regiões (e por que a semiologia precisa delas)</h2>
+  <ul>
+    <li>O dorso é a <b>face posterior do tronco</b>, inferior ao pescoço e superior às nádegas — a região onde se fixam <b>cabeça, pescoço e membros</b>. Inclui pele, subcutâneo, músculos, coluna vertebral, costelas, <b>medula espinal e meninges</b>, e vasos/nervos segmentares.</li>
+    <li>Três partes: <b>região posterior do pescoço (NUCA)</b>, <b>região posterior do tórax</b> e <b>região lombar</b>.</li>
+    <li>Na região posterior do tórax, o marco divisor é a <b>escápula</b>: região <b>supraescapular</b> (acima), <b>escapular</b> (sobre a escápula), <b>infraescapular</b> (abaixo) e <b>interescápulo-vertebral</b> (entre as duas escápulas). Depois vêm <b>lombar</b> (vai até a nádega), <b>sacral</b> e <b>glútea</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/regioes-dorso.jpg" alt="Regiões da face posterior do tórax">
+  <figcaption><b>Regiões posteriores do tórax</b> — supraescapular, interescápulo-vertebral, escapular e infraescapular. É o vocabulário obrigatório do prontuário.</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 A facada que a escápula segura</p>
+  <p>O exemplo do professor: paciente esfaqueado no dorso. <b>Na região escapular, a faca "certamente não entrou"</b> — bate no osso da escápula. Mas <b>na região infraescapular, "opa, pode ter entrado"</b> — ali não há escudo ósseo. Saber nomear a região não é burocracia do prontuário: <b>define a preocupação clínica</b>. "Facada na bunda" não existe em prontuário — existe "ferimento penetrante em região glútea direita, próximo à linha mediana".</p></div>
+  <figure class="fig"><img src="img/panorama-superficial.jpg" alt="Panorama dos músculos superficiais do dorso">
+  <figcaption><b>O panorama do dorso</b> — trapézio, latíssimo, deltoide e os marcos ósseos palpáveis (vértebra proeminente C7, espinha da escápula, crista ilíaca), com os trígonos da ausculta e de Petit já assinalados. Guarde este mapa: a aula inteira acontece nele.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · Coluna vertebral: o eixo biomecânico</h2>
+  <ul>
+    <li><b>33 vértebras</b> em 5 regiões: <b>7 cervicais · 12 torácicas · 5 lombares · 5 sacrais (fundidas no sacro) · 4 coccígeas</b> (remanescentes de cauda). Mede <b>72–75 cm</b> no adulto — praticamente metade da altura do corpo.</li>
+    <li>Funções: <b>protege a medula espinal</b> e os nervos espinhais; <b>sustenta o peso</b> do corpo acima da pelve; é um eixo <b>parcialmente rígido E flexível</b> ("haste biomecânica"); base sobre a qual a cabeça gira; papel central em <b>postura e locomoção</b>.</li>
+    <li>Movimentos do dorso: <b>flexão</b> (musculatura anterior contrai, a do dorso relaxa), <b>extensão/hiperextensão</b> (músculos posteriores), <b>flexão lateral</b> (contração unilateral) e <b>rotação</b>.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Onde procurar hérnia de disco</p>
+  <p>A rotação (e o movimento em geral) concentra-se em <b>dois segmentos: cervical e lombar</b> — são os que mais se movem e, por isso, <b>os que mais sofrem</b>. Na ortopedia, hérnia de disco se procura <b>no pescoço e na lombar; "no tórax certamente não vai ter"</b> — a caixa torácica trava o segmento torácico.</p></div>
+  <figure class="fig"><img src="img/movimentos-coluna.jpg" alt="Movimentos da coluna vertebral">
+  <figcaption><b>Movimentos do dorso</b> — flexão, extensão, flexão lateral e as rotações (da cabeça/pescoço e da parte superior do tronco).</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · Região suboccipital e o trígono suboccipital</h2>
+  <ul>
+    <li>Compartimento muscular <b>profundo</b> da nuca, entre a <b>base do crânio (occipital) e as vértebras C1–C2</b> — um espaço <b>piramidal</b> abaixo dos músculos esternocleidomastóideo, esplênio e semiespinal. Para vê-lo na dissecção, é preciso tirar trapézio → esplênio → semiespinal da frente.</li>
+    <li><b>4 pequenos músculos de cada lado</b>, todos ligados a C1/C2: <b>reto posterior menor da cabeça</b>, <b>reto posterior maior da cabeça</b>, <b>oblíquo superior da cabeça</b> e <b>oblíquo inferior da cabeça</b>. Fazem o ajuste fino dos movimentos da cabeça sobre as duas primeiras vértebras.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O primeiro trígono da aula</p>
+  <p>Três desses músculos formam o <b>TRÍGONO SUBOCCIPITAL</b>: <b>reto posterior maior + oblíquo superior + oblíquo inferior</b>. E o conteúdo é o que importa: <b>a ARTÉRIA VERTEBRAL e o NERVO SUBOCCIPITAL</b> (que inerva os quatro músculos da região). A artéria vertebral sobe protegida dentro dos <b>forames transversos</b> das vértebras cervicais, passa por esse trígono e entra pelo <b>forame magno</b> — as duas vertebrais se unem formando a <b>artéria BASILAR</b>, que participa do <b>polígono cerebral (de Willis)</b>. Ou seja: dentro desse triângulo de músculos minúsculos passa uma artéria que nutre o cérebro.</p></div>
+  <figure class="fig"><img src="img/trigono-suboccipital.jpg" alt="Trígono suboccipital em 3D">
+  <figcaption><b>Trígono suboccipital</b> — reto posterior maior + oblíquo superior + oblíquo inferior emoldurando o triângulo sobre C1–C2.</figcaption></figure>
+  <figure class="fig"><img src="img/suboccipital-conteudo.jpg" alt="Conteúdo do trígono suboccipital">
+  <figcaption><b>O conteúdo</b> — a artéria vertebral cruzando o trígono (tracejado) e o nervo suboccipital (ramo posterior de C1); acima, o nervo occipital maior (ramo posterior de C2).</figcaption></figure>
+
+  <h2 class="topic" id="t4">4 · Escápula, manguito rotador e o plexo braquial</h2>
+  <ul>
+    <li>A escápula está NO dorso (temos até uma "região escapular"), mas seus músculos <b>não movem a coluna</b> — movem o <b>ombro/membro superior</b>. Não são músculos "próprios" do dorso.</li>
+    <li><b>Manguito rotador = 4 músculos</b> que nascem na escápula e se inserem no úmero: <b>supraespinal</b>, <b>infraespinal</b> e <b>redondo menor</b> por trás; <b>subescapular</b> (o "grandão" que forra a fossa subescapular) pela frente.</li>
+    <li><b>Supraespinal</b>: é ele que <b>INICIA a abdução</b> do braço — e é <b>o que mais lesa</b> (o desgaste clássico do tendão do manguito).</li>
+    <li><b>Redondo maior NÃO é manguito</b> — está ali do lado, vai direto ao úmero, mas fica fora do grupo.</li>
+  </ul>
+  <figure class="fig"><img src="img/manguito-posterior.jpg" alt="Manguito rotador vista posterior">
+  <figcaption><b>Vista posterior</b> — supraespinal (acima da espinha da escápula), infraespinal e redondo menor, rumo ao tubérculo maior do úmero.</figcaption></figure>
+  <figure class="fig"><img src="img/manguito-anterior.jpg" alt="Manguito rotador vista anterior com subescapular">
+  <figcaption><b>Vista anterior</b> — o subescapular forrando a fossa subescapular, a caminho do tubérculo menor. Três atrás + um na frente = manguito.</figcaption></figure>
+  <h3>Quem inerva o manguito? O plexo braquial responde</h3>
+  <ul>
+    <li>Revisão-relâmpago: o <b>plexo braquial</b> nasce das raízes <b>C5–T1</b> → forma os <b>troncos</b> superior, médio e inferior → divisões → <b>fascículos</b> lateral, medial e <b>posterior</b>. <b>Tudo que move o membro superior vem do plexo braquial.</b></li>
+    <li><b>Nervo supraescapular</b> (do <b>tronco superior</b>) → inerva <b>supraespinal e infraespinal</b>.</li>
+    <li><b>Nervos subescapulares</b> (do <b>fascículo posterior</b>) → inervam <b>subescapular e redondo maior</b>.</li>
+    <li>Pergunta clássica de prova oral: "mostra o músculo, diz quem inerva e de onde vem o nervo" — treine exatamente essa tríade.</li>
+  </ul>
+  <figure class="fig"><img src="img/plexo-braquial.jpg" alt="Esquema do plexo braquial">
+  <figcaption><b>Plexo braquial</b> — raízes C5–T1, troncos, fascículos e os ramos que interessam ao dorso: supraescapular, subescapulares, toracodorsal e dorsal da escápula.</figcaption></figure>
+  <figure class="fig"><img src="img/subescapular-redondo.jpg" alt="Subescapular e redondo maior com seus nervos">
+  <figcaption><b>Subescapular e redondo maior</b> — com as partes superior e inferior do nervo subescapular chegando pelo fascículo posterior.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Extrínsecos I: trapézio e o nervo acessório</h2>
+  <p>A musculatura do dorso tem <b>duas famílias</b>: os <b>EXTRÍNSECOS</b> (superficiais/intermediários — movem <b>membros e costelas</b>, não a coluna) e os <b>INTRÍNSECOS</b> (profundos, "próprios do dorso" — movem a coluna e mantêm a <b>postura</b>). O professor deu a imagem: extrínsecos são os "guindastes" do membro; intrínsecos são os "cabos de tensão" que seguram o mastro ereto.</p>
+  <ul>
+    <li><b>Trapézio</b> — o mais superficial. Origem no <b>terço medial da linha nucal, protuberância occipital e processos espinhosos de C7 a T12</b>; inserção no <b>terço lateral da clavícula, acrômio e espinha da escápula</b>.</li>
+    <li>As <b>partes</b> se nomeiam <b>tomando o OMBRO como referência</b>: fibras que DESCEM para o ombro = parte <b>descendente</b> (elevam a escápula); fibras transversais = parte <b>transversa</b> (retraem); fibras que SOBEM ao ombro = parte <b>ascendente</b> (deprimem). Juntas, ainda <b>rodam a escápula</b>.</li>
+    <li>A sequência da abdução completa do braço (trocar a lâmpada): <b>supraespinal inicia → deltoide continua → trapézio termina</b>, rodando a escápula para o braço passar da horizontal.</li>
+  </ul>
+  <figure class="fig"><img src="img/trapezio.jpg" alt="Músculo trapézio">
+  <figcaption><b>Trapézio</b> — da nuca a T12, convergindo para clavícula, acrômio e espinha da escápula. Um trapézio de cada lado (dois triângulos somados).</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Inervação surpresa: nervo ACESSÓRIO (XI par craniano)</p>
+  <p>O trapézio move o membro, mas <b>não vem do plexo braquial</b>: é inervado pelo <b>nervo acessório, o XI par craniano</b>, que sai da base do crânio e desce pelo pescoço. Cirurgia de tumor cervical que sacrifica o acessório → trapézio íntegro porém <b>desfuncionalizado</b> → atrofia, dor e <b>SÍNDROME DO OMBRO CAÍDO</b> (não eleva o ombro/braço). A artéria é a <b>dorsal da escápula</b> (da cervical transversa/axilar). E a aplicação cirúrgica: o trapézio dá <b>retalhos musculocutâneos</b> pediculados para cobrir grandes ressecções cervicais — por isso preservar o pedículo importa.</p></div>
+
+  <h2 class="topic" id="t6">6 · Extrínsecos II: latíssimo, romboides, levantador e serráteis</h2>
+  <h3>Latíssimo do dorso — o "grande avental"</h3>
+  <ul>
+    <li>Antigo "grande dorsal". Origem nos <b>processos espinhosos de T6–T12, fáscia toracolombar, crista ilíaca e 3–4 costelas inferiores</b>; inserção no <b>assoalho do sulco intertubercular do úmero</b>.</li>
+    <li>Ações: <b>estende, ADUZ e roda medialmente o úmero</b>; levanta o corpo na escalada. É a <b>puxada da remada</b>/barra — o trapézio joga o ombro, o latíssimo puxa.</li>
+    <li><b>Inervação: nervo TORACODORSAL</b> (do <b>fascículo posterior</b>, entre os dois subescapulares). <b>Artéria e veia toracodorsais</b>, ramos terminais da <b>subescapular</b> — que é o último ramo da <b>axilar</b> (continuação da subclávia).</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 O retalho que reconstrói a mama</p>
+  <p>Aplicação repetida com ênfase: na <b>mastectomia</b>, um retalho de <b>latíssimo do dorso</b> (pele + músculo + <b>pedículo toracodorsal</b> preservado) é rodado das costas para a frente para <b>reconstruir a mama</b>. Conexão direta com a Aula 04 (Mama): o cirurgião plástico vive dessa anatomia — retalho sem pedículo é retalho morto.</p></div>
+  <figure class="fig"><img src="img/latissimo.jpg" alt="Latíssimo do dorso">
+  <figcaption><b>Latíssimo do dorso</b> — o avental que sai da aponeurose toracolombar e sobe para o sulco intertubercular do úmero.</figcaption></figure>
+  <h3>Romboides e levantador da escápula</h3>
+  <ul>
+    <li>Sob o trapézio, entre coluna e escápula: <b>romboide MENOR</b> (ligamento nucal + C7–T1 — fica <b>acima</b>) e <b>romboide MAIOR</b> (T2–T5 — <b>abaixo</b>). Referência prática do professor: <b>a espinha da escápula</b> — do nível da espinha para baixo, maior; acima da espinha, menor.</li>
+    <li>Ações: <b>retraem a escápula</b> (aproximam as duas da coluna) e a fixam à parede torácica. O <b>levantador da escápula</b> sai do <b>ângulo superior</b> da escápula para os processos transversos cervicais — <b>eleva</b> a escápula, ajudando o trapézio.</li>
+    <li><b>Inervação dos três: nervo DORSAL DA ESCÁPULA</b> (primeiro raminho do plexo, sai da raiz de C5). Artéria homônima: <b>dorsal da escápula</b>.</li>
+    <li>Relembrete da semana passada: quem mantém a escápula <b>grudada no tórax</b> pela frente é o <b>serrátil ANTERIOR</b> — a lesão dele dá a escápula <b>alada</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/romboides-levantador.jpg" alt="Romboides e levantador da escápula com o nervo dorsal da escápula">
+  <figcaption><b>Romboides maior e menor + levantador da escápula</b> — com o nervo dorsal da escápula descendo para inervar os três.</figcaption></figure>
+  <h3>Serráteis posteriores — os extrínsecos respiratórios</h3>
+  <ul>
+    <li><b>Serrátil posterior SUPERIOR</b> (4 dígitos, sob os romboides): <b>ELEVA</b> costelas. <b>Serrátil posterior INFERIOR</b> (4 dígitos, sob o latíssimo): <b>DEPRIME</b> costelas.</li>
+    <li>São músculos respiratórios <b>acessórios</b> — entram em ação na crise asmática/bronquite, quando toda musculatura disponível é recrutada. Vão às <b>costelas</b> (não à escápula): movimento respiratório ⇒ continuam sendo <b>extrínsecos</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/serrateis-posteriores.jpg" alt="Serráteis posteriores superior e inferior">
+  <figcaption><b>Serráteis posteriores</b> — superior (sob os romboides) e inferior (sob o latíssimo), as "serrinhas" que puxam costelas na respiração forçada.</figcaption></figure>
+
+  <h2 class="topic" id="t7">7 · Intrínsecos: esplênios, eretores da espinha e transversoespinais</h2>
+  <p>Agora sim os <b>próprios do dorso</b>: profundos, revestidos pela fáscia/aponeurose toracolombar, responsáveis por <b>postura e movimento da coluna</b>. O corpo precisa deles porque <b>quase todo o peso (vísceras) fica ANTERIOR à coluna</b> — sem essas "hastes" potentes atrás, andaríamos vergados para a frente. Fraqueza aqui = dor, erro postural — por isso fisioterapia/pilates fortalecem exatamente essa musculatura. <b>Inervação de todos: RAMOS POSTERIORES dos nervos espinhais</b> (não é plexo braquial — não é movimento de membro!). Três camadas:</p>
+  <h3>Camada superficial — esplênios ("a bandagem")</h3>
+  <ul>
+    <li><b>Esplênio da cabeça</b> (vai ao <b>processo mastóide + linha nucal superior</b>) e <b>esplênio do pescoço</b> (para nos <b>processos transversos de C1–C3/C4</b>). Origem: ligamento nucal + processos espinhosos C7–T3/T4. Esplênio = "bandagem/compressa": envolvem e seguram os músculos profundos do pescoço.</li>
+    <li>Ação: <b>unilateral → inclina e RODA a cabeça para o MESMO lado · bilateral → ESTENDE</b> cabeça e pescoço.</li>
+  </ul>
+  <figure class="fig"><img src="img/esplenios.jpg" alt="Esplênios da cabeça e do pescoço">
+  <figcaption><b>Esplênios</b> — da cabeça (até mastóide/linha nucal) e do pescoço (até transversos cervicais), a bandagem sob o trapézio.</figcaption></figure>
+  <h3>Camada intermediária — ERETORES DA ESPINHA (os principais)</h3>
+  <ul>
+    <li>O <b>principal extensor da coluna</b>: mantém o bípede em pé. Três colunas de cada lado, num sulco entre processos espinhosos e ângulos das costelas, todas nascendo de uma <b>ORIGEM COMUM</b>: tendão largo na <b>crista ilíaca posterior + face posterior do sacro + processos espinhosos sacrais/lombares</b>, revestido pela aponeurose toracolombar.</li>
+    <li>De <b>medial → lateral</b>: <b>ESPINAL</b> (colado nos processos espinhosos; é o único que praticamente <b>não chega à cabeça</b>) · <b>LONGUÍSSIMO</b> (intermediário; vai até o <b>processo mastóide</b>) · <b>ILIOCOSTAL</b> (lateral; do ilíaco aos <b>ângulos das costelas</b>). Cada um com 3 partes regionais.</li>
+    <li>Ação: <b>unilateral → flexão lateral · bilateral → extensão/hiperextensão</b> da cabeça e da coluna.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Contrafilé × filé mignon</p>
+  <p>A analogia que ninguém esquece: os <b>eretores da espinha são o CONTRAFILÉ</b> — no boi (quadrúpede, que não precisa ficar em pé) o músculo é macio; no humano é duro, tenso, "ruim de comer", porque sustenta a coluna o dia inteiro. E o <b>FILÉ MIGNON é o PSOAS MAIOR</b> — também paravertebral, mas <b>anterior</b> à coluna, macio porque não briga com a gravidade. Anatomia de açougue que fixa a função: posterior = postura = duro; anterior = macio.</p></div>
+  <figure class="fig"><img src="img/eretores.jpg" alt="Eretores da espinha: espinal, longuíssimo e iliocostal">
+  <figcaption><b>Eretores da espinha</b> — as três colunas (espinal medial, longuíssimo intermédio, iliocostal lateral) subindo da origem comum sacroilíaca.</figcaption></figure>
+  <h3>Camada profunda — transversoespinais e os minúsculos</h3>
+  <ul>
+    <li>Sob os eretores, músculos <b>curtos e oblíquos</b> que vão de <b>processo TRANSVERSO a processo ESPINHOSO</b> de vértebras acima — daí "transversoespinais": <b>SEMIESPINAL</b> (continua para cima onde o espinal parou — o semiespinal da cabeça <b>chega ao occipital</b>, entre as linhas nucais), <b>MULTÍFIDO</b> (mais espesso na <b>lombar</b> — o "ajuste fino") e <b>ROTADORES</b> curtos/longos (mais desenvolvidos na <b>torácica</b>).</li>
+    <li>Ação dos transversoespinais: bilateral estende; unilateral <b>roda para o lado OPOSTO</b>.</li>
+    <li>Completam a camada: <b>interespinais, intertransversários e levantadores das costelas</b> — minúsculos, entre processos vizinhos.</li>
+  </ul>
+  <figure class="fig"><img src="img/transversoespinais.jpg" alt="Semiespinal e rotadores">
+  <figcaption><b>Transversoespinais</b> — semiespinal (do tórax, do pescoço e da cabeça) e os rotadores curtos e longos do tórax.</figcaption></figure>
+  <figure class="fig"><img src="img/camada-profunda.jpg" alt="Panorama da camada profunda do dorso">
+  <figcaption><b>A camada mais profunda em panorama</b> — multífido, rotadores, interespinais, intertransversários, levantadores das costelas e o quadrado do lombo, já junto ao osso.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Aponeurose toracolombar: as 3 lâminas</h2>
+  <ul>
+    <li>Os intrínsecos são contidos por uma "armadura" de tecido conjuntivo: a <b>fáscia/aponeurose toracolombar</b> — <b>fina na parte torácica, ESPESSA na lombar</b> (o losango branco visível na dissecção). É o equivalente posterior da bainha do reto do abdome: na frente não há osso, atrás há coluna + esse cinturão.</li>
+    <li><b>Lâmina ANTERIOR:</b> sai da <b>face anterior dos processos transversos</b> lombares, passa <b>na frente do QUADRADO DO LOMBO</b> e continua como <b>FÁSCIA TRANSVERSAL</b> (o revestimento interno do músculo transverso do abdome).</li>
+    <li><b>Lâmina MÉDIA:</b> sai da <b>ponta (extremidade) dos processos transversos</b>, passa <b>atrás do quadrado do lombo</b> e dá origem ao tendão do <b>transverso e do oblíquo interno</b> do abdome.</li>
+    <li><b>Lâmina POSTERIOR:</b> sai dos <b>processos espinhosos</b> (+ sacro e crista ilíaca), <b>reveste os eretores da espinha</b> por trás e dá origem ao tendão do <b>serrátil posterior inferior e do latíssimo do dorso</b> — por isso o latíssimo "nasce" daquela área branca.</li>
+  </ul>
+  <figure class="fig"><img src="img/fascia-toracolombar.jpg" alt="As três lâminas da fáscia toracolombar">
+  <figcaption><b>As 3 lâminas</b> — anterior (frente do quadrado do lombo → fáscia transversal), média (atrás dele) e posterior (envolvendo os eretores), fechando o cinturão lombar.</figcaption></figure>
+  <figure class="fig"><img src="img/fascia-corte-axial.jpg" alt="Corte axial da região lombar">
+  <figcaption><b>Corte axial lombar</b> — psoas maior ao lado do corpo vertebral (o "filé mignon"), quadrado do lombo, eretores dentro dos folhetos da fáscia toracolombar, e a continuidade com a parede abdominal.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Trígonos: ausculta, Grynfeltt e Petit — e as hérnias lombares</h2>
+  <h3>Trígono da ausculta</h3>
+  <ul>
+    <li>Limites: <b>margem superior do latíssimo do dorso</b> (embaixo) + <b>margem lateral do trapézio</b> (medial) + <b>margem medial da escápula</b> (lateral). Assoalho: <b>romboide maior</b> (e a parede torácica logo abaixo). <b>Sem conteúdo próprio.</b></li>
+    <li>É a janela onde o estetoscópio chega mais perto da parede torácica — pouca musculatura e nenhuma escápula no caminho. Manobra clássica: <b>pedir para o paciente cruzar os braços à frente</b> — a escápula desliza lateralmente e o trígono se amplia.</li>
+  </ul>
+  <figure class="fig"><img src="img/trigono-ausculta.jpg" alt="Trígono da ausculta na peça de cadáver">
+  <figcaption><b>Trígono da ausculta na peça</b> — entre trapézio, latíssimo e a margem medial da escápula, com o romboide maior no assoalho.</figcaption></figure>
+  <h3>Trígonos lombares — as portas das hérnias</h3>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>Trígono lombar SUPERIOR (Grynfeltt)</th><th>Trígono lombar INFERIOR (Petit)</th></tr>
+    <tr><td><b>Referência óssea</b></td><td><b>12ª costela</b> (acima)</td><td><b>crista ilíaca</b> (abaixo)</td></tr>
+    <tr><td><b>Limites</b></td><td>12ª costela · oblíquo interno · eretores da espinha <em>ou</em> quadrado do lombo</td><td>crista ilíaca · latíssimo do dorso · oblíquo EXTERNO</td></tr>
+    <tr><td><b>Assoalho</b></td><td><b>fáscia transversal</b> (= lâmina anterior da aponeurose toracolombar) — só fáscia!</td><td><b>oblíquo INTERNO</b> — músculo</td></tr>
+    <tr><td><b>Teto</b></td><td><b>latíssimo do dorso</b> (fino, não segura hérnia)</td><td>—</td></tr>
+    <tr><td><b>Hérnia</b></td><td><b>MAIS comum</b>: hérnia lombar superior / de Grynfeltt</td><td>mais rara: hérnia de Petit</td></tr>
+  </table></div>
+  <ul>
+    <li>Por que o superior hernia mais? Porque o assoalho é <b>só fáscia</b> — no inferior há um <b>músculo</b> (oblíquo interno) fazendo assoalho. Detalhe anatômico: conforme a inserção do oblíquo interno, o "triângulo" superior pode virar um <b>quadrilátero</b>.</li>
+    <li>Mecanismo: são <b>áreas de fraqueza natural</b> — aumento da pressão abdominal (esforço, evacuação, carregar peso) empurra <b>gordura retroperitoneal (perirrenal) ou vísceras</b> pela falha. Clínica: abaulamento lombar que "vai e volta".</li>
+  </ul>
+  <figure class="fig"><img src="img/trigonos-lombares.jpg" alt="Triângulos lombares superior e inferior">
+  <figcaption><b>Os dois trígonos lombares</b> — superior (Grynfeltt), entre 12ª costela, oblíquo interno e eretor; inferior (Petit), sobre a crista ilíaca, entre latíssimo e oblíquo externo.</figcaption></figure>
+  <figure class="fig"><img src="img/trigono-petit.jpg" alt="Trígono de Petit">
+  <figcaption><b>Trígono de Petit</b> — a janelinha entre latíssimo, oblíquo externo e crista ilíaca.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 "Pensei que era lipoma — era hérnia"</p>
+  <p>Caso do professor: paciente ("sou pedreiro, doutor") com abaulamento lombar que aumentava ao esforço. Na cirurgia, o que parecia <b>lipoma</b> era <b>hérnia lombar</b> com gordura perirrenal saindo pela falha. E a lição de conduta: <b>não adianta só reduzir o conteúdo ou suturar músculo fraco</b> — sutura em músculo fraco abre de novo, e na hérnia de Grynfeltt nem dá para "aproximar costela com músculo". Corrige-se com <b>TELA SINTÉTICA</b> reforçando a parede — o mesmo princípio das hérnias inguinais.</p></div>
+  <figure class="fig"><img src="img/hernias-lombares.jpg" alt="Hérnias nos trígonos lombares">
+  <figcaption><b>As hérnias lombares</b> — de Grynfeltt (trígono superior) e de Petit (trígono inferior), abaulando sob o latíssimo.</figcaption></figure>
+
+  <div class="resumo" id="t10"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Regiões:</b> nuca · tórax posterior (supra/escapular/infra/interescápulo-vertebral) · lombar · sacral · glútea. Facada na escapular não entra; na infraescapular pode.</li>
+    <li><b>Coluna:</b> 33 vértebras (7-12-5-5-4), 72–75 cm; protege medula, sustenta, flexível; hérnia de disco = cervical e lombar (segmentos que mais movem).</li>
+    <li><b>Suboccipital:</b> 4 músculos (retos posteriores maior/menor + oblíquos superior/inferior) entre occipital e C1–C2; TRÍGONO = reto post. maior + os 2 oblíquos; conteúdo = <b>a. vertebral + n. suboccipital</b>; vertebrais → basilar → polígono.</li>
+    <li><b>Manguito:</b> supra (inicia abdução, mais lesado) + infra + redondo menor + subescapular. Redondo maior FORA. N. supraescapular (tronco sup.) → supra/infra; nn. subescapulares (fascículo post.) → subescapular/redondo maior.</li>
+    <li><b>Extrínsecos:</b> trapézio (descendente eleva/transversa retrai/ascendente deprime; <b>n. ACESSÓRIO XI</b> → ombro caído; a. dorsal da escápula) · latíssimo (adução/extensão/rotação medial; <b>n. e a. toracodorsais</b>; retalho da mama) · romboides + levantador (<b>n. dorsal da escápula</b>; espinha da escápula separa maior/menor) · serráteis posteriores (respiratórios acessórios: superior eleva, inferior deprime costelas).</li>
+    <li><b>Intrínsecos</b> (ramos POSTERIORES dos nn. espinais): esplênios (bandagem; uni = roda p/ mesmo lado, bi = estende) → ERETORES (origem comum sacroilíaca; <b>medial→lateral: espinal, longuíssimo, iliocostal</b>; contrafilé × psoas/filé mignon) → transversoespinais (semiespinal chega à cabeça; multífido lombar; rotadores torácicos; uni roda p/ lado OPOSTO).</li>
+    <li><b>Aponeurose toracolombar:</b> 3 lâminas — anterior (frente do quadrado do lombo → fáscia transversal) · média (atrás dele) · posterior (reveste eretores; origina latíssimo e serrátil post. inferior).</li>
+    <li><b>Trígonos:</b> ausculta (trapézio + latíssimo + escápula; assoalho romboide maior; braços cruzados ampliam) · Grynfeltt (12ª costela; assoalho SÓ fáscia transversal; teto latíssimo; hernia MAIS) · Petit (crista ilíaca; assoalho oblíquo interno; hernia menos). Correção de hérnia lombar = TELA.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Dorso</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aula 03 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-regioes">Regiões/Coluna</a>
+    <a class="a1" href="#p-suboccipital">Suboccipital</a>
+    <a class="a1" href="#p-manguito">Manguito</a>
+    <a class="a1" href="#p-extrinsecos">Extrínsecos</a>
+    <a class="a1" href="#p-intrinsecos">Intrínsecos</a>
+    <a class="a1" href="#p-fascia">Fáscia</a>
+    <a class="a1" href="#p-trigonos">Trígonos</a>
+    <a class="a1" href="#p-nervos">Nervo→músculo</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-regioes">
+  <span class="aula-tag t1">Regiões e coluna</span>
+  <ul>
+    <li>Tórax posterior: <b class="k">supraescapular · escapular · infraescapular · interescápulo-vertebral</b>; depois lombar, sacral, glútea. Facada na escapular NÃO entra (osso); na infraescapular PODE.</li>
+    <li>Coluna: <b class="k">33 vértebras</b> = 7C + 12T + 5L + 5S (fundidas) + 4 coccígeas · <b>72–75 cm</b> · protege a medula.</li>
+    <li>Movimento máximo (e <b class="k">hérnia de disco</b>): <b>cervical e lombar</b> — tórax não.</li>
+  </ul>
+</section>
+
+<section id="p-suboccipital">
+  <span class="aula-tag t1">Região suboccipital</span>
+  <ul>
+    <li>4 músculos entre occipital e C1–C2: <b class="k">reto posterior menor · reto posterior MAIOR · oblíquo superior · oblíquo inferior</b>.</li>
+    <li><b class="k">Trígono suboccipital</b> = reto posterior MAIOR + oblíquo superior + oblíquo inferior.</li>
+    <li>Conteúdo: <b class="k">ARTÉRIA VERTEBRAL + NERVO SUBOCCIPITAL</b>. Vertebrais sobem nos forames transversos → forame magno → unem-se na <b>BASILAR</b> → polígono cerebral.</li>
+  </ul>
+</section>
+
+<section id="p-manguito">
+  <span class="aula-tag t1">Manguito rotador</span>
+  <ul>
+    <li>4 músculos: <b class="k">supraespinal</b> (INICIA a abdução; o que MAIS lesa) · infraespinal · redondo menor (posteriores) · <b class="k">subescapular</b> (anterior).</li>
+    <li><b class="k">Redondo maior NÃO é manguito</b> (vai direto ao úmero).</li>
+    <li>Abdução completa: <b class="k">supraespinal → deltoide → trapézio</b> (roda a escápula p/ passar da horizontal).</li>
+    <li>Plexo braquial: raízes C5–T1 → troncos (sup/méd/inf) → fascículos (lat/med/post).</li>
+  </ul>
+</section>
+
+<section id="p-extrinsecos">
+  <span class="aula-tag t1">Extrínsecos (movem membro/costelas)</span>
+  <div class="tw"><table>
+    <thead><tr><th>Músculo</th><th>Ação</th><th>Nervo</th><th>Artéria</th></tr></thead>
+    <tbody>
+      <tr><td><b>Trapézio</b> (descendente/transversa/ascendente — ref. = OMBRO)</td><td>eleva / retrai / deprime + roda a escápula</td><td><b>ACESSÓRIO (XI par)</b></td><td>dorsal da escápula</td></tr>
+      <tr><td><b>Latíssimo do dorso</b></td><td>ADUZ, estende, roda medialmente o úmero (remada; escalada)</td><td><b>toracodorsal</b> (fascículo post.)</td><td>toracodorsal (da subescapular ← axilar)</td></tr>
+      <tr><td><b>Romboides maior/menor + levantador da escápula</b></td><td>retraem / fixam / elevam a escápula</td><td><b>dorsal da escápula</b> (C5)</td><td>dorsal da escápula</td></tr>
+      <tr><td><b>Serráteis posteriores sup/inf</b></td><td>sup ELEVA · inf DEPRIME costelas (respiração acessória)</td><td>intercostais</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b class="k">Lesão do acessório</b> (cirurgia cervical/tumor) = <b>síndrome do OMBRO CAÍDO</b> (trapézio íntegro porém desfuncionalizado, atrofia).</li>
+    <li>Romboide maior × menor: referência = <b class="k">espinha da escápula</b> (abaixo = maior; acima = menor).</li>
+    <li>Retalhos: <b class="k">trapézio</b> (cobertura cervical) e <b class="k">latíssimo</b> (reconstrução de MAMA) — sempre preservar o pedículo.</li>
+    <li>Escápula grudada no tórax = <b>serrátil ANTERIOR</b> (lesão = escápula alada).</li>
+  </ul>
+</section>
+
+<section id="p-intrinsecos">
+  <span class="aula-tag t1">Intrínsecos (postura/coluna) — 3 camadas</span>
+  <ul>
+    <li>Inervação de TODOS: <b class="k">ramos POSTERIORES dos nervos espinais</b> (nada de plexo braquial).</li>
+    <li><b class="k">Superficial — esplênios</b> (cabeça/pescoço): "bandagem". Unilateral = inclina/roda p/ <b>MESMO lado</b> · bilateral = estende.</li>
+    <li><b class="k">Intermediária — ERETORES DA ESPINHA</b>: origem comum (crista ilíaca + sacro + espinhosos lombares). Medial→lateral: <b>ESPINAL</b> (não chega à cabeça) · <b>LONGUÍSSIMO</b> (chega ao mastóide) · <b>ILIOCOSTAL</b> (ângulos das costelas). Uni = flexão lateral · bi = extensão.</li>
+    <li><b class="k">Profunda — transversoespinais</b> (transverso → espinhoso acima): <b>SEMIESPINAL</b> (continua o espinal; chega ao occipital) · <b>MULTÍFIDO</b> (espesso na LOMBAR) · <b>ROTADORES</b> (torácicos). Uni roda p/ lado <b>OPOSTO</b>. + interespinais, intertransversários, levantadores das costelas.</li>
+    <li><b class="k">Contrafilé = eretores</b> (posterior, duro) · <b class="k">filé mignon = PSOAS MAIOR</b> (anterior, macio).</li>
+  </ul>
+</section>
+
+<section id="p-fascia">
+  <span class="aula-tag t1">Aponeurose toracolombar (3 lâminas)</span>
+  <ul>
+    <li>Fina no tórax, <b>ESPESSA na lombar</b> (losango branco). "Bainha do reto" do dorso.</li>
+    <li><b class="k">Anterior</b>: face anterior dos processos transversos → FRENTE do quadrado do lombo → continua como <b>FÁSCIA TRANSVERSAL</b>.</li>
+    <li><b class="k">Média</b>: ponta dos processos transversos → ATRÁS do quadrado do lombo → tendão do transverso + oblíquo interno.</li>
+    <li><b class="k">Posterior</b>: processos espinhosos → reveste os ERETORES → origina <b>latíssimo + serrátil posterior inferior</b>.</li>
+  </ul>
+</section>
+
+<section id="p-trigonos">
+  <span class="aula-tag t1">Trígonos (decoreba boa)</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Limites</th><th>Assoalho</th><th>Nota</th></tr></thead>
+    <tbody>
+      <tr><td><b>Suboccipital</b></td><td>reto post. maior + oblíquos sup/inf</td><td>—</td><td>conteúdo: <b>a. vertebral + n. suboccipital</b></td></tr>
+      <tr><td><b>Ausculta</b></td><td>trapézio (medial) + latíssimo (inferior) + escápula (lateral)</td><td><b>romboide maior</b></td><td>sem conteúdo; braços cruzados AMPLIAM</td></tr>
+      <tr><td><b>Grynfeltt (lombar SUPERIOR)</b></td><td>12ª costela + oblíquo interno + eretores/quadrado do lombo</td><td><b>fáscia transversal (SÓ fáscia)</b></td><td>teto = latíssimo; hérnia <b>MAIS comum</b></td></tr>
+      <tr><td><b>Petit (lombar INFERIOR)</b></td><td>crista ilíaca + latíssimo + oblíquo EXTERNO</td><td><b>oblíquo INTERNO (músculo)</b></td><td>hérnia mais rara</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Hérnia lombar: gordura perirrenal/víscera saindo por fraqueza + pressão abdominal; caso do "lipoma" que era hérnia; correção = <b class="k">TELA sintética</b> (ponto em músculo fraco reabre).</li>
+  </ul>
+</section>
+
+<section id="p-nervos">
+  <span class="aula-tag t1">Nervo → músculo (cai na oral)</span>
+  <div class="tw"><table>
+    <thead><tr><th>Nervo</th><th>Origem</th><th>Músculos</th></tr></thead>
+    <tbody>
+      <tr><td><b>Acessório (XI par craniano)</b></td><td>base do crânio</td><td>trapézio</td></tr>
+      <tr><td><b>Supraescapular</b></td><td>tronco SUPERIOR</td><td>supraespinal + infraespinal</td></tr>
+      <tr><td><b>Subescapulares</b></td><td>fascículo POSTERIOR</td><td>subescapular + redondo maior</td></tr>
+      <tr><td><b>Toracodorsal</b></td><td>fascículo POSTERIOR (entre os subescapulares)</td><td>latíssimo do dorso</td></tr>
+      <tr><td><b>Dorsal da escápula</b></td><td>raiz C5</td><td>romboides maior/menor + levantador da escápula</td></tr>
+      <tr><td><b>Suboccipital</b></td><td>ramo posterior de C1</td><td>4 músculos suboccipitais</td></tr>
+      <tr><td><b>Ramos posteriores dos nn. espinais</b></td><td>—</td><td>TODOS os intrínsecos</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <ul>
+    <li><b class="k">Extrínseco</b> (membro/respiração) ≠ <b>intrínseco</b> (coluna/postura) — serráteis posteriores movem COSTELA, logo são extrínsecos.</li>
+    <li><b class="k">Redondo MENOR</b> = manguito ≠ <b>redondo MAIOR</b> = fora do manguito (nn. subescapulares).</li>
+    <li><b class="k">Trapézio</b> = n. ACESSÓRIO (craniano) ≠ demais músculos do membro = plexo braquial.</li>
+    <li><b class="k">Espinal</b> (não chega à cabeça) ≠ <b>SEMIespinal</b> (continua e chega ao occipital).</li>
+    <li><b class="k">Esplênios</b> rodam p/ MESMO lado ≠ <b>transversoespinais</b> rodam p/ lado OPOSTO.</li>
+    <li><b class="k">Grynfeltt</b> = superior, 12ª costela, assoalho de FÁSCIA (hernia mais) ≠ <b>Petit</b> = inferior, crista ilíaca, assoalho MUSCULAR.</li>
+    <li><b class="k">Serrátil ANTERIOR</b> (fixa a escápula; escápula alada) ≠ <b>serráteis POSTERIORES</b> (respiração acessória).</li>
+    <li><b class="k">Contrafilé</b> = eretores (posterior) ≠ <b>filé mignon</b> = psoas maior (anterior).</li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Dorso</h2>
+    <p>Anatomia Topográfica · Aula 03 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 03 — Dorso</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:"facil",enun:`<span class="vinheta">Homem, 30 anos, vítima de agressão por arma branca no dorso, dá entrada no PS. O plantonista descreve no prontuário: "ferimento na região logo abaixo da escápula direita".</span><div class="pergunta">Qual o nome técnico da região e por que ela preocupa mais que um ferimento sobre a escápula?</div>`,alts:["Região interescápulo-vertebral; preocupa pela proximidade da coluna","Região supraescapular; preocupa pela passagem do plexo braquial","Região escapular; preocupa porque a lâmina pode fraturar o osso","Região infraescapular; preocupa porque ali não há escudo ósseo","Região lombar; preocupa pela proximidade do rim retroperitoneal"],correta:3,just:["Errada — interescápulo-vertebral é ENTRE as duas escápulas, junto à coluna; o ferimento descrito é abaixo da escápula.","Errada — supraescapular é ACIMA da escápula; e a preocupação principal do exemplo é a penetração torácica.","Errada — sobre a escápula o ferimento tende a ser CONTIDO: 'certamente não entrou, bate na escápula'.","Correta — abaixo da escápula é a região INFRAESCAPULAR: sem o anteparo ósseo, 'opa, pode ter entrado' — a faca alcança a parede torácica. Saber nomear a região define a preocupação clínica e a descrição correta do prontuário.","Errada — a região lombar fica mais abaixo, até a nádega; o ferimento descrito é torácico posterior."],ref:"Aula 03 — Regiões do dorso"},
+
+{n:2,aula:1,nivel:"facil",enun:`<span class="vinheta">Na prova prática, o professor pede a constituição completa da coluna vertebral e seu comprimento aproximado no adulto.</span><div class="pergunta">Qual alternativa está correta?</div>`,alts:["33 vértebras: 7 cervicais, 12 torácicas, 5 lombares, 5 sacrais e 4 coccígeas; 90 cm","33 vértebras: 7 cervicais, 12 torácicas, 5 lombares, 5 sacrais fundidas e 4 coccígeas; 72–75 cm","26 vértebras: 7 cervicais, 12 torácicas, 5 lombares, sacro e cóccix já contados como um; 60 cm","30 vértebras: 6 cervicais, 12 torácicas, 6 lombares, 4 sacrais e 2 coccígeas; 72–75 cm","33 vértebras: 8 cervicais, 10 torácicas, 5 lombares, 5 sacrais e 5 coccígeas; 80 cm"],correta:1,just:["Errada — a distribuição está certa, mas o comprimento é 72–75 cm, não 90.","Correta — 33 vértebras em 5 regiões: 7 cervicais, 12 torácicas, 5 lombares, 5 sacrais FUNDIDAS (formando o sacro) e 4 coccígeas (remanescentes de cauda), medindo 72–75 cm — praticamente metade da altura do corpo.","Errada — a contagem clássica ensinada foi de 33 vértebras, contando as sacrais e coccígeas individualmente.","Errada — são 7 cervicais e 5 lombares; não existem 6 cervicais.","Errada — são 7 cervicais (não 8) e 12 torácicas (não 10)."],ref:"Aula 03 — Coluna vertebral"},
+
+{n:3,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente com dor irradiada procura o ortopedista com suspeita de hérnia de disco.</span><div class="pergunta">Em quais segmentos da coluna a hérnia deve ser procurada, e por quê?</div>`,alts:["Torácico e sacral, porque sustentam o maior peso do tronco","Apenas lombar, porque é o único segmento com discos espessos","Cervical e torácico, porque a cabeça sobrecarrega os discos altos","Sacral e coccígeo, porque a fusão óssea comprime os discos","Cervical e lombar, porque são os segmentos que mais se movimentam"],correta:4,just:["Errada — o segmento torácico é travado pela caixa torácica: 'no tórax certamente não vai ter'.","Errada — a cervical também é sítio clássico; movimento, não espessura do disco, é o critério ensinado.","Errada — o torácico é o segmento MENOS móvel; a dupla correta é cervical + lombar.","Errada — o sacro é fundido e o cóccix vestigial; não há disco móvel herniando ali.","Correta — rotação e movimento se concentram na CERVICAL e na LOMBAR; são os segmentos que mais se movem e por isso os que mais sofrem — é neles que se procura hérnia de disco."],ref:"Aula 03 — Movimentos da coluna"},
+
+{n:4,aula:1,nivel:"medio",enun:`<span class="vinheta">Na dissecção profunda da nuca, após rebater trapézio, esplênio e semiespinal, o grupo identifica um triângulo muscular sobre C1–C2.</span><div class="pergunta">Quais músculos formam o trígono suboccipital?</div>`,alts:["Reto posterior maior, oblíquo superior e oblíquo inferior da cabeça","Reto posterior menor, reto posterior maior e oblíquo superior da cabeça","Esplênio da cabeça, semiespinal da cabeça e reto posterior maior","Reto posterior menor, oblíquo inferior e levantador da escápula","Oblíquo superior, oblíquo inferior e esplênio do pescoço"],correta:0,just:["Correta — dos 4 músculos suboccipitais, TRÊS formam o trígono: reto posterior MAIOR da cabeça + oblíquo superior + oblíquo inferior. O reto posterior MENOR fica fora do triângulo.","Errada — o reto posterior MENOR não participa do trígono; o terceiro lado é o oblíquo inferior.","Errada — esplênio e semiespinal são as camadas que COBREM a região; precisam ser removidos para ver o trígono.","Errada — o levantador da escápula pertence à região escapular, não à suboccipital.","Errada — o esplênio do pescoço não é músculo suboccipital; falta o reto posterior maior."],ref:"Aula 03 — Trígono suboccipital"},
+
+{n:5,aula:1,nivel:"medio",enun:`<span class="vinheta">O professor aponta o interior do trígono suboccipital e pergunta: "o que passa aqui dentro, e por que essa estrutura é tão importante?"</span><div class="pergunta">Qual a resposta correta?</div>`,alts:["A veia jugular interna, principal via de drenagem do encéfalo","O nervo occipital maior, responsável pela sensibilidade de toda a face","A artéria vertebral, futura formadora da basilar, e o nervo suboccipital","A artéria carótida interna, no seu trajeto até o polígono de Willis","O nervo acessório, a caminho do trapézio e do esternocleidomastóideo"],correta:2,just:["Errada — a jugular interna desce pela região carotídea anterior do pescoço, não pelo trígono suboccipital.","Errada — o occipital maior (ramo posterior de C2) passa PRÓXIMO, mas o conteúdo do trígono ensinado é outro — e ele é sensitivo do couro cabeludo, não da face.","Correta — o conteúdo do trígono é a ARTÉRIA VERTEBRAL (que subiu protegida nos forames transversos, entra pelo forame magno e se une à contralateral formando a artéria BASILAR → polígono cerebral) e o NERVO SUBOCCIPITAL, que inerva os 4 músculos da região.","Errada — a carótida interna sobe pela frente do pescoço e entra pelo canal carótico, longe do trígono.","Errada — o acessório (XI par) desce lateralmente no pescoço; não cruza o trígono suboccipital."],ref:"Aula 03 — Conteúdo do trígono suboccipital"},
+
+{n:6,aula:1,nivel:"medio",enun:`<span class="vinheta">Um familiar comenta: "meu médico disse que minha lesão é no manguito rotador". O estudante decide revisar quais músculos compõem o grupo.</span><div class="pergunta">Qual alternativa lista corretamente o manguito rotador?</div>`,alts:["Supraespinal, infraespinal, redondo maior e subescapular","Supraespinal, infraespinal, redondo menor e subescapular","Deltoide, supraespinal, infraespinal e redondo menor","Trapézio, deltoide, redondo menor e subescapular","Supraespinal, redondo maior, redondo menor e deltoide"],correta:1,just:["Errada — o redondo MAIOR não é manguito: está ao lado, vai direto ao úmero, mas fica fora do grupo.","Correta — manguito rotador = 4 músculos da escápula que se inserem no úmero: SUPRAESPINAL, INFRAESPINAL e REDONDO MENOR por trás + SUBESCAPULAR pela frente. Pegadinha clássica: redondo menor SIM, redondo maior NÃO.","Errada — o deltoide não é manguito; ele continua a abdução que o supraespinal inicia.","Errada — trapézio e deltoide são músculos superficiais do ombro, não componentes do manguito.","Errada — troca o infraespinal e o subescapular por redondo maior e deltoide, ambos fora do grupo."],ref:"Aula 03 — Manguito rotador"},
+
+{n:7,aula:1,nivel:"facil",enun:`<span class="vinheta">Tenista, 52 anos, com dor no ombro ao INICIAR a elevação lateral do braço. A ressonância mostra tendinopatia do músculo mais lesado do manguito.</span><div class="pergunta">Qual é esse músculo e qual sua função?</div>`,alts:["Infraespinal — rotação lateral do úmero durante o saque","Redondo menor — rotação lateral e estabilização inferior","Subescapular — rotação medial do úmero contra resistência","Supraespinal — é ele que inicia a abdução do braço","Deltoide — abdução do braço da horizontal para cima"],correta:3,just:["Errada — o infraespinal roda lateralmente, mas não é quem INICIA a abdução nem o mais lesado.","Errada — o redondo menor é rotador lateral acessório; não inicia a abdução.","Errada — o subescapular é rotador MEDIAL (anterior); a queixa é no início da elevação lateral.","Correta — o SUPRAESPINAL inicia a abdução ('para começar o movimento, estou usando o supraespinal') e é o componente do manguito que MAIS lesa — o desgaste clássico do tendão sob o acrômio.","Errada — o deltoide CONTINUA a abdução depois do início; e não pertence ao manguito."],ref:"Aula 03 — Supraespinal"},
+
+{n:8,aula:1,nivel:"medio",enun:`<span class="vinheta">Na prova oral: "mostre o supraespinal e o infraespinal, diga quem os inerva e de onde vem esse nervo. Agora o subescapular e o redondo maior."</span><div class="pergunta">Qual resposta está correta?</div>`,alts:["Supraescapular (fascículo lateral) para os quatro músculos citados","Toracodorsal (tronco médio) para supra/infraespinal; axilar para os outros dois","Dorsal da escápula (raiz C5) para supra/infraespinal; acessório para os demais","Axilar (fascículo posterior) para todos os músculos da escápula","Supraescapular, do tronco superior; subescapulares, do fascículo posterior"],correta:4,just:["Errada — o supraescapular inerva apenas supra e infraespinal, e nasce do tronco superior, não do fascículo lateral.","Errada — o toracodorsal é do LATÍSSIMO; e o axilar é do deltoide/redondo menor, não dos músculos citados.","Errada — o dorsal da escápula é dos romboides + levantador; o acessório é do trapézio.","Errada — o axilar inerva deltoide e redondo menor; não cobre supra/infraespinal nem subescapular.","Correta — nervo SUPRAESCAPULAR (do TRONCO SUPERIOR) → supraespinal e infraespinal; nervos SUBESCAPULARES (do FASCÍCULO POSTERIOR) → subescapular e redondo maior. É exatamente a tríade músculo–nervo–origem cobrada na oral."],ref:"Aula 03 — Inervação do manguito"},
+
+{n:9,aula:1,nivel:"medio",enun:`<span class="vinheta">"Me mostre a parte descendente do trapézio e diga o que ela faz" — pede o professor na peça.</span><div class="pergunta">Qual a referência para nomear as partes do trapézio e a ação da parte descendente?</div>`,alts:["A referência é o OMBRO; as fibras que descem até ele ELEVAM a escápula","A referência é a coluna; as fibras descendentes fazem a extensão cervical","A referência é a escápula; as fibras descendentes deprimem o ombro","A referência é a clavícula; as fibras descendentes retraem a escápula","A referência é a linha nucal; todas as partes elevam igualmente o ombro"],correta:0,just:["Correta — as partes do trapézio se nomeiam tomando o OMBRO como referência: fibras que DESCEM para o ombro = parte descendente → ELEVAM a escápula; transversas → retraem; ascendentes → deprimem. Juntas ainda rodam a escápula.","Errada — o trapézio é extrínseco: gera movimento de OMBRO/escápula, não da coluna.","Errada — quem deprime é a parte ASCENDENTE (fibras que sobem ao ombro); a referência ensinada é o ombro.","Errada — retração é da parte TRANSVERSA; e a referência não é a clavícula.","Errada — cada parte tem ação própria (elevar/retrair/deprimir); não são equivalentes."],ref:"Aula 03 — Partes do trapézio"},
+
+{n:10,aula:1,nivel:"medio",enun:`<span class="vinheta">Homem, 58 anos, submetido a ressecção de tumor cervical com sacrifício de um nervo. Evolui com ombro caído, dor e atrofia do trapézio, sem conseguir elevar o braço acima da cabeça.</span><div class="pergunta">Qual nervo foi lesado e qual sua particularidade?</div>`,alts:["Supraescapular — ramo do tronco superior, lesado na incisura da escápula","Dorsal da escápula — primeiro ramo do plexo, saindo de C5","Acessório (XI par craniano), que não pertence ao plexo braquial","Toracodorsal — ramo do fascículo posterior lesado na axila","Frênico — nervo cervical que desce junto ao trapézio"],correta:2,just:["Errada — o supraescapular pouparia o trapézio; a atrofia descrita é dele.","Errada — o dorsal da escápula inerva romboides e levantador; lesão dele não derruba o ombro dessa forma.","Correta — o trapézio, apesar de mover o membro, é inervado pelo NERVO ACESSÓRIO (XI par CRANIANO), que sai da base do crânio e cruza a região cervical — vulnerável em cirurgias e tumores cervicais. Lesado, o trapézio íntegro fica desfuncionalizado: atrofia + SÍNDROME DO OMBRO CAÍDO, sem completar a elevação do braço.","Errada — o toracodorsal é do latíssimo; sua lesão enfraquece a adução (remada), não a elevação do ombro.","Errada — o frênico inerva o DIAFRAGMA; sua lesão dá problema respiratório, não ombro caído."],ref:"Aula 03 — Nervo acessório e ombro caído"},
+
+{n:11,aula:1,nivel:"medio",enun:`<span class="vinheta">"Para trocar a lâmpada" — o professor eleva o braço do início do movimento até acima da cabeça e pergunta a sequência muscular completa da abdução.</span><div class="pergunta">Qual a ordem correta?</div>`,alts:["Deltoide inicia → trapézio continua → supraespinal finaliza o arco","Trapézio inicia → deltoide continua → latíssimo finaliza o movimento","Supraespinal e latíssimo agem juntos durante todo o arco de elevação","Supraespinal inicia → deltoide continua → trapézio conclui o arco","Deltoide faz o arco inteiro sozinho; os demais apenas estabilizam"],correta:3,just:["Errada — a ordem está invertida: quem INICIA é o supraespinal, e o trapézio entra no final.","Errada — o trapézio é o FINALIZADOR (roda a escápula); e o latíssimo é ADUTOR — faz o movimento oposto.","Errada — o latíssimo ADUZ (puxa o braço para junto do corpo); não participa da elevação.","Correta — a sequência ensinada: SUPRAESPINAL inicia a abdução → DELTOIDE leva até a horizontal → TRAPÉZIO completa o arco rodando a escápula para o braço subir acima da cabeça. Cada dor em cada fase aponta um culpado diferente.","Errada — o deltoide sozinho para na horizontal; sem a rotação escapular do trapézio o braço não chega lá em cima."],ref:"Aula 03 — Sequência da abdução"},
+
+{n:12,aula:1,nivel:"medio",enun:`<span class="vinheta">Mulher, 49 anos, mastectomizada, será submetida a reconstrução mamária com retalho miocutâneo rodado do dorso.</span><div class="pergunta">Qual músculo é usado e qual sua ação normal?</div>`,alts:["Latíssimo do dorso — extensão, adução e rotação medial do úmero","Trapézio — elevação e rotação da escápula durante a abdução","Romboide maior — retração da escápula contra a parede torácica","Serrátil posterior inferior — depressão das costelas na expiração","Eretor da espinha — extensão da coluna e manutenção da postura"],correta:0,just:["Correta — o LATÍSSIMO DO DORSO (antigo grande dorsal) é o retalho clássico da reconstrução mamária: pele + músculo + pedículo toracodorsal preservado, rodados das costas para a frente. Ação normal: ESTENDE, ADUZ e roda MEDIALMENTE o úmero — a puxada da remada/barra, e levantar o corpo na escalada.","Errada — o trapézio dá retalhos para COBERTURA CERVICAL; o da mama é o latíssimo.","Errada — o romboide é pequeno e profundo; não fornece o grande retalho miocutâneo necessário.","Errada — o serrátil posterior inferior é fino e respiratório acessório; não é músculo de retalho.","Errada — os eretores são a coluna de sustentação postural; removê-los seria desastroso e não há pedículo axilar conveniente."],ref:"Aula 03 — Latíssimo e retalho da mama"},
+
+{n:13,aula:1,nivel:"medio",enun:`<span class="vinheta">Na dissecção da axila, o grupo precisa identificar o pedículo vasculonervoso do latíssimo do dorso antes de planejar um retalho.</span><div class="pergunta">Qual é o nervo, de onde ele vem — e de onde vem a artéria?</div>`,alts:["Nervo axilar, do tronco inferior; artéria circunflexa da escápula na axila","Nervo e artéria toracodorsais — fascículo posterior e artéria subescapular","Nervo torácico longo, das raízes C5–C7; artéria torácica lateral","Nervo subescapular superior, do tronco médio; artéria dorsal da escápula","Nervo peitoral medial, do fascículo medial; artéria toracoacromial"],correta:1,just:["Errada — o axilar vai ao deltoide/redondo menor; e a circunflexa da escápula é o OUTRO ramo terminal da subescapular.","Correta — o NERVO TORACODORSAL sai do FASCÍCULO POSTERIOR (entre os dois nervos subescapulares) e desce pela axila até o latíssimo. A ARTÉRIA (e veia) TORACODORSAL é ramo terminal da SUBESCAPULAR — última grande colateral da AXILAR (continuação da subclávia). Nervo, artéria e veia com o mesmo nome: o pedículo do retalho.","Errada — o torácico longo inerva o serrátil ANTERIOR (lesão = escápula alada).","Errada — os subescapulares vão ao subescapular/redondo maior; e a dorsal da escápula nutre romboides/trapézio.","Errada — os peitorais inervam os peitorais; a toracoacromial irriga a região deltopeitoral."],ref:"Aula 03 — Pedículo toracodorsal"},
+
+{n:14,aula:1,nivel:"facil",enun:`<span class="vinheta">Na peça, dois músculos ocupam o espaço entre a borda medial da escápula e a coluna. O professor pergunta como diferenciar o romboide maior do menor.</span><div class="pergunta">Qual a referência anatômica correta?</div>`,alts:["O ângulo inferior da escápula: acima dele, o maior; abaixo, o menor","A clavícula: o menor insere-se nela; o maior, na escápula","O ligamento nucal: o maior origina-se dele; o menor, de T2–T5","O tamanho absoluto: o menor é sempre mais largo que o maior","A espinha da escápula: abaixo dela, o maior; acima dela, o menor"],correta:4,just:["Errada — o ângulo inferior é o limite INFERIOR da inserção do maior, não o divisor entre os dois.","Errada — nenhum romboide toca a clavícula; ambos vão à borda medial da escápula.","Errada — é o contrário: o MENOR vem do ligamento nucal e C7–T1; o MAIOR, de T2–T5.","Errada — o menor é... menor; e tamanho não é a referência prática ensinada.","Correta — a referência é a ESPINHA DA ESCÁPULA: as fibras que chegam do nível da espinha PARA BAIXO (até o ângulo inferior) são o romboide MAIOR; as que chegam ACIMA da espinha são o MENOR. Ambos retraem a escápula e a fixam à parede torácica; o levantador da escápula sai do ângulo superior."],ref:"Aula 03 — Romboides"},
+
+{n:15,aula:1,nivel:"medio",enun:`<span class="vinheta">"Quem inerva esses três danados aí?" — pergunta o professor apontando romboide maior, romboide menor e levantador da escápula.</span><div class="pergunta">Qual a resposta correta?</div>`,alts:["Nervo acessório, o mesmo do trapézio, por serem vizinhos","Nervo supraescapular, ramo direto do tronco superior","Nervo dorsal da escápula, que sai da raiz de C5","Nervos subescapulares, vindos do fascículo posterior","Ramos posteriores dos nervos espinais cervicais"],correta:2,just:["Errada — o acessório é EXCLUSIVO do trapézio (e esternocleidomastóideo); não desce aos romboides.","Errada — o supraescapular vai a supra/infraespinal, passando pela incisura da escápula.","Correta — o NERVO DORSAL DA ESCÁPULA, um dos primeiros raminhos do plexo (sai da RAIZ de C5), desce junto à borda medial da escápula e inerva os TRÊS: romboide maior, romboide menor e levantador da escápula. A artéria homônima (dorsal da escápula) os nutre.","Errada — os subescapulares inervam subescapular e redondo maior, na face anterior da escápula.","Errada — ramos posteriores dos nervos espinais inervam os músculos INTRÍNSECOS do dorso; romboides são extrínsecos, do plexo."],ref:"Aula 03 — Nervo dorsal da escápula"},
+
+{n:16,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente em crise asmática grave usa musculatura acessória. Sob os romboides e sob o latíssimo existem dois músculos denteados que se fixam nas costelas.</span><div class="pergunta">Quais são e o que fazem?</div>`,alts:["Serráteis posteriores: o superior ELEVA e o inferior DEPRIME costelas","Serrátil anterior duplicado: ambos fixam a escápula ao tórax","Levantadores das costelas: músculos intrínsecos da camada profunda","Intercostais externos: os principais músculos da inspiração","Serráteis posteriores: ambos elevam costelas na inspiração forçada"],correta:0,just:["Correta — SERRÁTIL POSTERIOR SUPERIOR (sob os romboides) ELEVA costelas; SERRÁTIL POSTERIOR INFERIOR (sob o latíssimo) DEPRIME. São respiratórios ACESSÓRIOS — entram em cena na crise asmática/bronquite. Movem COSTELA (não coluna) ⇒ classificam-se como EXTRÍNSECOS.","Errada — o serrátil anterior é ÚNICO e anterolateral; quem está sob romboides/latíssimo são os posteriores.","Errada — os levantadores das costelas existem, mas são outros músculos, da camada profunda intrínseca junto aos processos transversos.","Errada — os intercostais não estão 'sob os romboides e sob o latíssimo' como os denteados descritos.","Errada — só o SUPERIOR eleva; o inferior puxa as costelas para BAIXO."],ref:"Aula 03 — Serráteis posteriores"},
+
+{n:17,aula:1,nivel:"medio",enun:`<span class="vinheta">O professor divide a musculatura do dorso em "guindastes" e "cabos de tensão que mantêm o mastro ereto".</span><div class="pergunta">Qual a diferença entre músculos extrínsecos e intrínsecos do dorso — inclusive na inervação?</div>`,alts:["Extrínsecos movem a coluna e vêm do plexo braquial; intrínsecos movem membros","Ambos movem a coluna; extrínsecos são apenas os mais superficiais","Extrínsecos são inervados por ramos posteriores; intrínsecos, por nervos cranianos","Extrínsecos movem membros e costelas; intrínsecos movem a coluna (ramos posteriores)","A distinção é só de profundidade; a inervação é idêntica nos dois grupos"],correta:3,just:["Errada — está invertido: extrínsecos movem MEMBROS; intrínsecos movem a COLUNA.","Errada — extrínsecos NÃO movem a coluna (podem até fixar-se nela, mas o movimento gerado é do membro/costela).","Errada — é o contrário: intrínsecos = ramos posteriores; entre os extrínsecos há nervos do plexo e um craniano (acessório).","Correta — EXTRÍNSECOS (trapézio, latíssimo, romboides, levantador, serráteis posteriores): unem esqueleto axial ao apendicular e movem MEMBROS e COSTELAS. INTRÍNSECOS ('próprios do dorso'): profundos, movem a COLUNA e mantêm a POSTURA, inervados pelos RAMOS POSTERIORES dos nervos espinais — sem eles, com o peso das vísceras todo anterior à coluna, andaríamos vergados.","Errada — a inervação muda: intrínsecos = ramos posteriores; extrínsecos = plexo braquial (e o acessório para o trapézio)."],ref:"Aula 03 — Extrínsecos × intrínsecos"},
+
+{n:18,aula:1,nivel:"medio",enun:`<span class="vinheta">Sob o trapézio, um músculo espesso e plano envolve o pescoço "como uma bandagem", da coluna à base do crânio.</span><div class="pergunta">Que músculo é esse e o que acontece quando contrai de um lado só — e dos dois?</div>`,alts:["Semiespinal da cabeça: unilateral roda para o lado oposto; bilateral flete","Esplênio da cabeça: unilateral inclina e roda para o MESMO lado; bilateral estende","Longuíssimo da cabeça: unilateral estende; bilateral roda para o mesmo lado","Esplênio da cabeça: unilateral roda para o lado oposto; bilateral flete o pescoço","Esternocleidomastóideo: unilateral roda para o mesmo lado; bilateral estende"],correta:1,just:["Errada — o semiespinal é mais PROFUNDO (sob o esplênio) e é transversoespinal; a 'bandagem' descrita é o esplênio.","Correta — ESPLÊNIO (= bandagem/compressa) da cabeça: origem no ligamento nucal e espinhosos C7–T3/T4, fixação no processo MASTÓIDE e linha nucal superior. UNIlateral: inclina e RODA a cabeça para o MESMO lado; BIlateral: ESTENDE cabeça e pescoço. É a camada superficial dos intrínsecos.","Errada — o longuíssimo é eretor da espinha (camada intermediária), não a bandagem superficial do pescoço.","Errada — o esplênio bilateral ESTENDE (puxa para trás), não flete; e a rotação unilateral é para o MESMO lado.","Errada — o esternocleidomastóideo é anterior/lateral do pescoço e roda a cabeça para o lado OPOSTO."],ref:"Aula 03 — Esplênios"},
+
+{n:19,aula:1,nivel:"facil",enun:`<span class="vinheta">"O contrafilé do boi é macio; o nosso é duro — porque nós ficamos de pé." O professor pede então as três colunas do músculo que sustenta a postura ereta, em ordem de medial para lateral.</span><div class="pergunta">Qual a sequência correta dos eretores da espinha?</div>`,alts:["Iliocostal → longuíssimo → espinal","Longuíssimo → espinal → iliocostal","Espinal → longuíssimo → iliocostal","Espinal → iliocostal → longuíssimo","Multífido → semiespinal → rotadores"],correta:2,just:["Errada — está na ordem inversa: o iliocostal é o mais LATERAL.","Errada — o espinal é o mais medial (colado nos processos espinhosos), não o do meio.","Correta — de MEDIAL para LATERAL: ESPINAL (junto aos processos espinhosos; praticamente não chega à cabeça) → LONGUÍSSIMO (intermediário; vai até o processo mastóide) → ILIOCOSTAL (lateral; do ilíaco aos ângulos das costelas). Origem comum: tendão largo em crista ilíaca + sacro + espinhosos lombares. São o 'contrafilé' humano — e o filé mignon é o psoas maior, anterior à coluna.","Errada — troca a posição de longuíssimo e iliocostal.","Errada — multífido, semiespinal e rotadores são os TRANSVERSOESPINAIS, da camada profunda — não os eretores."],ref:"Aula 03 — Eretores da espinha"},
+
+{n:20,aula:1,nivel:"dificil",enun:`<span class="vinheta">Na lâmina de estudo, o monitor mostra que o músculo espinal "para" na região cervical baixa, mas uma coluna muscular continua dali até o occipital, sob o esplênio.</span><div class="pergunta">Que músculo é esse e a que grupo pertence?</div>`,alts:["Semiespinal da cabeça — transversoespinal profundo que alcança o occipital","Longuíssimo do tórax — eretor intermediário que termina no mastóide","Multífido — transversoespinal mais espesso da região cervical","Esplênio do pescoço — o segmento cervical da bandagem superficial","Iliocostal cervical — a parte mais alta da coluna lateral dos eretores"],correta:0,just:["Correta — o SEMIESPINAL ('metade do espinal') continua para cima exatamente onde o espinal para, e o semiespinal DA CABEÇA chega ao occipital, entre as linhas nucais superior e inferior. Pertence aos TRANSVERSOESPINAIS (camada profunda: semiespinal + multífido + rotadores), que vão de processo TRANSVERSO a processo ESPINHOSO de vértebras acima; unilateralmente rodam para o lado OPOSTO.","Errada — quem chega ao mastóide é o longuíssimo DA CABEÇA; e a estrutura descrita continua o ESPINAL, sob o esplênio.","Errada — o multífido é mais espesso na região LOMBAR (ajuste fino), não a coluna cervical descrita.","Errada — o esplênio do pescoço nem chega ao crânio (para nos transversos cervicais) e é a camada SUPERFICIAL, que foi rebatida para ver o músculo em questão.","Errada — o iliocostal é a coluna LATERAL, indo aos ângulos das costelas — não o trajeto espinhoso-occipital descrito."],ref:"Aula 03 — Transversoespinais"},
+
+{n:21,aula:1,nivel:"dificil",enun:`<span class="vinheta">Na prova teórica: "descreva a formação da aponeurose toracolombar e diga qual lâmina se continua como fáscia transversal do abdome."</span><div class="pergunta">Qual descrição está correta?</div>`,alts:["Duas lâminas saindo dos corpos vertebrais; a posterior continua como fáscia transversal","Três lâminas saindo do processo espinhoso; a média forma a bainha do reto do abdome","Três lâminas: a posterior passa na frente do quadrado do lombo e vira fáscia transversal","Duas lâminas envolvendo o psoas maior; a anterior origina o latíssimo do dorso","Três lâminas; a anterior passa à frente do quadrado do lombo e vira fáscia transversal"],correta:4,just:["Errada — nenhuma lâmina sai do CORPO vertebral ('não é do corpo, não se engana'); são três lâminas, não duas.","Errada — do processo espinhoso sai apenas a lâmina POSTERIOR; e a bainha do reto é estrutura da parede ANTERIOR, análoga, não derivada da média.","Errada — quem passa NA FRENTE do quadrado do lombo é a lâmina ANTERIOR; a posterior reveste os eretores.","Errada — o psoas fica fora do envelope (anterior à coluna); e o latíssimo nasce da lâmina POSTERIOR, não da anterior.","Correta — TRÊS lâminas: ANTERIOR (face anterior dos processos transversos → frente do quadrado do lombo → continua como FÁSCIA TRANSVERSAL), MÉDIA (ponta dos processos transversos → atrás do quadrado do lombo → tendão do transverso/oblíquo interno) e POSTERIOR (processos espinhosos → reveste os eretores → origina latíssimo e serrátil posterior inferior). É o 'cinturão' posterior, espesso na lombar."],ref:"Aula 03 — Aponeurose toracolombar"},
+
+{n:22,aula:1,nivel:"medio",enun:`<span class="vinheta">Para auscultar melhor a base pulmonar, o preceptor pede: "cruze os braços à frente do corpo" — e posiciona o estetoscópio numa janela do dorso.</span><div class="pergunta">Que região é essa e quais seus limites e assoalho?</div>`,alts:["Trígono lombar superior: 12ª costela, oblíquo interno e eretores; assoalho de fáscia","Trígono suboccipital: retos posteriores e oblíquos; assoalho na membrana atlanto-occipital","Trígono da ausculta: trapézio, latíssimo e escápula; assoalho no romboide maior","Trígono de Petit: crista ilíaca, latíssimo e oblíquo externo; assoalho no oblíquo interno","Fossa infraespinal: coberta apenas pela fáscia infraespinal e pela pele"],correta:2,just:["Errada — o trígono lombar superior é área de HÉRNIA, na altura da 12ª costela — não janela de ausculta.","Errada — o suboccipital é profundo na nuca, cheio de músculo por cima — péssimo para ausculta.","Correta — TRÍGONO DA AUSCULTA: margem lateral do TRAPÉZIO (medial) + margem superior do LATÍSSIMO (inferior) + margem medial da ESCÁPULA (lateral); assoalho = ROMBOIDE MAIOR, quase direto sobre a parede torácica. Sem conteúdo próprio. Cruzar os braços desliza a escápula lateralmente e AMPLIA a janela.","Errada — Petit é o trígono lombar INFERIOR, junto à crista ilíaca — área de hérnia, não de ausculta.","Errada — a fossa infraespinal é coberta pelo músculo infraespinal, espesso — não é a janela descrita."],ref:"Aula 03 — Trígono da ausculta"},
+
+{n:23,aula:1,nivel:"dificil",enun:`<span class="vinheta">Comparando os dois trígonos lombares, o professor pergunta: "qual deles hernia MAIS, e qual o motivo anatômico?"</span><div class="pergunta">Qual a resposta correta?</div>`,alts:["O inferior (Petit), porque a crista ilíaca não oferece apoio muscular","O superior (Grynfeltt): seu assoalho é só fáscia; o de Petit tem músculo","O inferior (Petit), porque o oblíquo externo é o músculo mais fino da parede","Ambos herniam igualmente; a diferença é apenas o nome do cirurgião","O superior (Grynfeltt), porque não possui teto muscular de nenhum tipo"],correta:1,just:["Errada — o de Petit tem assoalho MUSCULAR (oblíquo interno), o que o torna MAIS resistente, não menos.","Correta — o trígono lombar SUPERIOR (Grynfeltt: 12ª costela + oblíquo interno + eretores/quadrado do lombo) tem assoalho de FÁSCIA TRANSVERSAL apenas (= lâmina anterior da aponeurose toracolombar) — só fáscia, sem músculo. O INFERIOR (Petit: crista ilíaca + latíssimo + oblíquo externo) tem o OBLÍQUO INTERNO fazendo assoalho muscular. Fáscia < músculo ⇒ Grynfeltt hernia mais.","Errada — o motivo ensinado é o ASSOALHO (fáscia × músculo), não a espessura do oblíquo externo.","Errada — a anatomia dita frequências diferentes: o superior hernia mais.","Errada — o Grynfeltt TEM teto: o latíssimo do dorso — fino demais para segurar a hérnia, mas existe."],ref:"Aula 03 — Grynfeltt × Petit"},
+
+{n:24,aula:1,nivel:"dificil",enun:`<span class="vinheta">Pedreiro, 45 anos, com abaulamento lombar que surge ao carregar peso e "vai e volta". Na cirurgia, o suposto lipoma era gordura perirrenal saindo por uma falha abaixo da 12ª costela, sob o latíssimo do dorso.</span><div class="pergunta">Qual o diagnóstico e a conduta correta?</div>`,alts:["Hérnia de Petit; ressecar a gordura herniada resolve definitivamente","Lipoma retroperitoneal; basta a exérese completa da massa","Hérnia inguinal indireta de trajeto atípico; herniorrafia com pontos simples","Hérnia de Grynfeltt; reduzir o conteúdo e reforçar a parede com tela","Abscesso do psoas; drenagem cirúrgica e antibioticoterapia"],correta:3,just:["Errada — Petit é o trígono INFERIOR, junto à crista ilíaca; a falha descrita está abaixo da 12ª COSTELA = superior.","Errada — foi exatamente o erro inicial do caso: parecia lipoma, mas tirar a gordura sem tratar a FALHA da parede garante recidiva.","Errada — a região inguinal é outra; e pontos simples em músculo fraco 'vão abrir de novo'.","Correta — abaulamento sob o latíssimo (o TETO fino do trígono), abaixo da 12ª costela, com gordura perirrenal = HÉRNIA DE GRYNFELTT (lombar superior). Conduta: reduzir o conteúdo e REFORÇAR com TELA sintética — não dá para 'aproximar costela com músculo', e sutura em parede fraca reabre. Mesmo princípio das hérnias inguinais.","Errada — não há sinais infecciosos; o quadro é mecânico, relacionado a esforço e pressão abdominal."],ref:"Aula 03 — Hérnias lombares"}
+];
+
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Homem, 26 anos, vítima de agressão por arma branca no dorso, chega ao PS estável. O acadêmico registra: "duas lesões: uma sobre a 'pá' esquerda e outra logo abaixo dela". O preceptor devolve o prontuário e pede a descrição técnica, com as regiões corretas e o raciocínio de risco de cada ferimento.`,
+perg:["Reescreva a descrição usando a nomenclatura regional correta do dorso.","Por que os dois ferimentos têm riscos completamente diferentes?","Se uma terceira lesão fosse descrita 'entre as duas escápulas, junto à linha mediana', que região seria e que estrutura profunda preocuparia?","Cite as três partes do dorso e as funções da coluna vertebral que justificam tanta proteção muscular."],
+resp:[["Regiões escapular e infraescapular","Descrição técnica: 'ferimento por arma branca em REGIÃO ESCAPULAR esquerda' e 'ferimento em REGIÃO INFRAESCAPULAR esquerda'. As regiões do tórax posterior se organizam ao redor da escápula: SUPRAESCAPULAR (acima), ESCAPULAR (sobre o osso), INFRAESCAPULAR (abaixo) e INTERESCÁPULO-VERTEBRAL (entre as escápulas); abaixo vêm lombar, sacral e glútea. Prontuário não aceita 'pá' nem 'bunda' — aceita região nomeada, lado e relação com a linha mediana."],
+["O escudo ósseo muda tudo","Na região ESCAPULAR, a faca encontra a escápula: 'certamente não entrou — bate na escápula'. Na INFRAESCAPULAR não há anteparo ósseo: 'opa, pode ter entrado' — risco real de penetração torácica (pleura, pulmão), mudando conduta, exames e vigilância. A anatomia regional é o primeiro triage: a mesma faca, dois centímetros abaixo, vira outra doença."],
+["Interescápulo-vertebral — e a coluna logo abaixo","Seria a região INTERESCÁPULO-VERTEBRAL. A preocupação profunda ali é a COLUNA VERTEBRAL e seu conteúdo: a MEDULA ESPINAL protegida no canal vertebral (com as meninges). Lesão penetrante paravertebral exige avaliação neurológica imediata."],
+["Nuca, tórax posterior e lombar","As 3 partes do dorso: região posterior do pescoço (NUCA), região posterior do TÓRAX e região LOMBAR. A coluna (33 vértebras: 7C+12T+5L+5S fundidas+4 coccígeas; 72–75 cm) PROTEGE a medula, SUSTENTA o peso do corpo acima da pelve, serve de eixo parcialmente rígido e flexível ('haste biomecânica') e de base para a cabeça girar — funções centrais em postura e locomoção, garantidas pela musculatura potente que a aula esmiuçou."]],
+ref:"Aula 03 — Regiões do dorso e coluna"},
+
+{n:2,aula:1,caso:`Homem, 61 anos, submetido a esvaziamento cervical por metástase linfonodal. No pós-operatório tardio, queixa-se de dor no ombro direito, dificuldade para pentear o cabelo e "ombro despencado". Ao exame: atrofia visível do trapézio direito, escápula discretamente deslocada e incapacidade de completar a elevação do braço acima da horizontal. A sensibilidade do membro está preservada e os demais músculos têm força normal.`,
+perg:["Qual nervo foi lesado e qual sua particularidade em relação aos outros nervos do membro superior?","Explique por que o braço não sobe acima da horizontal usando a sequência muscular da abdução.","Que partes do trapézio existem, qual a referência para nomeá-las e o que cada uma faz?","Se em vez do trapézio o paciente tivesse perdido a função do supraespinal e do infraespinal, qual nervo estaria lesado e onde nasce?"],
+resp:[["Nervo acessório — XI par craniano","O quadro é a SÍNDROME DO OMBRO CAÍDO por lesão do NERVO ACESSÓRIO (XI par craniano). Particularidade: o trapézio move o membro superior, mas NÃO é inervado pelo plexo braquial — o acessório sai da BASE DO CRÂNIO e cruza a região cervical, onde fica vulnerável em esvaziamentos e tumores. Músculo íntegro + nervo seccionado = músculo desfuncionalizado, que atrofia e dói."],
+["O trapézio é quem termina o arco","A abdução completa é uma corrida de revezamento: o SUPRAESPINAL inicia o movimento, o DELTOIDE leva o braço até a horizontal, e o TRAPÉZIO completa o arco RODANDO A ESCÁPULA para o úmero passar da horizontal. Sem trapézio funcionante, supraespinal e deltoide preservados levam o braço só até a horizontal — exatamente o déficit do paciente (não alcança acima da cabeça, não penteia o cabelo)."],
+["Descendente, transversa e ascendente — referência: o OMBRO","As partes do trapézio se nomeiam pelo trajeto das fibras EM RELAÇÃO AO OMBRO: DESCENDENTE (fibras que descem ao ombro) = ELEVA a escápula; TRANSVERSA (fibras horizontais) = RETRAI; ASCENDENTE (fibras que sobem ao ombro) = DEPRIME. Em conjunto, rodam a escápula. Origem no terço medial da linha nucal/protuberância occipital e espinhosos C7–T12; inserção no terço lateral da clavícula, acrômio e espinha da escápula. Vascularização: artéria DORSAL DA ESCÁPULA — pedículo que permite usar o trapézio como retalho cervical."],
+["Nervo supraescapular, do tronco superior","Supraespinal + infraespinal são inervados pelo NERVO SUPRAESCAPULAR, que nasce do TRONCO SUPERIOR do plexo braquial (raízes C5–C6) e passa pela incisura da escápula. A clínica seria outra: dificuldade para INICIAR a abdução (supraespinal) e fraqueza de rotação lateral (infraespinal), com trapézio normal e ombro não caído — a tríade músculo–nervo–origem diferencia as duas lesões."]],
+ref:"Aula 03 — Trapézio, acessório e abdução"},
+
+{n:3,aula:1,caso:`Mulher, 52 anos, mastectomizada por câncer de mama, será submetida a reconstrução com retalho miocutâneo de latíssimo do dorso. Durante o planejamento, o residente precisa descrever ao cirurgião a anatomia completa do músculo e de seu pedículo — e justificar por que esse retalho funciona rodado para a parede anterior do tórax.`,
+perg:["Descreva origem, inserção e ações do latíssimo do dorso.","Qual o pedículo vasculonervoso do retalho e qual seu trajeto desde o plexo e a artéria axilar?","Por que o retalho sobrevive quando rodado para a frente — e o que aconteceria se o pedículo fosse lesado?","Que déficit funcional a paciente pode notar no membro após a transferência do músculo?"],
+resp:[["O grande avental do dorso","LATÍSSIMO DO DORSO (antigo 'grande dorsal'): origem nos processos espinhosos de T6–T12, na APONEUROSE TORACOLOMBAR (lâmina posterior), crista ilíaca e 3–4 costelas inferiores; inserção no ASSOALHO DO SULCO INTERTUBERCULAR do úmero. Ações: ESTENDE, ADUZ e RODA MEDIALMENTE o úmero — é a puxada da remada e da barra, e levanta o corpo na escalada."],
+["Pedículo toracodorsal","NERVO TORACODORSAL: nasce do FASCÍCULO POSTERIOR do plexo braquial, entre os nervos subescapulares superior e inferior, e desce pela axila até a face profunda do músculo. ARTÉRIA E VEIA TORACODORSAIS: ramos terminais da SUBESCAPULAR, que é o último grande ramo da AXILAR (continuação da subclávia). Nervo, artéria e veia com o mesmo nome, entrando juntos no músculo — esse conjunto é o pedículo do retalho."],
+["Retalho vive do pedículo","O retalho miocutâneo é rodado mantendo o PEDÍCULO TORACODORSAL intacto na axila: a pele e o músculo transferidos continuam perfundidos pela artéria/veia toracodorsais, mesmo em nova posição na parede anterior. Pedículo lesado = retalho sem sangue = NECROSE da reconstrução. Por isso o cirurgião disseca a axila protegendo o feixe — 'tenho que preservar o pedículo', a regra de ouro dos retalhos (a mesma lógica vale para o retalho de trapézio com a artéria dorsal da escápula)."],
+["Perde-se força de adução e extensão","Com o latíssimo transferido, a paciente pode notar fraqueza nos movimentos que ele fazia: puxar o braço de encontro ao corpo (ADUÇÃO), ESTENDER o úmero e a rotação medial potente — funcionalmente, menos força em 'remada', puxar objetos e apoiar o corpo para levantar. No dia a dia costuma ser bem compensado pelos sinergistas (redondo maior, peitoral), o que torna o retalho aceitável."]],
+ref:"Aula 03 — Latíssimo e pedículo toracodorsal"},
+
+{n:4,aula:1,caso:`Pedreiro, 47 anos, nota "caroço" lombar direito que aparece quando carrega sacos de cimento e some ao deitar. O médico da UBS encaminha como "lipoma dorsal". Na exploração cirúrgica, encontra-se gordura perirrenal protruindo por um defeito da parede posterior, imediatamente abaixo da 12ª costela, entre o eretor da espinha e o oblíquo interno, recoberta apenas pelo latíssimo do dorso.`,
+perg:["Qual o diagnóstico exato e quais os limites anatômicos da falha?","Por que essa região é naturalmente frágil — e por que o trígono lombar inferior hernia menos?","Explique o papel da aponeurose toracolombar nessa fraqueza, citando suas 3 lâminas.","Qual a conduta cirúrgica correta e por que a simples sutura ou a exérese da gordura falhariam?"],
+resp:[["Hérnia de Grynfeltt","É a HÉRNIA LOMBAR SUPERIOR — hérnia do trígono de GRYNFELTT. Limites do trígono lombar superior: 12ª COSTELA (acima), OBLÍQUO INTERNO (lateral) e ERETOR DA ESPINHA ou QUADRADO DO LOMBO (medial — um dos dois, conforme a anatomia individual; a depender da inserção do oblíquo interno o 'triângulo' pode até virar quadrilátero). Teto: LATÍSSIMO DO DORSO. O conteúdo típico é exatamente gordura perirrenal/retroperitoneal empurrada pelo aumento da pressão abdominal (esforço do pedreiro), com abaulamento que 'vai e volta'."],
+["Assoalho de fáscia × assoalho de músculo","O assoalho do Grynfeltt é SÓ a FÁSCIA TRANSVERSAL (a lâmina anterior da aponeurose toracolombar) — não há músculo tapando a janela; e o teto (latíssimo) é fino e plano, incapaz de conter a protrusão. Já o trígono lombar INFERIOR (PETIT: crista ilíaca + latíssimo + oblíquo EXTERNO) tem o OBLÍQUO INTERNO fazendo ASSOALHO MUSCULAR — músculo segura mais que fáscia, então Petit hernia menos. Fraqueza + pressão abdominal (esforço, evacuação) = hérnia."],
+["O cinturão de 3 lâminas","A aponeurose toracolombar é o 'cinturão' posterior (fino no tórax, espesso na lombar): lâmina ANTERIOR — da face anterior dos processos transversos, passa NA FRENTE do quadrado do lombo e continua como FÁSCIA TRANSVERSAL (é ela o assoalho frágil do Grynfeltt); lâmina MÉDIA — da ponta dos processos transversos, passa ATRÁS do quadrado do lombo e origina o tendão do transverso/oblíquo interno; lâmina POSTERIOR — dos processos espinhosos, reveste os eretores e dá origem ao latíssimo e ao serrátil posterior inferior. Onde a parede depende só da lâmina anterior, sem músculo, está a porta da hérnia."],
+["Tela sintética — reforçar, não remendar","Conduta: reduzir o conteúdo herniado e REFORÇAR a parede com TELA SINTÉTICA. Só ressecar a gordura repete o erro do 'lipoma': a falha continua lá e a hérnia recidiva. E sutura simples falha por dois motivos ensinados: 'não adianta dar ponto em músculo fraco — vai abrir de novo', e no Grynfeltt um dos limites é a 12ª COSTELA — 'como aproximar costela com músculo?'. A tela faz o reforço protético da parede, o mesmo princípio consagrado das hérnias inguinais; depois o paciente pode voltar a carregar peso sem protrusão."]],
+ref:"Aula 03 — Trígonos lombares e hérnias"}
+];
+
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 03</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 03</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 03 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 03 — Dorso",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Regiões, coluna, suboccipital, manguito rotador, extrínsecos × intrínsecos, aponeurose toracolombar e os trígonos (ausculta, Grynfeltt, Petit).",cards:[
+{area:"Regiões",cat:"prof",q:"Facada na região escapular × infraescapular: qual preocupa mais?",a:"ESCAPULAR: 'certamente não entrou' — bate na escápula (escudo ósseo). INFRAESCAPULAR: 'opa, pode ter entrado' — sem anteparo, risco de penetração torácica. Nomear a região define a preocupação clínica."},
+{area:"Regiões",cat:"conceito",q:"Regiões da face posterior do tórax (referência = escápula)?",a:"SUPRAESCAPULAR (acima) · ESCAPULAR (sobre) · INFRAESCAPULAR (abaixo) · INTERESCÁPULO-VERTEBRAL (entre as duas). Depois: lombar (até a nádega), sacral e glútea."},
+{area:"Regiões",cat:"conceito",q:"As 3 partes do dorso?",a:"Região posterior do pescoço (NUCA) · região posterior do TÓRAX · região LOMBAR."},
+{area:"Coluna",cat:"conceito",q:"Constituição e comprimento da coluna vertebral?",a:"33 VÉRTEBRAS: 7 cervicais + 12 torácicas + 5 lombares + 5 sacrais FUNDIDAS (sacro) + 4 coccígeas (remanescentes de cauda). Mede 72–75 cm — metade da altura do corpo."},
+{area:"Coluna",cat:"conceito",q:"Funções da coluna vertebral?",a:"PROTEGE a medula espinal e os nervos espinhais · SUSTENTA o peso acima da pelve · eixo parcialmente rígido E flexível ('haste biomecânica') · base para a cabeça girar · postura e locomoção."},
+{area:"Coluna",cat:"alerta",q:"Onde procurar hérnia de disco — e por quê?",a:"CERVICAL e LOMBAR: são os segmentos que MAIS se movimentam (rotação inclusive) e por isso mais sofrem. 'No tórax certamente não vai ter' — a caixa torácica trava o segmento."},
+{area:"Suboccipital",cat:"conceito",q:"Os 4 músculos da região suboccipital?",a:"RETO POSTERIOR MENOR da cabeça · RETO POSTERIOR MAIOR da cabeça · OBLÍQUO SUPERIOR da cabeça · OBLÍQUO INFERIOR da cabeça — entre a base do crânio e C1–C2, sob esternocleidomastóideo, esplênio e semiespinal."},
+{area:"Suboccipital",cat:"prof",q:"Trígono suboccipital: limites e conteúdo?",a:"Limites: RETO POSTERIOR MAIOR + OBLÍQUO SUPERIOR + OBLÍQUO INFERIOR (o reto menor fica fora). Conteúdo: ARTÉRIA VERTEBRAL + NERVO SUBOCCIPITAL (inerva os 4 músculos)."},
+{area:"Suboccipital",cat:"conceito",q:"Trajeto e destino da artéria vertebral?",a:"Sobe protegida nos FORAMES TRANSVERSOS das cervicais → cruza o trígono suboccipital → entra pelo FORAME MAGNO → as duas vertebrais se unem na artéria BASILAR → polígono cerebral (Willis). Nutre o cérebro."},
+{area:"Manguito",cat:"prof",q:"Os 4 músculos do manguito rotador — e quem fica de fora?",a:"SUPRAESPINAL + INFRAESPINAL + REDONDO MENOR (posteriores) + SUBESCAPULAR (anterior, forra a fossa subescapular). O REDONDO MAIOR NÃO é manguito — vai direto ao úmero.",obs:"Todos nascem na escápula e se inserem no úmero, movendo o ombro."},
+{area:"Manguito",cat:"alerta",q:"Qual músculo INICIA a abdução do braço e qual o mais lesado?",a:"O SUPRAESPINAL — inicia a abdução E é o componente do manguito que mais lesa (desgaste do tendão). A dor ao começar a elevar o braço aponta para ele."},
+{area:"Manguito",cat:"prof",q:"Sequência muscular da abdução completa (trocar a lâmpada)?",a:"SUPRAESPINAL inicia → DELTOIDE leva até a horizontal → TRAPÉZIO completa o arco RODANDO A ESCÁPULA para o braço passar acima da cabeça."},
+{area:"Plexo",cat:"conceito",q:"Esqueleto do plexo braquial?",a:"Raízes C5–T1 → TRONCOS superior, médio e inferior → divisões → FASCÍCULOS lateral, medial e POSTERIOR. Tudo que move o membro superior vem do plexo (exceção da aula: trapézio = nervo craniano)."},
+{area:"Plexo",cat:"prof",q:"Nervo supraescapular e nervos subescapulares: origem e alvos?",a:"SUPRAESCAPULAR: nasce do TRONCO SUPERIOR → supraespinal + infraespinal. SUBESCAPULARES: nascem do FASCÍCULO POSTERIOR → subescapular + redondo maior. É a tríade músculo–nervo–origem da prova oral."},
+{area:"Extrínsecos",cat:"conceito",q:"Extrínsecos × intrínsecos do dorso: qual a diferença?",a:"EXTRÍNSECOS (superficiais/intermediários): movem MEMBROS e COSTELAS — 'guindastes'. INTRÍNSECOS (profundos, próprios do dorso): movem a COLUNA e mantêm a POSTURA — 'cabos de tensão'. Sem eles, com as vísceras todas anteriores, andaríamos vergados."},
+{area:"Trapézio",cat:"conceito",q:"Partes do trapézio: referência e ação de cada uma?",a:"Referência = O OMBRO. DESCENDENTE (fibras que descem ao ombro) ELEVA · TRANSVERSA retrai · ASCENDENTE deprime a escápula. Juntas, rodam a escápula. Origem: linha nucal + espinhosos C7–T12; inserção: clavícula lateral, acrômio, espinha da escápula."},
+{area:"Trapézio",cat:"prof",q:"Inervação e vascularização do trapézio — e a síndrome clássica?",a:"NERVO ACESSÓRIO (XI par CRANIANO — não é plexo braquial!) + artéria DORSAL DA ESCÁPULA. Lesão do acessório (cirurgia/tumor cervical) = trapézio íntegro porém desfuncionalizado → atrofia + SÍNDROME DO OMBRO CAÍDO.",obs:"Trapézio também dá retalho pediculado p/ cobertura de ressecções cervicais."},
+{area:"Latíssimo",cat:"conceito",q:"Latíssimo do dorso: origem, inserção e ações?",a:"Origem: espinhosos T6–T12 + aponeurose toracolombar + crista ilíaca + 3–4 costelas inferiores. Inserção: ASSOALHO DO SULCO INTERTUBERCULAR do úmero. Ações: ESTENDE, ADUZ e roda MEDIALMENTE o úmero — a puxada da remada; levanta o corpo na escalada."},
+{area:"Latíssimo",cat:"prof",q:"Pedículo do latíssimo (nervo e artéria) — e a aplicação cirúrgica?",a:"NERVO TORACODORSAL (fascículo POSTERIOR, entre os subescapulares) + ARTÉRIA/VEIA TORACODORSAIS (ramos da SUBESCAPULAR ← axilar ← subclávia). Aplicação: retalho miocutâneo rodado para RECONSTRUÇÃO DA MAMA pós-mastectomia — pedículo preservado = retalho vivo."},
+{area:"Romboides",cat:"conceito",q:"Romboide maior × menor: como diferenciar na peça?",a:"Referência = ESPINHA DA ESCÁPULA: fibras chegando do nível da espinha PARA BAIXO (até o ângulo inferior) = MAIOR (origem T2–T5); ACIMA da espinha = MENOR (lig. nucal + C7–T1, superior ao maior). Ação: retraem a escápula e a fixam ao tórax."},
+{area:"Romboides",cat:"prof",q:"Quem inerva romboides + levantador da escápula?",a:"NERVO DORSAL DA ESCÁPULA — um dos primeiros raminhos do plexo, sai da RAIZ DE C5 — inerva OS TRÊS (romboide maior, menor e levantador). Artéria homônima: dorsal da escápula. O levantador sai do ÂNGULO SUPERIOR da escápula e a eleva."},
+{area:"Extrínsecos",cat:"conceito",q:"Serráteis posteriores: onde estão e o que fazem?",a:"SUPERIOR: 4 dígitos SOB os romboides → ELEVA costelas. INFERIOR: 4 dígitos SOB o latíssimo → DEPRIME costelas. Músculos respiratórios ACESSÓRIOS (crise asmática/bronquite). Movem costela ⇒ são EXTRÍNSECOS."},
+{area:"Extrínsecos",cat:"alerta",q:"Quem mantém a escápula grudada no tórax — e qual a lesão clássica?",a:"O SERRÁTIL ANTERIOR (anterolateral, visto na aula passada). Lesão do seu nervo (torácico longo) = ESCÁPULA ALADA. Não confundir com os serráteis POSTERIORES (respiratórios)."},
+{area:"Intrínsecos",cat:"prof",q:"Quem inerva TODOS os músculos intrínsecos do dorso?",a:"Os RAMOS POSTERIORES DOS NERVOS ESPINAIS — não é plexo braquial (não é movimento de membro; é coluna e postura). Os ramos anteriores seguem para formar intercostais/plexos."},
+{area:"Intrínsecos",cat:"conceito",q:"As 3 camadas dos intrínsecos?",a:"SUPERFICIAL: esplênios (cabeça/pescoço). INTERMEDIÁRIA: eretores da espinha (espinal, longuíssimo, iliocostal). PROFUNDA: transversoespinais (semiespinal, multífido, rotadores) + interespinais, intertransversários, levantadores das costelas."},
+{area:"Esplênios",cat:"conceito",q:"Esplênios ('bandagem'): fixações e ações?",a:"Origem: lig. nucal + espinhosos C7–T3/T4. DA CABEÇA → processo MASTÓIDE + linha nucal superior; DO PESCOÇO → transversos C1–C3/C4 (não chega ao crânio). UNIlateral: inclina e RODA para o MESMO lado · BIlateral: ESTENDE cabeça e pescoço."},
+{area:"Eretores",cat:"prof",q:"Eretores da espinha: as 3 colunas de medial para lateral?",a:"ESPINAL (colado nos processos espinhosos; praticamente não chega à cabeça) → LONGUÍSSIMO (intermediário; chega ao processo MASTÓIDE) → ILIOCOSTAL (lateral; vai aos ÂNGULOS DAS COSTELAS). Principal EXTENSOR da coluna; uni = flexão lateral."},
+{area:"Eretores",cat:"conceito",q:"Origem comum dos eretores da espinha?",a:"TENDÃO LARGO na parte posterior da CRISTA ILÍACA + face posterior do SACRO + processos espinhosos sacrais e lombares — revestido pela aponeurose toracolombar. Cada coluna tem 3 partes regionais."},
+{area:"Eretores",cat:"prof",q:"Contrafilé × filé mignon: qual músculo é qual?",a:"CONTRAFILÉ = ERETORES DA ESPINHA (posteriores; duros no humano porque sustentam o bípede — no boi são macios). FILÉ MIGNON = PSOAS MAIOR (paravertebral ANTERIOR; macio porque não briga com a gravidade). Anatomia de açougue que fixa a função."},
+{area:"Profundos",cat:"conceito",q:"Transversoespinais: trajeto, componentes e ação rotatória?",a:"De processo TRANSVERSO a processo ESPINHOSO de vértebras ACIMA. SEMIESPINAL (tórax/pescoço/cabeça — chega ao occipital) · MULTÍFIDO (mais espesso na LOMBAR — ajuste fino) · ROTADORES curtos/longos (torácicos). Unilateral roda para o lado OPOSTO; bilateral estende."},
+{area:"Profundos",cat:"alerta",q:"Espinal × SEMIespinal: qual chega à cabeça?",a:"O ESPINAL praticamente NÃO chega à cabeça — para na região cervical. O SEMIESPINAL continua dali para cima e o semiespinal DA CABEÇA insere-se no occipital entre as linhas nucais. Um é eretor (intermediário); o outro é transversoespinal (profundo)."},
+{area:"Fáscia",cat:"conceito",q:"Aponeurose toracolombar: onde é fina e onde é espessa?",a:"FINA na parte torácica, ESPESSA na lombar (o losango branco da dissecção). É a 'armadura'/cinturão que contém os intrínsecos — o análogo posterior da bainha do reto do abdome."},
+{area:"Fáscia",cat:"prof",q:"As 3 lâminas da aponeurose toracolombar?",a:"ANTERIOR: face anterior dos processos transversos → passa NA FRENTE do quadrado do lombo → continua como FÁSCIA TRANSVERSAL. MÉDIA: ponta dos transversos → ATRÁS do quadrado do lombo → tendão do transverso/oblíquo interno. POSTERIOR: processos espinhosos → reveste os ERETORES → origina LATÍSSIMO + serrátil posterior inferior."},
+{area:"Trígonos",cat:"prof",q:"Trígono da ausculta: limites, assoalho e utilidade?",a:"Margem lateral do TRAPÉZIO (medial) + margem superior do LATÍSSIMO (inferior) + margem medial da ESCÁPULA (lateral). Assoalho: ROMBOIDE MAIOR. Sem conteúdo — é a janela onde o estetoscópio quase toca a parede torácica.",obs:"Manobra: braços cruzados à frente → a escápula desliza e o trígono AMPLIA."},
+{area:"Trígonos",cat:"prof",q:"Trígono lombar SUPERIOR (Grynfeltt): limites, assoalho e teto?",a:"Limites: 12ª COSTELA + OBLÍQUO INTERNO + ERETORES ou QUADRADO DO LOMBO. Assoalho: SÓ a FÁSCIA TRANSVERSAL (lâmina anterior da aponeurose). Teto: LATÍSSIMO (fino, não segura hérnia). Conforme a inserção do oblíquo interno, pode virar quadrilátero."},
+{area:"Trígonos",cat:"conceito",q:"Trígono lombar INFERIOR (Petit): limites e assoalho?",a:"CRISTA ILÍACA (base) + LATÍSSIMO DO DORSO + OBLÍQUO EXTERNO. Assoalho: OBLÍQUO INTERNO — um MÚSCULO, por isso hernia MENOS que o Grynfeltt (que tem assoalho só de fáscia)."},
+{area:"Trígonos",cat:"alerta",q:"Qual trígono lombar hernia mais e por quê?",a:"O SUPERIOR (Grynfeltt): assoalho é SÓ FÁSCIA transversal, sem músculo — e o teto (latíssimo) é fino demais. No Petit, o oblíquo interno faz assoalho MUSCULAR. Fáscia < músculo ⇒ hérnia lombar superior é a mais comum."},
+{area:"Hérnias",cat:"caso",q:"Caso do 'lipoma' do pedreiro: o que era e qual a lição?",a:"Abaulamento lombar ao esforço que parecia lipoma era HÉRNIA DE GRYNFELTT com gordura perirrenal saindo pela falha. Lição: massa lombar que 'vai e volta' com esforço = pensar em hérnia; só ressecar a gordura deixa a falha e recidiva."},
+{area:"Hérnias",cat:"prof",q:"Conduta na hérnia lombar — e por que sutura simples falha?",a:"Reduzir o conteúdo + TELA SINTÉTICA reforçando a parede. 'Não adianta dar ponto em músculo fraco — abre de novo'; e no Grynfeltt um limite é a 12ª COSTELA ('como aproximar costela com músculo?'). Mesmo princípio das hérnias inguinais."},
+{area:"Hérnias",cat:"conceito",q:"Mecanismo geral das hérnias lombares?",a:"Áreas de FRAQUEZA NATURAL da parede + AUMENTO DA PRESSÃO ABDOMINAL (esforço, evacuação, carregar peso) → gordura retroperitoneal/perirrenal ou vísceras protruem pelos trígonos. Clínica: abaulamento que aparece ao esforço e some ao deitar."},
+{area:"Prova",cat:"prof",q:"O que o professor disse que NÃO cobra — e o que cobra?",a:"NÃO cobra origem e inserção decoradas ('vocês não vão ser anatomistas, querem ser médicos'). COBRA: o PORQUÊ do movimento, a INERVAÇÃO e a VASCULARIZAÇÃO de cada músculo — 'mostra o músculo, diz quem inerva e de onde vem o nervo'."},
+{area:"Plexo",cat:"conceito",q:"Nervo → músculo: monte a tabela-resumo da aula.",a:"ACESSÓRIO (XI) → trapézio · SUPRAESCAPULAR (tronco sup.) → supra/infraespinal · SUBESCAPULARES (fasc. post.) → subescapular/redondo maior · TORACODORSAL (fasc. post.) → latíssimo · DORSAL DA ESCÁPULA (C5) → romboides + levantador · SUBOCCIPITAL (ramo post. de C1) → 4 suboccipitais · RAMOS POSTERIORES → todos os intrínsecos."},
+{area:"Regiões",cat:"caso",q:"Por que 'facada na bunda' não pode ir no prontuário?",a:"Prontuário exige descrição TÉCNICA: 'ferimento penetrante em REGIÃO GLÚTEA direita, próximo à linha mediana'. Região nomeada + lado + referência — é linguagem médico-legal, além de definir o raciocínio de risco."},
+{area:"Coluna",cat:"conceito",q:"Movimentos do dorso e quem os executa?",a:"FLEXÃO: musculatura anterior contrai (dorso relaxa) · EXTENSÃO/hiperextensão: posteriores (eretores) · FLEXÃO LATERAL: contração unilateral · ROTAÇÃO: concentrada em cervical e lombar. Postura fraca → dor/hérnia → fortalecer intrínsecos (fisioterapia/pilates)."}
+]}};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-dorso-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
