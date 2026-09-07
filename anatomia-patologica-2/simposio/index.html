@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Simpósio — Fígado e Estômago · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Simpósio — Fígado e Estômago</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Simpósio (4 grupos, mesmo dia)</p>
+  <h1 class="page-h1">Simpósio — Fígado e Estômago</h1>
+  <p class="lead">Os quatro temas apresentados pelos grupos no simpósio de Anato Pato II: <b>Hepatites A e B</b>, <b>Hepatite C e Cirrose</b>, <b>Gastrite crônica, úlceras pépticas e pólipos</b> e <b>Neoplasias gástricas (GIST e adenocarcinoma)</b>. Este hub foi montado a partir dos slides dos grupos (não há transcrição do simpósio) e amarra tudo com o que a Profa. Janaina já cobrou nas aulas de fígado e estômago — os temas foram escolhidos por ela exatamente por serem a continuação natural da matéria.</p>
+
+  <nav class="toc">
+    <h2>Neste simpósio</h2>
+    <ol>
+      <li><a href="#t1">Hepatite A: a lesão que o vírus não faz</a></li>
+      <li><a href="#t2">Hepatite B: o vírus e a transmissão</a></li>
+      <li><a href="#t3">Hepatite B: sorologia — a tabela que decide tudo</a></li>
+      <li><a href="#t4">Hepatite B: morfologia da aguda à crônica</a></li>
+      <li><a href="#t5">Hepatite C: quasispecies, cronicidade e a tríade histológica</a></li>
+      <li><a href="#t6">Cirrose: definição, classificações e os 3 eixos clínicos</a></li>
+      <li><a href="#t7">Gastrite crônica por H. pylori</a></li>
+      <li><a href="#t8">Gastrite autoimune (e como separá-la da H. pylori)</a></li>
+      <li><a href="#t9">Úlcera péptica e pólipos gástricos</a></li>
+      <li><a href="#t10">GIST: o tumor das células de Cajal</a></li>
+      <li><a href="#t11">Adenocarcinoma gástrico: de Correa a Borrmann</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Hepatite A: a lesão que o vírus não faz</h2>
+  <ul>
+    <li>O <b>HAV tem pouco efeito citopático direto</b>: quem destrói o fígado é a <b>resposta imune do hospedeiro</b> — inata (células NK, <b>Kupffer</b>, interferons) e adaptativa (<b>linfócitos T CD8+</b> reconhecem hepatócitos infectados, liberam IFN-γ/TNF-α e induzem apoptose e necrose).</li>
+    <li>Resultado: <b>hepatite aguda difusa</b> com inflamação lobular e morte de hepatócitos → ↑ transaminases, icterícia, mal-estar. <b>Não há reservatório persistente: a doença NÃO cronifica</b>, e o <b>anti-HAV IgG</b> confere imunidade prolongada.</li>
+    <li>Clínica depende da idade: crianças &lt;6 anos ~70% assintomáticas; adultos fazem a doença sintomática — fases <b>prodrômica → ictérica → convalescença</b>. Autolimitada; sem antiviral específico (suporte).</li>
+  </ul>
+  <figure class="fig"><img src="img/hav-patogenese.jpg" alt="Patogênese da hepatite A">
+  <figcaption><b>Patogênese do HAV</b> — replicação viral inocente + resposta imune (NK, Kupffer, T CD8+) agressiva: a lesão hepática é imunomediada, e a formação de anti-HAV IgG encerra a história sem cronificar.</figcaption></figure>
+  <h3>Na lâmina</h3>
+  <ul>
+    <li><b>Infiltrado mononuclear portal e periportal RICO EM PLASMÓCITOS</b> (marca da hepatite A), <b>hepatócitos balonizados</b>, <b>corpúsculos de Councilman</b> (apoptose) e <b>colestase canalicular mais proeminente</b> que nas outras hepatites virais; Kupffer hipertrofiadas e agregadas.</li>
+    <li>Graves: necrose em ponte → panlobular/maciça com reação ductular. <b>AUSENTES</b> (e isso diferencia): fibrose septal/em ponte, hepatócitos em <b>vidro fosco</b> (isso é HBV) e <b>agregados linfoides + esteatose</b> (isso é HCV).</li>
+  </ul>
+  <figure class="fig"><img src="img/hav-histologia.jpg" alt="Histologia da hepatite A">
+  <figcaption><b>Hepatite A na lâmina</b> — infiltrado mononuclear portal e periportal (linfócitos e plasmócitos) ao redor do espaço-porta. Plasmócitos abundantes = pista de HAV.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · Hepatite B: o vírus e a transmissão</h2>
+  <ul>
+    <li><b>HBV</b> (Hepadnaviridae): genoma de <b>DNA circular parcialmente dupla-fita</b>; envelope com <b>HBsAg</b>, capsídeo com <b>HBcAg</b>, e uma polimerase com <b>atividade de transcriptase reversa</b> (sintetiza DNA a partir de RNA).</li>
+    <li>Três consequências que caem em prova: (1) o DNA viral <b>INTEGRA-SE ao genoma do hepatócito</b> → <b>carcinogênese DIRETA, independente de cirrose</b>; (2) a transcriptase reversa erra muito → <b>alta taxa de mutação</b> (incluindo a mutação pré-core); (3) o vírus em si tem <b>efeito citopático limitado</b> — de novo, quem lesa é a resposta imune.</li>
+    <li><b>cccDNA</b>: forma estável do DNA viral que fica no <b>núcleo</b> do hepatócito — o <b>reservatório</b> que explica persistência e <b>reativação</b> mesmo com carga viral suprimida.</li>
+  </ul>
+  <figure class="fig"><img src="img/hbv-estrutura.jpg" alt="Estrutura do vírus da hepatite B">
+  <figcaption><b>O HBV</b> — DNA parcialmente dupla-fita, HBcAg no capsídeo (não circula no soro!), HBsAg no envelope e HBeAg secretado na replicação.</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 A idade da infecção determina o desfecho</p>
+  <p>Transmissão percutânea/mucosa (sangue, sêmen, fluidos). O número mais importante do deck: <b>transmissão VERTICAL cronifica em 70–90%</b> dos casos (imunidade imatura do recém-nascido tolera o vírus), enquanto a <b>infecção do ADULTO cronifica em só 5–20%</b>. Por isso a vacinação ao nascer e a profilaxia da transmissão vertical são a grande arma de saúde pública contra o HBV — e contra o carcinoma hepatocelular que vem décadas depois.</p></div>
+  <figure class="fig"><img src="img/hbv-transmissao.jpg" alt="Transmissão e risco de cronificação do HBV">
+  <figcaption><b>Transmissão × cronificação</b> — vertical: 70–90% cronificam; adulto: 5–20%. A idade da infecção define o desfecho.</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · Hepatite B: sorologia — a tabela que decide tudo</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Marcador</th><th>O que indica</th><th>Detalhe que cai</th></tr>
+    <tr><td><b>HBsAg</b></td><td>infecção presente (1º marcador: positiva 7–10 dias antes dos sintomas)</td><td><b>persistência &gt;6 meses = CRONIFICAÇÃO</b></td></tr>
+    <tr><td><b>Anti-HBs</b></td><td>imunidade (infecção resolvida OU vacina)</td><td><b>isolado (sem anti-HBc) = VACINA</b></td></tr>
+    <tr><td><b>Anti-HBc IgM</b></td><td>infecção <b>aguda</b> (ou reativação)</td><td>o "carimbo" da fase aguda</td></tr>
+    <tr><td><b>Anti-HBc total (IgG)</b></td><td>contato prévio com o vírus completo — persiste indefinidamente</td><td>isolado NÃO confere imunidade</td></tr>
+    <tr><td><b>HBeAg</b></td><td>replicação intensa, alta infectividade</td><td>correlato histológico: <b>núcleo areado</b></td></tr>
+    <tr><td><b>Anti-HBe</b></td><td>queda da replicação (soroconversão)</td><td>ausência de HBeAg NÃO exclui replicação: <b>mutação pré-core</b></td></tr>
+    <tr><td><b>HBV-DNA</b></td><td>quantifica replicação — atividade e resposta ao tratamento</td><td>o desempate quando a sorologia confunde</td></tr>
+  </table></div>
+  <ul>
+    <li><b>HBcAg não circula no soro</b> — o que se dosa é o <b>anti-HBc</b>; o antígeno do core só é reconhecido no tecido, no núcleo do hepatócito.</li>
+    <li>As <b>fases da infecção crônica</b> são definidas pela <b>relação entre replicação viral e resposta imune</b>, não pela carga viral isolada.</li>
+  </ul>
+  <figure class="fig"><img src="img/hbv-sorologia.jpg" alt="Tabela de marcadores sorológicos do HBV">
+  <figcaption><b>A tabela do grupo</b> — cada marcador com "o que indica" e "quando aparece". Vale imprimir na memória: é a sorologia mais cobrada da hepatologia.</figcaption></figure>
+
+  <h2 class="topic" id="t4">4 · Hepatite B: morfologia da aguda à crônica</h2>
+  <h3>Aguda</h3>
+  <ul>
+    <li><b>Degeneração balonizante</b> (tumefação com citoplasma claro e rarefeito — lesão <b>reversível</b>) convivendo com <b>corpúsculos de Councilman</b> (apoptose consumada, acidófilos e retraídos) — "estágios distintos da mesma agressão, na mesma lâmina".</li>
+    <li><b>A extensão da necrose separa a hepatite comum da fulminante</b>: focal → <b>em ponte</b> (porta–porta, porta–centro, centro–centro) → <b>panacinar</b> → <b>maciça</b>. Na maciça: ausência de hepatócitos, colapso da trama de reticulina, espaços-porta aproximados e <b>proliferação ductular reacional</b> (células progenitoras tentando regenerar). Clínica: insuficiência hepática aguda, encefalopatia, coagulopatia — <b>&lt;1% dos casos de HBV aguda, mas alta mortalidade</b>.</li>
+    <li>Macro da aguda: fígado discretamente aumentado, amolecido, avermelhado; da crônica/cirrose: retraído, endurecido, <b>macronodular</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/f48-necrose-ponte.jpg" alt="Peça de hepatite aguda com necrose em ponte">
+  <figcaption><b>Peça F-48</b> — hepatite aguda com necrose em ponte: as depressões escuras são as faixas de parênquima perdido.</figcaption></figure>
+  <figure class="fig"><img src="img/councilman.jpg" alt="Corpúsculo de Councilman">
+  <figcaption><b>Corpúsculo apoptótico</b> junto à veia centrolobular (VCL) — a morte celular "limpa" da hepatite viral.</figcaption></figure>
+  <figure class="fig"><img src="img/necrose-macica.jpg" alt="Necrose maciça com proliferação ductal">
+  <figcaption><b>Necrose maciça</b> — ausência de hepatócitos, espaços-porta colapsados e proliferação ductal reacional: o substrato da hepatite fulminante.</figcaption></figure>
+  <h3>Crônica</h3>
+  <ul>
+    <li>Chave dupla: <b>inflamação que ULTRAPASSA A PLACA LIMITANTE</b> (o infiltrado portal invade o parênquima periportal — hepatite de interface) + <b>marcadores citopáticos do HBV</b>: hepatócito em <b>VIDRO FOSCO</b> (citoplasma amplo, homogêneo, granular — corresponde ao <b>HBsAg citoplasmático</b>) e <b>núcleo areado</b> (HBcAg).</li>
+    <li>Expansão fibrosa portal → septos → nódulos regenerativos cercados por fibrose: o caminho para a cirrose. Ciclos repetidos de lesão imune + regeneração acumulam erro → <b>carcinoma hepatocelular</b> (que no HBV também pode vir SEM cirrose, pela integração do DNA).</li>
+    <li><b>Biópsia lauda em dois eixos independentes</b>: grau (atividade necroinflamatória) e estágio (fibrose); a <b>elastografia</b> estima a rigidez/fibrose sem invadir.</li>
+  </ul>
+
+  <h2 class="topic" id="t5">5 · Hepatite C: quasispecies, cronicidade e a tríade histológica</h2>
+  <ul>
+    <li><b>HCV</b> (Flaviviridae, <b>RNA fita simples +</b>, envelopado): uma ORF única gera uma poliproteína clivada em estruturais (core, E1/E2) e não estruturais (<b>NS3/4A</b> protease, <b>NS5A</b>, <b>NS5B</b> RNA-polimerase). 8 genótipos.</li>
+    <li><b>Por que cronifica?</b> A <b>NS5B tem baixa fidelidade e não corrige erros</b> → nuvem de variantes (<b>quasispecies</b>) → escape imunológico → persistência. É também por isso que não há vacina e que existe resistência a antivirais.</li>
+    <li>Números: <b>~30% eliminam espontaneamente</b> em até 6 meses; <b>~70% cronificam</b>; dos crônicos, <b>15–30% desenvolvem cirrose em até 20 anos</b> (aceleram: álcool, HIV, HBV, obesidade/resistência insulínica). A lesão, de novo, é <b>imunomediada</b> (T CD8+, NK, Kupffer) — inflamação persistente ativa as <b>células estreladas</b> → colágeno → fibrose → cirrose → CHC.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 A tríade histológica da hepatite C</p>
+  <p>Três achados juntos apontam HCV na lâmina: <b>(1) AGREGADOS/FOLÍCULOS LINFOIDES nos espaços-porta</b>, <b>(2) ESTEATOSE hepatocitária</b> (o vírus altera o metabolismo lipídico) e <b>(3) HEPATITE DE INTERFACE</b> (inflamação portal invadindo o parênquima periportal). Compare: plasmócitos + colestase = HAV · vidro fosco + núcleo areado = HBV · agregados linfoides + esteatose = HCV.</p></div>
+  <figure class="fig"><img src="img/hcv-histologia.jpg" alt="Histologia da hepatite C crônica">
+  <figcaption><b>Hepatite C crônica</b> — inflamação portal e lobular com esteatose (vacúolos claros). Procure também o agregado linfoide portal.</figcaption></figure>
+  <ul>
+    <li><b>METAVIR</b> — dois eixos independentes: <b>A</b>tividade necroinflamatória A0–A3 e <b>F</b>ibrose F0–F4 (<b>F4 = cirrose</b>, com proliferação ductal). Colorações: HE (arquitetura) + <b>tricrômico de Masson</b> (colágeno/fibrose).</li>
+    <li>Diagnóstico: <b>anti-HCV</b> (teste rápido/sorologia) = <b>contato prévio</b>, não diferencia curado de ativo → <b>HCV-RNA (PCR)</b> confirma <b>infecção ATIVA</b> e quantifica; genotipagem depois. Provas de necrose (AST/ALT) × provas de função (albumina, INR, bilirrubina); <b>plaquetopenia sugere fibrose avançada/hipertensão portal</b>; APRI/FIB-4 e <b>elastografia</b> estimam fibrose sem biópsia — a biópsia ficou para dúvida diagnóstica (e tem risco de sangramento no cirrótico).</li>
+  </ul>
+
+  <h2 class="topic" id="t6">6 · Cirrose: definição, classificações e os 3 eixos clínicos</h2>
+  <ul>
+    <li><b>Definição:</b> substituição do tecido hepático normal por tecido fibroso após estímulo inflamatório crônico, com perda progressiva da função. <b>Alterações morfológicas fundamentais:</b> (1) <b>fibrose difusa com septos</b>, (2) <b>nódulos regenerativos</b>, (3) <b>desorganização da arquitetura</b> — e (4) <b>proliferação de ductos biliares</b>, que <b>diferencia cirrose de hepatite crônica</b>.</li>
+    <li><b>Classificação morfológica:</b> <b>MICROnodular</b> (&lt;3 mm — alcoólica) × <b>MACROnodular</b> (&gt;3 mm — <b>hepatites virais</b>) × mista. <b>Etiológica:</b> viral, alcoólica, metabólica (<b>MASH</b> — a causa emergente que mais cresce), autoimune, colestática, genética, medicamentosa, criptogênica.</li>
+  </ul>
+  <figure class="fig"><img src="img/cirrose-macro.jpg" alt="Fígado cirrótico ao corte">
+  <figcaption><b>Cirrose ao corte</b> — nódulos regenerativos ocre separados por septos fibrosos esbranquiçados.</figcaption></figure>
+  <figure class="fig"><img src="img/cirrose-etiologias.jpg" alt="Mapa das etiologias da cirrose">
+  <figcaption><b>Etiologias</b> — hepatites virais, álcool, MASH, autoimunidade, colestase, doenças genéticas (hemocromatose, Wilson, alfa-1) e criptogênica.</figcaption></figure>
+  <div class="diagrama"><p class="t">Como o cirrótico se apresenta — os 3 eixos</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Insuficiência hepática</b> — <span class="d">↓ albumina (edema/ascite), icterícia, coagulopatia, ↓ detoxificação → ↑ amônia → <b>encefalopatia</b>; alterações hormonais → spider angiomas, eritema palmar, ginecomastia.</span></div></li>
+    <li><span class="n">2</span><div><b>Hipertensão portal</b> — <span class="d">↑ resistência intra-hepática → colaterais portossistêmicas: <b>varizes gastroesofágicas</b> (risco de hemorragia), <b>esplenomegalia/hiperesplenismo</b> (plaquetopenia), <b>ascite</b>, caput medusae.</span></div></li>
+    <li><span class="n">3</span><div><b>Complicações da doença crônica</b> — <span class="d"><b>carcinoma hepatocelular</b>, infecções, síndromes hepatorrenal e hepatopulmonar, sarcopenia.</span></div></li>
+  </ol></div>
+  <div class="box caso"><p class="h">🩺 O caso do grupo: A.C.M., 63 anos</p>
+  <p>Mecânico aposentado, aumento do volume abdominal há 8 meses, edema, perda de 7 kg, sonolência ocasional — e o antecedente-chave: <b>transfusão em 1990, antes da triagem para HCV</b>. Exame: icterícia, ascite, eritema palmar, telangiectasias, esplenomegalia. Labs: plaquetas 78 mil (hiperesplenismo), AST&gt;ALT, albumina 3,0, INR 1,5. <b>Anti-HCV reagente + HCV-RNA detectável</b> (genótipo 1b), elastografia 15,2 kPa = <b>F4</b>. Biópsia: nódulos regenerativos + septos fibrosos + hepatite de interface + agregados linfoides. Diagnóstico: <b>hepatite C crônica ativa evoluída para cirrose descompensada</b>. É o roteiro clínico perfeito para memorizar a doença.</p></div>
+
+  <h2 class="topic" id="t7">7 · Gastrite crônica por H. pylori</h2>
+  <ul>
+    <li>Inflamação prolongada da mucosa gástrica. Etiologias: <b>H. pylori em ~90%</b>, autoimune, radiação, refluxo biliar. No Brasil, o H. pylori atinge <b>60–70%</b> da população (mais no Norte/Nordeste), infecção adquirida na infância, via <b>fecal-oral</b> — e é <b>fator predisponente</b>, não doença: menos de 20% dos infectados desenvolvem doença gástrica grave.</li>
+    <li>A bactéria fica na <b>superfície da mucosa, SEM invadir as células</b>: sobrevive ao ácido pela <b>urease</b> (ureia → amônia), adere e inflama por citocinas — cepas <b>CagA/VacA+</b> inflamam mais e carregam mais risco de câncer.</li>
+  </ul>
+  <div class="diagrama"><p class="t">Os fenótipos da gastrite por H. pylori (sequência-chave)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Antrite (predomínio antral)</b> — <span class="d">inflamação no antro → ↓ somatostatina → <b>↑ gastrina → HIPERcloridria</b> → risco de <b>úlcera DUODENAL</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>Pangastrite / atrofia do corpo</b> — <span class="d">a inflamação sobe para o corpo, destrói células oxínticas → <b>HIPO/acloridria + ↓ fator intrínseco</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>Atrofia avançada</b> — <span class="d">perda de células G/D, ↓ gastrina-17, mucosa "intestinalizada" → terreno da <b>cascata de Correa</b> (câncer a longo prazo).</span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/hpylori-gram.jpg" alt="H. pylori ao Gram">
+  <figcaption><b>H. pylori</b> — bacilos curvos/espiralados Gram-negativos.</figcaption></figure>
+  <figure class="fig"><img src="img/hp-histologia.jpg" alt="H. pylori na histologia">
+  <figcaption><b>Na lâmina</b> — as bactérias espiraladas aderidas ao muco e à superfície epitelial, com infiltrado inflamatório na lâmina própria. Gastrite crônica "ativa" = mononucleares + neutrófilos penetrando o epitélio.</figcaption></figure>
+  <figure class="fig"><img src="img/hp-endoscopia.jpg" alt="Endoscopia com e sem H. pylori">
+  <figcaption><b>HP− × HP+</b> — enantema, nodularidade e perda do padrão em "favo de mel" da mucosa oxíntica na infecção.</figcaption></figure>
+  <ul>
+    <li><b>Progressão histológica:</b> gastrite superficial (infiltrado linfoplasmocitário sem atrofia) → <b>gastrite atrófica</b> (perda glandular) → <b>METAPLASIA INTESTINAL</b> (epitélio gástrico substituído por epitélio intestinal com <b>caliciformes</b> — adaptação com potencial displásico).</li>
+    <li><b>Diagnóstico (V Consenso Brasileiro):</b> teste rápido da urease; <b>teste respiratório ¹³C-ureia = padrão-ouro NÃO invasivo</b> (e para confirmar erradicação); <b>histologia = padrão-ouro</b> (mínimo 4 biópsias: 2 antro + 2 corpo — protocolo de Sydney completo: 5, incluindo incisura); antígeno fecal.</li>
+    <li><b>Tratamento:</b> erradicação — tríplice clássica (IBP + amoxicilina + claritromicina, limitada pela resistência) ou <b>quádrupla com bismuto</b> (destaque atual).</li>
+  </ul>
+  <figure class="fig"><img src="img/atrofia-metaplasia.jpg" alt="Progressão da gastrite atrófica">
+  <figcaption><b>Progressão</b> — do antro normal (células G em "halo") à atrofia grave com mucosa "intestinalizada": as glândulas pilóricas somem e o feedback da gastrina-17 se perde.</figcaption></figure>
+  <figure class="fig"><img src="img/metaplasia-intestinal.jpg" alt="Metaplasia intestinal">
+  <figcaption><b>Metaplasia intestinal</b> — caliciformes onde deveria haver epitélio gástrico, com infiltrado crônico e congestão na lâmina própria.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Gastrite autoimune (e como separá-la da H. pylori)</h2>
+  <ul>
+    <li>Autoimunidade contra as <b>células PARIETAIS</b> (corpo e fundo!) com <b>autoanticorpos anti-célula parietal e anti-FATOR INTRÍNSECO</b> — sem depender de H. pylori.</li>
+    <li>A cadeia que explica tudo: destruição das parietais → <b>hipo/acloridria</b> → perde-se o freio da somatostatina → <b>HIPERGASTRINEMIA crônica</b> (as células G do antro seguem funcionantes) → efeito trófico sobre as células <b>ECL</b> → <b>hiperplasia de ECL → risco de TUMOR NEUROENDÓCRINO</b>. E a perda do fator intrínseco → <b>↓ B12 → ANEMIA PERNICIOSA</b> (megaloblástica) + anemia ferropriva precoce (ácido baixo absorve mal o ferro).</li>
+    <li>Clínica além da dispepsia: astenia, <b>glossite atrófica</b>, e as manifestações neurológicas da B12 (parestesias, perda de sensibilidade vibratória/proprioceptiva, ataxia — degeneração combinada subaguda).</li>
+    <li>EDA: <b>atrofia do CORPO com ANTRO PRESERVADO</b> (o espelho da H. pylori clássica), vasos submucosos visíveis, pólipos hiperplásicos. Investigação: B12, ferro/ferritina, <b>gastrina</b>, pepsinogênio I/II, autoanticorpos. Tratamento: repor <b>B12 (IM)</b> e ferro.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ O comparativo que decide a prova</p>
+  <p><b>TOPOGRAFIA + tipo de infiltrado</b>: gastrite por <b>H. pylori</b> começa no <b>ANTRO</b> e tem componente <b>neutrofílico</b> ("ativa"); gastrite <b>autoimune</b> pega <b>CORPO/FUNDO poupando o antro</b> e não tem o infiltrado neutrofílico da infecção. Perfil: HP = hipercloridria (fase antral) · autoimune = acloridria + hipergastrinemia + B12 baixa.</p></div>
+  <figure class="fig"><img src="img/autoimune-fluxo.jpg" alt="Fluxograma da gastrite autoimune">
+  <figcaption><b>Gastrite autoimune</b> — dos autoanticorpos à anemia perniciosa e à hiperplasia de ECL: a fisiopatologia inteira em um fluxo.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 O caso do grupo: L.W., 63 anos</p>
+  <p>Queimação epigástrica há 6 meses com piora pós-prandial, dispepsia — e as <b>pistas de alerta</b>: astenia, palidez, <b>glossite</b>, <b>parestesias nos pés</b>, piora com ibuprofeno. Labs: anemia <b>macrocítica</b> (VCM 112 fL), <b>B12 120 pg/mL</b>, ferritina 9. EDA: mucosa pálida, pregas apagadas, vasos visíveis — <b>atrofia restrita a corpo e fundo</b>. Diagnóstico: <b>gastrite crônica AUTOIMUNE</b>. A 1ª impressão "gastrite por H. pylori" cai pela topografia + ausência de neutrófilos + síndrome da B12.</p></div>
+
+  <h2 class="topic" id="t9">9 · Úlcera péptica e pólipos gástricos</h2>
+  <ul>
+    <li><b>A balança da mucosa:</b> proteção = muco + bicarbonato + fluxo sanguíneo + <b>prostaglandinas (via COX-1)</b> + renovação epitelial · agressão = ácido/pepsina, <b>H. pylori</b>, <b>AINEs</b> (inibem COX-1 → ↓ prostaglandinas → ↓ muco/bicarbonato/fluxo), álcool, tabaco, estresse (hipoperfusão). <b>Úlcera = agressores vencendo as defesas.</b></li>
+    <li>Macro da úlcera péptica benigna: lesão <b>escavada, bem delimitada</b>, redonda/oval, fundo com <b>fibrina</b>, <b>bordas regulares</b> e edemaciadas, pregas convergindo simetricamente. Micro: perda de continuidade da mucosa com exsudato fibrinoso e tecido de reparação em camadas ordenadas.</li>
+    <li><b>Úlcera benigna × neoplásica:</b> a maligna tem <b>bordo evertido, nodular e irregular</b>, fundo friável/necrótico que sangra ao toque, <b>pregas amputadas/fusionadas</b> antes da lesão, arquitetura destruída na histologia. Classificações: <b>Sakita-Miwa</b> (A1/A2 ativa → H1/H2 cicatrização → S1/S2 cicatriz) e BOR (base, orla, relevo).</li>
+    <li>Lab do sangramento: ↓ Hb/Ht + <b>↑ ureia/BUN</b> (digestão do sangue no tubo alto + hipovolemia — BUN ≥21 sugere gravidade). Tratamento: erradicar H. pylori, suspender AINE, <b>IBP</b>; complicada → endoscopia/cirurgia.</li>
+    <li><b>Pólipos gástricos:</b> hiperplasia foveolar em resposta à inflamação crônica (H. pylori) ou à hipergastrinemia trófica (autoimune → ECL). Micro do hiperplásico: arquitetura <b>serrilhada</b>, discreta atipia basal, infiltrado, congestão. Evolução benigna, mas com risco de displasia — e <b>erradicar o H. pylori faz o pólipo regredir em até ~70%</b> dos casos.</li>
+  </ul>
+  <figure class="fig"><img src="img/balanca-ulcera.jpg" alt="Balança de fatores agressores e defensivos">
+  <figcaption><b>A balança</b> — úlcera é aritmética: H. pylori, AINEs, ácido e tabaco de um lado; muco, bicarbonato, fluxo e prostaglandinas do outro.</figcaption></figure>
+  <figure class="fig"><img src="img/ulcera-histologia.jpg" alt="Histologia da úlcera péptica">
+  <figcaption><b>Úlcera péptica na lâmina</b> — margem, exsudato fibrinoso e fundo com tecido de reparação ordenado (o contrário da neoplasia, que destrói a estratificação).</figcaption></figure>
+  <figure class="fig"><img src="img/polipo-piloro.jpg" alt="Pólipo hiperplásico no piloro">
+  <figcaption><b>Pólipo hiperplásico extruindo do piloro</b> — a hiperplasia foveolar da inflamação crônica virando massa.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · GIST: o tumor das células de Cajal</h2>
+  <ul>
+    <li><b>Tumor mesenquimal mais comum do TGI</b> (ainda que raro: 0,1–3% das neoplasias GI), originado das <b>células intersticiais de CAJAL</b> — o "marca-passo" que gera as ondas lentas e coordena o peristaltismo. <b>Estômago = 60–70%</b> dos casos; pico aos 50–70 anos. Cresce <b>intramural</b> (na muscular própria), como massa <b>subepitelial com mucosa íntegra</b> por cima.</li>
+    <li><b>Drivers mutuamente exclusivos:</b> <b>KIT mutado (~75–80%, éxon 11)</b> — o receptor tirosina-quinase "destrava", dimeriza e se autofosforila SEM ligante → vias RAS/MAPK (proliferação) e PI3K/AKT (sobrevivência) permanentemente ligadas — ou <b>PDGFRA (~5–10%, éxon 18)</b>. Wild-type (~10–15%): deficiência de <b>SDH</b> → succinato acumula → estabiliza HIF-1α → pseudo-hipóxia.</li>
+    <li><b>IHQ:</b> <b>CD117 (KIT) ~95%</b> + <b>DOG1</b> (cobre os CD117-negativos) + CD34 (~70%, menos específico). Padrões: <b>fusocelular 70%</b> · epitelioide 20% · misto 10%. Diferenciais (leiomioma, schwannoma, leiomiossarcoma) caem pela IHQ.</li>
+    <li><b>Atenção:</b> CD117 positivo ≠ mutação no KIT — a IHQ mostra a <b>proteína</b>; o <b>genótipo</b> (gene/éxon) vem do sequenciamento, e é ele que orienta dose e resposta ao <b>IMATINIBE</b> (inibidor de tirosina-quinase que bloqueia o sítio do ATP; éxon 11 responde bem, éxon 9/D842V respondem mal).</li>
+    <li><b>Prognóstico</b> = <b>tamanho + índice mitótico (mitoses/5 mm²) + localização</b> (estômago melhor que delgado) ± ruptura. Risco NIH: baixo = cirurgia + seguimento · alto = cirurgia + <b>imatinibe adjuvante 400 mg/dia por 3 anos</b>.</li>
+    <li>Investigação: EDA (abaulamento subepitelial) → <b>ecoendoscopia</b> (lesão hipoecoica da muscular própria) → <b>EUS-FNB</b>: um fragmento dá histologia + IHQ + molecular.</li>
+  </ul>
+  <figure class="fig"><img src="img/cajal.jpg" alt="Células intersticiais de Cajal">
+  <figcaption><b>Células de Cajal</b> — o marca-passo entre o plexo mioentérico e o músculo liso; é delas que o GIST nasce.</figcaption></figure>
+  <figure class="fig"><img src="img/kit-imatinibe.jpg" alt="Via KIT/PDGFRA e imatinibe">
+  <figcaption><b>KIT/PDGFRA → ativação constitutiva</b> — RAS/MAPK e PI3K/AKT ligadas sem ligante; o imatinibe fecha o bolso do ATP e desliga a cascata.</figcaption></figure>
+  <figure class="fig"><img src="img/gist-fusocelular.jpg" alt="GIST padrão fusocelular">
+  <figcaption><b>GIST fusocelular</b> (70%) — células alongadas em feixes. A morfologia orienta, mas quem confirma é a IHQ.</figcaption></figure>
+  <figure class="fig"><img src="img/cd117.jpg" alt="Imuno-histoquímica CD117">
+  <figcaption><b>CD117 (KIT)</b> — positividade forte e difusa: o marcador clássico do GIST.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Adenocarcinoma gástrico: de Correa a Borrmann</h2>
+  <ul>
+    <li><b>Neoplasia maligna EPITELIAL</b> (glandular) — principal câncer do estômago, <b>5º câncer</b> em incidência e mortalidade no mundo; Brasil ~22,5 mil casos/ano, mais em homens. Etiologia multifatorial: <b>H. pylori</b> (principal), dieta salgada/defumada, tabagismo, gastrite atrófica/metaplasia/anemia perniciosa, e <b>CDH1</b> no hereditário difuso.</li>
+  </ul>
+  <div class="diagrama"><p class="t">Cascata de Correa (cada etapa = janela de intervenção)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Mucosa normal → gastrite crônica</b> — <span class="d">infiltrado linfoplasmocitário pelo H. pylori (cepas <b>CagA/VacA+</b> aceleram tudo).</span></div></li>
+    <li><span class="n">2</span><div><b>Gastrite atrófica</b> — <span class="d">perda progressiva das glândulas especializadas.</span></div></li>
+    <li><span class="n">3</span><div><b>Metaplasia intestinal</b> — <span class="d">caliciformes no estômago.</span></div></li>
+    <li><span class="n">4</span><div><b>Displasia</b> — <span class="d">atipia arquitetural + citológica.</span></div></li>
+    <li><span class="n">5</span><div><b>Adenocarcinoma</b> — <span class="d">lesão invasiva estabelecida. Por isso erradicar H. pylori cedo importa.</span></div></li>
+  </ol></div>
+  <ul>
+    <li><b>Lauren:</b> tipo <b>INTESTINAL</b> — glândulas bem formadas, vem da cascata de Correa/metaplasia, idosos/homens, melhor prognóstico · tipo <b>DIFUSO</b> — células pouco coesas por <b>perda de E-caderina (CDH1)</b>, <b>células em ANEL DE SINETE</b> (mucina empurrando o núcleo), pacientes mais jovens, <b>linite plástica</b> ("garrafa de couro" — desmoplasia difusa da parede), pior prognóstico.</li>
+    <li><b>Borrmann (câncer avançado):</b> I polipoide · II <b>ulcerado de bordas elevadas e nítidas</b> · III ulcerado-<b>infiltrativo</b> (o mais comum no diagnóstico) · IV <b>infiltrativo difuso/linite</b>. I–III ≈ intestinal; IV ≈ difuso. Lesões precoces usam a classificação de <b>Paris</b> (0-I/II/III).</li>
+    <li><b>TNM essencial:</b> T1 mucosa/submucosa (= câncer gástrico PRECOCE) → T2 muscular própria → T3 subserosa → T4a serosa/T4b órgãos vizinhos; N pelo nº de linfonodos (N1 1–2 → N3b ≥16); M1 = estágio IV. Sobrevida em 5 anos: precoce &gt;90% · estágio III 20–35% · IV &lt;10% — <b>o estágio muda tudo, e &gt;50% chegam avançados</b>.</li>
+    <li><b>Sinais de doença avançada (os epônimos):</b> linfonodo de <b>Virchow</b> (supraclavicular E), nódulo da <b>Irmã Maria José</b> (umbigo), prateleira de <b>Blumer</b> (toque retal), tumor de <b>Krukenberg</b> (ovários bilaterais — típico do difuso/anel de sinete).</li>
+    <li><b>Biomarcadores:</b> <b>HER2</b> superexpresso em 15–20% (mais no intestinal) → <b>TRASTUZUMABE</b> + quimio; Ki-67 (proliferação), E-caderina (difuso); séricos CEA/CA19-9/CA72-4 acompanham, não diagnosticam. Diagnóstico/estadiamento: EDA + biópsia → ecoendoscopia (T/N) → TC (M) → laparoscopia se dúvida peritoneal.</li>
+  </ul>
+  <figure class="fig"><img src="img/adeno-vs-normal.jpg" alt="Fronteira entre adenocarcinoma e mucosa normal">
+  <figcaption><b>A fronteira</b> — adenocarcinoma à esquerda, mucosa gástrica normal à direita: a arquitetura glandular ordenada se desfaz na neoplasia.</figcaption></figure>
+  <figure class="fig"><img src="img/adeno-intestinal.jpg" alt="Adenocarcinoma tipo intestinal">
+  <figcaption><b>Tipo intestinal de Lauren</b> — glândulas neoplásicas bem formadas, com atipia nuclear e mitoses.</figcaption></figure>
+  <figure class="fig"><img src="img/signet-ring.jpg" alt="Célula em anel de sinete">
+  <figcaption><b>Célula em anel de sinete</b> — a mucina intracitoplasmática comprime o núcleo contra a periferia: a assinatura do tipo difuso.</figcaption></figure>
+  <figure class="fig"><img src="img/difuso-infiltrando.jpg" alt="Tipo difuso infiltrando a parede gástrica">
+  <figcaption><b>Tipo difuso</b> — células neoplásicas soltas infiltrando a parede entre as fibras musculares, sem formar glândulas.</figcaption></figure>
+  <figure class="fig"><img src="img/borrmann2.jpg" alt="Borrmann II na endoscopia">
+  <figcaption><b>Borrmann II</b> — lesão ulcerada bem delimitada de bordas elevadas. Compare com a úlcera péptica benigna do tópico 9.</figcaption></figure>
+  <figure class="fig"><img src="img/her2.jpg" alt="Célula HER2 positiva">
+  <figcaption><b>HER2</b> — a superexpressão do receptor define quem recebe trastuzumabe: biomarcador preditivo, não só prognóstico.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 O caso do grupo: M.J.S., 67 anos</p>
+  <p>Dor epigástrica há 4 meses + anorexia, saciedade precoce, <b>perda de 10 kg</b> e <b>melena</b>. EDA: lesão ulcerada e infiltrativa no antro, bordas irregulares — <b>Borrmann III</b>. Biópsia: <b>adenocarcinoma tipo intestinal moderadamente diferenciado</b> (a ponta final da cascata de Correa). Estadiamento por TC: <b>T3N1M0</b> → gastrectomia subtotal + linfadenectomia + quimioterapia perioperatória, com painel <b>HER2</b>. E o contraponto didático do grupo: se a biópsia mostrasse GIST, tudo mudaria — CD117/DOG1, sequenciamento KIT/PDGFRA e imatinibe.</p></div>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido do simpósio</h3>
+  <ul>
+    <li><b>Regra de ouro das hepatites virais:</b> a lesão é IMUNOMEDIADA (T CD8+), não citopática. Assinaturas: HAV = plasmócitos + colestase canalicular, sem cronificar · HBV = vidro fosco (HBsAg) + núcleo areado (HBcAg), DNA integra → CHC sem cirrose, cccDNA = reservatório · HCV = agregados linfoides + esteatose + interface, NS5B → quasispecies → 70% cronificam.</li>
+    <li><b>Sorologia HBV:</b> HBsAg &gt;6m = crônica · anti-HBs isolado = vacina · anti-HBc IgM = aguda · HBeAg = replicação (pré-core: replica sem HBeAg) · HBV-DNA quantifica. Vertical cronifica 70–90% × adulto 5–20%.</li>
+    <li><b>Cirrose:</b> fibrose difusa + nódulos regenerativos + desorganização + proliferação ductal (≠ hepatite crônica) · micro=álcool, macro=viral · 3 eixos: insuficiência, hipertensão portal, complicações (CHC) · METAVIR F4 · MASH em ascensão.</li>
+    <li><b>Gastrite:</b> H. pylori = ANTRO + neutrófilos, urease, antrite→hipercloridria→úlcera duodenal; pangastrite→atrofia→metaplasia (Correa) · Autoimune = CORPO/FUNDO, anti-parietal/anti-FI, acloridria + hipergastrinemia → ECL → tumor neuroendócrino, B12/perniciosa. ¹³C-UBT = padrão-ouro não invasivo; histologia (Sydney) fecha.</li>
+    <li><b>Úlcera:</b> agressores × defensores (COX-1/prostaglandinas; AINEs) · benigna: escavada, bordas regulares, pregas convergentes · maligna: bordo evertido, fundo friável, pregas amputadas · BUN sobe no sangramento alto · pólipo hiperplásico regride ~70% com erradicação.</li>
+    <li><b>GIST:</b> mesenquimal (Cajal), subepitelial, KIT éxon 11/PDGFRA (exclusivos), CD117+DOG1, fusocelular 70%, prognóstico = tamanho+mitoses+local, imatinibe (genótipo manda) · <b>Adenocarcinoma:</b> epitelial, Correa, Lauren intestinal×difuso (CDH1/anel de sinete/linite), Borrmann I–IV, TNM (T1=precoce &gt;90% em 5 anos), epônimos (Virchow, Irmã Maria José, Blumer, Krukenberg), HER2→trastuzumabe.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova — Simpósio</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Hepatites A/B/C, Cirrose, Gastrites, Úlcera, GIST e Adenocarcinoma</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-hepatites">Hepatites A×B×C</a>
+    <a class="a1" href="#p-sorologia">Sorologia HBV</a>
+    <a class="a1" href="#p-cirrose">Cirrose</a>
+    <a class="a1" href="#p-gastrite">Gastrites</a>
+    <a class="a1" href="#p-ulcera">Úlcera/Pólipos</a>
+    <a class="a1" href="#p-neo">GIST × Adeno</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-hepatites">
+  <span class="aula-tag t1">Hepatites virais — o comparativo</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>HAV</th><th>HBV</th><th>HCV</th></tr></thead>
+    <tbody>
+      <tr><td>Genoma</td><td>RNA</td><td><b>DNA</b> parcialmente dupla-fita (transcriptase reversa!)</td><td>RNA fita simples + (Flaviviridae)</td></tr>
+      <tr><td>Cronifica?</td><td><b>NUNCA</b></td><td>vertical <b>70–90%</b> · adulto 5–20%</td><td><b>~70%</b> (30% clareiam em 6m)</td></tr>
+      <tr><td>Assinatura na lâmina</td><td><b>plasmócitos</b> portais + <b>colestase canalicular</b> proeminente</td><td><b>vidro fosco</b> (HBsAg) + núcleo areado (HBcAg)</td><td><b>agregados linfoides + esteatose + interface</b></td></tr>
+      <tr><td>Carcinogênese</td><td>—</td><td>integração do DNA → <b>CHC SEM cirrose</b></td><td>via cirrose (15–30% em 20 anos)</td></tr>
+      <tr><td>Detalhe-chave</td><td>lesão 100% imunomediada; anti-HAV IgG imuniza</td><td><b>cccDNA</b> nuclear = reservatório/reativação</td><td>NS5B sem revisão → <b>quasispecies</b> → sem vacina</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Comum às três: <b>lesão IMUNOMEDIADA (T CD8+)</b>, balonização (reversível) + <b class="k">corpúsculo de Councilman</b> (apoptose) na aguda.</li>
+    <li>Gravidade da aguda = extensão da necrose: focal → <b class="k">em ponte</b> → panacinar → <b>maciça</b> (colapso de reticulina + proliferação ductular = fulminante, &lt;1% no HBV).</li>
+  </ul>
+</section>
+
+<section id="p-sorologia">
+  <span class="aula-tag t1">Sorologia HBV (decoreba obrigatória)</span>
+  <ul>
+    <li><b class="k">HBsAg</b> = infecção presente · <b>&gt;6 meses = crônica</b> · 1º marcador (7–10d antes dos sintomas).</li>
+    <li><b class="k">Anti-HBs</b> = imunidade · <b>isolado (sem anti-HBc) = VACINA</b>.</li>
+    <li><b class="k">Anti-HBc IgM</b> = aguda/reativação · <b>IgG</b> = contato prévio, persiste sempre (isolado NÃO protege).</li>
+    <li><b class="k">HBeAg</b> = replicação intensa/infectividade (histologia: núcleo areado) · <b>anti-HBe</b> = soroconversão · sem HBeAg pode replicar = <b>mutação pré-core</b> → confere <b class="k">HBV-DNA</b>.</li>
+    <li>HBcAg <b>não circula</b> no soro — só no núcleo do hepatócito.</li>
+    <li>HCV: <b class="k">anti-HCV</b> = contato prévio · <b class="k">HCV-RNA</b> = infecção ATIVA (confirma e quantifica) → genotipagem depois.</li>
+  </ul>
+</section>
+
+<section id="p-cirrose">
+  <span class="aula-tag t1">Cirrose</span>
+  <ul>
+    <li>4 marcas morfológicas: <b class="k">fibrose difusa/septos + nódulos regenerativos + desorganização da arquitetura + PROLIFERAÇÃO DUCTAL</b> (esta diferencia de hepatite crônica).</li>
+    <li><b class="k">MICROnodular (&lt;3mm) = álcool</b> · <b class="k">MACROnodular (&gt;3mm) = viral</b> · mista. MASH = etiologia emergente nº 1.</li>
+    <li>3 eixos clínicos: <b>insuficiência</b> (albumina↓/icterícia/coagulopatia/amônia→encefalopatia; spiders, eritema palmar) · <b>hipertensão portal</b> (varizes→HDA, esplenomegalia→plaquetopenia, ascite, caput medusae) · <b>complicações</b> (CHC, hepatorrenal).</li>
+    <li><b class="k">METAVIR</b>: A0–A3 (atividade) ⊥ F0–F4 (<b>F4 = cirrose</b>). Elastografia estima fibrose sem biópsia; biópsia só se dúvida (risco de sangrar no cirrótico).</li>
+    <li>AST&gt;ALT + plaquetopenia + albumina↓ + INR↑ = perfil do cirrótico descompensado.</li>
+  </ul>
+</section>
+
+<section id="p-gastrite">
+  <span class="aula-tag t1">Gastrite crônica: H. pylori × autoimune</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>H. pylori (~90%)</th><th>Autoimune</th></tr></thead>
+    <tbody>
+      <tr><td>Topografia</td><td><b>ANTRO</b> (depois pangastrite)</td><td><b>CORPO/FUNDO, antro POUPADO</b></td></tr>
+      <tr><td>Infiltrado</td><td>mononuclear <b>+ NEUTRÓFILOS</b> ("ativa")</td><td>mononuclear, <b>sem</b> componente neutrofílico</td></tr>
+      <tr><td>Ácido</td><td>fase antral: <b>HIPERcloridria</b> → úlcera duodenal</td><td><b>acloridria</b> + <b>HIPERgastrinemia</b></td></tr>
+      <tr><td>Marcadores</td><td>urease + · ¹³C-UBT · histologia</td><td><b>anti-célula parietal + anti-fator intrínseco</b></td></tr>
+      <tr><td>Consequências</td><td>atrofia → <b>metaplasia intestinal</b> → Correa</td><td><b>B12↓/anemia PERNICIOSA</b> + ECL → <b>tumor neuroendócrino</b></td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>H. pylori: superfície da mucosa, <b>não invade</b>; urease (ureia→amônia); cepas <b class="k">CagA/VacA+</b> = mais dano/câncer; fecal-oral; 60–70% dos brasileiros.</li>
+    <li>Sequência autoimune: <b class="k">↓parietais → ↓HCl → ↑gastrina → ↑ECL → tumor neuroendócrino</b>. E B12↓ → glossite, parestesias, degeneração combinada.</li>
+    <li>Diagnóstico HP: <b class="k">¹³C-UBT = padrão-ouro NÃO invasivo</b> (e controle de cura) · histologia = padrão-ouro (Sydney: 2 antro + 2 corpo + 1 incisura) · tratamento: tríplice (IBP+amoxi+claritro) ou quádrupla c/ bismuto.</li>
+  </ul>
+</section>
+
+<section id="p-ulcera">
+  <span class="aula-tag t1">Úlcera péptica + pólipos</span>
+  <ul>
+    <li>Balança: defesas (muco, bicarbonato, fluxo, <b class="k">prostaglandinas/COX-1</b>) × agressores (ácido, H. pylori, <b class="k">AINEs</b>, tabaco, estresse/isquemia).</li>
+    <li><b class="k">Benigna</b>: escavada, bordas regulares, fundo de fibrina, pregas convergentes ≠ <b class="k">maligna</b>: bordo evertido/nodular, fundo friável, pregas amputadas.</li>
+    <li>Sakita-Miwa: A (ativa) → H (cicatrização) → S (cicatriz). Sangramento alto: <b>↑BUN/ureia</b> (≥21 = gravidade) + Hb↓.</li>
+    <li>Pólipo hiperplásico gástrico: hiperplasia foveolar; serrilhado, atipia leve basal; <b class="k">erradicação do HP regride ~70%</b>.</li>
+  </ul>
+</section>
+
+<section id="p-neo">
+  <span class="aula-tag t1">GIST × Adenocarcinoma</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>GIST</th><th>Adenocarcinoma</th></tr></thead>
+    <tbody>
+      <tr><td>Origem</td><td><b>mesenquimal — células de CAJAL</b> (muscular própria)</td><td><b>epitelial — glândulas da mucosa</b></td></tr>
+      <tr><td>Driver</td><td><b>KIT éxon 11</b> (75–80%) ou PDGFRA (exclusivos); wild-type = SDH</td><td>H. pylori/Correa; <b>CDH1</b> no difuso hereditário</td></tr>
+      <tr><td>Marcadores</td><td><b>CD117 + DOG1</b> (+CD34)</td><td><b>HER2</b> (15–20%), Ki-67, E-caderina</td></tr>
+      <tr><td>Macro</td><td>subepitelial, mucosa íntegra</td><td>Borrmann I–IV (III = mais comum; IV = linite)</td></tr>
+      <tr><td>Terapia-alvo</td><td><b>IMATINIBE</b> (genótipo manda a dose)</td><td><b>TRASTUZUMABE</b> se HER2+</td></tr>
+      <tr><td>Disseminação</td><td>hematogênica (fígado, peritônio)</td><td>linfática + hematogênica + peritoneal</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>GIST prognóstico: <b class="k">tamanho + mitoses/5mm² + localização</b> (estômago melhor) ± ruptura → risco NIH → alto risco = imatinibe adjuvante 3 anos. CD117+ ≠ KIT mutado (IHQ=proteína; sequenciamento=genótipo).</li>
+    <li><b class="k">Cascata de Correa</b>: normal → gastrite crônica → atrofia → metaplasia intestinal → displasia → adenocarcinoma (CagA/VacA aceleram).</li>
+    <li><b class="k">Lauren</b>: intestinal (glândulas, Correa, idosos, melhor) × difuso (<b>anel de sinete</b>, perda de E-caderina, jovens, <b>linite plástica</b>, Krukenberg).</li>
+    <li>TNM: <b>T1 (mucosa/submucosa) = precoce → &gt;90% em 5 anos</b> · III 20–35% · IV &lt;10%. Epônimos avançados: <b class="k">Virchow</b> (supraclavicular E) · <b class="k">Irmã Maria José</b> (umbigo) · <b class="k">Blumer</b> (toque retal) · <b class="k">Krukenberg</b> (ovários).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <ul>
+    <li><b class="k">Anti-HBs isolado</b> = vacinado ≠ <b>anti-HBs + anti-HBc IgG</b> = infecção resolvida.</li>
+    <li><b class="k">Vidro fosco</b> (HBsAg citoplasmático, HBV) ≠ <b>esteatose</b> (vacúolos de gordura, HCV/metabólica).</li>
+    <li><b class="k">Balonização</b> = lesão reversível ≠ <b>Councilman</b> = apoptose consumada (convivem na mesma lâmina).</li>
+    <li><b class="k">Hepatite crônica</b> ≠ <b>cirrose</b>: a cirrose tem nódulos + proliferação ductal.</li>
+    <li><b class="k">Micronodular</b> = álcool ≠ <b>macronodular</b> = viral.</li>
+    <li><b class="k">Gastrite HP</b> = antro + neutrófilos + hipercloridria ≠ <b>autoimune</b> = corpo + acloridria + hipergastrinemia + B12↓.</li>
+    <li><b class="k">Úlcera benigna</b> = bordas regulares, pregas convergem ≠ <b>Borrmann II/III</b> = bordo evertido, pregas amputadas.</li>
+    <li><b class="k">GIST</b> = mesenquimal/subepitelial/CD117 ≠ <b>adenocarcinoma</b> = epitelial/mucoso/HER2.</li>
+    <li><b class="k">CD117 positivo</b> (proteína na IHQ) ≠ <b>KIT mutado</b> (genótipo no sequenciamento — quem guia o imatinibe).</li>
+    <li><b class="k">Anti-HCV+</b> = contato ≠ <b>HCV-RNA+</b> = doença ativa.</li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Simpósio</h2>
+    <p>Anato Pato II · Simpósio · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Simpósio — Fígado e Estômago</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:"facil",enun:`<span class="vinheta">Estudante pergunta no simpósio: "se o vírus da hepatite A quase não destrói células diretamente, por que o paciente tem icterícia e transaminases nas alturas?"</span><div class="pergunta">Qual a explicação correta?</div>`,alts:["O HAV produz uma toxina hepatotóxica que dissolve os canalículos biliares","A lesão é imunomediada: linfócitos T CD8+ destroem os hepatócitos infectados","O vírus obstrui mecanicamente os sinusoides, causando isquemia lobular","A icterícia vem de hemólise maciça, sem participação do fígado","A replicação viral consome a bilirrubina-conjugase dos hepatócitos"],correta:1,just:["Errada — o HAV não produz toxina; seu efeito citopático direto é pequeno.","Correta — o HAV tem POUCO efeito citopático direto: a lesão vem da RESPOSTA IMUNE do hospedeiro. NK, Kupffer e interferons na fase inata; linfócitos T CD8+ reconhecem hepatócitos infectados, liberam IFN-γ/TNF-α e induzem apoptose e necrose — hepatite aguda difusa com ↑ transaminases e icterícia. E como não há reservatório persistente, NÃO cronifica; o anti-HAV IgG imuniza.","Errada — não há obstrução sinusoidal na hepatite A; o mecanismo é celular-imune.","Errada — a icterícia é hepatocelular/colestática (a colestase canalicular é até proeminente no HAV), não hemolítica.","Errada — não existe esse mecanismo; a hiperbilirrubinemia reflete lesão e colestase, não consumo enzimático pelo vírus."],ref:"Simpósio — Hepatite A (patogenia)"},
+
+{n:2,aula:1,nivel:"medio",enun:`<span class="vinheta">Biópsia hepática de hepatite viral aguda: infiltrado mononuclear portal RICO EM PLASMÓCITOS, colestase canalicular proeminente, balonização e corpúsculos de Councilman. SEM fibrose, SEM vidro fosco, SEM agregados linfoides ou esteatose.</span><div class="pergunta">Qual etiologia esse conjunto sugere?</div>`,alts:["Hepatite C — os plasmócitos portais seriam o equivalente dos agregados linfoides","Hepatite B crônica em fase replicativa de alta carga viral","Hepatite alcoólica aguda sobreposta a esteato-hepatite","Hepatite A — plasmócitos e colestase são as pistas; os ausentes excluem B e C","Cirrose biliar primária em estágio pré-fibrótico inicial"],correta:3,just:["Errada — a marca do HCV são os AGREGADOS LINFOIDES portais + esteatose, explicitamente ausentes aqui.","Errada — HBV crônica mostraria hepatócitos em VIDRO FOSCO (HBsAg) e cronicidade — ambos ausentes.","Errada — a alcoólica cursa com esteatose e hialina de Mallory, não com o quadro descrito.","Correta — o infiltrado portal/periportal RICO EM PLASMÓCITOS e a COLESTASE CANALICULAR mais proeminente que nas outras hepatites virais apontam HAV; e a checagem dos ausentes fecha: sem fibrose (não cronifica), sem vidro fosco (não é B), sem agregados linfoides/esteatose (não é C).","Errada — CBP é doença crônica de ductos biliares com outro contexto clínico-laboratorial."],ref:"Simpósio — Hepatite A (histologia)"},
+
+{n:3,aula:1,nivel:"medio",enun:`<span class="vinheta">No simpósio, o grupo destacou: "no HBV, o carcinoma hepatocelular pode aparecer MESMO SEM cirrose".</span><div class="pergunta">Qual propriedade do vírus explica isso?</div>`,alts:["O DNA viral integra-se ao genoma do hepatócito — carcinogênese direta","A proteína NS5B introduz mutações no gene p53 durante a replicação","O cccDNA circula no sangue e transfecta células de outros órgãos","O HBsAg é diretamente mitogênico ao se acumular no citoplasma","A alta carga viral esgota o sistema imune, liberando clones malignos"],correta:0,just:["Correta — o genoma de DNA do HBV INTEGRA-SE ao genoma do hepatócito, e a integração permite carcinogênese DIRETA, independente de cirrose. É uma das três consequências-chave da biologia do vírus (com a transcriptase reversa que erra muito e o efeito citopático limitado).","Errada — NS5B é a RNA-polimerase do HCV, não do HBV; e ela erra no genoma VIRAL (quasispecies), não no p53 do hospedeiro.","Errada — o cccDNA é a forma NUCLEAR estável do DNA viral DENTRO do hepatócito: reservatório de reativação, não partícula circulante.","Errada — o vidro fosco marca acúmulo de HBsAg, mas o mecanismo carcinogênico destacado é a integração do DNA.","Errada — a carcinogênese do HBV não é por 'exaustão imune', e sim por integração + ciclos de lesão/regeneração."],ref:"Simpósio — Hepatite B (vírus)"},
+
+{n:4,aula:1,nivel:"medio",enun:`<span class="vinheta">Paciente com hepatite B crônica em tratamento, carga viral suprimida há anos, recebe quimioterapia imunossupressora e REATIVA a infecção.</span><div class="pergunta">Que estrutura viral explica essa reativação?</div>`,alts:["Os vírions defectivos acumulados no espaço de Disse","A polimerase viral que permanece ativa nos macrófagos de Kupffer","O cccDNA — o DNA viral estável que persiste no núcleo do hepatócito","O HBeAg sequestrado nos complexos imunes circulantes","Os fragmentos de HBsAg retidos no retículo endoplasmático"],correta:2,just:["Errada — não há reservatório em vírions defectivos extracelulares; o reservatório é intranuclear.","Errada — o HBV replica em hepatócitos; Kupffer são macrófagos que participam da resposta, não do reservatório.","Correta — o cccDNA (DNA circular covalentemente fechado) fica ESTÁVEL NO NÚCLEO do hepatócito e é o RESERVATÓRIO da infecção: explica a persistência e a possibilidade de REATIVAÇÃO mesmo com carga viral suprimida — exatamente o cenário da imunossupressão.","Errada — HBeAg é marcador secretado de replicação, não reservatório.","Errada — o HBsAg retido dá o 'vidro fosco' histológico, mas não é a fonte de reativação."],ref:"Simpósio — Hepatite B (cccDNA)"},
+
+{n:5,aula:1,nivel:"facil",enun:`<span class="vinheta">Gestante HBsAg positivo pergunta por que os médicos insistem tanto na profilaxia do recém-nascido, "se em adulto quase todo mundo se cura sozinho".</span><div class="pergunta">Qual a resposta correta com os números do simpósio?</div>`,alts:["A cronificação é igual nas duas idades; a profilaxia visa só a hepatite fulminante","No adulto a infecção cronifica em 70–90%; no recém-nascido, em 5–20%","A transmissão vertical é impossível sem amamentação prolongada","O recém-nascido sempre desenvolve hepatite fulminante ao nascer","A infecção vertical cronifica em 70–90%; a do adulto, em apenas 5–20%"],correta:4,just:["Errada — a diferença de cronificação por idade é justamente o ponto central da profilaxia neonatal.","Errada — os números estão invertidos: quem cronifica muito é o RECÉM-NASCIDO.","Errada — a transmissão vertical é perinatal (sangue/fluidos no parto), o principal cenário-alvo da profilaxia.","Errada — o problema do RN não é fulminância: é TOLERÂNCIA imune → infecção crônica silenciosa.","Correta — a idade da infecção determina o desfecho: transmissão VERTICAL cronifica em 70–90% (imunidade imatura tolera o vírus), enquanto o ADULTO cronifica em só 5–20%. Por isso vacina ao nascer + profilaxia vertical são a grande arma contra o HBV e o CHC de décadas depois."],ref:"Simpósio — Hepatite B (transmissão)"},
+
+{n:6,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente assintomático, achado de exame: HBsAg positivo há 8 meses em duas dosagens.</span><div class="pergunta">O que essa persistência define?</div>`,alts:["Imunidade vacinal consolidada contra o HBV","Infecção aguda em resolução, sem significado clínico","Falso-positivo — HBsAg não persiste além de 6 semanas","Hepatite B CRÔNICA — HBsAg positivo por mais de 6 meses","Mutação pré-core com replicação oculta"],correta:3,just:["Errada — imunidade vacinal é anti-HBs POSITIVO com HBsAg negativo.","Errada — na resolução o HBsAg DESAPARECE; a persistência indica o contrário.","Errada — o HBsAg persiste indefinidamente na infecção crônica; não é artefato.","Correta — a regra da tabela sorológica: HBsAg indica infecção presente, e sua PERSISTÊNCIA POR MAIS DE 6 MESES define CRONIFICAÇÃO (o desaparecimento sugere resolução). É o critério mais básico e mais cobrado.","Errada — a mutação pré-core diz respeito à replicação SEM HBeAg; não é definida pelo HBsAg persistente."],ref:"Simpósio — Sorologia HBV"},
+
+{n:7,aula:1,nivel:"medio",enun:`<span class="vinheta">Homem, 27 anos, icterícia e colúria há 2 dias, relação sexual desprotegida há 2 meses. Sorologia: HBsAg+, anti-HBs−, anti-HBc total+, anti-HBc IgM+, HBeAg+, anti-HBe−. ALT 1.480 U/L. (Caso do grupo de Hepatites A e B.)</span><div class="pergunta">Qual a interpretação correta?</div>`,alts:["Hepatite B crônica reagudizada, com baixa infectividade","Hepatite B AGUDA com intensa replicação viral e alta infectividade","Infecção resolvida com cicatriz sorológica e hepatite por outra causa","Coinfecção B + D, dada a magnitude da elevação de transaminases","Vacinação recente com resposta vacinal exuberante"],correta:1,just:["Errada — o anti-HBc IgM positivo marca infecção AGUDA/recente, não cronicidade antiga; e HBeAg+ indica ALTA infectividade.","Correta — a tríade fecha: HBsAg+ (infecção presente) + anti-HBc IgM+ (o 'carimbo' da fase AGUDA) + HBeAg+ (replicação intensa, alta infectividade), com ALT muito elevada (lesão hepatocelular imunomediada) e história de exposição sexual há 2 meses. Conduta: suporte (hidratação, repouso) — a maioria dos adultos resolve (só 5–20% cronificam).","Errada — infecção resolvida teria HBsAg NEGATIVO com anti-HBs positivo.","Errada — nada na sorologia apresentada indica delta; a magnitude de ALT é compatível com B aguda.","Errada — vacina gera anti-HBs ISOLADO; jamais HBsAg ou anti-HBc positivos."],ref:"Simpósio — Caso de hepatite B aguda"},
+
+{n:8,aula:1,nivel:"medio",enun:`<span class="vinheta">Check-up: anti-HBs positivo, TODOS os demais marcadores negativos (HBsAg−, anti-HBc−).</span><div class="pergunta">Qual a leitura correta?</div>`,alts:["Imunidade VACINAL — anti-HBs isolado, sem anti-HBc","Infecção antiga resolvida com perda seletiva do anti-HBc","Infecção oculta pelo HBV com replicação em nível baixo","Janela imunológica de infecção aguda em soroconversão","Resultado incompatível — anti-HBs nunca aparece sem anti-HBc"],correta:0,just:["Correta — anti-HBs = imunidade; quando vem ISOLADO (sem anti-HBc), a pessoa nunca teve contato com o vírus completo: é a assinatura da VACINA (que só contém HBsAg). Infecção resolvida teria anti-HBs + anti-HBc IgG.","Errada — o anti-HBc IgG persiste indefinidamente após infecção; sua ausência fala contra infecção prévia.","Errada — infecção oculta exigiria HBV-DNA detectável, tipicamente com anti-HBc positivo.","Errada — na janela, o HBsAg cai antes do anti-HBs subir, mas o anti-HBc (total/IgM) está POSITIVO.","Errada — é perfeitamente compatível: é o perfil clássico do vacinado."],ref:"Simpósio — Sorologia HBV (vacina)"},
+
+{n:9,aula:1,nivel:"medio",enun:`<span class="vinheta">Na lâmina de hepatite B crônica, o patologista aponta hepatócitos de citoplasma amplo, homogêneo e granular claro, e pergunta o nome e o significado do achado.</span><div class="pergunta">Qual a resposta correta?</div>`,alts:["Corpúsculo de Councilman — apoptose consumada do hepatócito","Esteatose microvesicular — acúmulo lipídico induzido pelo vírus","Hepatócito em VIDRO FOSCO — acúmulo citoplasmático de HBsAg","Degeneração balonizante — influxo de água por lesão de membrana","Hialina de Mallory — agregados de citoqueratina do etilismo"],correta:2,just:["Errada — Councilman é célula acidófila RETRAÍDA (apoptótica), não citoplasma amplo granular.","Errada — esteatose dá VACÚOLOS de gordura; e é assinatura do HCV/metabólica, não do HBV.","Correta — é o hepatócito em VIDRO FOSCO: citoplasma amplo, homogêneo, granular claro, correspondendo ao HBsAg CITOPLASMÁTICO — marcador citopático clássico do HBV crônico (o par dele é o núcleo areado, que corresponde ao HBcAg/replicação).","Errada — balonização é tumefação com citoplasma RAREFEITO/claro de lesão aguda reversível — outro aspecto.","Errada — hialina de Mallory é da hepatite alcoólica, eosinofílica e grumosa."],ref:"Simpósio — HBV crônica (vidro fosco)"},
+
+{n:10,aula:1,nivel:"medio",enun:`<span class="vinheta">"Por que 70% dos infectados pelo HCV cronificam — e por que até hoje não há vacina?" — pergunta feita no simpósio.</span><div class="pergunta">Qual mecanismo responde às duas perguntas de uma vez?</div>`,alts:["O envelope lipídico do HCV é invisível ao sistema imune inato","A integração do RNA viral ao genoma do hepatócito perpetua a infecção","O HCV infecta linfócitos T e destrói a resposta celular específica","A NS5B replica sem revisão, gerando quasispecies que driblam a imunidade","O cccDNA nuclear serve de molde permanente para novos vírions"],correta:3,just:["Errada — o envelope é reconhecido; o problema é a VARIABILIDADE dos epítopos, não invisibilidade.","Errada — RNA do HCV NÃO se integra ao genoma (isso é HBV, que é DNA).","Errada — o tropismo do HCV é pelo hepatócito; não destrói o compartimento T.","Correta — a RNA-polimerase NS5B tem BAIXA FIDELIDADE e não corrige erros → nuvem de variantes (QUASISPECIES) → a pressão imune seleciona as que escapam → PERSISTÊNCIA/cronicidade (~70%), resistência a antivirais e a dificuldade de desenvolver vacina. Sequência do slide: NS5B → erros → mutações → quasispecies → escape → persistência.","Errada — cccDNA é biologia do HBV; o HCV replica no citoplasma associado ao retículo."],ref:"Simpósio — Hepatite C (quasispecies)"},
+
+{n:11,aula:1,nivel:"dificil",enun:`<span class="vinheta">Biópsia hepática: agregados linfoides nos espaços-porta, esteatose hepatocitária e hepatite de interface.</span><div class="pergunta">Essa tríade sugere qual etiologia?</div>`,alts:["Hepatite autoimune em atividade moderada a intensa","Doença hepática alcoólica em fase de esteato-hepatite","Hepatite A grave com necrose em ponte estabelecida","Hemocromatose hereditária com sobrecarga de ferro","Hepatite C crônica — a tríade histológica clássica"],correta:4,just:["Errada — a autoimune tem interface exuberante e plasmócitos, mas não a combinação com agregados linfoides + esteatose.","Errada — a alcoólica tem esteatose, mas com hialina de Mallory e fibrose perivenular/pericelular, sem os folículos linfoides portais.","Errada — HAV é aguda: plasmócitos + colestase, sem agregados linfoides nem esteatose (o grupo listou esses achados como AUSENTES no A).","Errada — hemocromatose mostra hemossiderina em hepatócitos, outro cenário.","Correta — AGREGADOS/FOLÍCULOS LINFOIDES portais + ESTEATOSE (o vírus altera o metabolismo lipídico) + HEPATITE DE INTERFACE (inflamação portal invadindo o parênquima periportal) formam a tríade histológica da hepatite C crônica."],ref:"Simpósio — Hepatite C (tríade histológica)"},
+
+{n:12,aula:1,nivel:"facil",enun:`<span class="vinheta">Doador de sangue com teste rápido anti-HCV reagente pergunta, assustado, se "está com hepatite".</span><div class="pergunta">Qual o próximo passo e por quê?</div>`,alts:["Iniciar antiviral imediatamente — anti-HCV reagente confirma doença ativa","Dosar o HCV-RNA: o anti-HCV indica contato prévio, não infecção ativa","Repetir o anti-HCV em 6 meses antes de qualquer outra conduta","Solicitar genotipagem direto, pois ela substitui a carga viral","Encaminhar para biópsia hepática confirmatória de rotina"],correta:1,just:["Errada — tratar exige confirmar infecção ATIVA; ~30% clareiam o vírus espontaneamente e ficam só com a cicatriz sorológica.","Correta — o anti-HCV (rápido ou laboratorial) indica CONTATO PRÉVIO com o vírus, sem diferenciar infecção curada de ativa. Quem confirma infecção ATIVA (e quantifica a carga) é o HCV-RNA por PCR; a genotipagem vem DEPOIS da confirmação. É a distinção central do diagnóstico do HCV.","Errada — repetir a sorologia não diferencia curado de ativo; o desempate é molecular.","Errada — a genotipagem só se faz após HCV-RNA confirmar infecção ativa.","Errada — biópsia não é rotina no HCV atual: elastografia e escores estimam fibrose; biópsia fica para dúvidas."],ref:"Simpósio — Diagnóstico do HCV"},
+
+{n:13,aula:1,nivel:"medio",enun:`<span class="vinheta">Laudo de biópsia hepática: "METAVIR A2F4".</span><div class="pergunta">Como traduzir esse resultado?</div>`,alts:["Atividade moderada + fibrose em estágio de CIRROSE","Ausência de atividade + fibrose portal leve sem septos","Atividade intensa + fibrose em ponte ainda sem cirrose","Esteatose grau 2 + 4 focos de necrose confluente","Atividade moderada + 4 nódulos regenerativos identificados"],correta:0,just:["Correta — o METAVIR avalia DOIS EIXOS INDEPENDENTES: A = atividade necroinflamatória (A0 ausente → A3 intensa) e F = fibrose (F0 → F4). A2 = atividade MODERADA; F4 = CIRROSE (fibrose máxima, com nódulos e proliferação ductal). Grau e estágio não se misturam.","Errada — isso seria A0F1.","Errada — isso seria A3F3 (fibrose em ponte é F3; cirrose é F4).","Errada — METAVIR não gradua esteatose nem conta focos de necrose.","Errada — o F não conta nódulos: estadia a EXTENSÃO da fibrose."],ref:"Simpósio — METAVIR"},
+
+{n:14,aula:1,nivel:"medio",enun:`<span class="vinheta">Na prova teórica: "cite as alterações morfológicas fundamentais da cirrose — e o achado que a diferencia da hepatite crônica".</span><div class="pergunta">Qual a resposta correta?</div>`,alts:["Esteatose difusa + colestase + infiltrado neutrofílico; diferencia-se pela icterícia","Necrose em ponte + balonização + plasmócitos; diferencia-se pela carga viral","Fibrose difusa + nódulos regenerativos + desorganização; a PROLIFERAÇÃO DUCTAL diferencia","Hepatite de interface + agregados linfoides + esteatose; diferencia-se pela topografia","Congestão centrolobular + atrofia + hemossiderose; diferencia-se pelo tricrômico"],correta:2,just:["Errada — esses são achados de outras doenças; icterícia é clínica, não critério morfológico.","Errada — esses são achados de hepatite AGUDA; carga viral não define cirrose.","Correta — a tríade morfológica fundamental: (1) FIBROSE DIFUSA com septos fibrosos, (2) NÓDULOS REGENERATIVOS de hepatócitos e (3) DESORGANIZAÇÃO da arquitetura hepática normal — e a PROLIFERAÇÃO DE DUCTOS BILIARES é o achado que diferencia cirrose de hepatite crônica (presente no F4).","Errada — essa é a tríade da hepatite C crônica, não da cirrose.","Errada — congestão centrolobular aponta causas vasculares/cardíacas; não define cirrose."],ref:"Simpósio — Cirrose (morfologia)"},
+
+{n:15,aula:1,nivel:"facil",enun:`<span class="vinheta">Duas peças no laboratório: fígado A com nódulos menores que 3 mm difusos; fígado B com nódulos grandes, maiores que 3 mm.</span><div class="pergunta">Qual a associação etiológica clássica?</div>`,alts:["A = hepatite viral crônica; B = alcoolismo crônico","A = MICRONODULAR (alcoolismo); B = MACRONODULAR (hepatites virais)","Ambas são formas evolutivas da mesma etiologia, sem valor diagnóstico","A = cirrose biliar; B = cirrose cardíaca congestiva","A = cirrose criptogênica; B = doença de Wilson"],correta:1,just:["Errada — está invertido.","Correta — a classificação morfológica: MICRONODULAR (nódulos <3 mm) associa-se ao ALCOOLISMO crônico; MACRONODULAR (>3 mm) associa-se às HEPATITES VIRAIS crônicas; a mista pode representar evolução. É a pergunta de peça mais clássica do tema.","Errada — o padrão nodular TEM valor de orientação etiológica (ainda que não absoluto).","Errada — biliar tem tom esverdeado colestático; cardíaca dá 'noz-moscada' congestiva — não é a dicotomia do tamanho nodular.","Errada — essas etiologias não definem a dicotomia micro×macro clássica."],ref:"Simpósio — Cirrose (classificação morfológica)"},
+
+{n:16,aula:1,nivel:"medio",enun:`<span class="vinheta">Cirrótico chega com hematêmese volumosa. A esposa conta que ele também "dorme o dia todo e fala coisas sem sentido" e que o abdome cresceu.</span><div class="pergunta">Qual eixo fisiopatológico explica a HEMATÊMESE?</div>`,alts:["Insuficiência hepática → queda da albumina → ruptura capilar difusa","Carcinoma hepatocelular sangrando para a via biliar","Coagulopatia isolada por deficiência de vitamina K","Síndrome hepatorrenal com uremia e gastrite urêmica","Hipertensão portal → colaterais → varizes gastroesofágicas rotas"],correta:4,just:["Errada — hipoalbuminemia explica edema/ascite, não hemorragia digestiva volumosa.","Errada — hemobilia por CHC é raridade; o cenário clássico do cirrótico é outro.","Errada — a coagulopatia agrava o sangramento, mas não cria a fonte: a fonte é a variz.","Errada — hepatorrenal causa insuficiência renal; não é a explicação da hematêmese.","Correta — o eixo 2 do cirrótico: cirrose → ↑ resistência intra-hepática → ↑ pressão portal → o sangue busca COLATERAIS PORTOSSISTÊMICAS → VARIZES GASTROESOFÁGICAS → ruptura → hematêmese/melena. Os outros achados são os outros eixos: encefalopatia (amônia, eixo 1) e ascite (portal + hipoalbuminemia)."],ref:"Simpósio — Cirrose (hipertensão portal)"},
+
+{n:17,aula:1,nivel:"medio",enun:`<span class="vinheta">O grupo apresentou a "sequência-chave" da gastrite por H. pylori de predomínio antral: a inflamação no antro derruba a somatostatina.</span><div class="pergunta">O que vem a seguir — e qual úlcera esse fenótipo favorece?</div>`,alts:["↑ gastrina → hipercloridria → risco de úlcera DUODENAL","↓ gastrina → acloridria → risco de úlcera gástrica do corpo","↑ pepsinogênio → metaplasia pilórica → úlcera esofágica","↓ fator intrínseco → anemia perniciosa → úlcera de estresse","↑ somatostatina rebote → hipocloridria → pólipo fúndico"],correta:0,just:["Correta — o fenótipo ANTRAL: inflamação no antro → ↓ somatostatina → ↑ GASTRINA → estímulo das células parietais (que estão no corpo, preservado) → HIPERCLORIDRIA → maior risco de ÚLCERA DUODENAL. Se a inflamação progredir para pangastrite/atrofia do corpo, o quadro INVERTE: destruição das oxínticas → hipocloridria + ↓ fator intrínseco.","Errada — a queda da gastrina só ocorre na atrofia AVANÇADA (perda das células G); o fenótipo antral inicial é hipergastrinêmico.","Errada — não é a sequência apresentada; pepsinogênio não é o eixo do fenótipo antral.","Errada — perda de fator intrínseco pertence à fase de atrofia do corpo (ou à gastrite autoimune), não à antrite inicial.","Errada — a somatostatina CAI (a inflamação destrói o freio), não sobe."],ref:"Simpósio — Fenótipos da gastrite por H. pylori"},
+
+{n:18,aula:1,nivel:"medio",enun:`<span class="vinheta">Mulher, 63 anos, dispepsia + astenia + glossite + parestesias nos pés. EDA: atrofia acentuada de CORPO e FUNDO com ANTRO PRESERVADO. VCM 112 fL, B12 = 120 pg/mL. (Caso do grupo.)</span><div class="pergunta">Qual o diagnóstico e o mecanismo da anemia?</div>`,alts:["Gastrite crônica por H. pylori; anemia por sangramento crônico oculto nas fezes","Doença celíaca; anemia por má absorção duodenal de ferro","Síndrome de Zollinger-Ellison; anemia por múltiplas úlceras","Gastrite AUTOIMUNE: sem parietais → sem fator intrínseco → sem B12","Linfoma MALT gástrico; anemia de doença crônica"],correta:3,just:["Errada — a topografia é o oposto da H. pylori clássica (que começa no ANTRO); e sangramento daria anemia microcítica/ferropriva, não macrocítica.","Errada — celíaca não explica a atrofia gástrica de corpo/fundo nem o VCM de 112.","Errada — Zollinger-Ellison dá hipercloridria e úlceras múltiplas — nada disso no quadro.","Correta — GASTRITE CRÔNICA AUTOIMUNE: autoanticorpos anti-célula PARIETAL e anti-FATOR INTRÍNSECO destroem a mucosa oxíntica (CORPO/FUNDO, poupando o antro). Sem parietais → sem fator intrínseco → SEM ABSORÇÃO DE B12 → anemia MACROCÍTICA/PERNICIOSA — que explica também a glossite e as parestesias (neuropatia da B12). O perfil se completa com acloridria + hipergastrinemia.","Errada — MALT associa-se ao H. pylori e não produz essa síndrome carencial topograficamente típica."],ref:"Simpósio — Caso de gastrite autoimune"},
+
+{n:19,aula:1,nivel:"dificil",enun:`<span class="vinheta">Na gastrite autoimune de longa data, a biópsia mostra hiperplasia linear e micronodular de células ECL — e o grupo alertou para onde isso pode caminhar.</span><div class="pergunta">Qual a sequência fisiopatológica completa?</div>`,alts:["↑ ácido → ↑ somatostatina → atrofia de células G → adenocarcinoma difuso","↓ B12 → hiperplasia medular compensatória → mastocitose gástrica","↓ parietais → ↓ HCl → ↑ gastrina → hiperplasia de ECL → tumor neuroendócrino","↑ fator intrínseco → hiperabsorção de B12 → hiperplasia foveolar","↓ pepsinogênio → alcalinização → colonização por H. pylori → MALT"],correta:2,just:["Errada — na autoimune o ácido CAI; e o tumor associado à via ECL é neuroendócrino, não adenocarcinoma difuso.","Errada — a B12 baixa causa anemia megaloblástica; não há 'mastocitose gástrica' nessa via.","Correta — a sequência do slide: destruição autoimune das PARIETAIS → ↓ HCl (acloridria) → perde-se o freio (ácido baixo → somatostatina baixa) → GASTRINA SOBE SEM FREIO (células G antrais seguem funcionantes) → efeito trófico crônico sobre as células ECL → HIPERPLASIA de ECL (linear → micronodular) → risco de TUMOR NEUROENDÓCRINO gástrico (confirmável por cromogranina A).","Errada — o fator intrínseco DESPENCA (é alvo de autoanticorpo); não há hiperabsorção.","Errada — a acloridria não 'chama' H. pylori; e MALT é via da própria infecção, outro caminho."],ref:"Simpósio — Autoimune: ECL → TNE"},
+
+{n:20,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente em uso crônico de ibuprofeno por conta própria desenvolve epigastralgia e úlcera gástrica.</span><div class="pergunta">Qual o mecanismo da lesão pelos AINEs?</div>`,alts:["Estímulo direto das células parietais, triplicando a secreção ácida","Inibição da COX-1 → ↓ prostaglandinas → ↓ muco, bicarbonato e fluxo","Quelação do bicarbonato luminal pelo fármaco ionizado","Indução de urease endógena com produção local de amônia","Vasodilatação esplâncnica com edema e ruptura da mucosa"],correta:1,just:["Errada — AINEs não estimulam a parietal; o dano é por retirada da PROTEÇÃO.","Correta — a mucosa converte ácido araquidônico em PROSTAGLANDINAS via COX-1, e elas sustentam as defesas (muco, bicarbonato, fluxo sanguíneo, renovação epitelial). AINEs não seletivos inibem a COX-1 → caem as prostaglandinas → a balança pende para os agressores → erosões e úlceras. Por isso a conduta inclui suspender o AINE e proteger com IBP.","Errada — não há quelação de bicarbonato; o bicarbonato cai porque a prostaglandina que o estimulava sumiu.","Errada — urease é arma do H. PYLORI (ureia → amônia), não dos AINEs.","Errada — o efeito vascular dos AINEs na mucosa é REDUÇÃO do fluxo, não vasodilatação."],ref:"Simpósio — Úlcera péptica (AINEs)"},
+
+{n:21,aula:1,nivel:"medio",enun:`<span class="vinheta">EDA mostra úlcera gástrica: bordo EVERTIDO e nodular, fundo friável que sangra ao toque do aparelho, pregas AMPUTADAS antes de alcançar a lesão.</span><div class="pergunta">Qual a leitura correta desses estigmas?</div>`,alts:["Sinais de úlcera NEOPLÁSICA — biópsias obrigatórias das bordas","Úlcera péptica benigna em fase ativa A1 de Sakita-Miwa","Úlcera de estresse por hipoperfusão, de resolução espontânea","Lesão cicatricial S2 com convergência de pregas fisiológica","Úlcera duodenal ectópica sem potencial maligno"],correta:0,just:["Correta — é o retrato da úlcera MALIGNA: bordo EVERTIDO/nodular/irregular, fundo friável, heterogêneo ou necrótico com sangramento fácil, e pregas AMPUTADAS ou fusionadas de forma desordenada. A benigna é o espelho: leito limpo com fibrina, margens planas e bem demarcadas, pregas convergindo SIMETRICAMENTE. Diante desses estigmas: biópsias múltiplas das bordas.","Errada — A1 descreve úlcera ativa, mas os estigmas descritos não são de benignidade.","Errada — úlcera de estresse é rasa e múltipla em paciente grave — outro contexto.","Errada — na cicatriz as pregas CONVERGEM simetricamente; aqui estão amputadas.","Errada — a localização é gástrica e os estigmas são de malignidade."],ref:"Simpósio — Úlcera benigna × neoplásica"},
+
+{n:22,aula:1,nivel:"medio",enun:`<span class="vinheta">Massa subepitelial gástrica com mucosa íntegra; ecoendoscopia: lesão hipoecoica da muscular própria. Histologia fusocelular; IHQ: CD117+ e DOG1+.</span><div class="pergunta">Qual o diagnóstico e a origem celular?</div>`,alts:["Leiomioma — origem no músculo liso da muscular própria","Schwannoma gástrico — origem nas bainhas nervosas do plexo","Linfoma MALT — origem no tecido linfoide da mucosa","GIST — tumor mesenquimal das células intersticiais de Cajal","Adenocarcinoma difuso — origem epitelial com crescimento intramural"],correta:3,just:["Errada — leiomioma é o diferencial clássico, mas é CD117/DOG1 NEGATIVO (positivo para desmina/actina).","Errada — schwannoma é S100 positivo, CD117 negativo.","Errada — linfoma é lesão linfoide (CD20 etc.), não fusocelular CD117+.","Correta — GIST: tumor MESENQUIMAL mais comum do TGI, originado das células intersticiais de CAJAL (o marca-passo do peristaltismo, na muscular própria) — daí o crescimento intramural/subepitelial com mucosa íntegra. IHQ: CD117 (KIT) ~95% + DOG1 (cobre os negativos). Driver: KIT éxon 11 (~75–80%) ou PDGFRA, mutuamente exclusivos → imatinibe.","Errada — adenocarcinoma é EPITELIAL, nasce na mucosa (que aqui está íntegra) e não é CD117+."],ref:"Simpósio — GIST"},
+
+{n:23,aula:1,nivel:"dificil",enun:`<span class="vinheta">Mulher, 38 anos, emagrecimento e saciedade precoce. EDA: parede gástrica difusamente rígida, sem massa ulcerada ("garrafa de couro"). Biópsia: células pouco coesas em anel de sinete. Ovários aumentados bilateralmente na TC.</span><div class="pergunta">Qual o conjunto diagnóstico correto?</div>`,alts:["Lauren intestinal · Borrmann I · via cascata de Correa · metástase de Virchow","GIST epitelioide avançado com implantes ovarianos e ruptura tumoral","Linfoma gástrico difuso com envolvimento anexial bilateral","Adenocarcinoma intestinal HER2+ com prateleira de Blumer","Lauren DIFUSO (perda de E-caderina) · Borrmann IV/linite · tumor de KRUKENBERG"],correta:4,just:["Errada — intestinal forma GLÂNDULAS, vem da cascata de Correa em idosos e faz massas Borrmann I–III, não linite.","Errada — GIST é subepitelial CD117+, sem células em anel de sinete.","Errada — linfoma não produz células em anel de sinete (mucina intracitoplasmática).","Errada — HER2 é mais frequente no INTESTINAL; e Blumer é massa no fundo de saco ao toque retal, não ovários.","Correta — o tipo DIFUSO de Lauren: perda de E-CADERINA (CDH1) → células POUCO COESAS em ANEL DE SINETE infiltrando difusamente a parede → desmoplasia → LINITE PLÁSTICA (Borrmann IV, 'garrafa de couro'); acomete mais jovens, tem pior prognóstico e a metástase ovariana bilateral é o TUMOR DE KRUKENBERG — típico exatamente desse subtipo."],ref:"Simpósio — Adenocarcinoma difuso"},
+
+{n:24,aula:1,nivel:"dificil",enun:`<span class="vinheta">"Cada etapa é uma janela de oportunidade" — o grupo cobrou a ordem exata da cascata de Correa, da mucosa normal ao câncer.</span><div class="pergunta">Qual a sequência correta?</div>`,alts:["Gastrite crônica → displasia → atrofia → metaplasia → adenocarcinoma","Metaplasia intestinal → gastrite crônica → atrofia → displasia → adenocarcinoma","Gastrite crônica → atrófica → metaplasia intestinal → displasia → adenocarcinoma","Atrofia → gastrite crônica → displasia → metaplasia → adenocarcinoma","Gastrite crônica → metaplasia intestinal → atrofia → displasia → adenocarcinoma"],correta:2,just:["Errada — a displasia é a PENÚLTIMA etapa, depois da metaplasia; não vem antes da atrofia.","Errada — a metaplasia é consequência da atrofia, não o ponto de partida.","Correta — CASCATA DE CORREA: mucosa normal → GASTRITE CRÔNICA (infiltrado linfoplasmocitário pelo H. pylori) → GASTRITE ATRÓFICA (perda glandular) → METAPLASIA INTESTINAL (caliciformes no estômago) → DISPLASIA (atipia arquitetural + citológica) → ADENOCARCINOMA (tipo intestinal). Cepas CagA/VacA+ aceleram a cascata — daí a importância de erradicar o H. pylori cedo, em qualquer janela.","Errada — a atrofia não precede a gastrite crônica; ela é resultado da inflamação prolongada.","Errada — atrofia vem ANTES da metaplasia: primeiro perde a glândula, depois o epitélio se 'intestinaliza'."],ref:"Simpósio — Cascata de Correa"}
+];
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Masculino, 27 anos, procura atendimento com cansaço intenso, inapetência, náuseas e desconforto abdominal há 7 dias; há 2 dias notou olhos amarelados e urina escura. Relação sexual desprotegida com nova parceira há ~2 meses; nega drogas injetáveis e transfusões; não sabe se completou a vacina de hepatite B. Exame: icterícia cutânea e escleral, fígado discretamente aumentado e doloroso. Labs: ALT 1.480 · AST 920 · BT 6,2 (BD 4,5). Sorologia: anti-HAV negativo · HBsAg POSITIVO · anti-HBs negativo · anti-HBc total POSITIVO · anti-HBc IgM POSITIVO · HBeAg POSITIVO · anti-HBe negativo. (Caso do grupo de Hepatites A e B.)`,
+perg:["Feche o diagnóstico interpretando marcador por marcador.","Por que as transaminases estão tão altas se o HBV tem efeito citopático limitado?","O que uma biópsia hepática mostraria nesta fase — e que achado indicaria evolução catastrófica?","Qual a probabilidade de cronificação neste paciente e como você o acompanharia sorologicamente?"],
+resp:[["Hepatite B AGUDA com alta replicação","HBsAg+ = infecção presente pelo HBV · anti-HBc IgM+ = o 'carimbo' da infecção AGUDA/recente · HBeAg+ = replicação intensa e ALTA infectividade · anti-HBs e anti-HBe negativos = ainda sem soroconversão · anti-HAV negativo exclui hepatite A. Com exposição sexual há 2 meses (janela compatível) e síndrome ictérica aguda: HEPATITE B AGUDA SINTOMÁTICA em fase replicativa. Tratamento: SUPORTE (hidratação, repouso, dieta conforme tolerância)."],
+["A lesão é imunomediada","O HBV replica sem destruir a célula (efeito citopático limitado). Quem mata os hepatócitos é a RESPOSTA IMUNE: linfócitos T CD8+ reconhecem antígenos virais via MHC-I nos hepatócitos infectados e induzem apoptose/necrose — cada célula morta despeja ALT/AST no sangue. A icterícia com predomínio direto reflete a disfunção hepatocelular e a colestase do processo. É a regra que une as três hepatites virais do simpósio."],
+["Balonização + Councilman; o alarme é a necrose extensa","Esperado na aguda: DEGENERAÇÃO BALONIZANTE (hepatócitos tumefeitos de citoplasma rarefeito — lesão reversível) convivendo com CORPÚSCULOS DE COUNCILMAN (apoptose consumada — acidófilos, retraídos), inflamação portal e lobular. O ALARME é a extensão da necrose: focal → EM PONTE (porta–porta, porta–centro, centro–centro) → panacinar → MACIÇA, com colapso da trama de reticulina, espaços-porta aproximados e proliferação ductular reacional = HEPATITE FULMINANTE (insuficiência aguda + encefalopatia + coagulopatia; <1% dos casos de HBV agudo, alta mortalidade)."],
+["5–20% — e o HBsAg aos 6 meses decide","Adulto imunocompetente: a maioria RESOLVE; cronificação em apenas 5–20% (o oposto da transmissão vertical, que cronifica 70–90%). Seguimento: repetir sorologia — a RESOLUÇÃO aparece como desaparecimento do HBsAg + surgimento do anti-HBs (com anti-HBc IgG de cicatriz); a soroconversão HBeAg→anti-HBe marca queda da replicação. Se o HBsAg PERSISTIR >6 MESES = hepatite B CRÔNICA → estadiar (HBV-DNA, fases da infecção, elastografia) e vigiar CHC — lembrando que no HBV o carcinoma pode vir mesmo sem cirrose, pela integração do DNA viral."]],
+ref:"Simpósio — Hepatites A e B"},
+
+{n:2,aula:1,caso:`A.C.M., 63 anos, mecânico aposentado, aumento progressivo do volume abdominal há 8 meses, edema de MMII, fadiga, perda de 7 kg, episódios de sonolência/desatenção. Nega etilismo significativo. Antecedente: TRANSFUSÃO SANGUÍNEA EM 1990. Exame: icterícia discreta, ascite moderada, eritema palmar, telangiectasias, circulação colateral, esplenomegalia. Labs: plaquetas 78.000 · AST 104/ALT 68 (AST/ALT >1) · BT 2,1 · albumina 3,0 · INR 1,5. Anti-HCV reagente · HCV-RNA detectável (1,2 milhão UI/mL, genótipo 1b). Elastografia: 15,2 kPa. Biópsia: nódulos regenerativos + septos fibrosos espessos + hepatite de interface + agregados linfoides portais + proliferação ductular; Masson com extensa deposição de colágeno. (Caso do grupo de Hepatite C e Cirrose.)`,
+perg:["Que elementos da história apontam a etiologia — e por que a doença demorou 30 anos para aparecer?","Diferencie o papel do anti-HCV e do HCV-RNA no diagnóstico deste caso.","Explique a plaquetopenia, a ascite e a sonolência pelos eixos fisiopatológicos da cirrose.","Quais achados definem cirrose na biópsia — e qual o estadiamento METAVIR?"],
+resp:[["Transfusão pré-triagem + curso insidioso","A TRANSFUSÃO EM 1990 — antes da triagem sistemática do HCV nos bancos de sangue — é o fator de risco clássico. A demora é a assinatura do vírus: a infecção aguda é geralmente assintomática, ~70% cronificam (quasispecies da NS5B escapando da imunidade) e a inflamação persistente leva DÉCADAS ativando células estreladas → colágeno → fibrose progressiva → cirrose (15–30% dos crônicos em até 20 anos). O paciente só 'aparece' quando descompensa."],
+["Contato × doença ativa","ANTI-HCV reagente = anticorpos = CONTATO PRÉVIO com o vírus — não diferencia infecção curada (30% clareiam espontaneamente) de ativa. HCV-RNA DETECTÁVEL por PCR = replicação em curso = INFECÇÃO ATIVA, e quantifica a carga (1,2 milhão UI/mL); a genotipagem (1b) vem depois, para guiar terapia. No caso: anti-HCV+ E RNA+ = hepatite C crônica ATIVA."],
+["Os 3 eixos do cirrótico","PLAQUETOPENIA: hipertensão portal → esplenomegalia → HIPERESPLENISMO sequestrando plaquetas (eixo 2). ASCITE: hipertensão portal + vasodilatação esplâncnica → ↓ volume arterial efetivo → SRAA/ADH → retenção de Na+/água, somada à HIPOALBUMINEMIA (albumina 3,0 — eixo 1, falência de síntese). SONOLÊNCIA/DESATENÇÃO: ↓ detoxificação + shunts portossistêmicos → amônia e neurotóxicos no cérebro → ENCEFALOPATIA HEPÁTICA (eixo 1). INR 1,5 completa a falência sintética. Ascite + encefalopatia = cirrose DESCOMPENSADA."],
+["Nódulo + septo + interface; F4","A biópsia fecha: DISTORÇÃO DIFUSA DA ARQUITETURA com NÓDULOS REGENERATIVOS delimitados por SEPTOS FIBROSOS espessos (Masson confirmando o colágeno) + PROLIFERAÇÃO DUCTULAR (o achado que diferencia cirrose de hepatite crônica) — e as marcas do HCV: hepatite de interface e agregados linfoides portais. Estadiamento: METAVIR F4 (cirrose estabelecida), coerente com a elastografia de 15,2 kPa. Diagnóstico final: hepatite C crônica ativa evoluída para cirrose descompensada."]],
+ref:"Simpósio — Hepatite C e Cirrose"},
+
+{n:3,aula:1,caso:`L.W., 63 anos, feminina, secretária. Queimação epigástrica há 6 meses, piora pós-prandial, melhora com jejum/antiácidos; dispepsia, estufamento. Piora após ibuprofeno por conta própria (dor 8/10). Pistas no exame: ASTENIA, PALIDEZ, GLOSSITE ocasional, PARESTESIAS leves nos pés. Labs: Hb 10,1 · Ht 31% · VCM 112 fL · B12 120 pg/mL (ref. 200–900) · ferritina 9. EDA: mucosa PÁLIDA com perda das pregas e vasos submucosos proeminentes em CORPO E FUNDO, com ANTRO PRESERVADO; pseudopólipos e pólipos hiperplásicos. (Caso do grupo de Gastrite crônica.)`,
+perg:["A primeira hipótese era gastrite por H. pylori. Que achados derrubam essa hipótese e fecham gastrite autoimune?","Explique TODAS as alterações hematológicas e neurológicas por um único mecanismo.","Descreva a sequência que leva esta paciente ao risco de tumor neuroendócrino gástrico.","Como investigar e tratar — e qual o papel do protocolo de biópsias?"],
+resp:[["Topografia + ausência de neutrófilos","O comparativo do grupo: a gastrite por H. PYLORI começa no ANTRO e tem infiltrado com componente NEUTROFÍLICO ('ativa'). Aqui a atrofia está RESTRITA A CORPO E FUNDO COM ANTRO PRESERVADO — o espelho exato — e a doença mira as células PARIETAIS (que vivem no corpo/fundo), destruídas por autoanticorpos ANTI-CÉLULA PARIETAL e ANTI-FATOR INTRÍNSECO. A síndrome carencial de B12 associada (glossite, parestesias, macrocitose) é o resto da assinatura autoimune. O ibuprofeno só agravou a mucosa (AINE ↓ prostaglandinas), não explica o conjunto."],
+["Tudo é B12 (e um pouco de ferro)","Destruição das parietais → perda do FATOR INTRÍNSECO → B12 não é absorvida no íleo → ANEMIA MEGALOBLÁSTICA/PERNICIOSA: Hb 10,1 com VCM 112 (macrocitose), astenia, palidez, GLOSSITE atrófica (língua despapilada e dolorosa) e as PARESTESIAS — neuropatia por deficiência crônica de B12, que pode evoluir para degeneração combinada subaguda da medula (perda vibratória/proprioceptiva, ataxia). A acloridria ainda reduz a absorção do ferro inorgânico → ferritina 9 (ferropenia precoce concomitante)."],
+["↓parietais → ↓HCl → ↑gastrina → ↑ECL → TNE","Sem células parietais não há ácido (ACLORIDRIA). O ácido baixo apaga o freio fisiológico (somatostatina baixa) e as células G do ANTRO — preservado e funcionante — disparam: HIPERGASTRINEMIA CRÔNICA MANTIDA. A gastrina tem efeito TRÓFICO sobre as células ENTEROCROMAFINS-LIKE (ECL) do corpo → hiperplasia LINEAR → MICRONODULAR → risco de TUMOR NEUROENDÓCRINO bem diferenciado (confirmado por cromogranina A na IHQ). Os pólipos hiperplásicos da EDA nascem da mesma estimulação trófica/inflamatória."],
+["Sorologia + Sydney + repor o que falta","Investigação: autoanticorpos (anti-célula parietal, anti-fator intrínseco), GASTRINA (alta), pepsinogênio I/II, B12, ferro/ferritina, hemograma (macrocitose, neutrófilos hipersegmentados). BIÓPSIA MAPEADA — protocolo de Sydney: 5 fragmentos (2 corpo + 2 antro + 1 incisura), frascos separados — para documentar a distribuição da atrofia e estadiar (OLGA/OLGIM), além de biopsiar pólipos. Tratamento dirigido às consequências: REPOSIÇÃO DE B12 (geralmente IM), reposição de ferro, vigilância endoscópica (metaplasia/ECL). Erradicar H. pylori só se coexistir."]],
+ref:"Simpósio — Gastrite autoimune"},
+
+{n:4,aula:1,caso:`M.J.S., 67 anos, masculino. Dor epigástrica persistente há 4 meses, anorexia, saciedade precoce, PERDA DE 10 KG e episódios de MELENA. Exame: emagrecido, hipocorado (+/4+), dor à palpação profunda do epigástrio; sem massas, ascite, hepatomegalia ou linfonodo supraclavicular palpável. EDA: lesão ULCERADA E INFILTRATIVA no antro, bordas irregulares — Borrmann III. Biópsia: ADENOCARCINOMA GÁSTRICO TIPO INTESTINAL moderadamente diferenciado (glândulas irregulares infiltrativas, pleomorfismo, hipercromasia, mitoses, mucina, invasão do estroma). Estadiamento por TC: T3N1M0. (Caso do grupo de Neoplasias.)`,
+perg:["Conecte a biópsia deste paciente à cascata de Correa e ao tipo histológico de Lauren.","O que significa T3N1M0 — e por que o estadiamento muda toda a conduta?","Quais sinais clínicos de doença avançada (epônimos) deveriam ser ativamente procurados, e o que cada um significa?","O grupo encerrou com um contraponto: 'e se a biópsia mostrasse GIST?' — o que mudaria na investigação e no tratamento?"],
+resp:[["Intestinal = a ponta da cascata de Correa","O tipo INTESTINAL de Lauren forma GLÂNDULAS (bem a moderadamente diferenciadas) e nasce da sequência de CORREA: gastrite crônica (H. pylori) → atrofia → METAPLASIA INTESTINAL (o nome 'intestinal' vem daí — o epitélio gástrico se intestinalizou) → displasia → carcinoma. Perfil: idosos, homens, associação com H. pylori — exatamente M.J.S. O contraste é o tipo DIFUSO: células pouco coesas/anel de sinete por perda de E-caderina (CDH1), jovens, linite plástica, pior prognóstico. Borrmann III (ulcerado-infiltrativo) é a forma mais comum ao diagnóstico e costuma corresponder ao intestinal."],
+["Invade subserosa + 1–2 linfonodos, sem metástase","T3 = tumor invade o tecido conjuntivo SUBSEROSO (já passou da muscular própria, sem perfurar a serosa) · N1 = 1–2 LINFONODOS regionais acometidos · M0 = sem metástase à distância. Conduta guiada pelo estágio: doença locorregional ressecável → GASTRECTOMIA SUBTOTAL + LINFADENECTOMIA + QUIMIOTERAPIA PERIOPERATÓRIA + painel IHQ (HER2: se superexpresso, TRASTUZUMABE na doença avançada). O estadiamento não é formalidade: T1 (precoce) tem sobrevida >90% em 5 anos; estágio III cai para 20–35%; IV <10% — e >50% dos casos chegam avançados."],
+["Virchow, Irmã Maria José, Blumer, Krukenberg","Procurar ativamente: LINFONODO DE VIRCHOW (supraclavicular ESQUERDO — disseminação linfática via ducto torácico; o caso registra sua ausência), NÓDULO DA IRMÃ MARIA JOSÉ (umbilical — via linfática/peritoneal), PRATELEIRA DE BLUMER (massa no fundo de saco de Douglas ao TOQUE RETAL — implante peritoneal) e TUMOR DE KRUKENBERG (metástase OVARIANA bilateral, típica do tipo difuso/anel de sinete). Qualquer um positivo = doença avançada/M1 e muda o plano para paliativo-sistêmico. Melena + anemia ferropriva crônica são o sangramento tumoral do caso."],
+["Outra origem, outros marcadores, outra droga","GIST é neoplasia MESENQUIMAL (células de Cajal, muscular própria — lesão subepitelial de mucosa íntegra, não ulcerada mucosa como aqui). Investigação mudaria para: IHQ com CD117 (KIT) + DOG1 (+CD34) e SEQUENCIAMENTO de KIT/PDGFRA — porque o genótipo (éxon 11 × éxon 9/D842V) define resposta e dose do IMATINIBE. Tratamento: ressecção + classificação de risco (tamanho + índice mitótico/5mm² + localização + ruptura) → alto risco = imatinibe adjuvante 400 mg/dia por 3 anos. Estadiamento TNM clássico e quimio perioperatória do adenocarcinoma NÃO se aplicam — a distinção histogenética muda tudo."]],
+ref:"Simpósio — Adenocarcinoma e GIST"}
+];
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Simpósio</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Simpósio</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas do Simpósio (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Simpósio — Fígado e Estômago",kicker:"ANATO PATO II",desc:"Hepatites A/B/C, cirrose, gastrites, úlcera péptica, pólipos, GIST e adenocarcinoma gástrico — os 4 temas do simpósio.",cards:[
+{area:"Hepatite A",cat:"conceito",q:"Se o HAV quase não é citopático, quem causa a lesão hepática?",a:"A RESPOSTA IMUNE: inata (NK, Kupffer, interferons) + adaptativa (T CD8+ reconhecem hepatócitos infectados, liberam IFN-γ/TNF-α → apoptose/necrose). Hepatite aguda difusa → ↑ transaminases + icterícia."},
+{area:"Hepatite A",cat:"prof",q:"Assinatura histológica da hepatite A — e os 'ausentes' que excluem B e C?",a:"Infiltrado portal/periportal RICO EM PLASMÓCITOS + COLESTASE CANALICULAR proeminente + balonização + Councilman. AUSENTES: fibrose (não cronifica), vidro fosco (HBV), agregados linfoides + esteatose (HCV)."},
+{area:"Hepatite A",cat:"conceito",q:"A hepatite A cronifica? Por quê?",a:"NUNCA. Não há reservatório viral persistente; a infecção resolve e o ANTI-HAV IgG confere imunidade prolongada. Clínica varia com a idade: crianças <6a ~70% assintomáticas; adultos fazem as 3 fases (prodrômica → ictérica → convalescença)."},
+{area:"Hepatite B",cat:"conceito",q:"As 3 consequências da biologia do HBV (DNA + transcriptase reversa)?",a:"1) O DNA INTEGRA-SE ao genoma → carcinogênese DIRETA, sem precisar de cirrose; 2) transcriptase reversa erra muito → alta mutação (pré-core); 3) efeito citopático LIMITADO — a lesão é imunomediada."},
+{area:"Hepatite B",cat:"prof",q:"O que é o cccDNA e o que ele explica?",a:"Forma ESTÁVEL do DNA viral que permanece NO NÚCLEO do hepatócito = RESERVATÓRIO da infecção. Explica a persistência e a REATIVAÇÃO (ex.: na imunossupressão) mesmo com carga viral suprimida."},
+{area:"Hepatite B",cat:"alerta",q:"Transmissão vertical × adulto: quem cronifica mais?",a:"VERTICAL: cronifica em 70–90% (imunidade imatura tolera o vírus). ADULTO: só 5–20%. A idade da infecção determina o desfecho — por isso vacina ao nascer + profilaxia vertical."},
+{area:"Sorologia",cat:"prof",q:"HBsAg: o que indica e qual o marco dos 6 meses?",a:"Infecção PRESENTE (1º marcador — positiva 7–10 dias antes dos sintomas). PERSISTÊNCIA >6 MESES = hepatite B CRÔNICA; desaparecimento sugere resolução."},
+{area:"Sorologia",cat:"prof",q:"Anti-HBs isolado (sem anti-HBc): o que significa?",a:"VACINA. A vacina só contém HBsAg — gera anti-HBs sem anti-HBc. Infecção RESOLVIDA = anti-HBs + anti-HBc IgG. E anti-HBc isolado NÃO confere imunidade."},
+{area:"Sorologia",cat:"conceito",q:"Anti-HBc IgM × IgG — e por que não se dosa HBcAg?",a:"IgM = infecção AGUDA (ou reativação); IgG/total = contato prévio, persiste indefinidamente. HBcAg NÃO CIRCULA no soro — só é reconhecido no tecido, no núcleo do hepatócito (núcleo areado)."},
+{area:"Sorologia",cat:"conceito",q:"HBeAg, anti-HBe e a pegadinha da mutação pré-core?",a:"HBeAg = replicação intensa/alta infectividade; anti-HBe = soroconversão/queda da replicação. MAS ausência de HBeAg não exclui replicação: a MUTAÇÃO PRÉ-CORE replica sem produzir HBeAg → desempate pelo HBV-DNA."},
+{area:"Hepatite B",cat:"prof",q:"Os 2 marcadores citopáticos do HBV crônico na lâmina?",a:"Hepatócito em VIDRO FOSCO (citoplasma amplo, homogêneo, granular = HBsAg citoplasmático) + NÚCLEO AREADO (HBcAg). Somados à inflamação que ultrapassa a placa limitante (interface)."},
+{area:"Hepatite B",cat:"alerta",q:"O que separa a hepatite aguda comum da fulminante?",a:"A EXTENSÃO DA NECROSE: focal → EM PONTE (porta-porta, porta-centro, centro-centro) → panacinar → MACIÇA (colapso da reticulina, espaços-porta aproximados, proliferação ductular reacional). Fulminante: <1% do HBV agudo, alta mortalidade."},
+{area:"Hepatite C",cat:"conceito",q:"Balonização × corpúsculo de Councilman?",a:"BALONIZAÇÃO: hepatócito tumefeito, citoplasma claro/rarefeito — lesão REVERSÍVEL (água + citoesqueleto desorganizado). COUNCILMAN: apoptose CONSUMADA — célula acidófila, retraída. Convivem na mesma lâmina: estágios da mesma agressão."},
+{area:"Hepatite C",cat:"prof",q:"Por que o HCV cronifica em ~70% e não tem vacina?",a:"A NS5B (RNA-polimerase) tem BAIXA FIDELIDADE e não corrige erros → QUASISPECIES (nuvem de variantes) → escape imunológico → persistência + resistência a antivirais + dificuldade de vacina. ~30% clareiam espontaneamente em 6 meses."},
+{area:"Hepatite C",cat:"prof",q:"A tríade histológica da hepatite C crônica?",a:"1) AGREGADOS/FOLÍCULOS LINFOIDES nos espaços-porta · 2) ESTEATOSE hepatocitária (vírus altera metabolismo lipídico) · 3) HEPATITE DE INTERFACE (inflamação portal invadindo o parênquima periportal)."},
+{area:"Hepatite C",cat:"conceito",q:"Anti-HCV × HCV-RNA: qual o papel de cada um?",a:"ANTI-HCV = contato prévio (não diferencia curado de ativo). HCV-RNA (PCR) = infecção ATIVA — confirma e quantifica. Genotipagem só depois do RNA positivo. Elastografia/APRI/FIB-4 estimam fibrose sem biópsia."},
+{area:"Cirrose",cat:"prof",q:"METAVIR: os dois eixos e o que é F4?",a:"A = ATIVIDADE necroinflamatória (A0–A3) ⊥ F = FIBROSE (F0 sem fibrose → F1 portal → F2 septos → F3 em ponte → F4 = CIRROSE, com proliferação ductal). Eixos independentes: grau ≠ estágio."},
+{area:"Cirrose",cat:"prof",q:"As alterações morfológicas fundamentais da cirrose — e o que a diferencia da hepatite crônica?",a:"FIBROSE DIFUSA com septos + NÓDULOS REGENERATIVOS + DESORGANIZAÇÃO da arquitetura. O diferencial: PROLIFERAÇÃO DE DUCTOS BILIARES — presente na cirrose, não na hepatite crônica."},
+{area:"Cirrose",cat:"conceito",q:"Micronodular × macronodular: etiologias clássicas?",a:"MICRONODULAR (<3 mm) = ALCOOLISMO crônico. MACRONODULAR (>3 mm) = HEPATITES VIRAIS crônicas. Mista = evolução. E a etiologia emergente que mais cresce no mundo: MASH (esteato-hepatite metabólica)."},
+{area:"Cirrose",cat:"conceito",q:"Os 3 eixos clínicos do cirrótico?",a:"1) INSUFICIÊNCIA HEPÁTICA: ↓albumina (ascite/edema), icterícia, coagulopatia, ↑amônia → encefalopatia, spiders/eritema palmar; 2) HIPERTENSÃO PORTAL: varizes→HDA, esplenomegalia→plaquetopenia, ascite, caput medusae; 3) COMPLICAÇÕES: CHC, hepatorrenal, hepatopulmonar."},
+{area:"Cirrose",cat:"caso",q:"Caso A.C.M.: transfusão em 1990 + ascite + plaquetas 78 mil. Por que a transfusão importa?",a:"1990 = ANTES da triagem sistemática do HCV nos bancos de sangue — via de infecção clássica. 30 anos de infecção silenciosa → cirrose descompensada (ascite + encefalopatia). Plaquetopenia = hiperesplenismo da hipertensão portal.",obs:"Anti-HCV+ E HCV-RNA+ = doença ATIVA; elastografia 15,2 kPa = F4."},
+{area:"Gastrite",cat:"conceito",q:"Como o H. pylori sobrevive ao ácido e onde ele fica?",a:"UREASE (ureia → amônia alcalina, escudo químico) + fica na SUPERFÍCIE da mucosa SEM INVADIR as células. ~90% das gastrites crônicas; 60–70% dos brasileiros; transmissão fecal-oral na infância. Cepas CagA/VacA+ = mais dano e mais câncer."},
+{area:"Gastrite",cat:"prof",q:"Fenótipo ANTRAL da gastrite por H. pylori: a sequência-chave?",a:"Antrite → ↓ somatostatina → ↑ GASTRINA → hipercloridria → risco de ÚLCERA DUODENAL. Se progride: pangastrite/atrofia do corpo → destruição das oxínticas → HIPO/acloridria + ↓ fator intrínseco → terreno de Correa."},
+{area:"Gastrite",cat:"conceito",q:"Progressão histológica da gastrite crônica?",a:"Superficial (infiltrado linfoplasmocitário, sem atrofia) → ATRÓFICA (perda glandular, substituição fibrosa) → METAPLASIA INTESTINAL (caliciformes no estômago — adaptação com potencial displásico). 'Ativa' = neutrófilos penetrando o epitélio."},
+{area:"Gastrite",cat:"prof",q:"Diagnóstico do H. pylori: padrões-ouro do V Consenso?",a:"¹³C-UBT (teste respiratório) = padrão-ouro NÃO INVASIVO e controle de erradicação. HISTOLOGIA = padrão-ouro (mín. 4 biópsias: 2 antro + 2 corpo; Sydney completo = 5 com incisura). Também: urease rápida, antígeno fecal.",obs:"Tratamento: tríplice (IBP+amoxi+claritro) ou QUÁDRUPLA com bismuto."},
+{area:"Autoimune",cat:"prof",q:"Gastrite autoimune: alvo, topografia e autoanticorpos?",a:"Alvo = células PARIETAIS → topografia CORPO E FUNDO com ANTRO POUPADO (espelho da HP). Autoanticorpos: ANTI-CÉLULA PARIETAL e ANTI-FATOR INTRÍNSECO. Perfil: acloridria + HIPERgastrinemia."},
+{area:"Autoimune",cat:"prof",q:"A sequência que leva a autoimune ao tumor neuroendócrino?",a:"↓ PARIETAIS → ↓ HCl → (sem freio da somatostatina) ↑ GASTRINA crônica → efeito trófico → HIPERPLASIA DE ECL (linear → micronodular) → TUMOR NEUROENDÓCRINO (cromogranina A confirma)."},
+{area:"Autoimune",cat:"caso",q:"Caso L.W.: VCM 112, B12 120, glossite, parestesias. Qual o fio condutor?",a:"Perda do FATOR INTRÍNSECO (parietais destruídas) → sem B12 → ANEMIA PERNICIOSA (macrocítica) + glossite atrófica + neuropatia (até degeneração combinada subaguda). A acloridria ainda derruba o ferro (ferritina 9). Tratamento: B12 IM + ferro.",obs:"HP × autoimune: topografia (antro × corpo) + neutrófilos (presentes × ausentes)."},
+{area:"Úlcera",cat:"conceito",q:"A balança da úlcera péptica: defesas × agressores?",a:"DEFESAS: muco + bicarbonato + fluxo sanguíneo + PROSTAGLANDINAS (COX-1) + renovação epitelial. AGRESSORES: ácido/pepsina, H. pylori, AINEs, álcool, tabaco, estresse/isquemia. Úlcera = agressão vencendo."},
+{area:"Úlcera",cat:"prof",q:"Como os AINEs ulceram o estômago?",a:"Inibem a COX-1 → ↓ PROSTAGLANDINAS protetoras → ↓ muco, ↓ bicarbonato, ↓ fluxo sanguíneo mucoso, ↓ regeneração. Conduta: suspender o AINE + IBP para cicatrizar."},
+{area:"Úlcera",cat:"prof",q:"Úlcera benigna × neoplásica na endoscopia?",a:"BENIGNA: escavada, bordas REGULARES/planas, fundo limpo com fibrina, pregas CONVERGINDO simetricamente. MALIGNA: bordo EVERTIDO/nodular/irregular, fundo friável que sangra ao toque, pregas AMPUTADAS/fusionadas. Estigma maligno = biópsias múltiplas das bordas."},
+{area:"Úlcera",cat:"conceito",q:"Por que a ureia/BUN sobe no sangramento digestivo ALTO?",a:"O sangue é DIGERIDO e absorvido como proteína no tubo alto + a hipovolemia aumenta a reabsorção renal de ureia. BUN ≥21 mg/dL sugere gravidade. Acompanha ↓Hb/Ht. Sakita-Miwa: A (ativa) → H (cicatrização) → S (cicatriz)."},
+{area:"Pólipos",cat:"conceito",q:"Pólipos gástricos hiperplásicos: de onde vêm e o que os faz regredir?",a:"HIPERPLASIA FOVEOLAR por inflamação crônica (H. pylori) ou por hipergastrinemia trófica (autoimune → ECL). Micro: arquitetura serrilhada, atipia leve basal, congestão. ERRADICAR o H. pylori → regressão em até ~70%."},
+{area:"GIST",cat:"prof",q:"GIST: origem celular e por que a mucosa fica íntegra?",a:"Nasce das CÉLULAS INTERSTICIAIS DE CAJAL (marca-passo do peristaltismo) na MUSCULAR PRÓPRIA → cresce INTRAMURAL como massa SUBEPITELIAL empurrando a mucosa (íntegra por cima). Estômago = 60–70% dos casos; tumor mesenquimal mais comum do TGI."},
+{area:"GIST",cat:"prof",q:"Drivers moleculares do GIST e a lógica do imatinibe?",a:"KIT mutado (~75–80%, éxon 11) OU PDGFRA (~5–10%, éxon 18) — mutuamente exclusivos: tirosina-quinase LIGADA sem ligante → RAS/MAPK (proliferação) + PI3K/AKT (sobrevivência). IMATINIBE bloqueia o bolso do ATP → cascata desligada. Éxon 11 responde bem; éxon 9/D842V mal.",obs:"Wild-type (~10–15%): deficiência de SDH → succinato → HIF-1α → pseudo-hipóxia."},
+{area:"GIST",cat:"conceito",q:"IHQ do GIST — e a pegadinha CD117 × KIT?",a:"CD117 (KIT) ~95% + DOG1 (cobre os CD117-negativos) + CD34 (~70%). PEGADINHA: CD117 positivo ≠ mutação no KIT — IHQ mostra a PROTEÍNA; o GENÓTIPO (gene/éxon) vem do sequenciamento e é ele que guia dose/resposta ao imatinibe."},
+{area:"GIST",cat:"conceito",q:"Fatores prognósticos do GIST e conduta por risco?",a:"TAMANHO + ÍNDICE MITÓTICO (mitoses/5 mm²) + LOCALIZAÇÃO (estômago melhor que delgado) ± ruptura → classificação NIH. Baixo risco: cirurgia + seguimento. Alto risco: cirurgia + IMATINIBE ADJUVANTE 400 mg/dia por 3 anos. Padrões: fusocelular 70% · epitelioide 20% · misto 10%."},
+{area:"Adenocarcinoma",cat:"prof",q:"Cascata de Correa: a ordem completa?",a:"Mucosa normal → GASTRITE CRÔNICA (H. pylori) → GASTRITE ATRÓFICA → METAPLASIA INTESTINAL → DISPLASIA → ADENOCARCINOMA (intestinal). Cepas CagA/VacA+ aceleram. Cada etapa = janela de intervenção (erradicar HP cedo!)."},
+{area:"Adenocarcinoma",cat:"prof",q:"Lauren: intestinal × difuso?",a:"INTESTINAL: glândulas bem formadas, via Correa/metaplasia, idosos/homens, Borrmann I–III, melhor prognóstico, HER2 mais frequente. DIFUSO: perda de E-CADERINA (CDH1) → células soltas em ANEL DE SINETE → LINITE PLÁSTICA (Borrmann IV), jovens, Krukenberg, pior prognóstico."},
+{area:"Adenocarcinoma",cat:"conceito",q:"Borrmann I–IV (câncer avançado)?",a:"I = polipoide exofítico · II = ULCERADO de bordas elevadas e nítidas · III = ulcerado-INFILTRATIVO (o mais comum ao diagnóstico) · IV = INFILTRATIVO DIFUSO/linite plástica ('garrafa de couro' — desmoplasia). Lesões precoces usam Paris (0-I/II/III)."},
+{area:"Adenocarcinoma",cat:"conceito",q:"TNM essencial do estômago — e o que é câncer gástrico precoce?",a:"T1 = mucosa/submucosa (T1a/T1b) = CÂNCER PRECOCE → sobrevida >90% em 5 anos · T2 muscular própria · T3 subserosa · T4a serosa/T4b órgãos vizinhos · N pelo Nº de linfonodos (N1 1–2 → N3b ≥16) · M1 = estágio IV (<10%). >50% chegam avançados."},
+{area:"Adenocarcinoma",cat:"prof",q:"Os 4 epônimos da doença avançada?",a:"VIRCHOW: linfonodo supraclavicular ESQUERDO (via ducto torácico) · IRMÃ MARIA JOSÉ: nódulo umbilical · BLUMER: prateleira no fundo de saco ao TOQUE RETAL · KRUKENBERG: metástase OVARIANA bilateral (tipo difuso/anel de sinete)."},
+{area:"Adenocarcinoma",cat:"conceito",q:"HER2 no câncer gástrico: qual o papel?",a:"Superexpresso em 15–20% (mais no tipo INTESTINAL). É biomarcador PREDITIVO: HER2+ → TRASTUZUMABE + quimioterapia. Séricos (CEA, CA19-9, CA72-4) acompanham, não diagnosticam — quem diagnostica é EDA + biópsia; ecoendo (T/N) e TC (M) estadiam."},
+{area:"Adenocarcinoma",cat:"caso",q:"Caso M.J.S.: melena + 10 kg perdidos + Borrmann III no antro. Qual o pacote diagnóstico-terapêutico?",a:"Adenocarcinoma tipo INTESTINAL (fim da cascata de Correa) — estadiar com TC: T3N1M0 → GASTRECTOMIA SUBTOTAL + linfadenectomia + QT perioperatória + painel HER2. Se fosse GIST: CD117/DOG1 + sequenciamento KIT/PDGFRA e imatinibe — a histogênese muda TUDO."},
+{area:"Geral",cat:"alerta",q:"A regra que une as três hepatites virais do simpósio?",a:"O vírus replica; QUEM LESA É A RESPOSTA IMUNE (T CD8+). Vale para HAV (nunca cronifica), HBV (vidro fosco; integração → CHC sem cirrose) e HCV (quasispecies → 70% cronificam → cirrose → CHC)."},
+{area:"Geral",cat:"conceito",q:"GIST × adenocarcinoma gástrico em uma linha cada?",a:"GIST: MESENQUIMAL (Cajal), subepitelial, CD117/DOG1, KIT/PDGFRA → IMATINIBE, disseminação hematogênica. ADENOCARCINOMA: EPITELIAL (glândulas), via Correa ou CDH1, HER2 → TRASTUZUMABE, disseminação linfática + hematogênica + peritoneal."}
+]}};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-simposio-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
