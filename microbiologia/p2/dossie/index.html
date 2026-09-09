@@ -3024,6 +3024,41 @@ const topicToResumo = {
             dpBody.appendChild(row);
           });
         }
+
+        if(!document.getElementById('relIaBtn')){
+          const relW=document.createElement('div');relW.style.marginTop='16px';
+          relW.innerHTML='<button class="hud-btn" id="relIaBtn">📋 Copiar relatório para IA</button>';
+          dp.appendChild(relW);
+          document.getElementById('relIaBtn').addEventListener('click',function(){
+            const IA_INTRO="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez.";
+            let erros=[],certos=[];
+            questions.forEach(q=>{const ok=q.dataset.answered&&q.dataset.userCorrect==='1';(ok?certos:erros).push(q);});
+            const pct=questions.length?Math.round(100*certos.length/questions.length):0;
+            const num=q=>{const n=$('.q-num',q);return n?n.textContent.replace(/Questão\s*/,'Q').trim():'';};
+            let s='RELATÓRIO DE SIMULADO — '+document.title+'\n';
+            s+='Resultado: '+certos.length+'/'+questions.length+' ('+pct+'%). Erros/em branco: '+erros.length+'.\n\n';
+            s+=IA_INTRO+'\n\n';
+            s+='==================== ERROS ('+erros.length+') ====================\n\n';
+            erros.forEach(q=>{
+              s+='['+num(q)+'] '+(q.dataset.topicLabel||q.dataset.topic||'')+'\n';
+              const stem=$('.q-stem',q);s+='ENUNCIADO: '+(stem?stem.textContent.replace(/\s+/g,' ').trim():'')+'\n';
+              $$('.alts li',q).forEach(a=>{s+='  '+a.getAttribute('data-letter')+') '+a.textContent.replace(/\s+/g,' ').trim()+'\n';});
+              s+='MINHA RESPOSTA: '+(q.dataset.answered?q.dataset.userAnswer:'(em branco)')+'\n';
+              s+='CORRETA: '+q.dataset.answer+'\n';
+              const expP=$('.explain p',q);if(expP)s+='EXPLICAÇÃO DO GABARITO: '+expP.textContent.replace(/\s+/g,' ').trim()+'\n';
+              const my=q.dataset.answered?q.dataset.userAnswer:null;
+              if(my)$$('.explain li',q).forEach(li=>{const t=li.textContent.replace(/\s+/g,' ').trim();
+                if(t.indexOf(my+')')===0)s+='SOBRE A MINHA ALTERNATIVA: '+t+'\n';});
+              s+='\n';
+            });
+            s+='==================== ACERTOS ('+certos.length+') ====================\n';
+            s+=certos.map(num).join(' · ')+'\n';
+            const b=document.getElementById('relIaBtn');
+            const done=()=>{const t=b.textContent;b.textContent='✓ Copiado! Cole na IA';setTimeout(()=>{b.textContent=t;},2600);};
+            const fb=()=>{const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);};
+            if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+          });
+        }
         dp.classList.add('open');
         setTimeout(()=>dp.scrollIntoView({behavior:'smooth',block:'start'}),100);
       }

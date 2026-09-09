@@ -245,6 +245,7 @@ h2.section { font-size: 1.4em; margin: 40px 0 16px; color: var(--accent); border
 <div class="result-panel" id="result-panel">
   <div class="result-score" id="result-score"></div>
   <div id="result-detail"></div>
+  <button class="submit-btn show" style="display:block;margin-top:14px" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button>
 </div>
 
 <h2 class="section">Questões Dissertativas</h2>
@@ -1914,6 +1915,41 @@ function finishSimulado() {
   detail.innerHTML = html;
   panel.classList.add('show');
   panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+
+var __IA_INTRO="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez.";
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+function relatorioIA(btn){
+  var L="ABCDE",erros=[],certos=[];
+  questoes.forEach(function(q){var sel=selectedAnswers[q.id];
+    if(sel===q.correta)certos.push(q);else erros.push({q:q,r:(sel===undefined?null:sel)});});
+  var pct=questoes.length?Math.round(certos.length/questoes.length*100):0;
+  var s="RELATÓRIO DE SIMULADO — "+document.title+"\n";
+  s+="Resultado: "+certos.length+"/"+questoes.length+" ("+pct+"%). Erros/em branco: "+erros.length+".\n\n";  s+=__IA_INTRO+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){var q=e.q;
+    s+="[Q"+q.id+"] "+q.topicLabel+" — nível "+q.nivel+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enunciado)+"\n";
+    q.alternativas.forEach(function(a,i){s+="  "+L[i]+") "+__iaStrip(a)+"\n";});
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.explicacao&&q.explicacao.correta)s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.explicacao.correta)+"\n";
+    if(e.r!=null&&q.explicacao&&q.explicacao.erradas){var pref=L[e.r]+":";
+      var m=q.explicacao.erradas.filter(function(x){return String(x).indexOf(pref)===0;})[0];
+      if(m)s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(m)+"\n";}
+    s+="\n";});
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.id+" ("+q.topicLabel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
 }
 
 function filterTopic(topic) {
