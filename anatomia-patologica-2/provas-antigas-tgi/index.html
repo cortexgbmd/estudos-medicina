@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provas Antigas — TGI · Anato Pato II · Córtex Estudos</title>
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0a0d1f;--surface:#141833;--surface2:#1b2043;--ink:#f3f4fb;--muted:#9aa1c4;--faint:#6f76a0;
+    --line:rgba(255,255,255,.10);--accent:#818cf8;--gold:#e6b450;--ok:#34d399;--err:#f87171;--radius:12px}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.55;min-height:100vh}
+  a{color:var(--accent);text-decoration:none}
+  .top{position:sticky;top:0;z-index:50;background:rgba(10,13,31,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .in{max-width:860px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:15px}.brand b{color:var(--gold)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:7px 16px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+  .tab.on{background:var(--accent);color:#0a0d1f;border-color:transparent}
+  .wrap{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+  .kick{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:clamp(24px,4.5vw,34px);line-height:1.1;margin-bottom:10px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:18px;max-width:70ch}
+  .statgrid{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 18px;text-align:center}
+  .stat b{display:block;font-size:22px}.stat span{color:var(--muted);font-size:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+  .chip{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--muted);border-radius:999px;
+    padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .chip.on{background:#e8eaf6;color:#0a0d1f;border-color:transparent}
+  .panel{display:none}.panel.on{display:block}
+  .q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
+  .qhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .qid{font-weight:800;color:var(--gold);font-size:17px}
+  .qorg{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .qsrc{font-size:11.5px;color:var(--faint)}
+  .enun{margin:8px 0 12px;white-space:pre-line}
+  .qimg{margin:10px 0;background:#fff;border-radius:8px;padding:6px;text-align:center}
+  .qimg img{max-width:100%;border-radius:5px}
+  .qimg figcaption{font-size:12px;color:#555;padding:5px 4px 2px;text-align:left}
+  .alts{display:flex;flex-direction:column;gap:8px}
+  .alt{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1.5px solid var(--line);
+    border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14.5px;transition:.12s;text-align:left;color:var(--ink);width:100%}
+  .alt:hover{border-color:var(--accent)}
+  .alt .letra{font-weight:800;color:var(--accent);flex:0 0 auto}
+  .alt.certa{border-color:var(--ok);background:rgba(52,211,153,.10)}
+  .alt.errada{border-color:var(--err);background:rgba(248,113,113,.10)}
+  .alt.marcada{border-color:var(--accent);background:rgba(129,140,248,.12)}
+  .alt:disabled{cursor:default}
+  .exp{display:none;margin-top:12px;border-left:3px solid var(--gold);background:rgba(230,180,80,.07);
+    border-radius:0 9px 9px 0;padding:12px 14px;font-size:14px}
+  .exp .fonte{display:block;margin-top:8px;font-size:11.5px;color:var(--faint)}
+  .exp.show{display:block}
+  .varia{font-size:12px;color:var(--faint);margin-top:8px;font-style:italic}
+  .btn{border:0;border-radius:9px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;background:var(--accent);color:#0a0d1f}
+  .btn.sec{background:rgba(255,255,255,.09);color:var(--ink);border:1px solid var(--line)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .simbar{position:sticky;bottom:0;background:rgba(10,13,31,.95);border-top:1px solid var(--line);padding:12px 18px;
+    display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:40}
+  .resultado{background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius);padding:24px;margin:20px 0}
+  .resultado h2{margin-bottom:6px}
+  .score{font-size:42px;font-weight:800;color:var(--gold)}
+  .porOrgao{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .porOrgao div{background:var(--surface2);border-radius:9px;padding:8px 14px;font-size:13px}
+  .rev{margin-top:8px;font-size:13.5px;color:var(--muted)}
+  .diss .item{margin:12px 0}
+  .diss .perg{font-weight:700;margin-bottom:6px}
+  .diss .resp{display:none;border-left:3px solid var(--ok);background:rgba(52,211,153,.07);border-radius:0 9px 9px 0;padding:11px 13px;font-size:14px}
+  .diss .resp.show{display:block}
+  .mini{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .aviso{background:rgba(129,140,248,.09);border:1px solid rgba(129,140,248,.35);border-radius:var(--radius);padding:14px 16px;font-size:13.5px;color:var(--muted);margin:14px 0}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ok);color:#052;font-weight:800;
+    padding:10px 22px;border-radius:999px;z-index:99;display:none}
+  small{color:var(--faint)}
+  ::selection{background:var(--accent);color:#0a0d1f}
+</style>
+</head>
+<body>
+<nav class="top"><div class="in">
+  <span class="brand">🧠 Córtex<b>.</b> · <a href="../../">Início</a></span>
+  <div class="tabs">
+    <button class="tab on" data-p="estudo">📖 Estudo</button>
+    <button class="tab" data-p="simulado">🎯 Simulado</button>
+    <button class="tab" data-p="diss">✍️ Dissertativas &amp; Lâminas</button>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <p class="kick">Córtex Estudos · Anato Pato II · Provas antigas 2022–2025</p>
+  <h1>Provas Antigas — TGI</h1>
+  <p class="lead">Todas as questões de esôfago, estômago, intestino, pâncreas e fígado das 11 provas antigas (T18, T19, T20, T23B e Pato I 2022) — cada questão distinta uma vez, com gabarito comentado e a fonte de cada resposta (gabarito oficial da lousa, correção da professora, marcação de aluno ou conteúdo da aula).</p>
+  <div class="statgrid">
+    <div class="stat"><b>45</b><span>objetivas (a–d)</span></div>
+    <div class="stat"><b>8</b><span>dissertativas</span></div>
+    <div class="stat"><b>4</b><span>lâminas práticas</span></div>
+  </div>
+
+  <div id="p-estudo" class="panel on">
+    <div class="aviso">Modo estudo: responda e veja o gabarito comentado na hora. Seu progresso fica salvo neste navegador. ⚠️ A <b>E4</b> pede a alternativa <b>INCORRETA</b>.</div>
+    <div class="chips" id="filtros"></div>
+    <div id="lista-estudo"></div>
+  </div>
+
+  <div id="p-simulado" class="panel">
+    <div id="sim-intro">
+      <div class="aviso"><b>Simulado:</b> as 45 objetivas em sequência, sem feedback. No final você vê a nota, a revisão comentada e pode <b>copiar um relatório pronto para colar em uma IA</b> e estudar em cima dos seus erros. Tempo sugerido pelo compilado: até 90 minutos por bloco — mas aqui é livre.</div>
+      <button class="btn" id="sim-start">▶ Começar simulado</button>
+      <span id="sim-retomar"></span>
+    </div>
+    <div id="sim-area" style="display:none">
+      <div id="lista-sim"></div>
+      <div class="simbar"><span id="sim-prog" style="color:var(--muted);font-size:13.5px"></span>
+        <button class="btn" id="sim-fim">Finalizar simulado</button></div>
+    </div>
+    <div id="sim-result" style="display:none"></div>
+  </div>
+
+  <div id="p-diss" class="panel">
+    <div class="aviso">Formato real das provas: dissertativas valem 1,0 e a prática pede <b>órgão + 2 processos patológicos + diagnóstico final</b> por lâmina. Tente responder em voz alta (ou por escrito) antes de revelar.</div>
+    <h2 style="margin:18px 0 4px">Dissertativas (D1–D8)</h2>
+    <div id="lista-diss"></div>
+    <h2 style="margin:26px 0 4px">Prova prática — lâminas (L1–L4)</h2>
+    <div id="lista-lam"></div>
+  </div>
+</div>
+<div class="toast" id="toast">Relatório copiado ✓</div>
+
+<script>
+const QUESTOES=[
+{id:'E1',org:'Esôfago',fontes:'T18 ago/2022 Q1 · T19 mar/2023 Q1',img:null,
+enun:`Recém-nascido do gênero feminino, a termo, com peso adequado. No segundo dia pós-parto, manifesta episódios de vômitos imediatamente após as mamadas, seguidos de engasgo e tosse. Ao exame físico, observa-se diminuição do turgor e mucosas ressecadas. À ausculta cardíaca, nada digno de nota. À ausculta pulmonar, presença de roncos, estertores e sibilos. Quais os diagnósticos diferenciais (DDs) possíveis e a conduta (CD) indicada?`,
+alts:[`DDs: Tecidos ectópicos; Cistos de duplicação. CD: Colocação de balão esofágico.`,`DDs: Atresia esofágica; Fístula esofágica. CD: Correção cirúrgica.`,`DDs: Divertículo de Zenker; Anéis de Schatzki. CD: Correção cirúrgica.`,`DDs: Acalásia; Membranas esofágicas. CD: Endoscopia terapêutica.`],
+correta:1,fonteResp:'professora',
+exp:`Vômito imediato após mamada, engasgo, tosse e ausculta suja no 2º dia = atresia com fístula traqueoesofágica (broncoaspiração). Falha na separação esôfago-traqueia entre a 4ª e a 6ª semana; tipo C de Gross (atresia + fístula distal) em mais de 80%; conduta é correção cirúrgica. Ectopias são assintomáticas (achado de EDA); balão/dilatação é tratamento de acalásia; Zenker, Schatzki e membranas são adquiridos.`},
+{id:'E2',org:'Esôfago',fontes:'T18 ago/2022 Q2',img:'e2.jpg',imgcap:'Rx A-P de tórax. Base de hemitórax E elevada. Sonda com extremidade distal em cavidade gástrica intratorácica.',
+enun:`Paciente João Silva, 50 anos, negro, obeso, DM2, HAS, caminhoneiro, etilista com histórico de abuso nos finais de semana. Dá entrada na UPA com queixa de 3 episódios de hematêmese (++/4+) nas últimas 24 h; relata estar investigando refluxo no último ano, em que evolui com pirose, sensação de plenitude e episódios de refluxo noturno. Realizou EDA há 6 meses evidenciando lacerações no terço distal esofágico e esofagite; na época foi orientado a cessar o consumo de álcool, sem adesão. Foi realizado Rx de tórax com sonda gástrica em posição anômala (ver figura). Assinale a hipótese diagnóstica mais provável dessa condição.`,
+alts:[`Estenose esofágica benigna.`,`Diverticulite esofagiana.`,`Acalásia esofágica secundária.`,`Hérnia de hiato deslizante.`],
+correta:3,fonteResp:'professora',
+exp:`Estômago dentro do tórax ao Rx em obeso, sedentário, com refluxo crônico, esofagite e hematêmese: hérnia de hiato — e a deslizante é ~90% dos casos. Etiologia por incompetência do EEI e esofagite de refluxo; complicações incluem hematêmese e perfuração; hérnias grandes aparecem ao Rx. Estenose benigna não desloca o estômago; acalásia secundária (Chagas) dá disfagia insidiosa e megaesôfago; "diverticulite esofagiana" não existe na aula.`},
+{id:'E3',org:'Esôfago',fontes:'T18 Q3 · T19 Q5 · T20 set/2023 Q12',img:'e3.jpg',imgcap:'Esquerda: EDA, região do esfíncter esofágico inferior (EEI). Direita: EDA, na retrovisão, região da cárdia gástrica.',
+enun:`Sabe-se que o trato gastrointestinal pode ser acometido por patologias comuns nos seus diferentes segmentos, podendo ser resultado de progressão loco-regional ou de alterações envolvendo órgãos anexos que participam da digestão, tal como fígado e pâncreas. Um exemplo claro desse processo é encontrado nas figuras macroscópicas de EDA, que evidenciam:`,
+alts:[`Papiloma esofágico e papiloma gástrico. Ambos tumores benignos relacionados ao HPV e à formação de nódulos na área de transição esôfago-gástrica.`,`Papiloma esofágico e papiloma gástrico. Ambos tumores malignos relacionados ao H. pylori e que provocam hiperplasia nodular na área de transição esôfago-gástrica.`,`Varizes esofágicas e varizes gástricas. Ambos processos relacionados a prolongada ou intensa hipertensão portal, como a que ocorre no caso de cirrose.`,`Varizes esofágicas e varizes gástricas. Ambos processos indicativos de progressão da hipotensão portal, como a que ocorre no caso de hepatite aguda.`],
+correta:2,fonteResp:'professora + oficial',varia:'Na T20, os distratores b e d traziam "acalásia + leiomioma" e "lacerações esofágicas e gástricas por hipotensão portal".',
+exp:`Cordões venosos tortuosos no EEI e na cárdia = varizes esofágicas e gástricas: hipertensão portal prolongada ou intensa (90% dos cirróticos), canais colaterais portossistêmicos, concomitância frequente. Papiloma é HPV e benigno, mas não forma nódulos na transição nem existe papiloma gástrico por HPV; "hipotensão portal" inverte a fisiopatologia.`},
+{id:'E4',org:'Esôfago',fontes:'T18 ago/2022 Q4 — pede a INCORRETA',img:null,
+enun:`O processo de regulação da motilidade esofágica é complexo e envolve diversos mecanismos motores que favorecem o transporte controlado do bolo alimentar no sentido descendente e impedem o refluxo gastroesofágico. Assinale a alternativa INCORRETA de exemplos de causas e doença esofágica adquirida.`,
+alts:[`Dilatação dos pilares diafragmáticos e alargamento do espaço do hiato do diafragma → Hérnia de hiato.`,`Aumento do tônus basal do esfíncter esofágico inferior e relaxamento incompleto do EEI → Acalásia.`,`Esvaziamento gástrico acelerado, redução da pressão intra-abdominal e aumento da capacidade de reparo da mucosa → Esofagite de refluxo (DRGE).`,`Espessamento fibroso da parede esofágica, atrofia e estreitamento do lúmen → Estenose benigna.`],
+correta:2,fonteResp:'conteúdo (alternativas reconstruídas de foto parcial; a professora anotou "C" na T18)',
+exp:`As causas da DRGE são REDUÇÃO do tônus do EEI, LENTIDÃO do esvaziamento gástrico com AUMENTO da pressão intra-abdominal e REDUÇÃO da capacidade de neutralização e reparo. A alternativa c inverte os três — por isso é a incorreta. As demais estão certas: a = hérnia de hiato; b = tríade da acalásia; d = estenose fibrocicatricial.`},
+{id:'E5',org:'Esôfago',fontes:'T18 Q5 · T19 Q2 · T23B fev/2025 Q10',img:'e5.jpg',imgcap:'Biópsia incisional, HE.',
+enun:`José Aparecido, 49 anos, branco, sem doenças de base, trabalha como inspetor da instituição CASA. Evolui há mais de um ano com sensação de pirose pós-prandial, regurgitação esporádica de conteúdo gástrico e, no último mês, dor retroesternal que não cede mais ao uso de anti-inflamatórios. No laudo do exame endoscópico se descreve "placa de mucosa avermelhada, de superfície aveludada, que se estende da porção distal para cima da junção gastroesofágica. Conclusão: esofagite crônica, sugestiva de esôfago de Barrett [T23B: segmento longo]". Foi realizada coleta de biópsia incisional que originou a lâmina da figura. Qual o laudo anatomopatológico mais provável para esta imagem?`,
+alts:[`Em uma extremidade, remanescente de epitélio cúbico estratificado hiperqueratinizado, contíguo com epitélio glandular metaplásico do tipo balonizado, discreto infiltrado inflamatório eosinofílico e intraglandular. Conclusão: adenocarcinoma esofágico.`,`Em uma extremidade, remanescente de epitélio pseudoestratificado queratinizado, contíguo com epitélio glandular metaplásico do tipo antro-pilórico, intenso infiltrado inflamatório predominantemente crônico inter e intraglandular. Conclusão: esôfago de Barrett.`,`Em uma extremidade, remanescente de epitélio colunar estratificado não queratinizado, contíguo com epitélio glandular metaplásico do tipo cárdico com células pavimentosas e formação de vacúolos de mucina, pequeno infiltrado inflamatório eosinofílico intraglandular. Conclusão: adenocarcinoma esofágico.`,`Em uma extremidade, remanescente de epitélio pavimentoso estratificado não queratinizado, contíguo com epitélio glandular metaplásico do tipo caliciforme, intenso infiltrado inflamatório predominantemente mononuclear inter e intraglandular. Conclusão: esôfago de Barrett.`],
+correta:3,fonteResp:'aluno + conteúdo',
+exp:`Barrett = epitélio escamoso esofágico normal (PAVIMENTOSO ESTRATIFICADO NÃO QUERATINIZADO) contíguo a epitélio glandular com CÉLULAS CALICIFORMES (metaplasia intestinal) e infiltrado mononuclear com vasos congestos. O diagnóstico exige endoscopia + comprovação histológica da metaplasia intestinal. Esôfago não é cúbico, pseudoestratificado nem queratinizado; metaplasia antro-pilórica ou cárdica não é intestinal e não fecha Barrett; adenocarcinoma exigiria displasia/invasão.`},
+{id:'E6',org:'Esôfago',fontes:'T18 ago/2022 Q6',img:null,
+enun:`As esofagites agrupam os processos inflamatórios que envolvem a mucosa de revestimento do esôfago. Correlacione as patologias esofágicas (I, II, III, IV) com as características morfológicas ou de progressão (A, B, C, D).<br><br><b>I.</b> Esofagite química &nbsp;·&nbsp; <b>II.</b> Esofagite infecciosa &nbsp;·&nbsp; <b>III.</b> Esofagite crônica de refluxo (DRGE) &nbsp;·&nbsp; <b>IV.</b> Esôfago de Barrett<br><br><b>A.</b> É comum em pacientes imunocomprometidos. A depender do agente etiológico, na microscopia são observadas células epiteliais com discreta hiperplasia, exocitose, coilocitose ou presença de hifas fúngicas.<br><b>B.</b> A patogenia envolve redução do tônus do esfíncter esofágico inferior e outras condições que permitem o refluxo do suco gástrico, originando áreas avermelhadas (inflamação, erosão, laceração) na mucosa esofágica.<br><b>C.</b> Trata-se de uma progressão de parcela das esofagites crônicas. Na morfologia clínica observamos mucosa atípica, "mucosa de salmão". Na microscópica, metaplasia intestinal do epitélio da transição esofagogástrica. Podem acumular displasias e progredir para adenocarcinoma.<br><b>D.</b> Provocadas por agentes corrosivos ou irritantes (ácidos, álcalis, álcool, fluidos quentes) que lesionam o epitélio, podendo causar diferentes graus de dano, da erosão à estenose.<br><br>A correlação correta está em:`,
+alts:[`I-A; II-C; III-B; IV-D.`,`I-D; II-A; III-B; IV-C.`,`I-B; II-A; III-D; IV-C.`,`I-C; II-D; III-A; IV-B.`],
+correta:1,fonteResp:'conteúdo',
+exp:`I química–D (álcool, ácidos e álcalis, soda cáustica, fluidos quentes); II infecciosa–A (imunossupressão; hifas ao PAS, coilocitose viral); III DRGE–B (redução do tônus do EEI, mucosa hiperemiada com erosão); IV Barrett–C (mucosa em salmão, metaplasia intestinal, displasia → adenocarcinoma).`},
+{id:'E7',org:'Esôfago',fontes:'T18 Q9 · T19 Q4 · T23B Q12',img:null,
+enun:`Homem, 53 anos, etilista e tabagista pesado (30 anos do hábito), dá entrada no PS com queixa de disfagia, dor retroesternal constante há mais de 30 dias e 2 episódios de hematêmese em jato. No início da sintomatologia conseguia se alimentar de dieta pastosa e líquida, mas na última semana não deglute nem água. Relata perda ponderal repentina que se iniciou antes da disfagia (perdeu 12 kg). O exame endoscópico evidenciou, no terço médio esofágico, área de estenose pela presença de massa tumoral vegetativa, fibrosa, com região central ulcerada, maior que 10 cm, ocluindo 70% do lúmen. Qual a provável hipótese diagnóstica (HD) e o laudo anatomopatológico da biópsia incisional realizada?`,
+alts:[`HD: Esôfago de Barrett. Laudo: área de transição esôfago-gástrica evidenciando área de metaplasia intestinal. Conclusão: displasia de alto grau.`,`HD: Displasia esofágica. Laudo: epitélio pavimentoso estratificado não queratinizado, evidenciando células escamosas polimórficas envolvendo camada basal e espinhosa, moderado infiltrado inflamatório. Conclusão: metaplasia intestinal.`,`HD: Carcinoma de células escamosas. Laudo: epitélio esofágico com displasia de alto grau, células tumorais semelhantes a queratinócitos atípicos, polimórficos, formando ninhos neoplásicos entremeados por estroma com fibrose linear reativa, intenso infiltrado linfoplasmocitário e exuberante neoangiogênese. Conclusão: carcinoma epidermoide.`,`HD: Adenocarcinoma in situ. Laudo: epitélio esofágico evidenciando displasia severa envolvendo todos os estratos epiteliais, área central ulcerada com invasão da lâmina própria e formação de fibrose reativa e leve infiltrado inflamatório. Conclusão: displasia de baixo grau.`],
+correta:2,fonteResp:'oficial (E10) + aluno',
+exp:`Homem 50+, tabaco + álcool (sinergismo), TERÇO MÉDIO, disfagia progressiva de sólidos a líquidos, emagrecimento, massa vegetativa ulcerada: carcinoma de células escamosas, o mais frequente no Brasil. Micro: queratinócitos atípicos, pleomórficos, pérolas córneas, invasão do córion, resposta inflamatória exuberante, neoangiogênese. Barrett/adenocarcinoma é DISTAL e vem da DRGE; displasia restrita a basal e espinhosa não explica massa de 10 cm; a alternativa d mistura descrição escamosa com nome glandular.`},
+{id:'E8',org:'Esôfago',fontes:'T20 set/2023 Q9',img:null,
+enun:`Recém-nascido do gênero feminino, a termo, com peso adequado. No segundo dia pós-parto, manifesta episódios de regurgitação imediatamente pós-mamadas, seguidos de engasgo, tosse, dispneia e episódios de cianose (aspecto azulado). Ao exame físico, orofaringe sem presença de obstruções; observa-se diminuição do turgor e mucosas ressecadas, sem outras alterações. À ausculta cardíaca, nada digno de nota. À ausculta pulmonar, presença de roncos, estertores e sibilos anormais. Quais os possíveis diagnósticos diferenciais (DDs) CONGÊNITOS e a conduta (CD) indicada?`,
+alts:[`DDs: Tecidos ectópicos; Cistos de duplicação. CD: Colocação de balão esofágico.`,`DDs: Anéis de Schatzki; Lacerações de Mallory. CD: Sondagem e acompanhamento.`,`DDs: Acalásia; Membranas esofágicas. CD: Endoscopia terapêutica.`,`DDs: Atresia esofágica; Fístula esofágica. CD: Correção cirúrgica.`],
+correta:3,fonteResp:'oficial',
+exp:`Mesma lógica da E1, com cianose e pergunta restrita a DDs congênitos: atresia + fístula traqueoesofágica, correção cirúrgica. Schatzki e Mallory-Weiss são ADQUIRIDOS, e "sondagem e acompanhamento" não é conduta para atresia.`},
+{id:'E9',org:'Esôfago',fontes:'T20 set/2023 Q10',img:null,
+enun:`As esofagites agrupam os processos inflamatórios que envolvem a mucosa de revestimento do esôfago. Correlacione as patologias esofágicas A, B e C com as características morfológicas ou de progressão I, II e III.<br><br><b>A.</b> Esofagite infecciosa &nbsp;·&nbsp; <b>B.</b> Esofagite crônica de refluxo (DRGE) &nbsp;·&nbsp; <b>C.</b> Esôfago de Barrett<br><br><b>I.</b> Trata-se de uma progressão de parcela das esofagites crônicas. Na morfologia clínica observamos mucosa atípica, "mucosa de salmão". Na microscópica: metaplasia intestinal do epitélio da transição esofagogástrica. Podem acumular displasias e malignizar.<br><b>II.</b> A patogenia envolve redução do tônus do esfíncter esofágico inferior e outras condições que permitem o contato do suco gástrico, originando áreas avermelhadas (inflamação, erosão, laceração) na mucosa esofágica.<br><b>III.</b> É comum em pacientes imunocomprometidos. A depender do agente etiológico, na microscopia são observadas células epiteliais com hiperplasia, exocitose, coilocitose ou presença de leveduras e hifas.<br><br>A correlação correta está em:`,
+alts:[`A-I; B-II; C-III.`,`A-III; B-II; C-I.`,`B-I; C-II; A-III.`,`B-III; C-I; A-II.`],
+correta:1,fonteResp:'oficial',
+exp:`A infecciosa–III (imunocomprometidos, hifas, leveduras, coilocitose viral), B DRGE–II (redução do tônus do EEI), C Barrett–I (mucosa de salmão, metaplasia intestinal, malignização).`},
+{id:'E10',org:'Esôfago',fontes:'T20 set/2023 Q11',img:null,
+enun:`Homem, 53 anos, etilista e tabagista pesado (30 cigarros/dia e 30 anos do hábito), dá entrada no PS com queixa de disfagia, dor retroesternal constante há mais de 30 dias e 2 episódios de hematêmese em jato. No início da sintomatologia conseguia se alimentar de dieta pastosa e líquida, mas na última semana tem dificuldade de deglutição de água. Relata perda ponderal repentina que se iniciou antes da disfagia (perdeu 12 kg). O exame endoscópico evidenciou, no terço médio esofágico, área de estenose pela presença de massa tumoral vegetativa, de contornos difusos, fibrosa, com região central ulcerada, maior que 10 cm, ocluindo 70% do lúmen (figura A). Qual a provável hipótese diagnóstica (HD) e o laudo anatomopatológico da biópsia incisional realizada (figura B)?`,
+alts:[`HD: Esôfago de Barrett. Laudo: área de transição esôfago-gástrica evidenciando área de metaplasia intestinal com displasia de alto grau.`,`HD: Carcinoma in situ. Laudo: epitélio pavimentoso estratificado não queratinizado, evidenciando células escamosas polimórficas e displásicas, envolvendo apenas as camadas basal e espinhosa, moderado infiltrado inflamatório.`,`HD: Carcinoma de células escamosas invasivo. Laudo: epitélio esofágico com displasia de alto grau, células tumorais atípicas, polimórficas, formando ninhos neoplásicos sólidos invadindo o conjuntivo subjacente com fibrose reativa, intenso infiltrado linfoplasmocitário e neoangiogênese.`,`HD: Adenocarcinoma in situ. Laudo: epitélio esofágico evidenciando glândulas com displasia severa, área central ulcerada com invasão da lâmina própria e formação de fibrose reativa e discreto infiltrado inflamatório misto.`],
+correta:2,fonteResp:'oficial',
+exp:`Versão que separa in situ de invasivo. No carcinoma IN SITU a membrana basal está preservada e a displasia fica restrita ao epitélio — a alternativa b descreve isso (só basal e espinhosa), incompatível com massa de 10 cm ocluindo 70% do lúmen. A c descreve ninhos INVADINDO o conjuntivo com fibrose reativa e neoangiogênese. Sequência: displasia de alto grau → CIS → invasivo → metástase.`},
+{id:'E11',org:'Esôfago',fontes:'T23B fev/2025 Q13',img:'e3.jpg',imgcap:'As mesmas EDAs da questão E3 (EEI e, em retrovisão, cárdia).',
+enun:`Sabe-se que o trato gastrointestinal pode ser acometido por patologias comuns nos seus diferentes segmentos, podendo ser resultado de progressão loco-regional ou de alterações envolvendo órgãos anexos. Um exemplo claro envolvendo o segmento distal esofágico e proximal gástrico é encontrado nas figuras endoscópicas (EDA na região do EEI e, em retrovisão, na cárdia), e evidenciam:`,
+alts:[`Hérnia de hiato deslizante esofágica e hérnia de hiato paraesofágica gástrica. Ambos processos indicativos de progressão e persistência da DRGE.`,`Varizes esofágicas e varizes gástricas. Ambos processos relacionados a prolongada ou intensa hipertensão portal, como a que ocorre no caso de cirrose.`,`Papiloma esofágico e papiloma gástrico. Ambos tumores benignos relacionados ao HPV e à formação de nódulos na área de transição esôfago-gástrica.`,`Lipoma esofágico e lipoma gástrico. Ambos tumores malignos relacionados ao H. pylori e que provocam hiperplasia nodular na área de transição esôfago-gástrica.`],
+correta:1,fonteResp:'aluno + oficial (E3)',
+exp:`Igual à E3 com distratores novos. A frase sobre hérnia de hiato é verdadeira em si, mas as imagens mostram CORDÕES VENOSOS, não estômago herniado. Lipoma é benigno (a alternativa o chama de maligno).`},
+{id:'E12',org:'Esôfago',fontes:'T23B fev/2025 Q9',img:'e12.jpg',imgcap:'Rx de tórax após passagem de sonda nasogástrica (reprodução da foto da prova).',
+enun:`Recém-nascido do gênero feminino, a termo, com peso adequado. No segundo dia pós-parto, manifesta episódios de vômitos imediatamente após as mamadas, seguidos de engasgo e tosse. Ao exame físico, observa-se diminuição do turgor e mucosas ressecadas. À ausculta cardíaca, nada digno de nota. À ausculta pulmonar, presença de roncos, estertores e sibilos, sugerindo broncoaspiração. Solicitada passagem de sonda nasogástrica e Rx de tórax (ver imagem). Qual o processo geral envolvido e os possíveis diagnósticos diferenciais (DDs)?`,
+alts:[`Processo inflamatório/infeccioso. DDs: Ectopia esofagiana.`,`Processo obstrutivo adquirido. DDs: Hérnia de hiato; Anéis de Schatzki.`,`Processo esofágico congênito. DDs: Atresia esofágica; Fístula esofágica.`,`Processo esofágico neoplásico. DDs: Acalásia; Membranas esofágicas.`],
+correta:2,fonteResp:'aluno + oficial (E8)',
+exp:`Alternativas organizadas pelo funil da aula (congênito, adquirido não inflamatório, inflamatório, neoplásico). Atresia com fístula é o processo CONGÊNITO; a sonda parada na bolsa esofágica ao Rx é a imagem clássica. Ectopia não é inflamatória/infecciosa; acalásia não é neoplásica.`},
+{id:'E13',org:'Esôfago',fontes:'T23B fev/2025 Q11',img:null,
+enun:`As esofagites agrupam os processos inflamatórios que envolvem a mucosa de revestimento do esôfago. Correlacione as patologias esofágicas (I, II, III) com as características morfológicas ou de progressão (A, B, C).<br><br><b>I.</b> Esofagite infecciosa &nbsp;·&nbsp; <b>II.</b> Esofagite crônica de refluxo (DRGE) &nbsp;·&nbsp; <b>III.</b> Esôfago de Barrett<br><br><b>A.</b> Trata-se de uma progressão de parcela das esofagites crônicas. Na morfologia clínica observamos "mucosa de salmão". Na microscópica: metaplasia intestinal do epitélio de transição esofagogástrica. Podem acumular displasias e progredir para adenocarcinoma.<br><b>B.</b> É comum em pacientes imunocomprometidos. A depender do agente etiológico, na microscopia são observadas células epiteliais com hiperplasia, exocitose, células gigantes com inclusões virais ou presença de hifas fúngicas.<br><b>C.</b> A patogenia envolve redução do tônus do esfíncter esofágico inferior e outras condições que permitem o refluxo do suco gástrico, originando áreas avermelhadas (inflamação, erosão, laceração) na mucosa esofágica.<br><br>A correlação correta está em:`,
+alts:[`I-A; II-C; III-B.`,`I-B; II-C; III-A.`,`I-B; II-A; III-B.`,`I-C; II-B; III-A.`],
+correta:1,fonteResp:'aluno + oficial (E9)',
+exp:`I infecciosa–B (células gigantes com inclusões virais = herpes; hifas = Candida), II DRGE–C, III Barrett–A. Repare que a alternativa c chega a citar um pareamento duplicado (III-B com I-B), impossível.`},
+{id:'E14',org:'Esôfago',fontes:'Slide 3 da aula de esôfago, caso de abertura',img:null,
+enun:`Adalberto, 55 anos, 80 kg, REG, hipertenso e diabético em acompanhamento. Procura o serviço de acolhimento da UBS com queixa de dor na região retroesternal, náuseas, pirose e sensação de regurgitação ácida há mais de 6 meses. Teve 3 episódios de vômitos após as refeições no último mês, refere desânimo e cansaço. Tabagista há 30 anos, etilista eventual, alimentação desregulada. Ao exame clínico, mucosas oculares normocoradas, orofaringe e mucosa lingual eritematosas, ausculta pulmonar e palpação abdominal sem achados relevantes. HMG e LCG sem alterações relevantes. Diante desse quadro, qual seria o grupo de diagnósticos diferenciais (DDs) mais prováveis e o exame mais indicado a ser solicitado?`,
+alts:[`Doenças congênitas esofágicas / pHmetria.`,`Doenças neoplásicas benignas esofágicas / Rx ou TC.`,`Doenças neoplásicas malignas esofágicas / endoscopia por cápsula.`,`Doenças inflamatórias esofágicas / esofagogastroduodenoscopia (EDA).`],
+correta:3,fonteResp:'aula (slides 3 a 5)',
+exp:`Pirose, regurgitação ácida e dor retroesternal por mais de 6 meses em tabagista apontam para o grupo das doenças INFLAMATÓRIAS (DRGE e esofagites); o exame de escolha é a EDA, que vê E biopsia. Congênito não combina com 55 anos; neoplasia benigna não dá esse quadro; cápsula não biopsia.`},
+{id:'E15',org:'Esôfago',fontes:'P1 Patologia I · mar/2022 Q13',img:'e15.jpg',imgcap:'Biópsia de mucosa esofágica, HE (reprodução de foto de tela).',
+enun:`Um homem de 52 anos de idade tem "azia" e refluxo gástrico ao término de uma grande refeição. Depois de os sintomas se manifestarem por muitos meses, foi realizada uma endoscopia gastrointestinal superior e uma biópsia da mucosa esofágica foi obtida. Qual das seguintes alterações patológicas, observadas na figura, provavelmente foi a que ocorreu?`,
+alts:[`Hipertrofia da mucosa.`,`Metaplasia epitelial colunar.`,`Atrofia da lâmina própria.`,`Hiperplasia de célula caliciforme.`],
+correta:1,fonteResp:'aluno + conteúdo',
+exp:`Refluxo crônico e biópsia de esôfago distal mostrando epitélio COLUNAR no lugar do escamoso: METAPLASIA (troca de um epitélio maduro por outro) — aqui a colunar intestinal do Barrett. Não é hipertrofia (aumento de tamanho celular) nem atrofia; a "hiperplasia de caliciformes" não existe como categoria — as caliciformes surgem PORQUE houve metaplasia.`},
+{id:'G1',org:'Estômago',fontes:'T19 mar/2023 Q6 · T18 ago/2022 Q8',img:'g1.jpg',imgcap:'A e B: microfotografias, HE, com as descrições C e D ao lado.',
+enun:`Analise as alterações apresentadas nas microfotografias das lâminas A e B coradas em HE e as descrições apresentadas em C e D. Correlacione a imagem histológica ao respectivo processo patológico descrito e aponte a hipótese diagnóstica.<br><br><b>C:</b> "Perda de continuidade da mucosa foveolar e glandular gástrica com presença de área fibrinosa e exposição do tecido conjuntivo, intenso infiltrado inflamatório misto, angiogênese e fibrose na camada submucosa."<br><b>D:</b> "Mucosa glandular gástrica com arquitetura preservada, aparentemente atrófica, presença de intenso infiltrado inflamatório predominantemente mononuclear em lâmina própria e submucosa com presença de vasos congestos."`,
+alts:[`A-C e B-D → I Erosão gástrica e II Úlcera duodenal.`,`A-C e B-D → I Gastrite fúngica e II Adenocarcinoma.`,`A-D e B-C → I Úlcera péptica e II Gastrite autoimune.`,`A-D e B-C → I Gastrite crônica e II Úlcera péptica.`],
+correta:3,fonteResp:'conteúdo + oficial (G2)',varia:'Na T18 (Q8) as mesmas lâminas vinham numeradas I (gastrite) e II (úlcera) com alternativas reordenadas — o gabarito seguia a mesma lógica.',
+exp:`A imagem A é mucosa gástrica com glândulas preservadas e infiltrado mononuclear denso: bate com a descrição D = GASTRITE CRÔNICA. A imagem B é a cratera com fundo fibrinoide e tecido conjuntivo exposto: bate com C = ÚLCERA PÉPTICA. Logo A-D e B-C. A alternativa c pareia A-D mas chama A de úlcera e B de autoimune, contradizendo a própria correlação (autoimune exigiria atrofia oxíntica com metaplasia intestinal — ver G3). Essa é a questão que mais confunde: alunos marcaram c (T19) e b (T18).`},
+{id:'G2',org:'Estômago',fontes:'T20 set/2023 Q13',img:'g2.jpg',imgcap:'(A) e (B): endoscopias. (a) e (b): microfotografias, HE.',
+enun:`Analise as alterações apresentadas nas imagens e microfotografias coradas em HE e nas descrições apresentadas abaixo. Correlacione as imagens clínicas com a microscopia e com o laudo histológico, fechando a hipótese diagnóstica do processo patológico apresentado.<br><br><b>(I)</b> "Perda da mucosa glandular com presença de camada superficial fibrino-hemorrágica, exposição da camada submucosa com presença de tecido de granulação subjacente."<br><b>(II)</b> "Mucosa glandular gástrica hiperplasiada mas com arquitetura preservada, lâmina própria com vasos congestos, exuberante infiltrado inflamatório mononuclear até a muscular da mucosa."`,
+alts:[`A, a, I → Úlcera duodenal e B, b, II → Gastrite aguda.`,`A, b, II → Gastrite autoimune e B, a, I → Adenocarcinoma gástrico.`,`A, b, I → Úlcera péptica e B, a, II → Gastrite crônica.`,`A, a, II → Gastrite eosinofílica e B, b, I → Úlcera péptica.`],
+correta:2,fonteResp:'oficial',
+exp:`Endoscopia A (lesão escavada) + microfotografia b (cratera com perda da mucosa) + descrição I (camada fibrino-hemorrágica, submucosa exposta, tecido de granulação) = ÚLCERA PÉPTICA. Endoscopia B (pregas espessadas e hiperemiadas) + microfotografia a (glândulas preservadas com infiltrado) + descrição II (mucosa hiperplasiada, infiltrado mononuclear até a muscular da mucosa) = GASTRITE CRÔNICA.`},
+{id:'G3',org:'Estômago',fontes:'T23B fev/2025 Q14',img:'g3.jpg',imgcap:'A, B e C: microfotografias, HE (legenda recortada para não entregar a resposta).',
+enun:`Analise as alterações apresentadas nas microfotografias das lâminas coradas em hematoxilina-eosina (A, B e C), correlacione com as descrições (I, II e III) e as hipóteses diagnósticas, HDs (a, b ou c).<br><br><b>I.</b> Perda abrupta de continuidade da mucosa glandular gástrica, com presença de área fibrinosa e tecido conjuntivo exposto na forma de tecido de granulação. → <b>a)</b> HD: Úlcera péptica gástrica<br><b>II.</b> Mucosa gástrica atrófica, perda do compartimento glandular oxíntico, lâmina própria com exuberante infiltrado linfocitário subepitelial. Áreas de metaplasia intestinal. → <b>b)</b> HD: Gastrite crônica<br><b>III.</b> Mucosa gástrica com arquitetura preservada, exibindo hiperplasia glandular, presença de moderado infiltrado inflamatório crônico interglandular e permeando a muscular da mucosa. → <b>c)</b> HD: Gastrite autoimune`,
+alts:[`A-I-a; B-II-b; C-III-c.`,`A-II-c; B-III-a; C-I-b.`,`A-III-c; B-I-b; C-II-a.`,`A-III-b; B-I-a; C-II-c.`],
+correta:3,fonteResp:'aluno + conteúdo',
+exp:`A = arquitetura preservada com hiperplasia e infiltrado crônico = III = gastrite crônica (b). B = cratera com tecido de granulação = I = úlcera péptica (a). C = mucosa atrófica com perda do compartimento oxíntico, infiltrado linfocitário e metaplasia intestinal = II = gastrite AUTOIMUNE (c). A tríade "atrofia oxíntica + metaplasia intestinal + corpo/fundo" é o que separa autoimune da gastrite crônica por H. pylori (antro). Repare que as HDs impressas ao lado das descrições II e III estão TROCADAS de propósito — é isso que a questão testa.`},
+{id:'G4',org:'Estômago',fontes:'T20 set/2023 Q14 · T19 mar/2023 Q7',img:null,
+enun:`Maria dos Anjos, 55 anos, R.E.G., HAS e DM2, procura o serviço de acolhimento da UBS com queixa de dor epigástrica, náuseas e sensação de plenitude (empachamento) há mais de 2 semanas. Teve episódios de vômitos após as refeições nos últimos dois dias; durante o relato do estado geral, também refere desânimo, fraqueza e intenso cansaço no último mês. Nega tabagismo, nega etilismo, relata ter alimentação balanceada (eutrófica). Ao exame clínico, mucosas oculares descoradas, mucosa lingual eritroplásica, com despapilação e atrofia epitelial de demais mucosas, ausculta pulmonar e palpação abdominal sem achados relevantes. Diante desse quadro, quais seriam os diagnósticos diferenciais (DDs) e os exames de auxílio diagnóstico solicitados pelo médico, no 1º atendimento?`,
+alts:[`DDs: Gastrite aguda; Gastrite crônica H. pylori (–). Exames: EDA com biópsia S/N, tomografia computadorizada e ressonância magnética.`,`DDs: Gastrite autoimune; Úlcera péptica gástrica. Exames: EDA simples; coagulograma; dosagem de vitamina D.`,`DDs: Gastrite crônica H. pylori (+); Gastropatia hipertrófica. Exames: Ultrassonografia endoscópica (ecoendoscopia); Rx de abdome; hemograma.`,`DDs: Gastrite autoimune; Gastrite crônica. Exames: EDA com pesquisa de H. pylori e biópsia S/N; hemograma; dosagem de vitamina B12.`],
+correta:3,fonteResp:'oficial',varia:'Na T19 as alternativas eram reordenadas, com a mesma resposta (gastrite crônica/autoimune + hemograma + B12 + EDA).',
+exp:`Dispepsia crônica + ANEMIA (mucosas descoradas, cansaço) + GLOSSITE atrófica (língua eritroplásica, despapilada) em quem não fuma nem bebe = gastrite crônica com suspeita de gastrite AUTOIMUNE e deficiência de B12 (anemia perniciosa). Primeiro atendimento: hemograma, B12 e EDA com pesquisa de H. pylori e biópsia. Ecoendoscopia, TC, RM e coagulograma não são exames de triagem para esse quadro.`},
+{id:'G5',org:'Estômago',fontes:'T20 Q15 · T19 Q8 · T18 Q10 · T23B Q15',img:null,
+enun:`Uma peculiaridade do sistema gástrico é que os tumores ou neoplasias gástricas benignas também despertam preocupação, uma vez que, mesmo em incidências baixas, existe o risco de progressão displásica e malignização. Encontramos um exemplo clássico e sua patogenia correta em uma das alternativas abaixo:`,
+alts:[`Papiloma escamoso gástrico. Trata-se de uma hiperplasia epitelial relacionada a mutação pelo vírus HPV; constitui lesões papilomatosas geralmente múltiplas e com capacidade de progressão para o papiloma adenomatoso.`,`Tumor estromal gastrointestinal, também conhecido como GIST. Está relacionado a mutação do oncogene c-KIT em células intersticiais de Cajal; na forma benigna constituem massas tumorais volumosas (< 5 cm). Na forma maligna progridem para GIST maligno (sarcomas grandes).`,`Adenocarcinoma do subtipo intestinal é o tumor benigno mais comum, tendo sua fisiopatogenia relacionada à mutação do gene p53. São múltiplos e geralmente volumosos e evoluem para a forma maligna adenocarcinoma do subtipo difuso.`,`Tumor estromal gastrointestinal, também conhecido como GIST, tem sua etiologia relacionada a hiperplasia reativa crônica das células de Cajal de origem neural. Geralmente são nódulos múltiplos e congruentes. 50% dos casos evoluem para o linfoma gástrico.`],
+correta:1,fonteResp:'oficial',varia:'Na T23B o GIST era a alternativa d, com os mesmos distratores (papiloma→HPV, leiomioma "estriado", pólipos→linfoma).',
+exp:`GIST: tumor MESENQUIMAL das células intersticiais de Cajal, mutação ativadora de c-KIT (ou PDGFRA), comportamento de benigno a maligno conforme TAMANHO (5 cm é o corte clássico) e índice mitótico; a forma maligna é um SARCOMA, nunca linfoma ou adenocarcinoma. Não existe papiloma escamoso no estômago (epitélio glandular); adenocarcinoma não é benigno; e as células de Cajal não geram linfoma.`},
+{id:'G6',org:'Estômago',fontes:'T18 Q11 · T19 Q9 · T23B Q16',img:null,
+enun:`João de Deus, 60 anos, hipertenso sem uso de medicação, tabagista, etilista, trabalha na reciclagem, procura atendimento médico no AMA com queixa de "inchaço no pescoço, lado E", de surgimento repentino há 1 mês, rápido aumento de volume e odinofagia na última semana. No prontuário eletrônico se observam consultas esporádicas no último ano com histórico de disfagia e refluxo, com resultado endoscópico não avaliado. Paciente relata que não se alimenta de sólidos há mais de 2 meses, perdeu mais de 10 kg. Ao exame físico: cútis desidratada sem turgor, paciente emagrecido; na palpação cervical esquerda, presença de nódulo supraclavicular (linfonodomegalia) de consistência endurecida, imóvel e com discreta dor à palpação; abdome distendido e rígido, presença de entumescimento em região periumbilical sem dor à palpação. Assinale a alternativa que contenha a nomenclatura dos achados clínicos da palpação, uma possível hipótese diagnóstica e o estágio da doença:`,
+alts:[`Nódulo periumbilical de Virchow e nódulo supraclavicular da Irmã Maria José, sugerem adenocarcinoma esofágico em estadiamento inicial.`,`Nódulo supraclavicular de Virchow e nódulo periumbilical da Irmã Maria José, sugerem linfoma gástrico em estadiamento intermediário, sem metástases.`,`Nódulo supraclavicular de Virchow e nódulo periumbilical da Irmã Maria José, sugerem adenocarcinoma gástrico em estadiamento avançado e metastatização a distância.`,`Nódulo supraclavicular de Virchow e nódulo periumbilical da Irmã Maria José, sugerem linfoma gástrico, não tendo significado no estadiamento ou no risco de metástase.`],
+correta:2,fonteResp:'professora',
+exp:`Nódulo de VIRCHOW = linfonodo supraclavicular ESQUERDO (metástase por via linfática pelo ducto torácico); nódulo da IRMÃ MARIA JOSÉ = nódulo periumbilical (implante peritoneal/metástase cutânea). Os dois são sinais de doença gástrica AVANÇADA e metastática. Disfagia com refluxo e emagrecimento em tabagista etilista de 60 anos sugerem adenocarcinoma gástrico. Linfoma não dá Virchow como regra, e "sem metástases" contradiz o próprio nódulo.`},
+{id:'G7',org:'Estômago',fontes:'T20 set/2023 Q16',img:null,
+enun:`Mesmo caso de João de Deus (G6), com nódulo supraclavicular esquerdo endurecido e fixo e entumescimento periumbilical. Assinale a alternativa que contenha a nomenclatura dos achados clínicos na palpação, um possível diagnóstico e o estágio da doença (estadiamento):`,
+alts:[`Nódulo periumbilical de Virchow e nódulo supraclavicular da Irmã Maria José, sugerem adenocarcinoma do subtipo difuso, tumores não coesos na fase intramucosa ou in situ.`,`Nódulo supraclavicular da Irmã Maria José e nódulo periumbilical de Virchow, sugerem adenocarcinoma do subtipo intestinal que ultrapassou a membrana basal mas sem metástases.`,`Nódulo supraclavicular de Virchow e nódulo periumbilical da Irmã Maria José, sugerem adenocarcinoma gástrico do subtipo intestinal, invasivo e em estadiamento avançado.`,`Nódulo supraclavicular de Virchow e nódulo periumbilical da Irmã Maria José, sugerem adenocarcinoma gástrico do subtipo difuso com células "soltas" justificando a linfadenomegalia.`],
+correta:2,fonteResp:'oficial',
+exp:`Mesma nomenclatura da G6, agora com Lauren: nódulos metastáticos = doença INVASIVA e AVANÇADA, o que exclui "intramucoso/in situ" (a) e "sem metástases" (b). Entre c e d, o adenocarcinoma INTESTINAL é o mais comum, forma massa/úlcera e é o que classicamente se associa a tabaco, álcool e homens mais velhos; a d tenta justificar a linfonodomegalia por "células soltas", que é descrição HISTOLÓGICA do difuso, não explicação da metástase.`},
+{id:'I1',org:'Intestino',fontes:'T20 Q1 · T18 Q14 · T19 Q12 · T23B Q2',img:'i1.jpg',imgcap:'Biópsia de mucosa colônica, HE.',
+enun:`Paciente T. S., 24 anos, sexo feminino, comparece ao ambulatório de Gastroenterologia com queixa de diarreia de consistência líquida há 3 meses, perda de peso (9 kg) e 6 a 8 evacuações/dia, com presença de sangue (confirmado em exame de sangue oculto nas fezes). Refere tenesmo e dor abdominal, tipo cólica difusa. Durante colonoscopia foram coletadas biópsias de áreas visivelmente hiperêmicas. O laudo histopatológico revela: mucosa colônica evidenciando focos de erosão do epitélio, intensa atividade inflamatória linfoplasmocitária na lâmina própria da mucosa, diminuição do conteúdo de muco nas glândulas crípticas e presença de polimorfonucleares no interior das glândulas. A atividade inflamatória está focada e limitada à mucosa. Estes dados patológicos são compatíveis com o diagnóstico de:`,
+alts:[`Doença de Crohn.`,`Colite ulcerativa.`,`Pólipo adenomatoso.`,`Adenocarcinoma.`],
+correta:1,fonteResp:'oficial',varia:'Na T19 o laudo falava em "pancolite… abscessos em criptas… lesões restritas à mucosa"; na T23B a ordem das alternativas mudava (resposta era a letra a).',
+exp:`Diarreia sanguinolenta crônica, tenesmo, inflamação LIMITADA À MUCOSA, depleção de muco (caliciformes), criptite/abscessos de cripta com polimorfonucleares dentro das glândulas, SEM granulomas: retocolite ulcerativa. Crohn é transmural, salteado e com granulomas.`},
+{id:'I2',org:'Intestino',fontes:'T23B Q3 · T19 Q13 · T20 Q2',img:null,
+enun:`Paciente do sexo masculino, caucasiano, 23 anos, apresentando dor abdominal há cerca de 2 meses, sem fatores desencadeantes, que aliviava com a defecação. Queixa-se de episódios diários de diarreia e falsas vontades de defecar. Durante a defecação, relata sentir dor anal e quadros de náuseas e anorexia. Ao exame proctológico, era visível um abscesso perianal e fissura anal, com emissão de pus. Apresentava importante palidez cutânea e era perceptível quadro de fraqueza. Realizou colonoscopia que evidenciou: "íleo terminal com mucosa erosionada e exsudativa; ceco e cólon ascendente com múltiplas erosões aftoides e mucosa circundante hiperemiada; cólon descendente e reto com múltiplas erosões aftoides". Foram coletadas biópsias cujo resultado descreve: erosão de mucosa intestinal, infiltrado inflamatório predominantemente linfoplasmocitário, estendendo-se de mucosa, lâmina própria da mucosa, muscular da mucosa até submucosa, onde se observa presença de granulomas.<br><br>Exames laboratoriais: leucograma 18.046/mm³ · sangue oculto positivo · ANCA reagente · calprotectina fecal 287 µg/g (doença inflamatória: &gt;160) · Hb 9,9 g/dl · PCR 11 mg/dl · VHS 73 mm/h.<br><br>Diante dos dados de anamnese e exames, estamos diante do diagnóstico de qual das patologias abaixo?`,
+alts:[`Doença de Crohn.`,`Colite ulcerativa.`,`Pólipos hamartomatosos.`,`Adenocarcinoma viloso.`],
+correta:0,fonteResp:'oficial',
+exp:`Íleo terminal acometido, erosões AFTOIDES salteadas, doença PERIANAL (abscesso e fissura), inflamação que vai da mucosa à submucosa COM GRANULOMAS, anemia, PCR/VHS e calprotectina altas: doença de Crohn. RCU não acomete íleo (salvo ileíte de refluxo), é contínua a partir do reto, restrita à mucosa e não tem granulomas nem doença perianal como regra.`},
+{id:'I3',org:'Intestino',fontes:'T19 mar/2023 Q10',img:'i3.jpg',imgcap:'Endoscopia: jejuno proximal.',
+enun:`MLA, 54 anos, com quadro de dor abdominal difusa predominante em hipocôndrio direito associado a melena intermitente, vômitos pós-prandiais, astenia, anorexia e perda de 10 kg de peso há aproximadamente 12 meses. Sem comorbidades. Internada com melena nos últimos 5 dias, mucosas hipocoradas ++/4+, taquicardia (FC 104 bpm). Hemoglobina de 5,8 g/dl e ferro 12 µg/dl. Realizou endoscopia com visualização, em jejuno proximal, de lesão infiltrante ulcerada e com sinal de sangramento recente. Biópsias: perda da arquitetura normal organizada com presença de células formando glândulas com luz, porém há perda da diferenciação em células colunares e caliciformes; nas glândulas e em criptas notam-se atipias nucleares e mitoses. Em algumas glândulas nota-se o aspecto cribriforme; as células atípicas infiltram todas as camadas da mucosa, passando pela submucosa, muscular até a serosa, onde se observa intenso infiltrado inflamatório às custas de linfócitos e presença de células neoplásicas junto aos adipócitos. Com base nos dados disponíveis neste caso, estamos diante do diagnóstico de:`,
+alts:[`Pólipo hamartomatoso.`,`Adenoma tubular.`,`Adenocarcinoma túbulo-viloso.`,`Adenoma túbulo-viloso.`],
+correta:2,fonteResp:'aluno + conteúdo',
+exp:`Lesão infiltrante ulcerada com glândulas atípicas cribriformes que INVADEM mucosa, submucosa, muscular e serosa até os adipócitos: isso é adenocarcinoma INVASIVO — a única alternativa maligna. Pólipo hamartomatoso e adenomas (tubular ou túbulo-viloso) são lesões limitadas à mucosa, sem invasão. O rótulo "túbulo-viloso" no adenocarcinoma é atípico, mas é a única alternativa que expressa carcinoma.`},
+{id:'I4',org:'Intestino',fontes:'T20 set/2023 Q3',img:'i4.jpg',imgcap:'Biópsia, HE. Seta impressa: "Mucosa (glândulas de Lieberkühn)".',
+enun:`T.V.A., 56 anos, feminina, com quadro de dor abdominal difusa associado a melena intermitente, vômitos pós-prandiais, astenia, anorexia e perda de 10 kg de peso há aproximadamente 9 meses. Internada com melena nos últimos 2 dias, mucosas hipocoradas ++++/4+, taquicardia (FC 109 bpm), abdome doloroso à palpação profunda em hipocôndrio direito. Anemia (Hb 8,8 g/dl). Solicitada colonoscopia, foi visualizada em cólon ascendente lesão polipoide séssil de formato irregular e infiltrante, ulcerada e com sinal de sangramento recente. A lesão foi biopsiada, cuja lâmina histopatológica pode ser observada na figura. Os achados desta lâmina são compatíveis com diagnóstico de:`,
+alts:[`Pólipo hiperplásico.`,`Pólipo adenomatoso tubular.`,`Pólipo inflamatório.`,`Adenocarcinoma invasivo.`],
+correta:3,fonteResp:'oficial',
+exp:`Massa polipoide séssil irregular, INFILTRANTE e ulcerada no cólon ascendente, anemia grave e melena, com lâmina mostrando glândulas neoplásicas FORA da mucosa normal (a seta "glândulas de Lieberkühn" marca o que restou de normal): adenocarcinoma invasivo. Pólipos hiperplásico, adenomatoso tubular e inflamatório não ulceram nem infiltram.`},
+{id:'I5',org:'Intestino',fontes:'T19 mar/2023 Q11',img:null,
+enun:`Após realizar uma colonoscopia, o médico informa à paciente que o diagnóstico de doença de Crohn é de alta probabilidade por ter identificado a lesão mais precoce ligada a essa doença, que se trata de:`,
+alts:[`Úlceras aftosas.`,`Estenoses segmentares.`,`Abscesso em criptas.`,`Granuloma na mucosa.`],
+correta:0,fonteResp:'aluno + conteúdo',
+exp:`A lesão mais PRECOCE e visível do Crohn na colonoscopia é a ÚLCERA AFTOIDE (pequena úlcera superficial sobre folículo linfoide). Estenoses e fístulas são tardias; abscesso de cripta é achado de RCU; granuloma é achado MICROSCÓPICO, não endoscópico — e aparece em menos da metade dos casos.`},
+{id:'I6',org:'Intestino',fontes:'T19 Q14 · T18 Q16',img:null,
+enun:`Pólipos colorretais são protrusões da mucosa colônica. Os pólipos que contêm potencial maligno devem ser diagnosticados e removidos através da colonoscopia. Com base nas afirmativas, avalie e determine quais destas sentenças são corretas:<br><br><b>I.</b> Pólipos adenomatosos podem conter displasia e risco de evolução para adenocarcinoma. A displasia é fator determinante de gravidade de acordo com o seu grau.<br><b>II.</b> Lesão vegetante, friabilidade, endurecimento, estenose ou obstrução à passagem, tamanho do pólipo, padrão histológico viloso e presença de displasia de alto grau são fatores preocupantes para risco aumentado de malignidade.<br><b>III.</b> O surgimento dos pólipos adenomatosos é consequência de uma alteração da dinâmica proliferativa em relação à mucosa normal. Pode-se observar à microscopia um crescimento proliferativo, ocorrendo então uma perda progressiva do padrão característico com a consequente substituição das células normais por células pouco diferenciadas.<br><br>Está correto o que se afirma em:`,
+alts:[`I e II.`,`I e III.`,`II e III.`,`I, II e III.`],
+correta:3,fonteResp:'professora ("16.D")',
+exp:`As três afirmativas descrevem corretamente a sequência adenoma-carcinoma: a displasia GRADUA o risco; tamanho, padrão viloso, displasia de alto grau e sinais endoscópicos de infiltração aumentam a probabilidade de malignidade; e o adenoma nasce de alteração da dinâmica proliferativa (via APC/Wnt) com perda progressiva de diferenciação.`},
+{id:'I7',org:'Intestino',fontes:'T19 Q15 · T18 Q17',img:'i7.jpg',imgcap:'Pólipo, HE, em pequeno e maior aumento.',
+enun:`Paciente sexo masculino, 12 anos, estudante, relata sangramento retal e dificuldade de evacuar há 20 dias. O paciente foi submetido a uma colonoscopia que evidenciou mais de 40 pólipos no cólon e no reto, de tamanhos variados (entre 5 e 20 mm). Alguns destes pólipos foram excisados e 18 deles enviados para exame anatomopatológico. O aspecto histológico das lesões polipoides exibia, em 11 dos pólipos analisados (imagem), dilatação cística, ramificação e tortuosidade de glândulas e, em maior aumento, o epitélio glandular apresentava atipia com núcleos hipercromáticos, pleomorfismo, hipercelularidade, perda de polaridade, congestão vascular, inflamação crônica e figuras de mitose. Com base nos dados e histórico deste paciente, podemos considerar tratar-se de:`,
+alts:[`Polipose juvenil com progressão para adenocarcinoma.`,`Polipose familiar com lesão inflamatória.`,`Adenocarcinoma viloso.`,`Adenoma túbulo-viloso.`],
+correta:0,fonteResp:'professora ("17.A")',
+exp:`Criança de 12 anos com dezenas de pólipos retais sangrantes; histologia com criptas CÍSTICAS dilatadas, ramificadas e tortuosas em estroma inflamado = pólipos JUVENIS (hamartomatosos); o achado de atipia, pleomorfismo e mitoses em 11 deles indica displasia, ou seja, PROGRESSÃO para adenocarcinoma — que ocorre na polipose juvenil (mutações SMAD4/BMPR1A). PAF teria centenas de adenomas tubulares, não pólipos císticos inflamados.`},
+{id:'I8',org:'Intestino',fontes:'T19 Q16 · T18 Q18',img:null,
+enun:`São informações corretas sobre a polipose adenomatosa familiar (PAF):<br><br><b>I.</b> É uma doença autossômica dominante, com penetrância próxima de 100%, causada por uma mutação no Adenomatous polyposis coli (APC). Quando o APC sofre mutação, há interferência na proliferação, apoptose e controle das fases do ciclo celular.<br><b>II.</b> A PAF se manifesta pela presença de numerosos pólipos adenomatosos em todo o trato gastrointestinal, principalmente o cólon. Estes pólipos podem estar presentes vários anos antes do aparecimento dos sintomas, fato que ratifica a importância de investigação precoce dos familiares de pacientes acometidos pela doença.<br><b>III.</b> É um processo inflamatório crônico de etiologia ainda desconhecida, não curável por tratamento clínico ou cirúrgico e que acomete o trato gastrointestinal de forma uni ou multifocal, com lesões transmurais. A presença de fístulas intestinais é uma característica comum desta patologia.<br><br>Está correto o que se afirma nas sentenças:`,
+alts:[`I e II.`,`I e III.`,`II e III.`,`I, II e III.`],
+correta:0,fonteResp:'professora (escreveu "crohn" ao lado do item III)',
+exp:`I e II descrevem a PAF: autossômica dominante, penetrância ~100%, mutação germinativa de APC, centenas de adenomas colônicos anos antes dos sintomas, rastreio dos familiares e colectomia profilática. III descreve a DOENÇA DE CROHN (transmural, salteada, fístulas), não a PAF.`},
+{id:'I9',org:'Intestino',fontes:'T19 Q17 · T18 Q19',img:null,
+enun:`Paciente internada há 15 dias por agravamento clínico com dor abdominal, diarreia (mais de 10 dejeções de fezes líquidas/dia), melena e picos febris. Perda ponderal de 18 kg desde o início do quadro. Os exames microbiológico, parasitológico e pesquisa de toxina de Clostridium difficile nas fezes foram negativos, o exame de sangue oculto nas fezes positivo, hemoglobina de 7,6 g/dl e hematócrito de 23%. O exame de colonoscopia mostrou, a partir do ângulo hepático, o órgão com aspecto tubular e mucosa intensamente hiperêmica, com intensa vasodilatação, edemaciado e com presença de pólipos. Realizada biópsia, com excisão de pólipos, o resultado obtido consta das seguintes informações: fragmento de mucosa de porção do intestino grosso com ligeira irregularidade da morfologia de criptas, por espessamento da lâmina própria invadida por células inflamatórias mononucleares, acompanhado de vasos dilatados e congestos e conservação da população de células caliciformes e enterócitos; observam-se ainda abscessos em criptas. Não foram observados granulomas. A amostra não revela sinais de displasia. O diagnóstico compatível com a clínica e confirmado pelo laudo histopatológico obtido é de:`,
+alts:[`Doença de Crohn.`,`Colite ulcerativa.`,`Adenocarcinoma.`,`Adenoma.`],
+correta:1,fonteResp:'professora ("colite")',varia:'Na T18 a colonoscopia detalhava reto e sigmoide normais até 20 cm e o mesmo padrão contínuo dali ao ângulo hepático.',
+exp:`Diarreia sanguinolenta grave, culturas e toxina de C. difficile NEGATIVAS, colonoscopia com mucosa CONTÍNUA hiperêmica e tubular (perda de haustrações), biópsia com infiltrado mononuclear na lâmina própria, ABSCESSOS DE CRIPTA, SEM granulomas e sem displasia: retocolite ulcerativa em atividade.`},
+{id:'I10',org:'Intestino',fontes:'T20 set/2023 Q4',img:'i10.jpg',imgcap:'Pólipo, HE, 10x e 40x.',
+enun:`Homem de 44 anos busca ajuda médica devido a desconforto abdominal, do tipo cólica, há 3 meses. Solicitada colonoscopia, observou-se mucosa hiperêmica e edemaciada de cólon ascendente até sigmoide, e presença de 3 pólipos pediculados variando em tamanho entre 0,5 e 0,7 cm. Os pólipos foram removidos e encaminhados para exame histopatológico. Observe as lâminas e determine qual das alternativas é compatível com os achados histopatológicos visíveis:`,
+alts:[`Pólipo inflamatório, com presença de infiltrado inflamatório linfoplasmocitário.`,`Pólipo hiperplásico, com importante atividade inflamatória crônica.`,`Pólipo hamartomatoso, compatível com mutações gênicas.`,`Adenocarcinoma in situ, podendo este ser considerado curado dada a remoção do pólipo para a realização da biópsia.`],
+correta:1,fonteResp:'oficial',
+exp:`Pólipos pediculados pequenos (0,5 a 0,7 cm) com criptas alongadas de luz SERRILHADA/estrelada em corte transversal, epitélio maduro com caliciformes e SEM displasia = pólipo HIPERPLÁSICO, a lesão polipoide mais comum do cólon. Inflamatório teria predomínio de inflamação e regeneração; hamartomatoso é lesão de síndromes (Peutz-Jeghers, juvenil); adenocarcinoma in situ exigiria displasia de alto grau, que não há.`},
+{id:'I11',org:'Intestino',fontes:'T23B Q4 · T20 Q5',img:null,
+enun:`Paciente feminina, 49 anos, procura ajuda médica com quadro de fadiga, astenia e anemia. A paciente relata ser constipada desde a adolescência e nos últimos meses chega a permanecer por 9 dias sem defecar e refere melena esporádica. Dado o diagnóstico de anemia há alguns anos, a paciente faz uso de repositores de ferro. Realizada colonoscopia, foram vistos pólipos intestinais sésseis e pediculados no intestino grosso; destes, 5 foram removidos para análise. Dentre os laudos de biópsias abaixo, qual justificaria a realização de proctocolectomia?`,
+alts:[`O fragmento analisado revelou vilosidades apresentando células com núcleos alongados e estratificação, acompanhada de atividade inflamatória linfoplasmocitária da lâmina própria, glândulas cribriformes revestidas por epitélio cujas células mantêm as características acima citadas em meio a escassez de caliciformes. As demais camadas estão livres de quaisquer alterações.`,`O fragmento analisado revelou áreas de mucosa preservada entremeadas por área de intenso infiltrado inflamatório às custas de células mononucleares. A atividade inflamatória avança em direção à camada submucosa, onde se observa também a presença de granulomas. Não foram vistas alterações na camada muscular do órgão.`,`O fragmento analisado revelou glândulas dilatadas, com estroma congesto e cronicamente inflamado, bem como hiperplasia epitelial colunar e áreas de displasia moderada. Demais camadas sem alterações.`,`O fragmento analisado revelou glândulas de Lieberkühn apresentando luz cribriforme, importante redução no número de células caliciformes, núcleos celulares hipercromáticos, atipia nuclear de alto grau, alteração da relação núcleo/citoplasma, perda de polaridade celular, presença de mitose celular em glândulas e vilosidades. Observa-se intenso infiltrado inflamatório às custas de células mononucleares em todas as camadas e presença de glândulas invadindo a submucosa.`],
+correta:3,fonteResp:'oficial (na T20, o mesmo texto era a alternativa a — gabarito a)',
+exp:`Proctocolectomia se justifica quando há CARCINOMA INVASIVO (ou polipose com displasia de alto grau difusa). Só a alternativa d descreve INVASÃO: luz cribriforme, perda de caliciformes, atipia de alto grau, perda de polaridade, mitoses e glândulas invadindo a SUBMUCOSA. A alternativa a é adenoma com displasia (limitado à mucosa), b é Crohn (granulomas), c é pólipo com displasia moderada.`},
+{id:'I12',org:'Intestino',fontes:'T20 set/2023 Q8',img:null,
+enun:`A retocolite ulcerativa (RCU) é uma doença idiopática caracterizada por episódios recorrentes de inflamação. As manifestações clínicas mais comuns são diarreia, sangramento retal, eliminação de muco nas fezes e dor abdominal, devendo sempre ser excluídas causas infecciosas. A histopatologia nestes casos pode apresentar:<br><br><b>I.</b> Lesões da mucosa, formando abscessos em cripta, os quais correspondem a células inflamatórias e debris localizados na luz das glândulas, destruindo-as.<br><b>II.</b> Na fase ativa há forte congestão dos vasos, são possíveis sangramentos, infiltrado linfoplasmocitário e neutrofílico, necrose das células epiteliais da mucosa originando áreas erosadas; é possível a formação de pseudopólipos.<br><b>III.</b> Podem ser observados infiltrado inflamatório e fibrose afetando todas as camadas, até a serosa. O aparecimento de granulomas é característico nesta doença.<br><br>São achados histopatológicos clássicos de RCU:`,
+alts:[`I e II.`,`I e III.`,`II e III.`,`I, II e III.`],
+correta:0,fonteResp:'oficial',
+exp:`I (abscessos de cripta) e II (congestão, sangramento, infiltrado linfoplasmocitário e neutrofílico, erosões e pseudopólipos) são achados clássicos da RCU. III (inflamação e fibrose TRANSMURAL até a serosa, granulomas) é doença de CROHN.`},
+{id:'I13',org:'Intestino',fontes:'T23B fev/2025 Q1',img:'i13.jpg',imgcap:'Lesão polipoide excisada, HE.',
+enun:`Paciente de 62 anos, sexo feminino, comparece ao ambulatório de Gastroenterologia com queixa de cólicas intestinais. Realizada colonoscopia, foi localizada lesão polipoide, a qual foi excisada. Observe a imagem e responda: qual o diagnóstico diante da imagem histopatológica observada?`,
+alts:[`Pólipo inflamatório.`,`Pólipo hiperplásico túbulo-viloso.`,`Pólipo displásico viloso.`,`Adenocarcinoma túbulo-viloso.`],
+correta:2,fonteResp:'aluno + conteúdo',
+exp:`A imagem mostra projeções VILOSAS alongadas, digitiformes, revestidas por epitélio adenomatoso: adenoma VILOSO, que por definição é displásico. "Pólipo hiperplásico túbulo-viloso" mistura duas entidades que não coexistem; pólipo inflamatório não tem vilosidades; adenocarcinoma exigiria invasão — e a paciente só tem cólicas.`},
+{id:'I14',org:'Intestino',fontes:'T23B fev/2025 Q5',img:'i14.jpg',imgcap:'Lesão excisada, HE.',
+enun:`Paciente de 64 anos, sexo feminino, hipertensa e diabética, diagnosticada com anemia persistente há 2 anos, realizou pesquisa de sangue oculto nas fezes com resultado positivo. A paciente referia hábito intestinal irregular e queixava-se de perda de 2 kg no último ano. Solicitada colonoscopia para melhor compreensão da presença de sangue nas fezes, foi removido 1 pólipo séssil da região de cólon sigmoide, irregular em sua forma e medindo 3,7 cm em seu menor diâmetro por 7,1 cm em seu maior diâmetro. Observe a lâmina histopatológica. Com base nos dados e imagem disponíveis, podemos afirmar tratar-se de:`,
+alts:[`Pseudopólipo.`,`Pólipo adenomatoso túbulo-viloso.`,`Colite ulcerativa.`,`Adenocarcinoma invasivo.`],
+correta:3,fonteResp:'aluno + conteúdo',
+exp:`Pólipo SÉSSIL de 7 cm, irregular, com anemia crônica e sangue oculto, em idosa, e lâmina com glândulas angulosas e cribriformes infiltrando estroma DESMOPLÁSICO: adenocarcinoma invasivo. Tamanho acima de 2 cm e componente viloso são os maiores preditores de malignidade em adenoma. Pseudopólipo e RCU não têm glândulas neoplásicas.`},
+{id:'I15',org:'Intestino',fontes:'T23B fev/2025 Q6',img:null,
+enun:`Colonoscopia realizada em paciente com queixa principal de dor abdominal, diarreia crônica e sangramento retal. Descrição do exame: Reto: mucosa com aspecto preservado, sem ulceração. Cólon sigmoide: acometimento focal da mucosa com áreas de ulceração irregular, congestão e áreas de cicatrização; evidência de estenose no segmento distal. Cólon descendente: presença de lesões ulceradas e friáveis, com bordas elevadas e irregulares, características da inflamação crônica. Cólon transverso: áreas de ulceração profunda, com presença de fístulas e secreção purulenta, sugerindo atividade inflamatória ativa. Cólon ascendente: acometimento focal da mucosa com áreas de ulceração irregular, congestão e áreas de cicatrização. Válvula ileocecal: alterações significativas, com ulceração e inflamação; presença de estenose. Íleo terminal: edema e ulceração profunda, com presença de áreas de cicatrização e estenose significativa. Histopatologia das lesões: infiltrado inflamatório denso composto predominantemente por linfócitos, plasmócitos e células gigantes multinucleadas, características de granulomas vistos em submucosa. Acometimento transmural: a inflamação estende-se até a camada muscular, com edema e presença de fibrose. Os dados dos exames descrevem:`,
+alts:[`Colite ulcerativa.`,`Adenoma túbulo-viloso.`,`Adenocarcinoma invasivo.`,`Doença de Crohn.`],
+correta:3,fonteResp:'aluno + conteúdo',
+exp:`RETO POUPADO, acometimento focal/salteado, úlceras profundas, ESTENOSES, FÍSTULAS, válvula ileocecal e ÍLEO TERMINAL acometidos, GRANULOMAS com células gigantes e inflamação TRANSMURAL com fibrose: doença de Crohn ponto a ponto. RCU começa no reto, é contínua e restrita à mucosa.`},
+{id:'I16',org:'Intestino',fontes:'T23B fev/2025 Q7',img:null,
+enun:`Dentre as descrições histopatológicas abaixo, qual revela um PSEUDOPÓLIPO?`,
+alts:[`O exame revela áreas de mucosa intestinal com epitélio de vilos e glândulas com células caliciformes e enterócitos proliferados; as células epiteliais apresentam alterações nucleares discretas, como aumento do núcleo, hipercromasia e alongamento celular. Observa-se ainda presença de infiltrado inflamatório crônico em lâmina própria da mucosa em meio a glândulas cribriformes.`,`As glândulas presentes no tecido apresentam arquitetura desorganizada, células cilíndricas com núcleos hipercromáticos, pleomórficos, e mitoses em alta frequência. Há invasão da camada muscular da mucosa por glândulas de Lieberkühn em meio a intensa atividade inflamatória crônica e congestão vascular.`,`Ao exame microscópico, observa-se um pólipo intestinal cujo tecido mostra um infiltrado inflamatório crônico, com predominância de linfócitos, plasmócitos e raros neutrófilos, localizado na lâmina própria. Não há evidência de alterações quantitativas ou morfológicas em enterócitos e caliciformes.`,`Pólipo intestinal caracterizado por proliferação de células caliciformes e colunares em vilos e glândulas; não há evidências de displasia. Observa-se congestão vascular em lâmina própria da mucosa e infiltrado de células mononucleares que não ultrapassa a camada muscular da mucosa.`],
+correta:2,fonteResp:'aluno + conteúdo',
+exp:`Pseudopólipo é ilha de mucosa PRESERVADA ou regenerativa cercada por ulceração, típica da RCU: tecido com infiltrado inflamatório crônico e SEM alteração dos enterócitos e caliciformes — exatamente a alternativa c. A alternativa a tem displasia (adenoma), a b tem invasão (carcinoma) e a d descreve pólipo HIPERPLÁSICO (proliferação).`},
+{id:'I17',org:'Intestino',fontes:'T23B fev/2025 Q8',img:null,
+enun:`Paciente do sexo feminino, de 53 anos de idade, sem comorbidades, assintomática, sem antecedente familiar de câncer colorretal, realizou exame de sangue oculto nas fezes que veio positivo, sendo indicada a realização de colonoscopia. A colonoscopia evidenciou dois pólipos sésseis, de 0,5 cm cada, localizados no cólon direito (ambos adenomas tubulares de baixo grau), um pólipo séssil de 0,8 cm localizado no cólon transverso (adenoma tubular de ALTO grau) e dois pólipos pediculados no sigmoide, de 1,2 cm e 1,5 cm (ambos adenomas tubulares de baixo grau). Foi realizada polipectomia, com margens livres de todos os pólipos. Dentre as alterações histopatológicas, qual dos laudos de biópsia abaixo descreve a lesão séssil observada no CÓLON TRANSVERSO?`,
+alts:[`O tumor apresenta arquitetura glandular, com glândulas cribriformes e outras mais complexas e ramificadas; há presença de áreas de perda de polaridade celular e formação glandular tapada. Observa-se atipia nuclear significativa, com núcleos hipercromáticos, de tamanho aumentado e forma irregular. A relação núcleo/citoplasma está aumentada e as células apresentam nucléolos evidentes, sugerindo atividade mitótica elevada.`,`O tumor apresenta arquitetura glandular, com glândulas cribriformes. A proliferação epitelial glandular revela células colunares alongadas em núcleo e citoplasma e células caliciformes também proliferadas, variando discretamente em tamanho.`,`O tumor apresenta arquitetura glandular típica; em algumas regiões, o epitélio está erodido, mostrando áreas de ulceração superficial em vilosidades. A lâmina própria apresenta um infiltrado inflamatório denso, predominantemente composto por linfócitos, plasmócitos e macrófagos. Pequenos vasos sanguíneos dilatados e congestos são visíveis, com presença de edema intersticial leve. O infiltrado inflamatório é difuso, envolvendo toda a lâmina própria, mas sem formação de granulomas.`,`O epitélio que recobre as criptas apresenta erosões e úlcera superficial. Há também um aumento das células caliciformes, com secreção excessiva de mucina, sugerindo um esforço de proteção da mucosa intestinal. A lâmina própria mostra uma reação inflamatória crônica com forte infiltrado de linfócitos, macrófagos e plasmócitos, distribuídos de maneira difusa. Granulomas não caseosos são observados em várias áreas da lâmina própria.`],
+correta:0,fonteResp:'aluno + conteúdo',
+exp:`Adenoma de ALTO GRAU: arquitetura complexa (glândulas cribriformes, ramificadas, "tapadas"), perda de polaridade, atipia nuclear marcada, nucléolos evidentes e mitoses — mas SEM invasão da submucosa. A alternativa b é adenoma de baixo grau (atipia discreta); c e d são lesões inflamatórias (a d, com granulomas, é Crohn).`},
+{id:'P1',org:'Pâncreas',fontes:'P4 T18 dez/2022 Q15 · T19 Q18 · T20 Q17 · T23B Q18',img:null,
+enun:`Um estudo de pancreatite com necropsias é realizado. Em alguns casos, há evidências de morte por pancreatite aguda nos quais há alterações de pancreatite crônica. O exame microscópico exibe inflamação aguda, inflamação crônica com fibrose e atrofia acinar, além de rolhas de proteína espessa nos pequenos ductos pancreáticos obstruídos. Algumas das rolhas proteicas mostram calcificação. Qual o fator de risco mais provável para a pancreatite nesses casos?`,
+alts:[`Abuso de álcool.`,`Pâncreas divisum.`,`Mutações no gene CFTR.`,`Cálculos biliares presos na porção terminal do colédoco.`],
+correta:0,fonteResp:'oficial',
+exp:`Pancreatite crônica com ROLHAS PROTEICAS CALCIFICADAS obstruindo pequenos ductos, fibrose e atrofia acinar, com surtos agudos sobrepostos, é o padrão da pancreatite crônica ALCOÓLICA (secreção rica em proteína e pobre em bicarbonato → tampões que calcificam). Cálculo biliar causa pancreatite AGUDA obstrutiva, não crônica calcificante; CFTR e pâncreas divisum são causas raras.`},
+{id:'P2',org:'Pâncreas',fontes:'T20 set/2023 Q18 · T23B fev/2025 Q19',img:null,
+enun:`Paciente acometido por episódios de pancreatite aguda recorrentes foi diagnosticado com colelitíase. Após exame de ultrassom da vesícula, percebeu-se que o seu interior estava repleto de microcálculos de colesterol, além da presença de barro biliar. Em novo episódio de pancreatite aguda após ingestão de grande quantidade de comida gordurosa, o paciente manifestou dor aguda contínua e persistente na altura do epigástrio. Manifestou quadro de icterícia e, após internado, evoluiu muito mal e veio a óbito. Na necrópsia observou-se significativa exsudação celular, intensa esteatonecrose dos tecidos peripancreáticos, hemorragias intraparenquimatosas por lesões vasculares intrapancreáticas e destruição da porção exócrina e endócrina do pâncreas. Sobre o desenvolvimento das lesões encontradas microscopicamente, está correto o que se afirma em:<br><br><b>I.</b> A enzima lipase teve participação direta na destruição da porção exócrina e endócrina do pâncreas.<br><b>II.</b> As lesões vasculares intrapancreáticas foram causadas pela presença de elastase.<br><b>III.</b> A área de esteatonecrose resulta da ação de amilases pancreáticas que liberam triglicérides dos ácidos graxos, desencadeando uma reação com íons Ca++ dos líquidos intersticiais.<br><b>IV.</b> A exsudação celular está relacionada com vasodilatação, células polimorfonucleares e aumento da permeabilidade vascular (cininas).`,
+alts:[`I e II.`,`I e III.`,`II e III.`,`II e IV.`],
+correta:3,fonteResp:'oficial',
+exp:`II certa: a ELASTASE ativada digere a parede dos vasos e causa as hemorragias intraparenquimatosas. IV certa: a exsudação vem da vasodilatação, aumento de permeabilidade e quimiotaxia de neutrófilos mediados por CININAS. I errada: a destruição do parênquima é feita pelas PROTEASES (tripsina e derivadas) — a lipase age na GORDURA. III errada: a esteatonecrose é obra da LIPASE, que libera ácidos graxos DOS triglicérides (e não o contrário), que então se ligam ao cálcio (saponificação).`},
+{id:'P3',org:'Pâncreas',fontes:'T19 mar/2023 Q19 · P4 T18 dez/2022 Q16',img:null,
+enun:`Mesmo caso da P2 (pancreatite aguda recorrente por colelitíase, óbito, necrópsia com esteatonecrose, hemorragias intraparenquimatosas e destruição da porção exócrina e endócrina). Sobre o desenvolvimento das lesões encontradas microscopicamente, está correto o que se afirma em:<br><br><b>I.</b> A enzima lipase teve participação direta na destruição da porção exócrina e endócrina do pâncreas.<br><b>II.</b> As lesões vasculares intrapancreáticas foram causadas pela presença de quimiotripsina.<br><b>III.</b> A área de esteatonecrose resulta da ação de amilases pancreáticas que liberam triglicérides dos ácidos graxos, desencadeando uma reação com íons Ca++ dos líquidos intersticiais.`,
+alts:[`I e II.`,`I e III.`,`II e III.`,`Nenhuma das anteriores.`],
+correta:3,fonteResp:'conteúdo (na T19 o aluno riscou as palavras erradas e mudou para d)',
+exp:`Versão com 3 afirmativas — TODAS erradas: I atribui à lipase a destruição do parênquima (é das PROTEASES); II atribui as lesões vasculares à quimiotripsina (é da ELASTASE); III atribui a esteatonecrose às amilases e inverte a reação (a LIPASE libera ácidos graxos dos triglicérides). Logo, "nenhuma das anteriores". Pegadinha clássica de troca de enzimas.`},
+{id:'P4',org:'Pâncreas',fontes:'P4 T18 Q17 · T19 Q20 · T20 Q19 · T23B Q17',img:'p4.jpg',imgcap:'Peça macroscópica de pâncreas.',
+enun:`Um homem de 52 anos de idade vem apresentando dor abdominal severa há 2 dias. No exame físico, há rigidez em tábua dos músculos abdominais, dificultando um exame mais aprofundado. Não há distensão abdominal observável. O aspecto macroscópico representativo do processo patológico é exibido na figura. Qual dos seguintes é o mecanismo que apresenta a maior probabilidade de produzir tal aspecto?`,
+alts:[`Hipertrigliceridemia.`,`Mutação do gene K-RAS.`,`Desregulação da inativação do tripsinogênio.`,`Presença de altos níveis de TGF-β no tecido.`],
+correta:2,fonteResp:'oficial',
+exp:`Abdome em tábua com pâncreas necro-hemorrágico e focos de esteatonecrose: pancreatite aguda grave. O mecanismo central é a ATIVAÇÃO INAPROPRIADA DO TRIPSINOGÊNIO dentro do ácino (por obstrução ductal, lesão acinar ou defeito no transporte das pró-enzimas) e a falha em inativar a tripsina, que ativa as demais pró-enzimas e o complemento. Hipertrigliceridemia é causa rara; K-RAS é oncogênese; TGF-β é a fibrose da pancreatite CRÔNICA.`},
+{id:'P5',org:'Pâncreas',fontes:'T23B fev/2025 Q20 · T20 set/2023 Q20',img:'p5.jpg',imgcap:'Biópsia da lesão, HE.',
+enun:`Um paciente de 58 anos de idade, sexo masculino, comparece à consulta relatando perda de peso não intencional de 10 kg nos últimos 3 meses, icterícia progressiva, urina escura e fezes claras. Relata ainda desconforto abdominal vago e perda de apetite. Não possui histórico de doenças crônicas, mas é fumante de longa data e relata consumo moderado de álcool. Ao exame físico, é observada icterícia cutaneomucosa, sem outras alterações significativas. Exames laboratoriais indicam elevação das enzimas hepáticas e bilirrubinas. A ultrassonografia abdominal evidenciou uma massa na cabeça do pâncreas e dilatação do ducto biliar comum. Uma tomografia computadorizada confirmou a presença de uma lesão de 4 cm na cabeça do pâncreas. Foi realizada uma biópsia cujo resultado está representado pela imagem. Qual das seguintes patologias envolvendo o pâncreas tem a maior probabilidade de estar presente?`,
+alts:[`Pancreatite aguda.`,`Pancreatite crônica.`,`Adenocarcinoma.`,`Pseudocistos.`],
+correta:2,fonteResp:'oficial',
+exp:`Idoso tabagista com emagrecimento, ICTERÍCIA PROGRESSIVA INDOLOR com colúria e acolia, massa na CABEÇA do pâncreas dilatando o colédoco (sinal de Courvoisier) e biópsia com glândulas atípicas em estroma DESMOPLÁSICO denso: adenocarcinoma ductal. Pancreatite crônica dá fibrose mas sem glândulas atípicas; pseudocisto é coleção líquida sem epitélio; pancreatite aguda não faz massa de 4 cm com esse quadro.`},
+{id:'F1',org:'Fígado',fontes:'P1 Patologia I · mar/2022 Q16',img:'f1.jpg',imgcap:'Fígado, HE (reprodução de foto de tela).',
+enun:`A necropsia de um homem de 54 anos de idade apresentou fígado aumentado (2.200 g) com uma superfície de corte amarelada. A figura mostra a aparência microscópica do fígado. Antes da morte, os níveis sorológicos de colesterol estavam normais, triglicérides aumentado e a concentração de albumina sérica estava diminuída. Qual das seguintes atividades provavelmente conduziu a tais achados?`,
+alts:[`Prática intensa de atividade esportiva.`,`Hábito de beber cerveja.`,`Tabagismo.`,`Uso indiscriminado de medicamentos.`],
+correta:1,fonteResp:'aluno + conteúdo',
+exp:`Fígado grande e AMARELO com hepatócitos repletos de vacúolos lipídicos = ESTEATOSE macrovesicular; com triglicérides altos, colesterol normal e albumina baixa em homem de 54 anos, a causa mais provável é o ÁLCOOL (aumenta a síntese de ácidos graxos, reduz a oxidação e a exportação de lipoproteínas; a albumina cai pela lesão hepatocelular e desnutrição). Exercício não dá esteatose; tabagismo não é causa clássica; "medicamentos" é genérico e não explica o perfil.`}
+];
+
+const DISSERTATIVAS=[
+{id:'D1',org:'Esôfago',fontes:'T20 set/2023, dissertativa 2 · vale 1,0',img:'e5.jpg',imgcap:'Lâmina da biópsia, HE. Na prova, a transição esofagogástrica está marcada "TEG".',
+enun:`José Aparecido, 49 anos, caucasiano, sem doenças de base. Evolui há mais de um ano com pirose pós-prandial, regurgitação frequente e, no último mês, dor retroesternal que não cede a anti-inflamatórios. Laudo endoscópico: "placa de mucosa avermelhada, de superfície aveludada, que se estende da porção distal para 3 cm acima da junção gastroesofágica. Conclusão: esofagite crônica, sugestiva de esôfago de Barrett". Biópsia incisional na lâmina.`,
+itens:[
+{p:`a) Elabore um laudo anatomopatológico citando as 3 estruturas apontadas na figura.`,
+r:`Fragmento de mucosa da transição esofagogástrica com <b>(1) epitélio pavimentoso estratificado não queratinizado</b> (mucosa esofágica) em continuidade com <b>(2) epitélio glandular colunar com células caliciformes</b> em criptas regulares (metaplasia intestinal) e <b>(3) lâmina própria com intenso infiltrado inflamatório mononuclear</b> inter e intraglandular e vasos congestos. Conclusão: esofagite crônica com metaplasia intestinal, compatível com esôfago de Barrett de segmento longo (≥ 3 cm).`},
+{p:`b) Considerando que o laudo fechou esôfago de Barrett com displasia moderada, explique o prognóstico (progressão da doença e bases do tratamento).`,
+r:`Barrett é resposta adaptativa à agressão ácida crônica da DRGE e o principal fator de risco do <b>adenocarcinoma de esôfago</b>; sequência metaplasia → displasia de baixo grau → alto grau → adenocarcinoma, proporcional ao tempo e extensão do refluxo. Displasia moderada já é lesão pré-maligna: <b>seguimento endoscópico obrigatório</b> com biópsias seriadas e, se alto grau, tratamento agressivo. Bases: <b>tratar a DRGE</b> (IBP, medidas antirrefluxo, fundoplicatura se indicado) e <b>tratar a displasia</b> (ablação ou ressecção endoscópica; cirurgia conforme o grau).<br><small>Na T20, a resposta que tirou 0,75 não nomeou "adenocarcinoma" e não disse que a DRGE precisa ser tratada — a professora cobrou os dois pontos.</small>`}]},
+{id:'D2',org:'Estômago',fontes:'T18 dissertativa 1 · T19 dissertativa 1 · vale 1,0',img:'d2.jpg',imgcap:'"Subtipo 1" e "Subtipo 2", HE.',
+enun:`O adenocarcinoma gástrico representa 90% dos cânceres deste órgão, com mortalidade elevada conforme o estadiamento e o subtipo. Sobre esta neoplasia e os subtipos histológicos de Lauren, representados nas microfotografias:`,
+itens:[
+{p:`a) Qual é o nome da classificação histológica do subtipo 1 e do subtipo 2? Cite pelo menos UMA característica histomorfológica de CADA subtipo.`,
+r:`Subtipo 1 = <b>INTESTINAL</b>: células neoplásicas colunares COESAS formando glândulas/túbulos e cordões, com mucina intracitoplasmática, sobre mucosa com gastrite crônica atrófica e metaplasia intestinal. Subtipo 2 = <b>DIFUSO</b>: células NÃO COESAS, isoladas ou em pequenos grupos, em <b>anel de sinete</b> (vacúolo de mucina que empurra o núcleo para a periferia), infiltrando difusamente a parede (linite plástica).`},
+{p:`b) Quais as diferenças clínicas da progressão de cada subtipo (população-alvo, topografia, metastatização etc.)? Cite pelo menos DUAS para CADA.`,
+r:`<b>Intestinal:</b> homens, mais de 50 anos, regiões de alta incidência; associado a H. pylori, dieta (nitrosaminas, sal) e gastrite atrófica; antro e pequena curvatura; TEM lesão precursora (metaplasia → displasia); disseminação hematogênica (fígado) e linfática; melhor prognóstico. <b>Difuso:</b> mulheres, mais jovens, incidência estável/em ascensão; perda de E-caderina (CDH1); SEM lesão precursora; corpo/fundo, espessamento difuso da parede; disseminação linfática e peritoneal (tumor de Krukenberg, Irmã Maria José); mais metástases e pior prognóstico.<br><small>Na T18, a professora aceitou como certo: intestinal = glândulas com caliciformes, antro, homens; difuso = anel de sinete, fundo, mulheres, mais metástase.</small>`}]},
+{id:'D3',org:'Estômago',fontes:'T23B fev/2025, dissertativa 3',img:'d3.jpg',imgcap:'Biópsia de fundo gástrico, HE, 100x e 400x.',
+enun:`Paciente feminina, 43 anos, branca, sem hábitos tabagistas, etilista social, sem doenças de base. Em investigação para sintomas gástricos, náuseas e pirose pós-prandial, sensação de plenitude há 1 ano e perda ponderal iniciada há 2 meses (12 kg). Endoscopia: "mucosa gástrica de cárdia e fundo com moderado enantema e pequena área de erosão, negativo ao teste para H. pylori"; biópsia do fundo. O laudo usou a classificação de Lauren.`,
+itens:[
+{p:`a) A partir da história clínica, sem o laudo em mãos, quais os diagnósticos diferenciais possíveis (cite pelo menos 2)?`,
+r:`Mulher de 43 anos com dispepsia, plenitude, perda de 12 kg e enantema com erosão em cárdia e fundo, H. pylori NEGATIVO: DDs de <b>adenocarcinoma gástrico</b> (sobretudo o tipo DIFUSO, que poupa o antro e não depende de H. pylori), <b>gastrite crônica autoimune</b> (fundo/corpo), úlcera péptica, linfoma gástrico e DRGE/gastrite erosiva.`},
+{p:`b) Analise as microfotografias e aponte 1 achado histológico patognomônico e o diagnóstico final.`,
+r:`Achado patognomônico: <b>células em ANEL DE SINETE</b> (vacúolo de mucina citoplasmático deslocando o núcleo para a periferia) infiltrando isoladamente a lâmina própria, SEM formar glândulas. Diagnóstico: <b>adenocarcinoma gástrico tipo DIFUSO de Lauren</b> (carcinoma pouco coeso com células em anel de sinete).`}]},
+{id:'D4',org:'Intestino',fontes:'T18 diss. 2 · T19 diss. 2 · T23B diss. 1',img:'d4.jpg',imgcap:'Esquerda: colonoscopia. Direita: lâmina do pólipo, HE.',
+enun:`Paciente de 62 anos, sexo feminino, comparece ao ambulatório de Gastroenterologia com queixa de cólicas intestinais. Realizada colonoscopia, foram localizadas lesões polipoides, as quais foram excisadas. Observe as imagens e responda:`,
+itens:[
+{p:`a) O que revela a imagem da colonoscopia? Justifique a realização da biópsia e descreva o provável prognóstico.`,
+r:`A colonoscopia mostra <b>pólipo SÉSSIL</b>, pequeno (menos de 1 cm), de superfície lisa e cor semelhante à mucosa. A biópsia/polipectomia é obrigatória porque a macroscopia NÃO distingue pólipo hiperplásico de adenoma (lesão pré-maligna): só a histologia exclui displasia. Prognóstico excelente: pólipo hiperplásico é não neoplásico, sem risco relevante de malignização; segue-se o rastreio de rotina.<br><small>A professora anotou "séssil" como palavra esperada.</small>`},
+{p:`b) Descreva a lâmina histológica observada e determine o processo patológico evidenciado.`,
+r:`Criptas alongadas com <b>luz serrilhada/estrelada</b> em corte transversal, revestidas por epitélio maduro rico em caliciformes, com proliferação restrita à base das criptas, SEM displasia nem atipia; lâmina própria com discreto infiltrado. Processo: <b>hiperplasia epitelial (pólipo hiperplásico)</b>.`}]},
+{id:'D5',org:'Intestino',fontes:'T20 set/2023, dissertativa 1 · vale 1,0',img:'d5.jpg',imgcap:'Rx simples de abdome.',
+enun:`Paciente de 36 anos, sexo feminino, com diarreia persistente, dor abdominal e histórico familiar de câncer de intestino. Colonoscopia: reto e cólon com mucosa edemaciada e hiperemiada, friável, recoberta de fibrina até o ângulo hepático; anatomopatológico com retite crônica não granulomatosa com folículos linfoides, limitada à mucosa. Tratada por 2 meses com mesalazina e prednisona, deu entrada em pronto atendimento com intensa dor abdominal, febre há 3 dias, desidratada, anorexia, náuseas, vômitos, taquicardia, distensão abdominal, constipação e leucocitose com desvio à esquerda. Perda de 17 kg em 20 dias. Solicitado Rx de abdome (imagem).`,
+itens:[
+{p:`a) O que está evidenciado na imagem?`,
+r:`Rx de abdome com <b>distensão gasosa acentuada do cólon</b> (diâmetro maior que 6 cm), perda das haustrações e, por vezes, ilhas de mucosa em relevo: <b>MEGACÓLON TÓXICO</b> (dilatação aguda do cólon).`},
+{p:`b) Qual a causa desta complicação?`,
+r:`Complicação da <b>retocolite ulcerativa grave/fulminante</b>: a inflamação intensa ultrapassa a mucosa, lesa a muscular própria e o <b>plexo mioentérico</b>, com liberação de mediadores e óxido nítrico que paralisam a musculatura; o cólon dilata, há febre, taquicardia, leucocitose com desvio, dor e parada de eliminação de fezes, com risco de <b>perfuração e peritonite</b>. Fatores precipitantes: atividade grave, hipocalemia, opioides/anticolinérgicos, colonoscopia.<br><small>Nota 1,0 na T20 para "megacólon" + "lesão do plexo nervoso pela colite ulcerativa não controlada".</small>`}]},
+{id:'D6',org:'Intestino',fontes:'T18 ago/2022, dissertativa 3 · vale 1,0',img:null,
+enun:`Beatriz, sexo feminino, 21 anos, apresentou enterorragia, sem repercussão hemodinâmica, que cessou espontaneamente. Colonoscopia: lesões aftoides SALTEADAS no íleo terminal, com anatomopatológico de atividade inflamatória estendida até a submucosa e acompanhada de ulceração. Seis meses após, foi admitida por dor abdominal de forte intensidade, náuseas e vômitos; pelo quadro compatível com apendicite aguda, foi feita apendicectomia aberta. Permaneceu com dor abdominal, febre recorrente e infecção da ferida operatória refratária a ciprofloxacina e metronidazol; como complicação, apresentou SAÍDA DE FEZES PELA FERIDA OPERATÓRIA. Laudo do apêndice: processo inflamatório crônico linfo-histioplasmocitário com atividade até a muscular do órgão, sem neoplasia, entremeado por GRANULOMAS; na base do apêndice, o mesmo infiltrado com granulomas e grandes áreas de mucosa ulcerada.`,
+itens:[
+{p:`a) Qual o diagnóstico, com base na clínica, colonoscopia e biópsia?`,
+r:`<b>Doença de Crohn</b>: enterorragia em jovem, lesões aftoides SALTEADAS no íleo terminal, inflamação que ultrapassa a mucosa até a submucosa com ulceração.`},
+{p:`b) Qual a origem da apendicite e quais achados da biópsia são decisivos?`,
+r:`A apendicite foi manifestação da PRÓPRIA doença de Crohn acometendo a região ileocecal e o apêndice (não apendicite obstrutiva/infecciosa comum). Decisivos: inflamação crônica linfo-histioplasmocitária <b>transmural</b> (até a muscular), <b>granulomas não caseosos</b> entremeados no infiltrado e mucosa ulcerada com o mesmo infiltrado granulomatoso na base do apêndice. A evolução com <b>fístula enterocutânea</b> pela ferida operatória, refratária a antibióticos, é típica de Crohn.<br><small>Nota 1,0 na T18 para "Doença de Crohn" + "granulomas e mucosa ulcerada na base do apêndice".</small>`}]},
+{id:'D7',org:'Pâncreas',fontes:'T19 diss. 3 · T20 diss. 3 · T23B diss. 2 · vale 1,0',img:'d7.jpg',imgcap:'Esquerda: peça macroscópica. Direita: microscopia, HE, com setas.',
+enun:`Uma mulher de 38 anos de idade com uma longa história de doença da vesícula biliar apresenta início súbito de dor severa na parte superior do abdome. Os aspectos macro e microscópico representativos do caso são exibidos na figura.`,
+itens:[
+{p:`a) Cite 2 achados sorológicos laboratoriais e 2 achados microscópicos apontados na imagem que são essenciais para a conclusão do diagnóstico.`,
+r:`Sorológicos: <b>amilase e lipase séricas elevadas</b> (a lipase mais específica e duradoura), classicamente acima de 3× o limite superior. Microscópicos: <b>esteatonecrose</b> (necrose gordurosa enzimática: adipócitos necróticos com contornos "fantasma" e depósitos basofílicos de cálcio por saponificação) e <b>necrose do parênquima acinar</b> com infiltrado neutrofílico, edema e hemorragia por lesão vascular.`},
+{p:`b) Apenas com a história clínica, qual é a provável etiologia e a patogênese?`,
+r:`Etiologia: <b>colelitíase</b>, com cálculo migrando e impactando na ampola de Vater/colédoco distal. Patogênese: obstrução do ducto pancreático → ↑ pressão intraductal → acúmulo intersticial de líquido rico em enzimas → <b>ativação inapropriada do tripsinogênio</b> → tripsina ativa pró-fosfolipase, pró-elastase e lipase → autodigestão: necrose gordurosa (lipase), lesão vascular e hemorragia (elastase), inflamação com edema, insuficiência vascular, isquemia e necrose do parênquima.<br><small>Na T20 a professora escreveu a sequência esperada: "obstrução dos ductos por cálculos impactados na ampola de Vater → eleva a pressão → acúmulo intersticial rico em enzimas → lipase: necrose gordurosa; citocinas → inflamação → edema → insuficiência vascular → lesão isquêmica → necrose".</small>`}]},
+{id:'D8',org:'Pâncreas',fontes:'P1 Patologia I · 09/03/2022, dissertativa "Necrose"',img:'d8.jpg',imgcap:'Necropsia: mesentério e peritônio peripancreático.',
+enun:`M.G.P., caucasiano, 58 anos, chega à UPA com dor abdominal forte na região epigástrica média que irradia para as costas há 2 dias; a dor melhora quando se inclina para a frente ou em posição fetal e se agrava com respiração intensa e palpação profunda. Ictérico, febril, com náuseas, vômitos e confuso. Após um dia de internação, evolui a óbito. USG: cálculos biliares sem inflamação da vesícula; amilase e lipase alteradas. A necropsia revelou o aspecto do mesentério e peritônio próximo ao pâncreas mostrado na figura.`,
+itens:[
+{p:`a) Qual a possível hipótese diagnóstica clínica?`,
+r:`<b>Pancreatite aguda necro-hemorrágica de causa biliar (obstrutiva)</b>: dor epigástrica em faixa irradiada para o dorso que melhora em posição fetal, icterícia, febre, vômitos, cálculos biliares, amilase e lipase elevadas.`},
+{p:`b) Qual é o processo fisiopatológico geral e específico envolvido?`,
+r:`Geral: <b>NECROSE</b> (morte celular com autodigestão enzimática) acompanhada de inflamação aguda. Específico: <b>necrose gordurosa (esteatonecrose enzimática)</b> do tecido adiposo peripancreático e mesentérico, por lipase liberada após ativação inapropriada do tripsinogênio secundária à obstrução biliar.<br><small>Na prova, a professora anotou "necrose gordurosa" como o processo específico esperado.</small>`},
+{p:`c) Faça uma breve descrição do que é observado na imagem.`,
+r:`Superfície do mesentério e peritônio com <b>múltiplos focos e placas esbranquiçadas a amareladas</b>, opacas, de tamanhos variados, de aspecto "giz" (saponificação de ácidos graxos com cálcio), entremeados por áreas de congestão e hemorragia.`}]}
+];
+
+const LAMINAS=[
+{id:'L1',fontes:'T18 ago/2022, lâmina 01',img:'g3.jpg',imgcap:'Use a lâmina B do painel da G3 (T23B Q14) como referência visual.',
+itens:[
+{p:`a) Qual o diagnóstico do tecido ou órgão da lâmina?`,r:`<b>Estômago</b> (mucosa gástrica).`},
+{p:`b) Processo patológico 1.`,r:`Perda de continuidade da mucosa com exposição do tecido conjuntivo; superfície com <b>exsudato fibrinoide/fibrina</b> e debris necróticos.`},
+{p:`c) Processo patológico 2.`,r:`<b>Tecido de granulação</b> e infiltrado inflamatório misto (neutrófilos superficiais, mononucleares na profundidade), com fibrose na base.`},
+{p:`d) Diagnóstico anatomopatológico final.`,r:`<b>Úlcera péptica gástrica</b>.<br><small>Na T18 a professora aceitou "degradação da mucosa gástrica" e "tecido de fibrina" — e recusou "infiltrado inflamatório" isolado e "células intestinais em mucosa gástrica".</small>`}]},
+{id:'L2',fontes:'T18 ago/2022, lâmina 02',img:'e5.jpg',imgcap:'HE, 100x — transição esofagogástrica.',
+itens:[
+{p:`a) Qual o diagnóstico do tecido ou órgão da lâmina?`,r:`<b>Esôfago</b>, transição esofagogástrica (junção escamo-colunar).`},
+{p:`b) Processo patológico 1.`,r:`<b>Inflamação crônica</b>: infiltrado mononuclear na lâmina própria com vasos congestos.`},
+{p:`c) Processo patológico 2.`,r:`<b>Metaplasia intestinal</b>: epitélio glandular com células caliciformes contíguo ao epitélio escamoso.`},
+{p:`d) Diagnóstico anatomopatológico final.`,r:`<b>Esôfago de Barrett</b> (sem displasia).<br><small>Na T18, "hiperplasia" foi marcada errada: hiperplasia basal é achado de DRGE moderada/grave, não define Barrett; faltou citar o epitélio escamoso da transição.</small>`}]},
+{id:'L3',fontes:'T18 ago/2022, lâmina 03',img:'d2.jpg',imgcap:'Use o "Subtipo 1" do painel da D2 como referência visual.',
+itens:[
+{p:`a) Qual o diagnóstico do tecido ou órgão da lâmina?`,r:`<b>Estômago</b>.`},
+{p:`b) Processo patológico 1.`,r:`Proliferação de <b>glândulas atípicas, irregulares e cribriformes</b>, invadindo lâmina própria e submucosa (invasão glandular).`},
+{p:`c) Processo patológico 2.`,r:`<b>Atipia celular</b> (núcleos hipercromáticos, pleomórficos, mitoses) com estroma desmoplásico e infiltrado inflamatório crônico.`},
+{p:`d) Diagnóstico anatomopatológico final.`,r:`<b>Adenocarcinoma gástrico do tipo intestinal</b>.<br><small>Na T18 a professora recusou "hiperplasia de células caliciformes" e completou "infiltrado inflamatório crônico".</small>`}]},
+{id:'L4',fontes:'T20 set/2023, lâmina 21 (nota 2,0)',img:'i10.jpg',imgcap:'HE, 10x e 40x — mesma lesão da questão I10.',
+itens:[
+{p:`a) Qual o diagnóstico do tecido ou órgão da lâmina?`,r:`<b>Intestino grosso</b>.`},
+{p:`b) Processo patológico 1.`,r:`<b>Infiltrado inflamatório predominantemente mononuclear</b> na lâmina própria até a submucosa.`},
+{p:`c) Processo patológico 2.`,r:`<b>Hiperplasia de enterócitos e células caliciformes</b> com criptas alongadas de luz serrilhada.`},
+{p:`d) Diagnóstico anatomopatológico final.`,r:`<b>Pólipo hiperplásico</b>.`}]}
+];
+
+
+const L4='abcd';
+const esc=s=>String(s==null?'':s);
+const SAVE='provas-tgi-estudo-v1';
+let saved={};try{saved=JSON.parse(localStorage.getItem(SAVE)||'{}')}catch(e){}
+function persist(){try{localStorage.setItem(SAVE,JSON.stringify(saved))}catch(e){}}
+
+/* ===== abas ===== */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+t.dataset.p).classList.add('on');
+  window.scrollTo(0,0);
+}));
+
+/* ===== helpers ===== */
+function qHTML(q,modo){
+  const img=q.img?`<figure class="qimg"><img loading="lazy" src="img/${q.img}" alt="Figura da questão ${q.id}">${q.imgcap?`<figcaption>${q.imgcap}</figcaption>`:''}</figure>`:'';
+  const alts=q.alts.map((a,i)=>`<button class="alt" data-q="${q.id}" data-i="${i}"><span class="letra">${L4[i]})</span><span>${a}</span></button>`).join('');
+  const varia=q.varia?`<p class="varia">↺ ${q.varia}</p>`:'';
+  return `<div class="q" id="${modo}-${q.id}"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span><span class="qsrc">[${q.fontes}]</span></div>
+  <div class="enun">${q.enun}</div>${img}<div class="alts">${alts}</div>${varia}
+  <div class="exp" id="${modo}-exp-${q.id}"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte da resposta: ${q.fonteResp}.</span></div></div>`;
+}
+
+/* ===== modo estudo ===== */
+const ORGS=['Todos','Esôfago','Estômago','Intestino','Pâncreas','Fígado'];
+let fOrg='Todos';
+function renderFiltros(){
+  document.getElementById('filtros').innerHTML=ORGS.map(o=>{
+    const n=o==='Todos'?QUESTOES.length:QUESTOES.filter(q=>q.org===o).length;
+    return `<button class="chip ${fOrg===o?'on':''}" data-o="${o}">${o} (${n})</button>`}).join('');
+  document.querySelectorAll('#filtros .chip').forEach(c=>c.addEventListener('click',()=>{fOrg=c.dataset.o;renderEstudo()}));
+}
+function renderEstudo(){
+  renderFiltros();
+  const qs=QUESTOES.filter(q=>fOrg==='Todos'||q.org===fOrg);
+  document.getElementById('lista-estudo').innerHTML=qs.map(q=>qHTML(q,'est')).join('');
+  qs.forEach(q=>{ if(saved[q.id]!=null) pintarEstudo(q,saved[q.id],false); });
+  document.querySelectorAll('#lista-estudo .alt').forEach(b=>b.addEventListener('click',()=>{
+    const q=QUESTOES.find(x=>x.id===b.dataset.q);
+    if(saved[q.id]!=null) return;
+    saved[q.id]=Number(b.dataset.i); persist(); pintarEstudo(q,saved[q.id],true);
+  }));
+}
+function pintarEstudo(q,resp,anim){
+  const card=document.getElementById('est-'+q.id); if(!card) return;
+  card.querySelectorAll('.alt').forEach(b=>{
+    const i=Number(b.dataset.i); b.disabled=true;
+    if(i===q.correta) b.classList.add('certa');
+    else if(i===resp) b.classList.add('errada');
+  });
+  document.getElementById('est-exp-'+q.id).classList.add('show');
+}
+
+/* ===== simulado ===== */
+const SIMKEY='provas-tgi-sim-v1';
+let sim=null;try{sim=JSON.parse(localStorage.getItem(SIMKEY)||'null')}catch(e){}
+function simPersist(){try{localStorage.setItem(SIMKEY,JSON.stringify(sim))}catch(e){}}
+function simStart(fresh){
+  if(fresh||!sim) sim={resp:{},ini:Date.now()};
+  simPersist();
+  document.getElementById('sim-intro').style.display='none';
+  document.getElementById('sim-result').style.display='none';
+  document.getElementById('sim-area').style.display='block';
+  document.getElementById('lista-sim').innerHTML=QUESTOES.map(q=>qHTML(q,'sim')).join('');
+  document.querySelectorAll('#lista-sim .exp').forEach(e=>e.remove());
+  document.querySelectorAll('#lista-sim .alt').forEach(b=>b.addEventListener('click',()=>{
+    const qid=b.dataset.q;
+    sim.resp[qid]=Number(b.dataset.i); simPersist();
+    document.querySelectorAll(`#sim-${qid} .alt`).forEach(x=>x.classList.toggle('marcada',x===b));
+    simProg();
+  }));
+  Object.entries(sim.resp).forEach(([qid,i])=>{
+    const b=document.querySelector(`#sim-${qid} .alt[data-i="${i}"]`); if(b) b.classList.add('marcada');
+  });
+  simProg();
+}
+function simProg(){
+  const n=Object.keys(sim.resp).length;
+  document.getElementById('sim-prog').textContent=`${n}/${QUESTOES.length} respondidas`;
+}
+document.getElementById('sim-start').addEventListener('click',()=>simStart(true));
+if(sim&&Object.keys(sim.resp||{}).length){
+  document.getElementById('sim-retomar').innerHTML=` <button class="btn sec" id="sim-cont">Continuar simulado em andamento (${Object.keys(sim.resp).length}/${QUESTOES.length})</button>`;
+  document.getElementById('sim-cont').addEventListener('click',()=>simStart(false));
+}
+document.getElementById('sim-fim').addEventListener('click',()=>{
+  const faltam=QUESTOES.length-Object.keys(sim.resp).length;
+  if(faltam>0&&!confirm(`Ainda faltam ${faltam} questão(ões) sem resposta — elas contarão como erro. Finalizar mesmo assim?`))return;
+  simFinaliza();
+});
+function simFinaliza(){
+  const min=Math.round((Date.now()-sim.ini)/60000);
+  try{localStorage.removeItem(SIMKEY)}catch(e){}
+  let acertos=0;const porOrg={},erros=[],certos=[];
+  QUESTOES.forEach(q=>{
+    porOrg[q.org]=porOrg[q.org]||{a:0,t:0}; porOrg[q.org].t++;
+    const r=sim.resp[q.id];
+    if(r===q.correta){acertos++;porOrg[q.org].a++;certos.push(q)}else erros.push({q,r});
+  });
+  const pct=Math.round(acertos/QUESTOES.length*100);
+  const orgHTML=Object.entries(porOrg).map(([o,v])=>`<div><b>${o}</b>: ${v.a}/${v.t}</div>`).join('');
+  const revHTML=QUESTOES.map(q=>{
+    const r=sim.resp[q.id];const ok=r===q.correta;
+    return `<div class="q"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span>
+      <span style="font-weight:800;color:${ok?'var(--ok)':'var(--err)'}">${ok?'✓ acertou':'✗ errou'}</span></div>
+      <div class="rev">Sua resposta: <b>${r!=null?L4[r]+')':'em branco'}</b> · Correta: <b>${L4[q.correta]})</b></div>
+      <div class="exp show" style="margin-top:8px"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte: ${q.fonteResp}.</span></div></div>`;
+  }).join('');
+  document.getElementById('sim-area').style.display='none';
+  document.getElementById('sim-result').style.display='block';
+  document.getElementById('sim-result').innerHTML=`<div class="resultado">
+    <h2>Resultado</h2><div class="score">${acertos}/${QUESTOES.length} <small style="font-size:18px">(${pct}%)</small></div>
+    <p style="color:var(--muted);font-size:13.5px">${min} min · ${erros.length} erro(s)</p>
+    <div class="porOrgao">${orgHTML}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="btn-relatorio">📋 Copiar relatório para IA</button>
+      <button class="btn sec" id="btn-refazer">↺ Refazer simulado</button>
+    </div>
+    <p style="color:var(--faint);font-size:12.5px;margin-top:10px">O relatório traz seus erros com enunciado completo, sua resposta, a correta e o comentário do gabarito — é só colar no chat de uma IA e pedir para trabalhar os erros com você.</p>
+  </div><h2 style="margin:18px 0 4px">Revisão comentada</h2>${revHTML}`;
+  document.getElementById('btn-relatorio').addEventListener('click',()=>copiaRelatorio(acertos,pct,min,porOrg,erros,certos));
+  document.getElementById('btn-refazer').addEventListener('click',()=>{sim=null;try{localStorage.removeItem(SIMKEY)}catch(e){};simStart(true)});
+  window.scrollTo(0,0);
+}
+function txt(s){return String(s).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&')}
+function copiaRelatorio(acertos,pct,min,porOrg,erros,certos){
+  const L=['a','b','c','d'];
+  let r=`RELATÓRIO DE SIMULADO — Provas antigas de TGI (Anatomia Patológica II, 4º semestre de Medicina)\n`;
+  r+=`Fonte: compilado das provas 2022–2025 (esôfago, estômago, intestino, pâncreas, fígado).\n`;
+  r+=`Resultado: ${acertos}/${QUESTOES.length} (${pct}%) em ${min} min.\n`;
+  r+=`Por órgão: `+Object.entries(porOrg).map(([o,v])=>`${o} ${v.a}/${v.t}`).join(' · ')+`\n\n`;
+  r+=`Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI, com minha resposta, a correta e o comentário do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) me faça perguntas novas de verificação sobre esses temas, uma de cada vez.\n\n`;
+  r+=`==================== ERROS (${erros.length}) ====================\n\n`;
+  erros.forEach(e=>{
+    const q=e.q;
+    r+=`[${q.id}] ${q.org} — fontes: ${q.fontes}\n`;
+    r+=`ENUNCIADO: ${txt(q.enun)}\n`;
+    q.alts.forEach((a,i)=>{r+=`  ${L[i]}) ${txt(a)}\n`});
+    r+=`MINHA RESPOSTA: ${e.r!=null?L[e.r]+') '+txt(q.alts[e.r]).slice(0,120):'(em branco)'}\n`;
+    r+=`CORRETA: ${L[q.correta]}) ${txt(q.alts[q.correta]).slice(0,160)}\n`;
+    r+=`COMENTÁRIO DO GABARITO: ${txt(q.exp)}\n\n`;
+  });
+  r+=`==================== ACERTOS (${certos.length}) ====================\n`;
+  r+=certos.map(q=>`${q.id} (${q.org})`).join(' · ')+`\n`;
+  const done=()=>{const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>t.style.display='none',2200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r).then(done).catch(()=>fallbackCopy(r,done))}
+  else fallbackCopy(r,done);
+}
+function fallbackCopy(s,done){const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){alert('Não consegui copiar automaticamente — selecione e copie o texto da caixa.');}document.body.removeChild(ta)}
+
+/* ===== dissertativas e lâminas ===== */
+function dissHTML(d){
+  const img=d.img?`<figure class="qimg"><img loading="lazy" src="img/${d.img}" alt="Figura de ${d.id}">${d.imgcap?`<figcaption>${d.imgcap}</figcaption>`:''}</figure>`:'';
+  const itens=d.itens.map((it,i)=>`<div class="item"><p class="perg">${it.p}</p>
+    <button class="mini" data-t="${d.id}-${i}">👁 Revelar resposta modelo</button>
+    <div class="resp" id="resp-${d.id}-${i}">${it.r}</div></div>`).join('');
+  return `<div class="q diss"><div class="qhead"><span class="qid">${d.id}</span>${d.org?`<span class="qorg">${d.org}</span>`:''}<span class="qsrc">[${d.fontes}]</span></div>
+    ${d.enun?`<div class="enun">${d.enun}</div>`:''}${img}${itens}</div>`;
+}
+document.getElementById('lista-diss').innerHTML=DISSERTATIVAS.map(dissHTML).join('');
+document.getElementById('lista-lam').innerHTML=LAMINAS.map(dissHTML).join('');
+document.querySelectorAll('.mini').forEach(b=>b.addEventListener('click',()=>{
+  const r=document.getElementById('resp-'+b.dataset.t); r.classList.toggle('show');
+  b.textContent=r.classList.contains('show')?'🙈 Esconder':'👁 Revelar resposta modelo';
+}));
+
+renderEstudo();
+</script>
+</body>
+</html>
