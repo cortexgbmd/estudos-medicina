@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prova Pueri P1</title>
+<style>
+:root{
+  --bg:#f5f6f8;--card:#ffffff;--text:#1c1f26;--muted:#6b7280;--line:#e3e6ec;
+  --accent:#2b6cb0;--accent-soft:#e8f0fb;--ok:#1f8a4c;--ok-soft:#e6f6ec;--bad:#c53030;--bad-soft:#fbe9e9;--warn:#b7791f;--warn-soft:#fdf3e0;
+  --radius:14px;--shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115;--card:#181b22;--text:#e8eaf0;--muted:#9aa3b2;--line:#2a2f3a;
+    --accent:#6ea8ff;--accent-soft:#1d2a40;--ok:#4ccc7f;--ok-soft:#153323;--bad:#ff7b7b;--bad-soft:#3a1c1c;--warn:#f0b755;--warn-soft:#3a2d14;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115;--card:#181b22;--text:#e8eaf0;--muted:#9aa3b2;--line:#2a2f3a;
+  --accent:#6ea8ff;--accent-soft:#1d2a40;--ok:#4ccc7f;--ok-soft:#153323;--bad:#ff7b7b;--bad-soft:#3a1c1c;--warn:#f0b755;--warn-soft:#3a2d14;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:24px 16px 120px}
+header{margin-bottom:20px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:14px;margin:0}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;margin:0 -16px 16px;padding-left:16px;padding-right:16px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px}
+.bar .grow{flex:1;min-width:120px}
+.progress{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.progress > i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.bar .cnt{color:var(--muted);white-space:nowrap}
+.bar .timer{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px 14px;margin-bottom:14px}
+.q-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.q-num{font-weight:700;color:var(--accent);font-size:14px}
+.tag{font-size:12px;color:var(--muted);background:var(--accent-soft);padding:2px 9px;border-radius:99px;white-space:nowrap;visibility:hidden}
+body.revealed .tag{visibility:visible}
+.stem{margin:0 0 12px;white-space:pre-line}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;transition:background .12s,border-color .12s;user-select:none}
+.opt:hover{background:var(--accent-soft)}
+.opt input{margin:4px 0 0;accent-color:var(--accent);flex:none}
+.opt .l{font-weight:600;flex:none;width:20px}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+body.revealed .opt{cursor:default}
+body.revealed .opt:hover{background:transparent}
+body.revealed .opt.sel:hover{background:var(--accent-soft)}
+body.revealed .opt.correct{border-color:var(--ok);background:var(--ok-soft)}
+body.revealed .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{display:none;margin-top:12px;padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.5}
+body.revealed .fb{display:block}
+.fb.ok{background:var(--ok-soft);color:var(--ok)}
+.fb.bad{background:var(--bad-soft);color:var(--bad)}
+.fb.blank{background:var(--warn-soft);color:var(--warn)}
+.fb b{font-weight:700}
+.fb .c{color:var(--text);opacity:.85;display:block;margin-top:4px}
+.actions{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;z-index:6}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--accent);color:#fff}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+button:disabled{opacity:.5;cursor:default}
+.result{display:none;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:18px}
+body.revealed .result{display:block}
+.score{font-size:40px;font-weight:800;letter-spacing:-.02em;margin:0}
+.score small{font-size:16px;color:var(--muted);font-weight:500}
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.legend{font-size:12px;color:var(--muted);margin-top:10px}
+.jump{display:none;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+body.revealed .jump{display:flex}
+.jump a{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;border:1px solid var(--line);color:var(--text)}
+.jump a.ok{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.jump a.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.jump a.blank{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+@media (max-width:480px){h1{font-size:22px}.card{padding:14px 14px 12px}.score{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Puericultura — P1 · Prova de objetivas</h1>
+  <p class="sub">50 questões de provas antigas (P1 26/03/2026, P2/2022 e banco de questões), 6 temas, ordem embaralhada. O tema de cada questão e o gabarito só aparecem ao corrigir.</p>
+</header>
+
+<div class="bar">
+  <div class="grow"><div class="progress"><i id="prog"></i></div></div>
+  <span class="cnt" id="cnt">0 / 50</span>
+  <span class="timer" id="timer">00:00</span>
+</div>
+
+<section class="result" id="result"></section>
+<nav class="jump" id="jump"></nav>
+<main id="quiz"></main>
+</div>
+
+<div class="actions">
+  <button id="btnCorrigir">Corrigir prova</button>
+  <button class="ghost" id="btnNova">Nova prova (embaralhar)</button>
+</div>
+
+<script id="data" type="application/json">
+[
+{"t":"Crescimento","q":"Em recém-nascido normal, a termo, em média, inicia a recuperação do peso por volta:","o":["3º dia de vida","5º dia de vida","15º dia de vida","10º dia de vida"],"a":"d","c":"[prova]"},
+{"t":"Crescimento","q":"Em que período da vida ocorre a maior velocidade de crescimento?","o":["Puberdade","Intrauterina","Escolar","No período neonatal"],"a":"b","c":"[prova]"},
+{"t":"Crescimento","q":"Qual indicador mais sensível a curto prazo no processo de crescimento?","o":["Peso","Comprimento","Estatura","Circunferências"],"a":"a","c":"[sugerido]"},
+{"t":"Crescimento","q":"São fatores que influenciam no crescimento:","o":["Etnia e genética","Socioeconômico e atividade física","Interação mãe-filho e urbanização","A, B e C estão corretos"],"a":"d","c":"[sugerido]"},
+{"t":"Crescimento","q":"Qual a idade em média da erupção dos incisivos centrais na primeira dentição (decíduos)?","o":["6 a 8 meses","10 a 12 meses","2 a 4 meses","12 a 15 meses"],"a":"a","c":"[sugerido; tabela do slide: inferior 6 m, superior 8 m]"},
+{"t":"Crescimento","q":"Júlia nasceu com 3.500 g. Qual o peso esperado aos 3 meses?","o":["4.200 g","3.900 g","5.600 g","4.800 g"],"a":"c","c":"[sugerido] 3.500 + 3 × 700 = 5.600 g."},
+{"t":"Crescimento","q":"Júlia nasceu com 3.500 g. Aos 9 meses, quanto Júlia deverá pesar aproximadamente?","o":["7.500 g","6.900 g","8.900 g","10.100 g"],"a":"c","c":"[sugerido] 3.500 + 2.100 (1º tri) + 1.800 (2º tri) + 1.500 (3º tri) = 8.900 g."},
+{"t":"Crescimento","q":"Fontanela com fechamento aproximadamente até os 18 meses de vida:","o":["Lambdoide","Esfenoidais","Mastoideas","Bregmática"],"a":"d","c":"[sugerido] Anterior (bregmática) fecha entre 9 e 18 m; a lambdoide fecha com 6 a 8 semanas."},
+{"t":"Crescimento","q":"Manuel nasceu com 50 cm. Aos 6 meses, qual o comprimento esperado?","o":["58 cm","60 cm","75 cm","65 cm"],"a":"d","c":"[sugerido] 1º semestre: 8–9 cm até 3 m + 6–7 cm de 3 a 6 m = 15 cm → 65 cm."},
+{"t":"Crescimento","q":"Manuel nasceu com 50 cm. Com 12 meses, Manuel deverá alcançar qual comprimento?","o":["68 cm","75 cm","90 cm","87 cm"],"a":"b","c":"[sugerido] 2º semestre: +10 cm → 65 + 10 = 75 cm."},
+{"t":"Crescimento","q":"Qual a velocidade de crescimento de uma criança na fase escolar/ano?","o":["3 a 5 cm","2 a 4 cm","6 a 7 cm","8 a 10 cm"],"a":"c","c":"[sugerido; slide 1] Pré-escolar 7–8 cm/ano; escolar 6–7 cm/ano."},
+{"t":"Crescimento","q":"O processo de crescimento é multifatorial (…). Assinale a afirmativa correta:","o":["No primeiro ano de vida ocorre a maior velocidade de crescimento, cerca de 40 cm/ano e ganho de peso de 10 kg","No primeiro ano de vida ocorre a maior velocidade de crescimento, cerca de 24 a 25 cm/ano e um ganho de 6 a 6,6 kg","No segundo ano de vida cresce aproximadamente 25 cm/ano","A velocidade de crescimento na fase escolar está em torno de 15 cm/ano"],"a":"b","c":"[sugerido] 25 cm no 1º ano; 10 cm no 2º; escolar 6–7 cm/ano."},
+
+{"t":"DNPM","q":"Qual dos comportamentos a seguir é esperado encontrar nos marcos do desenvolvimento de uma criança de 12 meses de idade?","o":["Transferir objetos de uma mão para outra","Balbuciar e sentar sem apoio","Subir escadas e correr","Ficar em pé e apresentar pinça completa (polpa a polpa)"],"a":"d","c":""},
+{"t":"DNPM","q":"Em relação ao desenvolvimento neuropsicomotor do lactente, a correlação adequada é:","o":["Dois meses: sorriso social","Quatro meses: movimento em pinça","Doze meses: desaparece o reflexo de Moro","Seis meses: controlar esfíncteres"],"a":"a","c":"Moro desaparece aos 3 meses; pinça aos 11–12 meses."},
+{"t":"DNPM","q":"Aos 4 meses de idade, uma criança com desenvolvimento normal deve ser capaz de realizar os seguintes \"marcos de desenvolvimento\", exceto:","o":["Levantar a cabeça e os ombros","Preensão voluntária das mãos","Virar a cabeça em direção de uma voz ou objeto sonoro","Sentar sem apoio"],"a":"d","c":"Senta com apoio aos 6 m, sem apoio aos 9 m."},
+{"t":"DNPM","q":"Considerando os grandes marcos do desenvolvimento infantil, um lactente saudável de 10 meses de vida adquire a capacidade de:","o":["Caminhar com apoio, fazer movimento de pinça com o polegar e atender pelo nome","Sentar-se sem apoio, engatinhar e estranhar as pessoas desconhecidas","Levantar e sustentar a cabeça quando colocada de bruços, levar os pés à boca e emitir sons","Imitar os pais, bater palmas e rolar sozinha"],"a":"b","c":"[prova] Tabela do slide: 9 m senta sem apoio, 10 m engatinha e fica de pé com apoio; anda com apoio e pinça só aos 12 m."},
+{"t":"DNPM","q":"Aos 7 meses, qual dos marcos do desenvolvimento neuropsicomotor (LINGUAGEM) é esperado?","o":["Sons guturais","Diz uma ou duas palavras","Forma frases","Lalação (\"mmmm\")"],"a":"d","c":"[prova]"},
+
+{"t":"Amamentação","q":"Mãe de um bebê de 5 meses procura a unidade básica de saúde porque deve voltar a trabalhar em duas semanas, na parte da manhã, e seu bebê está em aleitamento materno exclusivo. Qual a melhor alternativa para essa mãe?","o":["Antecipar a introdução da papa de frutas, uma vez que será antecipado em apenas 15 dias e já ajudará o bebê na introdução da alimentação complementar","Introduzir fórmula láctea adaptada para o 1º semestre","Antecipar fórmula láctea adaptada para o 2º semestre","Oferecer leite materno ordenhado em copinho, xícara ou colher"],"a":"d","c":""},
+{"t":"Amamentação","q":"O colostro quando comparado ao leite materno maduro, apresenta maior teor de:","o":["Lactose","Gorduras","Proteínas","Carboidratos"],"a":"c","c":"[prova] Colostro: mais proteína e anticorpos, menos lactose e gordura."},
+{"t":"Amamentação","q":"O aleitamento materno é a mais sábia estratégia natural de vínculo, afeto, proteção e nutrição para a criança e constitui a mais sensível, econômica e eficaz intervenção para redução da morbimortalidade infantil. Em relação ao aleitamento materno, analise as afirmativas:\nI. O aleitamento materno tem efeito protetor dose-dependente na redução de risco de obesidade na vida adulta.\nII. A produção do leite materno é estimulada pela prolactina, hormônio que tem aumento de seus níveis por estímulo de sucção do complexo mamilo-areolar.\nIII. Os ácidos graxos poli-insaturados de cadeia longa do leite materno são de extrema importância para o desenvolvimento do sistema hepatobiliar.\nIV. O leite materno anterior é rico em gordura e tem importante papel na saciedade, enquanto o posterior é rico em lactose e auxilia na síntese proteica.","o":["II e III","I e IV","I e II","III e IV"],"a":"c","c":"[prova] III: os LC-PUFAs são para o cérebro e a retina; IV está invertida: o anterior é rico em lactose e o posterior em gordura."},
+{"t":"Amamentação","q":"Recém-nascido, 15 dias, amamentado exclusivamente ao seio, pesou ao nascer 2.910 g e hoje pesa 3.035 g. Avaliando esses dados, a conduta adequada é:","o":["Internar e investigar possível infecção","Vigilância nutricional e pesar aos 30 dias de vida","Iniciar complementação das mamadas com fórmula","Avaliar a pega buscando encontrar as possíveis falhas"],"a":"d","c":"[sugerido, com dúvida entre b e d] Ganhou só 125 g em 15 dias; o esperado é recuperar o peso de nascimento até o 10º dia e ganhar 20 a 30 g/dia depois, então está no limite inferior. Nunca fórmula nem internação."},
+{"t":"Amamentação","q":"Na consulta de puericultura do primeiro mês, um lactente em amamentação exclusiva está com 300 g acima do seu peso de nascimento. A mãe relata que ele é uma criança inquieta. Depois de um exame clínico rigoroso, você certificou-se de que se trata de um lactente aparentemente normal, em bom estado geral, hidratado, ativo e responsivo. A conduta inicial a ser tomada é:","o":["Prescrever fórmula láctea como complementação calórica","Agendar consulta para pesagem do lactente em uma semana","Tranquilizar a mãe por se tratar de lactente com crescimento lento","Certificar-se de que o lactente está sendo amamentado corretamente"],"a":"d","c":"[sugerido] 300 g em 1 mês é pouco; esperado ≈ 700 g; primeiro passo é observar a mamada: posição, pega, sucção."},
+{"t":"Amamentação","q":"Considerando os quatro pontos-chave orientados pela OMS para a \"pega\" adequada do seio materno pelo lactente, assinale a opção que NÃO faz parte dessa orientação:","o":["Boca bem aberta com queixo tocando a mama","Bochechas do bebê encovadas a cada sucção","Lábio inferior virado para fora e bem adaptado","Mais aréola visível acima da boca do bebê"],"a":"b","c":"[sugerido] Bochecha encovada = pega incorreta."},
+{"t":"Amamentação","q":"Uma mãe quer fazer o desmame precoce do filho de 2 meses. Quais vantagens nutricionais você pode esclarecer para ela sobre o leite materno?","o":["Maiores valores de proteína e gordura e menores valores de sódio e cálcio","Menores valores de proteína, carboidrato e maiores valores de gordura e cálcio","Maiores valores de proteína, gordura e carboidrato e menores valores de cálcio","Menores valores de proteína e cálcio e maiores valores de gordura e hidrato de carbono"],"a":"d","c":"[sugerido] Leite humano: 0,9% de proteína, menos cálcio e sódio, mais lactose e gordura que o de vaca."},
+{"t":"Amamentação","q":"Analise as asserções:\nI. Lactentes amamentados no peito apresentam incidência de anemia ferropriva menor em relação aos bebês alimentados com leite de vaca.\nPORQUE\nII. No leite materno, a maior proporção do ferro está ligada à fração caseína (65-81%) e, no leite de vaca, à fração soro (61-73%).","o":["I e II verdadeiras e II justifica I","I e II verdadeiras, mas II não justifica I","I verdadeira e II falsa","I falsa e II verdadeira"],"a":"c","c":"[sugerido] I é verdade: o ferro do leite humano tem 50% de absorção contra 10% no de vaca; II é falsa: no leite humano o ferro está ligado à lactoferrina, na fração do soro, e o de vaca tem 80% de caseína."},
+{"t":"Amamentação","q":"Com relação ao aleitamento materno:\nI. São sinais de boa pega: lábio superior evertido, bebê abocanha o mamilo (…).\nII. São sinais de posicionamento adequado: bebê com cabeça e tronco alinhados, bem apoiado, rosto de frente para a mama, com nariz na altura do mamilo.\nIII. Sinais de técnica inadequada: ruídos na língua, mama esticada, bochechas encovadas a cada sucção.\nIV. A má pega está mais relacionada com traumas e fissuras mamilares, não tendo relação direta com a produção de leite.","o":["I e II","Somente I","II e III","II e IV"],"a":"c","c":"[sugerido] I: é o lábio inferior evertido e o bebê abocanha a aréola, não só o mamilo; IV: má pega esvazia mal a mama e derruba a produção, pelo \"inibidor\" do leite."},
+{"t":"Amamentação","q":"Sobre colostro, leite materno e leite de vaca in natura:\nI. O colostro de gestação a termo tem mais calorias, lipídios e proteína que o leite maduro, porém menos lactose.\nII. O leite de vaca tem elevado teor proteico, além de maior relação proteína do soro/caseína, quando comparado ao leite materno.\nIII. As principais deficiências vitamínicas no leite de vaca são C, D e E.","o":["Todas corretas","Todas incorretas","Apenas II","Apenas III"],"a":"d","c":"[sugerido] I: colostro tem mais proteína mas MENOS gordura e calorias; II: a relação soro/caseína do leite de vaca é menor, 20/80, contra 65/35 no humano; III bate com o slide 4: \"baixos níveis de vitaminas D, E e C\"."},
+{"t":"Amamentação","q":"O aleitamento materno pode melhorar a qualidade de vida das famílias (…). Tantos benefícios acontecem porque:","o":["A concentração de proteína aumenta no decorrer de uma mamada; o leite posterior é mais rico em energia e sacia melhor","O leite materno contém diversos fatores de proteção, tais como anticorpos IgM e IgG, macrófagos, neutrófilos, linfócitos B e T, lactoferrina, lisozima e fator bífido, que favorece o crescimento do Lactobacillus bifidus","Os numerosos fatores imunológicos protegem a criança contra infecções. A IgG secretora é o principal anticorpo atuando contra microrganismos das mucosas","Os fatores de proteção não são destruídos pelo calor, razão pela qual o leite humano pasteurizado (62,5 °C por 30 min) tem o mesmo valor biológico que o leite cru"],"a":"b","c":"[sugerido] a: o que aumenta ao longo da mamada é a gordura; c: é IgA secretora; d: a pasteurização reduz parte dos fatores."},
+
+{"t":"Alimentação","q":"É indicação de uma alimentação saudável, segundo o Ministério da Saúde para crianças:","o":["Oferecer leite materno até os 6 meses, sendo necessário oferecer água","A partir de 3 meses oferecer gradualmente sucos e sopinhas, mantendo o aleitamento materno","Alimentação complementar, quando iniciada, deve ser espessa desde o início e oferecida de colher, aumentando a consistência até chegar à alimentação da família","Não oferecer frutas e hortaliças com frequência diária para evitar episódios de diarreia"],"a":"c","c":"Passo 5 dos \"10 passos\" MS/OPAS/SBP."},
+{"t":"Alimentação","q":"Pré-escolar, três anos, sexo masculino, é trazido por sua mãe à consulta pois não quer comer e ela teme que fique desnutrido. Conta que faz de tudo para que coma, mas só aceita alimentos pastosos e líquidos, deixa o biscoito na boca até derreter e tem preferência por alimentos lácteos. Em função disso ela cede e coloca suplementos no leite para tentar nutri-lo. A proposta adequada é:","o":["Pressionar a criança para alterar a preferência alimentar","Oferecer alimentos sólidos quando a criança solicitar leite","Evitar o uso de utensílios que a criança rejeite, como colher","Observar, pois tal comportamento é normal até quatro anos de idade"],"a":"b","c":"[prova] Marcada na prova."},
+{"t":"Alimentação","q":"É indicação de uma alimentação saudável, seguindo o Ministério da Saúde, para crianças menores de 2 anos:","o":["Alimentação complementar quando iniciada deve ser espessa desde o início e oferecida de colher, aumentando a consistência gradualmente até chegar à alimentação da família","A partir dos 3 meses oferecer gradualmente sucos e sopinhas, mantendo o aleitamento materno até os 2 anos","Oferecer leite materno até os seis meses; sendo necessário oferecer água em dias muito quentes","Evitar alimentos variados para que a criança se acostume com os sabores aos poucos"],"a":"a","c":"[prova]"},
+{"t":"Alimentação","q":"A alimentação complementar é o conjunto de todos os alimentos, além do leite materno, oferecidos durante o período em que a criança continuará a ser amamentada ao seio sem exclusividade deste. Com relação à introdução da alimentação complementar, de acordo com as recomendações da SBP, assinale a alternativa INCORRETA:","o":["Aos 4-6 meses a criança encontra-se num estágio de maturidade fisiológica e neurológica, com atenuação do reflexo de protrusão da língua, que facilita a ingestão de alimentos semissólidos. As enzimas digestivas são produzidas em quantidades suficientes, razão que as habilitam a receber outros alimentos além do leite materno.","As frutas in natura, raspadas, amassadas ou picadas devem ser oferecidas a partir de 6 meses de idade, lembrando que nenhuma fruta é contraindicada.","Não se deve adicionar sal no preparo da papa de alimentação complementar para lactentes até 12 meses e após esta idade usar sal com moderação.","Os sucos naturais devem ser incentivados a partir dos 6 meses de idade como fontes importantes de vitaminas e minerais, além de contribuir na ingestão hídrica diária."],"a":"d","c":"[prova] Suco não é incentivado; se oferecido, no máximo 100 ml/dia e nunca substituindo a fruta."},
+{"t":"Alimentação","q":"Palestra sobre \"nutrição da criança\" para cuidadores. Alternativa CORRETA:","o":["Entre 1 e 2 anos a criança já aprende a beber com copo","A família não deve incentivar a independência da criança (comer por conta própria)","A criança só deve comer a comida da família aos 2 anos","A alimentação deve ser feita à parte da família, em momento e lugar reservados"],"a":"a","c":"[sugerido] Comida da família começa entre 9 e 12 meses; comer junto com a família é orientação do guia."},
+{"t":"Alimentação","q":"Qual recomendação NÃO faz parte dos \"Doze Passos para uma Alimentação Saudável\" do Guia Alimentar para Crianças Menores de Dois Anos (MS, 2019)?","o":["Não oferecer alimentos ultraprocessados","Não oferecer açúcar nem produtos com açúcar até os 2 anos","Não adicionar sal no preparo das refeições de crianças com menos de 12 meses","Proteger a criança da publicidade dos alimentos"],"a":"c","c":"[sugerido] O guia fala em \"usar pouco sal\"; os outros três são passos 7, 8 e 12."},
+{"t":"Alimentação","q":"O conceito dos 1000 dias ou \"intervalo de ouro\" corresponde a:","o":["Da concepção até o fim do segundo ano de vida","Do nascimento até completar 1000 dias fora do útero","Da fase embrionária ao final do terceiro ano","Do 24º mês ao 5º ano de vida"],"a":"a","c":"[sugerido] 270 dias de gestação + 365 + 365."},
+{"t":"Alimentação","q":"Mãe retorna ao trabalho na próxima semana e deixará a filha de 5 meses em creche integral; lactente em AME. Orientação correta:","o":["Introduzir alimentação complementar e oferecer frutas e papa na creche","Retirar do aleitamento exclusivo e oferecer fórmula de 1º semestre","Orientar ordenha materna e armazenamento adequado do leite ofertado enquanto a mãe trabalha","Introduzir papa de fruta e salgada e manter aleitamento, orientando ordenha"],"a":"c","c":"[sugerido]"},
+{"t":"Alimentação","q":"Acerca da alimentação complementar, assinale a correta:","o":["O mel é totalmente contraindicado no primeiro ano de vida","A papa salgada não deve conter sal","A criança menor de um ano não deve comer peixe","Frutas ácidas como abacaxi e kiwi não devem ser introduzidas antes dos oito meses"],"a":"a","c":"[sugerido] Botulismo; ovo inteiro e peixe entram já na 1ª papa; nenhuma fruta é contraindicada."},
+{"t":"Alimentação","q":"Lactente de 6 meses em AME: orientações para o início da alimentação complementar?","o":["A papa principal deve conter todos os grupos alimentares, amassada, oferecida logo no início da introdução","Iniciar com papa de frutas nos primeiros 15 dias e, após aceitação, iniciar papa principal, amassada e com todos os grupos","A papa principal deve conter todos os grupos e deve ser peneirada","Início gradual, papas de fruta e suco, e após 1 mês a papa principal em 2 horários"],"a":"b","c":"[sugerido, com dúvida entre a e b] Pelo slide, no 6º mês entram frutas e a 1ª papa principal; a 2ª papa vem do 7º ao 8º mês. Nunca peneirar ou liquidificar; suco não."},
+{"t":"Alimentação","q":"Lactente de 9 meses, desmamado cedo, mingau de leite integral 3 a 4 vezes/dia + frutas + papa principal. Principais inadequações:","o":["Baixa quantidade de proteínas, sódio, cloretos, fósforo e ferro biodisponível","Adequada proteína, mas sódio, cloretos, cálcio, fósforo e ferro abundantes","Elevada quantidade de proteínas, cálcio e eletrólitos, além de ferro de baixa biodisponibilidade","Elevada proteína e baixas taxas de eletrólitos e ferro, além de cálcio de baixa biodisponibilidade"],"a":"c","c":"[sugerido; slide 4] Leite de vaca = proteína e sódio altos (carga renal de soluto), ferro e oligoelementos de baixa biodisponibilidade."},
+
+{"t":"Parasitoses","q":"Criança chega ao Pronto-Socorro com quadro de \"chiado no peito\", desconforto respiratório e dor abdominal intensa. Ao exame físico está taquidispneico e distensão abdominal importante, com dor à palpação difusa. Sem evacuação há 2 dias. Rx de abdome com imagem em \"miolo de pão\". Em relação às enteroparasitoses, o agente mais comum relacionado com este quadro clínico é:","o":["Enterobius vermiculares","Giárdia","Ascaris lumbricoides","Escherichia coli"],"a":"c","c":"Síndrome de Löffler + abdome agudo obstrutivo; única com migração anômala nesse quadro."},
+{"t":"Parasitoses","q":"Escolar de 7 anos dá entrada no Pronto-Socorro referindo dor abdominal de forte intensidade e súbita. Ao exame físico, à inspeção da região perianal apresenta prolapso retal. A provável causa relacionada seria:","o":["Giardíase","Infecção por Trichuris trichiura","Suboclusão por Ascaris lumbricoides","Evento adverso à vacina contra rotavírus"],"a":"b","c":""},
+{"t":"Parasitoses","q":"Um importante problema de saúde pública são as parasitoses intestinais, que comumente são encontradas na infância e devem ter o manejo adequado devido a sua alta prevalência. Assinale a afirmativa correta:","o":["Para a maioria das helmintíases intestinais, temos o albendazol como tratamento de primeira linha","Ascaridíase, estrongiloidíase, enterobíase e ancilostomíase fazem Síndrome de Löeffler e podem ocasionar além de sintomas gastrointestinais, tosse crônica e outros sintomas respiratórios, associado a infiltrado na radiografia de tórax","A alteração hematológica mais comum nas enteroparasitoses é a plaquetopenia","Para um escolar com quadro de prurido anal, predominantemente à noite, o diagnóstico clínico é giardíase"],"a":"a","c":"[prova, a aluna marcou C e errou] B erra porque Enterobius não tem ciclo pulmonar; C: o comum é eosinofilia e anemia ferropriva; D: prurido anal noturno é enterobíase/oxiuríase."},
+{"t":"Parasitoses","q":"Sobre as citações:\nI. Parasitas com passagem pulmonar: Strongyloides stercoralis, Ancylostoma duodenale e Necator americanus.\nII. A giardíase pode levar à síndrome de Löeffler, perda ponderal e diarreia.\nIII. O protoparasitológico de fezes é o padrão-ouro, de baixo custo.\nIV. No \"tratamento em massa\" de uma comunidade de baixo risco, indicar quimioterapia preventiva 2x ao ano.","o":["Apenas I e III","Apenas II e IV","Apenas IV","Todas"],"a":"a","c":"[sugerido] Giardia é protozoário, não faz ciclo pulmonar; tratamento em massa 2x/ano é para comunidades de alto risco, prevalência ≥ 50%; baixo risco = 1x/ano."},
+
+{"t":"Dermatites","q":"Dona Clara procura a UBS para atendimento de seu filho Pedro, com 3 anos de idade, previamente hígido, que apresenta prurido no corpo todo há 10 dias, principalmente à noite. As lesões são pequenas pápulas eritematosas, algumas encimadas de crostas, outras em arranjo linear, com área de escoriação, com distribuição difusa, principalmente em pés. O irmão mais novo também apresenta as mesmas queixas há 1 semana. O diagnóstico e os achados clínicos que o definem são:","o":["Dermatofitose: presença de pápulas eritematosas e caso semelhante em outra criança da família","Dermatite atópica: prurido, escoriações e história familiar","Impetigo: escoriações e prurido noturno e caso","Escabiose: pápulas-crostosas, túneis, prurido noturno e caso semelhante em outra criança da família"],"a":"d","c":""},
+{"t":"Dermatites","q":"Joana, com 6 meses de idade, está em acompanhamento de Puericultura na UBS. Apresenta região de fraldas com eritema brilhante há 3 dias, poupando região de dobras. Deve ser orientado à mãe:","o":["Uso de griseofulvina sistêmica","Uso de mupirocina tópica 2x/dia","Troca frequente de fraldas e creme de barreira","Uso de nistatina creme após cada troca de fraldas"],"a":"c","c":"Dermatite de fralda irritativa primária; poupar dobras afasta cândida."},
+{"t":"Dermatites","q":"Lactente, com 5 meses de idade, apresenta região de fraldas com eritema brilhante há 3 dias, poupando região de dobras, em formato de W. Deve ser orientado à mãe:","o":["Uso de griseofulvina sistêmica e higiene com lenços umedecidos","Uso de mupirocina tópica 2x/dia","Troca frequente de fraldas e creme de barreira","Uso de creme de tacrolimo 0,1% (inibidor de calcineurina) 2x/dia"],"a":"c","c":""},
+{"t":"Dermatites","q":"Sobre a dermatite atópica (DA), devemos afirmar, exceto:","o":["A manutenção do uso constante de hidratantes adequados mantém a remissão e diminui o número de recidivas de DA","Como critérios diagnósticos, o paciente pode apresentar urticária e dermatite de contato","Os atópicos apresentam xerose, prurido, lesões eczematosas com distribuição típica e história de cronicidade","História pessoal de rinite e asma podem estar presentes"],"a":"b","c":"[prova] Marcada na prova."},
+{"t":"Dermatites","q":"Pré-escolar, cinco anos, apresenta pele seca e áspera com prurido intenso em face e nas pregas antecubitais e poplíteas com áreas de liquenificação e ausência de lesão purulenta. HPP: asma brônquica. Refere que há piora daqueles sintomas quando está calor, apresentando mais prurido quando aumenta a sudorese. As orientações para o controle adequado das crises desta criança devem ser baseadas nos itens abaixo, exceto:","o":["Orientações sobre fatores desencadeantes, anti-histamínico via oral para controle do prurido, antibiótico tópico e antibiótico sistêmico","Hidratação de pele e orientações sobre fatores desencadeantes","Uso de corticoide tópico","Uso de tacrolimo tópico, como segunda opção"],"a":"a","c":"Dermatite atópica sem sinal de infecção: não cabe antibiótico."},
+{"t":"Dermatites","q":"Lactente do sexo feminino com 9 meses apresenta há cinco dias pápulas eritematosas no tronco, palmas das mãos e plantas dos pés com prurido. Nega fatores de melhora ou piora. A mãe refere lesões pruriginosas nas suas axilas há 10 dias. O diagnóstico e o tratamento são:","o":["Escabiose / permetrina tópica","Doença pé-mão-boca / analgésico oral","Prurigo estrófulo / corticosteroides tópicos","Dermatite de contato eczematizada / antibiótico tópico"],"a":"a","c":""},
+{"t":"Dermatites","q":"Em sua primeira semana de atendimento na UBS, você atende em uma primeira consulta uma menina de 11 anos, que apresenta quadro recorrente de xerodermia difusa, mais grossa em regiões flexoras dos membros e do pescoço, inclusive com áreas de liquenificação. As lesões não apresentam conteúdo purulento. A menina apresenta prurido importante desde o início do quadro, que se iniciou com 10 meses de vida. Qual seria seu diagnóstico e a melhor orientação para esta família?","o":["Trata-se de escabiose, devendo-se tratar a família toda com permetrina, loção corporal e ivermectina","Trata-se de dermatofitose (tinha corporis) devido presença de lesões liquenificadas, devendo-se iniciar imediatamente o uso de antifúngico tópico para o tratamento de Malassezia furfur, responsável pelas lesões","Trata-se de dermatite atópica, devendo-se orientar tomar banhos curtos e com água morna, utilizar sabonetes neutros e aplicar creme hidratante com frequência para melhorar o quadro de base, podendo ser considerada associação de corticoterapia tópica em períodos de exacerbação","Trata-se de impetigo não bolhoso, devendo-se orientar banho com hipoclorito de sódio e neomicina pomada"],"a":"c","c":"[prova]"}
+]
+</script>
+
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('data').textContent);
+  var LETTERS = ['a','b','c','d'];
+  var KEY = 'pueri-p1-prova';
+  var state = null;
+
+  function shuffle(arr){ for(var i=arr.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=arr[i];arr[i]=arr[j];arr[j]=t;} return arr; }
+  function load(){ try{ var s=localStorage.getItem(KEY); if(s){ var p=JSON.parse(s); if(p && p.order && p.order.length===DATA.length) return p; } }catch(e){} return null; }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  function fresh(){
+    var order = shuffle(DATA.map(function(_,i){return i;}));
+    return { order:order, answers:{}, revealed:false, start:Date.now(), elapsed:0 };
+  }
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  var quiz = document.getElementById('quiz');
+  function render(){
+    document.body.classList.toggle('revealed', state.revealed);
+    var html = '';
+    state.order.forEach(function(qi, n){
+      var q = DATA[qi]; var num = n+1; var sel = state.answers[qi];
+      html += '<article class="card" id="q'+num+'"><div class="q-head"><span class="q-num">Questão '+num+'</span><span class="tag">'+esc(q.t)+'</span></div>';
+      html += '<p class="stem">'+esc(q.q)+'</p><div class="opts">';
+      q.o.forEach(function(opt, k){
+        var L = LETTERS[k]; var cls='opt';
+        if(sel===L) cls+=' sel';
+        if(state.revealed){ if(L===q.a) cls+=' correct'; else if(sel===L) cls+=' wrong'; }
+        html += '<label class="'+cls+'" data-q="'+qi+'" data-l="'+L+'"><input type="radio" name="q'+qi+'" value="'+L+'"'+(sel===L?' checked':'')+(state.revealed?' disabled':'')+'><span class="l">'+L+')</span><span>'+esc(opt)+'</span></label>';
+      });
+      html += '</div>';
+      if(state.revealed){
+        var fb, cls;
+        if(sel===undefined){ cls='blank'; fb='<b>Em branco.</b> Gabarito: '+q.a+')'; }
+        else if(sel===q.a){ cls='ok'; fb='<b>Certa.</b> Gabarito: '+q.a+')'; }
+        else { cls='bad'; fb='<b>Errada.</b> Você marcou '+sel+'), gabarito: '+q.a+')'; }
+        if(q.c) fb += '<span class="c">'+esc(q.c)+'</span>';
+        html += '<div class="fb '+cls+'">'+fb+'</div>';
+      }
+      html += '</article>';
+    });
+    quiz.innerHTML = html;
+    updateBar();
+    renderResult();
+  }
+
+  quiz.addEventListener('change', function(e){
+    if(state.revealed) return;
+    var lab = e.target.closest('.opt'); if(!lab) return;
+    var qi = +lab.dataset.q; state.answers[qi] = lab.dataset.l; save();
+    lab.parentNode.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('sel', o===lab); });
+    updateBar();
+  });
+
+  function updateBar(){
+    var n = Object.keys(state.answers).length;
+    document.getElementById('cnt').textContent = n+' / '+DATA.length;
+    document.getElementById('prog').style.width = (100*n/DATA.length)+'%';
+  }
+
+  function renderResult(){
+    var box = document.getElementById('result'), jump = document.getElementById('jump');
+    if(!state.revealed){ box.innerHTML=''; jump.innerHTML=''; return; }
+    var total=DATA.length, ok=0, blank=0, byT={};
+    var jl='';
+    state.order.forEach(function(qi,n){
+      var q=DATA[qi], sel=state.answers[qi]; byT[q.t]=byT[q.t]||{ok:0,n:0};
+      byT[q.t].n++;
+      var cls;
+      if(sel===undefined){ blank++; cls='blank'; }
+      else if(sel===q.a){ ok++; byT[q.t].ok++; cls='ok'; }
+      else cls='bad';
+      jl += '<a href="#q'+(n+1)+'" class="'+cls+'">'+(n+1)+'</a>';
+    });
+    var wrong = total-ok-blank;
+    var pct = Math.round(100*ok/total);
+    var mins = Math.floor(state.elapsed/60000), secs = Math.floor(state.elapsed/1000)%60;
+    var h = '<p class="score">'+ok+' / '+total+' <small>('+pct+'%) · '+wrong+' erradas · '+blank+' em branco · tempo '+mins+'min '+(secs<10?'0':'')+secs+'s</small></p>';
+    h += '<table><tr><th>Tema</th><th class="n">Acertos</th><th class="n">%</th></tr>';
+    Object.keys(byT).forEach(function(t){ var b=byT[t]; h+='<tr><td>'+esc(t)+'</td><td class="n">'+b.ok+' / '+b.n+'</td><td class="n">'+Math.round(100*b.ok/b.n)+'%</td></tr>'; });
+    h += '</table><p class="legend">[prova] = gabarito marcado na prova corrigida. [sugerido] = resposta baseada nos slides (o banco de questões veio sem gabarito).</p>';
+    box.innerHTML = h; jump.innerHTML = jl;
+  }
+
+  // timer
+  function tick(){
+    if(!state.revealed) state.elapsed = Date.now()-state.start;
+    var s=Math.floor(state.elapsed/1000), m=Math.floor(s/60); s=s%60;
+    document.getElementById('timer').textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  }
+  setInterval(tick, 1000);
+
+  document.getElementById('btnCorrigir').addEventListener('click', function(){
+    if(state.revealed) return;
+    var n = Object.keys(state.answers).length;
+    if(n<DATA.length && !confirm('Ainda faltam '+(DATA.length-n)+' questões em branco. Corrigir mesmo assim?')) return;
+    state.elapsed = Date.now()-state.start; state.revealed = true; save(); render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+  document.getElementById('btnNova').addEventListener('click', function(){
+    if(!state.revealed && Object.keys(state.answers).length && !confirm('Isso apaga as respostas atuais e embaralha de novo. Continuar?')) return;
+    state = fresh(); save(); render(); window.scrollTo(0,0);
+  });
+
+  state = load() || fresh();
+  if(!state.revealed) state.start = Date.now()-state.elapsed; // continua contando do ponto salvo
+  save(); render(); tick();
+})();
+</script>
+</body>
+</html>
