@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado P1 · Farmacoterapia · Córtex Estudos</title>
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0a0d1f;--surface:#141833;--surface2:#1b2043;--ink:#f3f4fb;--muted:#9aa1c4;--faint:#6f76a0;
+    --line:rgba(255,255,255,.10);--accent:#818cf8;--gold:#e6b450;--ok:#34d399;--err:#f87171;--radius:12px}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.55;min-height:100vh}
+  a{color:var(--accent);text-decoration:none}
+  .top{position:sticky;top:0;z-index:50;background:rgba(10,13,31,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .top .in{max-width:860px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:15px}.brand b{color:var(--gold)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:7px 16px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+  .tab.on{background:var(--accent);color:#0a0d1f;border-color:transparent}
+  .wrap{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+  .kick{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:clamp(24px,4.5vw,34px);line-height:1.1;margin-bottom:10px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:18px;max-width:70ch}
+  .statgrid{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 18px;text-align:center}
+  .stat b{display:block;font-size:22px}.stat span{color:var(--muted);font-size:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+  .chip{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--muted);border-radius:999px;
+    padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .chip.on{background:#e8eaf6;color:#0a0d1f;border-color:transparent}
+  .panel{display:none}.panel.on{display:block}
+  .q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
+  .qhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .qid{font-weight:800;color:var(--gold);font-size:17px}
+  .qorg{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .qsrc{font-size:11.5px;color:var(--faint)}
+  .enun{margin:8px 0 12px;white-space:pre-line}
+  .qimg{margin:10px 0;background:#fff;border-radius:8px;padding:6px;text-align:center}
+  .qimg img{max-width:100%;border-radius:5px}
+  .qimg figcaption{font-size:12px;color:#555;padding:5px 4px 2px;text-align:left}
+  .alts{display:flex;flex-direction:column;gap:8px}
+  .alt{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1.5px solid var(--line);
+    border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14.5px;transition:.12s;text-align:left;color:var(--ink);width:100%}
+  .alt:hover{border-color:var(--accent)}
+  .alt .letra{font-weight:800;color:var(--accent);flex:0 0 auto}
+  .alt.certa{border-color:var(--ok);background:rgba(52,211,153,.10)}
+  .alt.errada{border-color:var(--err);background:rgba(248,113,113,.10)}
+  .alt.marcada{border-color:var(--accent);background:rgba(129,140,248,.12)}
+  .alt:disabled{cursor:default}
+  .exp{display:none;margin-top:12px;border-left:3px solid var(--gold);background:rgba(230,180,80,.07);
+    border-radius:0 9px 9px 0;padding:12px 14px;font-size:14px}
+  .exp .fonte{display:block;margin-top:8px;font-size:11.5px;color:var(--faint)}
+  .exp.show{display:block}
+  .varia{font-size:12px;color:var(--faint);margin-top:8px;font-style:italic}
+  .btn{border:0;border-radius:9px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;background:var(--accent);color:#0a0d1f}
+  .btn.sec{background:rgba(255,255,255,.09);color:var(--ink);border:1px solid var(--line)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .simbar{position:sticky;bottom:0;background:rgba(10,13,31,.95);border-top:1px solid var(--line);padding:12px 18px;
+    display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:40}
+  .resultado{background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius);padding:24px;margin:20px 0}
+  .resultado h2{margin-bottom:6px}
+  .score{font-size:42px;font-weight:800;color:var(--gold)}
+  .porOrgao{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .porOrgao div{background:var(--surface2);border-radius:9px;padding:8px 14px;font-size:13px}
+  .rev{margin-top:8px;font-size:13.5px;color:var(--muted)}
+  .diss .item{margin:12px 0}
+  .diss .perg{font-weight:700;margin-bottom:6px}
+  .diss .resp{display:none;border-left:3px solid var(--ok);background:rgba(52,211,153,.07);border-radius:0 9px 9px 0;padding:11px 13px;font-size:14px}
+  .diss .resp.show{display:block}
+  .mini{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .aviso{background:rgba(129,140,248,.09);border:1px solid rgba(129,140,248,.35);border-radius:var(--radius);padding:14px 16px;font-size:13.5px;color:var(--muted);margin:14px 0}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ok);color:#052;font-weight:800;
+    padding:10px 22px;border-radius:999px;z-index:99;display:none}
+  small{color:var(--faint)}
+  ::selection{background:var(--accent);color:#0a0d1f}
+</style>
+</head>
+<body>
+<nav class="top"><div class="in">
+  <span class="brand">🧠 Córtex<b>.</b> · <a href="../../">Início</a></span>
+  <div class="tabs">
+    <button class="tab on" data-p="estudo">📖 Estudo</button>
+    <button class="tab" data-p="simulado">🎯 Simulado</button>
+    <button class="tab" data-p="diss">✍️ Abertas &amp; Dissertativas</button>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Farmacoterapia · Aulas 01–06</p>
+  <h1>Simulado P1 — Farmacoterapia</h1>
+  <p class="lead">Banco de 57 objetivas e 68 questões abertas cobrindo as Aulas 01–06 — corticoides, broncodilatadores/asma, drogas lícitas e ilícitas, contraceptivos, tocólise e uterotônicos — cada uma com gabarito comentado, resolvido questão a questão (onde a resposta original era duvidosa, o comentário avisa).</p>
+  <div class="statgrid">
+    <div class="stat"><b>57</b><span>objetivas (A–E)</span></div>
+    <div class="stat"><b>68</b><span>abertas</span></div>
+    <div class="stat"><b>5</b><span>temas</span></div>
+  </div>
+
+  <div id="p-estudo" class="panel on">
+    <div class="aviso">Modo estudo: responda e veja o gabarito comentado na hora. Seu progresso fica salvo neste navegador. ⚠️ A <b>E4</b> pede a alternativa <b>INCORRETA</b>.</div>
+    <div class="chips" id="filtros"></div>
+    <div id="lista-estudo"></div>
+  </div>
+
+  <div id="p-simulado" class="panel">
+    <div id="sim-intro">
+      <div class="aviso"><b>Simulado:</b> as 45 objetivas em sequência, sem feedback. No final você vê a nota, a revisão comentada e pode <b>copiar um relatório pronto para colar em uma IA</b> e estudar em cima dos seus erros. Tempo sugerido pelo compilado: até 90 minutos por bloco — mas aqui é livre.</div>
+      <button class="btn" id="sim-start">▶ Começar simulado</button>
+      <span id="sim-retomar"></span>
+    </div>
+    <div id="sim-area" style="display:none">
+      <div id="lista-sim"></div>
+      <div class="simbar"><span id="sim-prog" style="color:var(--muted);font-size:13.5px"></span>
+        <button class="btn" id="sim-fim">Finalizar simulado</button></div>
+    </div>
+    <div id="sim-result" style="display:none"></div>
+  </div>
+
+  <div id="p-diss" class="panel">
+    <div class="aviso">Nas provas reais deste banco, os testes valiam 0,25–0,4 e as descritivas 1,0–1,5. As questões abertas têm a resposta esperada no botão — treina escrever antes de revelar.</div>
+    <h2 style="margin:18px 0 4px">Abertas &amp; dissertativas</h2>
+    <div id="lista-diss"></div>
+    
+    <div id="lista-lam"></div>
+  </div>
+</div>
+<div class="toast" id="toast">Relatório copiado ✓</div>
+
+<script>
+const QUESTOES=[
+{id:"Q1",org:"Corticoides",fontes:"T15",img:null,
+enun:"Sobre a Síndrome de Cushing, avalie as afirmações a seguir: I- tem relação com as ações metabólicas dos corticoides. II- é decorrente da ação inibitória do eixo hipotálamo-hipófise-adrenal. III- para se evitar este efeito deve-se fazer o esquema de retirada. É correto o que se afirma em:",
+alts:["I e III", "I, II e III", "II e III", "I e II", "apenas I"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"(apenas I) — Cushing é efeito METABÓLICO do excesso de cortisol. II F: não decorre da inibição do eixo. III F: a retirada evita a insuficiência adrenal, não o Cushing."},
+{id:"Q2",org:"Corticoides",fontes:"T15",img:null,
+enun:"Sobre os corticoides, assinale a alternativa correta:",
+alts:["Agem inibindo a ação da ciclo-oxigenase 2", "São potentes antiagregantes plaquetários", "Quando ministrados por períodos prolongados e interrompidos abruptamente, podem levar à insuficiência da suprarrenal", "Inibem a gliconeogênese", "Aumentam a síntese proteica muscular"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"bloqueio prolongado do eixo → atrofia adrenal → retirada abrupta = insuficiência da suprarrenal. (A: a inibição da COX-2 é genômica, na síntese; B: não são antiagregantes; D: estimulam gliconeogênese; E: catabolismo muscular.)"},
+{id:"Q3",org:"Corticoides",fontes:"T15",img:null,
+enun:"Sobre os anti-inflamatórios esteroides, analise: I- os corticosteroides possuem mecanismo associado à transcrição gênica; como certo tempo é requerido para as alterações de expressão gênica, não são efetivos como medida isolada na fase aguda da anafilaxia. II- os glicocorticoides inibem a proliferação de fibroblastos, aumentando os processos de cicatrização. III- tratamentos agudos, com doses de 30 mg/dia de prednisona por período inferior a sete dias, podem ser suspensos abruptamente. IV- o esquema de retirada nos tratamentos prolongados deve ser feito para se evitar a síndrome de Cushing. Estão corretas apenas:",
+alts:["I e III", "apenas I", "III e IV", "II e IV"],
+correta:0,fonteResp:"gabarito conferido",
+exp:"(I e III) — II F: INIBEM fibroblastos e PIORAM a cicatrização. IV F: o esquema de retirada evita a insuficiência adrenal."},
+{id:"Q4",org:"Corticoides",fontes:"T15",img:null,
+enun:"Sobre as interações medicamentosas dos corticoides: I- o aumento do pH estomacal diminui a absorção dos corticoides. II- glicocorticoides favorecem a hipocalemia interagindo com digitálicos. III- indutores de metabolismo, como os anticonvulsivantes, podem diminuir o efeito farmacológico dos glicocorticoides. É correto o que se afirma em:",
+alts:["apenas I", "II e III", "I e III", "I e II", "I, II e III"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"(I, II e III) — antiácido ↓absorção; digitálicos + hipocalemia = mais toxicidade; fenitoína/carbamazepina/rifampicina induzem o metabolismo e ↓efeito."},
+{id:"Q5",org:"Corticoides",fontes:"T15",img:null,
+enun:"Qual das alternativas abaixo NÃO se inclui entre os efeitos indesejados dos corticoides?",
+alts:["Hiperglicemia, estrias cutâneas e acne", "Aumento da reposição óssea", "Supressão da suprarrenal", "Hipertensão arterial e fragilidade capilar", "Supressão da resposta a infecções ou lesões"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"corticoide REDUZ massa óssea (inibe osteoblastos, ↓absorção de cálcio → osteoporose); todo o resto é efeito real."},
+{id:"Q6",org:"Corticoides",fontes:"P-05/10/22",img:null,
+enun:"Sobre o mecanismo de ação anti-inflamatória dos corticoides: I- podem afetar os processos de cicatrização por aumentar a proliferação de fibroblastos. II- estabilizam a membrana de lisossomos. III- aumentam a formação dos fatores de estimulação de colônias para alguns leucócitos. IV- agem inibindo genomicamente a COX-2. É correto afirmar em:",
+alts:["I e II", "I e III", "II e III", "II e IV", "III e IV"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"(II e IV) — I F: INIBEM a proliferação de fibroblastos; III F: DIMINUEM fatores de estimulação de colônias (CSF), interleucinas e TNF."},
+{id:"Q7",org:"Corticoides",fontes:"P-05/10/22",img:null,
+enun:"Sobre as interações medicamentosas dos corticoides, avalie: I- carbamazepina faz interação farmacocinética com corticoides. II- hipoglicemiantes orais têm suas necessidades diminuídas com esta interação. III- associados aos AINEs, potencializam os efeitos indesejados gástricos. IV- corticoides aumentam os efeitos dos contraceptivos. É correto afirmar em:",
+alts:["I e II", "I e III", "II e III", "II e IV", "III e IV"],
+correta:1,fonteResp:"atenção — ver comentário",
+exp:"(I e III) — II F: corticoide é hiperglicemiante → a necessidade de hipoglicemiante AUMENTA. IV F: é o contrário (estrogênios/contraceptivos aumentam a meia-vida dos corticoides). Marcação do aluno ilegível na foto; resolvido pelo conteúdo."},
+{id:"Q8",org:"Corticoides",fontes:"P-05/10/22",img:null,
+enun:"Os corticoides fazem parte de um importante grupo de fármacos com importantes repercussões fisiológicas. Avalie: I- a hidrocortisona é um corticoide de curta duração sem atividade mineralocorticoide. II- a betametasona é um corticoide de ação prolongada com alta potência anti-inflamatória. III- corticoides podem alterar a secreção de GH. É correto afirmar em:",
+alts:["I e II", "I e III", "II e III", "apenas II", "I, II e III"],
+correta:2,fonteResp:"atenção — ver comentário",
+exp:"(II e III) — I F: a hidrocortisona TEM atividade mineralocorticoide (é o padrão 1:1). Sem gabarito na fonte; resolvido."},
+{id:"Q9",org:"Asma",fontes:"Comp",img:null,
+enun:"Sobre o mecanismo de ação dos agonistas beta no tratamento da asma, podemos afirmar:",
+alts:["Diminuem a concentração de AMPc intracelular", "Inativam a PKA", "Atuam nos receptores β1 respiratórios", "Aumentam o Ca²⁺ intracelular", "Nenhuma das anteriores"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"(NDA) — β2: AUMENTA AMPc → ATIVA PKA → DIMINUI Ca²⁺ intracelular → broncodilatação; e o receptor respiratório é β2, não β1."},
+{id:"Q10",org:"Asma",fontes:"Comp/P-foto",img:null,
+enun:"São agonistas β de longa duração:",
+alts:["Fenoterol", "Salmeterol", "Salbutamol", "Terbutalina", "Nenhuma das anteriores"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"salmeterol (e formoterol) = longa duração; fenoterol, salbutamol e terbutalina = curta."},
+{id:"Q11",org:"Asma",fontes:"P-foto",img:null,
+enun:"Sobre a farmacocinética da teofilina, podemos afirmar:",
+alts:["É mal absorvida pelo trato gastrointestinal", "Insuficiência cardíaca aumenta a concentração plasmática da droga", "Faz interação farmacodinâmica com a eritromicina", "Infecções virais aumentam o metabolismo da droga", "Nenhuma das anteriores"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"a IC reduz o clearance da teofilina → ↑concentração plasmática. (A: bem absorvida VO; C: interação farmacoCINÉTICA com eritromicina; D: infecções virais DIMINUEM o metabolismo.)"},
+{id:"Q12",org:"Asma",fontes:"P-foto",img:null,
+enun:"São ações fisiopatológicas características dos leucotrienos B4:",
+alts:["Aumento da permeabilidade vascular", "Quimiotaxia (eosinófilos)", "Broncoconstrição", "Indução de neutrófilos", "Nenhuma das anteriores"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"LTB4 = quimiotaxia/indução de NEUTRÓFILOS. Permeabilidade, eosinófilos e broncoconstrição são dos cisteinílicos (C4/D4/E4)."},
+{id:"Q13",org:"Asma",fontes:"P-05/10/22",img:null,
+enun:"Sobre os antileucotrienos, avalie: I- zafirlukast é um inibidor dos receptores de leucotrienos. II- efeito broncodilatador inicial (semanas) e anti-inflamatório (dias). III- pode ser ingerido junto com as refeições. É correto o que se afirma em:",
+alts:["Apenas a I está correta", "I e II estão corretas", "I e III estão corretas", "II e III estão corretas", "I, II e III estão corretas"],
+correta:0,fonteResp:"gabarito conferido",
+exp:"(apenas I) — II está invertida (broncodilatador em HORAS, anti-inflamatório em SEMANAS); III F: montelucaste/zafirlucaste longe das refeições."},
+{id:"Q14",org:"Asma",fontes:"P-05/10/22",img:null,
+enun:"Sobre a terapia da asma, considere: I- corticoides inalatórios revertem e previnem os sintomas. II- no tratamento da asma leve porém intermitente deve-se utilizar um agonista beta inalatório quando necessário. III- modificadores de leucotrienos são indicados como monoterapia na asma leve. É correto o que se afirma em:",
+alts:["Apenas a I está correta", "I e II estão corretas", "I e III estão corretas", "II e III estão corretas", "Todas estão corretas"],
+correta:4,fonteResp:"atenção — ver comentário",
+exp:"(todas) — corticoide inalatório previne E reverte; β2 quando necessário na intermitente; antileucotrieno vale como monoterapia na asma leve. A própria fonte oscilou entre \"II e III\" e \"todas\" — se a prova considerar que CI só previne, a resposta vira D."},
+{id:"Q15",org:"Asma",fontes:"P-05/10/22",img:null,
+enun:"Sobre as drogas utilizadas na asma: I- terbutalina provoca alívio imediato dos sintomas. II- formoterol tem início de ação em aproximadamente 15 min e tempo de duração de 12 h. III- o uso prolongado desses fármacos pode diminuir a hiper-reatividade da asma. É correto o que se afirma em:",
+alts:["Apenas a I está correta", "I e II estão corretas", "I e III estão corretas", "II e III estão corretas", "I, II e III estão corretas"],
+correta:0,fonteResp:"atenção — ver comentário",
+exp:"(apenas I — gabarito da fonte) — farmacologicamente a II também é verdadeira (formoterol tem início rápido e dura ~12 h); a fonte manteve só a I. III é F: uso prolongado de β2 NÃO diminui a hiper-reatividade (pode dar tolerância)."},
+{id:"Q16",org:"Asma",fontes:"P-foto",img:null,
+enun:"Sobre o brometo de ipratrópio (Atrovent®): I- efeito broncodilatador mais lento que os agonistas dos beta-adrenoceptores. II- trata-se de agonista parassimpático utilizado como broncodilatador adicional para idosos e lactentes. III- apresentam como efeito indesejado boca seca, visão turva e constipação intestinal. É correto o que se afirma em:",
+alts:["Apenas a I está correta", "I e II estão corretas", "I e III estão corretas", "II e III estão corretas", "Todas estão corretas"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"(I e III) — II F: ipratrópio é ANTAGONISTA muscarínico (parassimpaticolítico), não agonista."},
+{id:"Q17",org:"Asma",fontes:"Comp",img:null,
+enun:"Paciente de 12 anos apresentando crise asmática deu entrada na Santa Casa; foi prescrita inaloterapia com Berotec e Atrovent, drogas de ação no SNA. Sobre o Atrovent (ipratrópio), podemos afirmar:",
+alts:["É um agonista do SNS", "É um agonista do SNP", "Age como droga simpatomimética", "É um antagonista do SNS", "Todas estão erradas"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"o ipratrópio é ANTAGONISTA COLINÉRGICO (bloqueia o SNP); nenhuma das alternativas descreve isso."},
+{id:"Q18",org:"Asma",fontes:"Comp",img:null,
+enun:"A adrenalina utilizada por inalação no tratamento da asma é uma droga:",
+alts:["Antagonista muscarínico", "Agonista muscarínico", "Agente anticolinesteásico", "Antagonista adrenérgico", "Agonista simpático"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"adrenalina = agonista simpático (adrenérgico) direto."},
+{id:"Q19",org:"Asma",fontes:"FARMACO P2-3",img:null,
+enun:"Sobre o salbutamol no tratamento da asma, podemos afirmar:",
+alts:["Age sobre os receptores beta parassimpáticos promovendo broncodilatação", "São broncodilatadores de curta duração", "Provocam hipertensão", "São administrados por via intravenosa na emergência", "Nenhuma das anteriores"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"salbutamol é β2-agonista de CURTA duração (via inalatória; \"beta parassimpático\" não existe)."},
+{id:"Q20",org:"Asma",fontes:"Comp",img:null,
+enun:"Assinale a alternativa que NÃO corresponda a um efeito indesejado do salbutamol no tratamento da asma:",
+alts:["Taquicardia", "Vasodilatação", "Tremores", "Agitação", "Sonolência"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"β2 dá taquicardia, tremor, agitação, vasodilatação; NÃO dá sonolência."},
+{id:"Q21",org:"Asma",fontes:"FARMACO P2-3",img:null,
+enun:"Sobre os anti-inflamatórios esteroidais, podemos afirmar:",
+alts:["Têm ação somente anti-inflamatória", "Agem inibindo somente a COX-2", "São contraindicados para pacientes renais", "Agem estimulando a COX-1 e COX-2", "Nenhuma das anteriores"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"corticoide inibe (genomicamente) a síntese de COX-2 e a fosfolipase A2 (via lipocortina-1), sem tocar a COX-1. Tem também ação imunossupressora (A é falsa por \"somente\")."},
+{id:"Q22",org:"Asma",fontes:"Análise",img:null,
+enun:"Sobre o uso de antiasmáticos em adultos e crianças: I- o controle das crises se faz mediante uso contínuo de corticoides em pacientes com mais de 60 anos e lactentes. II- o tratamento de crises graves de asma deve associar brometo de ipratrópio a beta-2-agonistas por inalação, oxigênio e corticoide sistêmico. III- a frequência de doses dos broncodilatadores deve ser monitorada, pois as reações adversas são dose-dependentes. As afirmativas corretas são:",
+alts:["II e III", "I e III", "Apenas I", "Apenas II"],
+correta:0,fonteResp:"gabarito conferido",
+exp:"(II e III) — I F: corticoide contínuo não é o controle de crise para >60 anos e lactentes."},
+{id:"Q23",org:"Asma",fontes:"Análise",img:null,
+enun:"Sobre o tratamento da asma, assinale a alternativa INCORRETA:",
+alts:["Para o manejo da asma leve ou intermitente em crianças, deve-se utilizar um broncodilatador inalatório agonista beta-2 de curta ação, como o salbutamol", "Para crianças em idade escolar diagnosticadas com asma, a terapia preventiva regular é o uso apenas do agonista beta-2 de curta ação", "O uso de corticosteroides, como a beclometasona, é importante na redução da hiperatividade brônquica", "A asma persistente não controlada, em crianças maiores de 6 anos, exige, além do agonista beta-2 de curta ação e do corticosteroide, um agonista beta-2 de ação longa por inalação, como o formoterol"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"(INCORRETA) — terapia preventiva regular NÃO é só β2 de curta; exige antiinflamatório de manutenção."},
+{id:"Q24",org:"Asma",fontes:"Análise",img:null,
+enun:"Avalie com V ou F: ( ) A beclometasona é metilxantina broncodilatadora que inibe aspectos da fase tardia da asma alérgica. ( ) O salbutamol e o ipratrópio são antagonistas β2-adrenérgicos que diminuem a formação de componentes inflamatórios da asma crônica, relaxando a musculatura brônquica. ( ) A aminofilina é uma xantina com ação broncodilatadora, utilizada via oral e intravenosa, com ação estimulante sobre o SNC e a respiração. ( ) O fenoterol é um agonista β2-adrenérgico de ação longa que relaxa a musculatura brônquica e inibe a liberação de mediadores de mastócitos e monócitos.",
+alts:["F, V, V e V", "F, F, V e V", "V, F, V e F", "F, V, V e F"],
+correta:1,fonteResp:"atenção — ver comentário",
+exp:"(F,F,V,V — gabarito da fonte) — beclometasona é CORTICOIDE (não xantina); salbutamol/ipratrópio não são \"antagonistas β2\". A afirmativa IV chama o fenoterol de \"ação longa\" (ele é de curta) — a fonte considerou V pelo restante da frase; leve com essa ressalva."},
+{id:"Q25",org:"Asma",fontes:"Análise",img:null,
+enun:"Mariana, 17 anos, asmática desde os 3 anos, mudou-se e adotou um gato. Sintomas frequentes nas atividades diárias, usando salbutamol 3×/semana; já usa beclometasona/formoterol 100/6 mcg 12/12 h. Melhor conduta:",
+alts:["Evitar gatilhos (pó, poeira, pelos) e encaminhar ao pneumologista, sugerindo a adição de omalizumabe", "Indicar que se adapte à nova rotina", "Encaminhar com urgência para corticosteroides orais", "Evitar gatilhos e encaminhar sugerindo aumento da dose do corticosteroide inalatório", "Evitar gatilhos e encaminhar sugerindo adição de montelucaste e teofilina"],
+correta:0,fonteResp:"atenção — ver comentário",
+exp:"asma alérgica (gato!) não controlada apesar de CI+LABA → encaminhar e considerar OMALIZUMABE (anti-IgE). Gabarito da fonte."},
+{id:"Q26",org:"Asma",fontes:"Análise",img:null,
+enun:"O medicamento da classe dos glicoxantinos usado no tratamento da asma é:",
+alts:["Amitriptilina", "Acetominofen", "Ácido nalidíxico", "Aminofilina"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"aminofilina (xantina)."},
+{id:"Q27",org:"Asma",fontes:"Análise",img:null,
+enun:"Escolar de 8 anos, asma com última crise há 4 meses (internação 72 h), joga futebol 2×/semana; FR 32, sibilância bilateral com retrações. Pelo III Consenso Brasileiro, o tratamento profilático indicado é:",
+alts:["Corticoide inalatório + antileucotrieno oral", "Antileucotrieno oral + β2 de longa duração inalatório", "Antileucotrieno oral + teofilina de liberação lenta oral", "Corticosteroide inalatório + β2 de longa duração inalatório", "Corticoide inalatório + teofilina de liberação lenta oral"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"persistente leve em escolar ativo: corticoide inalatório + β2 de LONGA duração inalatório."},
+{id:"Q28",org:"Asma",fontes:"Análise",img:null,
+enun:"Sobre o tratamento da asma aguda grave, assinale a correta:",
+alts:["O brometo de ipratrópio, isoladamente, é bem eficaz", "Broncodilatador via nebulização é mais eficaz do que nebulímetro com espaçador", "A aminofilina é medicação de resgate com eficácia na asma aguda grave", "O corticoide oral apresenta a mesma eficácia que o intravenoso, quando o paciente tem condições de ingesta oral", "O salbutamol inalatório tem eficácia maior que o fenoterol inalatório"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"corticoide oral = IV em eficácia quando o paciente consegue ingerir. (Ipratrópio nunca isolado; espaçador ≥ nebulização; xantina não é resgate; salbutamol ≈ fenoterol.)"},
+{id:"Q29",org:"Asma",fontes:"Análise",img:null,
+enun:"Homem, 34 anos, asma desde a infância, crises noturnas de dispneia, tosse e sibilância. O melhor esquema é:",
+alts:["Budesonida + teofilina", "Ciclesonida", "Budesonida + formoterol", "Fluticasona + salbutamol", "Mometasona"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"crise NOTURNA pede broncodilatador de LONGA duração: budesonida + FORMOTEROL (não confundir com fenoterol, curta)."},
+{id:"Q30",org:"Asma",fontes:"Análise",img:null,
+enun:"Assinale a medicação mais indicada para a prevenção imediata de asma induzida por exercício:",
+alts:["Salmeterol", "Montelucaste", "Budesonida", "Salbutamol", "Prednisona"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"prevenção IMEDIATA = β2 de ação rápida e curta: salbutamol (salmeterol é lento; montelucaste é manutenção)."},
+{id:"Q31",org:"Asma",fontes:"Análise",img:null,
+enun:"Assinale a alternativa compatível com o quadro clínico da asma brônquica:",
+alts:["Doença essencialmente pediátrica, iniciando-se em todos os casos até 7 anos", "Chiado em todos os casos, referido ou auscultado", "Pico de sintomas após o almoço com melhora ao anoitecer", "Asmáticos não apresentam rinite alérgica e vice-versa", "História familiar positiva para asma brônquica"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"história familiar positiva (asma = genética + ambiente). B cai pelo \"em todos os casos\"."},
+{id:"Q32",org:"Asma",fontes:"Análise",img:null,
+enun:"O.G., 85 anos, DPOC em exacerbação. Sobre o tratamento da DPOC instável, V ou F: ( ) broncodilatadores costumam ser usados para alívio sintomático. ( ) em internados, glicocorticoides reduzem a estada hospitalar, aceleram a recuperação e diminuem exacerbação/recidiva em até 6 meses. ( ) as bactérias comuns nas exacerbações são S. pneumoniae, H. influenzae e M. catarrhalis, além de M. pneumoniae e C. pneumoniae. ( ) o oxigênio suplementar deve manter saturações maiores que 95%.",
+alts:["V–F–V–F", "F–V–F–V", "V–F–V–V", "F–V–V–V", "V–V–V–F"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"(V,V,V,F) — na DPOC a meta de saturação NÃO é >95% (aceita-se 88–92%)."},
+{id:"Q33",org:"Asma",fontes:"Análise",img:null,
+enun:"Monique, 31 anos, asma persistente leve recém-diagnosticada, sem medicamentos: tosse seca diurna e dispneia noturna 2–3×/semana. A melhor opção é:",
+alts:["β2 de curta ação para alívio conforme demanda + corticosteroide inalatório em dose baixa no controle", "Anticolinérgico inalatório para alívio + β2 de longa no controle", "Corticoide inalatório dose baixa para alívio + corticoide inalatório dose alta no controle", "Monoterapia com aminofilina em altas doses no controle", "Monoterapia com β2 de ação prolongada no controle"],
+correta:4,fonteResp:"atenção — ver comentário",
+exp:"(gabarito da fonte) — a análise tratou o quadro como intermitente e aceitou monoterapia com β2 de longa. Pela GINA/diretriz atual a conduta clássica seria a A (CI dose baixa + β2 de curta de alívio) — se a prova for de diretriz, vai de A; se repetir esta fonte, E."},
+{id:"Q34",org:"Asma",fontes:"Análise",img:null,
+enun:"Assinale a alternativa com dois fármacos simpatomiméticos e dois anti-inflamatórios esteroidais usados na asma brônquica:",
+alts:["Rivastigmina • Donepezil • Beclometasona • Budesonida", "Salbutamol • Salmeterol • Nedocromila • Atropina", "Salbutamol • Atropina • Beclometasona • Budesonida", "Salbutamol • Salmeterol • Beclometasona • Budesonida", "Salbutamol • Salmeterol • Teofilina • Fluticasona"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"simpatomiméticos: salbutamol + salmeterol; esteroidais: beclometasona + budesonida."},
+{id:"Q36",org:"Drogas",fontes:"T15",img:null,
+enun:"Um jovem sofre uma overdose e os amigos relatam abuso de opioides. Qual via neurológica é afetada e qual conduta deve ser adotada no pronto atendimento para reversão do quadro, respectivamente?",
+alts:["Via GABAérgica (GABA-A), tratamento com atropina", "Via GABAérgica (GABA-A), tratamento com naloxona", "Via colinérgica, tratamento com atropina", "Via serotoninérgica, tratamento com naloxona"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"opioides desinibem a via de recompensa agindo em interneurônios GABAérgicos (receptor μ); reversão da overdose = NALOXONA (antagonista opioide)."},
+{id:"Q37",org:"Drogas",fontes:"P-07/12/21",img:null,
+enun:"São efeitos indesejados na utilização do ecstasy: I- lesões a longo prazo do SNC relacionadas com a memória e o prazer. II- modificação de tempo vivido, espaço e corpo. III- tremor muscular, náuseas, visão borrada. É correto afirmar em:",
+alts:["Apenas a I está correta", "I e II estão corretas", "II e III estão corretas", "I e III estão corretas", "I, II e III estão corretas"],
+correta:3,fonteResp:"atenção — ver comentário",
+exp:"(I e III) — II (\"modificação de tempo vivido, espaço e corpo\") é a descrição clássica do LSD na própria fonte. Sem marcação clara na prova original; resolvido."},
+{id:"Q38",org:"Contraceptivos",fontes:"T15/P18ª",img:null,
+enun:"A eficácia da pílula anticoncepcional está diretamente relacionada com o seu uso correto. Marque a alternativa que NÃO indica uma situação em que a proteção da pílula é afetada:",
+alts:["Esquecimento de mais de uma pílula durante um mesmo ciclo", "Episódios de diarreias intensas", "Episódios de vômitos", "Uso combinado com métodos contraceptivos de barreira", "Uso de antibióticos e anticonvulsivantes"],
+correta:3,fonteResp:"atenção — ver comentário",
+exp:"barreira ASSOCIADA só aumenta a proteção; todo o resto derruba a pílula. Esta fonte (antiga) considera antibiótico como fator de falha; a diretriz ATUAL (CDC 2024/OMS 2025, dada em aula) diz que antibiótico comum NÃO interfere — quem derruba é anticonvulsivante indutor (e rifampicina)."},
+{id:"Q39",org:"Contraceptivos",fontes:"T15/P18ª",img:null,
+enun:"Sobre a função hormonal feminina: I- o LH tem um pico de secreção na ovulação. II- a progesterona aumenta na fase lútea do ciclo menstrual. III- tanto o estrogênio quanto a progesterona exercem feedback positivo no hipotálamo e hipófise anterior. IV- progesterona controla a fase proliferativa do ciclo menstrual. É correto o que se afirma em:",
+alts:["II e III", "I e IV", "I e II", "III e IV"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"(I e II) — III F: feedback NEGATIVO; IV F: progesterona controla a fase SECRETÓRIA (proliferativa = estrogênio)."},
+{id:"Q40",org:"Contraceptivos",fontes:"T15",img:null,
+enun:"Os contraceptivos hormonais orais podem apresentar alterações de uma série de mecanismos fisiológicos. Assinale a correta:",
+alts:["Estrógeno não provoca retenção de sódio", "Diminuem a adesividade plaquetária", "Estrogênio tem a propriedade de aumentar o LDL colesterol", "Os estrógenos aumentam a antitrombina III", "Aumenta a síntese de substrato de renina"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"estrogênio aumenta a síntese de substrato de renina/angiotensinogênio (→ ↑PA). (Retém sódio; AUMENTA adesividade plaquetária; DIMINUI LDL/aumenta HDL; DIMINUI antitrombina III.)"},
+{id:"Q41",org:"Contraceptivos",fontes:"T15/P18ª",img:null,
+enun:"Nem todas as pílulas anticoncepcionais são permitidas para a mulher em fase de amamentação. Para esse público, é recomendada apenas a pílula composta exclusivamente por:",
+alts:["Insulina sintética", "Testosterona sintética", "Estrogênio sintético", "Ocitocina sintética", "Progesterona sintética"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"na amamentação: pílula SÓ de progesterona (estrogênio interfere na lactação)."},
+{id:"Q42",org:"Contraceptivos",fontes:"P18ª/P-variante",img:null,
+enun:"Os contraceptivos hormonais orais podem apresentar alterações séricas de mecanismos fisiológicos. Assinale a correta:",
+alts:["Os estrógenos aumentam a antitrombina III", "Diminuem a síntese de substrato de renina", "O estrogênio tem a propriedade de aumentar o LDL colesterol", "Aumenta a adesividade plaquetária", "O estrógeno não provoca retenção de sódio"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"aumenta a adesividade plaquetária (as outras quatro estão invertidas)."},
+{id:"Q43",org:"Contraceptivos",fontes:"P18ª/P-05/10/22",img:null,
+enun:"Sobre a ação do estrógeno, podemos afirmar: I- o risco de gravidez é maior com o uso de contraceptivos de estrógeno de baixa dosagem. II- pacientes que usam CHO de baixa dosagem apresentam risco de tromboembolismo menor que gestantes. III- são estrógenos de 2ª geração o norgestrel. É correto afirmar em:",
+alts:["I e II", "I e III", "II e III", "II e IV", "III e IV"],
+correta:0,fonteResp:"gabarito conferido",
+exp:"(I e II) — III F: norgestrel é PROGESTÓGENO de 2ª geração, não estrógeno."},
+{id:"Q44",org:"Contraceptivos",fontes:"P18ª/P-05/10/22",img:null,
+enun:"Sobre os progestógenos, avalie: I- progesterona apresenta ação antimineralocorticoide. II- desogestrel apresenta efeito antiandrogênico. III- acetato de ciproterona tem como efeito o bloqueio da secreção de testosterona. É correto afirmar em:",
+alts:["I e II", "I e III", "II e III", "II e IV", "III e IV"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"(I e III) — II F: desogestrel não é antiandrogênico (é 3ª geração, seletivo). Gabarito da fonte (prova 18ª)."},
+{id:"Q45",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"São usos farmacológicos do estrogênio, EXCETO:",
+alts:["Usado no hipergonadismo ovariano", "Usado no tratamento do CA de próstata", "Usado na reposição pós-menopausa", "Utilizado como contraceptivo", "Todas estão erradas"],
+correta:0,fonteResp:"atenção — ver comentário",
+exp:"estrogênio trata HIPOgonadismo; \"hipergonadismo ovariano\" não é uso. A fonte marcou A com dúvida; confere com a farmacologia."},
+{id:"Q46",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"São efeitos colaterais do estrogênio, EXCETO:",
+alts:["Irritabilidade", "Alteração na libido", "Tonturas", "Vômitos", "Diarreia"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"diarreia não está na lista (irritabilidade, tontura, vômito sim; libido é dos progestógenos)."},
+{id:"Q47",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"Sobre a terapia contraceptiva com a pílula simples (apenas progestogênio), podemos afirmar:",
+alts:["Utilizada 21 dias de um ciclo de 28 dias", "Inibe a liberação de FSH", "Não interfere na lactação", "Mais confiável que a pílula combinada", "Nenhuma das anteriores"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"a minipílula NÃO interfere na lactação (uso contínuo; nem sempre inibe FSH/ovulação; menos confiável que a combinada)."},
+{id:"Q48",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"Sobre os contraceptivos orais, podemos afirmar:",
+alts:["Pílulas combinadas são utilizadas continuamente", "Pílula apenas com progesterona é utilizada durante a amamentação", "Pílulas combinadas têm como efeito indesejado perda de [texto original incompleto]", "A e B estão corretas", "Todas estão erradas"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"pílula só de progesterona é a da amamentação. (A: combinadas em geral têm pausa; C: enunciado incompleto na fonte.)"},
+{id:"Q49",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"Os contraceptivos hormonais têm como mecanismo de ação:",
+alts:["Produção do ciclo anovulatório", "Diminuição da motilidade tubária", "Modificação no muco cervical", "A e B estão erradas", "A, B e C estão corretas"],
+correta:4,fonteResp:"gabarito conferido",
+exp:"mecanismo quádruplo: anovulação + muco + endométrio + motilidade tubária."},
+{id:"Q50",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"São contraindicações RELATIVAS dos contraceptivos orais:",
+alts:["Tromboflebite", "Tabagistas acima de 35 anos", "Doenças da vesícula biliar", "Hepatopatia", "Hipertensão arterial grave"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"doenças da vesícula biliar = RELATIVA. Tromboflebite, tabagista >35a, hepatopatia e HAS grave = ABSOLUTAS."},
+{id:"Q51",org:"Contraceptivos",fontes:"P18ª/Wat",img:null,
+enun:"Sobre a hemostasia, os estrógenos têm ação:",
+alts:["Aumentam a antitrombina III", "Aumentam a prostaciclina", "Diminuem a agregação plaquetária", "Aumentam o tromboxane A2", "Nenhuma das anteriores"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"estrógenos AUMENTAM tromboxane A2 (e fatores de coagulação, plaquetas; DIMINUEM antitrombina III e prostaciclina)."},
+{id:"Q52",org:"Contraceptivos",fontes:"P18ª",img:null,
+enun:"Mulher em idade fértil, em uso de anticoncepcional oral, inicia tratamento de tuberculose pulmonar com o esquema básico. A conduta adequada quanto ao contraceptivo seria:",
+alts:["Aconselhá-la quanto ao uso de outros métodos contraceptivos, uma vez que a rifampicina interfere na ação dos contraceptivos orais", "Mantê-lo, haja vista que não há interação medicamentosa com o esquema básico", "Mantê-lo e associá-lo a métodos de barreira", "Substituí-los pelos injetáveis, a fim de evitar a interferência da isoniazida", "Não se aconselha o uso de contraceptivos orais"],
+correta:0,fonteResp:"gabarito conferido",
+exp:"rifampicina é INDUTORA potente do CYP450 → derruba o ACO → aconselhar outro método (mesmo princípio dos anticonvulsivantes indutores da aula)."},
+{id:"Q53",org:"Contraceptivos",fontes:"P-variante",img:null,
+enun:"Sobre as ações dos estrógenos sobre a hemostasia, podemos afirmar:",
+alts:["Aumentam a formação de prostaciclina", "Diminuem a formação do fator VIII", "Aumentam a adesividade plaquetária", "Diminuem a formação do tromboxane A2", "Nenhuma das anteriores"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"aumenta a adesividade plaquetária (A, B e D invertidas)."},
+{id:"Q54",org:"Toco/Utero",fontes:"T15",img:null,
+enun:"Assinale a alternativa que corresponda ao fármaco MENOS utilizado no trabalho de parto prematuro devido à falta de estudos:",
+alts:["Ocitocina", "Doadores de óxido nítrico", "Nifedipina", "Broncodilatadores agonistas beta", "Sulfato de magnésio"],
+correta:2,fonteResp:"atenção — ver comentário",
+exp:"nifedipina, \"menos utilizada por falta de estudos\" NESTA fonte (anos atrás). Hoje a nifedipina é a 1ª ESCOLHA do SUS/FEBRASGO (aula 06!). Se a prova cobrar a fonte antiga, é C; se cobrar diretriz atual, a pergunta nem faz sentido — atenção ao enunciado."},
+{id:"Q55",org:"Toco/Utero",fontes:"T15/P-07/12/21",img:null,
+enun:"Sobre os agonistas beta utilizados como uterolíticos: I- diminuem a secreção de insulina pela gestante. II- a ativação dos receptores beta-2 presentes no miométrio e vasos sanguíneos é responsável pelo seu efeito farmacológico. III- têm propriedades tocolíticas semelhantes aos AGONISTAS dos receptores da ocitocina. É correto o que se afirma em:",
+alts:["Apenas I", "I e II", "I e III", "II e III", "I, II e III"],
+correta:1,fonteResp:"gabarito conferido",
+exp:"(I e II) — β2 ↓insulina (hiperglicemia) e age em miométrio/vasos; III F: atosiban é ANTAGONISTA da ocitocina (e \"agonista de ocitocina\" seria uterotônico)."},
+{id:"Q56",org:"Toco/Utero",fontes:"P-variante",img:null,
+enun:"Na prematuridade extrema, cada dia de retardo do parto aumenta a taxa de sobrevida em 3%, e o uso de uterolíticos é bastante útil. Avalie: I- agonistas dos receptores beta relaxam a musculatura uterina por diminuição do cálcio. II- os agonistas betas são contraindicados em casos de arritmia. III- o sulfato de magnésio é uma alternativa quando os agonistas betas são contraindicados. IV- atosiban age como agonista dos receptores de ocitocina. É correto afirmar em:",
+alts:["I e II", "I e III", "II e III", "I, II e III", "I, II e IV"],
+correta:3,fonteResp:"gabarito conferido",
+exp:"(I, II e III) — IV F: atosiban é ANTAGONISTA competitivo do receptor de ocitocina."},
+{id:"Q57",org:"Toco/Utero",fontes:"P-07/12/21",img:null,
+enun:"Sobre os uterotônicos utilizados no trabalho de parto, podemos afirmar:",
+alts:["Maleato de metilergonovina é mais efetivo que o misoprostol", "Misoprostol é um derivado da ergotamina", "Ocitocina promove contração da musculatura lisa uterina", "Ocitocina não é utilizada na hemorragia pós-parto", "Ocitocina pode produzir hipercalemia"],
+correta:2,fonteResp:"gabarito conferido",
+exp:"ocitocina CONTRAI a musculatura lisa uterina. (A: metilergonovina é MENOS efetiva que misoprostol; B: misoprostol é análogo de PGE1; D: é o 1º passo da HPP; E: causa hipoNATREMIA.)"},
+{id:"Q58",org:"Toco/Utero",fontes:"P-variante",img:null,
+enun:"Sobre os uterotônicos, podemos afirmar (versão variante):",
+alts:["Ocitocina promove relaxamento da musculatura lisa vascular", "Maleato de metilergonovina é mais efetivo que o misoprostol", "Misoprostol é um derivado da ergotamina", "Ocitocina não é utilizada na hemorragia pós-parto", "Ocitocina pode produzir hipercalemia"],
+correta:0,fonteResp:"gabarito conferido",
+exp:"pegadinha da ação EXTRAUTERINA: a ocitocina RELAXA a musculatura lisa VASCULAR (vasodilatação). As demais seguem erradas como na questão 57."}
+];
+
+const DISSERTATIVAS=[
+{id:"Q35",org:"Drogas",fontes:"T15 · questão de relacionar colunas",img:null,imgcap:null,
+enun:"Relacione o tipo de droga com a via impactada (uma via pode servir a mais de uma droga): I Cocaína · II Opioides · III Benzodiazepínicos e barbitúricos · IV Nicotina · V Antidepressivos tricíclicos · VI Álcool · VII ISRS · VIII Maconha · IX Heroína · X Anfetamina · XI Ecstasy. Vias: (1) agem em interneurônios GABAérgicos que inibem tonicamente os neurônios dopaminérgicos da via de recompensa (nucleus accumbens), inibidos por encefalinas via receptor μ · (2) bloqueio ou inversão dos transportadores de recaptação de DA (DAT), NA (NET) e 5-HT (5HTT) · (3) agonista do receptor μ · (4) afeta vários receptores: GABA-A, NMDA e canabinoides · (5) aumenta a eficiência de vias GABAérgicas; uso crônico induz infrarregulação compensatória · (6) ativa diretamente receptores nicotínicos de ACh centrais, periféricos e na junção neuromuscular · (7) libera serotonina na fenda, inibe sua síntese e bloqueia sua recaptação · (8) liga-se a receptores de canabinoides (proteína G; ligante endógeno anandamida).",
+itens:[{p:"Resposta esperada",r:"I-2 · II-1 · III-5 · IV-6 · V-2 · VI-4 · VII-2 · VIII-8 · IX-3 · X-2 · XI-7 (gabarito da fonte). Cocaína/ATC/ISRS/anfetamina = transportadores de monoaminas; opioides e heroína = μ/interneurônios GABAérgicos; BZD/barbitúricos = GABA; nicotina = nicotínico; álcool = GABA-A+NMDA+canabinoide; maconha = CB; ecstasy = serotonina."}]},
+{id:"D1",org:"Corticoides",fontes:"P-foto, 1,5 pt",img:null,imgcap:null,
+enun:"Explique o esquema de retirada para uma terapia com corticoides com dose média (15–40 mg) por um período intermediário (1 mês).",
+itens:[{p:"Resposta esperada",r:"Dose média (15–40 mg) por período intermediário (2 sem–2 meses): reduzir ¼ da dose a cada 2 semanas, usando apenas uma dose matinal (mimetiza o pico circadiano). Regra geral da tabela: só dose baixa/média por até 2 semanas pode ser abrupta; quanto maior a dose e o tempo, mais lento o desmame (alta/crônico: 1/5 a cada 2 semanas + dias alternados)."}]},
+{id:"D2",org:"Corticoides",fontes:"P-05/10/22",img:null,imgcap:null,
+enun:"O uso prolongado de corticoides está relacionado com a síndrome de Cushing. Cite e explique 2 sinais e sintomas relacionados ao uso destes fármacos.",
+itens:[{p:"Resposta esperada",r:"Cushing iatrogênico = efeito metabólico do excesso de corticoide. Ex.: fáscies em lua cheia e giba dorsal (redistribuição de gordura para face/dorso); estrias purpúreas (catabolismo proteico + fragilidade capilar da pele fina); hiperglicemia (↑gliconeogênese); obesidade central."}]},
+{id:"D3",org:"Corticoides",fontes:"P-05/10/22",img:null,imgcap:null,
+enun:"Explique por que devemos fazer o esquema de retirada nestes casos, e quais os sinais e sintomas da não realização deste procedimento.",
+itens:[{p:"Resposta esperada",r:"O corticoide exógeno faz feedback negativo contínuo → inibe CRH/ACTH → o córtex adrenal ATROFIA e para de produzir cortisol. A retirada gradual dá tempo de o eixo reativar. Sem o esquema: insuficiência adrenal aguda — hipotensão/choque, fraqueza, hipoglicemia, náuseas."}]},
+{id:"D4",org:"Corticoides",fontes:"Prova respondida",img:null,imgcap:null,
+enun:"Explique o motivo pelo qual o corticoide não é/foi recomendado no tratamento inicial do COVID, e sim na fase tardia da doença.",
+itens:[{p:"Resposta esperada",r:"Na fase INICIAL do COVID a resposta imune está combatendo o vírus — o corticoide (anti-inflamatório + imunossupressor) atrapalharia essa defesa. Na fase TARDIA (inflamatória/tempestade de citocinas) ele é usado justamente para frear a resposta inflamatória exagerada."}]},
+{id:"D5",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Descreva o ritmo circadiano de secreção de cortisol ao longo do dia em indivíduos normais.",
+itens:[{p:"Resposta esperada",r:"Pico máximo ~8h da manhã (preparar o metabolismo energético para o dia), decrescendo ao longo do dia até o mínimo noturno. É por isso que a dose única do corticoide é MATINAL."}]},
+{id:"D6",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação dos corticoides e por que o efeito indesejado é a síndrome de Cushing.",
+itens:[{p:"Resposta esperada",r:"Lipofílico, atravessa a membrana e age em receptor NUCLEAR, alterando transcrição/síntese proteica (anabolismo hepático, catabolismo muscular — ação órgão-específica). O Cushing iatrogênico é a soma dos efeitos metabólicos do excesso: giba, lua cheia, estrias purpúreas."}]},
+{id:"D7",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Descreva a ação anti-inflamatória dos corticosteroides.",
+itens:[{p:"Resposta esperada",r:"Estabiliza a membrana lisossomal; inibe formação de cininas; bloqueia a via do ácido araquidônico (↑lipocortina-1 → inibe fosfolipase A2; inibe genomicamente a síntese de COX-2, sem tocar a COX-1); inibe proliferação de fibroblastos (piora cicatrização); ↓IFN-γ, CSF, IL-1/2/3/6 e TNF-α (imunossupressão)."}]},
+{id:"D8",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Qual a diferença dos corticoides e dos AINEs?",
+itens:[{p:"Resposta esperada",r:"O corticoide NÃO inibe a COX-1 (só a COX-2, genomicamente, + fosfolipase A2); o AINE clássico inibe a COX diretamente (inclusive COX-1 — daí lesão gástrica e antiagregação, que o corticoide não faz)."}]},
+{id:"D9",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Os corticoides produzem ação direta sobre o rim e sobre o estômago?",
+itens:[{p:"Resposta esperada",r:"Não — como o bloqueio da fosfolipase A2 não é completo e a COX-1 fica preservada, as prostaglandinas fisiológicas de rim e estômago continuam sendo produzidas."}]},
+{id:"D10",org:"Corticoides",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Efeitos colaterais da corticoterapia.",
+itens:[{p:"Resposta esperada",r:"① Supressão da resposta a infecção/lesão (é anti-inflamatório); ② supressão da síntese endógena de cortisol (bloqueio do eixo → atrofia adrenal); ③ efeitos metabólicos = síndrome de Cushing iatrogênica (uso prolongado)."}]},
+{id:"D11",org:"Corticoides",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Explique o mecanismo de síntese e regulação do cortisol.",
+itens:[{p:"Resposta esperada",r:"Hipotálamo (CRH) → hipófise anterior (ACTH) → córtex adrenal (CORTISOL) → feedback negativo sobre hipófise e hipotálamo. (ACTH também estimula androgênios; a aldosterona responde à angiotensina II.)"}]},
+{id:"D12",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Disserte sobre a interação entre corticoides e anticonvulsivantes.",
+itens:[{p:"Resposta esperada",r:"Fenitoína e carbamazepina (e rifampicina) são INDUTORES hepáticos: aceleram o metabolismo dos glicocorticoides → ↓efeito farmacológico."}]},
+{id:"D13",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Por que os corticoides potencializam a hipocalemia?",
+itens:[{p:"Resposta esperada",r:"Retêm sódio (efeito mineralocorticoide); para compensar, o organismo elimina POTÁSSIO → hipocalemia."}]},
+{id:"D14",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Disserte sobre a interação entre corticoides e digitálicos na hipocalemia.",
+itens:[{p:"Resposta esperada",r:"A hipocalemia induzida pelo corticoide potencializa a TOXICIDADE DIGITÁLICA (o digital compete com o K⁺ na Na/K-ATPase — K baixo = mais digital ligado = arritmias)."}]},
+{id:"D15",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Explique a interação entre estrogênios/contraceptivos e corticoides.",
+itens:[{p:"Resposta esperada",r:"Estrogênios e contraceptivos AUMENTAM a meia-vida dos corticosteroides → efeito realçado (ajustar dose)."}]},
+{id:"D16",org:"Corticoides",fontes:"Wat",img:null,imgcap:null,
+enun:"Quais os riscos de prescrição de cortisol?",
+itens:[{p:"Resposta esperada",r:"Descompensação do DIABETES (hiperglicemiante) e piora de CARDIOPATIAS (retenção de sal/água, hipertensão, ↑obstrução vascular)."}]},
+{id:"D17",org:"Corticoides",fontes:"EXAME",img:null,imgcap:null,
+enun:"Cite 2 efeitos do corticoide na pressão arterial e o mais importante.",
+itens:[{p:"Resposta esperada",r:"① Retém sódio e água → ↑volume → ↑PA; ② aumenta a SENSIBILIDADE dos receptores α1/β1 às catecolaminas e à angiotensina II (ação genômica no receptor AT1) — este é o MAIS importante (risco de dano renal, cardíaco, AVC e IAM)."}]},
+{id:"D18",org:"Corticoides",fontes:"EXAME",img:null,imgcap:null,
+enun:"Explique como agem a dexa/betametasona no tratamento para anemia (hemolítica autoimune) e o efeito na hipertensão.",
+itens:[{p:"Resposta esperada",r:"Na anemia hemolítica autoimune: imunossupressão → ↓destruição das hemácias. Na PA: retenção de sódio e água → hipertensão como efeito adverso."}]},
+{id:"D19",org:"Corticoides",fontes:"EXAME",img:null,imgcap:null,
+enun:"Explique o mecanismo da síndrome de Cushing e cite 3 sintomas correlacionados.",
+itens:[{p:"Resposta esperada",r:"Excesso de cortisol — iatrogênico (corticoterapia) ou endógeno (hipersecreção/ACTH). Sintomas: hiperglicemia, fáscies em lua cheia, obesidade central/giba, fraqueza/cansaço, estrias, impotência/irregularidade menstrual."}]},
+{id:"D20",org:"Corticoides",fontes:"Monit",img:null,imgcap:null,
+enun:"Corticoide e pH para absorção: qual a relação?",
+itens:[{p:"Resposta esperada",r:"Corticoide é bem absorvido em pH ÁCIDO; antiácidos sobem o pH e REDUZEM a absorção (interação medicamentosa)."}]},
+{id:"D21",org:"Corticoides",fontes:"Monit",img:null,imgcap:null,
+enun:"Corticoide e sua relação com a coagulação.",
+itens:[{p:"Resposta esperada",r:"Não interfere na coagulação (age em fosfolipase A2/COX-2, não nas plaquetas via COX-1). Interfere na CICATRIZAÇÃO (↓fibroblastos/colágeno)."}]},
+{id:"D22",org:"Corticoides",fontes:"Monit",img:null,imgcap:null,
+enun:"Corticoides devem ser administrados com o que nos casos de anafilaxia?",
+itens:[{p:"Resposta esperada",r:"Com ADRENALINA (epinefrina) — o corticoide é lento (ação genômica) e não segura a fase aguda da anafilaxia sozinho."}]},
+{id:"D23",org:"Corticoides",fontes:"Monit",img:null,imgcap:null,
+enun:"Qual a relação entre a retirada do corticoide e a síndrome de Cushing?",
+itens:[{p:"Resposta esperada",r:"NENHUMA — o Cushing vem do EXCESSO de cortisol (uso contínuo); o esquema de retirada existe para evitar a FALTA (insuficiência adrenal por atrofia: hipoglicemia + hipotensão)."}]},
+{id:"D24",org:"Asma",fontes:"Escritas/FASM-14",img:null,imgcap:null,
+enun:"Explique a terapêutica recomendada para um caso de asma moderada persistente, citando os fármacos utilizados.",
+itens:[{p:"Resposta esperada",r:"Asma moderada persistente = BRONCODILATADOR + ANTI-INFLAMATÓRIO combinados: β2-agonista (curta para alívio, longa para manutenção) ± anticolinérgico/xantina + glicocorticoide inalatório, inibidores da síntese de leucotrienos (antileucotrienos) ou cromonas."}]},
+{id:"D25",org:"Asma",fontes:"Escritas/FASM-14",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação dos agonistas beta na musculatura lisa brônquica no tratamento da asma.",
+itens:[{p:"Resposta esperada",r:"β2 (acoplado a Gs) → ativa adenilato-ciclase → ↑AMPc → ativa PKA → ↓cálcio intracelular (e ↑Na/K-ATPase) → RELAXAMENTO da musculatura lisa das vias aéreas (broncodilatação)."}]},
+{id:"D26",org:"Asma",fontes:"Escritas",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação e dê exemplos dos anticolinérgicos.",
+itens:[{p:"Resposta esperada",r:"Antagonizam receptores muscarínicos M1/M3 (que medeiam broncoconstrição colinérgica). Exemplos: brometo de IPRATRÓPIO e TIOTRÓPIO. Broncodilatação mais lenta que β2; adjuvantes; efeitos atropínicos (boca seca, visão turva, constipação)."}]},
+{id:"D27",org:"Asma",fontes:"Escritas",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação dos modificadores de leucotrienos.",
+itens:[{p:"Resposta esperada",r:"Ou ANTAGONIZAM o receptor de leucotrienos (montelucaste, zafirlucaste) ou INIBEM a 5-lipoxigenase — a síntese (zileutona). Leucotrienos = broncoconstritores ~100× mais potentes que a histamina."}]},
+{id:"D28",org:"Asma",fontes:"Escritas/Estudo",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação dos glicocorticoides inalatórios e sistêmicos na asma, e suas RAMs (locais e sistêmicas).",
+itens:[{p:"Resposta esperada",r:"Impedem a acetilação das histonas → ↓transcrição de genes inflamatórios (menos citocinas, menos muco) + potencializam os β2. Inalatório = manutenção (RAM locais: disfonia, candidíase oral, tosse); sistêmico = emergência/exacerbação (prednisona VO; RAM: supressão adrenal, ↓crescimento em crianças, osteoporose, ↑pressão intraocular)."}]},
+{id:"D29",org:"Asma",fontes:"Escritas",img:null,imgcap:null,
+enun:"Qual a diferença do tratamento da asma e da DPOC?",
+itens:[{p:"Resposta esperada",r:"ASMA = doença INFLAMATÓRIA (sensibilizante, leucotrienos) → o eixo do tratamento é ANTI-INFLAMATÓRIO (CI, antileucotrienos, cromonas) + broncodilatador. DPOC = agente NOCIVO com destruição alveolar/obstrução → eixo em BRONCODILATADORES (β2, xantinas), com anti-inflamatório como coadjuvante."}]},
+{id:"D30",org:"Asma",fontes:"Escritas",img:null,imgcap:null,
+enun:"Por que não posso utilizar AINEs e devo usar glicocorticoides (na asma)?",
+itens:[{p:"Resposta esperada",r:"O AINE inibe as ciclo-oxigenases → sobra ácido araquidônico para a via da 5-LIPOXIGENASE → MAIS leucotrienos (broncoconstritores) — piora a asma. O glicocorticoide faz o contrário: corta a cascata mais acima (fosfolipase A2) e diminui a inflamação/muco."}]},
+{id:"D31",org:"Asma",fontes:"Escritas",img:null,imgcap:null,
+enun:"Qual a diferença de usar um β-adrenérgico de curta duração e de longa duração?",
+itens:[{p:"Resposta esperada",r:"Curta duração (salbutamol, fenoterol, terbutalina): alívio imediato das CRISES. Longa/ultralonga (salmeterol, formoterol): MANUTENÇÃO do quadro, sintomas noturnos — não substituem o resgate."}]},
+{id:"D32",org:"Asma",fontes:"Prova respondida",img:null,imgcap:null,
+enun:"AC, 60 anos, asma, em uso de formoterol 12 mcg/budesonida 400 mcg 2×/dia. Qual o mecanismo de ação e os efeitos indesejados dos fármacos utilizados?",
+itens:[{p:"Resposta esperada",r:"Formoterol: β2 de longa → ↑AMPc/PKA → ↓Ca²⁺ → relaxamento; indesejados: taquicardia, tremor, ↑produção de muco (fonte), hipocalemia. Budesonida: corticoide inalatório anti-inflamatório (RAM locais: candidíase, disfonia; sistêmicas em dose alta)."}]},
+{id:"D33",org:"Asma",fontes:"EXAME",img:null,imgcap:null,
+enun:"Cite 3 efeitos fisiopatológicos dos leucotrienos e 2 fármacos para isso.",
+itens:[{p:"Resposta esperada",r:"Leucotrieno D4: edema de vias aéreas, secreção de muco, ↓movimento ciliar, broncoconstrição, recrutamento de eosinófilos. Fármacos: MONTELUCASTE (antagonista do receptor) e ZILEUTONA (inibidor da 5-LOX)."}]},
+{id:"D34",org:"Drogas",fontes:"Wat/Monit",img:null,imgcap:null,
+enun:"Qual a classificação das substâncias psicotrópicas, seu mecanismo e exemplos?",
+itens:[{p:"Resposta esperada",r:"ESTIMULANTES (aceleram transmissões, ↓sono, ↑excitação): café, cocaína, crack, nicotina. DEPRESSORAS (↓transmissões): opiáceos, álcool, morfina, heroína, ansiolíticos, barbitúricos. PERTURBADORAS (distorcem o SNC): maconha. ALUCINÓGENAS: LSD, cogumelos."}]},
+{id:"D35",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Qual o mecanismo de ação da cocaína?",
+itens:[{p:"Resposta esperada",r:"Estimulante do SNC e supressor do apetite: IMPEDE A RECAPTAÇÃO das catecolaminas (DA/NA/5-HT) nas sinapses e estimula liberação de adrenalina pelas suprarrenais."}]},
+{id:"D36",org:"Drogas",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Por que o uso do propranolol na disritmia causada pela cocaína pode causar hipertensão grave?",
+itens:[{p:"Resposta esperada",r:"O propranolol é β-bloqueador NÃO seletivo: bloqueia β1 (coração) E β2 (vasos). Com a cocaína inundando de catecolaminas, sobra estímulo ALFA sem oposição β2 → vasoconstrição intensa → hipertensão grave por resistência."}]},
+{id:"D37",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Resultados do uso prolongado da cocaína.",
+itens:[{p:"Resposta esperada",r:"Inalação prolongada: ulceração da mucosa e lesão do septo nasal; altas doses/uso prolongado: paranoia. Mortes por parada cardíaca ou convulsões seguidas de parada respiratória."}]},
+{id:"D38",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Tratamento da intoxicação por cocaína (por ingestão).",
+itens:[{p:"Resposta esperada",r:"Ingestão: lavagem gástrica com carvão ativado (ou tanino) + laxativo salino. (Não há antídoto — o resto é sintomático.)"}]},
+{id:"D39",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Efeitos físicos do ecstasy.",
+itens:[{p:"Resposta esperada",r:"Neurotóxico; em altas doses: HIPERTERMIA MALIGNA → rigidez muscular → RABDOMIÓLISE → mioglobina → insuficiência renal (tratada com dantroleno); choque serotoninérgico; lesão cardiovascular."}]},
+{id:"D40",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Disserte sobre a heroína (mecanismo, aditivos, efeitos físicos).",
+itens:[{p:"Resposta esperada",r:"Derivada da morfina, agonista dos receptores opioides μ. Aditivos insolúveis do pó → obstrução de vasos (pulmões, fígado, rins, cérebro) → infecção/necrose. Efeitos: overdose fatal (depressão respiratória), aborto espontâneo, colapso venoso, HIV/hepatites, pneumonias; cruza a placenta; edema pulmonar na intoxicação."}]},
+{id:"D41",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Quais são os estágios de ação do LSD? E o fenômeno do uso crônico?",
+itens:[{p:"Resposta esperada",r:"Latência → modificações físicas → síndrome psíquica → modificação de tempo vivido, espaço e corpo → alucinações → conotação erótica → lucidez repentina. Uso crônico: FLASHBACKS."}]},
+{id:"D42",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Efeitos dos inalantes.",
+itens:[{p:"Resposta esperada",r:"Similares aos anestésicos (deprimem funções); uso repetido → perda de consciência; podem induzir parada cardíaca e morte em minutos; altas concentrações matam por SUFOCAÇÃO (deslocam o O₂ dos pulmões)."}]},
+{id:"D43",org:"Drogas",fontes:"Wat",img:null,imgcap:null,
+enun:"Efeitos da maconha a curto e a longo prazo.",
+itens:[{p:"Resposta esperada",r:"Curto prazo: memória/aprendizado prejudicados, percepção distorcida, dificuldade de pensar/resolver, perda de coordenação, ↑FC. Longo prazo: alterações cerebrais semelhantes às de drogas \"pesadas\"."}]},
+{id:"D44",org:"Drogas",fontes:"EXAME",img:null,imgcap:null,
+enun:"Explique a interação entre metadona e álcool.",
+itens:[{p:"Resposta esperada",r:"Os dois são DEPRESSORES do SNC: o álcool potencializa o GABA-A (↑condutância ao cloro → hiperpolarização) e a metadona é opioide depressor — a soma amplifica a sedação e pode levar a coma e morte (depressão respiratória)."}]},
+{id:"D45",org:"Contraceptivos",fontes:"Wat",img:null,imgcap:null,
+enun:"Explique as ações do FSH e do LH nos ovários.",
+itens:[{p:"Resposta esperada",r:"FSH: estimula o desenvolvimento do folículo principal e controla a secreção de estrogênio. LH: pico no meio do ciclo → OVULAÇÃO; depois estimula a secreção de progesterona pelo corpo lúteo."}]},
+{id:"D46",org:"Contraceptivos",fontes:"Wat",img:null,imgcap:null,
+enun:"Explique as ações e o uso farmacológico do estrógeno e da progesterona.",
+itens:[{p:"Resposta esperada",r:"Estrogênio: fase PROLIFERATIVA (espessa o endométrio). Progesterona: fase SECRETÓRIA (mantém). Ambos = feedback negativo no eixo. Uso farmacológico: elevar os dois no sangue → bloqueio do eixo → ciclo ANOVULATÓRIO."}]},
+{id:"D47",org:"Contraceptivos",fontes:"Wat",img:null,imgcap:null,
+enun:"Explique os feedbacks do eixo hipotálamo-hipófise no controle hormonal feminino.",
+itens:[{p:"Resposta esperada",r:"Feedback NEGATIVO: estrogênio+progesterona em níveis altos inibem FSH/LH. Feedback POSITIVO: 24–48 h antes da ovulação, pico de secreção de FSH/LH pela hipófise → ovulação."}]},
+{id:"D48",org:"Contraceptivos",fontes:"Wat",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação e os efeitos indesejados dos contraceptivos orais.",
+itens:[{p:"Resposta esperada",r:"Mecanismo: ciclo anovulatório (bloqueio do eixo) + muco cervical hostil ao espermatozoide (progesterona) + modificação do endométrio + ↓motilidade tubária. Indesejados: os do estrogênio (náusea, cefaleia, mastalgia, retenção, trombose) e do progestógeno (fadiga, ↓libido, acne, amenorreia)."}]},
+{id:"D49",org:"Contraceptivos",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Discuta as vantagens e desvantagens da pílula combinada e da pílula simples.",
+itens:[{p:"Resposta esperada",r:"Combinada: maior eficácia contraceptiva (bloqueio completo do eixo). Simples: o progestógeno isolado nem sempre inibe a ovulação (menos confiável), mas serve na lactação; estrógeno isolado não existe como método (risco de trombose)."}]},
+{id:"D50",org:"Contraceptivos",fontes:"Wat",img:null,imgcap:null,
+enun:"Quais fatores podem interferir na segurança do ACO?",
+itens:[{p:"Resposta esperada",r:"Metabolismo lipídico · metabolismo glicídico · sistema renina-angiotensina · hemostasia · peso."}]},
+{id:"D51",org:"Contraceptivos",fontes:"P-07/12/21, 0,25 pt",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação dos CHO simples (1 hormônio) e conjugados (dois hormônios).",
+itens:[{p:"Resposta esperada",r:"SIMPLES (só progestógeno): espessa o muco cervical, altera endométrio/motilidade (nem sempre anovulatória). CONJUGADA (estrogênio+progestógeno): feedback negativo contínuo no eixo hipotálamo-hipófise → sem pico de LH → ANOVULAÇÃO, + os demais mecanismos."}]},
+{id:"D52",org:"Contraceptivos",fontes:"P-07/12/21",img:null,imgcap:null,
+enun:"Cite 3 efeitos do estrógeno sobre a hemostasia.",
+itens:[{p:"Resposta esperada",r:"↑fatores de coagulação (II, V, VII, IX, X, XII) · ↓antitrombina III · ↑tromboxano A2 e ↑número/adesividade/agregação plaquetária (e ↓prostaciclina)."}]},
+{id:"D53",org:"Contraceptivos",fontes:"P-07/12/21",img:null,imgcap:null,
+enun:"Cite 2 ações da progesterona sobre o metabolismo dos carboidratos.",
+itens:[{p:"Resposta esperada",r:"Progestógenos (sobretudo os androgênicos): induzem RESISTÊNCIA PERIFÉRICA À INSULINA — ① ↓número de receptores de insulina na membrana; ② anomalias PÓS-receptor."}]},
+{id:"D54",org:"Contraceptivos",fontes:"3 provas diferentes",img:null,imgcap:null,
+enun:"Cite 3 contraindicações relativas (e 3 absolutas) ao uso dos contraceptivos orais.",
+itens:[{p:"Resposta esperada",r:"RELATIVAS (cite 3): HAS leve/moderada, cefaleia, fatores de risco para tromboembolismo (ou: epilepsia, psicose, doença da vesícula, IR/IC, diabetes, uso de medicamentos). ABSOLUTAS (cite 3): tromboembolismo/tromboflebite, HAS grave, neoplasia hormônio-dependente (ou: gravidez, DM grave, tabagista >35a, hepatopatia)."}]},
+{id:"D55",org:"Contraceptivos",fontes:"EXAME",img:null,imgcap:null,
+enun:"Diferencie minipílula e pílula combinada, citando contraindicação relativa ao seu uso.",
+itens:[{p:"Resposta esperada",r:"Minipílula = progestogênio ISOLADO; combinada = estrogênio + progestogênio. CI relativas: epilepsia, psicose, HAS leve/moderada."}]},
+{id:"D56",org:"Contraceptivos",fontes:"EXAME",img:null,imgcap:null,
+enun:"Cite 5 contraindicações relativas e 5 absolutas dos contraceptivos.",
+itens:[{p:"Resposta esperada",r:"Absolutas: neoplasia hormônio-dependente, doença tromboembólica, gravidez, HAS grave, DM insulino-dependente grave (+ tabagista >35a, hepatopatia, coronariopatia, sangramento sem diagnóstico). Relativas: cefaleia, epilepsia, psicose, HAS leve/moderada, insuficiência renal e cardíaca (+ vesícula biliar, diabetes, medicamentos)."}]},
+{id:"D57",org:"Toco/Utero",fontes:"Wat",img:null,imgcap:null,
+enun:"Quais as contraindicações para uso de uterolíticos?",
+itens:[{p:"Resposta esperada",r:"Malformações graves; sofrimento ou morte fetal; restrição de crescimento; rotura prematura de membranas; síndromes hemorrágicas ou hipertensivas; diabetes descompensado."}]},
+{id:"D58",org:"Toco/Utero",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Mecanismo de ação e efeitos colaterais dos beta-agonistas e seus representantes.",
+itens:[{p:"Resposta esperada",r:"β2 (miométrio, vasos, bronquíolos): relaxam a fibra uterina por ↓cálcio livre intracelular. Efeitos: taquicardia materna E fetal, hipotensão, HIPERglicemia, arritmias, dispneia, tremores, palpitação, náuseas. Representantes: TERBUTALINA, salbutamol, fenoterol, ritodrina."}]},
+{id:"D59",org:"Toco/Utero",fontes:"Wat",img:null,imgcap:null,
+enun:"Qual uterolítico deve ser utilizado em casos de DM e HAS?",
+itens:[{p:"Resposta esperada",r:"SULFATO DE MAGNÉSIO (antagonista do cálcio na fibra) — a alternativa quando os β-agonistas não podem ser usados (DM: hiperglicemia; cardiopatia/HAS)."}]},
+{id:"D60",org:"Toco/Utero",fontes:"Wat",img:null,imgcap:null,
+enun:"Mecanismo de ação e efeitos colaterais dos inibidores de prostaglandinas.",
+itens:[{p:"Resposta esperada",r:"Inibem a CICLO-OXIGENASE (sem prostaglandinas contráteis). Efeitos: irritação gástrica, ↓líquido amniótico, ↓fluxo renal fetal e FECHAMENTO DO DUCTO ARTERIOSO (por isso só até 31–32 semanas)."}]},
+{id:"D61",org:"Toco/Utero",fontes:"Wat",img:null,imgcap:null,
+enun:"Mecanismo de ação e efeitos colaterais dos doadores de óxido nítrico (nitroglicerina transdérmica).",
+itens:[{p:"Resposta esperada",r:"O NO ativa a via da quinase de cadeia leve da miosina → RELAXAMENTO da célula miometrial (nitroglicerina transdérmica). Efeitos: hipotensão materna, tontura, palpitações."}]},
+{id:"D62",org:"Toco/Utero",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Ação no útero e ações extrauterinas da ocitocina.",
+itens:[{p:"Resposta esperada",r:"Útero: CONTRAÇÃO da musculatura lisa (controle da hemorragia após a dequitação). Extrauterinas: RELAXAMENTO da musculatura lisa VASCULAR, ação antidiurética em altas doses → hipoNATREMIA e edema pulmonar."}]},
+{id:"D63",org:"Toco/Utero",fontes:"Wat/EXAME",img:null,imgcap:null,
+enun:"Usos e efeitos indesejados do misoprostol.",
+itens:[{p:"Resposta esperada",r:"Análogo da prostaglandina E1: prevenção da hemorragia pós-parto após parto vaginal (menos efetivo que a ocitocina). Indesejados: calafrio, FEBRE, cólicas, náuseas/vômitos, sangramento. (Lembra: no início da gestação é abortivo — Citotec, uso hospitalar controlado.)"}]},
+{id:"D64",org:"Toco/Utero",fontes:"Wat",img:null,imgcap:null,
+enun:"Efeitos colaterais e contraindicações do maleato de metilergonovina.",
+itens:[{p:"Resposta esperada",r:"Alcaloide do ergot: vasoespasmo periférico e HIPERTENSÃO arterial. CI: hipertensos e hipersensíveis à droga."}]},
+{id:"D65",org:"Toco/Utero",fontes:"P-07/12/21",img:null,imgcap:null,
+enun:"Explique o mecanismo de ação dos AINEs no trabalho de parto prematuro.",
+itens:[{p:"Resposta esperada",r:"AINEs inibem a COX → ↓prostaglandinas, que são CONTRÁTEIS do miométrio → o útero relaxa (tocólise). O preço fetal: a mesma prostaglandina mantém o ducto arterioso aberto e o fluxo renal → risco de fechamento precoce do ducto e oligodrâmnio."}]},
+{id:"D66",org:"Toco/Utero",fontes:"Monit",img:null,imgcap:null,
+enun:"Qual é o uterolítico mais utilizado no trabalho de parto prematuro?",
+itens:[{p:"Resposta esperada",r:"Pela fonte (monitoria): os AGONISTAS BETA-adrenérgicos (+ sulfato de magnésio como alternativa). Pela diretriz atual dada em aula (MS 2022/FEBRASGO): a 1ª escolha hoje é a NIFEDIPINA — cite conforme o que a prova pedir (fonte antiga × diretriz)."}]},
+{id:"D67",org:"Toco/Utero",fontes:"Monit",img:null,imgcap:null,
+enun:"Por que os uterolíticos (β-agonistas) diminuem a secreção de insulina?",
+itens:[{p:"Resposta esperada",r:"A estimulação β aumenta glicogenólise e gliconeogênese hepáticas e REDUZ a liberação de insulina (receptores β no pâncreas/fígado) → hiperglicemia materna (e fetal)."}]}
+];
+
+const LAMINAS=[];
+
+
+const L4='abcd';
+const esc=s=>String(s==null?'':s);
+const SAVE='simulado-farmacoterapia-p1-v1';
+let saved={};try{saved=JSON.parse(localStorage.getItem(SAVE)||'{}')}catch(e){}
+function persist(){try{localStorage.setItem(SAVE,JSON.stringify(saved))}catch(e){}}
+
+/* ===== abas ===== */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+t.dataset.p).classList.add('on');
+  window.scrollTo(0,0);
+}));
+
+/* ===== helpers ===== */
+function qHTML(q,modo){
+  const img=q.img?`<figure class="qimg"><img loading="lazy" src="img/${q.img}" alt="Figura da questão ${q.id}">${q.imgcap?`<figcaption>${q.imgcap}</figcaption>`:''}</figure>`:'';
+  const alts=q.alts.map((a,i)=>`<button class="alt" data-q="${q.id}" data-i="${i}"><span class="letra">${L4[i]})</span><span>${a}</span></button>`).join('');
+  const varia=q.varia?`<p class="varia">↺ ${q.varia}</p>`:'';
+  return `<div class="q" id="${modo}-${q.id}"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span><span class="qsrc">[${q.fontes}]</span></div>
+  <div class="enun">${q.enun}</div>${img}<div class="alts">${alts}</div>${varia}
+  <div class="exp" id="${modo}-exp-${q.id}"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte da resposta: ${q.fonteResp}.</span></div></div>`;
+}
+
+/* ===== modo estudo ===== */
+const ORGS=['Todos','Corticoides','Asma','Drogas','Contraceptivos','Toco/Utero'];
+let fOrg='Todos';
+function renderFiltros(){
+  document.getElementById('filtros').innerHTML=ORGS.map(o=>{
+    const n=o==='Todos'?QUESTOES.length:QUESTOES.filter(q=>q.org===o).length;
+    return `<button class="chip ${fOrg===o?'on':''}" data-o="${o}">${o} (${n})</button>`}).join('');
+  document.querySelectorAll('#filtros .chip').forEach(c=>c.addEventListener('click',()=>{fOrg=c.dataset.o;renderEstudo()}));
+}
+function renderEstudo(){
+  renderFiltros();
+  const qs=QUESTOES.filter(q=>fOrg==='Todos'||q.org===fOrg);
+  document.getElementById('lista-estudo').innerHTML=qs.map(q=>qHTML(q,'est')).join('');
+  qs.forEach(q=>{ if(saved[q.id]!=null) pintarEstudo(q,saved[q.id],false); });
+  document.querySelectorAll('#lista-estudo .alt').forEach(b=>b.addEventListener('click',()=>{
+    const q=QUESTOES.find(x=>x.id===b.dataset.q);
+    if(saved[q.id]!=null) return;
+    saved[q.id]=Number(b.dataset.i); persist(); pintarEstudo(q,saved[q.id],true);
+  }));
+}
+function pintarEstudo(q,resp,anim){
+  const card=document.getElementById('est-'+q.id); if(!card) return;
+  card.querySelectorAll('.alt').forEach(b=>{
+    const i=Number(b.dataset.i); b.disabled=true;
+    if(i===q.correta) b.classList.add('certa');
+    else if(i===resp) b.classList.add('errada');
+  });
+  document.getElementById('est-exp-'+q.id).classList.add('show');
+}
+
+/* ===== simulado ===== */
+const SIMKEY='provas-tgi-sim-v1';
+let sim=null;try{sim=JSON.parse(localStorage.getItem(SIMKEY)||'null')}catch(e){}
+function simPersist(){try{localStorage.setItem(SIMKEY,JSON.stringify(sim))}catch(e){}}
+function simStart(fresh){
+  if(fresh||!sim) sim={resp:{},ini:Date.now()};
+  simPersist();
+  document.getElementById('sim-intro').style.display='none';
+  document.getElementById('sim-result').style.display='none';
+  document.getElementById('sim-area').style.display='block';
+  document.getElementById('lista-sim').innerHTML=QUESTOES.map(q=>qHTML(q,'sim')).join('');
+  document.querySelectorAll('#lista-sim .exp').forEach(e=>e.remove());
+  document.querySelectorAll('#lista-sim .alt').forEach(b=>b.addEventListener('click',()=>{
+    const qid=b.dataset.q;
+    sim.resp[qid]=Number(b.dataset.i); simPersist();
+    document.querySelectorAll(`#sim-${qid} .alt`).forEach(x=>x.classList.toggle('marcada',x===b));
+    simProg();
+  }));
+  Object.entries(sim.resp).forEach(([qid,i])=>{
+    const b=document.querySelector(`#sim-${qid} .alt[data-i="${i}"]`); if(b) b.classList.add('marcada');
+  });
+  simProg();
+}
+function simProg(){
+  const n=Object.keys(sim.resp).length;
+  document.getElementById('sim-prog').textContent=`${n}/${QUESTOES.length} respondidas`;
+}
+document.getElementById('sim-start').addEventListener('click',()=>simStart(true));
+if(sim&&Object.keys(sim.resp||{}).length){
+  document.getElementById('sim-retomar').innerHTML=` <button class="btn sec" id="sim-cont">Continuar simulado em andamento (${Object.keys(sim.resp).length}/${QUESTOES.length})</button>`;
+  document.getElementById('sim-cont').addEventListener('click',()=>simStart(false));
+}
+document.getElementById('sim-fim').addEventListener('click',()=>{
+  const faltam=QUESTOES.length-Object.keys(sim.resp).length;
+  if(faltam>0&&!confirm(`Ainda faltam ${faltam} questão(ões) sem resposta — elas contarão como erro. Finalizar mesmo assim?`))return;
+  simFinaliza();
+});
+function simFinaliza(){
+  const min=Math.round((Date.now()-sim.ini)/60000);
+  try{localStorage.removeItem(SIMKEY)}catch(e){}
+  let acertos=0;const porOrg={},erros=[],certos=[];
+  QUESTOES.forEach(q=>{
+    porOrg[q.org]=porOrg[q.org]||{a:0,t:0}; porOrg[q.org].t++;
+    const r=sim.resp[q.id];
+    if(r===q.correta){acertos++;porOrg[q.org].a++;certos.push(q)}else erros.push({q,r});
+  });
+  const pct=Math.round(acertos/QUESTOES.length*100);
+  const orgHTML=Object.entries(porOrg).map(([o,v])=>`<div><b>${o}</b>: ${v.a}/${v.t}</div>`).join('');
+  const revHTML=QUESTOES.map(q=>{
+    const r=sim.resp[q.id];const ok=r===q.correta;
+    return `<div class="q"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span>
+      <span style="font-weight:800;color:${ok?'var(--ok)':'var(--err)'}">${ok?'✓ acertou':'✗ errou'}</span></div>
+      <div class="rev">Sua resposta: <b>${r!=null?L4[r]+')':'em branco'}</b> · Correta: <b>${L4[q.correta]})</b></div>
+      <div class="exp show" style="margin-top:8px"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte: ${q.fonteResp}.</span></div></div>`;
+  }).join('');
+  document.getElementById('sim-area').style.display='none';
+  document.getElementById('sim-result').style.display='block';
+  document.getElementById('sim-result').innerHTML=`<div class="resultado">
+    <h2>Resultado</h2><div class="score">${acertos}/${QUESTOES.length} <small style="font-size:18px">(${pct}%)</small></div>
+    <p style="color:var(--muted);font-size:13.5px">${min} min · ${erros.length} erro(s)</p>
+    <div class="porOrgao">${orgHTML}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="btn-relatorio">📋 Copiar relatório para IA</button>
+      <button class="btn sec" id="btn-refazer">↺ Refazer simulado</button>
+    </div>
+    <p style="color:var(--faint);font-size:12.5px;margin-top:10px">O relatório traz seus erros com enunciado completo, sua resposta, a correta e o comentário do gabarito — é só colar no chat de uma IA e pedir para trabalhar os erros com você.</p>
+  </div><h2 style="margin:18px 0 4px">Revisão comentada</h2>${revHTML}`;
+  document.getElementById('btn-relatorio').addEventListener('click',()=>copiaRelatorio(acertos,pct,min,porOrg,erros,certos));
+  document.getElementById('btn-refazer').addEventListener('click',()=>{sim=null;try{localStorage.removeItem(SIMKEY)}catch(e){};simStart(true)});
+  window.scrollTo(0,0);
+}
+function txt(s){return String(s).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&')}
+function copiaRelatorio(acertos,pct,min,porOrg,erros,certos){
+  const L=['a','b','c','d'];
+  let r=`RELATÓRIO DE SIMULADO — Farmacoterapia P1 (4º semestre de Medicina)\n`;
+  r+=`Simulado de Farmacoterapia P1 (Aulas 01-06: corticoides, asma, drogas, contraceptivos, tocolise/uterotonicos).\n`;
+  r+=`Resultado: ${acertos}/${QUESTOES.length} (${pct}%) em ${min} min.\n`;
+  r+=`Por tema: `+Object.entries(porOrg).map(([o,v])=>`${o} ${v.a}/${v.t}`).join(' · ')+`\n\n`;
+  r+=`Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI, com minha resposta, a correta e o comentário do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) me faça perguntas novas de verificação sobre esses temas, uma de cada vez.\n\n`;
+  r+=`==================== ERROS (${erros.length}) ====================\n\n`;
+  erros.forEach(e=>{
+    const q=e.q;
+    r+=`[${q.id}] ${q.org} — fontes: ${q.fontes}\n`;
+    r+=`ENUNCIADO: ${txt(q.enun)}\n`;
+    q.alts.forEach((a,i)=>{r+=`  ${L[i]}) ${txt(a)}\n`});
+    r+=`MINHA RESPOSTA: ${e.r!=null?L[e.r]+') '+txt(q.alts[e.r]).slice(0,120):'(em branco)'}\n`;
+    r+=`CORRETA: ${L[q.correta]}) ${txt(q.alts[q.correta]).slice(0,160)}\n`;
+    r+=`COMENTÁRIO DO GABARITO: ${txt(q.exp)}\n\n`;
+  });
+  r+=`==================== ACERTOS (${certos.length}) ====================\n`;
+  r+=certos.map(q=>`${q.id} (${q.org})`).join(' · ')+`\n`;
+  const done=()=>{const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>t.style.display='none',2200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r).then(done).catch(()=>fallbackCopy(r,done))}
+  else fallbackCopy(r,done);
+}
+function fallbackCopy(s,done){const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){alert('Não consegui copiar automaticamente — selecione e copie o texto da caixa.');}document.body.removeChild(ta)}
+
+/* ===== abertas/dissertativas ===== */
+function dissHTML(d){
+  const img=d.img?`<figure class="qimg"><img loading="lazy" src="img/${d.img}" alt="Figura de ${d.id}">${d.imgcap?`<figcaption>${d.imgcap}</figcaption>`:''}</figure>`:'';
+  const itens=d.itens.map((it,i)=>`<div class="item"><p class="perg">${it.p}</p>
+    <button class="mini" data-t="${d.id}-${i}">👁 Revelar resposta modelo</button>
+    <div class="resp" id="resp-${d.id}-${i}">${it.r}</div></div>`).join('');
+  return `<div class="q diss"><div class="qhead"><span class="qid">${d.id}</span>${d.org?`<span class="qorg">${d.org}</span>`:''}<span class="qsrc">[${d.fontes}]</span></div>
+    ${d.enun?`<div class="enun">${d.enun}</div>`:''}${img}${itens}</div>`;
+}
+document.getElementById('lista-diss').innerHTML=DISSERTATIVAS.map(dissHTML).join('');
+document.getElementById('lista-lam').innerHTML=LAMINAS.map(dissHTML).join('');
+document.querySelectorAll('.mini').forEach(b=>b.addEventListener('click',()=>{
+  const r=document.getElementById('resp-'+b.dataset.t); r.classList.toggle('show');
+  b.textContent=r.classList.contains('show')?'🙈 Esconder':'👁 Revelar resposta modelo';
+}));
+
+renderEstudo();
+</script>
+</body>
+</html>
