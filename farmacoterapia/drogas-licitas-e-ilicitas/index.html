@@ -1,0 +1,1633 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farmacoterapia · Aulas 04–05 — Drogas Lícitas e Ilícitas · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">💊</span> Farmacoterapia <span class="sep">·</span> <span class="sub">Aulas 04–05 — Drogas Lícitas e Ilícitas</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Farmaco II · Aulas 04–05</p>
+  <h1 class="page-h1">Drogas Lícitas e Ilícitas</h1>
+  <p class="lead">Farmacologia da dependência química: o que define uma droga psicotrópica, a via de recompensa que todas elas sequestram, e o par mecanismo→tratamento de cada classe — opioides (naloxona × metadona), cocaína e anfetaminas, álcool (GABA-A + NMDA, dissulfiram × acamprosato), nicotina (reposição + bupropiona), cannabis, inalantes e LSD.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O que é droga: lícitas × ilícitas, a lei e a classificação</a></li>
+      <li><a href="#t2">Dependência, tolerância, fissura e a via de recompensa</a></li>
+      <li><a href="#t3">Opioides: mecanismo, heroína e fentanil</a></li>
+      <li><a href="#t4">Naloxona × metadona: intoxicação × dependência</a></li>
+      <li><a href="#t5">Cocaína e crack</a></li>
+      <li><a href="#t6">Anfetaminas e êxtase (MDMA)</a></li>
+      <li><a href="#t7">Álcool: mecanismo, metabolismo e ressaca</a></li>
+      <li><a href="#t8">Tratamento do alcoolismo: dissulfiram × acamprosato</a></li>
+      <li><a href="#t9">Nicotina e o tratamento do tabagismo</a></li>
+      <li><a href="#t10">Cannabis e o sistema endocanabinoide</a></li>
+      <li><a href="#t11">Inalantes, LSD e psilocibina</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O que é droga: lícitas × ilícitas, a lei e a classificação</h2>
+  <p>Antes de decorar mecanismos, entenda o mapa. <b>Droga</b>, na definição clássica (OMS), é <b>qualquer substância não produzida pelo organismo que, introduzida nele, modifica seu funcionamento</b>. É um guarda-chuva enorme — inclui remédio de pressão. O recorte que interessa aqui é o das <b>drogas psicotrópicas</b>: as que atuam no <b>sistema nervoso central alterando o psiquismo</b> (humor, percepção, comportamento) e que têm <b>propriedade reforçadora</b> — o efeito é sentido como prazeroso e "pede" repetição. É essa propriedade reforçadora que abre a porta da <b>dependência</b>.</p>
+  <ul>
+    <li><b>Lícitas</b> — a lei permite produção, venda e consumo (com regras). Três grupos práticos:
+      <b>medicamentosas</b> (benzodiazepínicos, anorexígenos/anfetaminas de receita, anabolizantes — legais COM prescrição, abuso quando usadas fora dela);
+      <b>sem finalidade terapêutica</b> (álcool e tabaco — as duas drogas que mais matam no mundo, e são legais);
+      e <b>industriais</b> (colas, solventes, combustíveis — vendidas para outro fim e desviadas para inalação).</li>
+    <li><b>Ilícitas</b> — produção, comércio e porte proibidos por lei. A lei de tóxicos clássica (<b>Lei 6.368/76</b>, base histórica da atual) criminaliza a cadeia inteira: <b>plantar/cultivar</b>, <b>transportar, guardar ou entregar</b> — e até <b>instigar, induzir ou auxiliar alguém a usar</b> é crime. Ou seja: "só estava segurando pro amigo" e "só chamei pra experimentar" também são condutas típicas.</li>
+  </ul>
+  <p>Farmacologicamente, o que importa é o <b>efeito predominante sobre o SNC</b>:</p>
+  <div class="diagrama"><p class="t">Classificação farmacológica das psicotrópicas</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>DEPRESSORAS</b> — <span class="d">reduzem a atividade do SNC: álcool, opioides (morfina, heroína), benzodiazepínicos, inalantes/solventes.</span></div></li>
+    <li><span class="n">2</span><div><b>ESTIMULANTES</b> — <span class="d">aumentam a atividade do SNC: cocaína/crack, anfetaminas, nicotina, cafeína.</span></div></li>
+    <li><span class="n">3</span><div><b>PERTURBADORAS</b> — <span class="d">distorcem o funcionamento (percepção, tempo, memória) sem deprimir nem estimular de forma global: a maconha é o protótipo.</span></div></li>
+    <li><span class="n">4</span><div><b>ALUCINÓGENAS</b> — <span class="d">produzem alucinações e ilusões sensoriais: LSD, psilocibina (cogumelos). Muitas classificações fundem perturbadoras + alucinógenas num grupo só.</span></div></li>
+  </ol></div>
+  <div class="box alerta"><p class="h">⚠️ Lícita ≠ segura</p>
+  <p>A divisão lícita/ilícita é <b>jurídica, não farmacológica</b>. Álcool e tabaco (lícitas) matam mais gente que todas as ilícitas somadas; e um benzodiazepínico de farmácia vira droga de abuso na dose e no contexto errados. Na prova, não confunda o critério legal com o critério de perigo.</p></div>
+
+  <h2 class="topic" id="t2">2 · Dependência, tolerância, fissura e a via de recompensa</h2>
+  <p>Quatro conceitos sustentam a aula inteira — e as questões adoram trocá-los entre si:</p>
+  <ul>
+    <li><b>Dependência física:</b> o organismo se <b>adapta</b> à presença contínua da droga (muda número de receptores, vias de sinalização) e passa a funcionar "normal" só COM ela. A prova da adaptação é a <b>síndrome de abstinência</b>: retirou a droga, o sistema adaptado fica desregulado e aparecem sinais e sintomas — em geral <b>opostos ao efeito da droga</b> (a abstinência é o "espelho").</li>
+    <li><b>Tolerância:</b> com o uso repetido, a <b>mesma dose faz menos efeito</b> — o usuário precisa escalar a dose. Pode ser farmacocinética (o álcool induz as próprias enzimas que o metabolizam) ou farmacodinâmica (down-regulation de receptores).</li>
+    <li><b>Fissura (craving):</b> o <b>desejo compulsivo e incontrolável</b> de usar. É o componente psíquico da dependência e o grande responsável pela <b>recaída</b> — meses depois de desintoxicado, um gatilho (lugar, cheiro, pessoa) dispara a fissura.</li>
+    <li><b>Reforço:</b> o efeito prazeroso que "ensina" o cérebro a repetir o comportamento.</li>
+  </ul>
+  <p>O substrato anatômico do reforço é a <b>via de recompensa</b> (via mesolímbica): neurônios dopaminérgicos da <b>área tegmental ventral (ATV)</b>, no mesencéfalo, projetam para o <b>nucleus accumbens</b>, no prosencéfalo. Ela existe para premiar com prazer o que garante sobrevivência — comer, beber água, sexo. <b>Toda droga de abuso, por caminhos diferentes, converge para o mesmo final: aumentar a dopamina no nucleus accumbens.</b> A droga "sequestra" o sistema e entrega uma recompensa maior e mais rápida que qualquer estímulo natural.</p>
+  <figure class="fig"><img src="img/vias-recompensa.jpg" alt="Vias noradrenérgicas e dopaminérgicas no encéfalo">
+  <figcaption>As vias monoaminérgicas do encéfalo no slide da aula: a via que interessa à dependência é a dopaminérgica mesolímbica — da área tegmental ventral (ATV) ao nucleus accumbens. É nela que cocaína, anfetamina, nicotina, álcool, opioides e THC acabam aumentando dopamina.</figcaption></figure>
+  <div class="box prof"><p class="h">🎯 A lógica que resolve metade das questões</p>
+  <p>Decore o par <b>efeito × abstinência = espelho</b>. Droga depressora (álcool, opioide) → abstinência com <b>hiperexcitação</b> (tremor, convulsão, agitação). Droga estimulante (cocaína, nicotina) → abstinência com <b>depressão</b>, sonolência, humor rebaixado, bradicardia. Se a alternativa descrever abstinência "igual" ao efeito da droga, está errada.</p></div>
+
+  <h2 class="topic" id="t3">3 · Opioides: mecanismo, heroína e fentanil</h2>
+  <p>Os opioides (morfina, heroína, fentanil, metadona) agem em receptores próprios — <b>μ (mu), κ (kappa) e δ (delta)</b> — todos <b>acoplados a proteína G inibitória (Gi)</b>. A ativação:</p>
+  <div class="diagrama"><p class="t">Mecanismo molecular do opioide (receptor μ)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Inibe a adenilato ciclase</b> — <span class="d">cai o AMPc dentro do neurônio.</span></div></li>
+    <li><span class="n">2</span><div><b>Abre canais de K⁺</b> — <span class="d">o potássio sai, o neurônio hiperpolariza e fica difícil de excitar.</span></div></li>
+    <li><span class="n">3</span><div><b>Fecha canais de Ca²⁺</b> — <span class="d">sem cálcio no terminal, cai a liberação de neurotransmissores.</span></div></li>
+    <li><span class="n">4</span><div><b>Resultado</b> — <span class="d">neurônio desligado: analgesia, sedação, euforia (↑dopamina no accumbens por desinibição) e, na dose alta, depressão do centro respiratório.</span></div></li>
+  </ol></div>
+  <ul>
+    <li><b>Heroína</b> (diacetilmorfina): derivado mais lipossolúvel da morfina — atravessa a barreira hematoencefálica rápido e dá o "flash" (onda de euforia) que a morfina não dá. Vendida como pó, usada injetada, fumada ou aspirada. <b>A overdose mata por depressão respiratória</b>: o usuário simplesmente para de respirar.</li>
+    <li><b>Complicações que não são do opioide em si:</b> o pó de rua é "batizado" com aditivos insolúveis (talco, amido) que, injetados, geram <b>microtrombos e embolias</b>; e o compartilhamento de agulhas transmite <b>HIV, hepatites B e C e endocardite</b>. Questão clássica: usuário de droga injetável com febre + sopro novo = endocardite de câmaras direitas.</li>
+    <li><b>Fentanil:</b> opioide sintético <b>~100× mais potente que a morfina</b> — miligramas matam. É o motor da crise americana de overdoses (misturado à heroína de rua sem o usuário saber). No Brasil o perfil é outro: o usuário típico de fentanil é o <b>profissional de saúde</b> (anestesistas, equipe de CC/UTI), porque é quem tem acesso à ampola.</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · Naloxona × metadona: intoxicação × dependência</h2>
+  <p>Aqui mora a pegadinha mais cobrada do bloco. São dois problemas diferentes com dois fármacos diferentes:</p>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>NALOXONA (Narcan®)</th><th>METADONA</th></tr>
+    <tr><td><b>O que é</b></td><td>Antagonista puro dos receptores opioides</td><td>Agonista μ (é um opioide!)</td></tr>
+    <tr><td><b>Via / cinética</b></td><td>IV, ação em minutos, meia-vida curta</td><td>Oral, <b>meia-vida longa</b>, nível estável</td></tr>
+    <tr><td><b>Indicação</b></td><td><b>Intoxicação AGUDA</b> (overdose): reverte a depressão respiratória na hora</td><td><b>Tratamento da DEPENDÊNCIA</b> (terapia de substituição)</td></tr>
+    <tr><td><b>Detalhe de prova</b></td><td>Em dependente, precipita abstinência aguda; meia-vida menor que a da heroína — pode precisar repetir a dose</td><td>1×/dia, sem "onda" de euforia; depois desmame gradual</td></tr>
+  </table></div>
+  <p>Por que a metadona funciona? É farmacocinética pura. A heroína injetada sobe em pico ("onda" de prazer) e despenca em horas (abstinência + fissura) — o dia do dependente vira uma montanha-russa de picos e vales. A metadona oral, de meia-vida longa, mantém o <b>nível plasmático quase constante</b>: ocupa os receptores μ o suficiente para <b>não haver abstinência</b>, mas sem o pico que dá o barato. O usuário sai do ciclo, reorganiza a vida e depois reduz gradualmente. Existe ainda a <b>naltrexona</b> (antagonista oral de longa duração) para a manutenção: com os receptores bloqueados, usar heroína "não adianta" — ajuda a prevenir recaída no paciente já desintoxicado.</p>
+  <figure class="fig"><img src="img/metadona-vs-heroina.jpg" alt="Curvas de concentração: heroína em picos versus metadona estável">
+  <figcaption>O slide-chave do tratamento: a heroína (curva em picos) alterna euforia e abstinência várias vezes ao dia; a metadona oral 1×/dia (curva achatada) mantém concentração estável — sem "onda", sem fissura de vale. É isso que uma questão quer quando pergunta "por que substituir um opioide por outro opioide".</figcaption></figure>
+  <div class="box alerta"><p class="h">⚠️ Não confundir os três "NAL"</p>
+  <p><b>NALOXONA</b> = IV, emergência, overdose. <b>NALTREXONA</b> = oral, manutenção da abstinência (opioides e também álcool). <b>METADONA</b> = agonista de substituição para tratar dependência. Alternativa que colocar "metadona na overdose" ou "naloxona para tratar dependência" está errada.</p></div>
+
+  <h2 class="topic" id="t5">5 · Cocaína e crack</h2>
+  <p>A cocaína (do arbusto <i>Erythroxylum coca</i>) é o estimulante clássico. Mecanismo: <b>bloqueia os transportadores de recaptação das monoaminas</b> — dopamina (principal), noradrenalina e serotonina. O neurotransmissor liberado na fenda não é recolhido de volta: <b>acumula e continua estimulando o neurônio pós-sináptico</b>. No accumbens isso significa dopamina em nível recorde = euforia intensa; na periferia, noradrenalina sobrando = taquicardia, hipertensão, midríase, <b>vasoconstrição</b>.</p>
+  <ul>
+    <li><b>Formas:</b> pó aspirado (cloridrato) — absorção nasal, efeito em minutos; <b>crack</b> = base livre fumada — chega ao cérebro em <b>segundos</b>, pico altíssimo e curtíssimo, fissura brutal logo depois. Por isso o crack é a forma que mais escraviza: <b>a recaída no crack chega a ~70%</b> mesmo após tratamento.</li>
+    <li><b>Overdose de cocaína NÃO tem antídoto.</b> O tratamento é <b>sintomático</b>: benzodiazepínico para agitação/convulsão, controlar pressão, temperatura e arritmia. Compare com o opioide (que tem naloxona) — par de questão certo.</li>
+    <li><b>Como mata:</b> a vasoconstrição intensa fecha artérias — <b>isquemia cerebral/AVC</b>, IAM (coronária fechada em jovem sem aterosclerose!), arritmias, hipertermia. Angiografia feita ~20 minutos após uma dose IV já mostra o calibre das artérias cerebrais visivelmente reduzido.</li>
+  </ul>
+  <figure class="fig"><img src="img/vasoconstricao-cocaina.jpg" alt="Angiografia cerebral antes e após dose de cocaína">
+  <figcaption>Angiografia do slide: ~20 minutos após cocaína IV (0,4 mg/kg), as artérias cerebrais aparecem visivelmente mais finas — vasoconstrição difusa. É esse mecanismo que explica AVC e infarto em usuário jovem de coração "limpo".</figcaption></figure>
+  <figure class="fig"><img src="img/cerebro-lesao-cocaina.jpg" alt="Imagem funcional do cérebro de usuário crônico de cocaína">
+  <figcaption>Cérebro de usuário crônico no estudo do slide: áreas extensas de hipofunção/hipoperfusão em comparação com o controle — a soma de milhares de episódios de vasoconstrição. Lesão estrutural, não só "efeito passageiro".</figcaption></figure>
+
+  <h2 class="topic" id="t6">6 · Anfetaminas e êxtase (MDMA)</h2>
+  <p>As anfetaminas chegam ao <b>mesmo resultado da cocaína — monoaminas acumuladas na fenda — por mecanismo molecular diferente</b>. Em vez de bloquear o transportador por fora, a anfetamina <b>entra no neurônio por ele, desloca a dopamina das vesículas e faz o transportador funcionar ao contrário</b>: a bomba que deveria recaptar passa a <b>bombear dopamina para fora</b>. A cocaína age mais sobre o transportador de dopamina; a anfetamina, comparativamente, mexe mais com a noradrenalina — mas o quadro clínico é da mesma família (alerta, anorexia, taquicardia, hipertensão, euforia), variando potência e duração.</p>
+  <figure class="fig"><img src="img/cocaina-anfetamina-transportador.jpg" alt="Esquema dos transportadores: cocaína bloqueia, anfetamina inverte">
+  <figcaption>O slide que diferencia as duas: a cocaína (esq.) tranca o transportador de recaptação por fora — o neurotransmissor fica preso na fenda. A anfetamina (dir.) entra pelo transportador, esvazia as vesículas e inverte o sentido da bomba — o neurônio "vaza" dopamina. Dois mecanismos, um final: monoamina de sobra na sinapse.</figcaption></figure>
+  <ul>
+    <li><b>Anfetaminas de farmácia:</b> os anorexígenos clássicos — <b>anfepramona</b> (Dualid S®, Hipofagin®, Moderine®), <b>femproporex</b> (Lipomax®, Inobesin®), <b>mazindol</b> (Dasten®, Fagolipo®) — dominaram o emagrecimento por décadas e foram retirados/estritamente controlados pelo risco cardiovascular e de dependência. A <b>metanfetamina</b> (Pervitin® histórico) é a versão de rua mais potente. E o <b>metilfenidato (Ritalina®)</b> é uma anfetamina de uso legítimo no TDAH — hoje abusada como "droga de estudo".</li>
+    <li><b>MDMA (êxtase):</b> sintetizada pela Merck em <b>1914 como supressor de apetite — nunca chegou a ser comercializada</b> para isso. Voltou como droga de balada: comprimidos coloridos com logotipos, R$ 80–100 a unidade. Predomina o efeito <b>serotonérgico</b> (empatia, euforia sensorial).</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 A cascata que mata na balada</p>
+  <p>Jovem em festa eletrônica, horas dançando, chega ao PS quente, rígido e com urina escura. É a sequência letal do êxtase: <b>hipertermia maligna → rigidez/atividade muscular extrema → rabdomiólise → mioglobina entope o túbulo renal → insuficiência renal aguda → óbito</b>. Conduta: resfriar agressivamente, hidratar, suporte. Grave a cadeia inteira — a prova pergunta qualquer elo dela.</p></div>
+  <div class="box prof"><p class="h">🎯 "Droga sintética não some"</p>
+  <p>O professor insistiu num ponto de saúde pública: droga de laboratório (êxtase, K-drugs, "nova droga X") <b>nunca desaparece do mercado</b> — a síntese é barata e as "microcélulas" de produção (um químico, uma cozinha) são impossíveis de erradicar como se erradica uma plantação. Apreensão fecha uma cozinha; a receita continua no mundo.</p></div>
+
+  <h2 class="topic" id="t7">7 · Álcool: mecanismo, metabolismo e ressaca</h2>
+  <p>O álcool (etanol) é a droga lícita mais consumida do mundo — e um <b>depressor</b> do SNC, por mais que a festa comece "animada" (a euforia inicial é desinibição: o álcool deprime primeiro os freios corticais). Molécula pequena e solúvel em água e gordura, é <b>absorvida por qualquer mucosa</b> — boca, estômago, intestino (e até reto, nos relatos absurdos de "chuca" alcoólica).</p>
+  <ul>
+    <li><b>Mecanismo duplo:</b> ① liga-se ao receptor <b>GABA-A</b> num <b>sítio alostérico PRÓPRIO</b> — não é o sítio do GABA nem o dos benzodiazepínicos — e <b>potencializa a abertura do canal de cloreto</b> (mais Cl⁻ entra, neurônio hiperpolariza, SNC deprime); ② <b>inibe o receptor NMDA de glutamato</b>, o grande excitatório. A frase da aula: <b>"o álcool estimula quem inibe (GABA) e inibe quem estimula (glutamato)"</b> — depressão por dois lados.</li>
+    <li><b>Dependência e abstinência:</b> com uso crônico, o sistema glutamatérgico cronicamente inibido responde com <b>up-regulation dos receptores NMDA</b>, e a via de recompensa recebe seu ↑dopamina. Quando o etílico para de beber, o glutamato "represado" encontra receptores a mais: <b>hiperexcitação</b> — tremor, sudorese, taquicardia, <b>convulsões e delirium tremens</b>. A abstinência alcoólica MATA, e por isso se trata (com benzodiazepínico — adiante).</li>
+    <li><b>Metabolismo em dois passos hepáticos:</b> etanol —<b>álcool-desidrogenase</b>→ <b>ACETALDEÍDO</b> —<b>aldeído-desidrogenase</b>→ acetato (vira acetil-CoA/energia). O acetaldeído é <b>mais tóxico que o próprio etanol</b>: é ele o grande culpado da <b>ressaca</b> (cefaleia, náusea, mal-estar) e da toxicidade crônica.</li>
+    <li><b>Ressaca tem mais um sócio:</b> o álcool <b>inibe o ADH</b> (hormônio antidiurético) — você urina muito mais do que bebeu e acorda <b>desidratado</b>. Por isso o "tratamento" da ressaca comum é prosaico: <b>ÁGUA</b> (e tempo para o acetaldeído ser depurado).</li>
+    <li><b>Tolerância:</b> o álcool é <b>indutor enzimático</b> — induz inclusive as enzimas que o metabolizam (auto-indução). O bebedor crônico "aguenta mais" em parte porque destrói o etanol mais rápido; e atenção às interações: o fígado induzido acelera o metabolismo de outros fármacos.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Álcool + benzodiazepínico: 1 + 1 = 10</p>
+  <p>O benzodiazepínico sozinho é um fármaco <b>seguro</b> — há relatos de sobrevida com 20–40× a dose terapêutica, porque o BZD só modula o GABA-A (precisa do GABA endógeno para agir; efeito-teto). Mas álcool e BZD deprimem o mesmo canal por <b>sítios diferentes</b>, e a soma não é aritmética: é <b>sinergismo</b> ("1+1=10") — sedação profunda, coma e parada respiratória. O coquetel "rivotril com vodca" mata quem "só tomou o remédio de sempre".</p></div>
+
+  <h2 class="topic" id="t8">8 · Tratamento do alcoolismo: dissulfiram × acamprosato</h2>
+  <p>O tratamento farmacológico tem uma peça histórica e um esquema atual — e a prova adora contrastá-los.</p>
+  <ul>
+    <li><b>Dissulfiram (a peça histórica):</b> <b>inibe a aldeído-desidrogenase</b>. O paciente pode até beber — mas o acetaldeído se acumula e provoca em minutos o <b>efeito antabuse</b>: rubor facial intenso, cefaleia latejante, náusea/vômito, palpitação, hipotensão. A lógica é aversiva: beber vira sofrimento. Na prática, <b>baixa adesão</b> (o paciente simplesmente para o comprimido no dia em que decide beber) e risco real na recaída — por isso <b>não é mais o tratamento de escolha</b>.</li>
+    <li><b>O "dissulfiram natural":</b> boa parte dos <b>asiáticos</b> tem deficiência genética de aldeído-desidrogenase — bebem e ficam vermelhos, taquicárdicos e enjoados ("asian flush"). É o fenótipo antabuse espontâneo, e essas populações têm menos alcoolismo. Mesma bioquímica, ótimo gancho de questão.</li>
+    <li><b>Esquema atual:</b> ① na <b>abstinência aguda</b>, <b>benzodiazepínico</b> (substitui o álcool no GABA-A, previne convulsão e delirium; depois desmama); ② para <b>prevenir recaída</b>, <b>ACAMPROSATO</b> — modula/acalma a <b>hiperatividade glutamatérgica (NMDA)</b> do cérebro do etílico abstinente, tirando o desconforto que leva de volta ao copo. Detalhe: só faz sentido <b>depois que o paciente parou de beber</b>; ③ <b>naltrexona</b> (o antagonista opioide!) reduz o prazer/recompensa de beber e também previne recaída — e em outra dupla famosa, <b>naltrexona + bupropiona</b> é usada na obesidade.</li>
+  </ul>
+  <figure class="fig"><img src="img/dissulfiram-metabolismo.jpg" alt="Metabolismo do etanol e ponto de bloqueio do dissulfiram">
+  <figcaption>O slide do metabolismo: etanol → (álcool-desidrogenase, com NAD⁺) → acetaldeído → (aldeído-desidrogenase) → acetato. O dissulfiram tranca a segunda enzima — o acetaldeído acumulado produz o quadro antabuse: rubor, cefaleia, náusea, hipotensão. A deficiência genética da mesma enzima nos asiáticos reproduz o fenômeno sem remédio.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Nicotina e o tratamento do tabagismo</h2>
+  <p>A nicotina é <b>agonista dos receptores nicotínicos de acetilcolina</b>. Nos neurônios da <b>ATV</b>, essa ativação dispara a via de recompensa — <b>dopamina no accumbens</b> — e é por isso que um estimulante "leve" está entre as substâncias que mais geram dependência no planeta. Na fase aguda ela libera um coquetel de neurotransmissores (dopamina, noradrenalina, acetilcolina, serotonina): alerta, concentração, supressão do apetite, taquicardia. A <b>abstinência é o espelho</b>: irritabilidade, ansiedade, dificuldade de concentração, <b>ganho de peso</b>, bradicardia — e é ela que derruba quem tenta parar "no seco".</p>
+  <p>O tratamento de <b>primeira linha</b> tem dois pilares que podem ser combinados:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Pilar</th><th>Como se usa</th><th>Contraindicações / detalhes</th></tr>
+    <tr><td><b>Reposição de nicotina — ADESIVO</b> (a forma preferida)</td><td>6–8 semanas, desmame progressivo. Dose pelo consumo: <b>&lt;20 cig/dia → 14–21 mg/dia</b> · <b>20–40 cig/dia → 21–35 mg/dia</b> · <b>&gt;40 cig/dia → 42–44 mg/dia</b></td><td>Menores de 18 anos, <b>grávidas</b> e idosos com doença cardiovascular ativa</td></tr>
+    <tr><td><b>Reposição — GOMA de mascar</b></td><td>2 mg por tablete, ~10–15/dia conforme fissura, 8–12 semanas</td><td>Mastigação correta ("mastiga e estaciona"); problemas de ATM/dentário</td></tr>
+    <tr><td><b>Reposição — SPRAY nasal</b></td><td>Jatos conforme fissura</td><td>É a forma que <b>mais imita os PICOS</b> plasmáticos do cigarro (mais eficaz na fissura aguda, maior potencial de manter dependência) — caro, importado</td></tr>
+    <tr><td><b>BUPROPIONA</b></td><td>Bloqueia a recaptação de <b>dopamina e noradrenalina</b> (antidepressivo atípico — trata a "falta" que o cigarro deixava). Esquema: <b>150 mg/dia por 3 dias → 300 mg/dia</b> (2× 150 mg, intervalo ≥8 h)</td><td><b>Convulsões/epilepsia</b> (baixa o limiar!), bulimia, anorexia nervosa, uso de IMAO</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Segunda linha:</b> <b>nortriptilina</b> (tricíclico) 75–100 mg/dia por 8–12 semanas; <b>clonidina</b> (agonista α2) 0,1–0,75 mg/dia — ambas quando a primeira linha falha ou é contraindicada.</li>
+    <li>A lógica da reposição: entregar nicotina <b>sem a fumaça</b> (que é o que carrega alcatrão, CO e os 4.000 tóxicos), em nível mais estável, e desmamar devagar — o mesmo raciocínio da metadona para a heroína.</li>
+  </ul>
+  <figure class="fig"><img src="img/niveis-nicotina-reposicao.jpg" alt="Níveis plasmáticos de nicotina: cigarro versus formas de reposição">
+  <figcaption>Concentração de nicotina no sangue ao longo do tempo: o cigarro produz picos rápidos e altos (é o pico que vicia); adesivo entrega um platô lento e estável; goma e spray ficam no meio — o spray é o que mais se aproxima do pico do cigarro. Escolher a forma é escolher que curva o paciente recebe.</figcaption></figure>
+  <figure class="fig"><img src="img/tabela-tratamento-tabagismo.jpg" alt="Tabela de farmacoterapia do tabagismo da aula">
+  <figcaption>A tabela de tratamento do slide, como caiu na aula: reposição de nicotina (adesivo com doses por faixa de consumo, goma, spray) e bupropiona com esquema de dose e contraindicações — decorar as faixas do adesivo e as CI da bupropiona.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Cannabis e o sistema endocanabinoide</h2>
+  <p>A <i>Cannabis sativa</i> contém <b>cerca de 60 canabinoides</b>; o principal psicoativo é o <b>THC (Δ9-tetraidrocanabinol)</b>. Ele age em receptores próprios do corpo — a maconha só "funciona" porque temos um <b>sistema endocanabinoide</b> endógeno (anandamida etc.):</p>
+  <ul>
+    <li><b>CB1</b> — SNC: córtex (cognição), hipocampo (memória), cerebelo (coordenação), nucleus accumbens (reforço — de novo, ↑dopamina). <b>CB2</b> — periferia/sistema imune. Ambos acoplados a <b>Gi</b> (↓AMPc), como o opioide.</li>
+    <li><b>Efeito bifásico:</b> a "onda" (euforia, riso fácil, distorção de tempo e percepção, fome) seguida do declínio (sonolência, lentificação). Há <b>tolerância e síndrome de abstinência</b> descritas — a ideia de que "maconha não vicia" é falsa.</li>
+    <li><b>Riscos crônicos que o professor martelou:</b> uso pesado/precoce associa-se a <b>~3× mais esquizofrenia</b> e <b>~5× mais depressão</b> — o cérebro adolescente é o mais vulnerável.</li>
+    <li><b>Canabidiol (CBD):</b> o canabinoide NÃO psicotomimético virou fármaco — <b>epilepsias intratáveis da infância e transtorno do espectro autista</b> — mas os extratos reais sempre carregam algum THC; prescrição regulada.</li>
+    <li><b>K-drugs (canabinoides sintéticos, K2/K4/K9):</b> agonistas CB1 sintéticos, muito mais potentes, borrifados em ervas ou <b>impregnados em folhas de papel/cartas</b> — a via de entrada clássica nos presídios, que explodiu na pandemia. Toxicidade imprevisível.</li>
+    <li><b>Rimonabanto, a lição farmacológica:</b> se o CB1 dá fome e recompensa, um <b>antagonista CB1</b> deveria emagrecer — e emagrecia. Foi lançado para obesidade e <b>retirado do mercado por depressão e suicídio</b>: bloquear o sistema de recompensa endógeno tira o prazer de viver. O fracasso do fármaco foi o que consolidou o estudo dos endocanabinoides.</li>
+  </ul>
+  <figure class="fig"><img src="img/thc-cb1-regioes.jpg" alt="Regiões cerebrais ricas em receptores CB1 e efeitos do THC">
+  <figcaption>Onde o THC age, do slide: densidade de CB1 no córtex (cognição), hipocampo (memória), cerebelo (coordenação motora) e accumbens (recompensa) — cada região explica um efeito clínico da maconha. CB1/CB2 são receptores acoplados a Gi, reduzindo AMPc.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 Geografia de prova (e de jornal)</p>
+  <p>O <b>"polígono da maconha"</b> fica no sertão do São Francisco — norte da Bahia / sul de Pernambuco; e o <b>Paraguai</b> é o grande produtor que abastece o Cone Sul. Curiosidade que o professor usou para mostrar a escala do problema — pode aparecer como contextualização de vinheta.</p></div>
+
+  <h2 class="topic" id="t11">11 · Inalantes, LSD e psilocibina</h2>
+  <ul>
+    <li><b>Inalantes/solventes</b> (cola de sapateiro, tíner, esmalte, gasolina, <b>lança-perfume = éter + clorofórmio</b>, gás de cozinha): <b>depressores</b> do SNC de ação rapidíssima. O quadro passa por uma <b>fase de excitação inicial</b> (euforia, desinibição — as fases de Guedel dos anestésicos inalatórios) antes da depressão. Droga de <b>criança e adolescente de rua</b> (barata, legal de comprar). Mata por <b>deslocamento do oxigênio</b> (o vapor ocupa o alvéolo — asfixia/sufocação) e por arritmias; cronicamente lesa <b>cérebro, fígado e rins</b>. O gás de cozinha é inodoro — o cheiro é um <b>odorizante artificial</b> adicionado justamente para denunciar vazamento.</li>
+    <li><b>LSD:</b> alucinógeno <b>serotonérgico</b> (agonista 5-HT2A), ativo em microgramas ("selos"). Organicamente é considerada a <b>menos danosa</b> das ilícitas (não há overdose letal descrita típica) — o perigo é comportamental (acidentes durante a "viagem") e psiquiátrico: <b>flashbacks</b>, revivências da alucinação <b>anos depois</b>, descritos inclusive desencadeados por <b>fluoxetina/ISRS</b> (mexer na serotonina reacende o circuito).</li>
+    <li><b>Psilocibina (cogumelos):</b> alucinógeno serotonérgico "natural"; no Brasil vive num <b>limbo legal</b> (a lei lista a substância, não o cogumelo/esporos à venda) — mas limbo legal ≠ segurança: <b>não há dose segura estabelecida</b>, e a pesquisa terapêutica (depressão resistente) é feita em ambiente controlado, o que não valida o uso recreativo.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Os casos que o professor contou (e que viram vinheta fácil)</p>
+  <p><b>Anorexígenos manipulados:</b> o próprio professor, na época da faculdade, tomou fórmula de emagrecimento manipulada — anfetamina para "segurar o dia" + diazepam para conseguir dormir: o ciclo estimulante-depressor clássico das fórmulas de manipulação. <b>Anabolizantes:</b> atrofia testicular do usuário de esteroide androgênico (feedback negativo no eixo — o testículo "desliga"). <b>Cigarro:</b> o enfisema que acompanhou um colega professor até o fim. Três lembretes de que "droga lícita/medicamentosa" também cobra a conta.</p></div>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido das aulas</h3>
+  <ul>
+    <li><b>Todas as drogas de abuso</b> convergem para ↑dopamina na via ATV → nucleus accumbens; abstinência = espelho do efeito.</li>
+    <li><b>Opioide:</b> Gi → ↓AMPc, abre K⁺, fecha Ca²⁺; overdose mata por depressão respiratória → <b>NALOXONA</b>; dependência → <b>METADONA</b> VO meia-vida longa (sem "onda"); fentanil 100× morfina (no BR: profissional de saúde).</li>
+    <li><b>Cocaína bloqueia</b> a recaptação; <b>anfetamina inverte</b> o transportador — mesmo final. Overdose de cocaína: SEM antídoto, tratamento sintomático; mata por vasoconstrição (AVC/IAM). Êxtase: hipertermia → rabdomiólise → IRA.</li>
+    <li><b>Álcool:</b> sítio alostérico próprio no GABA-A + inibe NMDA ("estimula quem inibe, inibe quem estimula"); acetaldeído = ressaca; ressaca trata com água; álcool+BZD = sinergismo letal; abstinência trata com BZD; <b>dissulfiram</b> (inibe aldeído-DH, antabuse, obsoleto) × <b>acamprosato</b> (modula glutamato, previne recaída).</li>
+    <li><b>Nicotina:</b> agonista nicotínico → DA no accumbens; 1ª linha adesivo (14–21 / 21–35 / 42–44 mg conforme &lt;20 / 20–40 / &gt;40 cig/dia) + bupropiona 150→300 mg (CI: epilepsia, bulimia/anorexia, IMAO); 2ª linha nortriptilina, clonidina.</li>
+    <li><b>Cannabis:</b> THC em CB1/CB2 (Gi); ↑3× esquizofrenia, ↑5× depressão; CBD terapêutico (epilepsia, TEA); rimonabanto retirado (depressão/suicídio).</li>
+    <li><b>Inalantes:</b> depressores, matam por deslocamento de O₂; <b>LSD:</b> serotonérgico, flashbacks (até com ISRS); psilocibina sem dose segura.</li>
+  </ul></div>
+
+  <p class="lead" style="margin-top:18px">Fontes: transcrição integral das aulas 04–05 + slides da disciplina; Rang &amp; Dale, Farmacologia; Cecil, Tratado de Medicina Interna.</p>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>💊 Resumão Pré-Prova — Drogas Lícitas e Ilícitas</h1>
+  <p class="sub">Revisão da véspera · Farmaco II · Aulas 04–05 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-base">Conceitos</a>
+    <a class="a1" href="#p-opioides">Opioides</a>
+    <a class="a1" href="#p-estimulantes">Cocaína/Anfetas</a>
+    <a class="a1" href="#p-alcool">Álcool</a>
+    <a class="a1" href="#p-nicotina">Nicotina</a>
+    <a class="a1" href="#p-cannabis">Cannabis</a>
+    <a class="a1" href="#p-outros">Inalantes/LSD</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-base">
+  <span class="aula-tag t1">Base — conceitos e classificação</span>
+  <ul>
+    <li><b class="k">Droga (OMS):</b> substância não produzida pelo organismo que modifica seu funcionamento. <b>Psicotrópica:</b> age no SNC alterando o psiquismo + propriedade REFORÇADORA.</li>
+    <li><b class="k">Lícitas:</b> medicamentosas (BZD, anorexígenos, anabolizantes) · sem fim terapêutico (álcool, tabaco) · industriais (colas, solventes). <b>Lícita ≠ segura</b> — critério é jurídico.</li>
+    <li><b class="k">Lei 6.368/76:</b> plantar, transportar/guardar/entregar E <b>instigar/induzir/auxiliar</b> a usar = crime.</li>
+    <li><b class="k">Classificação:</b> DEPRESSORAS (álcool, opioides, BZD, inalantes) · ESTIMULANTES (cocaína, anfetaminas, nicotina) · PERTURBADORAS (maconha) · ALUCINÓGENAS (LSD, psilocibina).</li>
+    <li><b class="k">Via de recompensa:</b> ATV → nucleus accumbens, DOPAMINA. Toda droga de abuso converge pra cá.</li>
+    <li><b class="k">Abstinência = ESPELHO do efeito.</b> Depressora → abstinência excitada; estimulante → abstinência deprimida.</li>
+    <li><b class="k">Fissura (craving)</b> = desejo compulsivo, componente psíquico, motor da RECAÍDA.</li>
+  </ul>
+</section>
+
+<section id="p-opioides">
+  <span class="aula-tag t1">Opioides</span>
+  <ul>
+    <li><b class="k">Mecanismo (μ/κ/δ, todos Gi):</b> ↓AMPc + ABRE K⁺ (hiperpolariza) + FECHA Ca²⁺ (↓liberação de NT). Overdose mata por <b>depressão respiratória</b>.</li>
+    <li><b class="k">Heroína:</b> diacetilmorfina, mais lipossolúvel → "flash". Complicações do pó de rua: microtrombos/embolia (talco) + HIV/hepatites/endocardite (agulha).</li>
+    <li><b class="k">Fentanil:</b> ~100× a morfina; usuário típico no Brasil = PROFISSIONAL DE SAÚDE (acesso).</li>
+  </ul>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Naloxona (Narcan)</th><th>Metadona</th><th>Naltrexona</th></tr></thead>
+    <tbody>
+      <tr><td><b>É</b></td><td>ANTAGONISTA puro IV</td><td>AGONISTA μ oral, t½ LONGA</td><td>Antagonista ORAL longo</td></tr>
+      <tr><td><b>Para</b></td><td>INTOXICAÇÃO AGUDA (overdose)</td><td>TRATAR DEPENDÊNCIA (substituição, 1×/dia, sem "onda")</td><td>Manutenção pós-desintoxicação (opioide E álcool)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="p-estimulantes">
+  <span class="aula-tag t1">Cocaína · Anfetaminas · Êxtase</span>
+  <ul>
+    <li><b class="k">Cocaína BLOQUEIA</b> os transportadores de recaptação (DA &gt; NA, 5-HT) → NT acumula na fenda.</li>
+    <li><b class="k">Anfetamina INVERTE</b> o transportador (entra por ele, esvazia vesículas, bomba trabalha ao contrário) → mesmo final; age mais em NA.</li>
+    <li><b class="k">Overdose de cocaína:</b> SEM antídoto → tratamento SINTOMÁTICO (BZD, controlar PA/temperatura). Mata por VASOCONSTRIÇÃO → isquemia cerebral/AVC, IAM em jovem, arritmia.</li>
+    <li><b class="k">Crack:</b> fumado, chega em segundos, fissura brutal, recaída ~70%.</li>
+    <li><b class="k">Anorexígenos:</b> anfepramona (Dualid/Hipofagin/Moderine), femproporex (Lipomax/Inobesin), mazindol (Dasten/Fagolipo), metanfetamina (Pervitin), metilfenidato (RITALINA — TDAH).</li>
+    <li><b class="k">MDMA/êxtase:</b> Merck 1914 (supressor de apetite NUNCA comercializado); serotonérgico; cascata letal: HIPERTERMIA → rigidez → RABDOMIÓLISE → mioglobina → IRA → morte. Sintética "nunca some" (microcélulas).</li>
+  </ul>
+</section>
+
+<section id="p-alcool">
+  <span class="aula-tag t1">Álcool</span>
+  <ul>
+    <li><b class="k">Mecanismo duplo:</b> sítio alostérico PRÓPRIO no GABA-A (≠GABA, ≠BZD) → ↑Cl⁻ + INIBE NMDA. "Estimula quem inibe e inibe quem estimula."</li>
+    <li><b class="k">Absorção por QUALQUER mucosa.</b> Indutor enzimático (auto-indução → tolerância metabólica).</li>
+    <li><b class="k">Metabolismo:</b> etanol →(álcool-DH)→ <b>ACETALDEÍDO</b> (mais tóxico; = RESSACA) →(aldeído-DH)→ acetato.</li>
+    <li><b class="k">Ressaca:</b> acetaldeído + inibição do ADH → desidratação. Tratamento: ÁGUA.</li>
+    <li><b class="k">Álcool + BZD = "1+1=10"</b> (sítios diferentes no mesmo canal, sinergismo letal). BZD sozinho: seguro até 20–40× a dose.</li>
+    <li><b class="k">Abstinência</b> (up-regulation de NMDA): tremor → convulsão → delirium tremens. Trata com BZD.</li>
+    <li><b class="k">Dissulfiram:</b> inibe ALDEÍDO-DH → efeito antabuse (rubor, cefaleia, náusea, hipotensão). Baixa adesão → não é mais escolha. Asiáticos = deficiência genética da mesma enzima.</li>
+    <li><b class="k">Acamprosato:</b> modula a hiperatividade do GLUTAMATO → previne recaída; só APÓS parar de beber. + Naltrexona (↓recompensa; com bupropiona = obesidade).</li>
+  </ul>
+</section>
+
+<section id="p-nicotina">
+  <span class="aula-tag t1">Nicotina — tratamento do tabagismo</span>
+  <div class="tw"><table>
+    <thead><tr><th>1ª linha</th><th>Esquema</th><th>CI / detalhe</th></tr></thead>
+    <tbody>
+      <tr><td><b>ADESIVO</b> (preferido)</td><td>6–8 sem · <b>&lt;20 cig/dia: 14–21 mg</b> · <b>20–40: 21–35 mg</b> · <b>&gt;40: 42–44 mg/dia</b></td><td>&lt;18 anos, GRÁVIDAS, idoso com DCV ativa</td></tr>
+      <tr><td><b>Goma</b></td><td>2 mg, ~10–15/dia, 8–12 sem</td><td>mastigar e "estacionar"</td></tr>
+      <tr><td><b>Spray nasal</b></td><td>conforme fissura</td><td>o que MAIS IMITA OS PICOS do cigarro; caro</td></tr>
+      <tr><td><b>BUPROPIONA</b></td><td>150 mg 3 dias → 300 mg/dia (2×150, ≥8 h)</td><td><b>epilepsia/convulsão</b>, bulimia, anorexia, IMAO</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b class="k">Mecanismo:</b> agonista NICOTÍNICO → ATV → dopamina no accumbens. Bupropiona: bloqueia recaptação de DA + NA.</li>
+    <li><b class="k">2ª linha:</b> nortriptilina 75–100 mg/dia · clonidina (α2) 0,1–0,75 mg/dia.</li>
+    <li><b class="k">Abstinência-espelho:</b> irritabilidade, ansiedade, GANHO DE PESO, bradicardia.</li>
+  </ul>
+</section>
+
+<section id="p-cannabis">
+  <span class="aula-tag t1">Cannabis</span>
+  <ul>
+    <li><b class="k">~60 canabinoides; psicoativo = THC (Δ9).</b> Receptores CB1 (SNC: córtex-cognição, hipocampo-memória, cerebelo-coordenação, accumbens-reforço) e CB2 (imune) — ambos <b>Gi, ↓AMPc</b>.</li>
+    <li><b class="k">Tem tolerância E abstinência</b> — "não vicia" é mito. Fases: onda → declínio.</li>
+    <li><b class="k">Riscos:</b> ↑~3× ESQUIZOFRENIA · ↑~5× DEPRESSÃO (uso pesado/precoce).</li>
+    <li><b class="k">Canabidiol (CBD):</b> terapêutico — epilepsia intratável, TEA; extrato sempre carrega THC.</li>
+    <li><b class="k">K-drugs:</b> agonistas CB1 sintéticos, cartas impregnadas (presídios/pandemia), toxicidade imprevisível.</li>
+    <li><b class="k">Rimonabanto:</b> ANTAGONISTA CB1 antiobesidade → retirado por DEPRESSÃO/SUICÍDIO; consolidou o estudo dos endocanabinoides.</li>
+    <li><b class="k">Geografia:</b> polígono da maconha (norte BA/sul PE); Paraguai = grande produtor.</li>
+  </ul>
+</section>
+
+<section id="p-outros">
+  <span class="aula-tag t1">Inalantes · LSD · Psilocibina</span>
+  <ul>
+    <li><b class="k">Inalantes (cola, lança-perfume = éter+clorofórmio, gás de cozinha):</b> DEPRESSORES com fase de excitação inicial (Guedel). Matam por DESLOCAMENTO DO O₂ + arritmia; lesam cérebro/fígado/rins. Droga de criança/adolescente de rua. Gás de cozinha: cheiro = odorizante artificial.</li>
+    <li><b class="k">LSD:</b> serotonérgico (5-HT2A), microgramas; organicamente a "menos danosa"; perigo = comportamento na viagem + <b>FLASHBACKS anos depois (até com fluoxetina/ISRS)</b>.</li>
+    <li><b class="k">Psilocibina:</b> limbo legal no Brasil ≠ segura — sem dose segura estabelecida.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir (armadilhas)</span>
+  <ul>
+    <li><b class="k">Naloxona × metadona:</b> overdose AGUDA × tratamento da DEPENDÊNCIA. (E naltrexona = manutenção oral.)</li>
+    <li><b class="k">Cocaína × anfetamina:</b> BLOQUEIA × INVERTE o transportador — final igual (↑monoaminas).</li>
+    <li><b class="k">Overdose opioide TEM antídoto (naloxona); de cocaína NÃO TEM</b> (sintomático).</li>
+    <li><b class="k">Dissulfiram × acamprosato:</b> aversivo (acetaldeído/antabuse) × anti-recaída (modula glutamato).</li>
+    <li><b class="k">Sítio do álcool ≠ sítio do BZD ≠ sítio do GABA</b> — três sítios no MESMO GABA-A (por isso o sinergismo).</li>
+    <li><b class="k">Acetaldeído (ressaca) ≠ acetato</b> (produto final inócuo).</li>
+    <li><b class="k">CBD terapêutico ≠ THC psicoativo</b> — mesmo vegetal, papéis opostos.</li>
+    <li><b class="k">Espelho:</b> nicotina estimula → abstinência com GANHO de peso e BRADIcardia (não o contrário).</li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Drogas Lícitas e Ilícitas</h2>
+    <p>Farmaco II · Aulas 04–05 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aulas 04–05 — Drogas Lícitas e Ilícitas</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Farmacoterapia — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+/* 1 */ {n:1,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Na classificação farmacológica das drogas psicotrópicas quanto ao efeito predominante sobre o SNC, é correto afirmar:</div>`,
+ alts:["a maconha é estimulante, pelo aumento do apetite e pelo riso fácil que produz","o álcool é estimulante, dada a euforia e a desinibição do início do consumo","a maconha é perturbadora: distorce funções, sem deprimir nem estimular o SNC","os opioides são perturbadores, pois alteram a percepção dolorosa do usuário","a cocaína é depressora, pois após o uso sobrevêm cansaço e sonolência intensos"], correta:2,
+ just:[
+  "Riso e fome não fazem dela estimulante — a maconha é o protótipo das PERTURBADORAS.",
+  "A 'animação' do início é DESINIBIÇÃO: o álcool deprime primeiro os freios corticais. É DEPRESSOR.",
+  "Correta. Perturbadora = distorce o funcionamento (percepção, noção de tempo, memória) sem deprimir nem estimular o SNC de forma global — e a maconha é o exemplo clássico. LSD e psilocibina entram no grupo das alucinógenas.",
+  "Opioides são DEPRESSORES clássicos: analgesia, sedação e, na dose alta, depressão respiratória.",
+  "O 'crash' pós-uso é a abstinência-espelho — a cocaína é o ESTIMULANTE prototípico."],
+ ref:"Classificação das psicotrópicas"},
+
+/* 2 */ {n:2,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Um universitário garante ao colega: "pode deixar o pacote no meu armário — só guardar não é crime; e te chamar pra usar comigo, muito menos".</span><div class="pergunta">À luz da legislação brasileira de tóxicos discutida em aula (Lei 6.368/76 e sucessoras), o rapaz está:</div>`,
+ alts:["duplamente errado: guardar e instigar ou induzir ao uso são condutas criminosas","certo quanto a guardar, que é conduta atípica, e errado apenas quanto ao convite","certo nos dois pontos, pois a lei alcança somente quem produz ou comercializa","errado quanto a guardar e certo quanto ao convite, protegido como liberdade individual","sujeito apenas a sanção administrativa, pois nenhuma das condutas é crime"], correta:0,
+ just:[
+  "Correta. A lei criminaliza a cadeia inteira: plantar/cultivar, TRANSPORTAR, GUARDAR ou entregar — e também INSTIGAR, INDUZIR ou AUXILIAR alguém a usar. 'Segurar pro amigo' e 'chamar pra experimentar' são condutas típicas.",
+  "Guardar/ter em depósito é conduta expressamente criminalizada — não é atípica.",
+  "A lei vai muito além do traficante: alcança porte, guarda, transporte e até o induzimento ao uso.",
+  "O convite ao uso (instigar/induzir) é crime — não há 'liberdade individual' que o proteja.",
+  "As duas condutas são criminosas — não meras infrações administrativas."],
+ ref:"Lei de tóxicos — condutas típicas"},
+
+/* 3 */ {n:3,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">A via neural comum pela qual as drogas de abuso produzem reforço e dependência é:</div>`,
+ alts:["a via nigroestriatal, com liberação de acetilcolina no corpo estriado","o eixo hipotálamo-hipófise-adrenal, com liberação de cortisol","a projeção do locus ceruleus ao córtex, mediada por noradrenalina","a via serotonérgica dos núcleos da rafe para o hipocampo","a projeção da área tegmental ventral ao accumbens, com dopamina"], correta:4,
+ just:[
+  "A via nigroestriatal é motora (e dopaminérgica, não colinérgica) — é a via do parkinsonismo, não da recompensa.",
+  "O eixo HHA é a resposta ao estresse — cortisol não é o mediador do reforço.",
+  "O locus ceruleus participa do alerta/vigília — não é a via de recompensa.",
+  "A rafe é serotonérgica e regula humor/sono — não é o substrato do reforço.",
+  "Correta. A via de recompensa (mesolímbica) vai da ATV, no mesencéfalo, ao NUCLEUS ACCUMBENS, com DOPAMINA. Cocaína, anfetamina, nicotina, álcool, opioides e THC — todas convergem para aumentar dopamina aqui."],
+ ref:"Via de recompensa — ATV → accumbens"},
+
+/* 4 */ {n:4,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Homem, 31 anos, internado 40 dias por dependência de crack, recebe alta assintomático. Duas semanas depois, ao passar pelo antigo ponto de venda, é tomado por um desejo incontrolável de usar e recai.</span><div class="pergunta">O fenômeno que explica a recaída é:</div>`,
+ alts:["tolerância farmacocinética, por indução das enzimas de metabolização","fissura (craving): desejo compulsivo disparado por gatilhos ambientais","síndrome de abstinência física tardia, com hiperatividade autonômica","efeito reforçador residual da última dose consumida antes da internação","bloqueio persistente dos transportadores de dopamina no accumbens"], correta:1,
+ just:[
+  "Tolerância é precisar de MAIS dose para o mesmo efeito — não explica desejo após semanas limpo.",
+  "Correta. FISSURA (craving) é o desejo compulsivo e incontrolável, disparado por gatilhos (lugar, cheiro, pessoas). É o componente psíquico da dependência e o grande motor da RECAÍDA — no crack, ~70% recaem.",
+  "Após 40+ dias, a abstinência física já passou; o que resta (e dura anos) é o componente psíquico.",
+  "O efeito agudo da droga dura horas — não 'sobra' efeito reforçador dois meses depois.",
+  "O bloqueio do transportador pela cocaína é transitório — não persiste semanas após o uso."],
+ ref:"Fissura × tolerância × abstinência"},
+
+/* 5 */ {n:5,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre o mecanismo molecular dos opioides em seus receptores (μ, κ e δ), é correto afirmar:</div>`,
+ alts:["ativam proteína Gs, elevando o AMPc e excitando o neurônio-alvo","abrem canais de Ca²⁺ no terminal, aumentando a liberação de neurotransmissores","fecham canais de K⁺, despolarizando lentamente a membrana neuronal","via Gi, reduzem o AMPc, abrem canais de K⁺ e fecham canais de Ca²⁺","bloqueiam a recaptação de dopamina na fenda, à semelhança da cocaína"], correta:3,
+ just:[
+  "É o oposto: a proteína é INIBITÓRIA (Gi) e o AMPc CAI.",
+  "Os canais de Ca²⁺ se FECHAM — e a liberação de neurotransmissores DIMINUI.",
+  "Os canais de K⁺ se ABREM: o potássio sai e o neurônio HIPERPOLARIZA.",
+  "Correta. Os três receptores opioides são acoplados a Gi: ↓adenilato ciclase/AMPc, ABREM K⁺ (hiperpolarização) e FECHAM Ca²⁺ (↓liberação de neurotransmissores) — o neurônio 'desliga'. Daí analgesia, sedação e depressão respiratória.",
+  "Esse é o mecanismo da COCAÍNA — o opioide age em receptor próprio, não no transportador."],
+ ref:"Opioides — mecanismo Gi/K⁺/Ca²⁺"},
+
+/* 6 */ {n:6,aula:1,nivel:"facil",
+ enun:`<span class="vinheta">Jovem é trazido inconsciente de uma festa: frequência respiratória de 4 irpm, pupilas puntiformes, marcas de punção no antebraço.</span><div class="pergunta">Além do suporte ventilatório, a conduta farmacológica imediata é:</div>`,
+ alts:["naloxona intravenosa, que reverte a depressão respiratória em minutos","metadona oral, para estabilizar os níveis plasmáticos do opioide","flumazenil intravenoso, antagonista específico dos receptores benzodiazepínicos","naltrexona oral, garantindo bloqueio prolongado dos receptores μ","acamprosato, para modular a hiperatividade glutamatérgica aguda"], correta:0,
+ just:[
+  "Correta. Coma + bradipneia + MIOSE puntiforme + marcas de punção = overdose de opioide. NALOXONA IV é o antagonista puro que desloca o opioide do receptor e reverte a depressão respiratória em minutos (atenção: meia-vida curta — pode precisar repetir).",
+  "Metadona é AGONISTA de meia-vida longa — trataria a dependência depois; na overdose só aprofundaria a depressão.",
+  "Flumazenil antagoniza BENZODIAZEPÍNICO — a miose puntiforme aponta opioide.",
+  "Naltrexona é oral e de uso em MANUTENÇÃO — inútil na emergência com paciente inconsciente.",
+  "Acamprosato pertence ao tratamento do ALCOOLISMO (prevenção de recaída) — nada a ver com a cena."],
+ ref:"Overdose de opioide — naloxona"},
+
+/* 7 */ {n:7,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre o fentanil e seu padrão de abuso, é correto afirmar:</div>`,
+ alts:["é cerca de dez vezes menos potente que a morfina, o que permite uso recreativo com segurança","no Brasil, o abuso concentra-se em adolescentes de baixa renda das periferias","é ~100× mais potente que a morfina; no Brasil, quem mais abusa é o profissional de saúde","por ser sintético, não causa depressão respiratória nem dependência física","sua overdose não responde à naloxona, por envolver receptor não opioide"], correta:2,
+ just:[
+  "É o inverso — o fentanil é ~100× MAIS potente que a morfina: miligramas matam.",
+  "Esse é o perfil de outras drogas; o fentanil exige ACESSO à ampola — daí o perfil profissional.",
+  "Correta. Potência ~100× a da morfina (é o motor da crise americana, misturado à heroína de rua). No Brasil, quem abusa é quem tem acesso: anestesistas e equipes de centro cirúrgico/UTI.",
+  "É agonista μ pleno: deprime a respiração e vicia como qualquer opioide — só que em dose minúscula.",
+  "Age no receptor μ — a naloxona reverte (às vezes exigindo doses repetidas, pela potência)."],
+ ref:"Fentanil — potência e perfil de uso"},
+
+/* 8 */ {n:8,aula:1,nivel:"dificil",
+ enun:`<span class="vinheta">Homem, 26 anos, usuário de heroína injetável, chega com febre há 10 dias, sopro cardíaco novo e nódulos dolorosos em polpas digitais.</span><div class="pergunta">A principal hipótese diagnóstica e seu mecanismo são:</div>`,
+ alts:["síndrome de abstinência, por hiperatividade autonômica após a última dose","endocardite infecciosa, por inoculação repetida de bactérias pelas agulhas","overdose subaguda de opioide, com falência miocárdica progressiva","vasculite por vasoconstrição, típica da toxicidade direta dos opioides","embolia de talco isolada pelos aditivos, sem qualquer participação infecciosa no quadro"], correta:1,
+ just:[
+  "Abstinência de opioide dá agitação, dor, diarreia, piloereção — não febre prolongada com sopro NOVO.",
+  "Correta. Febre + sopro novo + fenômenos embólicos periféricos em usuário de droga INJETÁVEL = ENDOCARDITE INFECCIOSA (classicamente de câmaras direitas/tricúspide): cada injeção sem assepsia inocula bactérias da pele na corrente sanguínea.",
+  "Overdose de opioide mata por depressão RESPIRATÓRIA aguda — não por 'falência miocárdica subaguda' febril.",
+  "Vasoconstrição intensa é a assinatura da COCAÍNA; opioides tendem a vasodilatar (liberação de histamina).",
+  "Os aditivos (talco) causam microembolias, mas não explicam FEBRE de 10 dias com sopro — o quadro é infeccioso."],
+ ref:"Heroína injetável — complicações"},
+
+/* 9 */ {n:9,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">A racionalidade farmacológica de tratar a dependência de heroína com metadona é que a metadona:</div>`,
+ alts:["é antagonista μ e impede que a heroína produza qualquer efeito","não tem atividade opioide própria, funcionando como placebo ativo","tem meia-vida curtíssima, permitindo ajustar a dose a cada fissura","reproduz por via injetável o pico de euforia da heroína, sem os aditivos tóxicos do pó de rua","é agonista oral de meia-vida longa: nível estável, sem abstinência nem 'onda'"], correta:4,
+ just:[
+  "Antagonista é a NALTREXONA/naloxona — a metadona é AGONISTA μ (é um opioide).",
+  "Ela tem atividade opioide plena — é justamente por isso que segura a abstinência.",
+  "É o contrário: a meia-vida LONGA é a alma do tratamento (uma tomada ao dia).",
+  "É ORAL e sem pico — reproduzir a 'onda' injetável seria perpetuar o ciclo do vício.",
+  "Correta. Agonista μ ORAL de meia-vida LONGA: mantém o nível plasmático quase constante — ocupa o receptor o bastante para NÃO haver abstinência nem fissura de vale, mas sem o pico que dá a euforia. O paciente sai da montanha-russa e depois desmama."],
+ ref:"Metadona — terapia de substituição"},
+
+/* 10 */ {n:10,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">O mecanismo de ação central da cocaína é:</div>`,
+ alts:["agonismo direto dos receptores D2 pós-sinápticos do estriado","liberação vesicular de dopamina por inversão do transportador de membrana","inibição da MAO, reduzindo a degradação intraneuronal das monoaminas","bloqueio dos transportadores de recaptação das monoaminas (DA, NA e 5-HT)","abertura de canais de cloreto por sítio alostérico no receptor GABA-A"], correta:3,
+ just:[
+  "A cocaína não liga em receptor de dopamina — ela age no TRANSPORTADOR.",
+  "Inverter o transportador e esvaziar vesículas é o mecanismo da ANFETAMINA.",
+  "Inibir MAO é mecanismo de antidepressivo (IMAO) — não da cocaína.",
+  "Correta. A cocaína BLOQUEIA (por fora) os transportadores de recaptação de DA (principal), NA e 5-HT: o neurotransmissor liberado fica preso na fenda, estimulando sem parar. No accumbens = euforia; na periferia, NA sobrando = taquicardia, hipertensão, VASOCONSTRIÇÃO.",
+  "Canal de cloreto/GABA-A é o território do álcool e dos benzodiazepínicos — depressores."],
+ ref:"Cocaína — bloqueio da recaptação"},
+
+/* 11 */ {n:11,aula:1,nivel:"dificil",
+ enun:`<div class="pergunta">O que distingue o mecanismo da anfetamina do mecanismo da cocaína é que a anfetamina:</div>`,
+ alts:["bloqueia o transportador de recaptação atuando pelo lado externo da membrana","entra pelo transportador, esvazia as vesículas e inverte o sentido da bomba","age exclusivamente sobre receptores de serotonina, poupando a dopamina","hiperpolariza o neurônio dopaminérgico ao abrir canais de potássio","estimula a síntese de dopamina por ativação da tirosina-hidroxilase"], correta:1,
+ just:[
+  "Bloquear por fora é a COCAÍNA — a anfetamina usa o transportador como porta de entrada.",
+  "Correta. A anfetamina ENTRA no neurônio pelo próprio transportador, desloca a dopamina das vesículas para o citoplasma e INVERTE o sentido da bomba: em vez de recaptar, o transportador passa a jogar dopamina para fora. Final igual ao da cocaína (monoaminas de sobra na fenda) — a anfetamina pesa mais na noradrenalina, a cocaína na dopamina.",
+  "Ela mexe com DA, NA e 5-HT — a dopamina é justamente central para o reforço.",
+  "Hiperpolarizar abrindo K⁺ é o efeito do OPIOIDE — a anfetamina é estimulante.",
+  "O efeito é sobre liberação/recaptação, não sobre a síntese enzimática."],
+ ref:"Anfetamina — inversão do transportador"},
+
+/* 12 */ {n:12,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Mulher, 22 anos, chega agitada após inalar grande quantidade de cocaína: PA 210×120 mmHg, FC 150 bpm, T 39,5 °C. O interno pergunta qual é o antídoto.</span><div class="pergunta">A resposta correta é:</div>`,
+ alts:["não há antídoto: trata-se com benzodiazepínico, controle de PA e temperatura","naloxona intravenosa em bolus, repetida a cada três minutos se necessário","flumazenil, que desloca a cocaína de seu sítio no transportador de dopamina","dissulfiram, que acelera a degradação hepática do alcaloide circulante","metadona oral, que ocupa os receptores e abole a fissura da intoxicação"], correta:0,
+ just:[
+  "Correta. Overdose de cocaína NÃO TEM antídoto — trata-se o quadro: benzodiazepínico para agitação/convulsão, resfriar, controlar PA e arritmias. O que mata é a VASOCONSTRIÇÃO intensa: isquemia cerebral/AVC e IAM (coronária fechada em jovem sem aterosclerose).",
+  "Naloxona reverte OPIOIDE (e o quadro seria oposto: bradipneia e miose, não hipertensão com agitação).",
+  "Flumazenil antagoniza benzodiazepínico — não toca o transportador de dopamina.",
+  "Dissulfiram inibe a aldeído-desidrogenase (álcool) — nada faz sobre a cocaína.",
+  "Metadona é substituição para OPIOIDE — não existe 'substituto' aprovado para intoxicação por cocaína."],
+ ref:"Overdose de cocaína — sintomático"},
+
+/* 13 */ {n:13,aula:1,nivel:"medio",
+ enun:`<div class="pergunta">Sobre o crack em comparação à cocaína aspirada, é correto afirmar:</div>`,
+ alts:["por ser fumado, tem absorção mais lenta e efeito mais suave e duradouro","atinge o cérebro em cerca de trinta minutos, com euforia prolongada","gera menos dependência, pois parte do alcaloide se perde na queima","chega ao cérebro em segundos: pico intenso e breve, com fissura brutal","sua overdose é revertida com antagonista específico disponível no SUS"], correta:3,
+ just:[
+  "É o oposto: a via pulmonar é a MAIS rápida de todas — mais até que a nasal.",
+  "Segundos, não trinta minutos — a superfície alveolar joga a droga direto no coração e no cérebro.",
+  "Gera MAIS dependência: quanto mais rápido e alto o pico, maior o poder de reforço.",
+  "Correta. Base livre fumada → cérebro em SEGUNDOS → pico altíssimo e curtíssimo → despenca → FISSURA brutal. É a forma que mais escraviza: recaída em torno de 70% mesmo após tratamento.",
+  "Como toda cocaína, NÃO tem antídoto — o tratamento é sintomático."],
+ ref:"Crack — cinética e fissura"},
+
+/* 14 */ {n:14,aula:1,nivel:"facil",
+ enun:`<div class="pergunta">Sobre as anfetaminas de uso médico, é correto afirmar:</div>`,
+ alts:["a anfepramona segue como primeira linha no tratamento da obesidade no Brasil","o mazindol é um opioide fraco, usado como analgésico coadjuvante","o metilfenidato (Ritalina) é anfetamina de uso médico legítimo no TDAH","a metanfetamina é a forma de menor potência do grupo, sem uso recreativo","o femproporex nunca chegou a ser comercializado no país"], correta:2,
+ just:[
+  "A anfepramona (Dualid S, Hipofagin, Moderine) foi retirada/estritamente controlada — risco cardiovascular e de dependência.",
+  "Mazindol (Dasten, Fagolipo) é ANOREXÍGENO anfetamínico — não opioide.",
+  "Correta. O metilfenidato (Ritalina) é a anfetamina 'do bem' — indicação legítima no TDAH — mas virou droga de abuso de estudante e concurseiro, usada sem prescrição para 'render mais'.",
+  "A metanfetamina (Pervitin histórico) é a MAIS potente do grupo e a versão de rua clássica.",
+  "O femproporex (Lipomax, Inobesin) foi amplamente vendido como emagrecedor antes do banimento."],
+ ref:"Anorexígenos e metilfenidato"},
+
+/* 15 */ {n:15,aula:1,nivel:"medio",
+ enun:`<span class="vinheta">Em festa eletrônica, jovem de 19 anos usa êxtase e dança por horas. Chega ao PS com temperatura de 41 °C, rigidez muscular e urina cor de coca-cola.</span><div class="pergunta">A sequência fisiopatológica que ameaça a vida desse paciente é:</div>`,
+ alts:["vasoconstrição coronariana → infarto agudo → choque cardiogênico","depressão respiratória central → hipóxia grave → parada cardiorrespiratória","hipoglicemia grave → convulsão prolongada → edema cerebral difuso","hemólise maciça → hemoglobinúria → necrose tubular por pigmento","hipertermia → rabdomiólise → mioglobinúria → insuficiência renal aguda"], correta:4,
+ just:[
+  "Vasoconstrição/IAM é a assinatura da COCAÍNA — o êxtase mata por outra via.",
+  "Depressão respiratória é morte de OPIOIDE — o MDMA é estimulante/serotonérgico.",
+  "Hipoglicemia não é o eixo da toxicidade do MDMA.",
+  "A urina escura aqui é MIOGLOBINA (do músculo), não hemoglobina (de hemólise).",
+  "Correta. A cascata do êxtase: HIPERTERMIA maligna (+ horas de dança) → rigidez/hiperatividade muscular → RABDOMIÓLISE → mioglobina entope os túbulos → IRA → morte. Conduta: resfriamento agressivo, hidratação, suporte. Bônus histórico: MDMA foi sintetizado pela Merck em 1914 como supressor de apetite — nunca comercializado para isso."],
+ ref:"MDMA — hipertermia/rabdomiólise/IRA"},
+
+/* 16 */ {n:16,aula:2,nivel:"dificil",
+ enun:`<div class="pergunta">Sobre o mecanismo de ação do etanol no sistema nervoso central, é correto afirmar:</div>`,
+ alts:["age em sítio alostérico próprio do GABA-A e ainda inibe o receptor NMDA","liga-se ao mesmo sítio dos benzodiazepínicos no GABA-A, competindo com eles","é agonista direto do sítio do GABA, dispensando o neurotransmissor endógeno","estimula o receptor NMDA, o que explica a euforia do início do consumo","bloqueia a recaptação de dopamina, à semelhança dos estimulantes clássicos"], correta:0,
+ just:[
+  "Correta. O etanol tem sítio alostérico PRÓPRIO no GABA-A (≠ sítio do GABA, ≠ sítio do BZD), potencializando a entrada de cloreto — e ainda INIBE o receptor NMDA de glutamato. A frase da aula: 'estimula quem inibe e inibe quem estimula' — depressão por dois lados.",
+  "São sítios DIFERENTES no mesmo receptor — e é justamente por isso que os efeitos se SOMAM (sinergismo perigoso), em vez de competirem.",
+  "O álcool não substitui o GABA — modula o canal alostericamente.",
+  "Ele INIBE o NMDA; a 'euforia' inicial é desinibição cortical, não estímulo.",
+  "O ↑dopamina no accumbens existe, mas é indireto — o etanol não age no transportador."],
+ ref:"Etanol — GABA-A + NMDA"},
+
+/* 17 */ {n:17,aula:2,nivel:"medio",
+ enun:`<span class="vinheta">Mulher, 58 anos, usa clonazepam há anos na dose prescrita, sem intercorrências. Em um jantar, consome vários drinques e é encontrada em coma, com respiração agônica.</span><div class="pergunta">A explicação farmacológica do quadro é:</div>`,
+ alts:["overdose isolada de benzodiazepínico, fármaco de janela terapêutica estreita","sinergismo entre sítios distintos do mesmo GABA-A, com depressão multiplicada","interação farmacocinética: o álcool impede a absorção intestinal do clonazepam","efeito antabuse do clonazepam, com acúmulo de acetaldeído circulante","abstinência alcoólica precipitada pelo uso crônico do benzodiazepínico"], correta:1,
+ just:[
+  "O BZD sozinho é notoriamente SEGURO — há sobrevida descrita com 20–40× a dose terapêutica (efeito-teto: ele só modula o GABA endógeno).",
+  "Correta. Álcool e BZD deprimem o MESMO canal de cloreto por sítios DIFERENTES — a soma não é aritmética, é sinergismo: '1+1=10'. O coquetel produz sedação profunda, coma e parada respiratória em quem 'só tomou o remédio de sempre'.",
+  "Se impedisse a absorção, a paciente estaria PROTEGIDA — o quadro seria mais leve, não coma.",
+  "Antabuse é do DISSULFIRAM (inibição da aldeído-desidrogenase) — clonazepam não participa desse metabolismo.",
+  "Ela estava BEBENDO — não há retirada de álcool na cena; e BZD trataria (não precipitaria) abstinência alcoólica."],
+ ref:"Álcool + BZD — sinergismo"},
+
+/* 18 */ {n:18,aula:2,nivel:"facil",
+ enun:`<div class="pergunta">A cefaleia, a náusea e o mal-estar da ressaca alcoólica devem-se principalmente:</div>`,
+ alts:["ao próprio etanol ainda circulante na manhã seguinte ao consumo","ao acetato, produto final da oxidação hepática do etanol","à hipoglicemia isolada, por inibição da gliconeogênese hepática","ao acetaldeído acumulado e à desidratação por inibição do ADH","à liberação maciça de histamina induzida pelos fermentados"], correta:3,
+ just:[
+  "Na ressaca o etanol já foi majoritariamente metabolizado — o vilão é o METABÓLITO.",
+  "O acetato é o produto INÓCUO do segundo passo — vira acetil-CoA/energia.",
+  "Pode haver hipoglicemia no etilista, mas não é ela o eixo da ressaca comum.",
+  "Correta. Dois sócios: o ACETALDEÍDO (metabólito mais tóxico que o próprio etanol, gerado pela álcool-desidrogenase) + a DESIDRATAÇÃO (o álcool inibe o ADH → poliúria). Por isso o 'tratamento' é prosaico: ÁGUA — e tempo para depurar o acetaldeído.",
+  "Histamina pode dar rubor em sensíveis, mas não é o mecanismo central da ressaca."],
+ ref:"Ressaca — acetaldeído + ADH"},
+
+/* 19 */ {n:19,aula:2,nivel:"medio",
+ enun:`<div class="pergunta">Sobre o dissulfiram no tratamento do alcoolismo, é correto afirmar:</div>`,
+ alts:["inibe a álcool-desidrogenase, impedindo a formação de acetaldeído","modula a hiperatividade glutamatérgica, prevenindo a recaída","é agonista GABA-A de meia-vida longa, substituindo o álcool no receptor durante a retirada","permanece como primeira escolha, dada a excelente adesão dos pacientes","inibe a aldeído-desidrogenase: beber acumula acetaldeído (efeito antabuse)"], correta:4,
+ just:[
+  "Enzima errada: se inibisse a PRIMEIRA (álcool-DH), o acetaldeído nem se formaria — e não haveria reação aversiva nenhuma.",
+  "Modular o glutamato é o ACAMPROSATO — mecanismo e objetivo completamente diferentes.",
+  "Substituir o depressor no receptor é o papel do BENZODIAZEPÍNICO na abstinência aguda.",
+  "É o oposto: a ADESÃO é o calcanhar de aquiles — o paciente para o comprimido no dia em que decide beber. Por isso caiu de escolha.",
+  "Correta. Inibindo a ALDEÍDO-desidrogenase, qualquer gole acumula acetaldeído: rubor facial, cefaleia latejante, náusea/vômito, palpitação, hipotensão — o efeito ANTABUSE. Os asiáticos com deficiência genética da mesma enzima vivem o fenômeno espontaneamente ('asian flush')."],
+ ref:"Dissulfiram — aldeído-DH/antabuse"},
+
+/* 20 */ {n:20,aula:2,nivel:"medio",
+ enun:`<div class="pergunta">O acamprosato previne a recaída do paciente alcoolista porque:</div>`,
+ alts:["provoca reação fisicamente aversiva a cada episódio de consumo de álcool","bloqueia os receptores opioides, abolindo todo o prazer de beber","acalma a hiperatividade glutamatérgica (NMDA) do cérebro abstinente","repõe GABA exógeno, corrigindo o déficit inibitório do etilista","induz as enzimas hepáticas, acelerando a eliminação do etanol"], correta:2,
+ just:[
+  "Aversão é a lógica do DISSULFIRAM — o acamprosato não pune quem bebe.",
+  "Reduzir a recompensa via receptor opioide é a NALTREXONA (que também previne recaída — e, com bupropiona, trata obesidade).",
+  "Correta. O cérebro do etílico crônico fez up-regulation de NMDA; quando ele para de beber, sobra GLUTAMATO hiperativo — desconforto, insônia, ansiedade que empurram de volta ao copo. O acamprosato MODULA essa hiperatividade glutamatérgica. Detalhe de prova: só faz sentido DEPOIS que o paciente parou de beber.",
+  "Não existe 'repor GABA' por comprimido — e não é esse o mecanismo descrito.",
+  "Acelerar a eliminação do etanol não trata dependência — e não é o que ele faz."],
+ ref:"Acamprosato — modulação do glutamato"},
+
+/* 21 */ {n:21,aula:2,nivel:"facil",
+ enun:`<div class="pergunta">A nicotina gera dependência porque:</div>`,
+ alts:["ativa receptores nicotínicos na ATV, liberando dopamina no accumbens","bloqueia os receptores muscarínicos corticais, produzindo sedação prazerosa","inibe a recaptação de serotonina, como fazem os antidepressivos ISRS","abre canais de cloreto no GABA-A, deprimindo o córtex pré-frontal","antagoniza os receptores NMDA, mimetizando o efeito do etanol"], correta:0,
+ just:[
+  "Correta. A nicotina é AGONISTA dos receptores nicotínicos de acetilcolina; nos neurônios da ATV isso dispara a via de recompensa — DOPAMINA no nucleus accumbens. Agudamente ainda libera NA, ACh e 5-HT (alerta, concentração, menos apetite); a abstinência é o espelho: irritabilidade, GANHO de peso, bradicardia.",
+  "Ela é AGONISTA colinérgico (nicotínico) — não bloqueia muscarínico.",
+  "Não é ISRS — o eixo do reforço é dopaminérgico.",
+  "Canal de cloreto/GABA-A é território de álcool e BZD — depressores.",
+  "Antagonizar NMDA é parte do mecanismo do ÁLCOOL — não da nicotina."],
+ ref:"Nicotina — agonista nicotínico/ATV"},
+
+/* 22 */ {n:22,aula:2,nivel:"dificil",
+ enun:`<span class="vinheta">Homem, 52 anos, fuma 45 cigarros por dia há 30 anos e decide parar. Sem comorbidades. Opta-se por reposição de nicotina com adesivo transdérmico.</span><div class="pergunta">A dose inicial adequada e uma contraindicação da reposição são:</div>`,
+ alts:["7 mg/dia; contraindicada em homens com mais de cinquenta anos","14–21 mg/dia; contraindicada em hipertensos bem controlados","21–35 mg/dia; contraindicada apenas em cardiopatas graves","10 mg/dia em goma de mascar; contraindicada em usuários de IMAO","42–44 mg/dia; contraindicada em grávidas e menores de 18 anos"], correta:4,
+ just:[
+  "Dose homeopática para 45 cigarros/dia — e idade/sexo não contraindicam.",
+  "14–21 mg é a faixa de quem fuma MENOS de 20 cigarros/dia.",
+  "21–35 mg é a faixa dos 20–40 cigarros/dia — ele fuma mais que isso.",
+  "IMAO é contraindicação da BUPROPIONA; e a goma é 2 mg/tablete, ~10–15/dia.",
+  "Correta. As faixas do adesivo: <20 cig/dia → 14–21 mg; 20–40 → 21–35 mg; >40 → 42–44 mg/dia — uso por 6–8 semanas com desmame. Contraindicações da reposição: GRÁVIDAS, menores de 18 anos e idosos com doença cardiovascular ativa."],
+ ref:"Adesivo de nicotina — doses/CI"},
+
+/* 23 */ {n:23,aula:2,nivel:"medio",
+ enun:`<span class="vinheta">Mulher, 34 anos, tabagista, tem epilepsia controlada com medicação e pergunta se pode usar "o comprimido que o marido tomou para parar de fumar" (bupropiona).</span><div class="pergunta">A orientação correta é:</div>`,
+ alts:["pode usar: a bupropiona eleva o limiar convulsivo e é até protetora em epilépticos","não pode: a bupropiona reduz o limiar convulsivo e é vetada na epilepsia","pode, desde que associada a adesivo de nicotina em dose plena","não pode, porque a bupropiona é um IMAO clássico de uso restrito","pode, pois a contraindicação da bula restringe-se a gestantes"], correta:1,
+ just:[
+  "É o oposto — ela BAIXA o limiar convulsivo.",
+  "Correta. A bupropiona (bloqueia a recaptação de DOPAMINA e NORADRENALINA; esquema 150 mg por 3 dias → 300 mg/dia em 2 tomadas com ≥8 h) REDUZ o limiar convulsivo: contraindicada em epilepsia/convulsões, bulimia, anorexia nervosa e uso de IMAO. Para essa paciente: reposição de nicotina ou 2ª linha (nortriptilina, clonidina).",
+  "Associar não anula a contraindicação — o risco convulsivo é da bupropiona em si.",
+  "Ela NÃO é IMAO — mas usar junto COM um IMAO é contraindicado.",
+  "A bula proíbe bem mais que gestação: epilepsia é a contraindicação emblemática."],
+ ref:"Bupropiona — mecanismo e CI"},
+
+/* 24 */ {n:24,aula:2,nivel:"medio",
+ enun:`<div class="pergunta">Sobre a Cannabis e o sistema endocanabinoide, é correto afirmar:</div>`,
+ alts:["o THC age em receptores CB1 acoplados a proteína Gs, elevando o AMPc","não há tolerância nem síndrome de abstinência descritas para a maconha","o canabidiol é o principal responsável pelos efeitos psicotomiméticos","o uso pesado e precoce eleva ~3× a esquizofrenia e ~5× a depressão","o rimonabanto, agonista CB1, foi retirado do mercado por causar obesidade"], correta:3,
+ just:[
+  "CB1 e CB2 são acoplados a Gi — o AMPc CAI (como no opioide).",
+  "Existem AMBAS — 'maconha não vicia' é mito; há tolerância e abstinência descritas.",
+  "É o contrário: o psicoativo é o THC (Δ9); o CANABIDIOL é o terapêutico (epilepsia intratável, TEA).",
+  "Correta. Os números que o professor martelou: uso pesado/precoce (cérebro adolescente) associa-se a cerca de 3× mais ESQUIZOFRENIA e 5× mais DEPRESSÃO — o principal argumento clínico contra a banalização.",
+  "Inverteu tudo: o rimonabanto é ANTAGONISTA CB1, lançado PARA obesidade e retirado por DEPRESSÃO/SUICÍDIO — bloquear a recompensa endógena tira o prazer de viver."],
+ ref:"Cannabis — CB1/CB2 e riscos"},
+];
+
+const dissertativas=[
+{n:1,aula:1,
+ caso:`Homem, 24 anos, é encontrado inconsciente no banheiro de uma festa: frequência respiratória de 5 irpm, pupilas puntiformes, cianose de extremidades e marcas de punção em ambos os antebraços. É levado ao pronto-socorro, onde o quadro é revertido em minutos com um fármaco intravenoso. Semanas depois, procura o CAPS-AD afirmando que quer largar a heroína, mas que "toda vez que tenta parar, o corpo cobra".`,
+ perg:["Qual fármaco reverteu o quadro agudo e por que ele age tão rápido — e o que esperar em seguida?","Explique, pelo mecanismo molecular dos opioides, por que a overdose mata.","Por que a metadona — sendo também um opioide — funciona como tratamento da dependência?","Após a desintoxicação, que fármaco pode ser usado na manutenção, e com que lógica?"],
+ resp:[
+  ["Naloxona IV","Antagonista puro dos receptores opioides: desloca a heroína do receptor μ e reverte a depressão respiratória em minutos. Duas ressalvas: em dependente, precipita síndrome de abstinência aguda; e sua meia-vida é mais curta que a do opioide — o paciente pode 'renarcotizar' e a dose precisar ser repetida."],
+  ["Mecanismo → morte","Receptores μ/κ/δ são acoplados a Gi: ↓adenilato ciclase (cai o AMPc), abertura de canais de K⁺ (hiperpolarização) e fechamento de canais de Ca²⁺ (↓liberação de neurotransmissores) — o neurônio 'desliga'. Em dose alta, isso alcança o centro respiratório bulbar: bradipneia → apneia → hipóxia → morte. A tríade clássica da overdose: coma + depressão respiratória + miose puntiforme."],
+  ["A lógica da metadona","É farmacocinética: a heroína injetada faz picos ('onda' de euforia) e vales (abstinência + fissura) várias vezes ao dia. A metadona é agonista μ ORAL de meia-vida LONGA: mantém nível plasmático quase constante — ocupa os receptores o suficiente para não haver abstinência, mas sem o pico que dá o barato. Uma tomada diária tira o paciente da montanha-russa; depois, desmame gradual."],
+  ["Manutenção — naltrexona","Antagonista opioide ORAL de longa duração: com os receptores bloqueados, usar heroína 'não adianta' — o episódio de recaída não produz euforia e o comportamento se extingue. Exige paciente já desintoxicado e motivado (se ainda dependente, precipita abstinência)."]],
+ ref:"Opioides — da overdose à manutenção"},
+
+{n:2,aula:2,
+ caso:`Homem, 47 anos, consumo diário de destilados há 20 anos, é internado para cirurgia eletiva e fica em jejum etílico forçado. No segundo dia, apresenta tremores de extremidades, sudorese, taquicardia e agitação; na madrugada, uma crise convulsiva tônico-clônica. A esposa pergunta se existe "remédio para ele parar de beber de vez".`,
+ perg:["Explique o mecanismo duplo do etanol no SNC e o sentido da frase 'estimula quem inibe e inibe quem estimula'.","Por que a retirada abrupta produz tremor, convulsão e delirium — e qual classe trata a abstinência?","Compare dissulfiram e acamprosato: mecanismo, objetivo e limitações.","Por que parte dos asiáticos 'imita' espontaneamente o efeito do dissulfiram?"],
+ resp:[
+  ["Mecanismo duplo","O etanol ① liga-se a um sítio alostérico PRÓPRIO do receptor GABA-A (diferente do sítio do GABA e do sítio benzodiazepínico), potencializando a entrada de cloreto — 'estimula quem inibe'; e ② INIBE o receptor NMDA de glutamato, o grande excitatório — 'inibe quem estimula'. Depressão do SNC por dois flancos; a via de recompensa recebe seu ↑dopamina, fechando o ciclo da dependência."],
+  ["Abstinência e tratamento","Com o glutamato cronicamente inibido, o cérebro responde com up-regulation dos receptores NMDA. Retirado o álcool, o glutamato encontra receptores a mais: hiperexcitação — tremor, sudorese, taquicardia, convulsões e, no extremo, delirium tremens (que mata). Trata-se com BENZODIAZEPÍNICO: substitui o depressor no GABA-A, previne convulsão e delirium, e depois se desmama."],
+  ["Dissulfiram × acamprosato","DISSULFIRAM: inibe a ALDEÍDO-desidrogenase — beber acumula acetaldeído → efeito antabuse (rubor, cefaleia, náusea, hipotensão). Lógica aversiva; limitação fatal: baixa adesão (o paciente suspende o comprimido para poder beber) — não é mais escolha. ACAMPROSATO: modula a hiperatividade glutamatérgica (NMDA) do cérebro abstinente, aliviando o desconforto que leva à recaída; usado DEPOIS que o paciente parou de beber. Completam o arsenal: naltrexona (↓recompensa de beber)."],
+  ["O 'antabuse genético'","Boa parte dos asiáticos tem deficiência genética de aldeído-desidrogenase: ao beber, acumulam acetaldeído e apresentam rubor, taquicardia e náusea ('asian flush') — exatamente o que o dissulfiram provoca farmacologicamente. Consequência epidemiológica: menos alcoolismo nessas populações."]],
+ ref:"Álcool — mecanismo, abstinência e tratamento"},
+
+{n:3,aula:2,
+ caso:`Mulher, 41 anos, fuma 30 cigarros por dia desde os 18 anos e procura o ambulatório decidida a parar. Antecedente de bulimia nervosa na juventude, tratada. Já tentou parar "na força de vontade" duas vezes: nas duas, engordou, ficou irritada e voltou a fumar em menos de um mês.`,
+ perg:["Explique, pela farmacologia da nicotina, os sintomas das tentativas anteriores.","Qual a dose inicial do adesivo para esse consumo, por quanto tempo se usa a reposição, e quais as contraindicações?","A bupropiona seria boa opção aqui? Justifique com mecanismo e contraindicações.","Por que o spray nasal é a reposição que mais 'imita' o cigarro — e qual o preço disso?"],
+ resp:[
+  ["A abstinência-espelho","A nicotina é agonista nicotínico que, via ATV → accumbens, libera dopamina (reforço) e, agudamente, NA/ACh/5-HT: alerta, concentração, supressão de apetite. A retirada produz o espelho: irritabilidade, ansiedade, dificuldade de concentração, GANHO DE PESO (o apetite volta sem o freio) e bradicardia — exatamente o que a derrubou duas vezes."],
+  ["Adesivo","30 cigarros/dia cai na faixa 20–40 → dose inicial de 21–35 mg/dia, com desmame ao longo de 6–8 semanas. Contraindicações da reposição: menores de 18 anos, GRÁVIDAS e idosos com doença cardiovascular ativa. Alternativas/associações: goma de 2 mg (~10–15/dia, 8–12 semanas) para a fissura situacional."],
+  ["Bupropiona — não","Mecanismo: bloqueia a recaptação de dopamina e noradrenalina (esquema 150 mg/dia por 3 dias → 300 mg/dia em duas tomadas com ≥8 h). Mas REDUZ o limiar convulsivo e é contraindicada em: epilepsia/convulsões, BULIMIA e ANOREXIA NERVOSA (o antecedente da paciente!) e uso de IMAO. Aqui, portanto: reposição de nicotina; se falhar, 2ª linha — nortriptilina 75–100 mg/dia ou clonidina 0,1–0,75 mg/dia."],
+  ["Spray — a curva do cigarro","O que vicia no cigarro é o PICO plasmático rápido de nicotina a cada tragada. O adesivo entrega um platô lento; a goma, algo intermediário; o SPRAY nasal produz picos rápidos — é o que mais alivia a fissura aguda justamente porque mais se parece com fumar. O preço: maior potencial de perpetuar a dependência (além de ser caro e importado)."]],
+ ref:"Tabagismo — reposição e bupropiona"},
+
+{n:4,aula:2,
+ caso:`Adolescente, 14 anos, em situação de rua, é trazido sonolento após "cheirar cola" com um grupo. Os colegas contam que no início ele ficou "elétrico, rindo à toa", depois foi apagando. Dias depois, no mesmo bairro, um jovem morre asfixiado inalando gás de cozinha dentro de um saco plástico.`,
+ perg:["Classifique os inalantes quanto ao efeito no SNC e explique a fase inicial de euforia.","Por que o inalante mata mesmo sem 'overdose farmacológica' clássica?","O que o uso crônico de solventes lesa?","Por que o gás de cozinha tem cheiro — e o que isso revela sobre o produto?"],
+ resp:[
+  ["Depressores com máscara de estimulante","Inalantes (colas, tíner, esmalte, gasolina, lança-perfume = éter + clorofórmio, gases) são DEPRESSORES do SNC de ação rapidíssima. A 'elétrica' do início é a fase de EXCITAÇÃO — a mesma dos anestésicos inalatórios (fases de Guedel): os freios corticais deprimem primeiro, soltando euforia e desinibição, antes de a depressão generalizar (sonolência, torpor, coma)."],
+  ["Morte por deslocamento de O₂","O vapor inalado em ambiente fechado (saco plástico!) ocupa fisicamente o espaço do oxigênio no ar e no alvéolo: o usuário morre de ASFIXIA/sufocação, sem depender de dose 'tóxica' da substância. Somam-se as arritmias (sensibilização do miocárdio às catecolaminas) — a 'morte súbita do inalador'."],
+  ["Lesões crônicas","Cérebro (atrofia, prejuízo cognitivo — em um cérebro ainda em desenvolvimento, no perfil típico de criança/adolescente de rua), fígado e rins. Solventes são lipossolúveis e tóxicos exatamente para os tecidos que mais os concentram ou metabolizam."],
+  ["O cheiro é um aviso","O gás de cozinha (GLP) é INODORO — o cheiro característico é um ODORIZANTE ARTIFICIAL adicionado por segurança, para denunciar vazamentos. Ou seja: o 'cheiro de gás' é um alarme de engenharia, e quem o inala recreativamente está aspirando um produto industrial nunca pensado para contato humano — sem qualquer dose segura."]],
+ ref:"Inalantes — do barato à asfixia"},
+];
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}</button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aulas 04–05</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aulas 04–05</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas das Aulas 04–05 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aulas 04–05 — Drogas Lícitas e Ilícitas",kicker:"FARMACO II",desc:"Via de recompensa, opioides (naloxona × metadona), cocaína × anfetamina, álcool (GABA-A/NMDA, dissulfiram × acamprosato), nicotina e tratamento do tabagismo, cannabis, inalantes e LSD.",cards:[
+{area:"Base",cat:"conceito",q:"O que define uma droga PSICOTRÓPICA?",a:"Substância que age no SNC ALTERANDO O PSIQUISMO (humor, percepção, comportamento) e que tem propriedade REFORÇADORA — o efeito prazeroso 'pede' repetição e abre a porta da dependência.",obs:"Droga (OMS) = qualquer substância não produzida pelo organismo que modifica seu funcionamento."},
+{area:"Base",cat:"conceito",q:"Os 3 grupos de drogas LÍCITAS citados em aula:",a:"① MEDICAMENTOSAS (BZD, anorexígenos, anabolizantes legais com receita); ② SEM FINALIDADE TERAPÊUTICA (álcool, tabaco); ③ INDUSTRIAIS (colas, solventes, combustíveis desviados para inalação).",obs:"Lícita ≠ segura: álcool e tabaco matam mais que todas as ilícitas somadas."},
+{area:"Base",cat:"alerta",q:"Pela lei de tóxicos (6.368/76 e sucessoras), 'só guardar pro amigo' e 'chamar pra usar' são crime?",a:"SIM, os dois. A lei criminaliza plantar, transportar, GUARDAR, entregar — e também INSTIGAR, INDUZIR ou AUXILIAR alguém a usar.",obs:"Pegadinha clássica de questão de legislação."},
+{area:"Base",cat:"conceito",q:"Classificação farmacológica das psicotrópicas (4 grupos + exemplos):",a:"DEPRESSORAS (álcool, opioides, BZD, inalantes) · ESTIMULANTES (cocaína, anfetaminas, nicotina) · PERTURBADORAS (maconha) · ALUCINÓGENAS (LSD, psilocibina).",obs:"Muitas classificações fundem perturbadoras + alucinógenas num grupo só."},
+{area:"Base",cat:"prof",q:"Qual é a via de recompensa e por que ela importa em TODAS as drogas de abuso?",a:"ATV (área tegmental ventral) → NUCLEUS ACCUMBENS, com DOPAMINA (via mesolímbica). Toda droga de abuso, por caminhos diferentes, converge para ↑dopamina no accumbens — a droga 'sequestra' o sistema que premia comer/beber/sexo.",obs:"Se a questão pergunta 'via comum do reforço', a resposta é essa."},
+{area:"Base",cat:"prof",q:"Regra do ESPELHO: qual a relação entre efeito da droga e síndrome de abstinência?",a:"A abstinência é o OPOSTO do efeito. Depressora (álcool, opioide) → abstinência hiperexcitada (tremor, convulsão). Estimulante (cocaína, nicotina) → abstinência deprimida (sonolência, humor baixo, ganho de peso, bradicardia).",obs:"Resolve metade das alternativas de abstinência."},
+{area:"Base",cat:"conceito",q:"Diferencie: dependência física × tolerância × fissura.",a:"DEPENDÊNCIA FÍSICA: adaptação do organismo — sem a droga, abstinência. TOLERÂNCIA: mesma dose faz menos efeito (precisa escalar). FISSURA (craving): desejo compulsivo disparado por gatilhos — componente psíquico, motor da RECAÍDA.",obs:"A fissura explica recaída meses após a desintoxicação."},
+{area:"Opioides",cat:"conceito",q:"Mecanismo molecular dos opioides (μ/κ/δ):",a:"Todos acoplados a Gi: ↓adenilato ciclase (cai AMPc) + ABREM canais de K⁺ (hiperpolariza) + FECHAM canais de Ca²⁺ (↓liberação de neurotransmissores). O neurônio 'desliga': analgesia, sedação, euforia, depressão respiratória.",obs:"Tríade da overdose: coma + depressão respiratória + MIOSE puntiforme."},
+{area:"Opioides",cat:"conceito",q:"Por que a heroína dá 'flash' que a morfina não dá?",a:"É a diacetilmorfina: MAIS LIPOSSOLÚVEL — atravessa a barreira hematoencefálica muito mais rápido, gerando a onda súbita de euforia.",obs:"Velocidade de chegada ao cérebro = poder de reforço."},
+{area:"Opioides",cat:"caso",q:"Usuário de heroína injetável com febre + sopro novo + nódulos nas polpas digitais. Diagnóstico e mecanismo?",a:"ENDOCARDITE INFECCIOSA (classicamente tricúspide/câmaras direitas): cada injeção sem assepsia inocula bactérias da pele no sangue. Outras complicações do pó de rua: microtrombos/embolias pelos aditivos (talco) e HIV/hepatites pelas agulhas.",obs:"Complicações que NÃO são do opioide em si, e sim da via e do 'batismo'."},
+{area:"Opioides",cat:"prof",q:"Fentanil: potência e usuário típico no Brasil?",a:"~100× MAIS POTENTE que a morfina (miligramas matam). No Brasil, o usuário típico é o PROFISSIONAL DE SAÚDE (anestesistas, CC/UTI) — quem tem acesso à ampola.",obs:"Nos EUA, é o motor da crise: misturado à heroína de rua."},
+{area:"Opioides",cat:"alerta",q:"NALOXONA: o que é e quando usar?",a:"ANTAGONISTA opioide puro, IV, age em minutos: INTOXICAÇÃO AGUDA (overdose) — reverte a depressão respiratória. Meia-vida curta (pode precisar repetir); em dependente, precipita abstinência.",obs:"Narcan®. Nunca confundir com metadona."},
+{area:"Opioides",cat:"prof",q:"METADONA: por que um opioide trata a dependência de opioide?",a:"Agonista μ ORAL de MEIA-VIDA LONGA → nível plasmático quase constante: ocupa os receptores (sem abstinência, sem fissura de vale) mas SEM O PICO que dá a euforia. 1×/dia, tira o paciente da montanha-russa; depois desmame.",obs:"O gráfico heroína (picos) × metadona (linha estável) é O slide do tema."},
+{area:"Opioides",cat:"conceito",q:"NALTREXONA: papel no tratamento?",a:"Antagonista opioide ORAL de longa duração — MANUTENÇÃO pós-desintoxicação: com os receptores bloqueados, a recaída 'não compensa' (sem euforia). Também usada no alcoolismo (↓recompensa de beber).",obs:"Naltrexona + bupropiona = dupla da obesidade."},
+{area:"Opioides",cat:"alerta",q:"Não confundir os três 'NAL' + metadona:",a:"NALOXONA = IV, overdose AGUDA. NALTREXONA = oral, MANUTENÇÃO (opioide e álcool). METADONA = agonista de substituição para tratar DEPENDÊNCIA.",obs:"Alternativa com 'metadona na overdose' está errada."},
+{area:"Cocaína & Anfetas",cat:"conceito",q:"Mecanismo da COCAÍNA:",a:"BLOQUEIA (por fora) os transportadores de recaptação de DOPAMINA (principal), noradrenalina e serotonina: o neurotransmissor fica preso na fenda estimulando sem parar. Accumbens = euforia; periferia = taquicardia, hipertensão, VASOCONSTRIÇÃO.",obs:""},
+{area:"Cocaína & Anfetas",cat:"conceito",q:"Mecanismo da ANFETAMINA (e a diferença para a cocaína):",a:"ENTRA no neurônio pelo transportador, esvazia as vesículas e INVERTE o sentido da bomba — o transportador passa a jogar dopamina PARA FORA. Mesmo final da cocaína (monoaminas de sobra); a anfetamina pesa mais na NA, a cocaína na DA.",obs:"Cocaína BLOQUEIA × anfetamina INVERTE — par de prova."},
+{area:"Cocaína & Anfetas",cat:"alerta",q:"Qual é o antídoto da overdose de cocaína?",a:"NÃO EXISTE. Tratamento SINTOMÁTICO: benzodiazepínico (agitação/convulsão), resfriar, controlar PA e arritmias.",obs:"Contraste proposital com o opioide (naloxona)."},
+{area:"Cocaína & Anfetas",cat:"prof",q:"Como a cocaína mata?",a:"VASOCONSTRIÇÃO intensa (noradrenalina sobrando): isquemia cerebral/AVC, IAM em jovem SEM aterosclerose, arritmias, hipertermia. Angiografia já mostra artérias cerebrais afiladas ~20 min após dose IV.",obs:"Cérebro de usuário crônico: hipofunção difusa — lesão estrutural."},
+{area:"Cocaína & Anfetas",cat:"conceito",q:"Por que o CRACK escraviza mais que a cocaína aspirada?",a:"Base livre FUMADA → cérebro em SEGUNDOS → pico altíssimo e curtíssimo → despenca → fissura brutal. Recaída ~70% mesmo após tratamento.",obs:"Quanto mais rápido e alto o pico, maior o reforço."},
+{area:"Cocaína & Anfetas",cat:"conceito",q:"Anorexígenos anfetamínicos e seus nomes comerciais (a tabela do slide):",a:"ANFEPRAMONA (Dualid S, Hipofagin, Moderine) · FEMPROPOREX (Lipomax, Inobesin) · MAZINDOL (Dasten, Fagolipo) · METANFETAMINA (Pervitin) · METILFENIDATO (Ritalina).",obs:"Anorexígenos retirados/controlados por risco CV e dependência."},
+{area:"Cocaína & Anfetas",cat:"prof",q:"Metilfenidato (Ritalina): uso legítimo e abuso?",a:"Anfetamina de uso legítimo no TDAH — hoje abusada como 'droga de estudo' por estudantes e concurseiros sem prescrição.",obs:"O professor contou o próprio caso com fórmulas manipuladas: anfetamina de dia + diazepam pra dormir — o ciclo clássico."},
+{area:"Cocaína & Anfetas",cat:"caso",q:"Jovem na balada: 41 °C, rigidez muscular, urina cor de coca-cola após êxtase. Qual a cascata?",a:"HIPERTERMIA maligna → rigidez/atividade muscular extrema → RABDOMIÓLISE → mioglobinúria (entope o túbulo) → INSUFICIÊNCIA RENAL AGUDA → morte. Conduta: resfriar agressivamente, hidratar, suporte.",obs:"MDMA: Merck, 1914, supressor de apetite NUNCA comercializado."},
+{area:"Cocaína & Anfetas",cat:"prof",q:"Por que 'droga sintética nunca some do mercado'?",a:"A síntese é barata e as 'MICROCÉLULAS' de produção (um químico, uma cozinha) são impossíveis de erradicar como uma plantação. Fechar uma cozinha não apaga a receita.",obs:"Vale pra êxtase, K-drugs e as 'novas drogas' que sempre surgem."},
+{area:"Álcool",cat:"conceito",q:"Mecanismo DUPLO do etanol no SNC:",a:"① Sítio alostérico PRÓPRIO no GABA-A (≠ sítio do GABA, ≠ do BZD) → potencializa a entrada de Cl⁻; ② INIBE o receptor NMDA de glutamato. 'Estimula quem inibe e inibe quem estimula' — depressão por dois lados.",obs:"A 'animação' do começo é desinibição (freios corticais caem primeiro)."},
+{area:"Álcool",cat:"conceito",q:"Como o álcool é absorvido?",a:"Por QUALQUER MUCOSA — boca, estômago, intestino (até via retal). Molécula pequena, solúvel em água e gordura.",obs:""},
+{area:"Álcool",cat:"alerta",q:"Álcool + benzodiazepínico: por que '1 + 1 = 10'?",a:"Deprimem o MESMO canal de cloreto (GABA-A) por SÍTIOS DIFERENTES → sinergismo: sedação profunda, coma, parada respiratória. O BZD sozinho é seguro (sobrevida com 20–40× a dose; efeito-teto) — com álcool, mata.",obs:"'Rivotril com vodca' — a vinheta clássica."},
+{area:"Álcool",cat:"conceito",q:"Metabolismo do etanol (2 passos) e quem causa a ressaca:",a:"Etanol →(ÁLCOOL-desidrogenase)→ ACETALDEÍDO →(ALDEÍDO-desidrogenase)→ acetato. O ACETALDEÍDO é mais tóxico que o próprio etanol = o vilão da ressaca.",obs:"Acetato = produto final inócuo (vira acetil-CoA)."},
+{area:"Álcool",cat:"prof",q:"Por que a ressaca desidrata — e qual o 'tratamento'?",a:"O álcool INIBE o ADH (hormônio antidiurético) → poliúria → você urina mais do que bebeu → desidratação. Tratamento: ÁGUA (+ tempo para depurar o acetaldeído).",obs:""},
+{area:"Álcool",cat:"conceito",q:"Por que o bebedor crônico 'aguenta mais' álcool?",a:"O etanol é INDUTOR ENZIMÁTICO — induz inclusive as próprias enzimas de metabolização (AUTO-INDUÇÃO): tolerância farmacocinética. Atenção: o fígado induzido também acelera o metabolismo de outros fármacos.",obs:""},
+{area:"Álcool",cat:"caso",q:"Etilista em jejum etílico: tremor no 2º dia, convulsão na madrugada. Por quê, e como tratar?",a:"Uso crônico → up-regulation de NMDA (glutamato cronicamente inibido). Sem álcool, o glutamato acha receptores a mais: HIPEREXCITAÇÃO — tremor → convulsão → delirium tremens (mata). Tratamento: BENZODIAZEPÍNICO (substitui o depressor no GABA-A) e desmame.",obs:""},
+{area:"Álcool",cat:"conceito",q:"DISSULFIRAM: mecanismo, efeito e por que caiu de escolha?",a:"Inibe a ALDEÍDO-desidrogenase → beber acumula acetaldeído → efeito ANTABUSE: rubor facial, cefaleia latejante, náusea/vômito, palpitação, hipotensão. Lógica aversiva; caiu por BAIXA ADESÃO (o paciente para o comprimido no dia em que decide beber).",obs:""},
+{area:"Álcool",cat:"prof",q:"Qual população 'imita' o dissulfiram naturalmente?",a:"ASIÁTICOS com deficiência genética de ALDEÍDO-desidrogenase: bebem e ficam vermelhos, taquicárdicos, enjoados ('asian flush') — antabuse espontâneo. Consequência: menos alcoolismo nessas populações.",obs:"Mesma bioquímica do fármaco — ótimo gancho de questão."},
+{area:"Álcool",cat:"conceito",q:"ACAMPROSATO: mecanismo e regra de uso?",a:"MODULA a hiperatividade glutamatérgica (NMDA) do cérebro abstinente — alivia o desconforto que empurra de volta ao copo → PREVINE RECAÍDA. Só faz sentido DEPOIS que o paciente parou de beber.",obs:"Esquema atual: BZD na abstinência aguda + acamprosato ± naltrexona."},
+{area:"Nicotina",cat:"conceito",q:"Por que a nicotina vicia tanto?",a:"AGONISTA dos receptores NICOTÍNICOS de acetilcolina: na ATV, dispara a via de recompensa → DOPAMINA no accumbens. Agudamente libera também NA, ACh e 5-HT: alerta, concentração, menos apetite.",obs:""},
+{area:"Nicotina",cat:"conceito",q:"Abstinência da nicotina (o espelho):",a:"Irritabilidade, ansiedade, dificuldade de concentração, GANHO DE PESO e BRADICARDIA — o oposto do efeito estimulante. É ela que derruba quem para 'no seco'.",obs:""},
+{area:"Nicotina",cat:"prof",q:"ADESIVO de nicotina: doses por consumo e duração?",a:"Menos de 20 cig/dia → 14–21 mg/dia · 20–40 → 21–35 mg/dia · mais de 40 → 42–44 mg/dia. Uso por 6–8 SEMANAS com desmame progressivo. É a forma preferida de reposição.",obs:"DECOREBA obrigatória — caiu na tabela do slide."},
+{area:"Nicotina",cat:"alerta",q:"Contraindicações da reposição de nicotina:",a:"Menores de 18 anos, GRÁVIDAS e idosos com doença cardiovascular ATIVA.",obs:""},
+{area:"Nicotina",cat:"conceito",q:"Goma e spray de nicotina: como se usam e qual o detalhe de cada um?",a:"GOMA: 2 mg/tablete, ~10–15/dia conforme fissura, 8–12 semanas ('mastiga e estaciona'). SPRAY nasal: é a forma que MAIS IMITA OS PICOS do cigarro — melhor na fissura aguda, maior risco de manter a dependência; caro/importado.",obs:"Escolher a forma = escolher a curva plasmática."},
+{area:"Nicotina",cat:"prof",q:"BUPROPIONA: mecanismo, esquema e contraindicações?",a:"Bloqueia a recaptação de DOPAMINA + NORADRENALINA. Esquema: 150 mg/dia por 3 dias → 300 mg/dia (2×150 mg, intervalo ≥8 h). CI: CONVULSÕES/EPILEPSIA (baixa o limiar!), bulimia, anorexia nervosa, uso de IMAO.",obs:"1ª linha junto com a reposição de nicotina."},
+{area:"Nicotina",cat:"conceito",q:"Segunda linha no tabagismo:",a:"NORTRIPTILINA (tricíclico) 75–100 mg/dia por 8–12 semanas · CLONIDINA (agonista α2) 0,1–0,75 mg/dia.",obs:"Quando a 1ª linha falha ou é contraindicada."},
+{area:"Cannabis",cat:"conceito",q:"THC e seus receptores:",a:"A Cannabis tem ~60 canabinoides; o psicoativo é o THC (Δ9-tetraidrocanabinol). Age em CB1 (SNC: córtex-cognição, hipocampo-memória, cerebelo-coordenação, accumbens-reforço) e CB2 (periferia/imune) — ambos Gi, ↓AMPc.",obs:"Só funciona porque existe o sistema ENDOcanabinoide (anandamida)."},
+{area:"Cannabis",cat:"prof",q:"Os dois números da maconha que o professor martelou:",a:"Uso pesado/precoce: ~3× mais ESQUIZOFRENIA e ~5× mais DEPRESSÃO. O cérebro adolescente é o mais vulnerável.",obs:"'Maconha não vicia' é mito: há tolerância E abstinência descritas."},
+{area:"Cannabis",cat:"conceito",q:"CANABIDIOL (CBD): para que serve?",a:"É o canabinoide NÃO psicotomimético que virou fármaco: EPILEPSIAS INTRATÁVEIS da infância e TEA. Detalhe: os extratos reais sempre carregam algum THC — prescrição regulada.",obs:"CBD terapêutico ≠ THC psicoativo — mesmo vegetal, papéis opostos."},
+{area:"Cannabis",cat:"alerta",q:"K-drugs (K2/K4/K9): o que são e por que preocupam?",a:"Canabinoides SINTÉTICOS, agonistas CB1 muito mais potentes, borrifados em ervas ou IMPREGNADOS EM CARTAS/PAPEL (a via clássica de entrada nos presídios, que explodiu na pandemia). Toxicidade imprevisível.",obs:""},
+{area:"Cannabis",cat:"prof",q:"RIMONABANTO: a lição farmacológica?",a:"ANTAGONISTA CB1 lançado para OBESIDADE (bloqueia fome/recompensa) — e RETIRADO por depressão e suicídio: bloquear o sistema de recompensa endógeno tira o prazer de viver. O fracasso consolidou o estudo dos endocanabinoides.",obs:"Questão adora invertê-lo em 'agonista' ou trocar o motivo da retirada."},
+{area:"Inalantes & LSD",cat:"conceito",q:"Inalantes: classificação, quadro e quem usa?",a:"DEPRESSORES de ação rapidíssima com FASE DE EXCITAÇÃO inicial (fases de Guedel — euforia antes da depressão). Droga barata e legal de comprar: perfil clássico de CRIANÇA/ADOLESCENTE em situação de rua. Lança-perfume = éter + clorofórmio.",obs:""},
+{area:"Inalantes & LSD",cat:"alerta",q:"Como o inalante mata — e o que lesa cronicamente?",a:"Agudo: DESLOCAMENTO DO O₂ (o vapor ocupa o alvéolo — asfixia) + arritmias. Crônico: lesa CÉREBRO, FÍGADO e RINS.",obs:"O cheiro do gás de cozinha é um ODORIZANTE artificial anti-vazamento — o GLP é inodoro."},
+{area:"Inalantes & LSD",cat:"conceito",q:"LSD: mecanismo, perigo real e o fenômeno tardio?",a:"Alucinógeno SEROTONÉRGICO (5-HT2A), ativo em microgramas. Organicamente a 'menos danosa' das ilícitas — o perigo é comportamental (acidentes na 'viagem') e os FLASHBACKS: revivências anos depois, descritas até desencadeadas por FLUOXETINA/ISRS.",obs:"Psilocibina: limbo legal no Brasil ≠ segura — sem dose segura estabelecida."},
+]},
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-farmaco2-drogas-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+</body>
+</html>
