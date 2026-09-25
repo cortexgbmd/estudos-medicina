@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo de Imunologia P1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Lora', serif;
+            line-height: 1.8;
+            color: #222;
+            background: #fff;
+            transition: background 0.3s, color 0.3s;
+        }
+        body.dark-mode { background: #181818; color: #d4d4d4; }
+
+        /* Header - collapsible bar */
+        header {
+            background: #222;
+            color: #fff;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            border-bottom: 1px solid #333;
+            transition: background 0.3s;
+        }
+        header.collapsed .header-controls,
+        header.collapsed h1 { display: none; }
+        header.collapsed { padding: 0; border-bottom: none; }
+        .menu-toggle {
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            background: #222;
+            border: none;
+            color: #999;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 6px 12px;
+            width: 100%;
+            text-align: right;
+            font-family: 'Inter', sans-serif;
+            line-height: 1;
+            transition: background 0.3s;
+        }
+        .menu-toggle:hover { color: #fff; }
+        body.dark-mode .menu-toggle { background: #111; }
+        body.dark-mode header { background: #111; border-bottom-color: #333; }
+
+        header h1 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .header-controls { display: flex; gap: 0.6rem; align-items: center; }
+
+        button {
+            background: transparent;
+            border: 1px solid #555;
+            color: #ccc;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+        button:hover { border-color: #999; color: #fff; }
+
+        #searchInput {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: transparent;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            width: 220px;
+        }
+        #searchInput::placeholder { color: #777; }
+
+        /* Container */
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+
+        /* Table of Contents */
+        .toc {
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        body.dark-mode .toc { border-color: #333; }
+
+        .toc h2 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #222;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        body.dark-mode .toc h2 { color: #ccc; }
+
+        .toc ul { list-style: none; columns: 2; column-gap: 2rem; }
+        .toc li { margin-bottom: 0.5rem; }
+        .toc a {
+            color: #444;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .toc a:hover { border-bottom-color: #999; }
+        body.dark-mode .toc a { color: #aaa; }
+
+        /* Lectures */
+        .lecture {
+            margin-bottom: 1.5rem;
+            border: 1px solid #e0e0e0;
+        }
+        body.dark-mode .lecture { border-color: #333; }
+
+        .lecture-header {
+            background: #f5f5f5;
+            color: #222;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        body.dark-mode .lecture-header { background: #222; color: #ccc; border-bottom-color: #333; }
+        .lecture-header:hover { background: #eee; }
+        body.dark-mode .lecture-header:hover { background: #2a2a2a; }
+
+        .toggle-icon { font-size: 1.2rem; transition: transform 0.3s; color: #888; }
+        .lecture.collapsed .toggle-icon { transform: rotate(-90deg); }
+
+        .lecture-content {
+            padding: 1.5rem;
+            max-height: 10000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .lecture.collapsed .lecture-content { max-height: 0; padding: 0 1.5rem; }
+
+        /* Typography */
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 1.2rem;
+            color: #222;
+            font-family: 'Inter', sans-serif;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.4rem;
+            font-weight: 600;
+        }
+        body.dark-mode h2 { color: #ccc; border-bottom-color: #444; }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+        body.dark-mode h3 { color: #bbb; }
+
+        h4 {
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.6rem;
+            color: #444;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+        body.dark-mode h4 { color: #aaa; }
+
+        p { margin-bottom: 0.9rem; text-align: justify; }
+        ul, ol { margin: 0.8rem 0 0.8rem 1.8rem; }
+        li { margin-bottom: 0.4rem; }
+
+        strong { color: #111; font-weight: 700; }
+        body.dark-mode strong { color: #eee; }
+
+        .highlight { background: #fffde7; padding: 0.1rem 0.3rem; }
+        body.dark-mode .highlight { background: #3a3500; color: #ffe082; }
+
+        /* Callout boxes - all monochrome */
+        .warning {
+            background: #fafafa;
+            border-left: 3px solid #222;
+            padding: 1rem 1.2rem;
+            margin: 1.2rem 0;
+            font-weight: 500;
+        }
+        body.dark-mode .warning { background: #1e1e1e; border-left-color: #aaa; }
+        .warning::before { content: "IMPORTANTE PARA PROVA — "; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+
+        .external {
+            background: #fafafa;
+            border-left: 3px solid #999;
+            padding: 1rem 1.2rem;
+            margin: 1.2rem 0;
+            font-style: italic;
+        }
+        body.dark-mode .external { background: #1e1e1e; border-left-color: #666; }
+        .external::before { content: "[EXTERNO] "; font-weight: 700; font-style: normal; font-size: 0.85rem; }
+
+        .definition {
+            background: #fafafa;
+            padding: 1rem 1.2rem;
+            margin: 1.2rem 0;
+            border-left: 3px solid #444;
+        }
+        body.dark-mode .definition { background: #1e1e1e; border-left-color: #777; }
+
+        .mnemonic {
+            background: #fafafa;
+            padding: 1rem 1.2rem;
+            margin: 1.2rem 0;
+            border-left: 3px solid #888;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+        }
+        body.dark-mode .mnemonic { background: #1e1e1e; border-left-color: #666; }
+
+        .section-subsection {
+            margin: 1.2rem 0 0.8rem 0;
+            padding: 0.8rem 1rem;
+            background: #fafafa;
+            border-left: 2px solid #ccc;
+        }
+        body.dark-mode .section-subsection { background: #1e1e1e; border-left-color: #444; }
+
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: 0.9rem; }
+        th, td { border: 1px solid #ddd; padding: 0.7rem; text-align: left; }
+        body.dark-mode th, body.dark-mode td { border-color: #444; }
+        th { background: #333; color: #fff; font-weight: 600; font-family: 'Inter', sans-serif; }
+        body.dark-mode th { background: #2a2a2a; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        body.dark-mode tr:nth-child(even) { background: #222; }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 3rem;
+        }
+        body.dark-mode footer { border-top-color: #333; }
+
+        /* Print */
+        @media print {
+            header, .header-controls, button, #searchInput { display: none; }
+            body { background: #fff; color: #000; }
+            .container { max-width: 100%; margin: 0; padding: 0; }
+            .lecture { border: 1px solid #ccc; margin-bottom: 0.5rem; page-break-inside: avoid; }
+            .lecture-header { background: #eee; color: #000; }
+            .lecture-content { max-height: none !important; padding: 1rem; }
+            .lecture.collapsed .lecture-content { display: block; max-height: none !important; padding: 1rem; }
+            h2, h3 { page-break-after: avoid; }
+            .warning, .external, .definition, .mnemonic, table { page-break-inside: avoid; }
+            .toc { page-break-after: always; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            header { flex-direction: column; align-items: flex-start; }
+            header h1 { font-size: 1.1rem; }
+            .header-controls { width: 100%; flex-direction: column; }
+            #searchInput { width: 100%; }
+            .toc ul { columns: 1; }
+            .lecture-header { font-size: 0.9rem; }
+            h2 { font-size: 1.1rem; }
+            h3 { font-size: 1rem; }
+            table { font-size: 0.8rem; }
+            th, td { padding: 0.5rem; }
+            .warning, .external, .definition, .mnemonic { padding: 0.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 { font-size: 1rem; }
+            .lecture-content { padding: 0.8rem; }
+            p { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-toggle" id="menuToggle" onclick="document.querySelector('header').classList.toggle('collapsed'); this.textContent = document.querySelector('header').classList.contains('collapsed') ? '☰ Menu' : '✕ Fechar'">✕ Fechar</div>
+    <header>
+        <h1>Imunologia P1 — Resumo Completo</h1>
+        <div class="header-controls">
+            <input type="text" id="searchInput" placeholder="Buscar no documento...">
+            <button id="darkModeBtn">Modo Escuro</button>
+            <button id="expandAllBtn">Expandir Tudo</button>
+            <button id="collapseAllBtn">Colapsar Tudo</button>
+            <button id="printBtn">🖨️ Imprimir</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="toc">
+            <h2>📖 Índice de Conteúdo</h2>
+            <ul>
+                <li><a href="#aula1">Aula 1: Fundamentos e Microbiologia</a></li>
+                <li><a href="#aula2">Aula 2: Hemograma e Hematologia</a></li>
+                <li><a href="#aula3">Aula 3: HLA e Microbiota</a></li>
+                <li><a href="#aula4">Aula 4: Apresentação de Antígenos</a></li>
+                <li><a href="#aula5">Aula 5: PRRs e Citocinas</a></li>
+                <li><a href="#aula6">Aula 6: Órgãos Linfoides</a></li>
+                <li><a href="#aula7">Aula 7: Imunógenos e Imunização</a></li>
+            </ul>
+        </div>
+
+        <!-- AULA 1 -->
+        <div class="lecture" id="aula1">
+            <div class="lecture-header">
+                <span>📅 AULA 1 (02/02): Fundamentos de Imunologia e Microbiologia Clínica</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>Sistema Imunológico: Conceito e Componentes</h2>
+
+<div class="definition">
+<p>O <strong>Sistema Imunológico</strong> é um conjunto de órgãos afins, células, tecidos e produtos celulares que trabalham de forma coordenada para manter a imunidade do organismo.</p>
+</div>
+
+<h3>Componentes Principais</h3>
+<ul>
+<li><strong>Órgãos linfóides</strong> (primários e secundários)</li>
+<li><strong>Células específicas e inespecíficas</strong> (linfócitos, neutrófilos, macrófagos, NK, etc.)</li>
+<li><strong>Produtos celulares</strong> (citocinas, complemento, anticorpos)</li>
+</ul>
+
+<h2>As Três Funções Fundamentais do Sistema Imunológico</h2>
+
+<h3>1. PROTEÇÃO</h3>
+<p>Defesa contra invasores biológicos e substâncias estranhas:</p>
+<ul>
+<li>Microrganismos: bactérias, vírus, fungos, parasitas</li>
+<li>Proteínas estranhas e moléculas imunogênicas</li>
+<li>Alérgenos</li>
+<li>Drogas lícitas e ilícitas</li>
+</ul>
+
+<h3>2. EUGENIA (Distinção Self vs Non-Self)</h3>
+<p>Manutenção da homeostase através da distinção entre próprio e não-próprio, mediada pelas <strong>proteínas de histocompatibilidade (HLA/MHC)</strong>. Exemplo: rejeição de transplantes quando há incompatibilidade HLA.</p>
+
+<h3>3. VIGILÂNCIA</h3>
+<p>Detecção contínua e eliminação de:</p>
+<ul>
+<li>Células neoplásicas (câncer)</li>
+<li>Células danificadas ou senescentes</li>
+</ul>
+<p><em>Realizada por:</em> NK, CD8+, macrófagos e anticorpos.</p>
+
+<h2>Órgãos Linfóides Primários (Geradores/Centrais)</h2>
+
+<div class="section-subsection">
+<h3>TIMO - Órgão Maestro da Imunidade Específica</h3>
+
+<h4>Anatomia</h4>
+<ul>
+<li><strong>Estrutura:</strong> Bilobado anatomicamente, multilobular na histologia</li>
+<li><strong>Composição de cada lobo:</strong>
+  <ul>
+  <li>Cortical (externo): área de intensa mitose</li>
+  <li>Medular (interno): área de seleção e maturação</li>
+  </ul>
+</li>
+<li><strong>Localização:</strong> Anterior ao coração, sobre a articulação das costelas (mediastino)</li>
+<li><strong>Vida útil:</strong> Mais ativo na infância; involução começando na adolescência</li>
+</ul>
+
+<h4>Função Primordial</h4>
+<p><strong>MATURAÇÃO de linfócitos T:</strong> Transforma timócitos precursores (pré-T) em linfócitos T maduros e funcionais.</p>
+
+<div class="warning">
+Origem TAMBÉM compreende maturação - a maturação é PARTE do processo de origem tímica.
+</div>
+
+<h4>Hormônios Tímicos</h4>
+<p>Moléculas secretadas que provocam diferenciação de timócitos:</p>
+<ul>
+<li>Timolina</li>
+<li>Timosina</li>
+<li>Timopoetina</li>
+</ul>
+
+<h4>⚠️ SELEÇÃO CLONAL NO TIMO (CONCEITO CRUCIAL PARA PROVA)</h4>
+
+<div class="warning">
+Mecanismo de seleção positiva e negativa que garante a tolerância ao próprio.
+</div>
+
+<p><strong>Processo detalhado:</strong></p>
+<ol>
+<li><strong>Na córtex tímica:</strong> Proliferação intensa de timócitos. Cada um recebe um TCR aleatório (10⁷-10⁹ combinações diferentes/dia).</li>
+<li><strong>Na medula tímica:</strong> Células são testadas contra autoantígenos apresentados por células epiteliais e macrófagos.</li>
+<li><strong>Seleção NEGATIVA:</strong> Qualquer célula que reage contra o próprio → deletada por apoptose (morte programada). Elimina autorreativos.</li>
+<li><strong>Seleção POSITIVA:</strong> Células que NÃO reagem contra o próprio mas SÃO capazes de reconhecer HLA → liberadas para circulação.</li>
+</ol>
+
+<p><strong>Estatística:</strong> <span class="highlight">APENAS 5% dos timócitos sobrevivem</span>. <span class="highlight">95% morrem por apoptose</span> - taxa de mortalidade necessária para eliminar autorreativos.</p>
+
+<h4>Corpúsculo de Hassall</h4>
+<p><strong>Estrutura exclusiva do tecido tímico</strong>, encontrada na medula. Representa destruição de timócitos durante seleção negativa. Sua presença confirma atividade tímica.</p>
+
+<h4>Involução Tímica na Adolescência</h4>
+<p>Na adolescência, o timo começa a sofrer involução (redução de tamanho). MAS isto <strong>NÃO significa perda de atividade</strong>. O timo já gerou repertório de resposta para a maioria dos antígenos que encontrará na vida. Continua gerando novos linfócitos T, apenas em menor quantidade.</p>
+
+</div>
+
+<div class="section-subsection">
+<h3>MEDULA ÓSSEA - Fábrica de Células Imunológicas</h3>
+
+<h4>Características Fundamentais</h4>
+<ul>
+<li><strong>Localização:</strong> Ossos longos (fêmur, tíbia, úmero) e ossos chatos (crista ilíaca = sítio para mielograma)</li>
+<li><strong>Função primária:</strong> HEMATOPOESE (geração de todas as células do sangue)</li>
+<li><strong>Papel imunológico:</strong> Matriz de TODAS as células do sistema imune</li>
+</ul>
+
+<h4>Maturação de Linfócitos B</h4>
+<p><strong>A medula óssea é o ÚNICO local de maturação de linfócitos B</strong> do corpo humano. Diferente do timo para linfócitos T.</p>
+
+<h4>Estágios da Medula Óssea</h4>
+<ul>
+<li>Medula vermelha: alta atividade hematopoética (predominante na criança)</li>
+<li>Medula amarela/adiposa: fase intermediária (adulto)</li>
+<li>Medula cinzenta: baixa atividade</li>
+</ul>
+
+<h4>Megacariócitos</h4>
+<p>Células gigantes especializadas da medula que se fragmentam para liberar <strong>plaquetas</strong> na circulação.</p>
+
+</div>
+
+<h2>Linfócitos T: Maestros da Resposta Imune Específica</h2>
+
+<h3>Introdução - Sistema CD (Cluster of Differentiation)</h3>
+<p><strong>CD = Grupamentos de Diferenciação.</strong> Sistema internacional de nomenclatura para antígenos de superfície celular. Existem mais de 400 tipos de CDs diferentes. Cada célula imunológica expressa um padrão único de CDs que permite sua identificação.</p>
+
+<h3>Linfócito T CD4+ (T Helper/Auxiliar/Cooperador)</h3>
+
+<h4>Função Estratégica</h4>
+<p><strong>CD4+ é o CENTRO ESTRATÉGICO e MAESTRO da resposta imune específica.</strong></p>
+<ul>
+<li>Identifica o invasor via apresentação por APC (Célula Apresentadora de Antígeno)</li>
+<li><strong>Coordena TODA a resposta imune:</strong> qual célula será ativada, qual anticorpo será produzido</li>
+<li>Determina qual tipo de resposta (TH1, TH2, TH17) será montada</li>
+<li><strong>Sem CD4, a resposta imune é COMPLETAMENTE falha</strong> - problema central na infecção por HIV</li>
+</ul>
+
+<h4>Reconhecimento de Antígenos</h4>
+<p>CD4+ reconhece antígenos <strong>EXÓGENOS</strong> (externos, fagocitados) apresentados via <strong>HLA classe II</strong> (expresso apenas em APCs).</p>
+
+<h3>Linfócito T CD8+ (Citotóxico/Citolítico)</h3>
+
+<h4>Mecanismo de Ação</h4>
+<p><strong>Induz APOPTOSE (morte programada) em células infectadas ou neoplásicas.</strong> O nome "citotóxico" é enganoso - não causa lise direta, mas sim apoptose controlada.</p>
+
+<h4>Alvos de CD8+</h4>
+<ul>
+<li>Células infectadas por vírus</li>
+<li>Células infectadas por bactérias intracelulares</li>
+<li>Células neoplásicas</li>
+</ul>
+
+<h4>Reconhecimento de Antígenos</h4>
+<p>CD8+ reconhece antígenos <strong>ENDÓGENOS</strong> (produzidos dentro da célula) apresentados via <strong>HLA classe I</strong> (expresso em TODAS as células nucleadas).</p>
+
+<h4>Mecanismos Moleculares de Morte</h4>
+
+<p><strong>Via INTRÍNSECA (Perforina/Granzima):</strong> MAIS eficiente</p>
+<ul>
+<li>Perforina fura a membrana da célula-alvo</li>
+<li>Granzima B entra pelo poro</li>
+<li>Granzima B ativa caspase 3 (PONTO DE NÃO RETORNO)</li>
+<li>Desencadeia cascata de apoptose inevitável</li>
+</ul>
+
+<p><strong>Via EXTRÍNSECA (Fas/FasL):</strong> Menos eficiente</p>
+<ul>
+<li>Usa receptores de morte celular (Fas/FasL)</li>
+<li>Mais lenta e dependente de fatores adicionais</li>
+</ul>
+
+<h3>CD3+ - Marcador Universal de Linfócito T</h3>
+<p><strong>CD3+ é um marcador UNIVERSAL e EXCLUSIVO de linfócito T.</strong> Todo linfócito T é CD3+. Nenhuma outra célula expressa CD3. Usado clinicamente para diagnóstico.</p>
+
+<h3>Subtipos de CD4 Após Ativação (Diferenciação TH0)</h3>
+
+<div class="warning">
+Estes subtipos são CRÍTICOS para compreender a resposta imune adaptativa a diferentes patógenos.
+</div>
+
+<h4>TH1 - Resposta contra INTRACELULARES (Agressiva)</h4>
+<ul>
+<li><strong>Targets:</strong> vírus, micobactérias (TB, hanseníase), protozoários intracelulares</li>
+<li><strong>Mecanismo:</strong> Ativa macrófagos para matar patógeno → ativa CD8 para matar célula infectada</li>
+<li><strong>Citocina principal:</strong> IFN-γ (interferon-gama)</li>
+<li><strong>Resposta:</strong> Mais agressiva, intensa, eficaz contra intracelulares</li>
+</ul>
+
+<h4>TH2 - Resposta contra EXTRACELULARES e Alérgenos (Branda)</h4>
+<ul>
+<li><strong>Targets:</strong> bactérias extracelulares, alérgenos, helmintos</li>
+<li><strong>Mecanismo:</strong> Ativa linfócitos B para produzir anticorpos e mastócitos</li>
+<li><strong>Citocina principal:</strong> IL-4, IL-5, IL-13</li>
+<li><strong>Resposta:</strong> Mais branda, mediada por anticorpos (especialmente IgE para helmintos)</li>
+</ul>
+
+<h4>TH17 - Resposta contra Bactérias Extracelulares Agressivas</h4>
+<ul>
+<li><strong>Targets:</strong> Staphylococcus aureus, Pseudomonas aeruginosa, fungos</li>
+<li><strong>Mecanismo:</strong> Recruta NEUTRÓFILOS em massa (não macrófagos)</li>
+<li><strong>Citocina principal:</strong> IL-17 (interleucina 17)</li>
+<li><strong>Resposta:</strong> Inflamação neutrofílica intensa</li>
+</ul>
+
+<h4>TFH (T Folicular Helper)</h4>
+<ul>
+<li><strong>Localização:</strong> Dentro dos folículos linfoides secundários</li>
+<li><strong>Função:</strong> Ativa linfócitos B selecionados, direciona troca de classe de anticorpo, induz maturação de afinidade</li>
+<li><strong>Importância:</strong> Essencial para resposta humoral de qualidade</li>
+</ul>
+
+<h4>T-Reg (Linfócito T Regulador)</h4>
+<ul>
+<li><strong>Antigos nomes:</strong> TH3, T supressor</li>
+<li><strong>Função:</strong> Regulação imunológica, supressão de respostas excessivas</li>
+<li><strong>Citocina principal:</strong> IL-10, TGF-β</li>
+<li><strong>Importância:</strong> Previne autoimunidade e respostas inflamatórias exageradas</li>
+</ul>
+
+<h2>Linfócitos B: Produtores de Anticorpos</h2>
+
+<h3>Nomenclatura - O Que Significa "B"?</h3>
+
+<div class="warning">
+B = Bursa de Fabricius (órgão em aves). NÃO é "B de baço" nem "B de bone marrow". Lembrar que em humanos, o equivalente da bursa é a medula óssea.
+</div>
+
+<h3>Receptor de Célula B (BCR)</h3>
+<ul>
+<li><strong>BCR = imunoglobulina/anticorpo de superfície celular</strong></li>
+<li>Primeiro anticorpo expresso = IgM</li>
+<li>Cada linfócito B tem ~100.000 cópias do mesmo BCR em sua superfície</li>
+<li>Permite reconhecimento direto de antígeno</li>
+</ul>
+
+<h3>Antígeno Reconhecido por B</h3>
+
+<p><strong>Reconhece antígeno DIRETAMENTE (sem processamento por APC)</strong>:</p>
+<ul>
+<li>Nativo, em forma solúvel</li>
+<li>Ou particulado (bactéria inteira, vírus)</li>
+<li>Múltiplas naturezas: proteínas, polissacarídeos, lipídeos, nucleotídeos</li>
+</ul>
+
+<h3>Sequência de Ativação de Linfócito B</h3>
+
+<ol>
+<li><strong>Encontro:</strong> Linfócito B virgem encontra antígeno compatível com seu BCR</li>
+<li><strong>Transdução de sinal:</strong> Ligação do antígeno ao BCR → sinal intracelular</li>
+<li><strong>Proliferação:</strong> Divisão celular rápida em resposta ao estímulo</li>
+<li><strong>Diferenciação:</strong> Transformação em dois tipos:
+  <ul>
+  <li><strong>Plasmócito:</strong> célula ovalada, cheio de RER, secretora</li>
+  <li><strong>Célula de memória:</strong> célula de vida longa, dorme até reativação</li>
+  </ul>
+</li>
+<li><strong>Produção:</strong> Plasmócito secreta GRANDES quantidades de anticorpos idênticos ao seu BCR</li>
+</ol>
+
+<h3>Plasmócito - A Fábrica de Anticorpos</h3>
+
+<p><strong>Características morfológicas:</strong></p>
+<ul>
+<li>Célula ovalada, grande</li>
+<li>Núcleo excêntrico</li>
+<li>Abundantíssimo retículo endoplasmático rugoso (RER)</li>
+<li>Citoplasma eosinófilo</li>
+</ul>
+
+<div class="warning">
+Plasmócito NÃO deve aparecer em sangue periférico normal. Se aparece = indica malignidade (mieloma múltiplo) OU resposta crônica importante (tuberculose).
+</div>
+
+<h3>Células de Memória e Imortalidade Imunológica</h3>
+
+<p><strong>Plasmócitos de vida longa:</strong></p>
+<ul>
+<li>Migram para medula óssea após diferenciação</li>
+<li>Vivem décadas, alguns a vida toda</li>
+<li>Secretam anticorpos indefinidamente em baixas quantidades</li>
+<li>Responsáveis pela <strong>memória imunológica duradoura</strong></li>
+</ul>
+
+<h2>Memória Imunológica - Conceito Essencial</h2>
+
+<div class="warning">
+IMPORTANTÍSSIMO: Somente linfócitos T e B formam células de memória. Células inatas (NK, neutrófilos, macrófagos) NÃO têm memória.
+</div>
+
+<h3>Resposta Primária</h3>
+<ul>
+<li><strong>Tempo:</strong> 5-10 dias (média 7 dias)</li>
+<li><strong>Classe de anticorpo:</strong> IgM (pentamérica)</li>
+<li><strong>Afinidade:</strong> Baixa-moderada</li>
+<li><strong>Marcador clínico:</strong> Indicador de FASE AGUDA</li>
+<li><strong>Base imunológica:</strong> Ativação de linfócitos virgens</li>
+</ul>
+
+<h3>Resposta Secundária</h3>
+<ul>
+<li><strong>Tempo:</strong> 1-3 dias (muito mais rápida!)</li>
+<li><strong>Classe de anticorpo:</strong> IgG (monomérica)</li>
+<li><strong>Afinidade:</strong> Alta (maturação de afinidade)</li>
+<li><strong>Magnitude:</strong> Muito mais intensa - títulos 100-1000x maiores</li>
+<li><strong>Marcador clínico:</strong> Indicador de MEMÓRIA ou fase CRÔNICA</li>
+<li><strong>Base imunológica:</strong> Reativação de células de memória</li>
+</ul>
+
+<h3>Switch de Classe (Class Switching)</h3>
+
+<p>Linfócito B troca de IgM → IgG (ou IgA, IgE, IgD) com <strong>ajuda de TFH</strong>. Permite resposta mais específica para cada tipo de patógeno.</p>
+
+<h3>Maturação de Afinidade (Affinity Maturation)</h3>
+
+<p>Aperfeiçoamento progressivo da qualidade de ligação do anticorpo ao antígeno através de mutações somáticas selecionadas positivamente no centro germinativo.</p>
+
+<h3>Base da Vacinação</h3>
+
+<p>A vacinação funciona porque <strong>simula uma infecção primária</strong>, gerando memória imunológica. Regressa natural da infecção sem os riscos desta.</p>
+
+<h2>HIV/AIDS - Destruição da Imunidade Específica</h2>
+
+<div class="warning">
+HIV é crítico para compreender a importância de CD4 no funcionamento do sistema imune.
+</div>
+
+<h3>Características Virológicas do HIV</h3>
+<ul>
+<li><strong>Classificação:</strong> Parasita intracelular obrigatório</li>
+<li><strong>Material genético:</strong> RNA (vírus RNA)</li>
+<li><strong>Enzima especial:</strong> Transcriptase reversa (transcreve RNA → DNA)</li>
+</ul>
+
+<h3>Mecanismo de Infecção e Destruição</h3>
+
+<ol>
+<li><strong>Entrada:</strong> GP120 (proteína de envelope) se liga a CD4 + correceptores (CXCR4 ou CCR5) → fusão e entrada celular</li>
+<li><strong>Retrotranscrição:</strong> RNA vírus → DNA dupla fita usando transcriptase reversa</li>
+<li><strong>Integração:</strong> DNA viral integra-se no cromossoma da célula hospedeira</li>
+<li><strong>Replicação:</strong> Célula produz novos vírus = brotamento viral</li>
+<li><strong>Morte:</strong> CD4 infectado morre no processo</li>
+</ol>
+
+<h3>Consequência Imunológica Devastadora</h3>
+
+<p><strong>Destruição progressiva de CD4 →</strong></p>
+<ul>
+<li>Sem comando central → CD8 não tem ordem e fica inativo</li>
+<li>Linfócitos B produzem anticorpo errado (não neutralizante)</li>
+<li>Resposta imune falha completamente</li>
+</ul>
+
+<h3>Dinâmica da Doença</h3>
+<ul>
+<li><strong>CD4 normal:</strong> ~1000 células/μL</li>
+<li><strong>CD4 &lt;500:</strong> Manifestações clínicas de imunodeficiência aparecem</li>
+<li><strong>CD4 &lt;200:</strong> AIDS com infecções oportunistas graves</li>
+</ul>
+
+<h3>Infecções Oportunistas</h3>
+
+<div class="mnemonic">
+"Oportunista" não significa "aproveitar fragilidade". Significa: o paciente SEM CD4 de memória E virgens não consegue fazer resposta primária OU secundária quando encontra patógeno para o qual já foi sensibilizado ou vacinado.
+</div>
+
+<p><strong>Exemplos de infecções oportunistas:</strong></p>
+<ul>
+<li>Sarcoma de Kaposi (HHV-8)</li>
+<li>Pneumocystis jirovecii (PCP)</li>
+<li>Tuberculose miliar disseminada</li>
+<li>Toxoplasmose cerebral</li>
+<li>Candidose esofágica</li>
+<li>Cryptococcose meníngea</li>
+</ul>
+
+<h3>TB em HIV+ - Paradigma de Destruição Imunológica</h3>
+
+<p><strong>TB Normal:</strong> Macrófago é ativado por TH1 → forma granuloma → contém TB</p>
+
+<p><strong>TB em HIV+ sem CD4:</strong></p>
+<ul>
+<li>Sem CD4 → sem ativação de macrófago</li>
+<li>Sem granuloma → bactéria espalha livremente</li>
+<li>TB miliar disseminada (infecção desenfreada)</li>
+</ul>
+
+<h3>Tratamento Antirretroviral (TARV)</h3>
+
+<p>Medicamentos que mantêm CD4 vivo e funcional:</p>
+<ul>
+<li>Restaura capacidade de resposta imune</li>
+<li>Expectativa de vida = próxima à de HIV negativo</li>
+<li>Permite vida normal com adesão medicamentosa</li>
+<li>Reduz transmissibilidade (carga viral indetectável)</li>
+</ul>
+
+<h2>Órgãos Linfóides Secundários (Função: Ativação)</h2>
+
+<div class="section-subsection">
+<h3>LINFONODO - Processador de Informações Locais</h3>
+
+<h4>Estrutura Histológica</h4>
+<ul>
+<li>Encapsulado por cápsula de colágeno</li>
+<li>Trabéculas dividem o órgão</li>
+<li><strong>Característica única:</strong> Mais vasos aferentes (chegam) que eferentes (saem) → retém células e antígenos mais tempo</li>
+</ul>
+
+<h4>Regiões Funcionais</h4>
+<ul>
+<li><strong>Folículos linfóides:</strong> Agrupamentos de linfócitos B
+  <ul>
+  <li>Folículo primário: contém B virgem</li>
+  <li>Folículo secundário: possui centro germinativo com B em proliferação e diferenciação</li>
+  </ul>
+</li>
+<li><strong>Regiões parafoliculares:</strong> Ricas em linfócitos T</li>
+<li><strong>Medular:</strong> Plasmócitos em atividade</li>
+</ul>
+
+<h4>Função Fisiológica</h4>
+<p>Processa informações do <strong>INTERSTÍCIO</strong> (tecido ao redor) via linfa aferente. Antígenos chegam drenados por vasos linfáticos.</p>
+
+<h4>Linfadenopatia</h4>
+
+<p><strong>Linfadenopatia regional:</strong> Aumento de linfonodo em resposta a antígeno local.</p>
+<ul>
+<li>Pode aumentar até 50 mil vezes em número de células</li>
+<li>Volta ao normal após resolução da infecção</li>
+<li>Pode durar semanas após eliminação do patógeno</li>
+</ul>
+
+<h4>Linfonodo Sentinela</h4>
+
+<p><strong>Conceito oncológico:</strong> Primeiro linfonodo a receber drenagem linfática de uma região (ex: tumor de mama → linfonodo axilar). Importante para estadiamento de câncer.</p>
+
+</div>
+
+<div class="section-subsection">
+<h3>BAÇO - Processador de Informações Sistêmicas</h3>
+
+<h4>Anatomia Funcional</h4>
+
+<p><strong>Polpa BRANCA (componente imunológico):</strong></p>
+<ul>
+<li>Folículos linfóides (rico em linfócitos B e T)</li>
+<li>Apresentação de antígenos</li>
+<li>Processador de informações do SANGUE (não da linfa como linfonodo)</li>
+</ul>
+
+<p><strong>Polpa VERMELHA (componente hemocaterese):</strong></p>
+<ul>
+<li><strong>Hemocaterese:</strong> Remoção de hemácias envelhecidas (~120 dias de vida)</li>
+<li>Processo: Hemoglobina → Bilirrubina via hemoxigenase → metabolismo</li>
+<li>Macrófagos esplênicos realizam fagocitose de hemácias</li>
+<li>Recuperação de ferro da hemoglobina</li>
+</ul>
+
+<h4>Esplenomegalia</h4>
+
+<p>Aumento de tamanho do baço em resposta a:</p>
+<ul>
+<li>Infecção sistêmica (ativa imunidade)</li>
+<li>Hemólise (aumenta carga de hemácias a degradar)</li>
+<li>Malignidade (infiltração ou atividade linfocitária)</li>
+</ul>
+
+<h4>Esplenectomia</h4>
+
+<p>Remoção cirúrgica do baço (ex: em trauma, esferocitose hereditária):</p>
+<ul>
+<li>Perda de resposta imune <strong>não é catastrófica</strong> (outros órgãos linfóides compensam)</li>
+<li>MAS aumenta risco de infecção por bactérias encapsuladas (S. pneumoniae, H. influenzae)</li>
+<li>Vacinação de esplenectomizados é crucial</li>
+</ul>
+
+</div>
+
+<div class="section-subsection">
+<h3>MALT - Tecido Linfóide Associado à Mucosa</h3>
+
+<h4>Características Gerais</h4>
+<ul>
+<li><strong>Estrutura:</strong> Difuso, não encapsulado</li>
+<li><strong>Distribuição:</strong> Ao longo de todo trato gastrointestinal, respiratório e genitourinário</li>
+<li><strong>Função:</strong> Primeira linha de defesa em mucosas</li>
+<li><strong>Característica especial:</strong> Produção de IgA (anticorpo de mucosas)</li>
+</ul>
+
+<h4>Subtipos de MALT</h4>
+
+<p><strong>NALTE (Naso-Associated Lymphoid Tissue):</strong> Tecido nasofaríngeo</p>
+<ul>
+<li><strong>Tonsilas = Anel de Waldeyer:</strong>
+  <ul>
+  <li>Faríngea (adenóide) - superior</li>
+  <li>Palatina (amígdala) - lateral</li>
+  <li>Sublingual (lingual) - inferior</li>
+  </ul>
+</li>
+<li><strong>⚠️ Tonsilas = RESERVATÓRIO IMPORTANTÍSSIMO de linfócitos B produtores de IgA</strong></li>
+<li><strong>Clínica:</strong> Evitar tonsilectomia desnecessária - prejudica defesa de mucosas</li>
+</ul>
+
+<p><strong>GALTE (Gut-Associated Lymphoid Tissue):</strong> Tecido intestinal</p>
+<ul>
+<li>Placas de Peyer (intestino delgado)</li>
+<li>Apêndice vermiforme</li>
+<li>Folículos linfóides difusos em todo intestino</li>
+</ul>
+
+<p><strong>BALTE (Bronchial-Associated Lymphoid Tissue):</strong> Tecido bronquial</p>
+<ul>
+<li>Tecido linfóide em brônquios e bronquíolos</li>
+<li>Defesa das vias respiratórias inferiores</li>
+</ul>
+
+<p><strong>GERALTE (Genito-Urinary Associated Lymphoid Tissue):</strong> Tecido genitourinário</p>
+<ul>
+<li>Linfonodos ilíacos</li>
+<li>Linfonodos inguinais</li>
+<li>Tecido linfóide uretral e vaginal</li>
+</ul>
+
+<h4>Princípio Funcional de Distribuição</h4>
+
+<div class="mnemonic">
+"Diferentes antígenos em diferentes acessos" - o MALT está distribuído estrategicamente no corpo porque patógenos entram por diferentes rotas (nasal, oral, respiratória, genitourinária) e requerem defesa localizada em cada sítio.
+</div>
+
+</div>
+
+<h2>Células do Sistema Imune Inespecífico</h2>
+
+<h3>Célula NK (Natural Killer)</h3>
+
+<h4>Características Fundamentais</h4>
+<ul>
+<li><strong>Linhagem:</strong> Linfóide (apesar de não ter especificidade)</li>
+<li><strong>Marcadores:</strong> CD16+, CD56+</li>
+<li><strong>Tamanho:</strong> Grande granularidade</li>
+</ul>
+
+<h4>Capacidade Citotóxica</h4>
+
+<p><strong>Mesmo poder de morte que CD8+:</strong></p>
+<ul>
+<li>Via INTRÍNSECA: Perforina-granzima (eficiente)</li>
+<li>Via EXTRÍNSECA: Fas/FasL (menos eficiente)</li>
+</ul>
+
+<h4>O Que Torna NK Especial?</h4>
+
+<ul>
+<li><strong>NÃO forma memória:</strong> Sempre naïve, sem aprendizado acumulado</li>
+<li><strong>NÃO tem especificidade:</strong> Mata por critério geral, não por TCR/BCR</li>
+<li><strong>NÃO reconhece MHC/HLA:</strong> Mata INDEPENDENTE de HLA</li>
+<li><strong>Critério de morte:</strong> "Falta de sinal de segurança" - células que perderam HLA classe I são suspeitosas</li>
+</ul>
+
+<h4>Alvos Naturais</h4>
+<ul>
+<li>Células neoplásicas (perderam HLA classe I)</li>
+<li>Células infectadas por vírus (algumas escondem HLA)</li>
+</ul>
+
+<h3>Neutrófilo (Polimorfonuclear)</h3>
+
+<h4>Posição no Sistema Imune</h4>
+
+<p><strong>Fagócito profissional número 1.</strong> Primeira célula a aparecer em inflamação AGUDA.</p>
+
+<h4>Características Morfológicas</h4>
+<ul>
+<li>Núcleo multilobulado (segmentado)</li>
+<li>Citoplasma granular</li>
+<li>Grânulos contêm enzimas antimicrobianas</li>
+<li>Tamanho maior que linfócito</li>
+</ul>
+
+<h4>Mecanismo Antimicrobiano</h4>
+
+<p><strong>Burst Oxidativo:</strong> Produção rápida de espécies reativas de oxigênio (ROS) para matar patógeno.</p>
+
+<div class="warning">
+Englobar (fagocitar) NÃO é suficiente para matar - o patógeno PRECISA morrer dentro do fagolisossomo via burst oxidativo. Sem burst, patógeno sobrevive.
+</div>
+
+<h4>Componente Principal do Pus</h4>
+
+<p><strong>Pus = restos de neutrófilos mortos + patógeno + célula tecidual destruída.</strong> Indicador clínico de inflamação aguda/infecção.</p>
+
+<h4>Dinâmica Temporal</h4>
+<ul>
+<li><strong>Vida:</strong> 5-10 dias em circulação, horas em tecido</li>
+<li><strong>Morte:</strong> Apoptose programada após degranulação</li>
+<li><strong>Reparo:</strong> Macrófagos fagocitam neutrófilos apoptóticos</li>
+</ul>
+
+<h4>Importância Clínica</h4>
+
+<p><strong>Quando neutrófilos diminuem (neutropenia):</strong></p>
+<ul>
+<li>Bacterioses aumentam drasticamente</li>
+<li>Micoses aumentam (especialmente Candida albicans)</li>
+<li>Risco de sepse</li>
+</ul>
+
+<h3>Eosinófilo</h3>
+
+<h4>Função Primária</h4>
+
+<p><strong>Resposta especializada a:</strong></p>
+<ul>
+<li>Helmintos (parasitas)</li>
+<li>Reações alérgicas</li>
+</ul>
+
+<h4>Mediadores Inflamatórios</h4>
+
+<p><strong>Proteína Básica Principal (MBP):</strong> Principal mediador de eosinófilo</p>
+<ul>
+<li>NÃO é histamina (associação frequente incorreta)</li>
+<li>Tóxica para helmintos</li>
+<li>Responsável por inflamação tecidualar</li>
+</ul>
+
+<p><strong>Citocinas pró-inflamatórias:</strong> TNF-α, IL-1β, IL-6, IL-8</p>
+
+<h4>Funções Adicionais</h4>
+
+<ul>
+<li><strong>Reparo tecidualar:</strong> Participa de remodelamento</li>
+<li><strong>Fagocitose:</strong> "Com má vontade" - não é sua função principal</li>
+<li><strong>Burst oxidativo:</strong> Presente mas menor que neutrófilo</li>
+<li><strong>Degranulação:</strong> Libera grânulos com mediadores</li>
+</ul>
+
+<h4>Valores Normais e Alterações</h4>
+
+<ul>
+<li><strong>Porcentagem normal:</strong> 1-3% no hemograma</li>
+<li><strong>Valores normais:</strong> 4-5% (alguns laboratorios até 8%)</li>
+<li><strong>Eosinofilia:</strong> >5% = aumento patológico</li>
+<li><strong>Receptor para IgE:</strong> Expresso em superfície</li>
+</ul>
+
+<h3>Basófilo</h3>
+
+<h4>Localização e Natureza</h4>
+
+<ul>
+<li><strong>Localização:</strong> Célula sanguínea (circulante)</li>
+<li><strong>Características:</strong> Muito raro no sangue normal (~0-1%)</li>
+<li><strong>Precursor comum:</strong> Compartilha origem com mastócito</li>
+</ul>
+
+<h4>Conteúdo de Grânulos</h4>
+
+<ul>
+<li><strong>Histamina:</strong> Principal mediador de reação alérgica imediata</li>
+<li><strong>Heparina:</strong> Anticoagulante potente</li>
+<li>Várias enzimas proteolíticas</li>
+</ul>
+
+<h4>Receptor para IgE</h4>
+
+<p>Basófilo expressa receptor de alta afinidade para IgE. Crucial em:</p>
+<ul>
+<li>Reações alérgicas imediatas</li>
+<li>Anafilaxia</li>
+<li>Resposta a ectoparasitas (piolhos, carrapatos, ácaros)</li>
+</ul>
+
+<h4>Vida e Significado Clínico</h4>
+
+<ul>
+<li><strong>Vida:</strong> 1-2 dias (muito curta)</li>
+<li><strong>Desvio à esquerda de basófilo:</strong> Sugestivo de leucemia mielóide aguda - achado preocupante</li>
+</ul>
+
+<h3>Mastócito</h3>
+
+<h4>Localização Anatômica</h4>
+
+<p><strong>Célula de TECIDO (não circula, não aparece em hemograma).</strong> Encontrado em:</p>
+<ul>
+<li>Pele</li>
+<li>Trato gastrointestinal</li>
+<li>Trato respiratório</li>
+<li>Próximo a vasos sanguíneos (localização estratégica)</li>
+</ul>
+
+<h4>Conteúdo e Função</h4>
+
+<ul>
+<li><strong>Histamina:</strong> Em abundância nos grânulos</li>
+<li><strong>Receptor para IgE:</strong> Expresso em superfície</li>
+<li><strong>Degranulação:</strong> Libera mediadores → vasodilatação (via receptor H1)</li>
+</ul>
+
+<h4>Ativação</h4>
+
+<p>Ligação cruzada de IgE em superfície de mastócito → degranulação → reação alérgica local.</p>
+
+<h3>Monócito/Macrófago</h3>
+
+<h4>Relação entre Monócito e Macrófago</h4>
+
+<p><strong>"Clark Kent/Superman"</strong> - mesma célula em diferentes compartimentos:</p>
+<ul>
+<li><strong>Monócito:</strong> Na circulação sanguínea</li>
+<li><strong>Macrófago:</strong> No tecido após saída do vaso</li>
+</ul>
+
+<h4>Dupla Função</h4>
+
+<ul>
+<li><strong>Fagócito:</strong> Elimina patógenos e detritos</li>
+<li><strong>APC (Apresentadora de Antígeno):</strong> Processa e apresenta para CD4+</li>
+</ul>
+
+<h4>Nomes Especializados por Localização</h4>
+
+<ul>
+<li><strong>Célula de Kupffer:</strong> No fígado</li>
+<li><strong>Macrófago alveolar:</strong> Nos alvéolos pulmonares</li>
+<li><strong>Macrófago de tecido:</strong> Em qualquer outro lugar</li>
+<li><strong>Osteoclasto:</strong> Nos ossos (similar funcionalmente)</li>
+</ul>
+
+<h4>Características Morfológicas</h4>
+
+<ul>
+<li>Célula agranular (ou pseudo-agranular)</li>
+<li>Núcleo oval ou em ferradura</li>
+<li>Citoplasma cinzento/azulado</li>
+<li>Aparecem como células grandes em hemograma</li>
+</ul>
+
+<h4>Timing Clínico</h4>
+
+<p><strong>Diferenciação de agudo vs crônico:</strong></p>
+<ul>
+<li><strong>Inflamação AGUDA:</strong> Predominância de neutrófilos</li>
+<li><strong>Inflamação CRÔNICA:</strong> Predominância de macrófagos (chegam depois, ficam mais tempo)</li>
+</ul>
+
+<h3>Célula Dendrítica - A Rainha do Sistema Imune</h3>
+
+<h4>Superioridade Funcional</h4>
+
+<div class="warning">
+Célula dendrítica é 10x mais eficiente que macrófago em TUDO: fagocita melhor, processa melhor, apresenta melhor.
+</div>
+
+<h4>Função Primordial - Ativação de Linfócitos T Virgens</h4>
+
+<p><strong>ÚNICA célula capaz de ativar ("desvirginizar") linfócito T CD4+ virgem.</strong></p>
+
+<ul>
+<li>Macrófago pode apresentar para T CD4+ JÁ ATIVADO</li>
+<li>Apenas DC consegue ativar T virgem</li>
+<li>Requer apresentação em contexto especial (co-estimulação, citocinas)</li>
+</ul>
+
+<h4>Migração e Processamento</h4>
+
+<ul>
+<li><strong>Origem:</strong> Apresenta-se no tecido (pele, mucosas)</li>
+<li><strong>Função inicial:</strong> Fagocita patógeno, processa antígeno</li>
+<li><strong>Migração:</strong> Via vaso linfático para linfonodo drenante</li>
+<li><strong>Apresentação:</strong> Ativa linfócito T virgem no linfonodo</li>
+</ul>
+
+<h4>Célula de Langerhans</h4>
+
+<p>Célula dendrítica especializada da pele. Importante em:</p>
+<ul>
+<li>Respostas de contato (dermatite alérgica de contato)</li>
+<li>Vacinação percutânea (influência na resposta)</li>
+</ul>
+
+<h2>Coloração de Gram - Identificação Rápida Bacteriana</h2>
+
+<h3>Princípio da Coloração</h3>
+
+<p><strong>Método rápido (horas vs cultura 24-72h).</strong> Diferencia bactérias por composição de parede celular.</p>
+
+<h3>Gram-POSITIVAS (Roxas/Violetas)</h3>
+
+<h4>Características de Parede</h4>
+
+<ul>
+<li><strong>Composição:</strong> Espessa camada de peptideoglicano</li>
+<li><strong>Cor:</strong> Retém corante cristal violeta → roxo ao microscópio</li>
+</ul>
+
+<h4>Exemplos Clínicos Importantes</h4>
+
+<ul>
+<li><strong>Staphylococcus aureus:</strong> Cocos em cachos, causa infecções de pele, pneumonia, meningite</li>
+<li><strong>Streptococcus pyogenes (GAS):</strong> Cocos em cadeias, causa faringite, febre reumática, necrose tecidual</li>
+<li><strong>Streptococcus pneumoniae:</strong> Cocos diploides, causa meningite, pneumonia, otite</li>
+<li><strong>Bacillus anthracis:</strong> Bastonete em "corrente", causa antraz</li>
+</ul>
+
+<h3>Gram-NEGATIVAS (Rosas/Vermelhas)</h3>
+
+<h4>Características de Parede</h4>
+
+<ul>
+<li><strong>Composição:</strong> Parede fina + membrana externa com LPS</li>
+<li><strong>LPS (Lipopolissacarídeo):</strong> Componente tóxico, endotoxina, PAMP potente</li>
+<li><strong>Cor:</strong> Não retém corante crystal violeta, captura safranina → rosa ao microscópio</li>
+</ul>
+
+<h4>Exemplos Clínicos Importantes</h4>
+
+<ul>
+<li><strong>Escherichia coli:</strong> Bastonete, causa ITU, gastroenterite, sepse</li>
+<li><strong>Neisseria meningitidis:</strong> Cocobacilo diplococo, causa meningite meningocócica, meningococcemia, artrite</li>
+<li><strong>Neisseria gonorrhoeae:</strong> Cocobacilo diplococo, causa gonorreia, artrite séptica</li>
+<li><strong>Pseudomonas aeruginosa:</strong> Bastonete, causa infecção pulmonar em fibrose cística, ferida infectada</li>
+<li><strong>Haemophilus influenzae:</strong> Pequeno bastonete, causa meningite, epiglotite</li>
+<li><strong>Legionella pneumophila:</strong> Bastonete (não grampositivo bem), causa pneumonia atípica</li>
+</ul>
+
+<h3>Aplicação Clínica</h3>
+
+<h4>Determinação de Antibiótico Inicial</h4>
+
+<p>Forma + Gram = identificação presuntiva → determina <strong>antibiótico de primeira linha</strong>:</p>
+
+<ul>
+<li><strong>Cocobacilo gram-negativo de LCR:</strong> Provável N. meningitidis → cefotaxima + ceftriaxona IMEDIATAMENTE</li>
+<li><strong>Coco gram-positivo em cachos:</strong> Provável S. aureus → considerar meticilina-resistente → vancomicina</li>
+<li><strong>Bastonete gram-negativo em urina:</strong> Provável E. coli → fluorquinolona ou cefalosporina</li>
+</ul>
+
+<h4>Limitações</h4>
+
+<ul>
+<li>Cultura ainda necessária para confirmação</li>
+<li>Algumas bactérias não coram bem (Mycoplasma, Treponema)</li>
+<li>Requer observador experiente</li>
+</ul>
+
+            </div>
+        </div>
+
+        <!-- AULA 2 -->
+        <div class="lecture" id="aula2">
+            <div class="lecture-header">
+                <span>📅 AULA 2 (02/09): Sistema Imunológico e Hematologia</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>Hemograma - Avaliação do Sistema Imune</h2>
+
+<h3>Divisões do Hemograma</h3>
+
+<ul>
+<li><strong>Eritrograma:</strong> Avaliação de eritrócitos (hemácias)</li>
+<li><strong>Leucograma:</strong> Avaliação de leucócitos (glóbulos brancos)</li>
+<li><strong>Plaquetograma:</strong> Avaliação de plaquetas</li>
+</ul>
+
+<p><strong>Foco deste resumo:</strong> Leucograma e suas implicações imunológicas.</p>
+
+<h3>⚠️ Valores Normais (Por mm³ ou μL)</h3>
+
+<div class="warning">
+Conhecer valores normais é CRÍTICO para interpretar resultados de hemograma em prova.
+</div>
+
+<table>
+<tr>
+<th>Parâmetro</th>
+<th>Valor Normal</th>
+<th>Unidade</th>
+</tr>
+<tr>
+<td>Leucócitos totais</td>
+<td>4.500-11.000</td>
+<td>células/mm³</td>
+</tr>
+<tr>
+<td>Hemácias</td>
+<td>~4 milhões (H: 4,5-5,5 M: 4,0-4,5)</td>
+<td>células/mm³</td>
+</tr>
+<tr>
+<td>Plaquetas</td>
+<td>150.000-400.000 (~240.000)</td>
+<td>células/mm³</td>
+</tr>
+</table>
+
+<h2>Contagem Diferencial de Leucócitos</h2>
+
+<div class="warning">
+A contagem diferencial é FUNDAMENTAL para diagnóstico. Identifica qual tipo de célula está alterado.
+</div>
+
+<h3>Os 5 Tipos Principais</h3>
+
+<table>
+<tr>
+<th>Tipo de Leucócito</th>
+<th>Porcentagem Normal</th>
+<th>Valor Absoluto Normal</th>
+</tr>
+<tr>
+<td>Neutrófilos (segmentados)</td>
+<td>50-70%</td>
+<td>2.500-7.000/mm³</td>
+</tr>
+<tr>
+<td>Eosinófilos</td>
+<td>1-3%</td>
+<td>50-300/mm³</td>
+</tr>
+<tr>
+<td>Basófilos</td>
+<td>0-1%</td>
+<td>0-100/mm³</td>
+</tr>
+<tr>
+<td>Linfócitos</td>
+<td>20-40%</td>
+<td>1.000-4.500/mm³</td>
+</tr>
+<tr>
+<td>Monócitos</td>
+<td>2-8%</td>
+<td>200-800/mm³</td>
+</tr>
+</table>
+
+<h3>Contagem Absoluta vs Relativa (Porcentagem)</h3>
+
+<p><strong>IMPORTANTE:</strong> É possível ter porcentagem normal mas valor absoluto alterado!</p>
+
+<div class="mnemonic">
+Contagem ABSOLUTA = (porcentagem/100) × total de leucócitos
+Exemplo: 30% de 2.000 leucócitos = 0,30 × 2.000 = 600 (linfopenia absoluta mesmo com % "normal")
+</div>
+
+<h2>Nomenclatura Clínica das Alterações</h2>
+
+<div class="warning">
+Professor tira ponto por erro de nomenclatura! Usar terminologia correta é essencial.
+</div>
+
+<h3>Sufixo -FILIA = AUMENTO</h3>
+
+<ul>
+<li><strong>Neutrofilia:</strong> Aumento de neutrófilos</li>
+<li><strong>Eosinofilia:</strong> Aumento de eosinófilos</li>
+<li><strong>Basofilia:</strong> Aumento de basófilos</li>
+<li><strong>Linfocitose:</strong> Aumento de linfócitos</li>
+<li><strong>Monocitose:</strong> Aumento de monócitos</li>
+</ul>
+
+<h3>Sufixo -PENIA = DIMINUIÇÃO</h3>
+
+<ul>
+<li><strong>Neutropenia:</strong> Diminuição de neutrófilos</li>
+<li><strong>Eosinopenia:</strong> Diminuição de eosinófilos</li>
+<li><strong>Linfopenia:</strong> Diminuição de linfócitos</li>
+<li><strong>Trombocitopenia ou Plaquetopenia:</strong> Diminuição de plaquetas</li>
+</ul>
+
+<div class="warning">
+NUNCA usar "flora" ao descrever microrganismos na prova - professor tira ponto! Usar "microbiota".
+</div>
+
+<h2>Maturação de Neutrófilos - Série Mielóide</h2>
+
+<h3>Sequência de Diferenciação</h3>
+
+<p><strong>Ordem de maturação (da mais jovem para mais velha):</strong></p>
+
+<ol>
+<li><strong>Mieloblasto:</strong> Célula-tronco, grande, muito potencial mitótico</li>
+<li><strong>Promielócito:</strong> Ainda muito grande, começa diferenciação</li>
+<li><strong>Mielócito:</strong> Tamanho reduzido, citoplasma mais ameno</li>
+<li><strong>Metamielócito:</strong> Núcleo em "U" ou "C" (forma característica)</li>
+<li><strong>Bastonete (banda):</strong> Núcleo filamentoso não segmentado</li>
+<li><strong>Segmentado:</strong> Núcleo com 3-5 lóbulos conectados por filamento nuclear fino</li>
+</ol>
+
+<h3>Células Encontradas em Sangue Normal</h3>
+
+<p><strong>Apenas as últimas 2 formas aparecem em sangue periférico normal:</strong></p>
+<ul>
+<li>Segmentados (maioria)</li>
+<li>Bastonetes (minoria, <10% do total de neutrófilos)</li>
+</ul>
+
+<h3>Propriedades Funcionais Durante Maturação</h3>
+
+<ul>
+<li><strong>Tamanho:</strong> Diminui progressivamente (mieloblasto grande → segmentado pequeno)</li>
+<li><strong>Potencial mitótico:</strong> Reduz com maturação (menos divisões nas formas maduras)</li>
+<li><strong>Capacidade antimicrobiana:</strong> Aumenta com maturação (segmentado > bastonete > metamielócito)</li>
+</ul>
+
+<h2>⚠️ DESVIO À ESQUERDA (Conceito Crítico para Prova)</h2>
+
+<h3>Definição</h3>
+
+<p><strong>Aparecimento de FORMAS IMATURAS (promielócitos, mielócitos, metamielócitos, bastonetes aumentados) no sangue periférico.</strong></p>
+
+<h3>Significado Clínico</h3>
+
+<p>Indica <strong>mobilização EMERGENCIAL da medula óssea</strong> em resposta a:</p>
+<ul>
+<li>Infecção grave/sepse</li>
+<li>Apendicite aguda</li>
+<li>Pneumonia grave</li>
+<li>Qualquer processo infeccioso/inflamatório intenso</li>
+</ul>
+
+<h3>Mecanismo Fisiopatológico</h3>
+
+<p><strong>Analogia:</strong> Medula não consegue acompanhar a velocidade de reprodução bacteriana e de morte de neutrófilos. Como resposta:</p>
+<ul>
+<li>Libera células da medula mesmo antes de completa maturação</li>
+<li>Tira segurança da qualidade para ganhar QUANTIDADE</li>
+<li>Aparece "desvio" - formas imaturas no sangue</li>
+</ul>
+
+<h3>Interpretação Clínica</h3>
+
+<p><strong>Presença de desvio à esquerda = alarme de gravidade infecciosa.</strong> Mesmo que leucócitos totais estejam normais, a presença de formas imaturas é sinal de resposta intensa.</p>
+
+<h2>⚠️ HIPERSEGMENTAÇÃO de Núcleo</h2>
+
+<h3>Características</h3>
+
+<p>Neutrófilos com <strong>>4 lóbulos nucleares</strong> (quando normal é 3-4).</p>
+
+<h3>Causas</h3>
+
+<ul>
+<li><strong>Deficiência de folato:</strong> Impede síntese de DNA adequadamente, levando a núcleos muito grandes/hipersegmentados</li>
+<li><strong>Deficiência de vitamina B12:</strong> Mesma causa (B12 cofator de folato)</li>
+</ul>
+
+<h3>Diagnóstico</h3>
+
+<p>Encontrar hipersegmentação no hemograma deve alertar para possível deficiência nutricional.</p>
+
+<h2>Processos Celulares Fundamentais da Resposta Imune Inata</h2>
+
+<h3>QUIMIOTAXIA</h3>
+
+<h4>Definição</h4>
+
+<p><strong>Deslocamento direcionado de células em resposta a um estímulo químico.</strong></p>
+
+<h4>Mecanismo</h4>
+
+<ul>
+<li>Célula estende pseudópodes (extensões do citoplasma)</li>
+<li>Segue gradiente de concentração de fator quimiotático</li>
+<li>Move-se continuamente em direção à origem do estímulo</li>
+</ul>
+
+<h4>Estímulos Quimiotáticos</h4>
+
+<ul>
+<li><strong>LPS (lipopolissacarídeo):</strong> De bactérias gram-negativas</li>
+<li><strong>C5a:</strong> Componente do complemento (potente quimiotático)</li>
+<li><strong>IL-8 (interleucina 8):</strong> Citocina produzida por macrófagos inflamados</li>
+<li><strong>TNF-α:</strong> Citocina pró-inflamatória</li>
+<li><strong>Peptídeos bacterianos:</strong> N-formil-metionil-leucina</li>
+</ul>
+
+<h3>DIAPEDESE (Extravasamento)</h3>
+
+<h4>Definição</h4>
+
+<p><strong>Saída de célula do vaso sanguíneo para o tecido intersticial.</strong> Processo ativo que requer múltiplos passos.</p>
+
+<h4>Requisitos para Diapedese</h4>
+
+<ol>
+<li><strong>Moléculas de adesão:</strong> Selectinas (E-selectina, P-selectina), integrinas. Permitem célula se prender ao endotélio</li>
+<li><strong>Vasodilatação:</strong> Aumento de diâmetro do vaso (mediadores locais)</li>
+<li><strong>Abertura de junções interendoteliais:</strong> Espaço entre células endoteliais aumenta</li>
+<li><strong>Mediadores inflamatórios:</strong> Bradicinina, serotonina, histamina, prostaglandinas, leucotrienos</li>
+</ol>
+
+<h4>Sequência Temporal</h4>
+
+<ul>
+<li>Lesão tecidual → liberação de mediadores</li>
+<li>Mediadores → vasodilatação + aumento de permeabilidade vascular</li>
+<li>Expressão de moléculas de adesão</li>
+<li>Célula "marginaliza" (aproxima do endotélio)</li>
+<li>Célula sai do vaso (diapedese)</li>
+<li>Célula segue quimiotaxia no tecido</li>
+</ul>
+
+<h3>FAGOCITOSE</h3>
+
+<h4>Definição</h4>
+
+<p><strong>Englobamento de particula/patógeno por célula.</strong> Processo de captura e destruição.</p>
+
+<h4>Etapas Sequenciais</h4>
+
+<ol>
+<li><strong>Englobamento:</strong> Célula fagocitária estende pseudópodes ao redor de patógeno</li>
+<li><strong>Fagossomo:</strong> Vesícula contendo patógeno + membrana celular</li>
+<li><strong>Burst oxidativo:</strong> Produção de espécies reativas de oxigênio (radicais livres, peroxido de hidrogênio)
+  <ul>
+  <li>NADPH oxidase ativa</li>
+  <li>Reduz O₂ a ânion superóxido</li>
+  <li>Cascata de ROS mata patógeno</li>
+  </ul>
+</li>
+<li><strong>Fusão com lisossomo:</strong> Lisossomo se funde com fagossomo</li>
+<li><strong>Fagolisossomo:</strong> Vesícula contendo patógeno + enzimas líticas</li>
+<li><strong>Digestão:</strong> Enzimas destroem patógeno
+  <ul>
+  <li>Proteases (tripsina-like)</li>
+  <li>Lipases</li>
+  <li>Nucleases</li>
+  <li>Fosfatases</li>
+  </ul>
+</li>
+<li><strong>Expulsão (exocitose):</strong> Resíduos saem da célula</li>
+</ol>
+
+<h3>Escape de Patógeno - Cryptococcus neoformans</h3>
+
+<p><strong>Exemplo clínico importante:</strong> Algumas bactérias/fungos escapam da fagocitose ou sobrevivem dentro dela.</p>
+
+<p><strong>Cryptococcus:</strong></p>
+<ul>
+<li>Fungi encapsulado encontrado no meio ambiente (fezes de pombos)</li>
+<li>Inalado → pulmão</li>
+<li>Macrófago o ingere SENDO INCAPAZ DE MATÁ-LO</li>
+<li>Fungo VIVO dentro de macrófago é transportado para SNC</li>
+<li>Resulta em meningite criptocócica (infecção grave)</li>
+</ul>
+
+<p><strong>Lição:</strong> Englobar (fagocitar) patógeno NÃO garante morte. Destruição intracelular é ESSENCIAL.</p>
+
+<h2>Infecção vs Inflamação</h2>
+
+<h3>Distinção Conceitual</h3>
+
+<ul>
+<li><strong>INFECÇÃO:</strong> Invasão ativa do corpo por microrganismo. Requer presença de patógeno.</li>
+<li><strong>INFLAMAÇÃO:</strong> Resposta imunológica do corpo. Pode existir SEM infecção (inflamação estéril).</li>
+</ul>
+
+<h3>Exemplos de Inflamação Sem Infecção (Estéril)</h3>
+
+<ul>
+<li>Inflamação pós-traumática (contusão)</li>
+<li>Inflamação pós-cirúrgica</li>
+<li>Queimadura</li>
+<li>Enfarte do miocárdio</li>
+<li>Inflamação por cristais (gota)</li>
+<li>Reação a corpo estranho</li>
+</ul>
+
+<h3>Paradoxo da Resposta Inflamatória</h3>
+
+<p><strong>A resposta imune que AJUDA a eliminar patógeno TAMBÉM causa DANO COLATERAL ao tecido próprio.</strong></p>
+
+<ul>
+<li>Peróxido de hidrogênio mata bactéria mas danifica tecido</li>
+<li>Enzimas proteolíticas destroem patógeno mas degradam matriz extracelular</li>
+<li>Citocinas controlam infecção mas causam febre, calafrios, mialgia</li>
+<li>Inflamação intensa é paradoxo: ajuda e prejudica ao mesmo tempo</li>
+</ul>
+
+<h2>Hematopoese - Geração de Células Sanguíneas</h2>
+
+<h3>Origem das Células</h3>
+
+<p><strong>Célula-tronco hematopoética pluripotente origina duas linhagens principais:</strong></p>
+
+<ul>
+<li><strong>Linhagem MIELÓIDE:</strong> Neutrófilos, eosinófilos, basófilos, monócitos, macrófagos, eritrócitos, plaquetas</li>
+<li><strong>Linhagem LINFÓIDE:</strong> Linfócitos T (via timo), linfócitos B (via medula), NK</li>
+</ul>
+
+<h3>Fatores de Crescimento Hematopoético (Citocinas)</h3>
+
+<table>
+<tr>
+<th>Fator</th>
+<th>Célula-Alvo</th>
+<th>Origem/Função</th>
+</tr>
+<tr>
+<td>EPO (Eritropoetina)</td>
+<td>Eritrócitos</td>
+<td>Produzida por células peritubulares renais em resposta a hipóxia</td>
+</tr>
+<tr>
+<td>GM-CSF</td>
+<td>Granulócitos + Monócitos</td>
+<td>Produzida por células estromais medula óssea</td>
+</tr>
+<tr>
+<td>G-CSF</td>
+<td>Granulócitos (neutrófilos)</td>
+<td>Usado clinicamente para aumentar neutrófilos</td>
+</tr>
+<tr>
+<td>M-CSF</td>
+<td>Monócitos/Macrófagos</td>
+<td>Citocina estimuladora</td>
+</tr>
+<tr>
+<td>IL-3</td>
+<td>Pluripotente (muitas células)</td>
+<td>Citocina multi-alvo</td>
+</tr>
+<tr>
+<td>Trombopoetina</td>
+<td>Plaquetas</td>
+<td>Estimula megacariócitos</td>
+</tr>
+</table>
+
+<h3>Altitude e Resposta Hematopoética</h3>
+
+<p><strong>Conceito importante de fisiologia imunológica:</strong></p>
+
+<ul>
+<li><strong>Em altitude:</strong> Mesma % de O₂ no ar (21%) MAS menor pressão parcial de oxigênio</li>
+<li><strong>Hipóxia relativa</strong> percebida por células renais</li>
+<li><strong>Aumento de EPO</strong> produzido</li>
+<li><strong>Resposta:</strong> Medula óssea produz MAIS eritrócitos</li>
+<li><strong>Resultado:</strong> Policitemia de altitude (hematócrito elevado)</li>
+<li><strong>Vantagem evolutiva:</strong> Maior capacidade de O₂ em ambiente hipóxico</li>
+</ul>
+
+            </div>
+        </div>
+
+        <!-- AULA 3 -->
+        <div class="lecture" id="aula3">
+            <div class="lecture-header">
+                <span>📅 AULA 3 (02/23): Fundamentos de Imunologia, HLA e Microbiota</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>Edward Jenner e o Nascimento da Vacinação (1796)</h2>
+
+<h3>Histórico Revolucionário</h3>
+
+<p><strong>Observação clínica que mudou a medicina:</strong></p>
+
+<ul>
+<li>Ordenheiras que contraíram varíola bovina (doença leve em bovinos) NÃO desenvolviam varíola humana (doença mortal em humanos)</li>
+<li>Proteção cruzada observada empiricamente</li>
+<li>Ideia radical: inocular doença bovina para proteger de doença humana</li>
+</ul>
+
+<h3>Experimento de Jenner (1796)</h3>
+
+<ol>
+<li><strong>Sujeito:</strong> James Phillips, 8 anos de idade</li>
+<li><strong>Procedimento:</strong> Inoculação de varíola bovina (material de ordenhadeira infectada)</li>
+<li><strong>Resultado:</strong> Desenvolvimento de sintomas leves de varíola bovina</li>
+<li><strong>Teste definitivo:</strong> Inoculação posterior com varíola humana virulenta</li>
+<li><strong>Proteção completa:</strong> Criança NÃO desenvolveu varíola humana</li>
+</ol>
+
+<h3>Nomenclatura</h3>
+
+<p><strong>"Vaccination"</strong> vem de <strong>"vacca"</strong> (latim = vaca). Immortalizado no nome para reconhecer origem do conceito.</p>
+
+<h3>Impacto Histórico</h3>
+
+<p>Varíola foi <strong>ERRADICADA</strong> por vacinação em massa em 1980 - única doença infecciosa humana completamente eliminada. Amostras restantes mantidas apenas em dois centros:</p>
+<ul>
+<li>CDC (Atlanta, EUA)</li>
+<li>Instituto de Virologia (Rússia)</li>
+</ul>
+
+<h2>HLA (Human Leukocyte Antigen) = MHC (Major Histocompatibility Complex)</h2>
+
+<div class="warning">
+HLA é EXTREMAMENTE IMPORTANTE. Conceito que aparece em TODA avaliação de imunologia. Compreender HLA é compreender seleção de transplante, rejeiçãoe, tolerância ao próprio.
+</div>
+
+<h3>HLA CLASSE I - Apresentação a CD8+</h3>
+
+<h4>Estrutura Molecular</h4>
+
+<ul>
+<li><strong>Cadeia alfa (pesada):</strong> Inserida na membrana celular, contém sítio de ligação de peptídeo</li>
+<li><strong>Beta-2-microglobulina:</strong> Proteína acessória solúvel, fornece estabilidade</li>
+<li>Juntas formam receptor que apresenta antígeno para CD8+</li>
+</ul>
+
+<h4>Genética</h4>
+
+<ul>
+<li><strong>6 genes no total:</strong> 3 do cromossoma materno + 3 do cromossoma paterno</li>
+<li><strong>Co-dominância:</strong> Ambos alelos de cada gene são expressos</li>
+<li>Resultado: múltiplas moléculas de HLA classe I diferentes em mesma célula</li>
+</ul>
+
+<h4>Expressão Celular</h4>
+
+<p><strong>Expressa em TODAS as células NUCLEADAS do corpo, EXCETO:</strong></p>
+<ul>
+<li>Neurônios (razão fisiológica: evita destruição por CD8)</li>
+<li>Eritrócitos (não têm núcleo em mamíferos)</li>
+</ul>
+
+<p><strong>Por que em TODAS? Porque QUALQUER célula pode ser:</strong></p>
+<ul>
+<li>Infectada por vírus</li>
+<li>Infectada por bactéria intracelular</li>
+<li>Virar câncer (transformação neoplásica)</li>
+</ul>
+
+<p>Portanto, TODAS precisam exibir seus antígenos internos para CD8 poder avaliar "saudável ou anormal?"</p>
+
+<h4>Função</h4>
+
+<p><strong>Apresentar antígenos ENDÓGENOS para CD8+:</strong></p>
+<ul>
+<li>Proteínas virais produzidas dentro da célula</li>
+<li>Proteínas bacterianas de patógeno intracelular</li>
+<li>Proteínas mutantes de célula neoplásica</li>
+</ul>
+
+<h3>HLA CLASSE II - Apresentação a CD4+</h3>
+
+<h4>Estrutura Molecular</h4>
+
+<ul>
+<li><strong>Cadeia alfa:</strong> Transmembrana</li>
+<li><strong>Cadeia beta:</strong> Transmembrana</li>
+<li>Juntas formam bolso para ligação de peptídeo</li>
+</ul>
+
+<h4>Genética</h4>
+
+<ul>
+<li><strong>12 genes no total:</strong> 6 do cromossoma materno + 6 do cromossoma paterno</li>
+<li><strong>Co-dominância:</strong> Todos expressos</li>
+<li>Ainda MAIOR polimorfismo que HLA classe I</li>
+</ul>
+
+<h4>Expressão Celular</h4>
+
+<p><strong>Expressa APENAS em APCs (Antigen Presenting Cells):</strong></p>
+<ul>
+<li>Macrófagos</li>
+<li>Células dendríticas</li>
+<li>Linfócitos B</li>
+</ul>
+
+<p><strong>POR QUÊ apenas em APCs?</strong> CD4+ só precisa conversar com células que profissionalmente processam e apresentam antígeno. Células normais não são APCs.</p>
+
+<h4>Função</h4>
+
+<p><strong>Apresentar antígenos EXÓGENOS para CD4+:</strong></p>
+<ul>
+<li>Proteínas fagocitadas (bactérias extracelulares)</li>
+<li>Proteínas processadas de patógeno apresentado por APC</li>
+<li>Qualquer antígeno que APC decidiu processar</li>
+</ul>
+
+<h3>Localização Genética</h3>
+
+<p><strong>Braço curto do cromossoma 6 (6p21).</strong> Esta região é a <strong>MAIS POLIMÓRFICA do genoma humano</strong> - maior variabilidade genetica que qualquer outra região.</p>
+
+<p><strong>Razão evolutiva:</strong> Patógenos evoluem. População humana precisa de MÁXIMA DIVERSIDADE de HLA para que algum membro sempre consegue apresentar novo patógeno.</p>
+
+<h3>⚠️ MNEMÔNICA PARA MEMORIZAR</h3>
+
+<div class="mnemonic">
+Ordem crescente numérica: 1, 2, 4, 8. Ordem alfabética: Endógeno antes de Exógeno.
+- HLA 1 → Endógeno → CD8 (citotóxico)
+- HLA 2 → Exógeno → CD4 (cooperador)
+
+Além disso:
+- HLA I: TODAS as células nucleadas
+- HLA II: APENAS APCs
+</div>
+
+<h3>Aplicações Clínicas de HLA</h3>
+
+<h4>Doença Autoimune</h4>
+
+<ul>
+<li><strong>HLA-DR3 + DR4 (duplo-positivo):</strong> Risco 2x maior de desenvolver Diabetes Mellitus tipo 1</li>
+<li>Indica susceptibilidade genética para autoimunidade contra células beta pancreáticas</li>
+<li>NÃO garante doença (estocasticidade genética)</li>
+</ul>
+
+<h4>Espondilite Anquilosante</h4>
+
+<ul>
+<li><strong>HLA-B27:</strong> Associação muito forte com espondilite anquilosante (artrite inflamatória de coluna)</li>
+<li>90-95% dos pacientes são HLA-B27+</li>
+<li>Mecanismo: possível reação cruzada entre antígeno bacteriano intestinal e estrutura da coluna</li>
+</ul>
+
+<h4>Tipagem HLA para Transplante</h4>
+
+<ul>
+<li><strong>Compatibilidade HLA:</strong> Preditor de sucesso de transplante</li>
+<li><strong>Mínimo aceitável:</strong> ~50% de compatibilidade</li>
+<li><strong>Isogênico (gêmeos idênticos):</strong> 100% compatível, sem rejeição</li>
+<li><strong>Imunosupressão:</strong> Necessária mesmo com compatibilidade parcial</li>
+</ul>
+
+<h4>Órgãos Imunoprivilegiados</h4>
+
+<ul>
+<li><strong>Córnea:</strong> Órgão imunoprivilegiado - raramente sofre rejeição mesmo com incompatibilidade HLA</li>
+<li>Razão: barreiras físicas + ambiente imunologicamente tolerante</li>
+<li>Exceção: em pacientes já sensibilizados ou com ativação imune sistêmica</li>
+</ul>
+
+<h2>Tolerância ao Próprio - Conceito Central</h2>
+
+<h3>Por Que Tolerância é Essencial para Existência</h3>
+
+<p><strong>SEM tolerância ao próprio: não existiríamos.</strong></p>
+
+<ul>
+<li>Produzimos <span class="highlight">10⁷ a 10⁹ linfócitos T novos/dia</span></li>
+<li>É INEVITÁVEL que alguns sejam autorreativos (reconhecem proteínas próprias)</li>
+<li>Se TODOS fossem autoimunes → doença autoimune universal → morte</li>
+<li><strong>Solução evolutiva:</strong> Seleção clonal no timo e medula óssea → deleta maioria de autorreativos</li>
+</ul>
+
+<h3>Tolerância Central (No Timo/Medula Óssea)</h3>
+
+<ul>
+<li>Realizada durante maturação de linfócitos</li>
+<li>Seleção negativa no timo (já descrito em Aula 1)</li>
+<li>Seleção negativa na medula óssea para B</li>
+<li>Elimina ~95% de autorreativos</li>
+</ul>
+
+<h3>Tolerância Periférica (Nos Tecidos)</h3>
+
+<ul>
+<li>T-reguladores (T-Reg) suprimem autorreativos que escaparam seleção central</li>
+<li>Anergia (inativação) de células autorreativas</li>
+<li>Deleção adicional via morte programada</li>
+</ul>
+
+<h3>Feto na Gestação - "Bomba Antigênica"</h3>
+
+<p><strong>Feto = 50% proteínas "próprias" (mãe) + 50% proteínas "não-próprias" (pai).</strong></p>
+
+<ul>
+<li>Mãe PRECISA tolerar proteínas paternas</li>
+<li>Mecanismo: <strong>Progesterona</strong> (hormônio da gestação) induz tolerância</li>
+<li>Desaparece após parto → risco de doença hemolítica recém-nascido (em segunda gestação)</li>
+<li>Lição: tolerância é dinamicamente regulada, não é "imunidade apagada"</li>
+</ul>
+
+<h3>Tolerância Alimentar</h3>
+
+<p><strong>Comemos PROTEÍNAS DIFERENTES de nós todos os dias.</strong> Tolerância alimentar é CRUCIAL:</p>
+
+<ul>
+<li>Ingerimos proteínas de soja, trigo, leite, ovos, frutas, verduras</li>
+<li>Nenhuma é proteína humana</li>
+<li>Mas TOLERAMOS sem ativar resposta anti-alimentar</li>
+<li>Mecanismo: indução de T-Reg via MALT intestinal e apresentação de antígeno sem co-estimulação inflamatória</li>
+</ul>
+
+<h3>Conceito Filosófico: SI como Promotor de Homeostase</h3>
+
+<p><strong>O sistema imune frequentemente é descrito como "sistema de defesa".</strong> Mais precisamente:</p>
+
+<ul>
+<li><strong>Sistema imune = promotor de HOMEOSTASE</strong> (equilíbrio interno)</li>
+<li>Defende contra invasores (proteção)</li>
+<li>Mas TAMBÉM reconhece o próprio como pertencente ao corpo</li>
+<li>Tolerância + proteção = homeostase dinâmica</li>
+</ul>
+
+<h3>Autoimunidade - Quando Tolerância Falha</h3>
+
+<p><strong>Autorreatividade que ESCAPA do timo → doença autoimune.</strong></p>
+
+<p><strong>Exemplo: Diabetes Mellitus Tipo 1 (DM1)</strong></p>
+<ul>
+<li>Célula T autorreativa contra células beta do pâncreas</li>
+<li>Células beta produzem insulina</li>
+<li>Infiltração de T citotóxicos → destruição de beta</li>
+<li>Falta de insulina → hiperglicemia crônica</li>
+<li>Mecanismo: quebra de tolerância central (escape do autorreativo) + possível quebra de tolerância periférica (falha de T-Reg)</li>
+</ul>
+
+<h2>Microbiota Normal - Definições Críticas</h2>
+
+<div class="warning">
+Professor tira ponto por erro terminológico! Usar nomenclatura correta é essencial para aprovação.
+</div>
+
+<h3>Nomenclatura Precisa (Não Confundir)</h3>
+
+<table>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+<th>Exemplo de Uso</th>
+</tr>
+<tr>
+<td>MICROBIOTA</td>
+<td>Conjunto de microrganismos em pele/mucosas</td>
+<td>"Microbiota normal da boca"</td>
+</tr>
+<tr>
+<td>MICROBIOMA</td>
+<td>Microbiota + ambiente (genes, condições físicas)</td>
+<td>"Microbioma intestinal humano"</td>
+</tr>
+<tr>
+<td>PROBIÓTICO</td>
+<td>Microrganismo que você QUER adicionar</td>
+<td>"Lactobacilos como probióticos"</td>
+</tr>
+<tr>
+<td>PREBIÓTICO</td>
+<td>Alimento para microrganismo desejado</td>
+<td>"Inulina como prebiótico para lactobacilos"</td>
+</tr>
+<tr>
+<td>SIMBIÓTICO</td>
+<td>Probiótico + prebiótico combinados</td>
+<td>"Produto com lactobacilos + inulina"</td>
+</tr>
+</table>
+
+<h3>Formação de Microbiota no Nascimento</h3>
+
+<p><strong>Microbiota é adquirida DURANTE o nascimento:</strong></p>
+
+<ul>
+<li><strong>Parto normal (vaginal):</strong> Criança recebe microbiota vaginal (Lactobacillus dominante, vaginal flora)</li>
+<li><strong>Parto cesariana:</strong> Contato direto com pele + ambiente hospitalar (diferentes primeiras bactérias)</li>
+<li><strong>Importância:</strong> Primeiras bactérias "treinam" sistema imune do recém-nascido</li>
+</ul>
+
+<h3>Composição de Microbiota</h3>
+
+<ul>
+<li><strong>Bactérias:</strong> Predominante (~99% dos microrganismos por número)</li>
+<li><strong>Fungos:</strong> Minoria (ex: Candida albicans)</li>
+<li><strong>Vírus:</strong> Presentes (bacteriófagos e vírus de eucariotos)</li>
+<li><strong>Arqueias:</strong> Minoria, particularmente no trato digestivo (produtoras de metano)</li>
+</ul>
+
+<h3>Funções Fisiológicas de Microbiota</h3>
+
+<h4>Competição com Patógenos</h4>
+
+<ul>
+<li>Bactérias comensais competem por nutrientes com patógenos</li>
+<li>Ocupam "nichos ecológicos" evitando invasão</li>
+<li>Produzem bacteriocinas (antibióticos naturais) contra patógenos</li>
+</ul>
+
+<h4>Produção de Vitaminas</h4>
+
+<ul>
+<li><strong>Vitamina K3 (filoquinona):</strong> Produzida por bactérias intestinais, essencial para coagulação</li>
+<li>Deficiência pode ocorrer com antibióticos prolongados (elimina produtoras)</li>
+</ul>
+
+<h4>Treinamento Imunológico</h4>
+
+<p><strong>Efeito vacinal de microbiota:</strong></p>
+
+<ul>
+<li>Antígenos bacterianos = PAMPs constantes</li>
+<li>Estimulam MALT intestinal continuamente</li>
+<li>Educam sistema imune desde infância</li>
+<li>Aumentam tolerância e responsividade apropriada</li>
+</ul>
+
+<h3>Ambientes que Devem Ser ESTÉREIS (Vazio Microbiológico)</h3>
+
+<div class="warning">
+Estes ambientes devem estar COMPLETAMENTE livres de microrganismos. Infecção nesses sítios é sempre patológica.
+</div>
+
+<ul>
+<li><strong>SANGUE:</strong> Bacteremia = infecção séria, sempre anormal</li>
+<li><strong>LÍQUIDO CEFALORRAQUIDIANO (LCR):</strong> Infecção = meningite, infecção meníngea, sempre grave</li>
+<li><strong>SISTEMA NERVOSO CENTRAL (SNC):</strong> Qualquer bactéria = infeção cerebral grave</li>
+<li><strong>Cavidade peritoneal:</strong> Peritonite bacteriana espontânea = grave</li>
+<li><strong>Cavidade pleural:</strong> Empiema pleural = infecção da pleura</li>
+</ul>
+
+<h3>Disbiose - Desequilíbrio de Microbiota</h3>
+
+<h4>Definição</h4>
+
+<p><strong>Perda de equilíbrio da microbiota normal.</strong> Uma espécie cresce demais enquanto outras diminuem.</p>
+
+<h4>Exemplos Clínicos Importantes</h4>
+
+<p><strong>Antibióticos crônicos → Crescimento excessivo de Clostridium difficile</strong></p>
+<ul>
+<li>C. difficile é resistente a muitos antibióticos</li>
+<li>Quando bactérias normais são mortas, C. difficile prospera</li>
+<li>Produz toxinas → colite pseudomembranosa</li>
+<li>Prevenção: probióticos durante/após antibióticos</li>
+</ul>
+
+<p><strong>Colutórios e enxaguantes bucais → Candida albicans + Streptococcus sanguinis</strong></p>
+<ul>
+<li>Álcool em colutórios mata bactérias benéficas</li>
+<li>Candida cresce sem competição</li>
+<li>Levedura causa candidose oral</li>
+<li>S. sanguinis pode disseminar → endocardite infecciosa</li>
+</ul>
+
+<p><strong>Desodorante axilar excessivo → Desequilíbrio de axila</strong></p>
+<ul>
+<li>Desequilibra microbiota local</li>
+<li>Pode favorecer crescimento de patógenos</li>
+</ul>
+
+<p><strong>Laxantes crônicos → Eliminação de microbiota intestinal</strong></p>
+<ul>
+<li>Aumento de motilidade → eliminação de bactérias</li>
+<li>Pode predispor a infecções gastrointestinais</li>
+<li>Reduz biodiversidade intestinal</li>
+</ul>
+
+<h3>Microbiota Vaginal - Variação ao Longo da Vida</h3>
+
+<p><strong>Microbiota vaginal muda dramaticamente ao longo da vida, regulada por ESTROGÊNIO:</strong></p>
+
+<ul>
+<li><strong>Nascimento:</strong> Recebe Lactobacillus do canal de parto (Lactobacillus dominante)</li>
+<li><strong>Infância:</strong> Lactobacillus diminui, mais diversidade, sem HLA ainda (proteção estrogênica intrauterina persiste)</li>
+<li><strong>Puberdade:</strong> Aumento de estrogênio → retorno de Lactobacillus dominante, pH ácido (proteção)</li>
+<li><strong>Menopausa:</strong> Queda de estrogênio → perda de Lactobacillus → aumento de patógenos, pH aumenta</li>
+</ul>
+
+<h3>Projeto Microbioma Humano (2008)</h3>
+
+<p><strong>Grande iniciativa internacional para mapear microbiota humana.</strong> Descobertas revolucionárias:</p>
+
+<ul>
+<li><strong>Microbiota e obesidade:</strong> Compositção diferente em obesos vs magros</li>
+<li><strong>Microbiota e Diabetes Mellitus Tipo 2:</strong> Disbiose associada a DM2</li>
+<li><strong>Microbiota e Doenças Inflamatórias Intestinais (DII):</strong> Redução de diversidade em Crohn e colite ulcerosa</li>
+<li><strong>Microbiota e Alzheimer:</strong> Eixo intestino-cérebro alterado em demência</li>
+<li><strong>Microbiota e depressão:</strong> Alguns compostos bacterianos relacionados à saúde mental</li>
+<li><strong>Microbiota e câncer oral:</strong> Bactérias específicas associadas a risco aumentado</li>
+</ul>
+
+<p><strong>Implicação:</strong> Microbiota não é "apenas comensalismo" - é parceira ativa na saúde e doença.</p>
+
+            </div>
+        </div>
+
+        <!-- AULA 4 -->
+        <div class="lecture" id="aula4">
+            <div class="lecture-header">
+                <span>📅 AULA 4 (03/02): Apresentação de Antígenos e Memória Imunológica</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>Processo de Apresentação de Antígeno - Passo a Passo Detalhado</h2>
+
+<p>Modelo dinâmico mostrando como antígeno é processado e apresentado ao sistema imune específico:</p>
+
+<ol>
+<li><strong>Invasão:</strong> Bactéria invade tecido → causa lesão celular</li>
+<li><strong>Liberação de mediadores:</strong> Lesão celular → liberação de fosfolipídeos de membrana → ácido araquidônico</li>
+<li><strong>Cascata lipídica:</strong>
+  <ul>
+  <li>COX (ciclooxigenase) → prostaglandinas (PGE2, PGI2) → inflamação</li>
+  <li>LOX (lipoxigenase) → leucotrienos (LT) + outros mediadores</li>
+  <li>Mais mediadores: histamina, bradicinina, serotonina</li>
+  </ul>
+</li>
+<li><strong>Efeitos locais:</strong> Vasodilatação + aumento de permeabilidade vascular + abertura de junções interendoteliais</li>
+<li><strong>Primeira célula:</strong> NEUTRÓFILO faz diapedese (primeira célula na inflamação aguda)</li>
+<li><strong>Segunda célula:</strong> MACRÓFAGO chega DEPOIS (inflamação crônica quando predomina)</li>
+<li><strong>Fagocitose:</strong> Macrófago fagocita bactéria → fagossomo → burst oxidativo → fusão com lisossomo → fagolisossomo</li>
+<li><strong>Processamento:</strong> Digestão de patógeno em FRAGMENTOS = EPÍTOPOS ou DETERMINANTES ANTIGÊNICOS</li>
+<li><strong>Apresentação:</strong> Epítopo (peptídeo 8-39 amino ácidos) + molécula MHC/HLA → migra para membrana celular de APC</li>
+<li><strong>Migração:</strong> APC migra via vaso linfático para linfonodo drenante</li>
+<li><strong>Encontro com T virgem:</strong> No linfonodo, APC encontra linfócito T CD4+ virgem ALEATORIAMENTE</li>
+<li><strong>Reconhecimento:</strong> TCR ("olhos do linfócito T") reconhece epítopo + HLA → ligação</li>
+<li><strong>Ativação:</strong> Co-estimulação (CD28:B7) → ativação completa → proliferação e diferenciação</li>
+</ol>
+
+<h3>Produção Diária de Linfócitos T com Diversidade</h3>
+
+<p>O corpo produz <span class="highlight">10⁷ a 10⁹ linfócitos T DIFERENTES cada dia</span>, cada um com um TCR ÚNICO. Isso garante cobertura de praticamente qualquer antígeno que possa encontrar na vida.</p>
+
+<h2>Resposta Primária vs Secundária - Diferenças Críticas</h2>
+
+<div class="warning">
+IgM = fase aguda. IgG = memória/crônica. Marcadores distintos e sempre aparecem em questões de prova.
+</div>
+
+<h3>Resposta Primária</h3>
+
+<table>
+<tr>
+<th>Parâmetro</th>
+<th>Valor/Característica</th>
+</tr>
+<tr>
+<td>Tempo de início</td>
+<td>5-10 dias (média 7 dias)</td>
+</tr>
+<tr>
+<td>Classe de Ig principal</td>
+<td>IgM (pentamérica, 5 Ys ligados)</td>
+</tr>
+<tr>
+<td>Afinidade do anticorpo</td>
+<td>Baixa-moderada (não otimizada)</td>
+</tr>
+<tr>
+<td>Título final</td>
+<td>Moderado</td>
+</tr>
+<tr>
+<td>Significado clínico</td>
+<td>Indicador de INFECÇÃO AGUDA</td>
+</tr>
+<tr>
+<td>Mecanismo</td>
+<td>Ativação de linfócitos B virgens</td>
+</tr>
+</table>
+
+<h3>Resposta Secundária</h3>
+
+<table>
+<tr>
+<th>Parâmetro</th>
+<th>Valor/Característica</th>
+</tr>
+<tr>
+<td>Tempo de início</td>
+<td>1-3 dias (MUITO mais rápida!)</td>
+</tr>
+<tr>
+<td>Classe de Ig principal</td>
+<td>IgG (monomérica, 1 Y)</td>
+</tr>
+<tr>
+<td>Afinidade do anticorpo</td>
+<td>ALTA (otimizada por maturação de afinidade)</td>
+</tr>
+<tr>
+<td>Título final</td>
+<td>MUITO ALTO (100-1000x maior que primária)</td>
+</tr>
+<tr>
+<td>Significado clínico</td>
+<td>Indicador de MEMÓRIA ou INFECÇÃO CRÔNICA</td>
+</tr>
+<tr>
+<td>Mecanismo</td>
+<td>Reativação de células de memória B/T</td>
+</tr>
+</table>
+
+<h3>Ambas Elevadas = Transição</h3>
+
+<p>Se paciente tem IgM+ E IgG+ simultaneamente = passagem de infecção aguda para fase de memória/convalescência.</p>
+
+<h3>Aplicação Clínica: Dengue</h3>
+
+<ul>
+<li><strong>IgM+ (negativo):</strong> Dengue aguda</li>
+<li><strong>IgG+ (negativo):</strong> Dengue crônica/memória</li>
+<li><strong>Ambas positivas:</strong> Transição entre fases</li>
+</ul>
+
+<h3>Aplicação Clínica: Rubéola na Gestação (⚠️ IMPORTANTE)</h3>
+
+<ul>
+<li><strong>Mãe com IgM+ E IgG-:</strong> Infecção aguda = PERIGO EXTREMO para feto (risco de síndrome congênita da rubéola)</li>
+<li><strong>Mãe com IgM- E IgG+:</strong> Imunidade prévia = proteção fetal via IgG placentário</li>
+<li><strong>Significado:</strong> Tipagem de rubéola é rotina em pré-natal</li>
+</ul>
+
+<h2>Mecanismos Moleculares: Switch de Classe e Maturação de Afinidade</h2>
+
+<h3>Switch de Classe (Class Switching)</h3>
+
+<p><strong>Linfócito B TROCA de IgM → IgG (ou IgA, IgE, IgD) com ajuda de TFH.</strong></p>
+
+<ul>
+<li>Requer ligação T-B (contato direto)</li>
+<li>TFH fornece citocinas específicas (ex: IFN-γ para IgG)</li>
+<li>Recombinação gênica muda exon de cadeia pesada</li>
+<li>Resultado: mesmo especificidade de antígeno, novo isotipo de Ig</li>
+</ul>
+
+<h3>Maturação de Afinidade (Affinity Maturation)</h3>
+
+<p><strong>Aperfeiçoamento progressivo da qualidade de ligação.</strong></p>
+
+<ul>
+<li>Ocorre no centro germinativo do folículo</li>
+<li>Células B sofrem mutações somáticas aleatórias na região CDR do BCR</li>
+<li>Seleção positiva de clones com maior afinidade por antígeno</li>
+<li>Morte por apoptose de clones com menor afinidade</li>
+<li>Resultado final: anticorpo de altíssima afinidade e especificidade</li>
+</ul>
+
+            </div>
+        </div>
+
+        <!-- AULA 5 -->
+        <div class="lecture" id="aula5">
+            <div class="lecture-header">
+                <span>📅 AULA 5 (03/09): Integração da Imunidade, PRRs e Citocinas</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>PAMPs, DAMPs e PRRs - Reconhecimento Inato</h2>
+
+<h3>PAMPs - Padrões Moleculares Associados a PATÓGENOS</h3>
+
+<ul>
+<li><strong>Definição:</strong> Moléculas presentes em patógenos que NÃO existem em células humanas</li>
+<li><strong>Característica:</strong> Evolutivamente conservadas (presentes em múltiplas espécies de patógeno)</li>
+<li><strong>Exemplos:</strong>
+  <ul>
+  <li>Manose (carboidrato em parede bacteriana, humanos não têm)</li>
+  <li>LPS/endotoxina (lipopolissacarídeo de gram-negativas)</li>
+  <li>Peptideoglicano (parede bacteriana)</li>
+  <li>Flagelina (proteína flagelar de bactérias móveis)</li>
+  <li>DNA dupla-fita viral (forma anormal em citoplasma humano)</li>
+  <li>RNA dupla-fita viral</li>
+  </ul>
+</li>
+</ul>
+
+<h3>DAMPs - Padrões Moleculares Associados a DANO</h3>
+
+<ul>
+<li><strong>Definição:</strong> Moléculas liberadas por células danificadas ou apoptóticas</li>
+<li><strong>Significado:</strong> Sinais de "algo deu errado"</li>
+<li><strong>Exemplos:</strong>
+  <ul>
+  <li>Fosfatidilserina externalizada (sinal de apoptose)</li>
+  <li>DNA/RNA intracelular (sinal de morte celular)</li>
+  <li>Proteínas de choque térmico (HSP)</li>
+  <li>ATP extracelular (sinal de morte celular)</li>
+  <li>Cristais de ureia (gota)</li>
+  </ul>
+</li>
+</ul>
+
+<h3>PRRs - Receptores de Reconhecimento de Padrões</h3>
+
+<p><strong>Receptores expressos em células inatas que reconhecem PAMPs E DAMPs.</strong></p>
+
+<ul>
+<li><strong>Característica fundamental:</strong> Reconhecem PADRÃO, não antígeno específico</li>
+<li><strong>Vantagem evolutiva:</strong> Patógeno novo ainda tem PAMP reconhecível mesmo antes de catalogado</li>
+<li><strong>Tipos:</strong> TLR, NLR, RLR, CLR, etc.</li>
+</ul>
+
+<h3>⚠️ Imunidade Inata NUNCA tem Autoimunidade</h3>
+
+<div class="warning">
+Imunidade inata NUNCA têm autoimunidade - seria biologicamente incompatível com vida. Se PRRs reconhecessem antígenos próprios, o corpo se destruiria imediatamente.
+</div>
+
+<h2>TLRs (Toll-Like Receptors) - 13 Tipos Conhecidos</h2>
+
+<h3>Principais TLRs Clínicos</h3>
+
+<table>
+<tr>
+<th>TLR</th>
+<th>Ligante/PAMP</th>
+<th>Tipo de Patógeno</th>
+</tr>
+<tr>
+<td>TLR4</td>
+<td>LPS (lipopolissacarídeo)</td>
+<td>Bactérias gram-negativas</td>
+</tr>
+<tr>
+<td>TLR5</td>
+<td>Flagelina</td>
+<td>Bactérias flageladas (móveis)</td>
+</tr>
+<tr>
+<td>TLR9</td>
+<td>CpG / DNA dupla-fita</td>
+<td>Patógenos intracelulares, morte celular</td>
+</tr>
+<tr>
+<td>TLR3</td>
+<td>RNA dupla-fita</td>
+<td>Vírus (algumas classes)</td>
+</tr>
+<tr>
+<td>TLR7/8</td>
+<td>RNA simples-fita</td>
+<td>Vírus (outras classes)</td>
+</tr>
+</table>
+
+<h3>Capacidade de Detectar COMPORTAMENTO do Invasor</h3>
+
+<p>Exemplo: presença de flagela (móvel) + LPS (gram-negativa) ativa TLR5 + TLR4 = sinal combinado "patógeno gram-negativo móvel" = resposta específica.</p>
+
+<h2>Sistema Complemento [EXTERNO parcialmente - slides]</h2>
+
+<p><span class="external">Informações sobre complemento têm origem parcialmente em slides fornecidos e parcialmente em conhecimento externo de imunologia</span></p>
+
+<h3>Histórico</h3>
+
+<p>Descoberta: Jules Bordet (1870-1961) e Paul Ehrlich → conceito que complementa a ação de anticorpo.</p>
+
+<h3>Componentes</h3>
+
+<ul>
+<li><strong>9 proteínas principais</strong> (mais de 30 se contar reguladores e cofatores)</li>
+<li><strong>Ativação em cascata:</strong> Uma ativa a próxima em reação em cadeia</li>
+</ul>
+
+<h3>3 Vias de Ativação</h3>
+
+<p><strong>Todas convergem em C3 (ponto central de amplificação):</strong></p>
+
+<h4>VIA CLÁSSICA</h4>
+<ul>
+<li><strong>Iniciador:</strong> ANTICORPO (IgG, IgM) ligado ao antígeno</li>
+<li><strong>Sequência:</strong> IgG/IgM → C1q (liga) → C1r, C1s (ativados) → C4 (clivado) → C2 (clivado) → C3 (ativado)</li>
+<li><strong>Quando ativa:</strong> Infecção com resposta humoral (já tem anticorpos)</li>
+</ul>
+
+<h4>VIA ALTERNATIVA</h4>
+<ul>
+<li><strong>Iniciador:</strong> PAMPs (LPS de gram-negativas, polissacarídeos bacterianos)</li>
+<li><strong>Não requer anticorpo:</strong> Ativação INATA pura</li>
+<li><strong>Sequência:</strong> Superfície bacteriana → Fator B, Fator D (ativam) → C3 (ativado)</li>
+<li><strong>Quando ativa:</strong> Contato direto com patógeno, imunidade inata primária</li>
+</ul>
+
+<h4>VIA DAS LECTINAS (MBL)</h4>
+<ul>
+<li><strong>Iniciador:</strong> MBL (Mannose-Binding Lectin) liga-se a manose em patógeno</li>
+<li><strong>Sequência:</strong> MBL-MASP1/MASP2 → C4, C2 (ativados) → C3 (ativado)</li>
+<li><strong>Quando ativa:</strong> Primeira exposição a patógeno com manose, resposta intermediária entre adaptativa e inata</li>
+</ul>
+
+<h3>Fase Comum (Após C3 Ativação)</h3>
+
+<h4>C3a</h4>
+<ul>
+<li><strong>Anafilatoxina:</strong> Pequeno peptídeo inflamatório</li>
+<li><strong>Efeitos:</strong> Quimiotaxia, vasodilatação, degranulação de mastócitos</li>
+</ul>
+
+<h4>C3b</h4>
+<ul>
+<li><strong>Opsonina:</strong> Marca patógeno para fagocitose</li>
+<li><strong>Mecanismo:</strong> Liga-se covalentemente a superfície patógena</li>
+<li><strong>Receptor:</strong> Fagócitos têm CR1 (receptor para C3b)</li>
+<li><strong>Resultado:</strong> "Peguei você" - fagocitose aumentada 10x</li>
+</ul>
+
+<h4>C5a</h4>
+<ul>
+<li><strong>Anafilatoxina POTENTÍSSIMA:</strong> Mais potente que C3a</li>
+<li><strong>Efeitos:</strong> Quimiotaxia intensa, vasodilatação, degranulação</li>
+<li><strong>Clinicamente:</strong> Ligação a C5a em sépsis → liberação de citocinas → choque séptico</li>
+</ul>
+
+<h4>C6, C7, C8, C9</h4>
+<ul>
+<li><strong>Formação:</strong> Múltiplas moléculas de C9 formam poli-C9</li>
+<li><strong>Estrutura:</strong> MAC (Membrane Attack Complex) = poro cilíndrico</li>
+<li><strong>Função:</strong> Perfura membrana de patógeno → lise osmótica → morte</li>
+<li><strong>Alvos:</strong> Bactérias gram-negativas, vírus envelopados (sensíveis)</li>
+</ul>
+
+<h3>Resumo de Funções Complemento</h3>
+
+<table>
+<tr>
+<th>Função</th>
+<th>Componente(s)</th>
+<th>Resultado</th>
+</tr>
+<tr>
+<td>Opsonização</td>
+<td>C3b</td>
+<td>Marca para fagocitose</td>
+</tr>
+<tr>
+<td>Quimiotaxia</td>
+<td>C5a, C3a</td>
+<td>Recruta neutrófilos/macrófagos</td>
+</tr>
+<tr>
+<td>Inflamação</td>
+<td>Anafilatoxinas</td>
+<td>Vasodilatação, degranulação</td>
+</tr>
+<tr>
+<td>Lise Direta</td>
+<td>MAC (C5b-9)</td>
+<td>Morte patógeno</td>
+</tr>
+</table>
+
+<h3>Regulação de Complemento</h3>
+
+<p><strong>Complemento não-regulado = destruição sistêmica. Reguladores essenciais:</strong></p>
+
+<ul>
+<li><strong>Fator H:</strong> Cofator de Fator I, regula C3 alternativo</li>
+<li><strong>Fator I:</strong> Inibe C3, C4</li>
+<li><strong>CD55 (DAF):</strong> Acelera decaimento de C3/C5 convertases</li>
+<li><strong>CD59 (MIRL):</strong> Inibe formação de MAC</li>
+<li><strong>Inibidor C1:</strong> Regula via clássica</li>
+</ul>
+
+<h3>Deficiência: Hemoglobinúria Paroxística Noturna (HPN)</h3>
+
+<p><strong>Mutação em PIGA → perda de CD55 e CD59 → lise por complemento descontrolado.</strong></p>
+
+<ul>
+<li>Hemácias são destruídas pelo complemento do próprio corpo</li>
+<li>Hemoglobinúria especialmente à noite (menor pH urinário, ativa complemento)</li>
+<li>Anemia hemolítica grave crônica</li>
+</ul>
+
+<h2>Superantígenos [Slides]</h2>
+
+<p><span class="external">Conteúdo sobre superantígenos provém de slides de aula</span></p>
+
+<h3>Características Fundamentais</h3>
+
+<ul>
+<li><strong>Bypass de processamento normal:</strong> Não sofrem processamento em peptídeos pequenos</li>
+<li><strong>Ligação direta a MHC fora do sulco de ligação:</strong> Contorna seleção de epítopo específico</li>
+<li><strong>Ativação massiva de T:</strong> Até 20% de linfócitos T ficam ativados (vs 0,01% normal)</li>
+<li><strong>Resposta exagerada:</strong> Produção massiva de citocinas</li>
+</ul>
+
+<h3>Consequências Clínicas</h3>
+
+<ul>
+<li><strong>Inflamação sistêmica intensa:</strong> Febre alta, mialgia, artralgia</li>
+<li><strong>Síndrome do choque tóxico:</strong> Produção excessiva de TNF-α, IL-1β, IL-6</li>
+<li><strong>Exemplos de superantígenos:</strong> Toxina TSST-1 (S. aureus), enterotoxinas estafilocócicas</li>
+</ul>
+
+            </div>
+        </div>
+
+        <!-- AULA 6 -->
+        <div class="lecture" id="aula6">
+            <div class="lecture-header">
+                <span>📅 AULA 6 (03/16): Sistema Imune e Órgãos Linfoides</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>Repertório de Linfócitos T e Tolerância</h2>
+
+<h3>Formação de Repertório</h3>
+
+<p><strong>Com cada antígeno encontrado na vida, forma-se um CLONE específico de linfócito T.</strong></p>
+
+<ul>
+<li>Primeira infância = período crítico de formação de repertório</li>
+<li>Contato com patógenos ambientais "educa" sistema imune</li>
+<li><strong>Razão para não superproteger criança:</strong> Interação com ambiente (controlada, não perigosa) forma memória duradoura</li>
+<li><strong>MAS:</strong> Não significa abandonar vacinação - vacinação é contato SEGURO com patógeno</li>
+</ul>
+
+<h2>Disseminação vs Metástase - Conceitos Oncológicos</h2>
+
+<h3>Disseminação</h3>
+
+<p><strong>Células se desprendem da massa tumoral primária.</strong> Primeira etapa. Nem todas atingem sobrevida em outro sítio.</p>
+
+<h3>Metástase</h3>
+
+<p><strong>Células disseminadas se FIXAM e IMPLANTAM em outro local com sucesso.</strong> Segundo estágio. Requer adaptação ao novo microambiente.</p>
+
+<p><strong>Frequência:</strong> ~99,9% das células disseminadas morrem. Célula que consegue fazer metástase é exceção rara com propriedades especiais.</p>
+
+<h2>Circulação de Linfócitos</h2>
+
+<h3>Recirculação Constante</h3>
+
+<p><strong>Linfócitos NÃO ficam parados em um local.</strong> Recirculam continuamente:</p>
+
+<ul>
+<li>Sangue → linfonodo (via vaso aferente)</li>
+<li>Dentro linfonodo (contato com APC)</li>
+<li>Linfa → sangue (via vaso eferente)</li>
+<li>De novo para outro linfonodo</li>
+</ul>
+
+<p><strong>Importância:</strong> Vigilância imunológica constante. Antígeno em um sítio recruta linfócito de qualquer lugar do corpo.</p>
+
+            </div>
+        </div>
+
+        <!-- AULA 7 -->
+        <div class="lecture" id="aula7">
+            <div class="lecture-header">
+                <span>📅 AULA 7 (03/23): Imunógenos, Linfócito B e Imunização</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="lecture-content">
+
+<h2>Antígeno vs Imunógeno - Distinção Crítica</h2>
+
+<div class="warning">
+VAI CAIR NA PROVA: Toda questão sobre "qual é imunogênico" testa esse conceito. Diferença é fundamental.
+</div>
+
+<h3>ANTÍGENO</h3>
+
+<ul>
+<li><strong>Definição:</strong> Qualquer molécula que é RECONHECIDA pelo sistema imune</li>
+<li><strong>Característica:</strong> Pode ou NÃO ativar resposta</li>
+<li><strong>Exemplo:</strong> Tolerógeno (induz tolerância ao invés de ativação) é antígeno mas NÃO imunógeno</li>
+</ul>
+
+<h3>IMUNÓGENO</h3>
+
+<ul>
+<li><strong>Definição:</strong> Substância que INTERAGE COM o SI E ATIVA linfócitos</li>
+<li><strong>Característica:</strong> Tem "imunogenicidade" - capacidade de ativar</li>
+<li><strong>Exemplo:</strong> Proteína estruturada é imunógeno; mesma proteína amorf é apenas antígeno</li>
+</ul>
+
+<h3>⚠️ Mnemônica</h3>
+
+<div class="mnemonic">
+"TODO imunógeno é antígeno, mas NEM TODO antígeno é imunógeno."
+Antígeno é categoria maior; imunógeno é subcategoria que ATIVA.
+</div>
+
+<h2>Propriedades dos Imunógenos Ativadores de B</h2>
+
+<div class="warning">
+TODAS essas 5 propriedades são IMPORTANTÍSSIMAS para compreender qual antígeno vai ativar B melhor. Aparecem constantemente em avaliações.
+</div>
+
+<h3>1. DISTÂNCIA FILOGENÉTICA</h3>
+
+<p><strong>Quanto MAIOR a distância evolutiva, MAIS imunogênico.</strong></p>
+
+<table>
+<tr>
+<th>Origem do Antígeno</th>
+<th>Imunogenicidade</th>
+</tr>
+<tr>
+<td>Próprio (self)</td>
+<td>Muito baixa (tolerância)</td>
+</tr>
+<tr>
+<td>Outro mamífero</td>
+<td>Baixa</td>
+</tr>
+<tr>
+<td>Outro animal não-mamífero</td>
+<td>Moderada</td>
+</tr>
+<tr>
+<td>Fungo</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>Bactéria</td>
+<td>Muito alta</td>
+</tr>
+<tr>
+<td>Vírus</td>
+<td>Excepcional</td>
+</tr>
+</table>
+
+<p><strong>Razão:</strong> Quanto mais diferente da proteína própria, mais o si reconhece como não-self.</p>
+
+<h3>2. PESO MOLECULAR</h3>
+
+<p><strong>Ótimo: 10.000-100.000 Daltons.</strong></p>
+
+<ul>
+<li>Muito pequeno (<1.000 Da): NÃO forma epítopo suficiente</li>
+<li>Ótimo (10-100 kDa): Múltiplos epítopos, tamanho ideal</li>
+<li>Muito grande (>100 kDa): Difícil processar, estrutura complexa</li>
+</ul>
+
+<p><strong>EXCEÇÃO:</strong> Insulina (~3.000 Da) é imunogênica porque tem complexidade espacial elevada (muitas pontes dissulfeto, estrutura rígida).</p>
+
+<h3>3. CONFIGURAÇÃO ESPACIAL</h3>
+
+<p><strong>Quanto MAIS complexo o dobramento 3D, mais imunogênico.</strong></p>
+
+<ul>
+<li>Estrutura linear simples: baixa imunogenicidade</li>
+<li>Estrutura com alfa-hélices: moderada</li>
+<li>Estrutura com múltiplos domínios: alta</li>
+<li>Razão: melhor encaixe nas CDRs (Complementarity Determining Regions) do BCR</li>
+</ul>
+
+<h3>4. NATUREZA QUÍMICA</h3>
+
+<p><strong>Ranking de imunogenicidade (do melhor para pior):</strong></p>
+
+<table>
+<tr>
+<th>Tipo de Molécula</th>
+<th>Imunogenicidade</th>
+<th>Observação</th>
+</tr>
+<tr>
+<td>Proteína</td>
+<td>Excelente</td>
+<td>Melhor ativador de B E ÚNICO ativador de T</td>
+</tr>
+<tr>
+<td>Polissacarídeo</td>
+<td>Boa</td>
+<td>Ativa B mas NÃO ativa T bem (timoindependente)</td>
+</tr>
+<tr>
+<td>Lipídeo</td>
+<td>Razoável</td>
+<td>Ativa B mas não ideal</td>
+</tr>
+<tr>
+<td>Nucleotídeo</td>
+<td>Baixa</td>
+<td>Reconhecido mas fracamente</td>
+</tr>
+</table>
+
+<p><strong>Clínica:</strong> Polissacarídeos sozinhos (ex: meningococo cápsula) ativam B mas fracassam em vacinação. Solução: conjugação a proteína.</p>
+
+<h3>5. PROPRIEDADES FÍSICAS</h3>
+
+<p><strong>Particulado > Solúvel.</strong></p>
+
+<ul>
+<li><strong>Particulado:</strong> Bactéria inteira, vírus, agregados proteicos - EXCELENTE ativador</li>
+<li><strong>Solúvel:</strong> Proteína dissolvida em solução - bom ativador mas menor que particulado</li>
+<li><strong>Razão:</strong> Particula = múltiplos epítopos em 3D = melhor ligação cruzada de BCR</li>
+</ul>
+
+<h2>Timodependentes vs Timoindependentes</h2>
+
+<div class="warning">
+CRÍTICO: Timodependentes geram IgG com memória. Timoindependentes geram só IgM sem memória. Diferença define sucesso vacinal.
+</div>
+
+<h3>Antígenos T-DEPENDENTES (Proteicos)</h3>
+
+<ul>
+<li><strong>Exemplos:</strong> Todas as proteínas virais, proteínas bacterianas secretadas, toxóides</li>
+<li><strong>Ativação:</strong> B precisa de ajuda de TFH</li>
+<li><strong>Processo:</strong>
+  <ul>
+  <li>B apresenta epítopo a TFH via HLA II</li>
+  <li>TFH fornece citocinas e sinais co-estimulatórios</li>
+  <li>B sofre switch para IgG/IgA/IgE</li>
+  <li>Maturação de afinidade no centro germinativo</li>
+  </ul>
+</li>
+<li><strong>Resultado:</strong> IgG, alta afinidade, MEMÓRIA DURADOURA</li>
+<li><strong>Vacinação:</strong> Sucesso garantido (na maioria)</li>
+</ul>
+
+<h3>Antígenos T-INDEPENDENTES (Não-Proteicos)</h3>
+
+<ul>
+<li><strong>Exemplos:</strong> Polissacarídeos bacterianos, lipopolissacarídeo, lipídeos</li>
+<li><strong>Ativação:</strong> B é ativado SEM ajuda de T</li>
+<li><strong>Mecanismo:</strong> Ligação cruzada direta de BCR + sinais de Padrão (TLR)</li>
+<li><strong>Resultado:</strong> Apenas IgM, baixa afinidade, POUCA MEMÓRIA</li>
+<li><strong>Vacinação:</strong> Fracasso! Crianças <5 anos NÃO respondem bem (TFH não-desenvolvido)</li>
+</ul>
+
+<h2>Haptenos - Antígenos que Viram Imunógenos</h2>
+
+<h3>Definição</h3>
+
+<p><strong>Hapteno = substância pequena que é APENAS ANTIGÊNICA sozinha.</strong> Do grego haptein = "unir".</p>
+
+<h3>Características</h3>
+
+<ul>
+<li>Molecula pequena (< 1.000 Da)</li>
+<li><strong>Sozinha:</strong> Reconhecida mas NÃO ativa sistema imune (tolerógena)</li>
+<li><strong>Ligada a proteína carreadora:</strong> Ganha imunogenicidade</li>
+</ul>
+
+<h3>Exemplo Clássico: DNP (Dinitrofenol)</h3>
+
+<ul>
+<li>DNP sozinho: antígeno não-imunogênico</li>
+<li>DNP ligado a albumina (via diazotação química): torna-se imunógeno potente</li>
+<li>Resultado: Anticorpos anti-DNP produzidos</li>
+</ul>
+
+<h3>Aplicação Clínica: Alergia Medicamentosa</h3>
+
+<p><strong>Penicilina sozinha é pequena (hapteno). MAS no corpo:</strong></p>
+
+<ul>
+<li>Penicilina metabolita liga-se covalentemente a proteínas corporais (albumina, células T)</li>
+<li>Complexo "penicilina + proteína própria" torna-se imunógeno</li>
+<li>Corpo reconhece e monta resposta anti-penicilina</li>
+<li>Resultado: Reação alérgica</li>
+<li><strong>Mecanismo de tolerância quebrado:</strong> Próprio modificado por droga = "não-próprio"</li>
+</ul>
+
+<h2>Reconhecimento Diferencial: B vs T</h2>
+
+<table>
+<tr>
+<th>Característica</th>
+<th>Linfócito B</th>
+<th>Linfócito T</th>
+</tr>
+<tr>
+<td>Receptor</td>
+<td>BCR (imunoglobulina de superfície)</td>
+<td>TCR (dímero alfa-beta)</td>
+</tr>
+<tr>
+<td>Reconhecimento</td>
+<td>DIRETO, nativo</td>
+<td>Requer processamento + MHC/HLA</td>
+</tr>
+<tr>
+<td>Natureza do antígeno</td>
+<td>Diversas (proteína, polissacarídeo, lipídeo, nucleotídeo)</td>
+<td>SÓ PROTEÍNAS (peptídeos 8-39 amino ácidos)</td>
+</tr>
+<tr>
+<td>Localização do antígeno</td>
+<td>Solúvel ou em superfície</td>
+<td>Sempre em superfície com MHC</td>
+</tr>
+<tr>
+<td>Processamento anterior necessário</td>
+<td>NÃO (reconhece estrutura nativa)</td>
+<td>SIM (peptídeo em sulco MHC)</td>
+</tr>
+</table>
+
+<h2>Imunização Passiva vs Ativa</h2>
+
+<h3>Imunização PASSIVA</h3>
+
+<h4>Definição</h4>
+
+<p><strong>Injeção de anticorpos prontos (IgG).</strong> Não requer geração de resposta imune própria.</p>
+
+<h4>Características</h4>
+
+<ul>
+<li><strong>Duração:</strong> Curta (máximo 3 meses)</li>
+<li><strong>Razão:</strong> Anticorpo estranho é degradado progressivamente (meia-vida ~21 dias)</li>
+<li><strong>Memória:</strong> NÃO gera memória (puro anticorpo)</li>
+<li><strong>Receptor:</strong> Pode causar doença do soro (reação a proteína estrangeira)</li>
+</ul>
+
+<h4>Exemplos Clínicos</h4>
+
+<ul>
+<li><strong>Soroterapia antiofídica:</strong> Anticorpos contra veneno de cobra (obtidos de cavalo imunizado) - efeito rápido mas curto</li>
+<li><strong>IgG materna via placenta:</strong> Feto recebe IgG materno durante gestação - proteção passa com tempo</li>
+<li><strong>IgA no colostro:</strong> Leite materno rico em IgA - proteção do trato GI neonatal</li>
+</ul>
+
+<h3>Hipogamaglobulinemia Transitória</h3>
+
+<p><strong>Período crítico pós-parto:</strong></p>
+
+<ul>
+<li>IgG materno cai progressivamente (degradação normal)</li>
+<li>Neonato ainda NÃO produz muito IgG próprio</li>
+<li>Existe um "vácuo" de ~3 meses onde defesa é baixa</li>
+<li><strong>Importância:</strong> Vacinações durante este período podem ser ineficientes</li>
+</ul>
+
+<h3>Imunização ATIVA</h3>
+
+<h4>Definição</h4>
+
+<p><strong>Contato com antígeno (vivo ou inativo) que ativa próprio sistema imune.</strong> Geração de resposta específica.</p>
+
+<h4>Características</h4>
+
+<ul>
+<li><strong>Duração:</strong> MUITO longa (15+ anos vacinação, ~40 anos infecção natural)</li>
+<li><strong>Razão:</strong> Células de memória B e T permanecem dormentes, reativam rapidamente</li>
+<li><strong>Memória:</strong> Gera memória duradoura</li>
+<li><strong>Qualidade:</strong> Infecção natural > vacinação (exposição repetida amplifica memória)</li>
+</ul>
+
+<h4>Exemplo: Hepatite B</h4>
+
+<ul>
+<li><strong>Transmissão:</strong> 30% de chance de infecção após exposição (100x mais que HIV = 0,3%)</li>
+<li><strong>Vacina:</strong> HBsAg (antígeno de superfície, recombinante)</li>
+<li><strong>Resposta:</strong> ~90% dos vacinados desenvolvem anti-HBs (anticorpo protetor)</li>
+<li><strong>Não-respondedores:</strong> 10% não respondem
+  <ul>
+  <li>Tentativa: 4ª dose de reforço</li>
+  <li>Se continua negativo: 5ª dose</li>
+  <li>Se persistir: avaliação de imunodeficiência genética</li>
+  </ul>
+</li>
+<li><strong>Estrutura viral:</strong>
+  <ul>
+  <li>HBsAg (superfície) = antígeno vacinal</li>
+  <li>HBcAg (core) = marcador de replicação</li>
+  <li>HBeAg (e-antígeno) = infectividade</li>
+  <li>DNA polimerase = replicação</li>
+  </ul>
+</li>
+</ul>
+
+<h3>Protocolo PEP - Pós-Acidente Ocupacional com Hepatite B</h3>
+
+<p><strong>Pós-exposição (ex: agulha furada):</strong></p>
+
+<ul>
+<li><strong>Imunização PASSIVA:</strong> Gamaglobulina hiperimune anti-HBs IMEDIATAMENTE</li>
+<li><strong>Imunização ATIVA:</strong> Vacina de Hepatite B SIMULTANEAMENTE</li>
+<li><strong>Racional:</strong> Passiva protege enquanto ativa gera memória duradoura</li>
+</ul>
+
+<h2>Febre Reumática - Reação Cruzada Perigosa</h2>
+
+<p><strong>Streptococcus pyogenes (GAS) como modelo de complicação imunológica:</strong></p>
+
+<h3>Mecanismo</h3>
+
+<ul>
+<li><strong>Patógeno:</strong> Streptococcus pyogenes causa faringite aguda</li>
+<li><strong>Proteína M:</strong> Proteína de superfície em S. pyogenes</li>
+<li><strong>Problema:</strong> Proteína M tem epítopos SEMELHANTES a estruturas cardíacas humanas (tropomiosina, miosina)</li>
+<li><strong>Resposta imune:</strong> Corpo monta anticorpos anti-Proteína M</li>
+<li><strong>Reação cruzada:</strong> Anticorpos também reagem contra próprio coração</li>
+</ul>
+
+<h3>Frequência e Importância Clínica</h3>
+
+<ul>
+<li><strong>Frequência:</strong> ~3% dos casos NÃO TRATADOS de faringite estreptocócica evoluem para febre reumática</li>
+<li><strong>Prevenção:</strong> Antibióticos (penicilina) matam bactéria antes de resposta imune cruzada</li>
+<li><strong>Sequela:</strong> Cardite pós-estreptocócica → insuficiência mitral → necessidade de valvoplastia/prótese</li>
+</ul>
+
+<h2>Classes de Imunoglobulinas - Os 5 Tipos</h2>
+
+<h3>IgM (Imunoglobulina M)</h3>
+
+<ul>
+<li><strong>Forma no soro:</strong> Pentamérica (5 Y ligados por cadeia J)</li>
+<li><strong>Peso molecular:</strong> 900 kDa (maior Ig)</li>
+<li><strong>BCR:</strong> Monomérica como receptor de célula B</li>
+<li><strong>Cadeia pesada:</strong> μ (mi)</li>
+<li><strong>Primeira resposta:</strong> Primeira Ig produzida em resposta primária</li>
+<li><strong>Fixa complemento:</strong> Excelente (pentamérica = múltiplos C1q)</li>
+<li><strong>Atravessa placenta:</strong> NÃO (muito grande)</li>
+<li><strong>Significado clínico:</strong> Marcador de infecção AGUDA</li>
+</ul>
+
+<h3>IgG (Imunoglobulina G)</h3>
+
+<ul>
+<li><strong>Forma:</strong> Monomérica (1 Y)</li>
+<li><strong>Subclasses:</strong> 4 tipos (IgG1, IgG2, IgG3, IgG4)</li>
+<li><strong>Cadeia pesada:</strong> γ (gama)</li>
+<li><strong>Resposta:</strong> Predominante em resposta secundária</li>
+<li><strong>Fixa complemento:</strong> Sim (especialmente IgG1 e IgG3)</li>
+<li><strong>Atravessa placenta:</strong> SIM (único Ig placentário) - proteção fetal</li>
+<li><strong>Atravessa BBB:</strong> Limitadamente (não bem em CNS)</li>
+<li><strong>Significado clínico:</strong> Marcador de memória/infecção crônica ou vacinação</li>
+</ul>
+
+<h3>IgA (Imunoglobulina A)</h3>
+
+<ul>
+<li><strong>Forma sérica:</strong> Monomérica (IgA1, IgA2)</li>
+<li><strong>Forma em secreções:</strong> Dimérica (2 Y ligados por cadeia J)</li>
+<li><strong>Cadeia pesada:</strong> α (alfa)</li>
+<li><strong>Localização:** Predominante em mucosas (saliva, lágrimas, colostro, muco intestinal)</li>
+<li><strong>Função:</strong> Primeira linha de defesa em superfícies mucosas</li>
+<li><strong>Fixa complemento:</strong> NÃO (via clássica). Ativa via alternativa</li>
+<li><strong>Atravessa placenta:</strong> NÃO (monomérica sérica)</li>
+<li><strong>Leite materno:</strong> IgA2 dimérica no colostro - proteção neonatal trato GI</li>
+</ul>
+
+<h3>IgD (Imunoglobulina D)</h3>
+
+<ul>
+<li><strong>Localização:</strong> Membrana de célula B (receptor de antígeno)</li>
+<li><strong>Função:</strong> Função ainda não completamente entendida</li>
+<li><strong>Cadeia pesada:</strong> δ (delta)</li>
+<li><strong>Concentração sérica:</strong> Muito baixa</li>
+<li><strong>Papel:</strong> Possível co-receptor com IgM em ativação de B</li>
+</ul>
+
+<h3>IgE (Imunoglobulina E)</h3>
+
+<ul>
+<li><strong>Concentração sérica:</strong> Muito BAIXA (nanograma/mL)</li>
+<li><strong>Meia-vida:</strong> Curta (~2 dias) mas liga-se fortemente a mastócitos/basófilos</li>
+<li><strong>Receptor:</strong> Alta afinidade em mastócitos e basófilos</li>
+<li><strong>Cadeia pesada:</strong> ε (épsilon)</li>
+<li><strong>Funções:</strong>
+  <ul>
+  <li>Alergia imediata (reações anafiláticas)</li>
+  <li>Resposta a helmintos</li>
+  <li>Resposta a parasitas</li>
+  </ul>
+</li>
+<li><strong>Mecanismo de alergia:</strong> Ligação cruzada de IgE em mastócito → degranulação → liberação histamina/mediadores → sintomas alérgicos</li>
+</ul>
+
+<h3>Cadeias Leves</h3>
+
+<p><strong>Todas as Igs têm cadeias leves que podem ser:</strong></p>
+
+<ul>
+<li><strong>Kappa (κ):</strong> Tipo 1 (65% das Igs)</li>
+<li><strong>Lambda (λ):</strong> Tipo 2 (35% das Igs)</li>
+<li><strong>Função:</strong> Contribuem para sítio de ligação de antígeno</li>
+<li><strong>Importância:</strong> Proporção kappa:lambda alterada pode indicar neoplasia (mieloma produz um tipo)</li>
+</ul>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Resumo de Imunologia P1 - Estudante | Atualizado em 23/03/2026 | Para fins educacionais apenas</p>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const htmlElement = document.documentElement;
+
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            updateButtonText();
+        });
+
+        function updateButtonText() {
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeBtn.textContent = 'Modo Claro';
+            } else {
+                darkModeBtn.textContent = 'Modo Escuro';
+            }
+        }
+
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        updateButtonText();
+
+        // Lecture Collapse/Expand
+        document.querySelectorAll('.lecture-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.closest('.lecture').classList.toggle('collapsed');
+            });
+        });
+
+        // Expand All Button
+        document.getElementById('expandAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.lecture').forEach(lecture => {
+                lecture.classList.remove('collapsed');
+            });
+        });
+
+        // Collapse All Button
+        document.getElementById('collapseAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.lecture').forEach(lecture => {
+                lecture.classList.add('collapsed');
+            });
+        });
+
+        // Print Button
+        document.getElementById('printBtn').addEventListener('click', () => {
+            window.print();
+        });
+
+        // Search/Highlight Functionality
+        const searchInput = document.getElementById('searchInput');
+        let currentHighlight = 0;
+        let highlights = [];
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            // Remove previous highlights
+            document.querySelectorAll('.search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                while (el.firstChild) {
+                    parent.insertBefore(el.firstChild, el);
+                }
+                parent.removeChild(el);
+            });
+
+            highlights = [];
+            currentHighlight = 0;
+
+            if (searchTerm.length > 0) {
+                const walker = document.createTreeWalker(
+                    document.querySelector('.container'),
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+
+                let node;
+                while (node = walker.nextNode()) {
+                    if (node.nodeValue.toLowerCase().includes(searchTerm)) {
+                        const regex = new RegExp(`(${searchTerm})`, 'gi');
+                        const span = document.createElement('span');
+                        span.innerHTML = node.nodeValue.replace(regex, '<mark class="search-highlight">$1</mark>');
+                        node.parentNode.replaceChild(span, node);
+
+                        const marks = span.querySelectorAll('mark');
+                        marks.forEach(mark => highlights.push(mark));
+                    }
+                }
+
+                if (highlights.length > 0) {
+                    highlights[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    highlights[0].classList.add('current');
+                }
+            }
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && highlights.length > 0) {
+                highlights[currentHighlight].classList.remove('current');
+                currentHighlight = (currentHighlight + 1) % highlights.length;
+                highlights[currentHighlight].classList.add('current');
+                highlights[currentHighlight].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+
+        // Add CSS for search highlights
+        const style = document.createElement('style');
+        style.textContent = `
+            .search-highlight {
+                background-color: #fff3cd;
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+
+            body.dark-mode .search-highlight {
+                background-color: #664d00;
+                color: #ffd700;
+            }
+
+            .search-highlight.current {
+                background-color: #ffc107;
+                font-weight: bold;
+            }
+
+            body.dark-mode .search-highlight.current {
+                background-color: #ff8c00;
+            }
+
+            mark {
+                background-color: transparent;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

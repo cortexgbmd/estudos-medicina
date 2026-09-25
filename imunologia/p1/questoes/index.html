@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questões de Imunologia — P1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:#fff; color:#222; }
+body.dark { background:#181818; color:#d4d4d4; }
+.hdr { background:#222; color:#fff; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; }
+body.dark .hdr { background:#111; }
+.hdr h1 { font-size:15px; font-weight:600; }
+.hdr button { background:transparent; border:1px solid #555; color:#ccc; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:12px; }
+.hdr button:hover { border-color:#999; color:#fff; }
+.wrap { max-width:750px; margin:20px auto; padding:0 16px; }
+.prog { height:3px; background:#e0e0e0; margin-bottom:20px; }
+body.dark .prog { background:#333; }
+.prog-fill { height:3px; background:#444; width:0%; transition:width .3s; }
+body.dark .prog-fill { background:#888; }
+.grid { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:20px; }
+.grid button { width:32px; height:28px; font-size:11px; border:1px solid #ddd; background:#fff; color:#222; border-radius:3px; cursor:pointer; padding:0; }
+body.dark .grid button { background:#222; border-color:#444; color:#ccc; }
+.grid button.cur { border-color:#222; font-weight:700; background:#f0f0f0; }
+body.dark .grid button.cur { border-color:#aaa; background:#333; }
+.grid button.done { background:#e8e8e8; }
+body.dark .grid button.done { background:#2a2a2a; }
+.grid button.right { border-left:2px solid #4a4; }
+.grid button.wrong { border-left:2px solid #a44; }
+.qcard { border:1px solid #e0e0e0; padding:24px; margin-bottom:20px; }
+body.dark .qcard { border-color:#333; }
+.qinfo { display:flex; justify-content:space-between; margin-bottom:16px; }
+.qnum { font-weight:600; font-size:14px; }
+.diff { font-size:11px; padding:2px 8px; border:1px solid #999; border-radius:3px; }
+.qtxt { font-size:15px; line-height:1.7; margin-bottom:20px; }
+.opt { display:block; width:100%; text-align:left; padding:12px 16px; margin-bottom:8px; border:1px solid #ddd; background:#fff; font-size:14px; line-height:1.5; cursor:pointer; border-radius:4px; font-family:inherit; }
+body.dark .opt { background:#1e1e1e; border-color:#333; color:#d4d4d4; }
+.opt:hover { background:#f5f5f5; }
+body.dark .opt:hover { background:#252525; }
+.opt.sel { border-color:#444; background:#f0f0f0; }
+body.dark .opt.sel { border-color:#888; background:#2a2a2a; }
+.opt.correct { border-color:#4a4; background:#efffef; }
+body.dark .opt.correct { border-color:#4a4; background:#1a2e1a; }
+.opt.wrong { border-color:#a44; background:#fff0f0; }
+body.dark .opt.wrong { border-color:#a44; background:#2e1a1a; }
+.btns { display:flex; gap:8px; margin-top:16px; }
+.btns button { padding:8px 16px; border:1px solid #444; background:#222; color:#fff; border-radius:4px; cursor:pointer; font-size:13px; font-family:inherit; }
+body.dark .btns button { background:#333; border-color:#555; }
+.btns button:hover { background:#333; }
+.expl { margin-top:16px; padding:16px; background:#fafafa; border-left:3px solid #222; display:none; font-size:14px; line-height:1.6; }
+body.dark .expl { background:#1e1e1e; border-left-color:#888; }
+.expl.show { display:block; }
+.score { text-align:center; padding:40px; font-size:18px; display:none; }
+.score h2 { margin-bottom:16px; }
+.nav { display:flex; justify-content:space-between; margin-top:16px; }
+.nav button { padding:8px 20px; border:1px solid #ddd; background:#fff; cursor:pointer; border-radius:4px; font-family:inherit; font-size:13px; }
+body.dark .nav button { background:#222; border-color:#444; color:#ccc; }
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>Questões de Imunologia — P1 | 3º Semestre</h1>
+  <div><button onclick="document.body.classList.toggle('dark')">Modo</button></div>
+</div>
+<div class="wrap">
+  <div class="prog"><div class="prog-fill" id="pf"></div></div>
+  <div class="grid" id="grid"></div>
+  <div class="qcard" id="qcard"></div>
+  <div class="nav">
+    <button onclick="go(-1)">← Anterior</button>
+    <button onclick="go(1)">Próxima →</button>
+  </div>
+  <div class="score" id="score"></div>
+</div>
+<script>
+const Q=[
+  {
+    "number": 1,
+    "question": "Sistema complemento: \"Uma via é iniciada por anticorpos IgG ou IgM ligados ao patógeno.\" Qual via e primeiro componente?",
+    "options": [
+      "Via alternativa — Fator B",
+      "Via clássica — C1q",
+      "Via alternativa — C3 espontâneo",
+      "Via das lectinas — C4",
+      "Via das lectinas — MBL"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Via CLÁSSICA = iniciada por anticorpo (IgG/IgM) → C1q se liga ao Fc do anticorpo. Via alternativa = PAMPs. Via lectinas = MBL.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 2,
+    "question": "Paciente diabético tipo 1 desde os 12 anos. Tipagem HLA: DR3/DR4. Qual mecanismo patogênico explica a relação entre HLA e DM1?",
+    "options": [
+      "HLA-DR3/DR4 codifica receptores que atraem vírus para células beta",
+      "HLA-DR3/DR4 apresenta peptídeos de células beta de forma que favorece ativação de linfócitos T autorreativos",
+      "HLA-DR3/DR4 impede maturação de linfócitos T no timo",
+      "HLA-DR3/DR4 bloqueia produção de insulina diretamente",
+      "A tipagem HLA determina que o paciente não pode produzir anticorpos"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "HLA-DR3/DR4 → sulco de ligação favorece apresentação de autoantígenos de células beta → ativação de T autorreativos → destruição autoimune.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 3,
+    "question": "Hemograma de paciente internado com apendicite aguda complicada: leucócitos 22.000/mm³, presença de metamielócitos e mielócitos. Significado?",
+    "options": [
+      "Resultado normal para adulto saudável",
+      "Desvio à esquerda por mobilização emergencial de formas imaturas da medula",
+      "Deficiência de vitamina B12",
+      "Leucemia mielóide crônica",
+      "Infecção viral crônica com linfocitose"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Metamielócitos e mielócitos no sangue = formas IMATURAS = desvio à esquerda. Indica mobilização emergencial por infecção grave.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 4,
+    "question": "Paciente de 60 anos com câncer de pulmão é avaliado. Células tumorais expressam HLA classe I na superfície. Qual célula do sistema imune é responsável por reconhecer e induzir apoptose nessas células neoplásicas?",
+    "options": [
+      "Linfócito B via anticorpos anti-tumorais",
+      "Neutrófilo via burst oxidativo",
+      "Eosinófilo via proteína básica principal",
+      "Linfócito T CD8+ via reconhecimento de peptídeos tumorais apresentados por HLA classe I",
+      "Basófilo via liberação de histamina"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "CD8+ reconhece peptídeos (mutações tumorais) apresentados via HLA-I → induz apoptose via perforina/granzima. Vigilância imunológica.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 5,
+    "question": "Paciente de 45 anos em uso crônico de colutórios antissépticos orais desenvolve placas esbranquiçadas na mucosa oral. Cultura confirma Candida albicans. Qual é o mecanismo?",
+    "options": [
+      "O colutório estimula diretamente o crescimento de fungos",
+      "O colutório inativa o sistema complemento na saliva",
+      "O colutório causa imunossupressão sistêmica de linfócitos T",
+      "O colutório causa disbiose oral, eliminando bactérias que competem com Candida e permitindo seu sobrecrescimento",
+      "O colutório degrada IgA secretória da saliva"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "Colutórios matam bactérias comensais → disbiose → Candida sem competição prolifera. Mesmo princípio de C. difficile com antibióticos.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 6,
+    "question": "\"A célula dendrítica é 10x mais eficiente que o macrófago e é a ÚNICA capaz de ativar um linfócito T virgem.\" Na pele, qual é seu nome?",
+    "options": [
+      "Célula de Langerhans",
+      "Macrófago alveolar",
+      "Mastócito dérmico",
+      "Melanócito",
+      "Célula de Kupffer"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Célula de Langerhans = dendrítica da epiderme. Kupffer = macrófago do fígado. Alveolar = macrófago do pulmão.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 7,
+    "question": "Criança de 2 anos recebe vacina meningocócica conjugada. Em vez de só IgM, desenvolve IgG de alta afinidade com memória. Qual célula é essencial para essa conversão?",
+    "options": [
+      "NK ativada no folículo",
+      "Neutrófilo com função apresentadora",
+      "Mastócito desgranulado no centro germinativo",
+      "Célula dendrítica folicular madura",
+      "Linfócito T folicular helper (TFH) que direciona troca de classe no centro germinativo"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Vacina conjugada = proteína → T-dependente → TFH no centro germinativo → switch IgM→IgG + maturação de afinidade + memória.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 8,
+    "question": "Farmacologista explica alergia à penicilina: molécula pequena, incapaz de ativar SI sozinha, mas ao se ligar a proteínas séricas forma complexo que desencadeia resposta. Conceito?",
+    "options": [
+      "Penicilina se liga a TLR4 como PAMP",
+      "Penicilina é superantígeno que ativa 20% dos T",
+      "Penicilina ativa complemento pela via alternativa",
+      "Penicilina funciona como hapteno: sozinha antigênica mas não imunogênica; conjugada a proteína, adquire imunogenicidade",
+      "Penicilina destrói mastócitos por citotoxicidade direta"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "Hapteno = molécula pequena, sozinha não ativa SI. Ligada a proteína carreadora (endógena ou exógena) → ganha imunogenicidade. Penicilina = exemplo clássico.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 9,
+    "question": "Recém-nascido prematuro com hipogamaglobulinemia transitória desenvolve gastroenterite. Equipe enfatiza amamentação precoce. Razão imunológica?",
+    "options": [
+      "Colostro é rico em IgA secretória que protege o TGI do RN",
+      "Colostro fornece linfócitos T maduros",
+      "Amamentação induz maturação precoce do timo",
+      "Leite contém complemento ativo que lisa bactérias",
+      "Leite contém IgG que atravessam intestino"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Colostro = rico em IgA secretória → protege mucosa intestinal. IgG materna atravessa PLACENTA (não intestino). Imunização passiva.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 10,
+    "question": "Mulher de 28 anos com aumento indolor de linfonodos cervicais. Histologia: folículos com centros germinativos ativos, proliferação de B, seleção de clones, troca de classe. Qual órgão?",
+    "options": [
+      "Timo",
+      "Medula óssea",
+      "Linfonodo",
+      "Baço",
+      "Placas de Peyer"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Linfonodo = órgão linfóide secundário, encapsulado, vasos linfáticos aferentes, processa antígenos do interstício via linfa. Local de ativação adaptativa.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 11,
+    "question": "Professor discute subpopulações de T helper: \"Uma subpopulação é especializada em combater bactérias extracelulares agressivas como S. aureus e Pseudomonas, recrutando neutrófilos via IL-17.\" Qual é?",
+    "options": [
+      "TH1",
+      "TH2",
+      "TFH",
+      "TH17",
+      "Treg"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "TH17 produz IL-17 → recruta neutrófilos → combate bactérias extracelulares agressivas e fungos. TH1=intracelulares. TH2=helmintos/alergia.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 12,
+    "question": "HLA classe I: quantos genes e como se dá a herança?",
+    "options": [
+      "12 genes (6 maternos + 6 paternos), expressão co-dominante",
+      "3 genes herdados apenas do pai",
+      "6 genes (3 maternos + 3 paternos), expressão co-dominante",
+      "1 gene haplóide sem variação",
+      "24 genes com expressão monoalélica"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "HLA-I: HLA-A, HLA-B, HLA-C (3 loci). 3 da mãe + 3 do pai = 6 genes. Co-dominância = todos se expressam. HLA-II = 12 genes.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 13,
+    "question": "Paciente HIV+ com CD4 de 45/mm³ desenvolve pneumonia por Pneumocystis jirovecii. Por que não consegue montar resposta?",
+    "options": [
+      "Macrófagos alveolares não conseguem fazer fagocitose",
+      "Linfócitos B foram diretamente destruídos pelo HIV",
+      "Complemento completamente inativado pelo vírus",
+      "Células NK perderam capacidade de reconhecer PAMPs",
+      "HIV destruiu CD4+ virgens e de memória, impossibilitando respostas primárias e secundárias mediadas por T helper"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "CD4 <50 = destruição de virgens E memória. Sem CD4 → sem resposta primária E sem secundária. Infecções oportunistas não são 'aproveitadoras de fraqueza'.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 14,
+    "question": "\"Quando a contagem de neutrófilos diminui abaixo do normal, como chamamos?\"",
+    "options": [
+      "Neutropenia",
+      "Linfocitose",
+      "Trombocitose",
+      "Neutrofilia",
+      "Eosinofilia"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Neutropenia = diminuição de neutrófilos. -penia = diminuição. -filia = aumento. Grave (<500) → risco de infecções severas.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 15,
+    "question": "Slide mostra Ig monomérica com cadeias pesadas γ (gama), 4 subclasses, atravessa tecidos, fixa complemento, marcador de resposta secundária. Qual classe?",
+    "options": [
+      "IgM",
+      "IgA",
+      "IgG",
+      "IgD",
+      "IgE"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "IgG = monomérica, cadeia γ, 4 subclasses, mais abundante no soro, atravessa placenta, fixa complemento, marcador de memória/crônica.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 16,
+    "question": "Imunologista desenha maturação dos neutrófilos. Sequência começa no mieloblasto e termina no segmentado. Qual ordem correta?",
+    "options": [
+      "Mieloblasto → Segmentado → Bastonete → Mielócito → Metamielócito",
+      "Mielócito → Mieloblasto → Metamielócito → Segmentado → Bastonete",
+      "Promielócito → Mieloblasto → Mielócito → Bastonete → Segmentado",
+      "Mieloblasto → Promielócito → Mielócito → Metamielócito → Bastonete → Segmentado",
+      "Mieloblasto → Bastonete → Segmentado → Promielócito → Metamielócito"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "Ordem: Mieloblasto → Promielócito → Mielócito → Metamielócito → Bastonete → Segmentado. Tamanho e potencial mitótico decrescem.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 17,
+    "question": "Aula sobre complemento. \"Fragmento da clivagem de C5 é a anafilatoxina mais potente e principal quimiotático para neutrófilos.\" Qual?",
+    "options": [
+      "C3a",
+      "C5a",
+      "C4a",
+      "C3b",
+      "C9"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "C5a = anafilatoxina MAIS potente + quimiotaxia de neutrófilos. C3a = anafilatoxina menos potente. C3b = opsonina. C9 = forma MAC.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 18,
+    "question": "Citometria de fluxo identifica população CD16+, CD56+ e CD3-. Qual célula?",
+    "options": [
+      "Linfócito T CD4+",
+      "Célula NK",
+      "Linfócito T CD8+",
+      "Linfócito B",
+      "Monócito"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "CD16+/CD56+ e CD3- = NK. CD3+ seria T. CD19 = B. CD14 = monócito. NK é da linhagem linfóide mas NÃO é linfócito T.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 19,
+    "question": "Mãe leva filho de 3 anos ao pediatra preocupada porque brinca na terra. Pediatra explica papel imunológico da exposição ambiental na infância. Fundamento?",
+    "options": [
+      "Contato com antígenos variados expande repertório de linfócitos T e B, formando clones de memória",
+      "Comer terra fornece vitaminas para complemento",
+      "Sujeira contém prebióticos que matam patógenos",
+      "Exposição causa infecções que eliminam linfócitos autorreativos",
+      "Terra contém anticorpos naturais absorvidos pelo intestino"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Exposição antigênica na infância = expande repertório = mais clones de memória. 'Não superproteja a criança'. MAS continue vacinando.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 20,
+    "question": "\"Qual é a diferença fundamental entre mastócito e basófilo?\" Professor responde sobre localização.",
+    "options": [
+      "Ambos circulam no sangue periférico normalmente",
+      "Mastócito circula no sangue e basófilo reside no tecido",
+      "Nenhum dos dois contém histamina",
+      "Basófilo circula no sangue, enquanto mastócito reside fixo nos tecidos, próximo a vasos",
+      "Mastócito aparece rotineiramente no hemograma diferencial"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "Basófilo = sangue (0-1% no hemograma). Mastócito = tecido (NÃO circula, NÃO aparece em hemograma). Ambos têm histamina e receptor IgE.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 21,
+    "question": "HLA classe II: quantos genes um indivíduo expressa e como se dá a herança?",
+    "options": [
+      "3 genes exclusivamente maternos, sem co-dominância",
+      "6 genes paternos dominantes sobre os maternos",
+      "12 genes (6 maternos + 6 paternos) com expressão co-dominante",
+      "24 genes com expressão aleatória e monoalélica",
+      "4 genes, dois de cada progenitor, com dominância completa"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "HLA-II: DR, DQ, DP (3 loci × 2 alelos = 6 por progenitor). 6 mãe + 6 pai = 12 genes totais. Co-dominância = todos se expressam.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 22,
+    "question": "Neutrófilos com mais de 5 lóbulos nucleares (hipersegmentação) em hemograma de paciente com anemia megaloblástica. O que sugere?",
+    "options": [
+      "Infecção bacteriana aguda com desvio à esquerda",
+      "Leucemia mielóide crônica",
+      "Deficiência de ácido fólico ou vitamina B12",
+      "Resposta alérgica com eosinofilia",
+      "Infecção viral com linfocitose atípica"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Hipersegmentação (>4 lóbulos) = deficiência de folato ou B12. Diferente de desvio à esquerda (formas IMATURAS). Anemia megaloblástica.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 23,
+    "question": "Paciente asmático em crise com eosinofilia. Qual subpopulação de CD4 medeia resposta alérgica com IgE e eosinófilos?",
+    "options": [
+      "TH1",
+      "TH17",
+      "Treg",
+      "TFH",
+      "TH2"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "TH2 = alergia/helmintos. Citocinas: IL-4 (switch IgE), IL-5 (eosinófilos), IL-13. TH1 = intracelulares. TH17 = neutrófilos.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 24,
+    "question": "No estudo dirigido, professor pergunta: \"Todo imunógeno é um antígeno, mas nem todo antígeno é um imunógeno.\" Qual das seguintes afirmações está de acordo com essa premissa?",
+    "options": [
+      "A diferença é apenas semântica, sem relevância clínica ou imunológica",
+      "Antígeno e imunógeno são sinônimos sem distinção prática",
+      "Imunógeno se refere apenas a vírus, enquanto antígeno inclui bactérias",
+      "Antígeno ativa linfócitos e imunógeno apenas é reconhecido sem ativação",
+      "Imunógeno é uma substância capaz de interagir E ativar linfócitos, enquanto antígeno é qualquer molécula reconhecida pelo sistema imune, sem necessariamente ativá-lo"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Antígeno = reconhecido pelo SI. Imunógeno = reconhecido E ativa. Todo imunógeno é antígeno, mas haptenos são antígenos sem ser imunógenos.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 25,
+    "question": "Edward Jenner (1796): inoculou varíola BOVINA em menino, depois varíola HUMANA → sem doença. Princípio imunológico?",
+    "options": [
+      "Vírus bovino colonizou mucosas impedindo fisicamente entrada do vírus humano",
+      "Varíola bovina matou vírus humano por competição direta",
+      "Menino já era naturalmente imune por genética",
+      "Varíola bovina ativou complemento permanentemente",
+      "Exposição ao vírus bovino gerou memória com anticorpos que reconhecem epítopos compartilhados (proteção cruzada)"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Proteção cruzada: varíola bovina e humana compartilham epítopos. Memória gerada contra bovino reconhece humano. Base da vacinação.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 26,
+    "question": "Febre reumática pós-estreptocócica com cardite. Anticorpos contra S. pyogenes reagem com tecido cardíaco. Qual componente bacteriano causa reação cruzada?",
+    "options": [
+      "Proteína M, cujos epítopos mimetizam estruturas cardíacas como miosina",
+      "LPS da parede celular gram-negativa",
+      "Cápsula polissacarídica depositada nas válvulas",
+      "Flagelina reconhecida por TLR5 nos cardiomiócitos",
+      "Toxina eritrogênica que causa necrose do miocárdio"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Proteína M do S. pyogenes = epítopos semelhantes a miosina/tropomiosina cardíaca. 3% dos não tratados: reação cruzada → cardite.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 27,
+    "question": "Professor pergunta: \"Qual é o primeiro anticorpo produzido na resposta primária, com estrutura pentamérica no soro e marcador de fase aguda?\"",
+    "options": [
+      "IgG",
+      "IgA",
+      "IgE",
+      "IgM",
+      "IgD"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "IgM = primeira Ig produzida, pentamérica (5 monômeros), fase AGUDA. IgG = resposta secundária/memória. Switch de classe requer TFH.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 28,
+    "question": "Profissional de saúde sofre acidente com agulha de paciente HBsAg+. Protocolo recomenda dois produtos biológicos simultaneamente. Lógica?",
+    "options": [
+      "Duas doses da vacina em sítios diferentes",
+      "Imunização passiva (imunoglobulina anti-HBs) + ativa (vacina) simultaneamente para proteção imediata e memória",
+      "Dois antibióticos para cepas resistentes",
+      "Interferon + ribavirina",
+      "Antígenos vivos atenuados com inativados"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Passiva (gamaglobulina = anticorpos prontos = proteção imediata) + Ativa (vacina = memória duradoura). HBV tem 30% de transmissão (100x mais que HIV).",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 29,
+    "question": "Pesquisador estuda ativação de T em cultura. Antígeno solúvel puro não ativa T. Ao adicionar APCs, T são ativados. Explicação?",
+    "options": [
+      "T só reconhecem peptídeos processados e apresentados via HLA na superfície de APCs",
+      "T reconhecem antígeno diretamente mas precisam de ambiente adequado",
+      "APCs liberam anticorpos que ativam T",
+      "T na cultura estavam mortos e APCs os ressuscitaram",
+      "O antígeno solúvel era tóxico para as células T"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Linfócitos T NÃO reconhecem antígeno nativo. Precisam que APC processe (fragmente) e apresente peptídeos via HLA. Diferente de B que reconhece direto.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 30,
+    "question": "Paciente com espondilite anquilosante. Tipagem HLA mostra alelo fortemente associado. Qual?",
+    "options": [
+      "HLA-DR3",
+      "HLA-DR4",
+      "HLA-DQ2",
+      "HLA-A2",
+      "HLA-B27"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "HLA-B27 = associação clássica com espondilite anquilosante. HLA-DR3/DR4 = DM1. HLA-DQ2 = doença celíaca.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 31,
+    "question": "\"Na resposta imune, existe diferença crucial entre como B e T reconhecem antígenos.\" Qual alternativa descreve corretamente essa diferença?",
+    "options": [
+      "Ambos reconhecem da mesma forma, diretamente",
+      "B reconhece antígeno diretamente na forma nativa, enquanto T necessita de processamento e apresentação via HLA",
+      "B precisa de processamento via HLA, enquanto T reconhece diretamente",
+      "Apenas T reconhece polissacarídeos",
+      "B reconhece apenas peptídeos lineares"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "BCR = reconhece antígeno NATIVO direto. TCR = precisa de peptídeo processado + HLA. B aceita proteínas, polissacarídeos, lipídeos. T = só proteínas.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 32,
+    "question": "Geneticista estuda PRRs em duas populações expostas a sífilis. Na população A, 70% controla. Na B, apenas 40%. Investigação revela polimorfismos de PRRs. Qual é a interpretação?",
+    "options": [
+      "Polimorfismos genéticos dos PRRs determinam capacidade variável de reconhecimento do Treponema",
+      "A diferença se deve a variações na concentração de IgE",
+      "PRRs são idênticos em todos os humanos",
+      "A população B tem mais CD4+ por razões nutricionais",
+      "Treponema muta mais rápido na população A"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Polimorfismo de PRRs (TLR2, TLR4, CD14) = variação genética na capacidade de detectar PAMPs. Explica por que alguns controlam sífilis e outros não.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 33,
+    "question": "Diplococos corados em rosa (vermelho) na coloração de Gram. Classificação e exemplo clínico compatível?",
+    "options": [
+      "Gram-negativo, Neisseria meningitidis",
+      "Gram-positivo, Staphylococcus aureus",
+      "Gram-positivo, Streptococcus pneumoniae",
+      "Gram-variável, Mycobacterium tuberculosis",
+      "Gram-negativo, Escherichia coli (que é bacilo, não diplococo)"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Rosa/vermelho = Gram-NEGATIVO. Diplococos gram-negativos = Neisseria (meningitidis ou gonorrhoeae). S. aureus = cocos em cacho, gram+.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 34,
+    "question": "Qual célula, originada da linhagem linfóide, mata células infectadas e neoplásicas SEM necessidade de apresentação via HLA e SEM formar memória?",
+    "options": [
+      "Linfócito T CD8+",
+      "Linfócito T CD4+",
+      "Célula NK",
+      "Linfócito B",
+      "Neutrófilo"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "NK = linhagem linfóide, mata SEM MHC/HLA, SEM memória. CD8 precisa de HLA-I. CD4 não mata diretamente.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 35,
+    "question": "Professor pergunta: \"Qual é o nome correto para o conjunto de microrganismos que habitam pele e mucosas?\" Enfatiza que só um termo é aceito na prova.",
+    "options": [
+      "Flora normal",
+      "Microbiota",
+      "Fauna bacteriana",
+      "Microbioma",
+      "Probiótico"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "MICROBIOTA é o termo correto. Professor tira ponto por 'flora'. Microbioma = microbiota + ambiente. Probiótico = microrganismo adicionado.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 36,
+    "question": "Professor pergunta: \"Por que HLA classe I está em praticamente TODAS as células nucleadas do corpo?\"",
+    "options": [
+      "HLA-I é necessária para adesão celular",
+      "Todas as células precisam apresentar antígenos exógenos para CD4+",
+      "HLA-I participa do metabolismo celular básico",
+      "A expressão universal é resquício evolutivo sem função",
+      "Qualquer célula nucleada pode ser infectada ou se tornar neoplásica, necessitando apresentar antígenos endógenos para CD8+"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "HLA-I = em todas nucleadas porque QUALQUER célula pode ser infectada ou virar câncer → CD8 precisa ver peptídeos endógenos para eliminar.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 37,
+    "question": "Professor pergunta: \"Por que dizemos que o linfócito T CD8 é 'citotóxico' se na verdade ele não mata por toxicidade?\" Professor explica o verdadeiro mecanismo.",
+    "options": [
+      "CD8 libera toxinas que causam necrose celular massiva",
+      "CD8 recruta neutrófilos que matam a célula por burst oxidativo",
+      "CD8 fagocita a célula-alvo inteira e a digere",
+      "CD8 produz anticorpos que causam lise mediada por complemento",
+      "CD8 induz APOPTOSE (morte celular programada), não lise ou toxicidade direta — o nome 'citotóxico' é historicamente impreciso"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "CD8 induz apoptose via perforina/granzima (intrínseca) ou Fas/FasL (extrínseca). NÃO mata por lise ou toxicidade.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 38,
+    "question": "Paciente com doença de Crohn em uso crônico de corticoides desenvolve candidíase oral resistente, herpes zoster recorrente e pneumonia por germes atípicos. Qual mecanismo explica a variedade de infecções oportunistas?",
+    "options": [
+      "Corticoides destroem apenas neutrófilos, causando neutropenia isolada",
+      "Corticoides bloqueiam apenas a via do complemento permitindo infecções por encapsulados",
+      "Corticoides ativam excessivamente mastócitos causando anafilaxia crônica",
+      "Corticoides suprimem ampla gama de respostas imunes (TH1, TH17, inflamação), permitindo infecções por fungos, vírus e bactérias atípicas",
+      "Corticoides estimulam TH2 em excesso, causando alergia a todos os microrganismos"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "Corticoides = imunossupressão AMPLA: reduzem TH1, TH17, inflamação. Resultado: candidíase (fungo/TH17), herpes (vírus/TH1), germes atípicos.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 39,
+    "question": "CD8+ mata células-alvo por dois mecanismos: perforina/granzima e Fas/FasL. A via perforina/granzima é mais eficiente. Qual é seu mecanismo?",
+    "options": [
+      "Ligação Fas-FasL que ativa caspases extrínsecas",
+      "Perforina forma poros e granzima B ativa caspase 3, induzindo apoptose irreversível",
+      "Liberação de TNF-α que causa necrose",
+      "Espécies reativas de oxigênio dentro da célula-alvo",
+      "Ativação do complemento pela via clássica na célula"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Perforina fura membrana → granzima B entra → ativa caspase 3 (ponto de não retorno). Mais eficiente que Fas/FasL (via receptor de morte).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 40,
+    "question": "\"Órgão que filtra o SANGUE, possui polpa branca (imunologia) e polpa vermelha (reciclagem de hemácias).\" Qual órgão?",
+    "options": [
+      "Baço",
+      "Linfonodo",
+      "Timo",
+      "Medula óssea",
+      "Apêndice vermiforme"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Baço = filtra SANGUE. Polpa branca = linfócitos. Polpa vermelha = hemocaterese. Linfonodo filtra LINFA (interstício).",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 41,
+    "question": "Enfermeira grávida questiona por que não pode receber certas vacinas. O obstetra explica que a tolerância imunológica ao feto envolve mecanismos hormonais. Qual hormônio é o principal modulador?",
+    "options": [
+      "Estrogênio, que ativa TH1 e aumenta respostas pró-inflamatórias",
+      "Testosterona, que estimula produção de IgE",
+      "Prolactina, que ativa células NK contra o feto",
+      "Cortisol, que elimina completamente todos os linfócitos circulantes",
+      "Progesterona, que desvia a população de T auxiliares favorecendo tolerância"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Progesterona = principal imunomodulador gestacional. Desvia TH1→TH2, favorecendo tolerância ao feto (semi-alogênico).",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 42,
+    "question": "Hemoglobinúria paroxística noturna: episódios de hemólise intravascular. Deficiência de CD55 e CD59. Mecanismo?",
+    "options": [
+      "CD55/CD59 são proteínas de adesão que mantêm hemácias nos vasos",
+      "CD55/CD59 são receptores de EPO essenciais para eritropoese",
+      "Deficiência causa acúmulo de hemoglobina livre tóxica",
+      "Sem CD55/CD59, hemácias são lisadas pelo MAC do complemento descontrolado",
+      "Ausência permite infecção viral direta das hemácias"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "CD55 e CD59 = reguladores do complemento na superfície celular. Sem eles → MAC se deposita nas próprias hemácias → lise intravascular.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 43,
+    "question": "Professor define: \"É o processo pelo qual uma célula do sistema imune sai do vaso sanguíneo, atravessando o endotélio, para chegar ao tecido.\" Qual processo?",
+    "options": [
+      "Quimiotaxia",
+      "Opsonização",
+      "Hemocaterese",
+      "Diapedese",
+      "Apoptose"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "Diapedese = saída do leucócito do vaso para tecido. Quimiotaxia = deslocamento por estímulo químico. Hemocaterese = remoção de hemácias.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 44,
+    "question": "Em aula prática, professor aponta para célula em lâmina de sangue: \"Granulosidade com núcleo bilobado, ~1-4% dos leucócitos, importante em resposta a helmintos e alergia.\" Qual célula?",
+    "options": [
+      "Eosinófilo",
+      "Linfócito T CD4+",
+      "Neutrófilo",
+      "Monócito",
+      "Plaqueta"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Eosinófilo: granulosidade, núcleo bilobado, 1-3%, resposta a helmintos/alergia, Proteína Básica Principal, receptor IgE.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 45,
+    "question": "\"Existe um tipo de substância que é o ÚNICO capaz de ativar tanto linfócitos B quanto T.\" Qual?",
+    "options": [
+      "Ácidos nucléicos — reconhecidos exclusivamente por TLR9 em T",
+      "Polissacarídeos — reconhecidos igualmente por B e T",
+      "Lipídeos — ativadores universais",
+      "Proteínas — único tipo que T reconhece (como peptídeos via HLA), e também ativa B",
+      "Carboidratos simples — metabolizados por todas as células imunes"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "PROTEÍNA = único ativador de T (processada em peptídeos 8-39aa via HLA). B aceita proteínas, polissacarídeos, lipídeos. Proteína = ativa ambos.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 46,
+    "question": "Professor apresenta caso: paciente fez uso de anticorpo monoclonal anti-TNF-α para artrite reumatóide. Meses depois, desenvolveu tuberculose miliar. Qual é a relação entre o medicamento e a tuberculose?",
+    "options": [
+      "Anti-TNF-α ativa diretamente o Mycobacterium tuberculosis",
+      "O anticorpo destrói macrófagos alveolares permitindo entrada do bacilo",
+      "Anti-TNF-α causa neutropenia severa impossibilitando fagocitose",
+      "O bloqueio de TNF-α impede a manutenção dos granulomas que contêm M. tuberculosis, permitindo reativação",
+      "O anticorpo se liga ao bacilo e facilita sua entrada nas células"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "TNF-α é essencial para manter granulomas. Bloqueio → granuloma se desfaz → M. tuberculosis latente reativa → TB miliar disseminada.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 47,
+    "question": "Um estudante pergunta ao professor: \"Qual é o marcador de superfície universal que identifica todos os linfócitos T, sejam eles CD4+ ou CD8+?\"",
+    "options": [
+      "CD3",
+      "CD56",
+      "CD16",
+      "CD19",
+      "CD14"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "CD3 é o marcador universal de linfócitos T. CD16/CD56 = NK. CD19 = B. CD14 = monócitos.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 48,
+    "question": "TLR que reconhece flagelina bacteriana, clinicamente relevante para bactérias flageladas?",
+    "options": [
+      "TLR2",
+      "TLR5",
+      "TLR4",
+      "TLR3",
+      "TLR9"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "TLR5 = flagelina. TLR4 = LPS (gram-negativas). TLR9 = CpG/DNA. TLR3 = dsRNA (vírus).",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 49,
+    "question": "Paciente com infecção bacteriana aguda: leucocitose de 18.000/mm³, 78% de neutrófilos segmentados. Qual termo correto para esse aumento?",
+    "options": [
+      "Linfocitose",
+      "Eosinofilia",
+      "Neutrofilia",
+      "Monocitose",
+      "Basofilia"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "78% de neutrófilos (normal 50-70%) = neutrofilia. Leucocitose com neutrofilia = padrão clássico de infecção bacteriana aguda.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 50,
+    "question": "Neonatologista explica que RN possui anticorpos maternos nos primeiros meses, proteção temporária. Qual classe atravessa placenta?",
+    "options": [
+      "IgG",
+      "IgM",
+      "IgA",
+      "IgE",
+      "IgD"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "IgG = ÚNICA Ig que atravessa placenta (via receptor FcRn). Confere imunidade passiva ao RN. IgA = colostro/leite. IgM = não atravessa (pentamérica, grande).",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 51,
+    "question": "Paciente HIV+ com CD4 80/mm³ e TB pulmonar: radiografia com infiltrado difuso SEM granulomas. Em imunocompetente, TB forma granulomas. Por quê?",
+    "options": [
+      "M. tuberculosis em HIV+ perde capacidade de causar inflamação",
+      "Depleção de CD4 impede ativação de macrófagos que dependem de IFN-γ (TH1) para formar granulomas",
+      "Neutrófilos bloqueiam formação de granulomas em HIV+",
+      "Formação de granulomas depende exclusivamente de B e anticorpos",
+      "HIV destrói diretamente macrófagos alveolares"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Granuloma = macrófagos ativados por TH1 (IFN-γ). Sem CD4 → sem TH1 → sem IFN-γ → sem ativação macrofágica → sem granuloma → TB miliar disseminada.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 52,
+    "question": "Aula sobre propriedades dos imunógenos ativadores de B. \"A faixa ideal de peso molecular está entre...\"",
+    "options": [
+      "100 a 500 Daltons",
+      "Acima de 1.000.000 Daltons",
+      "10.000 a 100.000 Daltons",
+      "Menor que 50 Daltons",
+      "Exatamente 3.000 Da para todas as substâncias"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "PM ótimo = 10-100 kDa. Muito pequeno (<5kDa) = hapteno. Exceção: insulina (~3kDa) pela complexidade espacial.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 53,
+    "question": "Transplante renal com rejeição aguda. Biópsia: infiltrado de T atacando parênquima. Qual molécula é o principal determinante?",
+    "options": [
+      "IgE do receptor contra antígenos do doador",
+      "HLA/MHC incompatível entre doador e receptor, reconhecido pelos linfócitos T",
+      "Proteínas de fase aguda do fígado",
+      "Citocinas TH2 do receptor",
+      "Complemento C5a ativado no enxerto"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Rejeição = reconhecimento de HLA incompatível. Linfócitos T do receptor reconhecem HLA do doador como estranho → ataque ao enxerto.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 54,
+    "question": "Jovem 19 anos, febre alta, cefaleia, rigidez de nuca, vômitos 12h. Punção lombar: líquor turvo, aumento de neutrófilos, proteína elevada, glicose diminuída, diplococos gram-negativos. Interpretação?",
+    "options": [
+      "Pode ser normal, pois é comum haver microbiota no líquor",
+      "A glicose diminuída indica diabetes, não infecção",
+      "Seria preocupante apenas se houvesse partículas virais",
+      "Os diplococos são contaminação da coleta",
+      "Indica agente de doença grave, provavelmente Neisseria meningitidis"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Líquor turvo + neutrófilos + proteína↑ + glicose↓ + diplococos gram-negativos = meningite bacteriana por Neisseria meningitidis.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 55,
+    "question": "Qual estrutura do SI NÃO é encapsulada, é difusa, encontra-se em mucosas e inclui tonsilas, Placas de Peyer e apêndice?",
+    "options": [
+      "MALT (Tecido Linfóide Associado à Mucosa)",
+      "Baço",
+      "Timo",
+      "Medula óssea",
+      "Linfonodo"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "MALT = difuso, NÃO encapsulado. Inclui NALTE (tonsilas), GALTE (Peyer, apêndice), BALTE (brônquios). Linfonodo e baço são encapsulados.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 56,
+    "question": "Criança de 5 anos com amigdalites de repetição. Otorrino sugere tonsilectomia. Imunologista levanta preocupação. Justificativa?",
+    "options": [
+      "Tonsilas são órgãos primários essenciais para maturação de T",
+      "Remoção elimina única fonte de NK",
+      "Tonsilas são reservatório importante de linfócitos B produtores de IgA para proteção de mucosas",
+      "Tonsilas produzem exclusivamente IgG sérica sistêmica",
+      "Sem tonsilas, perde capacidade de produzir complemento"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Tonsilas = MALT/NALTE = reservatório de B produtores de IgA. Remoção reduz produção local de IgA. São SECUNDÁRIOS, não primários.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 57,
+    "question": "Imunologista explica que a resposta TH1 é crucial contra determinados patógenos. \"Essa via ativa macrófagos e CD8+ através de IFN-γ.\" Contra qual tipo de patógeno TH1 é mais importante?",
+    "options": [
+      "Helmintos intestinais e ectoparasitas",
+      "Bactérias extracelulares encapsuladas como S. pneumoniae",
+      "Alérgenos ambientais como pólen e ácaros",
+      "Patógenos INTRACELULARES como vírus, micobactérias e protozoários",
+      "Toxinas bacterianas circulantes no plasma"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "TH1 → IFN-γ → ativa macrófagos (M1) e CD8+ para destruir patógenos INTRACELULARES. TH2 = helmintos/alergia. TH17 = extracelulares agressivas.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 58,
+    "question": "C3b depositado na superfície de bactéria. Macrófagos rapidamente fagocitam essa bactéria marcada. Função do C3b?",
+    "options": [
+      "Anafilatoxina — vasodilatação e edema",
+      "Quimiotaxina — atrai neutrófilos",
+      "Formação de poros — lise direta",
+      "Ativação de mastócitos — histamina",
+      "Opsonina — marca patógeno para fagocitose facilitada"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "C3b = OPSONINA. Marca patógeno → macrófago reconhece C3b via receptor → fagocitose facilitada. C5a = anafilatoxina + quimiotaxia. MAC = lise.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 59,
+    "question": "Uma mulher grávida no primeiro trimestre faz exames de rotina. Sorologia para rubéola: IgM positivo, IgG negativo. O obstetra demonstra preocupação. Por que esse resultado é alarmante?",
+    "options": [
+      "O resultado indica apenas contato prévio sem risco atual",
+      "IgM positivo significa que a paciente é imune e não há risco",
+      "Indica infecção aguda recente por rubéola, com risco de síndrome da rubéola congênita no feto",
+      "A rubéola só é perigosa no terceiro trimestre",
+      "IgM positivo indica vacinação prévia adequada"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "IgM+ e IgG- = infecção AGUDA primária. Rubéola no 1º trimestre causa síndrome congênita (cardiopatia, catarata, surdez).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 60,
+    "question": "Médico explica a estudantes sobre SI inato reconhecendo estruturas típicas de patógenos por receptores inatos. \"Entre as estruturas abaixo, qual NÃO é reconhecida pelo sistema imune inato?\"",
+    "options": [
+      "LPS",
+      "Manose",
+      "RNA dupla-fita",
+      "Flagelina",
+      "Receptores Toll-like (TLRs)"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "TLRs são RECEPTORES (PRRs), não estruturas reconhecidas. LPS, RNA dupla-fita, flagelina e manose são PAMPs (reconhecidos PELOS TLRs).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 61,
+    "question": "\"Quando administramos soro antiofídico após picada de cobra, estamos conferindo proteção imediata, porém temporária.\" Qual característica define esse tipo de imunização?",
+    "options": [
+      "Exposição a antígenos atenuados que estimulam produção de anticorpos próprios com memória",
+      "Transferência de anticorpos prontos, proteção imediata de curta duração sem memória",
+      "Administração de citocinas recombinantes que ativam NK",
+      "Transplante de medula óssea para reconstituir o SI",
+      "Vacinação com vírus inativado que gera IgG duradoura"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Imunização PASSIVA = anticorpos prontos (soro, gamaglobulina, IgG materna, colostro). Imediata mas temporária (máx 3 meses). Sem memória.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 62,
+    "question": "Locais do corpo que devem ser absolutamente estéreis — presença de microrganismo indica infecção. Qual NÃO possui microbiota normalmente?",
+    "options": [
+      "Pele",
+      "Sangue",
+      "Intestino grosso",
+      "Cavidade oral",
+      "Vagina"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Sangue, líquor e SNC = ESTÉREIS (vazio microbiológico). Pele, oral, intestino e vagina possuem microbiota normal.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 63,
+    "question": "TFH (T folicular helper): qual é sua função principal?",
+    "options": [
+      "Ativar macrófagos para destruir patógenos intracelulares",
+      "Recrutar neutrófilos via IL-17",
+      "Suprimir respostas excessivas prevenindo autoimunidade",
+      "Entrar no folículo linfóide e direcionar troca de classe de anticorpo e maturação de afinidade do linfócito B",
+      "Matar células infectadas via perforina/granzima"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "TFH entra NO folículo → ativa B → direciona switch de classe (IgM→IgG/IgA/IgE) + maturação de afinidade no centro germinativo.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 64,
+    "question": "Paciente submetido a quimioterapia: medula aplásica, infecções bacterianas e fúngicas de repetição. Principal consequência imunológica da aplasia?",
+    "options": [
+      "Deficiência isolada de complemento sérico",
+      "Apenas deficiência de T por falha na maturação tímica",
+      "Apenas deficiência de anticorpos por ausência de B",
+      "Perda exclusiva de NK sem afetar outras linhagens",
+      "Pancitopenia com deficiência de todas as linhagens celulares — sem neutrófilos, sem plaquetas, sem eritrócitos"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Medula aplásica = parada de TODA hematopoese → pancitopenia (todas linhagens). Sem neutrófilos = bacterioses/micoses. Sem plaquetas = sangramento.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 65,
+    "question": "Sobre seleção tímica: dos timócitos que entram no timo, qual percentual sobrevive? Professor pede resposta precisa.",
+    "options": [
+      "80% sobrevive como T funcional",
+      "Todos sobrevivem sem seleção",
+      "95% sofre apoptose durante a seleção (positiva e negativa) e apenas ~5% sobrevive",
+      "50% é destruído randomicamente",
+      "Nenhum timócito sobrevive"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Apenas ~5% dos timócitos sobrevivem. A maioria morre na seleção POSITIVA (não reconhece HLA) e uma fração adicional na NEGATIVA (reage a autoantígenos). Corpúsculo de Hassall = evidência.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 66,
+    "question": "Corte histológico do baço mostra duas regiões distintas. Uma delas contém sinusóides vasculares com macrófagos fagocitando hemácias envelhecidas. Qual é esta região e qual processo ocorre nela?",
+    "options": [
+      "Polpa branca — ativação de linfócitos T e B",
+      "Cápsula esplênica — filtração mecânica do sangue",
+      "Zona marginal — produção de anticorpos IgM",
+      "Bainha periarteriolar — apresentação de antígenos",
+      "Polpa vermelha — hemocaterese (remoção de hemácias envelhecidas por macrófagos)"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Polpa vermelha = sinusóides + macrófagos que fazem hemocaterese (reciclagem de hemácias ~120 dias). Polpa branca = linfócitos.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 67,
+    "question": "~10% dos vacinados para HBV não respondem à série primária de 3 doses. Recomendação para não-respondedores?",
+    "options": [
+      "Considerar permanentemente suscetível sem opção",
+      "Imunoglobulina anti-HBs mensalmente por toda vida",
+      "Doses adicionais (4ª e 5ª) e, se persistir, investigar geneticamente",
+      "Vacina de vírus vivo atenuado",
+      "Soro antiofídico como proteção cruzada"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Não-respondedores: 4ª dose → revacinar → 5ª dose → se persistir sem anti-HBs → investigação genética (HLA). ~90% responde. 10% não.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 68,
+    "question": "Professor explica superantígenos: \"Diferentemente de antígenos convencionais que ativam ~0,01% dos linfócitos T, superantígenos podem ativar porcentagem enormemente maior.\" Qual é o mecanismo?",
+    "options": [
+      "Superantígenos são processados normalmente no sulco do HLA, ativando ~1%",
+      "Superantígenos ligam-se diretamente ao MHC FORA do sulco de ligação, ativando até 20% dos linfócitos T, causando tempestade de citocinas",
+      "Superantígenos ativam apenas linfócitos B sem envolvimento de T",
+      "Superantígenos são reconhecidos por TLR em neutrófilos, ativando ~50%",
+      "Superantígenos inibem a ativação de linfócitos T, causando imunossupressão"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Superantígenos byppassam processamento. Ligam-se FORA do sulco do MHC + diretamente à cadeia Vβ do TCR → ativação policlonal massiva (20%).",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 69,
+    "question": "Pesquisador purifica polissacarídeo capsular bacteriano e injeta em camundongos. Resposta: apenas IgM, baixa afinidade, sem memória. Ao conjugar polissacarídeo a proteína carreadora, obtém IgG de alta afinidade com memória. Qual o fundamento?",
+    "options": [
+      "Criar hapteno que ativa exclusivamente CD8+",
+      "Aumentar o peso molecular para ultrapassar 100.000 Daltons",
+      "Fornecer PAMPs adicionais para ativar TLR4",
+      "Permitir reconhecimento direto por células NK",
+      "Transformar antígeno T-independente em T-dependente, permitindo ajuda de TFH para troca de classe e memória"
+    ],
+    "correct": 4,
+    "letter": "E",
+    "explanation": "Polissacarídeo = T-independente (só IgM). Conjugado a proteína = T-dependente → TFH → switch de classe → IgG + memória. Base da vacina conjugada.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 70,
+    "question": "Aula sobre citocinas. \"Quando macrófago fagocita bactéria e detecta PAMPs, libera citocinas pró-inflamatórias que sinalizam perigo.\" Qual das seguintes é citocina pró-inflamatória clássica?",
+    "options": [
+      "IL-10 (anti-inflamatória)",
+      "TGF-β (regulatória)",
+      "TNF-α",
+      "IL-13 (remodelamento tecidual)",
+      "IL-4 (diferenciação TH2)"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "TNF-α = citocina pró-inflamatória clássica por macrófagos. IL-10 e TGF-β são anti-inflamatórias/regulatórias. IL-4 é TH2.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 71,
+    "question": "Em aula de histologia, professor mostra corte de órgão bilobado com regiões cortical e medular distintas. Na medula: corpúsculo de Hassall. Qual órgão e função?",
+    "options": [
+      "Timo — maturação e seleção de linfócitos T",
+      "Baço — hemocaterese e filtração do sangue",
+      "Linfonodo — ativação de linfócitos contra antígenos da linfa",
+      "Medula óssea — hematopoese",
+      "Tonsila palatina — produção de IgA"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Corpúsculo de Hassall = EXCLUSIVO do timo. Indica destruição de timócitos na seleção negativa. Timo = órgão primário de maturação de T.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 72,
+    "question": "Morador em altitude de 4.000 metros tem policitemia (eritrócitos acima de 6 milhões/mm³). Qual hormônio é responsável por esse aumento compensatório?",
+    "options": [
+      "Trombopoetina",
+      "GM-CSF",
+      "Interleucina-3",
+      "Eritropoetina (EPO)",
+      "G-CSF"
+    ],
+    "correct": 3,
+    "letter": "D",
+    "explanation": "EPO = produzida por células peritubulares renais em resposta a hipóxia. Altitude → menor pressão parcial de O₂ → mais EPO → mais eritrócitos.",
+    "difficulty": "Fácil"
+  },
+  {
+    "number": 73,
+    "question": "\"Patógeno escapa do burst oxidativo dentro do macrófago e é transportado até o SNC causando meningoencefalite.\" Qual é?",
+    "options": [
+      "Cryptococcus neoformans",
+      "Aspergillus fumigatus",
+      "Candida albicans",
+      "Histoplasma capsulatum",
+      "Pneumocystis jirovecii"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Cryptococcus sobrevive DENTRO do macrófago → é carregado vivo para SNC → criptococose cerebral. Conceito de 'cavalo de Tróia'.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 74,
+    "question": "Paciente faz exame sorológico para dengue. Resultado: IgM positivo, IgG negativo. Qual é a interpretação correta deste perfil sorológico?",
+    "options": [
+      "Infecção crônica com memória imunológica estabelecida",
+      "Vacinação prévia com resposta adequada",
+      "Infecção AGUDA recente, fase inicial da resposta primária",
+      "Paciente imune por infecção passada",
+      "Resultado falso-positivo sem significado clínico"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "IgM+ IgG- = resposta PRIMÁRIA aguda. IgM é o primeiro anticorpo produzido (pentamérico). IgG aparece depois (switch de classe).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 75,
+    "question": "Paciente HIV+ com CD4 de 150/mm³ desenvolve lesões cutâneas violáceas múltiplas. Biópsia confirma Sarcoma de Kaposi. Por que tumores raros se manifestam em pacientes com AIDS?",
+    "options": [
+      "O HIV causa mutações genéticas diretas que originam tumores",
+      "A imunossupressão permite proliferação bacteriana que causa câncer",
+      "A perda de vigilância imunológica (CD4, CD8, NK) permite que células neoplásicas proliferem sem serem eliminadas",
+      "Os antirretrovirais são carcinogênicos em longo prazo",
+      "O Sarcoma de Kaposi é reação alérgica medicamentosa"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Sarcoma de Kaposi = HHV-8. Em imunocompetentes, NK e CD8 controlam. Em AIDS, perda de vigilância → neoplasias oportunistas.",
+    "difficulty": "Médio"
+  }
+];
+let cur=0,ans={},rev={};
+const $=s=>document.getElementById(s);
+function render(){
+  const q=Q[cur];
+  let h=`<div class="qinfo"><span class="qnum">Questão ${q.number} de ${Q.length}</span><span class="diff">${q.difficulty}</span></div>`;
+  h+=`<div class="qtxt">${q.question}</div>`;
+  q.options.forEach((o,i)=>{
+    let cls="opt";
+    if(rev[cur]){
+      if(i===q.correct) cls+=" correct";
+      else if(ans[cur]===i) cls+=" wrong";
+    } else if(ans[cur]===i) cls+=" sel";
+    h+=`<button class="${cls}" onclick="pick(${i})">${String.fromCharCode(65+i)}) ${o}</button>`;
+  });
+  h+=`<div class="btns"><button onclick="reveal()">Revelar Resposta</button></div>`;
+  h+=`<div class="expl ${rev[cur]?'show':''}" id="expl"><strong>Gabarito: ${String.fromCharCode(65+q.correct)}</strong><br>${q.explanation}</div>`;
+  $("qcard").innerHTML=h;
+  // grid
+  let g="";
+  Q.forEach((qq,i)=>{
+    let c="";
+    if(i===cur) c+=" cur";
+    if(ans[i]!==undefined) c+=" done";
+    if(rev[i]&&ans[i]===Q[i].correct) c+=" right";
+    else if(rev[i]&&ans[i]!==undefined) c+=" wrong";
+    g+=`<button class="${c}" onclick="cur=${i};render()">${i+1}</button>`;
+  });
+  $("grid").innerHTML=g;
+  $("pf").style.width=(Object.keys(rev).length/Q.length*100)+"%";
+}
+function pick(i){ if(!rev[cur]){ ans[cur]=i; render(); } }
+function reveal(){ if(ans[cur]!==undefined){ rev[cur]=true; render(); } }
+function go(d){ cur=Math.max(0,Math.min(Q.length-1,cur+d)); render(); }
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight") go(1);
+  if(e.key==="ArrowLeft") go(-1);
+  if(e.key===" ") reveal();
+});
+render();
+</script>
+</body>
+</html>

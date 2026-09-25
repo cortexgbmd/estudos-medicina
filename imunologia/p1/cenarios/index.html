@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cenários de Ativação Imune</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a28;--surface3:#22223a;
+--text:#e8e8f0;--text2:#9898b0;--text3:#686880;
+--accent:#00e5ff;--accent2:#7c4dff;--accent3:#ff4081;--accent4:#76ff03;--accent5:#ffab00;
+--th1:#ff1744;--th2:#00e676;--th17:#ff9100;--tfh:#7c4dff;--cd8:#e040fb;--damp:#ffab00;
+--glass:rgba(18,18,26,0.7);--border:rgba(255,255,255,0.06);
+--radius:16px;--radius-sm:10px;
+}
+html{scroll-behavior:smooth}
+body{
+font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);
+min-height:100vh;overflow-x:hidden;line-height:1.6;
+}
+/* === ANIMATED BACKGROUND === */
+.bg-scene{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-scene canvas{width:100%;height:100%;opacity:0.15}
+
+/* === HEADER === */
+.hero{
+position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;
+align-items:center;justify-content:center;text-align:center;padding:2rem;
+}
+.hero::before{
+content:'';position:absolute;inset:0;
+background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(0,229,255,0.08),transparent 70%),
+radial-gradient(ellipse 40% 40% at 30% 60%,rgba(124,77,255,0.06),transparent 60%);
+pointer-events:none;
+}
+.hero-label{
+font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.3em;
+text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+background:rgba(0,229,255,0.08);padding:0.5rem 1.5rem;border-radius:100px;
+border:1px solid rgba(0,229,255,0.15);display:inline-block;
+}
+.hero h1{
+font-size:clamp(2.5rem,6vw,5rem);font-weight:700;line-height:1.1;
+margin-bottom:1rem;position:relative;
+}
+.hero h1 span{
+background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+background-clip:text;
+}
+.hero-sub{font-size:1.1rem;color:var(--text2);max-width:600px;margin:0 auto 3rem}
+.hero-nav{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center}
+.hero-nav a{
+text-decoration:none;padding:0.75rem 1.5rem;border-radius:var(--radius-sm);
+font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:500;
+transition:all 0.3s;cursor:pointer;border:1px solid var(--border);
+background:var(--glass);backdrop-filter:blur(20px);color:var(--text);
+display:flex;align-items:center;gap:0.5rem;
+}
+.hero-nav a:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.15)}
+.hero-nav a .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.scroll-hint{
+position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+color:var(--text3);font-size:0.8rem;animation:float 2s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+/* === SCENARIO SECTIONS === */
+.scenario{
+position:relative;z-index:1;padding:6rem 1.5rem;
+border-top:1px solid var(--border);
+}
+.scenario-inner{max-width:1100px;margin:0 auto}
+
+.scenario-header{
+display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:3rem;
+}
+.scenario-icon{
+width:80px;height:80px;border-radius:var(--radius);flex-shrink:0;
+display:flex;align-items:center;justify-content:center;font-size:2.5rem;
+position:relative;overflow:hidden;
+}
+.scenario-icon::before{
+content:'';position:absolute;inset:0;opacity:0.15;border-radius:inherit;
+}
+.scenario-header h2{
+font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;line-height:1.2;margin-bottom:0.25rem;
+}
+.scenario-header .tag{
+font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;
+text-transform:uppercase;opacity:0.5;
+}
+
+/* === TIMELINE / CASCADE === */
+.cascade{
+position:relative;padding-left:3rem;
+}
+.cascade::before{
+content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;
+background:linear-gradient(to bottom,transparent,var(--border) 5%,var(--border) 95%,transparent);
+}
+.step{
+position:relative;margin-bottom:2rem;
+animation:fadeSlide 0.6s ease-out both;
+}
+.step:nth-child(1){animation-delay:0.1s}
+.step:nth-child(2){animation-delay:0.2s}
+.step:nth-child(3){animation-delay:0.3s}
+.step:nth-child(4){animation-delay:0.4s}
+.step:nth-child(5){animation-delay:0.5s}
+.step:nth-child(6){animation-delay:0.6s}
+.step:nth-child(7){animation-delay:0.7s}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+
+.step-dot{
+position:absolute;left:-2.35rem;top:0.5rem;
+width:12px;height:12px;border-radius:50%;border:2px solid;
+background:var(--bg);z-index:1;
+}
+.step-num{
+font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;
+text-transform:uppercase;margin-bottom:0.35rem;
+}
+.step-title{
+font-size:1.15rem;font-weight:600;margin-bottom:0.5rem;
+}
+.step-body{
+color:var(--text2);font-size:0.95rem;line-height:1.7;
+}
+.step-body strong{color:var(--text);font-weight:600}
+
+/* === CARDS INSIDE STEPS === */
+.info-card{
+background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);
+padding:1rem 1.25rem;margin-top:0.75rem;
+}
+.info-card.quote{
+border-left:3px solid var(--accent2);font-style:italic;color:var(--text2);
+font-size:0.9rem;
+}
+.info-card.quote .src{
+display:block;margin-top:0.5rem;font-style:normal;font-size:0.75rem;
+font-family:'JetBrains Mono',monospace;color:var(--text3);
+}
+.cell-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem}
+.cell-tag{
+font-family:'JetBrains Mono',monospace;font-size:0.7rem;
+padding:0.25rem 0.6rem;border-radius:6px;
+background:rgba(255,255,255,0.04);border:1px solid var(--border);
+}
+
+/* === EFFECTOR GRID === */
+.effector-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:1rem;margin-top:1rem;
+}
+.effector-card{
+background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);
+padding:1.25rem;position:relative;overflow:hidden;
+}
+.effector-card::before{
+content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.effector-card h4{font-size:0.95rem;font-weight:600;margin-bottom:0.4rem}
+.effector-card p{font-size:0.85rem;color:var(--text2);line-height:1.6}
+
+/* === DECISION POINT === */
+.decision{
+background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+padding:2rem;margin:3rem 0;position:relative;overflow:hidden;
+}
+.decision::before{
+content:'';position:absolute;top:0;left:0;right:0;height:3px;
+background:linear-gradient(90deg,var(--th1),var(--th2),var(--th17),var(--tfh));
+}
+.decision h3{font-size:1.3rem;font-weight:700;margin-bottom:1rem}
+.decision-branches{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;
+}
+.branch{
+padding:1rem;border-radius:var(--radius-sm);border:1px solid var(--border);
+background:var(--surface2);text-align:center;cursor:pointer;
+transition:all 0.3s;
+}
+.branch:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.12)}
+.branch-icon{font-size:1.5rem;margin-bottom:0.5rem}
+.branch h4{font-size:0.9rem;font-weight:600;margin-bottom:0.25rem}
+.branch p{font-size:0.75rem;color:var(--text2)}
+
+/* === COMPARISON TABLE === */
+.comparison{
+position:relative;z-index:1;padding:6rem 1.5rem;border-top:1px solid var(--border);
+}
+.comparison-inner{max-width:1100px;margin:0 auto}
+.comparison h2{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;margin-bottom:2rem;text-align:center}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.comp-table{
+width:100%;border-collapse:collapse;font-size:0.85rem;
+min-width:700px;
+}
+.comp-table th,.comp-table td{
+padding:0.85rem 1rem;text-align:left;border-bottom:1px solid var(--border);
+}
+.comp-table th{
+font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;
+text-transform:uppercase;color:var(--text3);font-weight:500;
+background:var(--surface);position:sticky;top:0;
+}
+.comp-table td:first-child{
+font-weight:600;color:var(--text);white-space:nowrap;
+}
+.comp-table tr:hover td{background:rgba(255,255,255,0.02)}
+.pill{
+display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;
+font-family:'JetBrains Mono',monospace;
+}
+
+/* === CLINICAL EXAMPLE === */
+.clinical{
+background:linear-gradient(135deg,rgba(255,23,68,0.05),rgba(124,77,255,0.05));
+border:1px solid rgba(255,23,68,0.15);border-radius:var(--radius);
+padding:2rem;margin:2rem 0;
+}
+.clinical-label{
+font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;
+text-transform:uppercase;color:var(--th1);margin-bottom:0.75rem;
+}
+.clinical h4{font-size:1.1rem;font-weight:600;margin-bottom:0.75rem}
+.clinical p{font-size:0.9rem;color:var(--text2);line-height:1.7}
+.clinical p + p{margin-top:0.5rem}
+
+/* === FOOTER === */
+.footer{
+text-align:center;padding:3rem 1.5rem;color:var(--text3);font-size:0.8rem;
+border-top:1px solid var(--border);position:relative;z-index:1;
+}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+.scenario{padding:4rem 1rem}
+.scenario-header{flex-direction:column;gap:1rem}
+.cascade{padding-left:2rem}
+.step-dot{left:-1.6rem}
+.effector-grid{grid-template-columns:1fr}
+.decision-branches{grid-template-columns:1fr 1fr}
+.hero-nav{flex-direction:column;align-items:center}
+}
+@media(max-width:480px){
+.decision-branches{grid-template-columns:1fr}
+}
+
+/* === INTERACTIVE TAB SYSTEM === */
+.tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab-btn{
+padding:0.5rem 1rem;border-radius:var(--radius-sm);border:1px solid var(--border);
+background:var(--surface);color:var(--text2);font-size:0.8rem;cursor:pointer;
+font-family:'JetBrains Mono',monospace;transition:all 0.3s;
+}
+.tab-btn:hover{border-color:rgba(255,255,255,0.15);color:var(--text)}
+.tab-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,0.05)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* === MEMORY SECTION === */
+.memory-section{
+position:relative;z-index:1;padding:6rem 1.5rem;border-top:1px solid var(--border);
+}
+.memory-inner{max-width:1100px;margin:0 auto}
+.memory-flow{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;
+}
+.memory-card{
+background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+padding:1.5rem;position:relative;overflow:hidden;
+}
+.memory-card::before{
+content:'';position:absolute;top:0;left:0;right:0;height:3px;
+background:linear-gradient(90deg,var(--accent4),var(--accent));
+}
+.memory-card h4{font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+.memory-card p{font-size:0.85rem;color:var(--text2);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="bg-scene"><canvas id="bgCanvas"></canvas></div>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+<div class="hero-label">Imunologia P1 — Cenários de Ativação</div>
+<h1>A História do <span>Sistema Imune</span></h1>
+<p class="hero-sub">Cada invasor conta uma história diferente. Cada via de ativação é uma resposta sob medida. Navegue pelos cenários reais que seu corpo enfrenta.</p>
+<nav class="hero-nav">
+<a href="#innate"><span class="dot" style="background:var(--accent)"></span>Reconhecimento Inato</a>
+<a href="#th1"><span class="dot" style="background:var(--th1)"></span>TH1 — Intracelular</a>
+<a href="#th2"><span class="dot" style="background:var(--th2)"></span>TH2 — Parasitas</a>
+<a href="#th17"><span class="dot" style="background:var(--th17)"></span>TH17 — Bactéria Agressiva</a>
+<a href="#damp"><span class="dot" style="background:var(--damp)"></span>DAMP — Dano Tecidual</a>
+<a href="#decision"><span class="dot" style="background:var(--tfh)"></span>Ponto de Decisão</a>
+<a href="#tfh"><span class="dot" style="background:var(--tfh)"></span>TFH — Anticorpos</a>
+<a href="#compare"><span class="dot" style="background:var(--text3)"></span>Comparativo</a>
+</nav>
+<div class="scroll-hint">↓ scroll para explorar</div>
+</section>
+
+<!-- ========== RECONHECIMENTO INATO ========== -->
+<section class="scenario" id="innate">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">🔔</div>
+<div>
+<div class="tag">Fase 0 — O Alarme</div>
+<h2 style="color:var(--accent)">Reconhecimento Inato</h2>
+</div>
+</div>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Passo 01 — Invasão</div>
+<div class="step-title">O patógeno rompe as barreiras</div>
+<div class="step-body">
+O organismo invasor — seja vírus, bactéria, fungo ou parasita — conseguiu ultrapassar as barreiras mecânicas (pele, mucosas), químicas (pH ácido, lisozima, defensinas) e microbiológicas (microbiota residente). Agora ele está no tecido.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Passo 02 — PAMPs & DAMPs</div>
+<div class="step-title">Padrões moleculares são expostos</div>
+<div class="step-body">
+O invasor carrega <strong>PAMPs</strong> — padrões moleculares associados a patógenos. São <strong>classes</strong> de moléculas, não uma molécula específica. Exemplos: <strong>LPS</strong> (Gram-negativas), <strong>peptidoglicano</strong> (Gram-positivas), <strong>flagelina</strong>, <strong>RNA dupla-fita</strong> (viral), <strong>DNA CpG</strong>. Se houver dano tecidual, as células danificadas liberam <strong>DAMPs</strong> — como fosfatidilserina externalizada e LDL oxidado.
+</div>
+<div class="cell-tags">
+<span class="cell-tag" style="color:var(--accent)">📖 aula 03-09</span>
+<span class="cell-tag" style="color:var(--accent)">📊 slide 1</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Passo 03 — PRRs Tocam o Alarme</div>
+<div class="step-title">Receptores de reconhecimento de padrão disparam</div>
+<div class="step-body">
+As células da imunidade inata — <strong>macrófagos, células dendríticas, neutrófilos, mastócitos, NK</strong> — possuem <strong>PRRs</strong> na membrana e no citoplasma. Os mais conhecidos são os <strong>TLRs</strong> (Toll-like receptors):
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--th1);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>TLR-4</h4>
+<p>Reconhece <strong>LPS</strong> → bactérias Gram-negativas. Na membrana celular.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--th2);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>TLR-2</h4>
+<p>Reconhece <strong>peptidoglicano</strong> → bactérias Gram-positivas. Na membrana.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--accent2);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>TLR-7/8/9</h4>
+<p>Reconhecem <strong>ácidos nucleicos</strong> (RNA viral, DNA CpG). Ficam no <strong>endossomo</strong>.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--damp);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>RIG-I / MDA5 / CDS</h4>
+<p>Receptores <strong>citoplasmáticos</strong>. Detectam DNA/RNA viral dentro da célula infectada.</p>
+</div>
+</div>
+<div class="info-card quote">
+"Receptores de reconhecimento de padrões... eles são alarmes. Assim que eles encostam em PAMPs e DAMPs, eles começam a tocar."
+<span class="src">📖 Professor — aula 03-23</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Passo 04 — Inflamação & Fagocitose</div>
+<div class="step-title">Resposta inata imediata</div>
+<div class="step-body">
+Macrófagos residentes fagocitam o invasor. Liberam <strong>TNF-α, IL-1β, IL-6, IL-8</strong> → vasodilatação, aumento de permeabilidade, recrutamento de neutrófilos. <strong>Células dendríticas</strong> capturam o antígeno e migram para o <strong>linfonodo regional</strong> para iniciar a resposta adaptativa. Este é o momento crítico: a célula dendrítica vai determinar TODO o rumo da resposta.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Passo 05 — Apresentação de Antígeno</div>
+<div class="step-title">MHC I vs MHC II — dois caminhos</div>
+<div class="step-body">
+A célula dendrítica processa o antígeno e apresenta via <strong>MHC</strong>:
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--cd8);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>MHC Classe I (HLA-I)</h4>
+<p>Presente em <strong>todas as células nucleadas</strong>. Apresenta peptídeos <strong>endógenos</strong> (produzidos dentro da célula). Ativa <strong>CD8+</strong>. Por quê em todas? Porque qualquer célula pode ser infectada e precisa poder ser morta pelo CD8.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--accent2);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>MHC Classe II (HLA-II)</h4>
+<p>Presente <strong>só em APCs</strong> (dendríticas, macrófagos, linfócitos B). Apresenta peptídeos <strong>exógenos</strong> (fagocitados de fora). Ativa <strong>CD4+</strong>. Por quê só APCs? Porque o CD4 só precisa conversar com quem coordena a resposta.</p>
+</div>
+</div>
+<div class="info-card quote">
+"Por que o HLA de classe 1 tem que estar expresso em todas as suas células nucleares? Porque todas células... têm que poder sofrer pelo CD8 se tiverem infectadas."
+<span class="src">📖 Professor — aula 02-23</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== CENÁRIO TH1 ========== -->
+<section class="scenario" id="th1">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(255,23,68,0.1);border:1px solid rgba(255,23,68,0.2)">🦠</div>
+<div>
+<div class="tag">Cenário 01 — Resposta Violenta</div>
+<h2 style="color:var(--th1)">TH1 — Patógeno Intracelular</h2>
+</div>
+</div>
+<p style="color:var(--text2);margin-bottom:2rem;font-size:0.95rem">
+<strong>Invasores:</strong> Vírus, bactérias intracelulares (Mycobacterium tuberculosis), protozoários intracelulares.
+</p>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--th1)"></div>
+<div class="step-num" style="color:var(--th1)">Etapa 01 — Infecção</div>
+<div class="step-title">O patógeno entra na célula</div>
+<div class="step-body">
+O vírus ou bactéria intracelular invade células do hospedeiro. Agora ele está <strong>dentro</strong> da célula, usando a maquinaria celular para se replicar. As células infectadas começam a processar proteínas virais/bacterianas pelo <strong>proteassomo</strong> e apresentá-las no <strong>MHC I</strong>.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th1)"></div>
+<div class="step-num" style="color:var(--th1)">Etapa 02 — Célula Dendrítica Decodifica</div>
+<div class="step-title">Os PRRs intracelulares identificam o tipo de invasor</div>
+<div class="step-body">
+Ao fagocitar o patógeno, a célula dendrítica usa seus <strong>PRRs intracelulares</strong> (RIG-I, MDA5, CDS) para detectar RNA/DNA viral no citoplasma. Essa informação é traduzida em um <strong>coquetel de citocinas</strong> que vai programar o TH0.
+</div>
+<div class="info-card quote">
+"Se ela informar: estamos sendo atacados, é vírus, é bactéria intracelular, é protozoário intracelular — o TH0 vira TH1."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th1)"></div>
+<div class="step-num" style="color:var(--th1)">Etapa 03 — Diferenciação TH1</div>
+<div class="step-title">O TH0 se torna TH1 — a resposta mais violenta</div>
+<div class="step-body">
+No linfonodo, a dendrítica apresenta o antígeno via <strong>MHC II → CD4+ (TH0)</strong>. O coquetel de citocinas programa: <strong>TH0 → TH1</strong>. Citocina principal produzida: <strong>IFN-γ</strong> (interferon-gama). Simultaneamente, a dendrítica apresenta via <strong>MHC I → CD8+</strong>.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th1)"></div>
+<div class="step-num" style="color:var(--th1)">Etapa 04 — Resposta Efetora</div>
+<div class="step-title">CD8 mata, macrófago destrói</div>
+<div class="step-body">
+O TH1 comanda duas frentes:
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--cd8);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>CD8+ Citotóxico</h4>
+<p>Superativado pelo TH1. Sai do linfonodo, vai ao tecido infectado. Reconhece células que apresentam peptídeos do vírus no MHC I → induz <strong>apoptose</strong>. Mata a célula infectada.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--th1);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>Macrófago Ativado</h4>
+<p>IFN-γ do TH1 <strong>superativa o macrófago</strong> — aumenta capacidade microbicida, enzimas lisossomais, produção de TNF-α, IL-1β. Macrófago se torna uma máquina de matar.</p>
+</div>
+</div>
+<div class="info-card quote">
+"Eu prefiro pegar vocês na fonte do que ter que caçar vocês um por um lá fora."
+<span class="src">📖 Professor — aula 03-09, sobre preferir destruir célula infectada</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th1)"></div>
+<div class="step-num" style="color:var(--th1)">Etapa 05 — Anticorpos (papel secundário)</div>
+<div class="step-title">TFH entra no folículo para produção de IgG</div>
+<div class="step-body">
+Paralelamente, o <strong>TFH1</strong> entra no folículo linfoide e ajuda o linfócito B a produzir <strong>IgG</strong> — mas na resposta TH1, os anticorpos são coadjuvantes. O protagonista é a <strong>imunidade celular</strong> (CD8 + macrófago ativado).
+</div>
+</div>
+</div>
+
+<!-- CLINICAL: TUBERCULOSE -->
+<div class="clinical">
+<div class="clinical-label">⚕️ Caso Clínico — Tuberculose</div>
+<h4>Mycobacterium tuberculosis — o exemplo clássico de TH1</h4>
+<p>
+<strong>Paciente imunocompetente:</strong> TH1 ativa macrófagos com IFN-γ. Macrófagos se acumulam no pulmão junto com linfócitos TH1, formando um <strong>granuloma</strong> — infiltrado linfocitário que contém a bactéria. Há dano tecidual (a lesão pulmonar clássica da TB), mas o patógeno fica contido.
+</p>
+<p>
+<strong>Paciente HIV+ sem CD4:</strong> Sem TH1, o macrófago NÃO é ativado adequadamente. Sem granuloma. A micobactéria <strong>dissemina livremente</strong> → tuberculose miliar disseminada → risco de morte.
+</p>
+<div class="info-card quote" style="margin-top:1rem">
+"O paciente HIV positivo não tem esse T-helper. O que acontece com a micobactéria? Ela dissemina... pode matar o paciente."
+<span class="src">📖 Professor — aula 02-23</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== CENÁRIO TH2 ========== -->
+<section class="scenario" id="th2">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2)">🪱</div>
+<div>
+<div class="tag">Cenário 02 — Resposta Branda</div>
+<h2 style="color:var(--th2)">TH2 — Parasitas & Alérgenos</h2>
+</div>
+</div>
+<p style="color:var(--text2);margin-bottom:2rem;font-size:0.95rem">
+<strong>Invasores:</strong> Helmintos (vermes), alérgenos (pólen, ácaros), parasitas extracelulares.
+</p>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--th2)"></div>
+<div class="step-num" style="color:var(--th2)">Etapa 01 — Patógeno Extracelular</div>
+<div class="step-title">O invasor está fora da célula</div>
+<div class="step-body">
+Helmintos e alérgenos NÃO entram na célula. São grandes demais ou simplesmente não têm esse mecanismo. Ficam no espaço extracelular, no lúmen intestinal, nas mucosas. A célula dendrítica fagocita fragmentos e apresenta via <strong>MHC II</strong> (antígeno exógeno).
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th2)"></div>
+<div class="step-num" style="color:var(--th2)">Etapa 02 — Sinal: "É alérgeno/parasita"</div>
+<div class="step-title">Citocinas programam TH0 → TH2</div>
+<div class="step-body">
+A dendrítica secreta <strong>IL-4, IL-5, IL-13</strong> — informando que o invasor é extracelular e relativamente brando. O TH0 diferencia-se em <strong>TH2</strong>.
+</div>
+<div class="info-card quote">
+"A TH2... é a resposta mais branda que a gente tem."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th2)"></div>
+<div class="step-num" style="color:var(--th2)">Etapa 03 — Resposta Humoral Domina</div>
+<div class="step-title">Anticorpos são o protagonista, não CD8</div>
+<div class="step-body">
+Diferente do TH1, aqui o CD8 NÃO é superativado — não faz sentido, porque o patógeno NÃO está dentro de células. O foco é a <strong>imunidade humoral</strong>. O TFH2 entra no folículo e instrui o linfócito B a fazer <strong>class switch para IgE</strong>.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th2)"></div>
+<div class="step-num" style="color:var(--th2)">Etapa 04 — Efetores: IgE + Eosinófilos</div>
+<div class="step-title">Degranulação e ataque extracelular</div>
+<div class="step-body">
+O <strong>IgE</strong> se liga aos receptores de alta afinidade nos <strong>mastócitos e basófilos</strong>. Na reexposição ao alérgeno, essas células <strong>degranulam</strong>: histamina, proteases, fatores quimiotáticos. <strong>Eosinófilos</strong> são recrutados massivamente — são a principal célula efetora contra helmintos. Sua proteína básica principal é tóxica para parasitas.
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--th2);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>IgE + Mastócitos</h4>
+<p>IgE arma mastócitos. Reexposição → degranulação → histamina, vasodilatação, broncoespasmo (em alergia).</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--accent4);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>Eosinófilos</h4>
+<p>Célula efetora principal contra helmintos. Libera proteína básica principal, peroxidase, neurotoxina derivada de eosinófilos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== CENÁRIO TH17 ========== -->
+<section class="scenario" id="th17">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(255,145,0,0.1);border:1px solid rgba(255,145,0,0.2)">⚡</div>
+<div>
+<div class="tag">Cenário 03 — Resposta Inflamatória</div>
+<h2 style="color:var(--th17)">TH17 — Bactéria Extracelular Agressiva</h2>
+</div>
+</div>
+<p style="color:var(--text2);margin-bottom:2rem;font-size:0.95rem">
+<strong>Invasores:</strong> Staphylococcus aureus, Pseudomonas, Neisseria, fungos (Candida). Bactérias "bravas" extracelulares.
+</p>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--th17)"></div>
+<div class="step-num" style="color:var(--th17)">Etapa 01 — Bactéria Agressiva Extracelular</div>
+<div class="step-title">Nem TH1 nem TH2 resolvem</div>
+<div class="step-body">
+Essas bactérias são extracelulares (diferente de vírus), mas são <strong>muito agressivas</strong> — não dá pra lidar com a resposta branda do TH2. E como não estão dentro de células, TH1 não é ideal. A dendrítica detecta essa combinação e programa algo intermediário.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th17)"></div>
+<div class="step-num" style="color:var(--th17)">Etapa 02 — Diferenciação TH17</div>
+<div class="step-title">Resposta intermediária, inflamatória</div>
+<div class="step-body">
+O TH0 se diferencia em <strong>TH17</strong> — descoberto em 2007. Produz citocina principal: <strong>IL-17</strong>.
+</div>
+<div class="info-card quote">
+"Tem que ser uma resposta mais inflamada, intermediária e inflamatória entre a resposta TH1 e TH2... ele vai se transformar em TH17."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th17)"></div>
+<div class="step-num" style="color:var(--th17)">Etapa 03 — Resposta de Neutrófilos</div>
+<div class="step-title">TH17 é a resposta dos neutrófilos</div>
+<div class="step-body">
+A IL-17 faz <strong>recrutamento massivo de neutrófilos</strong>. Não ativa macrófagos como TH1. Não recruta eosinófilos como TH2. É uma resposta focada no neutrófilo.
+</div>
+<div class="info-card quote">
+"A resposta TH17, galera, é a resposta dos neutrófilos. Essa célula estimula principalmente os neutrófilos."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--th17)"></div>
+<div class="step-num" style="color:var(--th17)">Etapa 04 — Efetores: Neutrófilos</div>
+<div class="step-title">Burst oxidativo, degranulação, pus</div>
+<div class="step-body">
+Neutrófilos chegam em massa e atacam: <strong>burst oxidativo</strong> (espécies reativas de oxigênio), degranulação (grânulos antimicrobianos), fagocitose. O resultado é uma resposta inflamatória intensa — o acúmulo de neutrófilos mortos + bactérias = <strong>pus</strong>.
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--th17);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>Neutrófilo</h4>
+<p>Célula efetora exclusiva do TH17. Primeira a chegar, mata por fagocitose e burst oxidativo. Vida curta — morre e forma pus.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== CENÁRIO DAMP ========== -->
+<section class="scenario" id="damp">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(255,171,0,0.1);border:1px solid rgba(255,171,0,0.2)">💥</div>
+<div>
+<div class="tag">Cenário 04 — Inflamação Estéril</div>
+<h2 style="color:var(--damp)">DAMP — Dano Tecidual sem Patógeno</h2>
+</div>
+</div>
+<p style="color:var(--text2);margin-bottom:2rem;font-size:0.95rem">
+<strong>Situações:</strong> Infarto do miocárdio, trauma, isquemia-reperfusão, necrose. Não há invasor — há dano.
+</p>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--damp)"></div>
+<div class="step-num" style="color:var(--damp)">Etapa 01 — Morte Celular</div>
+<div class="step-title">Apoptose vs Necrose — dois destinos diferentes</div>
+<div class="step-body">
+Na <strong>apoptose</strong> (morte programada), a célula externaliza fosfatidilserina, é reconhecida por macrófagos e fagocitada <strong>silenciosamente</strong> — sem inflamação. Na <strong>necrose</strong> (morte não controlada), a célula <strong>estoura</strong> e libera seu conteúdo intracelular no tecido.
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--accent4);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>Apoptose → Silêncio</h4>
+<p>Fosfatidilserina na membrana. Macrófago reconhece e fagocita. Sem inflamação. Sem DAMPs liberados.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--th1);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>Necrose → Alarme</h4>
+<p>Célula estoura. Conteúdo intracelular vaza — DNA, proteínas, ATP. PRRs reconhecem como perigo → inflamação.</p>
+</div>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--damp)"></div>
+<div class="step-num" style="color:var(--damp)">Etapa 02 — DAMPs Ativam PRRs</div>
+<div class="step-title">O sistema imune responde ao dano como se fosse invasão</div>
+<div class="step-body">
+O conteúdo intracelular liberado — <strong>DNA livre no citoplasma</strong> (fora do lugar), moléculas oxidadas, <strong>LDL oxidado</strong>, ATP extracelular — são reconhecidos por PRRs e <strong>receptores scavenger</strong>. Os macrófagos ativam cascata inflamatória: TNF-α, IL-1β, IL-6. É uma resposta inflamatória <strong>sem patógeno</strong> — inflamação estéril.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--damp)"></div>
+<div class="step-num" style="color:var(--damp)">Etapa 03 — Consequência Clínica</div>
+<div class="step-title">Quando a inflamação estéril vira problema</div>
+<div class="step-body">
+Exemplo: no <strong>infarto</strong>, a necrose do tecido cardíaco libera DAMPs → inflamação local → recrutamento de neutrófilos e macrófagos. Isso pode causar mais dano ao tecido já comprometido. Outro exemplo: <strong>LDL oxidado</strong> reconhecido por receptores scavenger → macrófago vira <strong>célula espumosa</strong> → placa de ateroma → aterosclerose.
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== PONTO DE DECISÃO ========== -->
+<section class="scenario" id="decision">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(124,77,255,0.1);border:1px solid rgba(124,77,255,0.2)">🧭</div>
+<div>
+<div class="tag">O Momento Crucial</div>
+<h2 style="color:var(--accent2)">O Ponto de Decisão: APC → TH0</h2>
+</div>
+</div>
+
+<div class="decision">
+<h3>Como o sistema decide qual resposta montar?</h3>
+<p style="color:var(--text2);margin-bottom:1.5rem;font-size:0.95rem">
+Tudo depende da <strong>célula apresentadora de antígeno</strong> (dendrítica). Ela fagocita o invasor, usa PRRs intracelulares para decodificar QUE TIPO de invasor é, e traduz essa informação em um <strong>coquetel de citocinas</strong> que programa o TH0:
+</p>
+<div class="info-card quote" style="margin-bottom:1.5rem">
+"Essa citocina vai dizer pro meu linfócito T helper... que você identificou aí um invasor."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+<div class="decision-branches">
+<div class="branch" onclick="document.getElementById('th1').scrollIntoView({behavior:'smooth'})">
+<div class="branch-icon">🦠</div>
+<h4 style="color:var(--th1)">→ TH1</h4>
+<p>Vírus / Bact. intracelular<br><strong>IFN-γ</strong> → CD8 + Macrófago</p>
+</div>
+<div class="branch" onclick="document.getElementById('th2').scrollIntoView({behavior:'smooth'})">
+<div class="branch-icon">🪱</div>
+<h4 style="color:var(--th2)">→ TH2</h4>
+<p>Parasita / Alérgeno<br><strong>IL-4</strong> → IgE + Eosinófilo</p>
+</div>
+<div class="branch" onclick="document.getElementById('th17').scrollIntoView({behavior:'smooth'})">
+<div class="branch-icon">⚡</div>
+<h4 style="color:var(--th17)">→ TH17</h4>
+<p>Bact. extracel. agressiva<br><strong>IL-17</strong> → Neutrófilo</p>
+</div>
+<div class="branch" onclick="document.getElementById('tfh').scrollIntoView({behavior:'smooth'})">
+<div class="branch-icon">🎯</div>
+<h4 style="color:var(--tfh)">→ TFH</h4>
+<p>Entra no folículo<br>Direciona anticorpos</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== TFH & ANTICORPOS ========== -->
+<section class="scenario" id="tfh">
+<div class="scenario-inner">
+<div class="scenario-header">
+<div class="scenario-icon" style="background:rgba(124,77,255,0.1);border:1px solid rgba(124,77,255,0.2)">🎯</div>
+<div>
+<div class="tag">Via Paralela — O Folículo</div>
+<h2 style="color:var(--tfh)">TFH — Produção de Anticorpos</h2>
+</div>
+</div>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--tfh)"></div>
+<div class="step-num" style="color:var(--tfh)">Etapa 01 — TFH é diferente</div>
+<div class="step-title">Ele não vai pra periferia</div>
+<div class="step-body">
+Enquanto TH1/TH2/TH17 saem do linfonodo pra periferia (ativar macrófago, recrutar neutrófilo, etc.), o <strong>TFH vai pra dentro do folículo linfoide</strong>. Não ativa CD8. Não recruta neutrófilo. Não ativa macrófago. Sua função é <strong>uma só</strong>: conversar com o linfócito B.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--tfh)"></div>
+<div class="step-num" style="color:var(--tfh)">Etapa 02 — Apresentação B → TFH</div>
+<div class="step-title">Linfócito B apresenta antígeno pro TFH</div>
+<div class="step-body">
+Dentro do folículo, o linfócito B que capturou o antígeno (via BCR) processa e apresenta via <strong>MHC II</strong> para o TFH. O TFH então <strong>direciona</strong> o que o B vai fazer.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--tfh)"></div>
+<div class="step-num" style="color:var(--tfh)">Etapa 03 — Decisão do Anticorpo</div>
+<div class="step-title">TFH decide o class switch e a maturação de afinidade</div>
+<div class="step-body">
+O TFH carrega a "informação" que recebeu da dendrítica sobre o tipo de invasor. Com base nisso, instrui o B a fazer <strong>class switch</strong>:
+</div>
+<div class="effector-grid">
+<div class="effector-card">
+<div style="border-top:3px solid var(--th1);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>TFH1 → IgG</h4>
+<p>Informação: vírus/intracelular. Switch para IgG. Opsonização, neutralização, ativação de complemento.</p>
+</div>
+<div class="effector-card">
+<div style="border-top:3px solid var(--th2);margin:-1.25rem -1.25rem 1rem;border-radius:var(--radius-sm) var(--radius-sm) 0 0"></div>
+<h4>TFH2 → IgE</h4>
+<p>Informação: parasita/alérgeno. Switch para IgE. Arma mastócitos e eosinófilos.</p>
+</div>
+</div>
+<div class="info-card quote">
+"A apresentadora de antígeno falou pra mim que entrou ali o quê? Alérgeno. Então eu quero que você, linfócito B, diferencie ali os seus anticorpos em..."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--tfh)"></div>
+<div class="step-num" style="color:var(--tfh)">Etapa 04 — Maturação de Afinidade</div>
+<div class="step-title">Anticorpo fica cada vez mais preciso</div>
+<div class="step-body">
+No centro germinativo do folículo, o TFH controla a <strong>maturação de afinidade</strong> — mutações somáticas no gene do anticorpo que tornam a ligação antígeno-anticorpo cada vez mais forte e específica. O linfócito B pode se tornar: <strong>plasmócito</strong> (fábrica de anticorpos de vida curta) ou <strong>célula B de memória</strong> (vida longa, resposta rápida na reexposição).
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--tfh)"></div>
+<div class="step-num" style="color:var(--tfh)">Etapa 05 — Subtipos do TFH</div>
+<div class="step-title">TFH1, TFH2, e o TFH17 que ainda não existe</div>
+<div class="step-body">
+O professor explicou que o TFH segue a mesma lógica dos TH. <strong>TFH1</strong> vai pro folículo com citocinas de TH1. <strong>TFH2</strong> vai pro folículo com citocinas de TH2. O <strong>TFH17</strong> ainda não foi consolidado oficialmente, mas o professor acredita que será.
+</div>
+<div class="info-card quote">
+"O TFH17 ainda não existe, mas provavelmente vai ser consolidado. Porque senão não tem lógica."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== MEMÓRIA ========== -->
+<section class="memory-section" id="memory">
+<div class="memory-inner">
+<div class="scenario-header" style="margin-bottom:2rem">
+<div class="scenario-icon" style="background:rgba(118,255,3,0.1);border:1px solid rgba(118,255,3,0.2)">🧬</div>
+<div>
+<div class="tag">Fase Final — Resolução</div>
+<h2 style="color:var(--accent4)">Memória Imunológica</h2>
+</div>
+</div>
+<p style="color:var(--text2);margin-bottom:2rem;font-size:0.95rem">
+Após a resolução da infecção, a maioria das células efetoras morre por apoptose. Mas uma pequena população sobrevive como <strong>células de memória</strong> — garantindo uma resposta mais rápida e intensa na reexposição.
+</p>
+<div class="memory-flow">
+<div class="memory-card">
+<h4>CD4+ Memória</h4>
+<p>Reativação rápida. Na reexposição, diferencia-se rapidamente no subtipo correto (TH1/TH2/TH17) sem precisar de toda a cascata de novo.</p>
+</div>
+<div class="memory-card">
+<h4>CD8+ Memória</h4>
+<p>Pode matar diretamente sem precisar de ajuda da dendrítica. Resposta citotóxica imediata.</p>
+</div>
+<div class="memory-card">
+<h4>Célula B de Memória</h4>
+<p>Já fez class switch e maturação de afinidade. Na reexposição, produz anticorpos de alta afinidade rapidamente — sem precisar virar plasmócito do zero.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========== COMPARATIVO ========== -->
+<section class="comparison" id="compare">
+<div class="comparison-inner">
+<h2>Comparativo das Respostas</h2>
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Característica</th>
+<th style="color:var(--th1)">TH1</th>
+<th style="color:var(--th2)">TH2</th>
+<th style="color:var(--th17)">TH17</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Patógeno</td>
+<td>Vírus, TB, protozoário intracelular</td>
+<td>Helmintos, alérgenos</td>
+<td>S. aureus, Pseudomonas, Candida</td>
+</tr>
+<tr>
+<td>Citocina Principal</td>
+<td><span class="pill" style="background:rgba(255,23,68,0.15);color:var(--th1)">IFN-γ</span></td>
+<td><span class="pill" style="background:rgba(0,230,118,0.15);color:var(--th2)">IL-4, IL-5, IL-13</span></td>
+<td><span class="pill" style="background:rgba(255,145,0,0.15);color:var(--th17)">IL-17</span></td>
+</tr>
+<tr>
+<td>MHC</td>
+<td>Classe I + II</td>
+<td>Classe II</td>
+<td>Classe II</td>
+</tr>
+<tr>
+<td>Célula Efetora</td>
+<td><strong>CD8+</strong> (apoptose) + Macrófago ativado</td>
+<td><strong>Eosinófilo</strong> + IgE/Mastócito</td>
+<td><strong>Neutrófilo</strong></td>
+</tr>
+<tr>
+<td>Macrófago</td>
+<td>Superativado por IFN-γ</td>
+<td>Papel mínimo</td>
+<td>Papel mínimo</td>
+</tr>
+<tr>
+<td>CD8</td>
+<td>Superativado</td>
+<td>Mínimo</td>
+<td>Mínimo</td>
+</tr>
+<tr>
+<td>Anticorpo</td>
+<td>IgG (coadjuvante)</td>
+<td>IgE (protagonista)</td>
+<td>IgG (coadjuvante)</td>
+</tr>
+<tr>
+<td>Intensidade</td>
+<td>Violenta, destrutiva</td>
+<td>Branda, humoral</td>
+<td>Inflamatória intensa</td>
+</tr>
+<tr>
+<td>Dano Tecidual</td>
+<td>Granuloma (contém patógeno)</td>
+<td>Mínimo</td>
+<td>Pus (neutrófilos mortos)</td>
+</tr>
+<tr>
+<td>TFH</td>
+<td>TFH1 → IgG</td>
+<td>TFH2 → IgE</td>
+<td>TFH17? (não consolidado)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+<p>Conteúdo baseado exclusivamente nas aulas e slides da disciplina de Imunologia — 3º semestre</p>
+<p style="margin-top:0.5rem">📖 Transcriçoes 02-02 a 03-23 · 📊 Slides 1-3</p>
+</div>
+
+<!-- ========== BACKGROUND ANIMATION ========== -->
+<script>
+(function(){
+const c=document.getElementById('bgCanvas');
+const ctx=c.getContext('2d');
+let w,h,particles=[];
+function resize(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}
+window.addEventListener('resize',resize);resize();
+class P{
+constructor(){this.reset()}
+reset(){
+this.x=Math.random()*w;this.y=Math.random()*h;
+this.vx=(Math.random()-0.5)*0.3;this.vy=(Math.random()-0.5)*0.3;
+this.r=Math.random()*2+0.5;
+this.o=Math.random()*0.5+0.1;
+}
+update(){
+this.x+=this.vx;this.y+=this.vy;
+if(this.x<0||this.x>w)this.vx*=-1;
+if(this.y<0||this.y>h)this.vy*=-1;
+}
+draw(){
+ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+ctx.fillStyle=`rgba(0,229,255,${this.o})`;ctx.fill();
+}
+}
+for(let i=0;i<60;i++)particles.push(new P());
+function animate(){
+ctx.clearRect(0,0,w,h);
+particles.forEach(p=>{p.update();p.draw()});
+// connections
+for(let i=0;i<particles.length;i++){
+for(let j=i+1;j<particles.length;j++){
+const dx=particles[i].x-particles[j].x;
+const dy=particles[i].y-particles[j].y;
+const d=Math.sqrt(dx*dx+dy*dy);
+if(d<120){
+ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);
+ctx.lineTo(particles[j].x,particles[j].y);
+ctx.strokeStyle=`rgba(0,229,255,${0.08*(1-d/120)})`;
+ctx.lineWidth=0.5;ctx.stroke();
+}
+}
+}
+requestAnimationFrame(animate);
+}
+animate();
+})();
+</script>
+
+<!-- ========== INTERSECTION OBSERVER FOR ANIMATIONS ========== -->
+<script>
+const observer=new IntersectionObserver((entries)=>{
+entries.forEach(e=>{
+if(e.isIntersecting){
+e.target.querySelectorAll('.step').forEach((s,i)=>{
+s.style.animationDelay=`${i*0.15}s`;
+s.style.animationPlayState='running';
+});
+}
+});
+},{threshold:0.1});
+document.querySelectorAll('.scenario').forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>

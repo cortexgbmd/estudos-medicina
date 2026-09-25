@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamentos da Imunologia</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a28;--surface3:#22223a;
+--text:#e8e8f0;--text2:#9898b0;--text3:#686880;
+--accent:#00e5ff;--accent2:#7c4dff;--accent3:#ff4081;--accent4:#76ff03;--accent5:#ffab00;
+--organ:#00bcd4;--hla:#e040fb;--ag:#ff9100;--cell:#76ff03;--barrier:#00e676;
+--glass:rgba(18,18,26,0.7);--border:rgba(255,255,255,0.06);
+--radius:16px;--radius-sm:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+.bg-scene{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.bg-scene canvas{width:100%;height:100%;opacity:0.12}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(124,77,255,0.08),transparent 70%),radial-gradient(ellipse 40% 40% at 70% 60%,rgba(0,229,255,0.06),transparent 60%);pointer-events:none}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent2);margin-bottom:1rem;background:rgba(124,77,255,0.08);padding:0.5rem 1.5rem;border-radius:100px;border:1px solid rgba(124,77,255,0.15);display:inline-block}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
+.hero h1 span{background:linear-gradient(135deg,var(--accent2),var(--accent),var(--accent4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.1rem;color:var(--text2);max-width:650px;margin:0 auto 3rem}
+.hero-nav{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center}
+.hero-nav a{text-decoration:none;padding:0.7rem 1.3rem;border-radius:var(--radius-sm);font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:500;transition:all 0.3s;cursor:pointer;border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(20px);color:var(--text);display:flex;align-items:center;gap:0.5rem}
+.hero-nav a:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.15)}
+.hero-nav a .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--text3);font-size:0.8rem;animation:float 2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+/* SECTIONS */
+.section{position:relative;z-index:1;padding:6rem 1.5rem;border-top:1px solid var(--border)}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-header{display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:3rem}
+.section-icon{width:80px;height:80px;border-radius:var(--radius);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+.section-header h2{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:700;line-height:1.2;margin-bottom:0.25rem}
+.section-header .tag{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0.5}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;transition:transform 0.3s,border-color 0.3s}
+.card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.1)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card h3{font-size:1.05rem;font-weight:600;margin-bottom:0.5rem}
+.card p{font-size:0.88rem;color:var(--text2);line-height:1.65}
+.card .card-emoji{font-size:1.5rem;margin-bottom:0.75rem;display:block}
+.card .card-tag{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--text3);margin-top:0.75rem;display:block}
+
+/* TIMELINE */
+.cascade{position:relative;padding-left:3rem}
+.cascade::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--border) 5%,var(--border) 95%,transparent)}
+.step{position:relative;margin-bottom:2rem}
+.step-dot{position:absolute;left:-2.35rem;top:0.5rem;width:12px;height:12px;border-radius:50%;border:2px solid;background:var(--bg);z-index:1}
+.step-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.35rem}
+.step-title{font-size:1.15rem;font-weight:600;margin-bottom:0.5rem}
+.step-body{color:var(--text2);font-size:0.95rem;line-height:1.7}
+.step-body strong{color:var(--text);font-weight:600}
+
+/* INFO CARDS */
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.25rem;margin-top:0.75rem}
+.info-card.quote{border-left:3px solid var(--accent2);font-style:italic;color:var(--text2);font-size:0.9rem}
+.info-card.quote .src{display:block;margin-top:0.5rem;font-style:normal;font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:var(--text3)}
+
+/* TREE DIAGRAM */
+.tree{margin:2rem 0}
+.tree-root{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center;font-weight:600;margin-bottom:1rem;position:relative}
+.tree-root::after{content:'';position:absolute;bottom:-1rem;left:50%;width:2px;height:1rem;background:var(--border)}
+.tree-branches{display:grid;grid-template-columns:1fr 1fr;gap:1rem;position:relative}
+.tree-branches::before{content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--border)}
+.tree-branch{position:relative;padding-top:1.5rem}
+.tree-branch::before{content:'';position:absolute;top:0;left:50%;width:2px;height:1.5rem;background:var(--border)}
+.tree-branch-title{text-align:center;font-weight:600;font-size:0.9rem;padding:0.75rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:0.75rem}
+.tree-items{display:flex;flex-direction:column;gap:0.5rem}
+.tree-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.6rem 0.8rem;font-size:0.82rem;color:var(--text2)}
+.tree-item strong{color:var(--text);font-weight:500}
+
+/* COMPARISON TABLE */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:1.5rem 0}
+.comp-table{width:100%;border-collapse:collapse;font-size:0.85rem;min-width:500px}
+.comp-table th,.comp-table td{padding:0.85rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.comp-table th{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);font-weight:500;background:var(--surface);position:sticky;top:0}
+.comp-table td:first-child{font-weight:600;color:var(--text);white-space:nowrap}
+.comp-table tr:hover td{background:rgba(255,255,255,0.02)}
+.pill{display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.75rem;font-family:'JetBrains Mono',monospace}
+
+/* HIGHLIGHT BOX */
+.highlight{background:linear-gradient(135deg,rgba(124,77,255,0.06),rgba(0,229,255,0.06));border:1px solid rgba(124,77,255,0.15);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
+.highlight h4{font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+.highlight p{font-size:0.9rem;color:var(--text2);line-height:1.7}
+
+/* FOOTER */
+.footer{text-align:center;padding:3rem 1.5rem;color:var(--text3);font-size:0.8rem;border-top:1px solid var(--border);position:relative;z-index:1}
+
+@media(max-width:768px){
+.section{padding:4rem 1rem}
+.section-header{flex-direction:column;gap:1rem}
+.card-grid{grid-template-columns:1fr}
+.tree-branches{grid-template-columns:1fr}
+.cascade{padding-left:2rem}
+.step-dot{left:-1.6rem}
+.hero-nav{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-scene"><canvas id="bgCanvas"></canvas></div>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-label">Imunologia P1 — Os Outros 40%</div>
+<h1>Fundamentos da <span>Imunologia</span></h1>
+<p class="hero-sub">Tudo que sustenta a lógica de ativação: órgãos, células, barreiras, antígenos, HLA e os conceitos estruturais que caem na prova.</p>
+<nav class="hero-nav">
+<a href="#funcoes"><span class="dot" style="background:var(--accent)"></span>3 Funções</a>
+<a href="#barreiras"><span class="dot" style="background:var(--barrier)"></span>Barreiras</a>
+<a href="#orgaos"><span class="dot" style="background:var(--organ)"></span>Órgãos Linfoides</a>
+<a href="#celulas"><span class="dot" style="background:var(--cell)"></span>Células & Linhagens</a>
+<a href="#hla"><span class="dot" style="background:var(--hla)"></span>Sistema HLA</a>
+<a href="#antigenos"><span class="dot" style="background:var(--ag)"></span>Antígenos</a>
+<a href="#nk"><span class="dot" style="background:var(--accent3)"></span>Célula NK</a>
+<a href="#microbiota"><span class="dot" style="background:var(--accent4)"></span>Microbiota</a>
+<a href="#complemento"><span class="dot" style="background:var(--accent5)"></span>Complemento</a>
+<a href="#citocinas"><span class="dot" style="background:var(--accent2)"></span>Citocinas</a>
+<a href="#apoptose"><span class="dot" style="background:var(--accent3)"></span>Apoptose</a>
+<a href="#vacinas"><span class="dot" style="background:var(--accent)"></span>Vacinas</a>
+</nav>
+<div class="scroll-hint">↓ scroll para explorar</div>
+</section>
+
+<!-- 3 FUNÇÕES -->
+<section class="section" id="funcoes">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">🛡️</div>
+<div>
+<div class="tag">Conceito Fundamental</div>
+<h2 style="color:var(--accent)">As 3 Funções do Sistema Imune</h2>
+</div>
+</div>
+
+<div class="card-grid">
+<div class="card" style="--c:var(--accent)">
+<div style="height:3px;background:var(--accent);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<span class="card-emoji">🔰</span>
+<h3>1. Proteção</h3>
+<p>Defesa contra microorganismos — bactérias, vírus, fungos, parasitas. Também contra substâncias químicas (como penicilina), alérgenos e toxinas. É a função mais intuitiva: manter invasores fora e destruí-los quando entram.</p>
+<span class="card-tag">📖 aula 02-23 + 03-09</span>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--accent2);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<span class="card-emoji">🧬</span>
+<h3>2. Eugenia</h3>
+<p>Manutenção da integridade genética do organismo. O sistema imune identifica e elimina células defeituosas, mutantes ou envelhecidas — mantendo a "qualidade" celular do corpo. Ligado à homeostase tecidual.</p>
+<span class="card-tag">📖 aula 03-09</span>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--accent3);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<span class="card-emoji">👁️</span>
+<h3>3. Vigilância</h3>
+<p>Monitoramento constante contra formação de <strong>células neoplásicas</strong> (câncer). O sistema imune vigia o corpo 24h procurando células que sofreram mutações e poderiam virar tumores. Se encontra, destrói antes que proliferem.</p>
+<span class="card-tag">📖 aula 03-09</span>
+</div>
+</div>
+
+<div class="info-card quote">
+"Três funções: proteção, eugenia, vigilância."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+</section>
+
+<!-- BARREIRAS -->
+<section class="section" id="barreiras">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2)">🧱</div>
+<div>
+<div class="tag">Imunidade Inata — Primeira Linha</div>
+<h2 style="color:var(--barrier)">Barreiras do Sistema Imune</h2>
+</div>
+</div>
+
+<p style="color:var(--text2);margin-bottom:2rem">Antes de qualquer célula imune agir, o invasor precisa ultrapassar três tipos de barreiras. Se ele não conseguir, a resposta imune nem é ativada.</p>
+
+<div class="card-grid">
+<div class="card">
+<div style="height:3px;background:var(--barrier);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<span class="card-emoji">🏗️</span>
+<h3>Barreira Mecânica</h3>
+<p><strong>Pele</strong> — barreira física contínua. <strong>Mucosas</strong> — revestimento das cavidades (respiratória, GI, geniturinária). <strong>Peristaltismo</strong> — movimento do trato GI que empurra patógenos. <strong>Tosse e espirro</strong> — expulsão mecânica. <strong>Fluxo urinário</strong> — arrasta bactérias. <strong>Cílios</strong> no epitélio respiratório — empurram muco com patógenos para fora.</p>
+<span class="card-tag">📖 aula 03-09</span>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--accent5);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<span class="card-emoji">⚗️</span>
+<h3>Barreira Química</h3>
+<p><strong>pH ácido</strong> do estômago — mata maioria dos patógenos ingeridos. <strong>Lisozima</strong> — enzima presente nas lágrimas, saliva e secreções nasais que degrada parede bacteriana. <strong>Defensinas</strong> — peptídeos antimicrobianos. <strong>Ácidos graxos</strong> na pele — ambiente hostil para microorganismos.</p>
+<span class="card-tag">📖 aula 03-09</span>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--cell);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<span class="card-emoji">🦠</span>
+<h3>Barreira Microbiológica</h3>
+<p>A <strong>microbiota residente</strong> compete com patógenos por espaço e nutrientes — <strong>exclusão competitiva</strong>. Bactérias "do bem" ocupam os nichos e impedem que invasoras se estabeleçam. Isso é uma barreira ativa, não passiva.</p>
+<span class="card-tag">📖 aula 03-09</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ÓRGÃOS LINFOIDES -->
+<section class="section" id="orgaos">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(0,188,212,0.1);border:1px solid rgba(0,188,212,0.2)">🏛️</div>
+<div>
+<div class="tag">Anatomia Imunológica</div>
+<h2 style="color:var(--organ)">Órgãos Linfoides</h2>
+</div>
+</div>
+
+<div class="tree">
+<div class="tree-root">🧬 Órgãos do Sistema Imune</div>
+<div class="tree-branches">
+<div class="tree-branch">
+<div class="tree-branch-title" style="color:var(--accent);border-color:rgba(0,229,255,0.2)">Primários (Centrais/Geradores)</div>
+<div class="tree-items">
+<div class="tree-item"><strong style="color:var(--accent)">Timo</strong> — Órgão bilobado. Histologicamente multilobular com córtex e medula. Função: <strong>maturação do linfócito T</strong>. A célula aprende "quem ela é" (fase de cognição). Linfócitos T nascem na medula óssea e migram pro timo pra amadurecer.</div>
+<div class="tree-item"><strong style="color:var(--accent)">Medula Óssea</strong> — Local da <strong>hematopoiese</strong> (formação de todas as células do sangue). Origem das células-tronco hematopoiéticas. Também é onde o <strong>linfócito B amadurece</strong> (não no apêndice — humanos não têm bursa de Fabricius).</div>
+</div>
+</div>
+<div class="tree-branch">
+<div class="tree-branch-title" style="color:var(--accent2);border-color:rgba(124,77,255,0.2)">Secundários (Periféricos)</div>
+<div class="tree-items">
+<div class="tree-item"><strong style="color:var(--accent2)">Linfonodo</strong> — Órgão encapsulado. Linfócito entra pelo vaso aferente, migra pra região cortical (folicular) onde forma <strong>centros germinativos</strong>, depois pra região medular. Local onde a <strong>resposta adaptativa se desenvolve</strong>.</div>
+<div class="tree-item"><strong style="color:var(--accent2)">Baço</strong> — Órgão encapsulado. Monitora antígenos <strong>circulantes no sangue</strong>. Funciona como um "linfonodo pro sangue".</div>
+<div class="tree-item"><strong style="color:var(--accent2)">MALT</strong> — Tecido Linfoide Associado à Mucosa. Inclui tonsilas (oronasofaringe), placas de Peyer (intestino delgado), tecido linfoide em brônquios. Sistema de vigilância distribuído: monitora o que você <strong>respira, come e toca</strong>.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="highlight">
+<h4>Lógica: Por que primário vs secundário?</h4>
+<p><strong>Primários</strong> = onde as células NASCEM e AMADURECEM (medula óssea → B; timo → T). <strong>Secundários</strong> = onde as células TRABALHAM e ENCONTRAM antígenos (linfonodos, baço, MALT). A célula naive (virgem) sai do órgão primário e migra por quimiotaxia pro secundário, onde pode ser ativada.</p>
+</div>
+
+<div class="info-card quote">
+"O linfonodo monitora o que entra pela linfa, o baço monitora o que circula no sangue, e o MALT monitora o que entra pelas mucosas."
+<span class="src">📖 Professor — aula 02-02</span>
+</div>
+</div>
+</section>
+
+<!-- CÉLULAS & LINHAGENS -->
+<section class="section" id="celulas">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(118,255,3,0.1);border:1px solid rgba(118,255,3,0.2)">🔬</div>
+<div>
+<div class="tag">Hematopoiese</div>
+<h2 style="color:var(--cell)">Células & Linhagens</h2>
+</div>
+</div>
+
+<div class="tree">
+<div class="tree-root">🩸 Célula-Tronco Hematopoiética (Medula Óssea)</div>
+<div class="tree-branches">
+<div class="tree-branch">
+<div class="tree-branch-title" style="color:var(--accent2);border-color:rgba(124,77,255,0.2)">Linhagem Linfoide</div>
+<div class="tree-items">
+<div class="tree-item"><strong style="color:var(--accent2)">Linfócito T</strong> — Amadurece no timo. CD4+ (helper) e CD8+ (citotóxico). Reconhece antígeno SOMENTE via MHC (precisa de apresentação).</div>
+<div class="tree-item"><strong style="color:var(--accent2)">Linfócito B</strong> — Amadurece na medula óssea. Subtipos B1 e B2. Reconhece antígeno DIRETAMENTE via BCR. Diferencia em plasmócito (fábrica de anticorpos) ou célula de memória.</div>
+<div class="tree-item"><strong style="color:var(--accent2)">Célula NK</strong> — Mesmo poder de morte do CD8+, mas SEM especificidade e SEM memória. Induz apoptose. Crucial na vigilância antitumoral.</div>
+</div>
+</div>
+<div class="tree-branch">
+<div class="tree-branch-title" style="color:var(--ag);border-color:rgba(255,145,0,0.2)">Linhagem Mieloide</div>
+<div class="tree-items">
+<div class="tree-item"><strong style="color:var(--ag)">Neutrófilo</strong> — Fagócito profissional. Primeiro a chegar na inflamação. Come tudo, morre por apoptose → vira pus. Principal efetor do TH17.</div>
+<div class="tree-item"><strong style="color:var(--ag)">Monócito → Macrófago</strong> — Monócito no sangue. Quando migra pro tecido, vira macrófago (ou histiócito, dependendo do órgão). Fagócito, APC, produz citocinas. Ativado por IFN-γ do TH1.</div>
+<div class="tree-item"><strong style="color:var(--ag)">Célula Dendrítica</strong> — Pode originar de AMBAS linhagens (mieloide e linfoide). Na pele = célula de Langerhans. É a ÚNICA célula capaz de ativar linfócito T virgem. 10x mais potente que macrófago na apresentação de antígenos.</div>
+<div class="tree-item"><strong style="color:var(--ag)">Eosinófilo</strong> — Célula "vestigial" com fagocitose fraca. Luta contra helmintos com proteína básica principal. Principal efetor do TH2.</div>
+<div class="tree-item"><strong style="color:var(--ag)">Basófilo</strong> — Célula circulante com substâncias farmacologicamente ativas (histamina). NÃO migra pro tecido.</div>
+<div class="tree-item"><strong style="color:var(--ag)">Mastócito</strong> — Célula TECIDUAL, "prima" do basófilo (NÃO é basófilo que migrou). Também tem histamina. Degranula quando IgE é cross-linkado. Causa vasodilatação.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="highlight">
+<h4>Mastócito ≠ Basófilo que migrou pro tecido</h4>
+<p>O professor fez questão de corrigir isso: mastócito e basófilo são <strong>"primos"</strong>, não a mesma célula. Ambos têm histamina e mediadores vasoativos, mas são linhagens diferentes. O monócito sim vira macrófago quando migra pro tecido — mas o basófilo não vira mastócito.</p>
+<span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);display:block;margin-top:0.5rem">📖 aula 02-02</span>
+</div>
+
+<div class="info-card quote">
+"A célula dendrítica é a única que 'tira a virgindade' do linfócito T virgem. É 10 vezes mais importante que o macrófago."
+<span class="src">📖 Professor — aula 02-02</span>
+</div>
+</div>
+</section>
+
+<!-- SISTEMA HLA -->
+<section class="section" id="hla">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(224,64,251,0.1);border:1px solid rgba(224,64,251,0.2)">🔐</div>
+<div>
+<div class="tag">Apresentação de Antígenos</div>
+<h2 style="color:var(--hla)">Sistema HLA</h2>
+</div>
+</div>
+
+<p style="color:var(--text2);margin-bottom:2rem">HLA = Antígenos Leucocitários Humanos. Historicamente, foram descobertos em leucócitos e batizados assim. São o mesmo que <strong>MHC</strong> (Complexo Principal de Histocompatibilidade) — descoberto em transplantes em camundongos.</p>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Característica</th>
+<th style="color:var(--accent3)">HLA Classe I</th>
+<th style="color:var(--accent2)">HLA Classe II</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onde está</td>
+<td><strong>Todas as células nucleadas</strong></td>
+<td><strong>Só APCs</strong> (dendrítica, macrófago, linfócito B)</td>
+</tr>
+<tr>
+<td>Apresenta o quê</td>
+<td>Peptídeos <strong>endógenos</strong> (de dentro da célula)</td>
+<td>Peptídeos <strong>exógenos</strong> (fagocitados de fora)</td>
+</tr>
+<tr>
+<td>Ativa quem</td>
+<td><span class="pill" style="background:rgba(224,64,251,0.15);color:var(--accent3)">CD8+ citotóxico</span></td>
+<td><span class="pill" style="background:rgba(124,77,255,0.15);color:var(--accent2)">CD4+ helper</span></td>
+</tr>
+<tr>
+<td>Lógica</td>
+<td>Qualquer célula pode ser infectada → precisa mostrar pro CD8 o que tá dentro dela</td>
+<td>Só APCs coordenam a resposta → apresentam o que fagocitaram pro CD4</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight">
+<h4>Polimorfismo do HLA</h4>
+<p>O HLA é extremamente <strong>polimórfico</strong> — existem centenas de variantes genéticas. Isso explica por que pessoas diferentes respondem de maneiras diferentes ao mesmo patógeno. Também é a razão da <strong>rejeição de transplantes</strong>: se o HLA do doador for muito diferente do receptor, o sistema imune rejeita o tecido como "estranho".</p>
+<span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);display:block;margin-top:0.5rem">📖 aula 02-23 + 03-09</span>
+</div>
+
+<div class="info-card quote">
+"Por que o HLA de classe 1 tem que estar em todas as células nucleadas? Porque todas suas células têm que poder sofrer pelo CD8 se tiverem infectadas."
+<span class="src">📖 Professor — aula 02-23</span>
+</div>
+</div>
+</section>
+
+<!-- ANTÍGENOS -->
+<section class="section" id="antigenos">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(255,145,0,0.1);border:1px solid rgba(255,145,0,0.2)">🎯</div>
+<div>
+<div class="tag">Reconhecimento</div>
+<h2 style="color:var(--ag)">Antígenos, Epítopos e Haptenos</h2>
+</div>
+</div>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--ag)"></div>
+<div class="step-num" style="color:var(--ag)">Conceito 01</div>
+<div class="step-title">Antígeno vs Imunógeno</div>
+<div class="step-body">
+<strong>Antígeno</strong> = qualquer molécula reconhecida pelo sistema imune (se liga a anticorpo ou receptor). <strong>Imunógeno</strong> = molécula capaz de GERAR uma resposta imune adaptativa. Todo imunógeno é antígeno, mas nem todo antígeno é imunógeno (ex: hapteno é antigênico mas não imunogênico sozinho).
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--ag)"></div>
+<div class="step-num" style="color:var(--ag)">Conceito 02</div>
+<div class="step-title">Epítopo (Determinante Antigênico)</div>
+<div class="step-body">
+O linfócito NÃO reconhece o antígeno inteiro — reconhece um pedaço específico dele chamado <strong>epítopo</strong> (ou determinante antigênico). Um único patógeno pode ter <strong>vários epítopos diferentes</strong>, e cada um pode ativar um linfócito diferente.
+</div>
+<div class="info-card quote">
+"Naquele patógeno você tem mais de um epítopo, ou determinante antigênico? Tem vários."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--ag)"></div>
+<div class="step-num" style="color:var(--ag)">Conceito 03</div>
+<div class="step-title">Hapteno</div>
+<div class="step-body">
+Molécula <strong>pequena e quimicamente reativa</strong> que é antigênica (o BCR a reconhece) mas NÃO é imunogênica sozinha — pequena demais para fazer cross-linking dos BCRs. Precisa se ligar a uma <strong>proteína carreadora</strong> para ganhar tamanho suficiente e gerar resposta imune. Exemplo: penicilina — o anel beta-lactâmico se liga espontaneamente à albumina sérica.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--ag)"></div>
+<div class="step-num" style="color:var(--ag)">Conceito 04</div>
+<div class="step-title">Processamento e Apresentação</div>
+<div class="step-body">
+A APC (célula apresentadora de antígeno) fagocita o patógeno → degrada com enzimas lisossomais (peptidases) → peptídeos resultantes se ligam ao HLA → vão pra superfície da célula. O linfócito T <strong>só reconhece antígeno QUANDO apresentado no HLA</strong> — diferente do B, que reconhece antígeno diretamente via BCR.
+</div>
+</div>
+</div>
+
+<div class="highlight">
+<h4>T vs B: como reconhecem antígeno</h4>
+<p><strong>Linfócito B (BCR)</strong> → reconhece antígeno DIRETAMENTE, na forma nativa, sem precisar de apresentação. <strong>Linfócito T (TCR)</strong> → SÓ reconhece peptídeos PROCESSADOS e APRESENTADOS no MHC por uma APC. O T é "cego" para antígeno livre.</p>
+</div>
+</div>
+</section>
+
+<!-- CÉLULA NK -->
+<section class="section" id="nk">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(255,64,129,0.1);border:1px solid rgba(255,64,129,0.2)">⚔️</div>
+<div>
+<div class="tag">Imunidade Inata — Citotoxicidade</div>
+<h2 style="color:var(--accent3)">Célula NK (Natural Killer)</h2>
+</div>
+</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Característica</th>
+<th style="color:var(--accent3)">NK</th>
+<th style="color:var(--hla)">CD8+</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Origem</td><td>Linfoide</td><td>Linfoide</td></tr>
+<tr><td>Poder de matar</td><td><strong>Igual</strong> — induz apoptose</td><td><strong>Igual</strong> — induz apoptose</td></tr>
+<tr><td>Especificidade</td><td><span class="pill" style="background:rgba(255,64,129,0.15);color:var(--accent3)">NÃO tem</span></td><td><span class="pill" style="background:rgba(224,64,251,0.15);color:var(--hla)">TEM (TCR)</span></td></tr>
+<tr><td>Memória</td><td><span class="pill" style="background:rgba(255,64,129,0.15);color:var(--accent3)">NÃO forma</span></td><td><span class="pill" style="background:rgba(224,64,251,0.15);color:var(--hla)">SIM, forma</span></td></tr>
+<tr><td>Imunidade</td><td>Inata</td><td>Adaptativa</td></tr>
+<tr><td>Papel principal</td><td>Vigilância antitumoral, defesa viral precoce</td><td>Matar células infectadas apresentando via MHC I</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-card quote" style="margin-top:1.5rem">
+"Essa célula tem o mesmo poder de morte do meu linfócito TCD8... ela também é um indutor de apoptose, mas diferentemente do CD8, ela não forma células de memória e não tem especificidade."
+<span class="src">📖 Professor — aula 02-02</span>
+</div>
+
+<div class="highlight" style="margin-top:1.5rem">
+<h4>NK na Oncologia</h4>
+<p>O professor enfatizou que NK é crucial na <strong>vigilância contra neoplasias</strong>. A NK aparece PRIMEIRO para tentar combater a célula tumoral, antes mesmo do CD8 ser ativado pela via adaptativa. É a primeira linha de defesa citotóxica.</p>
+</div>
+</div>
+</section>
+
+<!-- MICROBIOTA -->
+<section class="section" id="microbiota">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(118,255,3,0.1);border:1px solid rgba(118,255,3,0.2)">🧫</div>
+<div>
+<div class="tag">Barreira Microbiológica</div>
+<h2 style="color:var(--accent4)">Microbiota</h2>
+</div>
+</div>
+
+<div class="card-grid">
+<div class="card">
+<div style="height:3px;background:var(--accent4);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>Microbiota</h3>
+<p>O <strong>conjunto de microorganismos</strong> que vivem em uma região do corpo (pele, intestino, boca, etc.). São as bactérias, fungos e vírus em si.</p>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--accent);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>Microbioma</h3>
+<p>Microbiota <strong>+ o ambiente + seus metabólitos</strong>. Inclui os microorganismos E tudo que eles produzem e o contexto onde vivem. É o "ecossistema completo".</p>
+</div>
+</div>
+
+<div class="card-grid">
+<div class="card">
+<div style="height:3px;background:var(--accent2);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>Permanente vs Transitória</h3>
+<p><strong>Microbiota permanente</strong> — coloniza e permanece de forma estável. Se estabelece desde o nascimento e persiste. <strong>Microbiota transitória</strong> — passa temporariamente, não se estabelece de forma permanente.</p>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--accent3);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>Disbiose</h3>
+<p>Desequilíbrio da microbiota normal. Exemplo do professor: uso contínuo de laxantes destrói a microbiota intestinal → perda da barreira microbiológica → maior vulnerabilidade a infecções.</p>
+</div>
+</div>
+
+<div class="info-card quote">
+"Microbiota, conjunto de microorganismos. Microbioma, microorganismos mais o que ele ali metabolizar, os seus metabólitos, o seu ambiente."
+<span class="src">📖 Professor — aula 02-23</span>
+</div>
+</div>
+</section>
+
+<!-- COMPLEMENTO -->
+<section class="section" id="complemento">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(255,171,0,0.1);border:1px solid rgba(255,171,0,0.2)">💣</div>
+<div>
+<div class="tag">⚠️ Cobertura Superficial</div>
+<h2 style="color:var(--accent5)">Sistema Complemento</h2>
+</div>
+</div>
+
+<p style="color:var(--text2);margin-bottom:2rem">O professor mencionou o sistema complemento, mas com pouca profundidade. Saiba o básico — se cair na prova, provavelmente será conceitual.</p>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent5)"></div>
+<div class="step-num" style="color:var(--accent5)">O que é</div>
+<div class="step-title">Conjunto de proteínas séricas</div>
+<div class="step-body">
+O sistema complemento é um conjunto de <strong>proteínas séricas</strong> (circulam no sangue) que, ao serem ativadas, geram uma cascata enzimática. "Complementam" a ação dos anticorpos e da fagocitose.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent5)"></div>
+<div class="step-num" style="color:var(--accent5)">Vias de ativação</div>
+<div class="step-title">Três vias: Clássica, Alternativa e das Lectinas</div>
+<div class="step-body">
+<strong>Via Clássica</strong> — ativada por complexo antígeno-anticorpo (precisa de anticorpo). <strong>Via Alternativa</strong> — ativação espontânea na superfície do patógeno. <strong>Via das Lectinas</strong> — ativada por MBL (lectina ligadora de manose) na superfície bacteriana. Todas convergem pra formação de C3b e MAC.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent5)"></div>
+<div class="step-num" style="color:var(--accent5)">Funções principais</div>
+<div class="step-title">Opsonização, Lise, Inflamação</div>
+<div class="step-body">
+<strong>C3b</strong> — opsoniza o patógeno (reveste ele pra facilitar fagocitose). <strong>MAC</strong> (Complexo de Ataque à Membrana) — faz poros na membrana do patógeno e o mata por lise. <strong>C3a/C5a</strong> — anafilatoxinas, recrutam células inflamatórias.
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CITOCINAS -->
+<section class="section" id="citocinas">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(124,77,255,0.1);border:1px solid rgba(124,77,255,0.2)">📡</div>
+<div>
+<div class="tag">Comunicação Celular</div>
+<h2 style="color:var(--accent2)">Citocinas</h2>
+</div>
+</div>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent2)"></div>
+<div class="step-num" style="color:var(--accent2)">Definição</div>
+<div class="step-title">"As palavras do sistema imunológico"</div>
+<div class="step-body">
+Citocinas são moléculas de comunicação entre células imunes. É assim que o TH fala pro linfócito B qual anticorpo produzir, que o macrófago avisa que há invasor, que o TH1 superativa o macrófago. Sem citocinas, nenhuma resposta coordenada acontece.
+</div>
+<div class="info-card quote">
+"O que são as citocinas? São as palavras do meu sistema imunológico."
+<span class="src">📖 Professor — aula 02-02</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent2)"></div>
+<div class="step-num" style="color:var(--accent2)">Principais mencionadas</div>
+<div class="step-title">As citocinas que apareceram nas aulas</div>
+<div class="step-body">
+O professor disse que dará nomes às citocinas em aula dedicada, mas estas já apareceram:
+</div>
+<div class="card-grid" style="margin-top:1rem">
+<div class="card">
+<div style="height:3px;background:var(--accent3);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>IFN-γ</h3>
+<p>Interferon-gama. Citocina principal do TH1. Superativa macrófagos.</p>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--barrier);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>IL-4, IL-5, IL-13</h3>
+<p>Citocinas do TH2. IL-4 direciona class switch pra IgE. Recrutam eosinófilos.</p>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--ag);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>IL-17</h3>
+<p>Citocina principal do TH17. Recruta neutrófilos massivamente.</p>
+</div>
+<div class="card">
+<div style="height:3px;background:var(--accent5);margin:-1.5rem -1.5rem 1.25rem;border-radius:var(--radius) var(--radius) 0 0"></div>
+<h3>TNF-α, IL-1β, IL-6</h3>
+<p>Citocinas pró-inflamatórias. Produzidas por macrófagos na resposta inata. Causam febre, vasodilatação, recrutamento.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- APOPTOSE -->
+<section class="section" id="apoptose">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(255,64,129,0.1);border:1px solid rgba(255,64,129,0.2)">💀</div>
+<div>
+<div class="tag">Morte Celular</div>
+<h2 style="color:var(--accent3)">Apoptose vs Necrose</h2>
+</div>
+</div>
+
+<div class="table-wrap">
+<table class="comp-table">
+<thead>
+<tr>
+<th>Característica</th>
+<th style="color:var(--accent2)">Apoptose</th>
+<th style="color:var(--accent3)">Necrose</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Tipo</td><td>Morte programada</td><td>Morte acidental/não controlada</td></tr>
+<tr><td>Morfologia</td><td>Célula <strong>murcha</strong></td><td>Célula <strong>incha e estoura</strong></td></tr>
+<tr><td>Membrana</td><td>Intacta → externaliza fosfatidilserina</td><td>Rompida → conteúdo vaza</td></tr>
+<tr><td>Inflamação</td><td><span class="pill" style="background:rgba(124,77,255,0.15);color:var(--accent2)">NÃO</span> — silenciosa</td><td><span class="pill" style="background:rgba(255,64,129,0.15);color:var(--accent3)">SIM</span> — libera DAMPs</td></tr>
+<tr><td>Indução</td><td>CD8+ e NK (granzima + perforina)</td><td>Trauma, isquemia, toxinas</td></tr>
+<tr><td>Remoção</td><td>Macrófago reconhece fosfatidilserina e fagocita</td><td>Resposta inflamatória limpa os restos</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="highlight" style="margin-top:1.5rem">
+<h4>Sistema Granzima-Perforina</h4>
+<p>O CD8+ e a NK matam por apoptose usando <strong>grânulos citotóxicos</strong>: a <strong>perforina</strong> faz poros na membrana da célula-alvo, e a <strong>granzima</strong> entra pelos poros e ativa as caspases → morte programada por dentro. É um assassinato cirúrgico — a célula morre sem explodir, sem causar inflamação.</p>
+</div>
+</div>
+</section>
+
+<!-- VACINAS -->
+<section class="section" id="vacinas">
+<div class="section-inner">
+<div class="section-header">
+<div class="section-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">💉</div>
+<div>
+<div class="tag">Imunização Ativa</div>
+<h2 style="color:var(--accent)">Vacinas & Jenner</h2>
+</div>
+</div>
+
+<div class="cascade">
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">História</div>
+<div class="step-title">Edward Jenner — 1797</div>
+<div class="step-body">
+Jenner observou que pessoas que tiveram <strong>varíola bovina (cowpox)</strong> não contraíam varíola humana. Em 1797, inoculou material de cowpox em um menino, que ficou protegido. Nasceu a <strong>vacinação</strong> (de "vacca" = vaca). Transformou a medicina.
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Lógica imunológica</div>
+<div class="step-title">Vacina = criar memória sem doença</div>
+<div class="step-body">
+A vacina expõe o sistema imune a um antígeno (atenuado, inativado ou fragmento) → ativa a resposta adaptativa → gera <strong>linfócitos de memória</strong> (B e T). Na reexposição ao patógeno real, a resposta é rápida e intensa — sem precisar passar pela doença. O professor diferenciou: <strong>vacinação = imunização ativa</strong> (seu corpo produz a defesa) vs <strong>soroterapia = imunização passiva</strong> (você recebe anticorpos prontos).
+</div>
+</div>
+
+<div class="step">
+<div class="step-dot" style="border-color:var(--accent)"></div>
+<div class="step-num" style="color:var(--accent)">Duração</div>
+<div class="step-title">Doença vs Vacina</div>
+<div class="step-body">
+O professor deu o exemplo da rubéola: se você <strong>teve a doença</strong>, tem ~20 anos de proteção. Se <strong>tomou a vacina</strong>, ~35 anos de proteção. Cada patógeno tem um tipo de vacina específico e duração diferente de imunidade.
+</div>
+<div class="info-card quote">
+"Por isso que tem que vacinar, né? Tendo vacinado, ele já tem os linfócitos de memória capazes de..."
+<span class="src">📖 Professor — aula 03-09</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+<p>Conteúdo baseado exclusivamente nas aulas e slides da disciplina de Imunologia — 3º semestre</p>
+<p style="margin-top:0.5rem">📖 Transcrições 02-02 a 03-23 · 📊 Slides 1-3</p>
+<p style="margin-top:1rem;color:var(--accent2)">Este material + Cenários de Ativação = ~95% da matéria coberta pelo professor</p>
+</div>
+
+<!-- BACKGROUND -->
+<script>
+(function(){
+const c=document.getElementById('bgCanvas');const ctx=c.getContext('2d');let w,h,particles=[];
+function resize(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}
+window.addEventListener('resize',resize);resize();
+class P{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-0.5)*0.25;this.vy=(Math.random()-0.5)*0.25;this.r=Math.random()*1.5+0.5;this.o=Math.random()*0.4+0.1}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(124,77,255,${this.o})`;ctx.fill()}}
+for(let i=0;i<50;i++)particles.push(new P());
+function animate(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.update();p.draw()});for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x;const dy=particles[i].y-particles[j].y;const d=Math.sqrt(dx*dx+dy*dy);if(d<100){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(124,77,255,${0.06*(1-d/100)})`;ctx.lineWidth=0.5;ctx.stroke()}}}requestAnimationFrame(animate)}animate()})();
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casos Clínicos — Imunologia P1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:#fff; color:#222; }
+body.dark { background:#181818; color:#d4d4d4; }
+.hdr { background:#222; color:#fff; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; }
+body.dark .hdr { background:#111; }
+.hdr h1 { font-size:15px; font-weight:600; }
+.hdr button { background:transparent; border:1px solid #555; color:#ccc; padding:4px 10px; border-radius:4px; cursor:pointer; font-size:12px; }
+.hdr button:hover { border-color:#999; color:#fff; }
+.tag { display:inline-block; font-size:10px; padding:2px 6px; border:1px solid #c44; color:#c44; border-radius:3px; margin-left:8px; font-weight:500; letter-spacing:0.5px; }
+body.dark .tag { border-color:#f66; color:#f66; }
+.wrap { max-width:750px; margin:20px auto; padding:0 16px; }
+.prog { height:3px; background:#e0e0e0; margin-bottom:20px; }
+body.dark .prog { background:#333; }
+.prog-fill { height:3px; background:#444; width:0%; transition:width .3s; }
+body.dark .prog-fill { background:#888; }
+.grid { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:20px; }
+.grid button { width:32px; height:28px; font-size:11px; border:1px solid #ddd; background:#fff; color:#222; border-radius:3px; cursor:pointer; padding:0; }
+body.dark .grid button { background:#222; border-color:#444; color:#ccc; }
+.grid button.cur { border-color:#222; font-weight:700; background:#f0f0f0; }
+body.dark .grid button.cur { border-color:#aaa; background:#333; }
+.grid button.done { background:#e8e8e8; }
+body.dark .grid button.done { background:#2a2a2a; }
+.grid button.right { border-left:2px solid #4a4; }
+.grid button.wrong { border-left:2px solid #a44; }
+.qcard { border:1px solid #e0e0e0; padding:24px; margin-bottom:20px; }
+body.dark .qcard { border-color:#333; }
+.qinfo { display:flex; justify-content:space-between; margin-bottom:16px; }
+.qnum { font-weight:600; font-size:14px; }
+.diff { font-size:11px; padding:2px 8px; border:1px solid #999; border-radius:3px; }
+.qtxt { font-size:15px; line-height:1.7; margin-bottom:20px; }
+.lab { background:#f8f8f0; border:1px solid #e0dcc8; border-radius:4px; padding:12px 16px; margin:12px 0 20px 0; font-size:13px; line-height:1.8; }
+body.dark .lab { background:#1e1e16; border-color:#3a3a28; }
+.opt { display:block; width:100%; text-align:left; padding:12px 16px; margin-bottom:8px; border:1px solid #ddd; background:#fff; font-size:14px; line-height:1.5; cursor:pointer; border-radius:4px; font-family:inherit; }
+body.dark .opt { background:#1e1e1e; border-color:#333; color:#d4d4d4; }
+.opt:hover { background:#f5f5f5; }
+body.dark .opt:hover { background:#252525; }
+.opt.sel { border-color:#444; background:#f0f0f0; }
+body.dark .opt.sel { border-color:#888; background:#2a2a2a; }
+.opt.correct { border-color:#4a4; background:#efffef; }
+body.dark .opt.correct { border-color:#4a4; background:#1a2e1a; }
+.opt.wrong { border-color:#a44; background:#fff0f0; }
+body.dark .opt.wrong { border-color:#a44; background:#2e1a1a; }
+.btns { display:flex; gap:8px; margin-top:16px; }
+.btns button { padding:8px 16px; border:1px solid #444; background:#222; color:#fff; border-radius:4px; cursor:pointer; font-size:13px; font-family:inherit; }
+body.dark .btns button { background:#333; border-color:#555; }
+.btns button:hover { background:#333; }
+.expl { margin-top:16px; padding:16px; background:#fafafa; border-left:3px solid #222; display:none; font-size:14px; line-height:1.6; }
+body.dark .expl { background:#1e1e1e; border-left-color:#888; }
+.expl.show { display:block; }
+.score { text-align:center; padding:40px; font-size:18px; display:none; }
+.score h2 { margin-bottom:16px; }
+.nav { display:flex; justify-content:space-between; margin-top:16px; }
+.nav button { padding:8px 20px; border:1px solid #ddd; background:#fff; cursor:pointer; border-radius:4px; font-family:inherit; font-size:13px; }
+body.dark .nav button { background:#222; border-color:#444; color:#ccc; }
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>Casos Clínicos — Imunologia P1<span class="tag">SIMULADO</span></h1>
+  <div><button onclick="document.body.classList.toggle('dark')">Modo</button></div>
+</div>
+<div class="wrap">
+  <div class="prog"><div class="prog-fill" id="pf"></div></div>
+  <div class="grid" id="grid"></div>
+  <div class="qcard" id="qcard"></div>
+  <div class="nav">
+    <button onclick="go(-1)">← Anterior</button>
+    <button onclick="go(1)">Próxima →</button>
+  </div>
+  <div class="score" id="score"></div>
+</div>
+<script>
+const Q=[
+  {
+    "number": 1,
+    "question": "Um jovem de 19 anos é levado ao pronto-socorro por apresentar febre alta (39,8°C), cefaleia intensa, rigidez de nuca e vômitos há cerca de 12 horas. Os familiares relatam que ele começou a ficar confuso e mais sonolento nas últimas horas. Na admissão, o médico suspeita de meningite e realiza uma punção lombar. A análise inicial do líquor revela:<br><br><div class='lab'>• Líquor turvo<br>• Aumento importante de neutrófilos<br>• Proteína elevada<br>• Glicose diminuída<br>• Presença de diplococos Gram-negativos na coloração de Gram</div>Diante do achado, a equipe inicia antibioticoterapia imediata. Considerando os mecanismos de reconhecimento do sistema imunológico, qual componente da imunidade INATA é o primeiro a reconhecer o patógeno e iniciar a resposta inflamatória neste caso?",
+    "options": [
+      "Linfócitos T CD4+ reconhecem o LPS via TCR e ativam macrófagos",
+      "TLR4 em macrófagos e neutrófilos reconhece o LPS da parede de Gram-negativos, ativando NF-κB e produção de citocinas pró-inflamatórias",
+      "Anticorpos IgM naturais opsonizam diretamente os diplococos antes de qualquer resposta celular",
+      "Células NK reconhecem os diplococos via receptores KIR e liberam perforinas",
+      "Linfócitos B da zona marginal do baço produzem IgG específica contra o polissacarídeo capsular"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Neisseria meningitidis é Gram-negativa → LPS na membrana externa. O LPS é um PAMP clássico reconhecido por TLR4 (receptor da imunidade inata) presente em macrófagos, neutrófilos e células dendríticas. A ligação LPS–TLR4 ativa a via NF-κB → produção de TNF-α, IL-1, IL-6 → inflamação aguda. Linfócitos T (opção A) são imunidade adaptativa e reconhecem peptídeos via MHC, não PAMPs diretamente. IgM natural (C) existe mas não é o PRIMEIRO mecanismo. NK (D) atua contra células infectadas por vírus, não bactérias extracelulares. IgG específica (E) é resposta adaptativa tardia.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 2,
+    "question": "Menina de 10 anos é diagnosticada com Diabetes Mellitus tipo 1 após apresentar poliúria, polidipsia e perda ponderal. A tipagem HLA revela HLA-DR3/DR4. Os pais questionam o médico sobre a relação entre genética e a doença. O hemograma é normal e os anticorpos anti-GAD e anti-ilhota são positivos.<br><br><div class='lab'>• Glicemia de jejum: 320 mg/dL<br>• HbA1c: 11,2%<br>• Anti-GAD65: positivo<br>• Anti-IA2: positivo<br>• Peptídeo C: indetectável</div>Qual é o mecanismo imunológico que explica a destruição das células beta pancreáticas nesta paciente?",
+    "options": [
+      "HLA-DR3/DR4 codifica receptores que atraem vírus diretamente para as células beta",
+      "A molécula HLA-DR3/DR4 apresenta autoantígenos das células beta a linfócitos T CD4+ autorreativos, que escaparam da tolerância central no timo, levando à ativação de CTLs e destruição das ilhotas",
+      "HLA-DR3/DR4 impede completamente a maturação de linfócitos T no timo, causando imunodeficiência",
+      "Os anticorpos anti-GAD são a causa primária da destruição, atuando por citotoxicidade dependente de anticorpos (ADCC) sem participação de células T",
+      "HLA-DR3/DR4 bloqueia a produção de insulina por mecanismo não-imunológico direto"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "DM1 é doença autoimune mediada por linfócitos T. HLA-DR3/DR4 (MHC classe II) possui bolso de ligação que apresenta peptídeos das células beta (GAD65, IA-2, proinsulina) de forma eficiente a linfócitos T CD4+ autorreativos que escaparam da seleção negativa no timo. Estes CD4+ ativam CD8+ citotóxicos (CTLs) que destroem as células beta por perforina/granzima. Os anticorpos anti-GAD são MARCADORES da doença, não a causa primária — a destruição é mediada por células T. Por isso o peptídeo C está indetectável (sem células beta funcionais).",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 3,
+    "question": "Paciente de 35 anos, HIV+, sem adesão ao tratamento antirretroviral, é internado com febre, tosse seca, dispneia progressiva e hipoxemia. A radiografia de tórax mostra infiltrado intersticial bilateral difuso. A contagem de CD4+ é de 85 células/mm³.<br><br><div class='lab'>• CD4+: 85 células/mm³<br>• Carga viral: 250.000 cópias/mL<br>• LDH sérico: elevado<br>• Lavado broncoalveolar: cistos de Pneumocystis jirovecii<br>• Hemograma: linfopenia</div>Sobre a fisiopatologia da AIDS e a infecção oportunista deste paciente, assinale a alternativa correta:",
+    "options": [
+      "O HIV destrói preferencialmente linfócitos B, o que explica a queda de anticorpos e a infecção fúngica",
+      "Pneumocystis jirovecii só infecta pacientes com neutropenia severa, independente da contagem de CD4+",
+      "A destruição progressiva de linfócitos T CD4+ pelo HIV elimina o comando central da resposta adaptativa; sem CD4+, macrófagos alveolares não são ativados por IFN-γ (via TH1), permitindo a proliferação de Pneumocystis",
+      "O HIV atua exclusivamente na imunidade inata, destruindo macrófagos e células dendríticas, sem afetar linfócitos",
+      "A pneumocistose ocorre porque o HIV aumenta a produção de IL-10, que estimula excessivamente a resposta TH1"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "HIV infecta e destrói células que expressam CD4 (principalmente linfócitos T CD4+, mas também macrófagos e dendríticas). O CD4+ é o 'comandante' do sistema imune — sem ele: (1) não há ativação eficiente de CTLs CD8+, (2) não há ativação de macrófagos via IFN-γ (eixo TH1), (3) não há help para linfócitos B produzirem anticorpos de alta afinidade. Pneumocystis jirovecii é fungo oportunista controlado pelo eixo TH1/IFN-γ/macrófago alveolar. Com CD4 <200, essa via colapsa → pneumocistose. IL-10 é anti-inflamatória e inibiria TH1, não estimularia (opção E invertida).",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 4,
+    "question": "Uma mulher de 28 anos apresenta aumento indolor de linfonodos cervicais. O exame histológico revela folículos linfoides proeminentes com centros germinativos ativos, onde ocorre intensa proliferação de linfócitos B, seleção de clones de alta afinidade e troca de classe de anticorpos em resposta a um antígeno.<br><br>Qual componente do sistema imunitário é considerado um órgão linfoide secundário, possuindo vasos linfáticos aferentes e atuando como o principal local de ativação da imunidade adaptativa para antígenos provenientes dos tecidos?",
+    "options": [
+      "Timo",
+      "Medula óssea",
+      "Linfonodo",
+      "Baço",
+      "Placas de Peyer"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Linfonodo = órgão linfoide SECUNDÁRIO com vasos linfáticos aferentes (drenagem de tecidos) e eferentes. É o principal local de encontro entre antígenos provenientes dos tecidos (trazidos por células dendríticas via linfáticos) e linfócitos naïve. Centros germinativos = proliferação B, hipermutação somática, seleção por afinidade e troca de classe (dependente de TFH). Timo e medula óssea são PRIMÁRIOS (maturação, não ativação). Baço filtra sangue (não tem aferentes linfáticos). Placas de Peyer = MALT intestinal (antígenos da mucosa).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 5,
+    "question": "Paciente de 45 anos em uso de imunossupressores após transplante renal há 6 meses apresenta febre, mal-estar e elevação de creatinina sérica. A biópsia renal revela infiltrado de linfócitos T CD8+ no interstício do enxerto com necrose tubular focal.<br><br><div class='lab'>• Creatinina sérica: 3,8 mg/dL (basal: 1,2)<br>• Biópsia: infiltrado linfocitário T CD8+ intersticial<br>• Necrose tubular focal<br>• Depósito de C4d negativo<br>• Anticorpos anti-HLA do doador: negativos</div>Qual é o mecanismo predominante de rejeição neste caso e por que o HLA é central neste processo?",
+    "options": [
+      "Rejeição hiperaguda mediada por anticorpos pré-formados anti-ABO",
+      "Rejeição aguda celular: linfócitos T CD8+ do receptor reconhecem moléculas HLA classe I do doador como estranhas (alorreconhecimento) e destroem células tubulares do enxerto via perforina/granzima",
+      "Rejeição crônica mediada por anticorpos anti-HLA classe II com ativação do complemento e C4d positivo",
+      "Reação de doença do enxerto contra o hospedeiro (GVHD) por linfócitos T do doador",
+      "Nefrotoxicidade pura por imunossupressores sem componente imunológico"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "C4d negativo e anticorpos anti-HLA negativos descartam rejeição humoral. Infiltrado de CD8+ com necrose tubular = REJEIÇÃO AGUDA CELULAR. Mecanismo: os linfócitos T CD8+ do receptor reconhecem moléculas HLA classe I do doador (expressas em todas as células nucleadas do enxerto) como non-self via alorreconhecimento direto → ativação → destruição celular por perforina/granzima e Fas/FasL. Quanto maior a incompatibilidade HLA entre doador e receptor, maior o risco. GVHD (D) ocorre em transplante de medula, não rim.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 6,
+    "question": "Lactente de 8 meses, previamente hígido, em aleitamento materno exclusivo, apresenta quadro de gastroenterite por rotavírus. A mãe, vacinada contra rotavírus na infância, questiona o pediatra sobre a proteção que o leite materno confere ao bebê.<br><br>Qual imunoglobulina presente no colostro e leite materno é a principal responsável pela proteção de mucosas do lactente, e qual é seu mecanismo de ação?",
+    "options": [
+      "IgG materna atravessa a mucosa intestinal do bebê e neutraliza o rotavírus na corrente sanguínea",
+      "IgE do leite materno sensibiliza mastócitos da mucosa intestinal, que liberam histamina contra o vírus",
+      "IgA secretora (sIgA) reveste a mucosa intestinal do lactente, impedindo a adesão e penetração de patógenos por neutralização e exclusão imune, sem ativar complemento nem causar inflamação",
+      "IgM pentamérica do leite ativa o sistema complemento na luz intestinal, lisando diretamente o rotavírus",
+      "IgD do colostro ativa linfócitos B do MALT intestinal do lactente, que produzem anticorpos próprios"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "IgA secretora (sIgA) é a principal imunoglobulina das mucosas e do leite materno/colostro. Mecanismo: (1) reveste epitélio mucoso, (2) liga-se a patógenos na luz intestinal impedindo adesão (exclusão imune), (3) neutraliza toxinas e vírus, (4) NÃO ativa complemento e NÃO causa inflamação (proteção 'silenciosa' — fundamental para não inflamar a mucosa do bebê). IgG atravessa a placenta, não a mucosa intestinal (A errada). IgE = alergia/parasitas (B). IgM é grande demais para secreção eficiente (D).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 7,
+    "question": "Estudante de medicina de 22 anos recebe a segunda dose da vacina contra hepatite B. Três semanas após, exames mostram títulos elevados de anti-HBs (IgG). O professor questiona os alunos sobre a diferença entre esta resposta e a resposta à primeira dose.<br><br><div class='lab'>• Após 1ª dose (4 semanas): anti-HBs IgM baixo, IgG mínimo<br>• Após 2ª dose (3 semanas): anti-HBs IgG elevado, IgM mínimo<br>• Avidez do anti-HBs: alta</div>Qual mecanismo explica a resposta mais rápida, intensa e com predomínio de IgG de alta avidez após a segunda dose?",
+    "options": [
+      "A segunda dose contém maior quantidade de antígeno, o que estimula mais linfócitos B virgens",
+      "Linfócitos B e T de memória gerados na resposta primária são reativados rapidamente; os linfócitos B de memória já sofreram troca de classe (IgM→IgG) e hipermutação somática nos centros germinativos, produzindo anticorpos de alta afinidade sem necessidade de novo processamento completo",
+      "O adjuvante da vacina na segunda dose é diferente e causa uma resposta inata mais forte",
+      "Células NK de memória reconhecem o antígeno vacinal e ativam diretamente linfócitos B sem participação de células T",
+      "A segunda dose ativa exclusivamente a via clássica do complemento, que aumenta a produção de anticorpos"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Resposta primária: linfócitos B naïve → ativação lenta → IgM predomina → troca de classe e hipermutação somática no centro germinativo → gera células B de memória e plasmócitos de vida longa. Resposta secundária (2ª dose): linfócitos B de memória (já com BCR de alta afinidade após hipermutação somática e selecionados no centro germinativo) + T de memória → ativação RÁPIDA → IgG de alta avidez predomina → pico maior e mais rápido. É o fundamento de qualquer esquema vacinal com doses de reforço (booster).",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 8,
+    "question": "Homem de 50 anos com espondilite anquilosante em tratamento com anti-TNF-α apresenta melhora significativa da dor lombar e rigidez matinal. A tipagem HLA confirma HLA-B27 positivo. O reumatologista explica ao residente que o TNF-α é central na patogênese da doença.<br><br>Sobre a associação HLA-B27 e espondilite anquilosante e o papel do TNF-α, assinale a alternativa correta:",
+    "options": [
+      "HLA-B27 é uma molécula de MHC classe II que apresenta autoantígenos a linfócitos T CD4+, e o TNF-α é produzido exclusivamente por linfócitos B",
+      "HLA-B27 é uma molécula de MHC classe I que pode apresentar peptídeos artrogênicos a linfócitos T CD8+, e o TNF-α é uma citocina pró-inflamatória produzida por macrófagos que amplifica a inflamação articular e o dano tecidual",
+      "HLA-B27 é um receptor de complemento que ativa C3, e o TNF-α inibe a resposta inflamatória",
+      "HLA-B27 impede a apresentação de qualquer antígeno, causando imunodeficiência articular",
+      "HLA-B27 é um anticorpo que ataca as articulações, e o anti-TNF-α funciona porque neutraliza esse anticorpo"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "HLA-B27 = MHC CLASSE I (loci A, B, C são todos classe I). Apresenta peptídeos a CD8+. A teoria artrogênica: HLA-B27 apresenta peptídeos próprios articulares de forma que ativa T CD8+ autorreativos → inflamação. TNF-α é citocina pró-inflamatória chave produzida por macrófagos ativados → amplifica inflamação → destruição articular. Por isso anti-TNF-α (infliximabe, adalimumabe) funciona: bloqueia a citocina efetora da inflamação. Memorize: B27 = classe I = CD8+; DR/DQ = classe II = CD4+.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 9,
+    "question": "Criança de 6 anos apresenta febre, artrite migratória de grandes articulações e sopro cardíaco novo 3 semanas após faringoamigdalite por Streptococcus pyogenes (estreptococo beta-hemolítico do grupo A) não tratada adequadamente. O diagnóstico de febre reumática é estabelecido.<br><br>Qual mecanismo imunológico explica o acometimento cardíaco nesta criança?",
+    "options": [
+      "O estreptococo invade diretamente o endocárdio e destrói as valvas por ação enzimática",
+      "Mimetismo molecular: anticorpos e linfócitos T gerados contra antígenos estreptocócicos (proteína M) reagem cruzadamente com proteínas do tecido cardíaco (miosina cardíaca), causando inflamação autoimune",
+      "O sistema complemento é ativado pela via das lectinas exclusivamente no coração, destruindo os cardiomiócitos",
+      "Linfócitos T reguladores (Treg) são excessivamente ativados, suprimindo a resposta contra o estreptococo e permitindo sua disseminação cardíaca",
+      "IgE contra antígenos estreptocócicos sensibiliza mastócitos cardíacos, causando anafilaxia localizada no coração"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Febre reumática = exemplo clássico de MIMETISMO MOLECULAR (cross-reactivity). A proteína M do Streptococcus pyogenes possui epítopos estruturalmente similares à miosina cardíaca. Anticorpos e células T gerados contra a proteína M reconhecem também a miosina cardíaca → inflamação autoimune → cardite, artrite, coreia. NÃO é invasão direta (o estreptococo não vai ao coração). É reação cruzada pós-infecciosa. Por isso o tratamento é prevenir: erradicar o estreptococo com penicilina antes que a resposta imune cause dano.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 10,
+    "question": "Paciente de 30 anos previamente hígido apresenta quadro de apendicite aguda. O hemograma da admissão revela:<br><br><div class='lab'>• Leucócitos totais: 18.500/mm³ (VR: 4.000-11.000)<br>• Neutrófilos segmentados: 75%<br>• Bastões: 12% (VR: 0-5%)<br>• Metamielócitos: 2%<br>• Linfócitos: 8%<br>• Monócitos: 3%<br>• Eosinófilos: 0%</div>O residente identifica 'desvio à esquerda' no hemograma. Qual é a interpretação correta deste achado e qual o mecanismo que o explica?",
+    "options": [
+      "Desvio à esquerda indica aumento de linfócitos maduros, sinalizando infecção viral crônica",
+      "Desvio à esquerda indica liberação precoce de formas imaturas de neutrófilos (bastões e metamielócitos) pela medula óssea em resposta a citocinas inflamatórias (G-CSF, IL-17) produzidas no foco infeccioso agudo bacteriano",
+      "Desvio à esquerda indica aumento de eosinófilos, sinalizando infecção parasitária",
+      "Desvio à esquerda indica queda de plaquetas (trombocitopenia) por consumo no foco inflamatório",
+      "Desvio à esquerda indica aumento de monócitos, típico de infecções fúngicas crônicas"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Desvio à esquerda = presença aumentada de formas IMATURAS de neutrófilos no sangue periférico (bastões >5%, metamielócitos, mielócitos). Em infecção bacteriana aguda: (1) citocinas pró-inflamatórias (TNF-α, IL-1, IL-6) + G-CSF + IL-17 (via TH17) estimulam a medula óssea a liberar neutrófilos antes de completar maturação, (2) demanda tecidual excede a reserva de segmentados maduros. Bastões 12% + metamielócitos 2% = desvio à esquerda clássico. Linfocitose sugere viral (não é o caso). Eosinofilia = parasitas/alergia.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 11,
+    "question": "Paciente de 40 anos com doença celíaca confirmada por biópsia duodenal (atrofia vilositária subtotal, infiltrado linfocitário intraepitelial) apresenta tipagem HLA-DQ2 positiva. Após dieta sem glúten por 6 meses, os anticorpos anti-transglutaminase tecidual (anti-tTG IgA) negativam e os sintomas desaparecem.<br><br>Qual é o papel do HLA-DQ2 na patogênese da doença celíaca?",
+    "options": [
+      "HLA-DQ2 é um anticorpo que reage diretamente contra o glúten na mucosa intestinal",
+      "HLA-DQ2 é uma molécula de MHC classe I que apresenta gliadina a linfócitos T CD8+ na mucosa",
+      "HLA-DQ2 é uma molécula de MHC classe II que apresenta peptídeos de gliadina deamidados a linfócitos T CD4+ na lâmina própria intestinal, desencadeando resposta TH1 com produção de IFN-γ e destruição da mucosa",
+      "HLA-DQ2 ativa diretamente o sistema complemento contra os enterócitos, causando atrofia vilositária",
+      "HLA-DQ2 bloqueia a absorção de glúten no intestino, e sua remoção paradoxalmente causa a doença"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "HLA-DQ2 (e DQ8) = MHC classe II → apresenta peptídeos a CD4+. Na doença celíaca: a transglutaminase tecidual deamida peptídeos de gliadina (fração do glúten) → esses peptídeos deamidados se encaixam perfeitamente no bolso do HLA-DQ2 → apresentação a T CD4+ na lâmina própria → resposta TH1 com IFN-γ → ativação de CD8+ intraepiteliais → destruição de enterócitos → atrofia vilositária. A dieta sem glúten remove o antígeno → sem apresentação → sem inflamação. Associação HLA-DQ2 é o exemplo clássico de predisposição genética + gatilho ambiental.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 12,
+    "question": "Recém-nascido a termo, filho de mãe Rh-negativa que não recebeu imunoglobulina anti-D (RhoGAM) durante a primeira gestação de feto Rh-positivo, nasce ictérico com anemia hemolítica grave (doença hemolítica do recém-nascido — DHRN).<br><br><div class='lab'>• Hemoglobina do RN: 8,2 g/dL<br>• Bilirrubina indireta: 18 mg/dL<br>• Teste de Coombs direto: positivo (IgG anti-D)<br>• Reticulócitos: elevados</div>Este é o SEGUNDO filho Rh-positivo. O primeiro nasceu saudável. Por que a doença se manifesta no segundo filho e não no primeiro?",
+    "options": [
+      "Na primeira gestação, hemácias fetais Rh+ sensibilizaram a mãe, gerando resposta primária (IgM, que NÃO atravessa a placenta); na segunda gestação, a reexposição ao antígeno Rh ativou células B de memória que produziram IgG anti-D de alta afinidade, que atravessa a placenta e opsoniza hemácias fetais → hemólise",
+      "O primeiro feto não expressava antígeno Rh por imaturidade, e o segundo expressou por ter mais semanas de gestação",
+      "A mãe só desenvolveu anticorpos anti-Rh após o parto do segundo filho, e esses anticorpos retroagiram",
+      "O sistema complemento materno só é ativado a partir da segunda gestação por maturação fisiológica",
+      "O primeiro filho era Rh-negativo como a mãe e não houve sensibilização"
+    ],
+    "correct": 0,
+    "letter": "A",
+    "explanation": "Este caso integra memória imunológica + classes de imunoglobulinas + transferência placentária. 1ª gestação: hemácias fetais Rh+ entram na circulação materna (especialmente no parto) → resposta primária → IgM anti-D (pentamérica, grande, NÃO atravessa placenta) → primeiro filho nasce bem. 2ª gestação: reexposição ao Rh+ → resposta SECUNDÁRIA → células B de memória → IgG anti-D (monomérica, atravessa placenta via receptor FcRn) → opsoniza hemácias fetais → hemólise por ADCC e fagocitose esplênica. RhoGAM previne a sensibilização inicial destruindo hemácias Rh+ fetais antes de ativar a mãe.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 13,
+    "question": "Paciente de 55 anos, tabagista, apresenta infecções respiratórias bacterianas de repetição. A investigação revela que ele utiliza enxaguante bucal antisséptico de alta potência 4 vezes ao dia há 2 anos. Cultura oral mostra crescimento excessivo de Candida albicans.<br><br>Qual conceito imunológico explica o aparecimento de candidíase oral neste paciente?",
+    "options": [
+      "O enxaguante bucal é diretamente imunossupressor, inibindo a produção de IgA sistêmica",
+      "O uso excessivo de antisséptico causa disbiose oral — elimina bactérias comensais da microbiota que competem com Candida por nicho ecológico e que estimulam respostas imunes locais (TH17, IgA), permitindo supercrescimento fúngico",
+      "Candida albicans é resistente a todos os antissépticos e prolifera independentemente da microbiota",
+      "O tabagismo é o único fator, pois a nicotina nutre diretamente a Candida albicans",
+      "A candidíase é causada por deficiência genética de complemento, não tendo relação com a microbiota"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Conceito de MICROBIOTA e DISBIOSE. A microbiota oral normal: (1) compete com patógenos por nutrientes e adesão (resistência à colonização), (2) estimula imunidade local — TH17 produz IL-17 que recruta neutrófilos antifúngicos, e IgA secretora mantém homeostase. Antisséptico excessivo = mata comensais → perda de resistência à colonização + perda de estímulo imune local → supercrescimento de Candida (oportunista). Importante: MICROBIOTA ≠ MICROBIOMA (microbiota = organismos; microbioma = genoma coletivo). O professor enfatiza que só 'microbiota' é aceito na prova.",
+    "difficulty": "Médio"
+  },
+  {
+    "number": 14,
+    "question": "Criança de 2 anos recebe vacina conjugada pneumocócica (PCV13). A mãe questiona por que a vacina anterior polissacarídica não era recomendada para menores de 2 anos.<br><br>Considerando os mecanismos de ativação de linfócitos B e a maturação do sistema imune, qual a justificativa imunológica para o uso de vacinas conjugadas em crianças pequenas?",
+    "options": [
+      "Crianças menores de 2 anos não possuem linfócitos B, sendo incapazes de produzir qualquer anticorpo",
+      "Vacinas polissacarídicas ativam linfócitos B de forma T-independente (sem ajuda de TFH), gerando apenas IgM de curta duração e sem memória; crianças <2 anos têm zona marginal esplênica imatura e respondem mal. Vacinas conjugadas (polissacarídeo + proteína carreadora) convertem a resposta em T-dependente, permitindo troca de classe, hipermutação somática e memória",
+      "A vacina polissacarídica contém adjuvantes tóxicos para crianças que a conjugada não contém",
+      "Crianças <2 anos têm excesso de anticorpos maternos que neutralizam vacinas polissacarídicas, mas não as conjugadas",
+      "A vacina conjugada funciona ativando exclusivamente células NK, que são mais maduras em crianças"
+    ],
+    "correct": 1,
+    "letter": "B",
+    "explanation": "Antígenos polissacarídicos = T-INDEPENDENTES → ativam B sem ajuda de T helper → resposta: IgM, curta, sem memória, sem troca de classe. Crianças <2 anos: zona marginal do baço (onde estão os B que respondem a T-independentes) ainda imatura → resposta ruim. SOLUÇÃO: conjugar polissacarídeo a uma proteína carreadora → B internaliza o conjugado → processa a PROTEÍNA → apresenta peptídeo via MHC II a TFH → TFH fornece help (CD40L, IL-21) → troca de classe (IgG), hipermutação somática, memória imunológica. É a conversão de resposta T-independente em T-dependente. Princípio fundamental de vacinologia.",
+    "difficulty": "Difícil"
+  },
+  {
+    "number": 15,
+    "question": "Gestante de 32 semanas apresenta pré-eclâmpsia e o obstetra explica que a gravidez normal requer um equilíbrio imunológico específico para tolerar o feto (que expressa antígenos paternos). A paciente questiona como o sistema imune materno não rejeita o feto.<br><br>Qual o perfil imunológico predominante na interface materno-fetal durante uma gravidez normal e o que acontece quando esse equilíbrio é rompido?",
+    "options": [
+      "Predominância TH1 com produção de IFN-γ que protege o feto contra infecções, e pré-eclâmpsia ocorre por excesso de TH2",
+      "Imunodeficiência total materna durante a gestação — o sistema imune é completamente suprimido para não atacar o feto",
+      "Predominância de perfil TH2 (IL-4, IL-10) e Treg na interface materno-fetal, mediada por progesterona, que suprime respostas TH1 citotóxicas contra antígenos paternos do feto; o desequilíbrio para TH1 está associado a complicações como pré-eclâmpsia e aborto espontâneo",
+      "O feto não expressa nenhuma molécula HLA, sendo completamente invisível ao sistema imune materno",
+      "Anticorpos IgE maternos formam uma barreira protetora na placenta que impede a passagem de linfócitos T"
+    ],
+    "correct": 2,
+    "letter": "C",
+    "explanation": "Gravidez normal = desvio TH2/Treg na interface materno-fetal. A progesterona favorece: (1) perfil TH2 (IL-4, IL-10 — anti-inflamatórias), (2) expansão de Treg (tolerância ativa), (3) supressão de TH1 (IFN-γ, TNF-α — citotóxicas). O trofoblasto expressa HLA-G (não-clássico) que inibe NK uterinas. Se ocorre desvio para TH1 → excesso de citocinas pró-inflamatórias na placenta → dano endotelial → pré-eclâmpsia, aborto. NÃO é imunodeficiência total (B) — a mãe mantém imunidade sistêmica funcional. O feto expressa HLA paterno (D está errado), mas mecanismos locais impedem a rejeição."
+  }
+];
+let cur=0,ans={},rev={};
+const $=s=>document.getElementById(s);
+function render(){
+  const q=Q[cur];
+  let h=`<div class="qinfo"><span class="qnum">Caso ${q.number} de ${Q.length}</span><span class="diff">${q.difficulty||'Difícil'}</span></div>`;
+  h+=`<div class="qtxt">${q.question}</div>`;
+  q.options.forEach((o,i)=>{
+    let cls="opt";
+    if(rev[cur]){
+      if(i===q.correct) cls+=" correct";
+      else if(ans[cur]===i) cls+=" wrong";
+    } else if(ans[cur]===i) cls+=" sel";
+    h+=`<button class="${cls}" onclick="pick(${i})">${String.fromCharCode(65+i)}) ${o}</button>`;
+  });
+  h+=`<div class="btns"><button onclick="reveal()">Revelar Resposta</button></div>`;
+  h+=`<div class="expl ${rev[cur]?'show':''}" id="expl"><strong>Gabarito: ${String.fromCharCode(65+q.correct)}</strong><br>${q.explanation}</div>`;
+  $("qcard").innerHTML=h;
+  let g="";
+  Q.forEach((qq,i)=>{
+    let c="";
+    if(i===cur) c+=" cur";
+    if(ans[i]!==undefined) c+=" done";
+    if(rev[i]&&ans[i]===Q[i].correct) c+=" right";
+    else if(rev[i]&&ans[i]!==undefined) c+=" wrong";
+    g+=`<button class="${c}" onclick="cur=${i};render()">${i+1}</button>`;
+  });
+  $("grid").innerHTML=g;
+  $("pf").style.width=(Object.keys(rev).length/Q.length*100)+"%";
+}
+function pick(i){ if(!rev[cur]){ ans[cur]=i; render(); } }
+function reveal(){ if(ans[cur]!==undefined){ rev[cur]=true; render(); } }
+function go(d){ cur=Math.max(0,Math.min(Q.length-1,cur+d)); render(); }
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight") go(1);
+  if(e.key==="ArrowLeft") go(-1);
+  if(e.key===" ") reveal();
+});
+render();
+</script>
+</body>
+</html>

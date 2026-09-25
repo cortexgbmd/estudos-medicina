@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Simulado — Visão Geral da Imunologia</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#05080f;--surface:#0a0f1a;--card:#0d1320;--border:#151d2e;--text:#c8d0e0;--text2:#6b7a94;--text3:#3a4760;--accent:#00d4aa;--accent2:#00b893;--green:#10b981;--red:#ef4444;--gold:#fbbf24;--purple:#a855f7}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(0,212,170,.03),transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(168,85,247,.02),transparent 40%);pointer-events:none;z-index:0}
+
+.hud{position:sticky;top:0;z-index:100;background:rgba(5,8,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 20px}
+.hud-inner{max-width:800px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hud-title{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.hud-sep{width:1px;height:20px;background:var(--border)}
+.hud-stats{display:flex;gap:16px;flex:1;font-size:12px;font-family:'JetBrains Mono',monospace}
+.stat{display:flex;align-items:center;gap:4px}
+.stat-val{font-weight:600}
+.stat-green{color:var(--green)}
+.stat-red{color:var(--red)}
+.stat-gray{color:var(--text2)}
+.progress-bar{flex:1;min-width:80px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px;transition:width .4s}
+.hud-btns{display:flex;gap:6px}
+.hud-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:5px 10px;border-radius:6px;cursor:pointer;font:11px 'Space Grotesk';font-weight:500;transition:all .15s}
+.hud-btn:hover{color:var(--text);border-color:var(--text2)}
+
+.main{max-width:800px;margin:0 auto;padding:20px;position:relative;z-index:1}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:all .3s}
+.q-card.answered{opacity:.85}
+.q-card.correct{border-left:3px solid var(--green)}
+.q-card.wrong{border-left:3px solid var(--red)}
+
+.q-header{padding:16px 18px 12px;display:flex;gap:10px;align-items:flex-start}
+.q-num{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--text3);padding:3px 8px;background:var(--surface);border:1px solid var(--border);border-radius:6px;white-space:nowrap;flex-shrink:0}
+.q-text{font-size:13.5px;font-weight:500;line-height:1.65;color:var(--text)}
+
+.q-opts{padding:0 18px 16px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s}
+.opt:hover:not(.locked){border-color:rgba(0,212,170,.3);background:rgba(0,212,170,.03)}
+.opt.locked{cursor:default}
+.opt.selected{border-color:var(--accent);background:rgba(0,212,170,.06)}
+.opt.right{border-color:var(--green);background:rgba(16,185,129,.08)}
+.opt.wrong-pick{border-color:var(--red);background:rgba(239,68,68,.06)}
+.opt-letter{width:24px;height:24px;border:1.5px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--text2);flex-shrink:0;transition:all .15s}
+.opt.selected .opt-letter{background:var(--accent);border-color:var(--accent);color:#000}
+.opt.right .opt-letter{background:var(--green);border-color:var(--green);color:#fff}
+.opt.wrong-pick .opt-letter{background:var(--red);border-color:var(--red);color:#fff}
+.opt-text{font-size:12.5px;line-height:1.6;color:var(--text);padding-top:2px}
+
+.q-exp{display:none;padding:0 18px 16px}
+.q-exp.show{display:block}
+.q-exp-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.q-exp-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:6px}
+.q-exp-text{font-size:12.5px;line-height:1.7;color:var(--text2)}
+
+.results-card{display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:20px;text-align:center}
+.results-card.show{display:block}
+.results-card h2{font-size:18px;font-weight:700;margin-bottom:16px}
+.results-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+.r-cell{padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.r-val{font-size:32px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.r-lab{font-size:11px;color:var(--text2);margin-top:4px}
+.results-btn{padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:8px;cursor:pointer;font:13px 'Space Grotesk';font-weight:600}
+
+@media(max-width:600px){
+  .hud-inner{gap:8px}
+  .hud-sep{display:none}
+  .q-header{padding:12px 14px 10px}
+  .q-opts{padding:0 14px 12px}
+  .opt{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="hud">
+<div class="hud-inner">
+  <div class="hud-title">Visão Geral</div>
+  <div class="hud-sep"></div>
+  <div class="hud-stats">
+    <div class="stat"><span class="stat-val stat-green" id="sCorrect">0</span><span style="color:var(--text3)">/30</span></div>
+    <div class="stat"><span class="stat-val stat-red" id="sWrong">0</span><span style="color:var(--text3)">err</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progBar"></div></div>
+    <div class="stat stat-gray" id="sPct">0%</div>
+  </div>
+  <div class="hud-btns">
+    <button class="hud-btn" onclick="toggleTheme()">◐</button>
+    <button class="hud-btn" onclick="resetQuiz()">Reset</button>
+  </div>
+</div>
+</div>
+
+<div class="main">
+<div class="results-card" id="results">
+  <h2 id="rTitle">Resultado</h2>
+  <div class="results-grid">
+    <div class="r-cell"><div class="r-val stat-green" id="rCorrect">0</div><div class="r-lab">Acertos</div></div>
+    <div class="r-cell"><div class="r-val stat-red" id="rWrong">0</div><div class="r-lab">Erros</div></div>
+    <div class="r-cell"><div class="r-val" style="color:var(--accent)" id="rPct">0%</div><div class="r-lab">Aproveitamento</div></div>
+  </div>
+  <button class="results-btn" onclick="resetQuiz()">Refazer</button>
+</div>
+<div id="qList"></div>
+</div>
+
+<script>
+const ALL=[
+// Distribution: A=6, B=6, C=6, D=6, E=6 (balanced)
+// Q1 — 3 funções do SI
+{n:1,q:"Quais são as três funções do sistema imune descritas pelo professor?",
+opts:["Proteção, Eugenia e Vigilância","Proteção, Homeostasia e Regeneração","Defesa, Tolerância e Memória","Imunidade, Regulação e Reparo","Proteção, Memória e Especificidade"],
+cor:0,let:"A",
+exp:"O professor definiu 3 funções: Proteção (contra microrganismos e partículas estranhas), Eugenia (self vs non-self, HLA, rejeição de transplantes) e Vigilância (contra neoplasias/células transformadas)."},
+
+// Q2 — Eugenia
+{n:2,q:"A função de 'eugenia' do sistema imune está diretamente relacionada a:",
+opts:["Produção de anticorpos contra patógenos","Eliminação de células tumorais por NK","Reconhecimento de self vs non-self e rejeição de transplantes","Geração de células de memória após vacinação","Fagocitose por macrófagos ativados"],
+cor:2,let:"C",
+exp:"Eugenia = distinção self vs non-self. Envolve o MHC/HLA — o complexo de histocompatibilidade principal que determina compatibilidade em transplantes."},
+
+// Q3 — Vigilância
+{n:3,q:"A função de vigilância do sistema imune refere-se principalmente a:",
+opts:["Controle da microbiota transitória","Manutenção da barreira mecânica da pele","Regulação do pH gástrico","Detecção e eliminação de células neoplásicas","Produção de citocinas pró-inflamatórias"],
+cor:3,let:"D",
+exp:"Vigilância = monitoramento de checkpoints celulares para detectar células transformadas (neoplásicas). Se a célula não está ok, o sistema a elimina."},
+
+// Q4 — Inata: características
+{n:4,q:"A imunidade inata apresenta todas as seguintes características, EXCETO:",
+opts:["Não possui especificidade para antígenos individuais","Gera células de memória após o primeiro contato","Age sempre com a mesma intensidade","Está presente desde o nascimento","Inclui barreiras mecânicas, químicas e microbiológicas"],
+cor:1,let:"B",
+exp:"A imunidade inata NÃO gera memória. Sempre age com mesma intensidade, sem especificidade para antígenos individuais. Memória é exclusiva da imunidade adaptativa."},
+
+// Q5 — Barreira mecânica
+{n:5,q:"A pele, os cílios e o peristaltismo intestinal são exemplos de qual tipo de barreira da imunidade inata?",
+opts:["Mecânica","Química","Microbiológica","Humoral","Celular"],
+cor:0,let:"A",
+exp:"Barreiras mecânicas = estruturas físicas que barram entrada: pele, cílios, peristaltismo. Não têm especificidade, memória, e agem sempre com a mesma intensidade."},
+
+// Q6 — Barreira química
+{n:6,q:"O pH ácido do estômago e a lisozima presente nas lágrimas são exemplos de barreira:",
+opts:["Mecânica","Microbiológica","Química","Adaptativa humoral","Adaptativa celular"],
+cor:2,let:"C",
+exp:"Barreiras químicas = substâncias que destroem ou inibem patógenos: pH gástrico, lisozima, defensinas. Diferente da mecânica (física) e microbiológica (microbiota)."},
+
+// Q7 — Microbiota definição
+{n:7,q:"Professor enfatizou a diferença entre microbiota e microbioma. A definição CORRETA de microbiota é:",
+opts:["Genoma coletivo dos microrganismos de uma região","Conjunto de vírus que habitam o trato gastrointestinal","Conjunto de microrganismos presentes nas regiões de pele e mucosa","Comunidade bacteriana exclusiva do intestino delgado","Flora bacteriana patogênica transitória"],
+cor:2,let:"C",
+exp:"MICROBIOTA = conjunto de microrganismos que habitam pele e mucosa. MICROBIOMA = microbiota + ambiente (genoma coletivo). Professor cobra essa distinção na prova."},
+
+// Q8 — Vazio microbiológico
+{n:8,q:"O conceito de 'vazio microbiológico' refere-se a regiões do corpo que normalmente NÃO possuem microbiota. São exemplos:",
+opts:["Pele e mucosa oral","Intestino delgado e cólon","Vagina e uretra","Nasofaringe e orofaringe","Sangue e líquor"],
+cor:4,let:"E",
+exp:"Sangue e líquor são estéreis — vazio microbiológico. Se tem bactéria no sangue = bacteremia. O professor alertou: 'cuidado com questão na prova sobre vazio microbiológico'."},
+
+// Q9 — Microbiota permanente
+{n:9,q:"A microbiota permanente se caracteriza por conviver com o hospedeiro de maneira:",
+opts:["Comensal ou simbionte, sem causar doença","Exclusivamente parasitária","Sempre patogênica em imunossuprimidos","Transitória, adquirida do ambiente externo","Oportunista em qualquer circunstância"],
+cor:0,let:"A",
+exp:"Microbiota permanente = comensal (vive junto sem fazer mal) ou simbionte (benefício mútuo). Não causa sintomas/sinais em condições normais. Diferente da transitória (adquirida do ambiente)."},
+
+// Q10 — Disbiose
+{n:10,q:"Disbiose é definida como:",
+opts:["Ausência total de microbiota em mucosas","Presença de microbiota transitória no sangue","Desequilíbrio da microbiota normal, levando a sintomas e sinais","Colonização inicial do recém-nascido","Substituição da microbiota permanente por fungos"],
+cor:2,let:"C",
+exp:"Disbiose = desequilíbrio da microbiota normal → sintomas e sinais. Exemplo: antibiótico destrói lactobacilos → Gardnerella prolifera → vaginose bacteriana."},
+
+// Q11 — Componentes microbiota
+{n:11,q:"Os componentes da microbiota incluem:",
+opts:["Apenas bactérias Gram-positivas e Gram-negativas","Somente bactérias e fungos comensais","Exclusivamente lactobacilos e bifidobactérias","Bactérias, fungos, partículas virais/vírus e archaeas","Bactérias, protozoários e helmintos"],
+cor:3,let:"D",
+exp:"Conforme o slide: componentes da microbiota = partículas virais e vírus, fungos, bactérias e archaeas. Não é só bactéria."},
+
+// Q12 — Microbiota transitória
+{n:12,q:"A diferença principal entre microbiota permanente e transitória é que a transitória:",
+opts:["Está presente desde o nascimento e nunca muda","Sempre causa doença quando presente","Habita exclusivamente o trato gastrointestinal","Produz anticorpos IgA locais","É adquirida do ambiente e não está fixa"],
+cor:4,let:"E",
+exp:"Microbiota transitória = microrganismos adquiridos do ambiente, não fixos. Diferente da permanente que é estável e convive de forma comensal/simbionte."},
+
+// Q13 — PAMPs
+{n:13,q:"PAMPs (Padrões Moleculares Associados a Patógenos) são definidos como:",
+opts:["Anticorpos produzidos contra invasores específicos","Receptores de membrana das células inatas","Citocinas liberadas em resposta à infecção","Fragmentos de células do hospedeiro danificadas","Padrões moleculares presentes nos invasores, ausentes nas células do hospedeiro"],
+cor:4,let:"E",
+exp:"PAMPs = classe de padrões moleculares presentes em patógenos mas ausentes em células humanas. Exemplos: LPS (Gram-), peptidoglicano (Gram+), flagelina, RNA viral, manose terminal."},
+
+// Q14 — DAMPs
+{n:14,q:"DAMPs (Padrões Moleculares Associados a Dano) diferem dos PAMPs porque:",
+opts:["Representam padrões moleculares modificados nas PRÓPRIAS células do hospedeiro","São específicos apenas para vírus","São reconhecidos exclusivamente por linfócitos T","São encontrados apenas em bactérias Gram-negativas","Ativam apenas a imunidade adaptativa"],
+cor:0,let:"A",
+exp:"DAMPs = padrões moleculares modificados nas células do PRÓPRIO hospedeiro quando há dano. Exemplos: fosfatidilserina externalizada (apoptose), LDL oxidado. PRRs reconhecem AMBOS: PAMPs E DAMPs."},
+
+// Q15 — Fosfatidilserina
+{n:15,q:"A fosfatidilserina, quando externalizada na membrana plasmática durante a apoptose, funciona como:",
+opts:["Um PAMP reconhecido por TLR-4","Um receptor de complemento","Uma citocina pró-inflamatória","Um DAMP reconhecido por receptores scavenger do macrófago","Um anticorpo natural de fase aguda"],
+cor:3,let:"D",
+exp:"Fosfatidilserina normalmente fica no lado INTERNO da membrana. Na apoptose, a membrana vira → fosfatidilserina exposta = DAMP. Macrófago reconhece via receptor scavenger e fagocita a célula morta."},
+
+// Q16 — LDL oxidado
+{n:16,q:"O macrófago que fagocita excessivamente LDL oxidado (um DAMP) se transforma em:",
+opts:["Célula dendrítica madura","Plasmócito de vida longa","Célula gigante multinucleada","Linfócito T ativado","Célula espumosa, contribuindo para aterosclerose"],
+cor:4,let:"E",
+exp:"LDL normal não é fagocitado. LDL oxidado = DAMP → macrófago reconhece via receptor scavenger → fagocita → quando come demais vira célula espumosa → aterosclerose. Professor conectou com histologia."},
+
+// Q17 — PRRs definição
+{n:17,q:"Os PRRs (Receptores de Reconhecimento de Padrão) são encontrados em células da imunidade:",
+opts:["Adaptativa, especificamente em linfócitos B","Inata, como macrófagos, células dendríticas e neutrófilos","Adaptativa, especificamente em linfócitos T CD8+","Apenas em células NK","Apenas em mastócitos da pele"],
+cor:1,let:"B",
+exp:"PRRs = receptores da imunidade INATA. Presentes em macrófagos, células dendríticas, neutrófilos, mastócitos e NK. Linfócitos T e B usam TCR e BCR (receptores específicos do adaptativo), NÃO PRRs."},
+
+// Q18 — PRRs reconhecem
+{n:18,q:"O professor perguntou na aula: 'O que os PRRs identificam?' A resposta correta é:",
+opts:["Apenas PAMPs de bactérias Gram-negativas","Padrões moleculares presentes nos invasores OU modificados no hospedeiro","Apenas DAMPs de células em apoptose","Antígenos específicos processados por MHC-II","Exclusivamente epítopos de proteínas virais"],
+cor:1,let:"B",
+exp:"PRRs reconhecem PAMPs (invasores) E DAMPs (dano próprio). O professor respondeu: 'padrões moleculares presentes nos invasores ou modificados em você'. Essa é a resposta-chave."},
+
+// Q19 — TLRs
+{n:19,q:"Os TLRs (Toll-Like Receptors) são:",
+opts:["Uma superfamília de PRRs com ~13 tipos conhecidos","Uma classe de anticorpos secretados","Receptores exclusivos de linfócitos T","Enzimas lisossomais do neutrófilo","Moléculas de adesão endotelial"],
+cor:0,let:"A",
+exp:"TLRs = superfamília de PRRs. Professor disse que existem ~13 tipos bem caracterizados. O nome 'Toll' vem do alemão (o pesquisador achou o receptor 'incrível'). Cada TLR reconhece um PAMP específico."},
+
+// Q20 — TLR-4
+{n:20,q:"O TLR-4 reconhece especificamente qual PAMP, identificando qual grupo bacteriano?",
+opts:["Flagelina → bactérias flageladas","LPS (lipopolissacarídeo) → bactérias Gram-negativas","Peptidoglicano → Gram-positivas","RNA viral fita simples → vírus de RNA","DNA CpG → micobactérias"],
+cor:1,let:"B",
+exp:"TLR-4 = LPS = Gram-negativa. O professor enfatizou: 'TLR-4 não se liga em mais nada, só em lipopolissacarídeo. Estamos sendo atacados por bactéria Gram-negativa.' É o TLR que ele mais detalhou."},
+
+// Q21 — TLR-2
+{n:21,q:"Bactérias Gram-positivas são reconhecidas pela imunidade inata principalmente através de qual receptor?",
+opts:["TLR-4","TLR-9","TLR-2","Dectina-1","Receptor de manose"],
+cor:2,let:"C",
+exp:"TLR-2 reconhece peptidoglicano e ácido lipoteicoico (Gram+). Professor mencionou que TLR-2 forma heterodímeros com diferentes parceiros para reconhecer diferentes ligantes."},
+
+// Q22 — TLR localização
+{n:22,q:"TLRs podem estar localizados na superfície celular OU em endossomos intracelulares. Os TLRs que reconhecem ácidos nucleicos (RNA/DNA viral) ficam:",
+opts:["Na superfície celular, voltados para o meio extracelular","Em endossomos/vesículas intracelulares","Livres no plasma sanguíneo","No núcleo da célula","Na membrana mitocondrial"],
+cor:1,let:"B",
+exp:"TLR-7/8 (RNA viral) e TLR-9 (DNA CpG) ficam em endossomos. Faz sentido: ácidos nucleicos virais só ficam expostos após degradação dentro de vesículas. TLR-4 e TLR-2 ficam na superfície."},
+
+// Q23 — Cascata TLR
+{n:23,q:"Quando um TLR é ativado por um PAMP, a cascata de sinalização resulta principalmente na produção de:",
+opts:["IgM pentamérica","Perforina e granzima","IgE para degranulação de mastócitos","Complemento C3b","TNF-α (principal citocina pró-inflamatória)"],
+cor:4,let:"E",
+exp:"TLR ativado → transdução de sinal → fator de transcrição (NF-κB) → abre gene do TNF-α → processo inflamatório. Professor: 'esse é o caminho — vai lá no gene, abre o gene do TNF-alpha, que é o principal gene pró-inflamatório'."},
+
+// Q24 — Receptor de manose
+{n:24,q:"O receptor de manose (MBL — lectina ligadora de manose) é um PRR que reconhece:",
+opts:["LPS de bactérias Gram-negativas","Fosfatidilserina em células apoptóticas","DNA CpG de vírus","Manose terminal na superfície de bactérias e fungos","Peptidoglicano de Gram-positivas"],
+cor:3,let:"D",
+exp:"Manose terminal está na superfície de muitas bactérias e fungos. Células humanas têm galactose/ácido siálico terminal, NÃO manose. Receptor baseado em lectina = PRR que reconhece esse açúcar."},
+
+// Q25 — Inata vs Adaptativa tabela
+{n:25,q:"Em relação à imunidade ADAPTATIVA (adquirida), é correto afirmar que:",
+opts:["Não possui memória imunológica","Age sempre com a mesma intensidade a cada contato","Está presente desde o nascimento e reconhece PAMPs","Suas células em destaque são macrófagos e células dendríticas","Se desenvolve durante a vida, possui especificidade para epítopos e gera memória"],
+cor:4,let:"E",
+exp:"Adaptativa: desenvolve durante a vida (passiva ou ativa), tem especificidade para epítopos, gera memória, intensidade aumenta com experiência. Células em destaque = linfócitos. Inata é a que reconhece PAMPs/DAMPs."},
+
+// Q26 — Humoral
+{n:26,q:"A resposta imune adaptativa do tipo HUMORAL é assim chamada porque:",
+opts:["É mediada por anticorpos nos líquidos corpóreos (humores)","É mediada por linfócitos T citotóxicos","Ocorre exclusivamente dentro dos órgãos linfoides","Depende exclusivamente de fagócitos","Não envolve linfócitos B"],
+cor:0,let:"A",
+exp:"Humoral vem de 'humores' = líquidos corpóreos. É a resposta mediada por anticorpos (produtos dos linfócitos B/plasmócitos) que circulam nos fluidos. O professor explicou: 'os seus humores são os seus líquidos corpóreos'."},
+
+// Q27 — Celular
+{n:27,q:"A resposta imune adaptativa do tipo CELULAR envolve principalmente:",
+opts:["Produção de anticorpos IgG e IgM","Ação direta de linfócitos T (CD4+ e CD8+) contra células infectadas","Ativação do sistema complemento","Barreiras mecânicas e químicas","Degranulação de mastócitos via IgE"],
+cor:1,let:"B",
+exp:"Resposta celular = ação direta de linfócitos T. CD4+ coordena a resposta (ativa macrófagos, B, CD8+). CD8+ mata células infectadas/tumorais por apoptose (perforina/granzima). Diferente da humoral (anticorpos à distância)."},
+
+// Q28 — HLA I
+{n:28,q:"O HLA classe I está presente em todas as células nucleadas e se conecta ao:",
+opts:["Linfócito B via BCR","Linfócito T CD4+ que ativa macrófagos","Linfócito T CD8+ que induz apoptose na célula-alvo","Neutrófilo via receptor scavenger","Mastócito via FcεRI"],
+cor:2,let:"C",
+exp:"HLA-I + CD8+ → apoptose da célula infectada/tumoral. Está em TODA célula nucleada. O slide do professor resume: 'HLA I está presente em todas as células nucleadas pois a CD8+ que se conecta a ela induz apoptose'."},
+
+// Q29 — HLA II
+{n:29,q:"O HLA classe II está restrito a células apresentadoras de antígeno (APCs) e se conecta ao:",
+opts:["CD8+ que induz apoptose direta","NK via KIR","Eosinófilo via IL-5","CD4+ que aumenta a atividade dos macrófagos","Plasmócito via Fc"],
+cor:3,let:"D",
+exp:"HLA-II + CD4+ → CD4+ ativa e coordena resposta (aumenta atividade de macrófagos, ativa B, etc.). O slide: 'HLA II se conecta ao CD4+ que aumenta a atividade dos macrófagos'. Só APCs expressam HLA-II."},
+
+// Q30 — Jenner
+{n:30,q:"Edward Jenner, considerado o fundador da Imunologia, demonstrou que:",
+opts:["A transfusão de sangue entre espécies era segura","Anticorpos podiam ser transferidos pela placenta","O sistema complemento era essencial para a fagocitose","A inoculação com varíola bovina (cowpox) protegia contra varíola humana (smallpox) por reatividade cruzada","A seleção tímica eliminava 95% dos timócitos"],
+cor:3,let:"D",
+exp:"Jenner inoculou cowpox (varíola bovina) em James Phipps (8 anos), que ficou protegido contra smallpox (varíola humana). Funciona por reatividade cruzada — antígenos semelhantes geram memória. 'Vacina' vem de 'vacca' (vaca em latim)."}
+];
+
+let state={answered:{},correct:0,wrong:0};
+const saved=localStorage.getItem('quiz-visao-geral');
+if(saved)state=JSON.parse(saved);
+function save(){localStorage.setItem('quiz-visao-geral',JSON.stringify(state))}
+
+function render(){
+  const list=document.getElementById('qList');
+  let html='';
+  ALL.forEach((q,qi)=>{
+    const ans=state.answered[qi];
+    const isDone=ans!==undefined;
+    const isRight=isDone&&ans===q.cor;
+    html+=`<div class="q-card ${isDone?(isRight?'correct':'wrong'):''} ${isDone?'answered':''}">
+      <div class="q-header">
+        <span class="q-num">${String(q.n).padStart(2,'0')}</span>
+        <div class="q-text">${q.q}</div>
+      </div>
+      <div class="q-opts">`;
+    const letters='ABCDE';
+    q.opts.forEach((o,oi)=>{
+      let cls='opt';
+      if(isDone){
+        cls+=' locked';
+        if(oi===q.cor)cls+=' right';
+        if(oi===ans&&ans!==q.cor)cls+=' wrong-pick';
+      }
+      html+=`<div class="${cls}" onclick="pick(${qi},${oi})">
+        <div class="opt-letter">${letters[oi]}</div>
+        <div class="opt-text">${o}</div>
+      </div>`;
+    });
+    html+=`</div>
+      <div class="q-exp ${isDone?'show':''}" id="exp-${qi}">
+        <div class="q-exp-box">
+          <div class="q-exp-label">Explicação</div>
+          <div class="q-exp-text">${q.exp}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  list.innerHTML=html;
+  updateHUD();
+}
+
+function pick(qi,oi){
+  if(state.answered[qi]!==undefined)return;
+  state.answered[qi]=oi;
+  if(oi===ALL[qi].cor)state.correct++;
+  else state.wrong++;
+  save();render();
+  // Scroll to show explanation
+  setTimeout(()=>{
+    const el=document.getElementById('exp-'+qi);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  },100);
+  // Check if all done
+  if(Object.keys(state.answered).length===ALL.length){
+    setTimeout(showResults,400);
+  }
+}
+
+function updateHUD(){
+  const total=Object.keys(state.answered).length;
+  document.getElementById('sCorrect').textContent=state.correct;
+  document.getElementById('sWrong').textContent=state.wrong;
+  document.getElementById('progBar').style.width=(total/ALL.length*100)+'%';
+  document.getElementById('sPct').textContent=total>0?Math.round(state.correct/total*100)+'%':'0%';
+}
+
+function showResults(){
+  const total=ALL.length;
+  const pct=Math.round(state.correct/total*100);
+  document.getElementById('rCorrect').textContent=state.correct;
+  document.getElementById('rWrong').textContent=state.wrong;
+  document.getElementById('rPct').textContent=pct+'%';
+  document.getElementById('rTitle').textContent=pct>=70?'Aprovado! 🎉':'Revisar conteúdo ⚠️';
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  if(Object.keys(state.answered).length>0&&!confirm('Resetar todas as respostas?'))return;
+  state={answered:{},correct:0,wrong:0};
+  save();
+  document.getElementById('results').classList.remove('show');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleTheme(){document.body.classList.toggle('light')}
+
+render();
+</script>
+</body>
+</html>
