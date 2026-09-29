@@ -1,39 +1,81 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Banco de Questões Dissertativas — Farmacologia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>(function(){var t="dark";try{t=localStorage.getItem("cortex-theme")||"dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)})()</script>
 <style>
-:root{--bg:#0f1419;--bg2:#161b22;--bg3:#1c2330;--txt:#e6edf3;--txt2:#9aa7b4;--acc:#4ea1ff;--acc2:#7ee787;--warn:#ffb454;--border:#2a313c;}
-[data-theme="light"]{--bg:#f7f9fc;--bg2:#fff;--bg3:#eef2f7;--txt:#1a2330;--txt2:#55636f;--acc:#1666c7;--acc2:#1a7f37;--warn:#9a6700;--border:#d6dee7;}
+:root,:root[data-theme="dark"]{
+--bg:#0a0908;--surface:#141311;--surface2:#1d1b18;
+--ink:#e8e4d7;--ink-soft:#cfcab9;--muted:#8a8573;
+--line:rgba(232,228,215,.14);--line-strong:rgba(232,228,215,.28);
+--accent:#4d7cff;--ok:#4fb47a;--warn:#d4a84b;--err:#ff5b55;
+--radius:2px;
+--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+--serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+--mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+--bg:#f6f2e7;--surface:#f6f2e7;--surface2:#ece7d7;
+--ink:#0a0908;--ink-soft:#1c1a16;--muted:#6a655a;
+--line:rgba(10,9,8,.18);--line-strong:rgba(10,9,8,.42);
+--accent:#0033ff;--ok:#006a3a;--warn:#8a5a00;--err:#c8241e;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);font-size:16px;line-height:1.6}
-#main{max-width:860px;margin:0 auto;padding:34px 28px}
-h1{font-size:26px;border-bottom:2px solid var(--acc);padding-bottom:10px}
-h2{font-size:22px;color:var(--acc);margin-top:42px;border-bottom:1px solid var(--border);padding-bottom:6px}
-.q{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin:18px 0}
-.q .src{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px}
+body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6}
+::selection{background:var(--accent);color:var(--bg)}
+.topbar{position:sticky;top:0;z-index:60;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.topbar .brand{display:flex;align-items:center;gap:10px;color:var(--muted);white-space:nowrap}
+.topbar .brand a{color:inherit;text-decoration:none}
+.topbar .brand a:hover{color:var(--accent)}
+.topbar .logo{width:14px;height:14px;background:var(--ink);position:relative;flex:0 0 auto}
+.topbar .logo::before,.topbar .logo::after{content:"";position:absolute;background:var(--bg)}
+.topbar .logo::before{left:6px;top:0;width:2px;height:14px}
+.topbar .logo::after{top:6px;left:0;width:14px;height:2px}
+.topnav{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;min-width:0}
+.topnav a{color:var(--muted);text-decoration:none;padding:3px 1px;border-bottom:2px solid transparent;white-space:nowrap}
+.topnav a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+.topbar .right{display:flex;justify-content:flex-end;align-items:center;gap:10px}
+#themeToggle{width:34px;height:34px;border:1px solid var(--line-strong);background:none;color:var(--ink);border-radius:var(--radius);font-size:15px;line-height:1;cursor:pointer;padding:0}
+#themeToggle:hover{border-color:var(--accent);color:var(--accent)}
+#wm-slot{display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;font-family:var(--mono)!important;letter-spacing:.08em;border-radius:var(--radius);backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(max-width:760px){.topbar{grid-template-columns:1fr auto}.topnav{display:none}}
+@media(max-width:720px){#wm-slot #wm{display:none!important}}
+#main{max-width:860px;margin:0 auto;padding:34px 24px 60px}
+.kick{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:14px 0 0}
+.kick .dot{display:inline-block;width:6px;height:6px;background:var(--accent);margin-right:8px;vertical-align:2px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.015em;margin:.15em 0 .25em}
+h1 em{font-style:italic;color:var(--accent);font-weight:400}
+h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;color:var(--ink);margin-top:48px;border-bottom:1px solid var(--line-strong);padding-bottom:.35em;scroll-margin-top:70px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:18px 0}
+.q .src{font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
 .q .stem{font-weight:600;margin:6px 0 4px}
 .q ul{margin:6px 0}
-button.rev{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px;margin-top:10px}
-button.rev:hover{opacity:.9}
-.ans{display:none;border-left:4px solid var(--acc2);background:var(--bg3);padding:12px 16px;margin-top:12px;border-radius:0 8px 8px 0}
+button.rev{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;background:none;color:var(--ink);border:1px solid var(--line-strong);border-radius:var(--radius);padding:9px 14px;cursor:pointer;margin-top:10px}
+button.rev:hover{border-color:var(--accent);color:var(--accent)}
+.ans{display:none;border:1px solid var(--line);border-left:2px solid var(--ok);background:var(--surface2);padding:12px 16px;margin-top:12px;border-radius:var(--radius)}
 .ans.show{display:block}
-.ans b{color:var(--acc2)}
-code{background:var(--bg3);padding:1px 6px;border-radius:4px;color:var(--acc2);font-size:13px}
-#toggle{position:fixed;top:14px;right:18px;background:var(--bg3);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer}
-.note{color:var(--txt2);font-size:14px}
+.ans b{color:var(--ok)}
+code{font-family:var(--mono);background:var(--surface2);border:1px solid var(--line);padding:1px 6px;border-radius:var(--radius);color:var(--ink);font-size:13px}
+.note{color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
-<button id="toggle" onclick="th()">☀︎ / ☾</button>
+<header class="topbar">
+<div class="brand"><div class="logo"></div><a href="index.html">CÓRTEX / FARMACOLOGIA</a></div>
+<nav class="topnav"><a href="#sec-anest">ANESTÉSICOS</a><a href="#sec-dor">DOR/OPIOIDES</a><a href="#sec-psico">PSICOFÁRMACOS</a><a href="#sec-banca">BANCA</a><a href="#sec-combos">COMBOS</a><a href="#sec-cardio">CARDIO</a><a href="#sec-renal">RENAL/ENDO</a></nav>
+<div class="right"><span id="wm-slot"></span><button id="themeToggle" onclick="th()" title="Alternar tema claro/escuro" aria-label="Alternar tema">☀</button></div>
+</header>
 <div id="main">
-<h1>Banco de Questões Dissertativas</h1>
+<div class="kick"><span class="dot"></span>FARMACOLOGIA / BANCO DISSERTATIVO</div>
+<h1>Banco de Questões Dissertativas<em>.</em></h1>
 <p class="note">Banco de questões dissertativas + variações prováveis. Responda <b>escrevendo no papel</b> primeiro, depois clique em "Ver resposta-modelo". Estrutura ideal: <b>classe → mecanismo → efeito → RAM → ressalva</b>.</p>
 
 
-<h2>SNC — Anestésicos</h2>
+<h2 id="sec-anest">SNC — Anestésicos</h2>
 
 <div class="q">
 <div class="src">Banco A</div>
@@ -81,7 +123,7 @@ A velocidade de indução/recuperação dos inalatórios depende da <b>solubilid
 </div>
 </div>
 
-<h2>SNC — Dor / AINEs / Opioides</h2>
+<h2 id="sec-dor">SNC — Dor / AINEs / Opioides</h2>
 
 <div class="q">
 <div class="src">Banco oficial · Perguntas exame</div>
@@ -126,7 +168,7 @@ A velocidade de indução/recuperação dos inalatórios depende da <b>solubilid
 </div>
 </div>
 
-<h2>SNC — Anticonvulsivantes / Psicofármacos / Parkinson</h2>
+<h2 id="sec-psico">SNC — Anticonvulsivantes / Psicofármacos / Parkinson</h2>
 
 <div class="q">
 <div class="src">Banco</div>
@@ -207,7 +249,7 @@ No Parkinson há <b>degeneração dos neurônios dopaminérgicos</b> da substân
 </div>
 </div>
 
-<h2>Enquadramentos específicos da banca (do banco oficial)</h2>
+<h2 id="sec-banca">Enquadramentos específicos da banca (do banco oficial)</h2>
 
 <div class="q">
 <div class="src">Banco oficial · SNC</div>
@@ -249,7 +291,7 @@ No Parkinson há <b>degeneração dos neurônios dopaminérgicos</b> da substân
 </div>
 </div>
 
-<h2>⭐ o professor — Combos dissertativos prováveis</h2>
+<h2 id="sec-combos">⭐ o professor — Combos dissertativos prováveis</h2>
 <p class="note">Aposta: dissertativa de <b>digitálicos + diuréticos</b> e <b>diurético + hipoglicemiantes</b>. Treine estes dois primeiro.</p>
 
 <div class="q">
@@ -274,7 +316,7 @@ No Parkinson há <b>degeneração dos neurônios dopaminérgicos</b> da substân
 </div>
 </div>
 
-<h2>o Cardiovascular</h2>
+<h2 id="sec-cardio">o Cardiovascular</h2>
 
 <div class="q">
 <div class="src">Banco</div>
@@ -326,7 +368,7 @@ No Parkinson há <b>degeneração dos neurônios dopaminérgicos</b> da substân
 </div>
 </div>
 
-<h2>o Renal / Endócrino / Sangue</h2>
+<h2 id="sec-renal">o Renal / Endócrino / Sangue</h2>
 
 <div class="q">
 <div class="src">Banco</div>
@@ -405,8 +447,11 @@ Alternativa moderna: associar <b>iSGLT2</b> (dapagliflozina) ou <b>GLP-1</b> —
 </div>
 <script>
 function sh(b){var a=b.nextElementSibling;a.classList.toggle('show');b.textContent=a.classList.contains('show')?'Ocultar resposta':'Ver resposta-modelo';}
-function th(){var h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='light'?'':'light');}
+function th(){var h=document.documentElement,t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);try{localStorage.setItem('cortex-theme',t)}catch(e){}sy();}
+function sy(){var b=document.getElementById('themeToggle');if(b)b.textContent=document.documentElement.getAttribute('data-theme')==='dark'?'☀':'☾';}
+sy();
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

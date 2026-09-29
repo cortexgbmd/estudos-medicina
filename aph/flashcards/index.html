@@ -1,39 +1,71 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flashcards APH — Atendimento Pré-Hospitalar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1419;--bg2:#161b22;--bg3:#1c2330;--txt:#e6edf3;--txt2:#9aa7b4;--acc:#4ea1ff;--acc2:#7ee787;--warn:#ffb454;--dang:#ff7b72;--border:#2a313c;}
-[data-theme="light"]{--bg:#f7f9fc;--bg2:#fff;--bg3:#eef2f7;--txt:#1a2330;--txt2:#55636f;--acc:#1666c7;--acc2:#1a7f37;--warn:#9a6700;--dang:#cf222e;--border:#d6dee7;}
+:root,:root[data-theme="dark"]{
+--bg:#0a0908;--bg2:#141311;--bg3:#1d1b18;
+--txt:#e8e4d7;--txt2:#8a8573;
+--acc:#4d7cff;--acc2:#4fb47a;--warn:#d4a84b;--dang:#ff5b55;
+--border:rgba(232,228,215,.14);--line-strong:rgba(232,228,215,.28);
+--radius:2px;
+--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+--serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+--mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+--bg:#f6f2e7;--bg2:#f6f2e7;--bg3:#ece7d7;
+--txt:#0a0908;--txt2:#6a655a;
+--acc:#0033ff;--acc2:#006a3a;--warn:#8a5a00;--dang:#c8241e;
+--border:rgba(10,9,8,.18);--line-strong:rgba(10,9,8,.42);
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-#themeBtn{position:fixed;top:16px;right:16px;background:var(--bg3);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
-#themeBtn:hover{border-color:var(--acc)}
-.head{text-align:center;margin-bottom:34px;max-width:620px}
-.head .kicker{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--acc2);font-weight:700}
-.head h1{font-size:30px;margin:8px 0 6px;font-weight:800;letter-spacing:.2px}
-.head p{color:var(--txt2);font-size:15px;line-height:1.5;margin:0}
+body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center;-webkit-font-smoothing:antialiased}
+::selection{background:var(--acc);color:var(--bg)}
+.topbar{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.topbar .tbrand{display:flex;align-items:center;gap:10px;color:var(--txt2)}
+.topbar .logo{width:16px;height:16px;background:var(--txt);position:relative}
+.topbar .logo::before,.topbar .logo::after{content:"";position:absolute;background:var(--bg)}
+.topbar .logo::before{left:7px;top:0;width:2px;height:16px}
+.topbar .logo::after{top:7px;left:0;width:16px;height:2px}
+.topbar .tright{display:flex;align-items:center}
+#themeToggle{width:34px;height:34px;padding:0;background:none;color:var(--txt);border:1px solid var(--line-strong);border-radius:var(--radius);font-size:15px;line-height:1;cursor:pointer}
+#themeToggle:hover{border-color:var(--acc);color:var(--acc)}
+#wm-slot{display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;border-radius:var(--radius);color:var(--txt2)!important;font-family:var(--mono)!important;letter-spacing:.08em;pointer-events:none}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+main{margin:auto;width:100%;display:flex;flex-direction:column;align-items:center;padding:44px 20px}
+.head{text-align:center;margin-bottom:34px;max-width:680px}
+.head .kicker{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--acc);font-weight:500}
+.head .kicker::before{content:"";display:inline-block;width:6px;height:6px;background:var(--acc);margin-right:8px;vertical-align:1px}
+.head h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.015em;margin:.15em 0 .25em}
+.head p{color:var(--txt2);font-size:15px;line-height:1.55;margin:0}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;width:100%;max-width:680px}
-.deck{position:relative;display:flex;flex-direction:column;text-decoration:none;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:26px 24px;color:var(--txt);transition:transform .15s,border-color .15s,box-shadow .15s;overflow:hidden}
-.deck::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--accent)}
-.deck:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.28)}
-.deck .tag{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:1px}
-.deck .big{font-size:42px;font-weight:800;margin:6px 0 2px;line-height:1}
-.deck h2{font-size:19px;margin:10px 0 6px;font-weight:700}
-.deck .desc{color:var(--txt2);font-size:14px;line-height:1.45;flex:1}
-.deck .go{margin-top:16px;font-size:14px;font-weight:700;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+.deck{position:relative;display:flex;flex-direction:column;text-decoration:none;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:26px 24px;color:var(--txt);transition:border-color .15s;overflow:hidden}
+.deck::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent)}
+.deck:hover{border-color:var(--accent)}
+.deck .tag{font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:.14em}
+.deck .big{font-family:var(--serif);font-size:46px;font-weight:600;margin:8px 0 2px;line-height:1;letter-spacing:-.02em}
+.deck h2{font-family:var(--serif);font-size:20px;margin:10px 0 6px;font-weight:600;letter-spacing:-.01em}
+.deck .desc{color:var(--txt2);font-size:14px;line-height:1.5;flex:1}
+.deck .go{margin-top:18px;font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
 .p1{--accent:var(--acc)}
 .p2{--accent:var(--acc2)}
-.foot{margin-top:30px;color:var(--txt2);font-size:13px;text-align:center;line-height:1.5;max-width:560px}
+.foot{margin-top:30px;color:var(--txt2);font-size:13px;text-align:center;line-height:1.55;max-width:560px}
 .foot b{color:var(--txt)}
-@media(max-width:560px){.cards{grid-template-columns:1fr}.head h1{font-size:25px}}
+@media(max-width:560px){.cards{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<button id="themeBtn" onclick="th()">☀︎/☾</button>
+<header class="topbar">
+<div class="tbrand"><div class="logo"></div><span>CÓRTEX / FLASHCARDS APH</span></div>
+<div class="tright"><span id="wm-slot"></span><button id="themeToggle" onclick="th()" title="Alternar tema claro/escuro" aria-label="Alternar tema">☀</button></div>
+</header>
 
+<main>
 <div class="head">
 <div class="kicker">Revisão estilo Anki</div>
 <h1>Flashcards APH</h1>
@@ -57,12 +89,15 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,san
 </a>
 </div>
 
-<div class="foot">✓ O progresso de cada deck fica salvo <b>neste navegador</b> — pode fechar e voltar depois. Dentro de cada deck, use os botões <b>P1 / P2 / 🏠 Início</b> no topo para alternar.</div>
+<div class="foot">✓ O progresso de cada deck fica salvo <b>neste navegador</b> — pode fechar e voltar depois. Dentro de cada deck, use os botões <b>P1 / P2 / Início</b> no topo para alternar.</div>
+</main>
 
 <script>
-function th(){var d=document.documentElement,n=d.getAttribute("data-theme")==="light"?"":"light";if(n)d.setAttribute("data-theme",n);else d.removeAttribute("data-theme");try{localStorage.setItem("aph_theme",n)}catch(e){}}
-try{if(localStorage.getItem("aph_theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);var b=document.getElementById("themeToggle");if(b)b.textContent=t==="dark"?"☀":"☾";try{localStorage.setItem("cortex-theme",t)}catch(e){}}
+function th(){applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark")}
+(function(){var t="dark";try{var s=localStorage.getItem("cortex-theme");if(s==="light"||s==="dark")t=s;else if(localStorage.getItem("aph_theme")==="light")t="light"}catch(e){}applyTheme(t)})();
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

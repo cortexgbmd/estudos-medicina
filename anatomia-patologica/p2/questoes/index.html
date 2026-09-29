@@ -4,110 +4,141 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anatomia Patológica P2 — Banco de Questões</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* ===== DOSSIÊ CÓRTEX — bone/ink, mono chrome, serif display ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;
-  --fg:#c9d1d9;--fg2:#8b949e;--fg3:#484f58;
-  --accent:#58a6ff;--accent2:#1f6feb;
-  --green:#3fb950;--red:#f85149;--yellow:#d29922;--purple:#bc8cff;
-  --border:#30363d;
-  --max-w:800px;--font:'Segoe UI',system-ui,-apple-system,sans-serif;
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908;--bg2:#141311;--bg3:#1d1b18;
+  --fg:#e8e4d7;--fg2:#8a8573;--fg3:#6d6a5e;
+  --line:rgba(232,228,215,.14);--line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff;--accent2:#6a91ff;
+  --green:#4fb47a;--red:#ff5b55;--yellow:#d4a84b;--purple:#a793e0;
+  --border:var(--line);
+  --radius:2px;
+  --max-w:800px;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --serif:'Fraunces',ui-serif,'Iowan Old Style',Georgia,serif;
+  --mono:'JetBrains Mono','IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --font:var(--sans);
 }
-[data-theme="light"]{
-  --bg:#fff;--bg2:#f6f8fa;--bg3:#eaeef2;
-  --fg:#1f2328;--fg2:#656d76;--fg3:#8b949e;
-  --accent:#0969da;--accent2:#0550ae;
-  --green:#1a7f37;--red:#cf222e;--yellow:#9a6700;--purple:#8250df;
-  --border:#d0d7de;
+:root[data-theme="light"]{
+  --bg:#f6f2e7;--bg2:#f6f2e7;--bg3:#ece7d7;
+  --fg:#0a0908;--fg2:#6a655a;--fg3:#8d8778;
+  --line:rgba(10,9,8,.18);--line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff;--accent2:#002bd9;
+  --green:#006a3a;--red:#c8241e;--yellow:#8a5a00;--purple:#5b3fb5;
 }
-html{scroll-behavior:smooth;font-size:16px}
+html{scroll-behavior:smooth;font-size:16px;scroll-padding-top:70px}
 body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s}
+::selection{background:var(--accent);color:var(--bg)}
 .container{max-width:var(--max-w);margin:0 auto;padding:2rem 1.5rem}
 
 /* HEADER */
-.site-header{position:sticky;top:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:.8rem 1.5rem;display:flex;align-items:center;gap:1rem;z-index:50}
-.site-title{font-size:1.1rem;font-weight:700;color:var(--accent)}
-.theme-toggle,.mode-toggle{background:none;border:1px solid var(--border);color:var(--fg);padding:.3rem .7rem;border-radius:6px;cursor:pointer;font-size:.85rem}
-.mode-toggle{margin-left:.5rem;background:var(--accent2);color:#fff;border:none}
-.header-right{margin-left:auto;display:flex;gap:.5rem}
+.site-header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line-strong);padding:.75rem 1.5rem;display:flex;align-items:center;gap:1.2rem;z-index:50;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.site-title{font-weight:500;color:var(--fg2);white-space:nowrap}
+.topnav{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.topnav a{color:var(--fg2);text-decoration:none;padding:4px 1px;border-bottom:2px solid transparent;white-space:nowrap;transition:color .12s,border-color .12s}
+.topnav a:hover{color:var(--fg);border-bottom-color:var(--accent)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+#themeToggle{width:34px;height:34px;border:1px solid var(--line-strong);background:none;color:var(--fg);border-radius:var(--radius);cursor:pointer;font-size:14px;line-height:1;display:inline-flex;align-items:center;justify-content:center;padding:0}
+#themeToggle:hover{border-color:var(--accent);color:var(--accent)}
+#themeToggle::after{content:"☀"}
+:root[data-theme="light"] #themeToggle::after{content:"☾"}
+#wm-slot{display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;color:var(--fg2)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;font-family:var(--mono)!important;font-size:10px!important;letter-spacing:.08em!important;padding:5px 9px!important}
+@media(max-width:720px){#wm-slot #wm{display:none!important}}
 
 /* QUESTÃO */
-.questoes-aula{margin-bottom:3rem;padding-bottom:2rem;border-bottom:2px solid var(--border)}
-.questoes-aula > h2{font-size:1.4rem;margin:2rem 0 1rem;color:var(--accent);border-bottom:2px solid var(--accent2);padding-bottom:.5rem}
-.questao{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin:1.5rem 0}
-.questao h3{font-size:1.1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
-.badge{font-size:.7rem;padding:.2rem .6rem;border-radius:12px;font-weight:600;text-transform:uppercase}
-.badge-facil{background:var(--green);color:#000}
-.badge-medio{background:var(--yellow);color:#000}
-.badge-dificil{background:var(--red);color:#fff}
+.questoes-aula{margin-bottom:3.5rem;padding-bottom:2rem;border-bottom:1px solid var(--line)}
+.questoes-aula > h2{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;letter-spacing:-.02em;line-height:1.08;margin:2.4rem 0 1.2rem;color:var(--fg);border-bottom:1px solid var(--line-strong);padding-bottom:.45em}
+.questao{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
+.questao h3{font-family:var(--mono);font-size:.76rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--fg2);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+.badge{font-family:var(--mono);font-size:.62rem;padding:.2rem .55rem;border-radius:var(--radius);font-weight:500;text-transform:uppercase;letter-spacing:.1em;border:1px solid currentColor;background:none}
+.badge-facil{color:var(--green)}
+.badge-medio{color:var(--yellow)}
+.badge-dificil{color:var(--red)}
 .enunciado{margin-bottom:1rem}
 .enunciado p{margin-bottom:.6rem}
 
 /* ALTERNATIVAS */
 .alternativas{margin:1rem 0}
-.alternativas label{display:block;padding:.5rem .8rem;margin:.3rem 0;border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:background .15s}
-.alternativas label:hover{background:var(--bg3)}
-.alternativas input[type="radio"]{margin-right:.6rem}
-.alternativas label.correct{background:rgba(63,185,80,.15);border-color:var(--green)}
-.alternativas label.incorrect{background:rgba(248,81,73,.1);border-color:var(--red)}
+.alternativas label{display:block;padding:.55rem .8rem;margin:.35rem 0;border:1px solid var(--line);border-radius:var(--radius);cursor:pointer;transition:border-color .15s,background .15s}
+.alternativas label:hover{border-color:var(--accent)}
+.alternativas input[type="radio"]{margin-right:.6rem;accent-color:var(--accent)}
+.alternativas label.correct{background:color-mix(in srgb,var(--green) 10%,transparent);border-color:var(--green)}
+.alternativas label.incorrect{background:color-mix(in srgb,var(--red) 8%,transparent);border-color:var(--red)}
 
 /* GABARITO */
-.gabarito{display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1.2rem;margin-top:1rem}
+.gabarito{display:none;background:var(--bg3);border:1px solid var(--line);border-radius:var(--radius);padding:1.2rem;margin-top:1rem}
 .gabarito.visible{display:block}
 .gabarito p{margin-bottom:.5rem}
 .gabarito ul{margin:.5rem 0 .5rem 1.5rem}
 .gabarito li{margin-bottom:.3rem;font-size:.9rem}
-.ref-aula{color:var(--fg2);font-size:.85rem;font-style:italic;margin-top:.8rem}
+.ref-aula{color:var(--fg2);font-family:var(--mono);font-size:.72rem;font-style:normal;letter-spacing:.02em;margin-top:.8rem}
 
 /* DISSERTATIVA */
 .dissertativa .perguntas-dissertativa{margin:1rem 0 1.5rem 1.5rem}
 .dissertativa .perguntas-dissertativa li{margin-bottom:.5rem}
-.btn-gabarito{background:var(--accent2);color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;cursor:pointer;font-size:.9rem;margin-top:.5rem}
-.btn-gabarito:hover{opacity:.8}
+.btn-gabarito{background:none;border:1px solid var(--line-strong);color:var(--fg);padding:.5rem 1rem;border-radius:var(--radius);cursor:pointer;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin-top:.5rem}
+.btn-gabarito:hover{border-color:var(--accent);color:var(--accent)}
 
 /* SCORE */
-.score-panel{display:none;background:var(--bg2);border:2px solid var(--accent);border-radius:8px;padding:1.5rem;margin:2rem 0;text-align:center}
+.score-panel{display:none;background:var(--bg2);border:1px solid var(--line-strong);border-radius:var(--radius);padding:1.6rem;margin:2rem 0;text-align:center}
 .score-panel.visible{display:block}
-.score-panel h2{color:var(--accent);margin-bottom:1rem}
-.score-big{font-size:3rem;font-weight:700;color:var(--accent)}
-.score-detail{color:var(--fg2);margin-top:.5rem}
+.score-panel h2{font-family:var(--serif);font-weight:600;color:var(--fg);margin-bottom:1rem}
+.score-big{font-family:var(--serif);font-size:3.2rem;font-weight:600;letter-spacing:-.02em;color:var(--accent)}
+.score-detail{color:var(--fg2);margin-top:.5rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.03em}
 
 /* INDEX */
-.index-header{text-align:center;margin:2rem 0}
-.index-header h1{font-size:1.8rem;color:var(--accent);margin-bottom:.5rem}
-.mode-buttons{display:flex;gap:1rem;justify-content:center;margin:1.5rem 0}
-.mode-btn{padding:.8rem 1.5rem;border:2px solid var(--accent);background:none;color:var(--accent);border-radius:8px;cursor:pointer;font-size:1rem;font-weight:600;transition:all .2s}
-.mode-btn:hover,.mode-btn.active{background:var(--accent);color:var(--bg)}
+.index-header{margin:2.6rem 0 2.2rem;text-align:left}
+.index-header h1{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.015em;font-weight:600;color:var(--fg);margin:0 0 .35em}
+.index-header p{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+.mode-buttons{display:flex;gap:.8rem;justify-content:flex-start;margin:1.5rem 0;flex-wrap:wrap}
+.mode-btn{padding:.7rem 1.3rem;border:1px solid var(--line-strong);background:none;color:var(--fg2);border-radius:var(--radius);cursor:pointer;font-family:var(--mono);font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;transition:color .15s,border-color .15s,background .15s}
+.mode-btn:hover{color:var(--accent);border-color:var(--accent)}
+.mode-btn.active{color:var(--accent);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
 
 table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
-th,td{padding:.5rem .7rem;border:1px solid var(--border);text-align:left}
-th{background:var(--bg3);font-weight:600}
+th,td{padding:.5rem .7rem;border:1px solid var(--line);text-align:left}
+th{background:var(--bg3);font-family:var(--mono);font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
 td{background:var(--bg2)}
-h1{font-size:1.8rem;margin:2rem 0 .5rem;color:var(--accent)}
-h2{font-size:1.3rem;margin:1.5rem 0 .8rem}
+h1{font-family:var(--serif);font-size:1.8rem;margin:2rem 0 .5rem;color:var(--fg)}
+h2{font-family:var(--serif);font-size:1.3rem;font-weight:600;margin:1.5rem 0 .8rem}
 p{margin-bottom:.6rem}
 ul,ol{margin:0 0 1rem 1.5rem}
 li{margin-bottom:.3rem}
 strong{color:var(--fg)}
 
-.back-top{position:fixed;bottom:2rem;right:2rem;background:var(--accent2);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.back-top{position:fixed;bottom:2rem;right:2rem;background:var(--bg2);color:var(--fg);border:1px solid var(--line-strong);width:38px;height:38px;border-radius:var(--radius);font-size:1.1rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50}
+.back-top:hover{border-color:var(--accent);color:var(--accent)}
 .back-top.visible{display:flex}
 
 @media(max-width:768px){
   .container{padding:1rem}
   .questao{padding:1rem}
 }
+@media(max-width:760px){.topnav{display:none}}
 @media print{.site-header,.back-top,.btn-gabarito,.mode-buttons,.alternativas input{display:none!important}
-.gabarito{display:block!important}body{background:#fff;color:#000}}
+.gabarito{display:block!important}body{background:#fff;color:#000}
+:root,:root[data-theme="dark"],:root[data-theme="light"]{--bg:#fff;--bg2:#fff;--bg3:#f2f0ea;--fg:#000;--fg2:#444;--line:#999;--line-strong:#666;--accent:#0033ff}}
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <span class="site-title">AnatoPato P2 — Questões</span>
+  <nav class="topnav" aria-label="Aulas">
+    <a href="#questoes-aula1">A1 Aguda</a>
+    <a href="#questoes-aula2">A2 Crônica</a>
+    <a href="#questoes-aula3">A3 Granulomatosa</a>
+    <a href="#questoes-aula4">A4 Necrose</a>
+    <a href="#questoes-aula5">A5 Apoptose</a>
+    <a href="#questoes-aula6">A6 Hemostasia</a>
+  </nav>
   <div class="header-right">
-    <button class="theme-toggle" onclick="toggleTheme()">&#9790;/&#9788;</button>
+    <span id="wm-slot"></span>
+    <button id="themeToggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro"></button>
   </div>
 </header>
 
@@ -126,7 +157,7 @@ strong{color:var(--fg)}
   <h2>Resultado do Simulado</h2>
   <div class="score-big" id="score-value">0/0</div>
   <div class="score-detail" id="score-detail"></div>
-  <button class="mode-btn" onclick="relatorioIA(this)" style="margin-top:1rem">📋 Copiar relatório para IA</button>
+  <button class="mode-btn" onclick="relatorioIA(this)" style="margin-top:1rem">Copiar relatório para IA</button>
   <div style="color:var(--fg2);font-size:.85rem;margin-top:.4rem">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
   <button class="mode-btn" onclick="resetSimulado()" style="margin-top:1rem">Refazer</button>
 </div>
@@ -2460,5 +2491,6 @@ function resetSimulado(){
 setMode('estudo');
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

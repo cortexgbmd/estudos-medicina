@@ -4,64 +4,78 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Semiologia Cardiovascular — Material de Estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem('cortex-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
 <style>
-:root{--bg:#0f1115;--fg:#e6e8ec;--muted:#9aa0a6;--accent:#ffb454;--card:#171a21;--border:#262a33;--hl:#2a2213;--hlb:#ffb454;--ok:#4ade80;--err:#f87171;}
-html[data-theme=light]{--bg:#fafafa;--fg:#1a1a1a;--muted:#555;--accent:#b8650a;--card:#fff;--border:#e4e4e4;--hl:#fff4dd;--hlb:#b8650a;--ok:#16a34a;--err:#dc2626;}
+/* ===== Dossiê Córtex — bone/ink, cobalto, mono chrome ===== */
+:root{--bg:#0a0908;--fg:#e8e4d7;--fg2:#cfcab9;--muted:#8a8573;--accent:#4d7cff;--card:#141311;--card2:#1d1b18;--border:rgba(232,228,215,.14);--border-strong:rgba(232,228,215,.28);--hl:rgba(212,168,75,.09);--hlb:#d4a84b;--ok:#4fb47a;--err:#ff5b55;--radius:2px;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;--serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;--mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;}
+html[data-theme=light]{--bg:#f6f2e7;--fg:#0a0908;--fg2:#1c1a16;--muted:#6a655a;--accent:#0033ff;--card:#ece7d7;--card2:#dcd6c3;--border:rgba(10,9,8,.18);--border-strong:rgba(10,9,8,.42);--hl:rgba(138,90,0,.08);--hlb:#8a5a00;--ok:#006a3a;--err:#c8241e;}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,system-ui,Segoe UI,Roboto,sans-serif;font-size:17px;line-height:1.65}
-header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;z-index:10;flex-wrap:wrap;gap:10px}
-header h1{font-size:15px;margin:0;color:var(--accent)}
-nav{display:flex;gap:6px}
-nav button{color:var(--fg);background:none;border:1px solid var(--border);padding:7px 14px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:500}
-nav button.active{background:var(--accent);color:#000;border-color:var(--accent)}
-.theme{color:var(--fg);background:none;border:1px solid var(--border);padding:7px 10px;border-radius:6px;cursor:pointer}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:var(--bg)}
+header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border-strong);padding:10px 20px;display:flex;justify-content:space-between;align-items:center;z-index:10;flex-wrap:wrap;gap:10px}
+header h1{font-family:var(--mono);font-size:11px;font-weight:500;margin:0;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+nav{display:flex;gap:18px}
+nav button{color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;padding:8px 2px;border-radius:0;cursor:pointer;font-family:var(--mono);font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em}
+nav button:hover{color:var(--accent)}
+nav button.active{color:var(--fg);border-bottom-color:var(--accent)}
+.hdr-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+#wm-slot{display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--border-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em;border-radius:var(--radius)!important}
+@media(max-width:720px){#wm-slot #wm{display:none!important}}
+#themeToggle{color:var(--fg);background:none;border:1px solid var(--border-strong);width:34px;height:34px;padding:0;border-radius:var(--radius);cursor:pointer;font-size:14px;line-height:1}
+#themeToggle:hover{color:var(--accent);border-color:var(--accent)}
 main{max-width:780px;margin:0 auto;padding:30px 22px 120px}
 .page{display:none}
 .page.active{display:block}
-h1.aula{font-size:30px;margin-top:0;border-bottom:2px solid var(--accent);padding-bottom:8px}
-h2{font-size:24px;margin-top:48px;color:var(--accent)}
-h3{font-size:19px;margin-top:28px}
-h4{font-size:17px;margin-top:20px;color:var(--muted)}
+h1.aula{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.015em;margin:.1em 0 .3em;border-bottom:1px solid var(--border-strong);padding-bottom:.2em}
+h2{font-family:var(--serif);font-weight:600;font-size:24px;margin-top:48px;color:var(--fg);border-bottom:1px solid var(--border);padding-bottom:.35em}
+h3{font-family:var(--serif);font-weight:600;font-size:19px;margin-top:28px}
+h4{font-family:var(--mono);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;margin-top:20px;color:var(--muted)}
 p{margin:12px 0}
 ul,ol{padding-left:22px}
 li{margin:4px 0}
-.destaque{border-left:4px solid var(--hlb);background:var(--hl);padding:12px 16px;margin:16px 0;border-radius:0 6px 6px 0}
-.destaque::before{content:"🎯 Destaque do professor — ";font-weight:bold;color:var(--hlb)}
-.caso{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin:16px 0}
-.caso::before{content:"🩺 Exemplo clínico";display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-.resumo{background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:16px 20px;margin:32px 0}
+.destaque{border-left:2px solid var(--hlb);background:var(--hl);padding:12px 16px;margin:16px 0;border-radius:var(--radius)}
+.destaque::before{content:"Destaque do professor";display:block;font-family:var(--mono);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--hlb);margin-bottom:6px}
+.caso{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin:16px 0}
+.caso::before{content:"Exemplo clínico";display:block;font-family:var(--mono);font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:6px}
+.resumo{background:var(--card);border:1px solid var(--accent);border-radius:var(--radius);padding:16px 20px;margin:32px 0}
 .resumo h3{margin-top:0;color:var(--accent)}
-.conexao{border-left:3px dashed var(--muted);padding:6px 14px;color:var(--muted);margin:14px 0;font-size:15px}
+.conexao{border-left:1px dashed var(--border-strong);padding:6px 14px;color:var(--muted);margin:14px 0;font-size:15px}
 figure{margin:20px 0;text-align:center}
-figure img{max-width:100%;border-radius:8px;border:1px solid var(--border)}
-figcaption{font-size:14px;color:var(--muted);margin-top:6px}
-.indice{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 24px}
+figure img{max-width:100%;border-radius:var(--radius);border:1px solid var(--border)}
+figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+.indice{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 24px}
+.indice>strong{display:block;font-family:var(--mono);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
 .indice a{display:block;padding:4px 0;color:var(--fg);text-decoration:none;border-bottom:1px dashed var(--border)}
 .indice a:hover{color:var(--accent)}
-code{background:var(--card);padding:1px 5px;border-radius:4px;font-size:14px}
+code{font-family:var(--mono);background:var(--card);padding:1px 5px;border-radius:var(--radius);font-size:14px}
 table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15px}
 th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
-th{background:var(--card)}
-#top{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#000;border:none;padding:10px 14px;border-radius:50%;cursor:pointer;font-size:18px;display:none;z-index:20}
+th{background:var(--card);font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+#top{position:fixed;bottom:20px;right:20px;background:var(--bg);color:var(--fg);border:1px solid var(--border-strong);padding:9px 13px;border-radius:var(--radius);cursor:pointer;font-size:16px;font-family:var(--mono);display:none;z-index:20}
+#top:hover{color:var(--accent);border-color:var(--accent)}
 /* Questões */
-.q{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin:18px 0}
-.q .meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.q{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin:18px 0}
+.q .meta{font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
 .q .enun{margin:8px 0 12px}
 .q .alts{list-style:none;padding:0;margin:0}
-.q .alts li{padding:9px 12px;margin:5px 0;border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:.15s}
+.q .alts li{padding:9px 12px;margin:5px 0;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:.15s}
 .q .alts li:hover{border-color:var(--accent)}
-.q .alts li.sel{border-color:var(--accent);background:var(--hl)}
-.q .alts li.ok{border-color:var(--ok);background:rgba(74,222,128,.1)}
-.q .alts li.err{border-color:var(--err);background:rgba(248,113,113,.1)}
-.q .exp{display:none;margin-top:14px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--accent);font-size:15px;border-radius:4px}
+.q .alts li.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.q .alts li.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,transparent)}
+.q .alts li.err{border-color:var(--err);background:color-mix(in srgb,var(--err) 9%,transparent)}
+.q .exp{display:none;margin-top:14px;padding:12px 14px;background:var(--bg);border-left:2px solid var(--accent);font-size:15px;border-radius:var(--radius)}
 .q.resolvida .exp{display:block}
-.q .letra{display:inline-block;font-weight:bold;color:var(--accent);width:22px}
-.diss{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 22px;margin:18px 0}
-.diss summary{cursor:pointer;font-weight:600;color:var(--accent);padding:8px 0}
-.diss .gab{margin-top:12px;padding:12px;background:var(--bg);border-left:3px solid var(--accent);font-size:15px;border-radius:4px}
+.q .letra{display:inline-block;font-family:var(--mono);font-weight:700;color:var(--accent);width:22px}
+.diss{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin:18px 0}
+.diss summary{cursor:pointer;font-family:var(--mono);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);padding:8px 0}
+.diss .gab{margin-top:12px;padding:12px;background:var(--bg);border-left:2px solid var(--accent);font-size:15px;border-radius:var(--radius)}
 .filtros{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-.filtros button{background:var(--card);border:1px solid var(--border);color:var(--fg);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px}
-.filtros button.on{background:var(--accent);color:#000;border-color:var(--accent)}
+.filtros button{background:none;border:1px solid var(--border-strong);color:var(--fg);padding:7px 14px;border-radius:var(--radius);cursor:pointer;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em}
+.filtros button:hover{border-color:var(--accent);color:var(--accent)}
+.filtros button.on{color:var(--accent);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
 /* Resumão densidade */
 #resumao{font-size:14.5px}
 #resumao h2{font-size:20px;margin-top:28px}
@@ -69,10 +83,11 @@ th{background:var(--card)}
 #resumao ul{margin:6px 0}
 #resumao li{margin:2px 0}
 .tabcomp th{background:var(--hl)}
-.naoconf{background:var(--hl);border-left:3px solid var(--hlb);padding:8px 12px;margin:10px 0;border-radius:0 4px 4px 0;font-size:14px}
+.naoconf{background:var(--hl);border-left:2px solid var(--hlb);padding:8px 12px;margin:10px 0;border-radius:var(--radius);font-size:14px}
 .naoconf strong{color:var(--hlb)}
+@media(max-width:760px){table{display:block;overflow-x:auto}}
 @media print{
-  header,nav,.theme,#top,.filtros,.indice{display:none!important}
+  header,nav,#themeToggle,#top,.filtros,.indice,#wm{display:none!important}
   .page{display:block!important;page-break-after:always}
   body{font-size:11pt;background:#fff;color:#000}
   .caso,.destaque,.resumo,.q,.diss{break-inside:avoid}
@@ -84,11 +99,11 @@ th{background:var(--card)}
 <header>
 <h1>Semiologia Cardiovascular</h1>
 <nav>
-<button data-pg="estudo" class="active">📖 Estudo</button>
-<button data-pg="questoes">❓ Questões</button>
-<button data-pg="resumao">⚡ Resumão</button>
+<button data-pg="estudo" class="active">Estudo</button>
+<button data-pg="questoes">Questões</button>
+<button data-pg="resumao">Resumão</button>
 </nav>
-<button class="theme" onclick="tg()">🌓</button>
+<div class="hdr-right"><span id="wm-slot"></span><button id="themeToggle" onclick="tg()" title="Alternar tema claro/escuro" aria-label="Alternar tema">☀</button></div>
 </header>
 
 <main>
@@ -113,7 +128,7 @@ th{background:var(--card)}
 <a href="#t10">10. Sistema venoso periférico</a>
 <a href="#t11">11. Sistema arterial periférico</a>
 <a href="#t12">12. Sistema linfático</a>
-<a href="#resumo">📌 Resumo final</a>
+<a href="#resumo">Resumo final</a>
 </div>
 
 <h2 id="t1">1. Contexto — por que existe um exame cardiovascular?</h2>
@@ -457,8 +472,8 @@ th{background:var(--card)}
 <p>Questões baseadas exclusivamente no conteúdo de Semiologia Cardiovascular. Clique em uma alternativa para responder e ver a explicação. Referência: aula única de Semiologia Cardiovascular.</p>
 
 <div class="filtros">
-<button onclick="reset()">🔄 Reiniciar</button>
-<button onclick="revelarTodas()">👁 Revelar todas</button>
+<button onclick="reset()">Reiniciar</button>
+<button onclick="revelarTodas()">Revelar todas</button>
 </div>
 
 <h2>Questões objetivas</h2>
@@ -990,7 +1005,9 @@ th{background:var(--card)}
 </main>
 
 <script>
-function tg(){let h=document.documentElement;h.dataset.theme=h.dataset.theme==='light'?'':'light'}
+function tg(){let h=document.documentElement;h.dataset.theme=h.dataset.theme==='light'?'':'light';try{localStorage.setItem('cortex-theme',h.dataset.theme==='light'?'light':'dark')}catch(e){}syncThemeBtn()}
+function syncThemeBtn(){let b=document.getElementById('themeToggle');if(b)b.textContent=document.documentElement.dataset.theme==='light'?'☾':'☀'}
+syncThemeBtn();
 document.querySelectorAll('nav button').forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
@@ -1036,5 +1053,6 @@ function revelarTodas(){
 window.addEventListener('scroll',()=>{document.getElementById('top').style.display=window.scrollY>400?'block':'none'});
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

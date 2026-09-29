@@ -1,60 +1,98 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flashcards de Fármacos — Mecanismo & RAM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>(function(){var t="dark";try{t=localStorage.getItem("cortex-theme")||"dark"}catch(e){}document.documentElement.setAttribute("data-theme",t)})()</script>
 <style>
-:root{--bg:#0f1419;--bg2:#161b22;--bg3:#1c2330;--txt:#e6edf3;--txt2:#9aa7b4;--acc:#4ea1ff;--acc2:#7ee787;--warn:#ffb454;--dang:#ff7b72;--border:#2a313c;}
-[data-theme="light"]{--bg:#f7f9fc;--bg2:#fff;--bg3:#eef2f7;--txt:#1a2330;--txt2:#55636f;--acc:#1666c7;--acc2:#1a7f37;--warn:#9a6700;--dang:#cf222e;--border:#d6dee7;}
+:root,:root[data-theme="dark"]{
+--bg:#0a0908;--surface:#141311;--surface2:#1d1b18;
+--ink:#e8e4d7;--ink-soft:#cfcab9;--muted:#8a8573;
+--line:rgba(232,228,215,.14);--line-strong:rgba(232,228,215,.28);
+--accent:#4d7cff;--ok:#4fb47a;--warn:#d4a84b;--err:#ff5b55;
+--radius:2px;
+--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+--serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+--mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+--bg:#f6f2e7;--surface:#f6f2e7;--surface2:#ece7d7;
+--ink:#0a0908;--ink-soft:#1c1a16;--muted:#6a655a;
+--line:rgba(10,9,8,.18);--line-strong:rgba(10,9,8,.42);
+--accent:#0033ff;--ok:#006a3a;--warn:#8a5a00;--err:#c8241e;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+::selection{background:var(--accent);color:var(--bg)}
+.topbar{position:sticky;top:0;z-index:60;width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:12px 20px;background:var(--bg);border-bottom:1px solid var(--line-strong);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.topbar .brand{display:flex;align-items:center;gap:10px;color:var(--muted);white-space:nowrap}
+.topbar .brand a{color:inherit;text-decoration:none}
+.topbar .brand a:hover{color:var(--accent)}
+.topbar .logo{width:14px;height:14px;background:var(--ink);position:relative;flex:0 0 auto}
+.topbar .logo::before,.topbar .logo::after{content:"";position:absolute;background:var(--bg)}
+.topbar .logo::before{left:6px;top:0;width:2px;height:14px}
+.topbar .logo::after{top:6px;left:0;width:14px;height:2px}
+.topbar .center{text-align:center;color:var(--muted)}
+.topbar .right{display:flex;justify-content:flex-end;align-items:center;gap:10px}
+#themeToggle{width:34px;height:34px;min-width:34px;border:1px solid var(--line-strong);background:none;color:var(--ink);border-radius:var(--radius);font-size:15px;line-height:1;cursor:pointer;padding:0}
+#themeToggle:hover{border-color:var(--accent);color:var(--accent)}
+#wm-slot{display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;font-family:var(--mono)!important;letter-spacing:.08em;border-radius:var(--radius);backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(max-width:760px){.topbar{grid-template-columns:1fr auto}.topbar .center{display:none}}
+@media(max-width:720px){#wm-slot #wm{display:none!important}}
 #top{width:100%;max-width:760px;padding:14px 16px 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-select,button{background:var(--bg3);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
-button:hover{border-color:var(--acc)}
-#count{margin-left:auto;color:var(--txt2);font-size:13px}
-#saveNote{flex-basis:100%;color:var(--txt2);font-size:12px;margin-top:2px}
+select,button{font-family:var(--mono);background:var(--surface2);color:var(--ink);border:1px solid var(--line-strong);border-radius:var(--radius);padding:8px 12px;font-size:13px;cursor:pointer}
+button{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;background:none}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#count{margin-left:auto;font-family:var(--mono);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+#saveNote{flex-basis:100%;color:var(--muted);font-size:12px;margin-top:2px}
 #wrap{width:100%;max-width:760px;padding:6px 16px 16px;flex:1;display:flex;flex-direction:column}
 #card{perspective:1600px;height:60vh;min-height:340px;margin:8px 0;cursor:pointer}
 #inner{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
 #card.flip #inner{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);border-radius:18px;background:var(--bg2);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto}
 .back{transform:rotateY(180deg)}
-.area{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--txt2)}
-.classe{font-size:15px;color:var(--acc);margin-top:4px}
-.farm{font-size:32px;font-weight:700;color:var(--acc2);margin:auto 0;line-height:1.2}
-.hint{text-align:center;color:var(--txt2);font-size:13px;margin-top:auto}
-.lbl{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--acc);margin:14px 0 2px}
+.area{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.classe{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--accent);margin-top:6px}
+.farm{font-family:var(--serif);font-weight:600;font-size:clamp(1.7rem,5vw,2.5rem);letter-spacing:-.015em;color:var(--ink);margin:auto 0;line-height:1.12}
+.hint{text-align:center;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-size:11px;margin-top:auto}
+.lbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:14px 0 2px}
 .lbl:first-of-type{margin-top:4px}
 .val{font-size:17px;line-height:1.45}
-.val.ram b,.dang{color:var(--dang)}
-.backhead{font-size:20px;font-weight:700;color:var(--acc2);border-bottom:1px solid var(--border);padding-bottom:8px}
+.val.ram b,.dang{color:var(--err)}
+.backhead{font-family:var(--serif);font-weight:600;font-size:1.35rem;letter-spacing:-.01em;color:var(--ink);border-bottom:1px solid var(--line-strong);padding-bottom:8px}
 #nav{display:flex;gap:8px;align-items:center}
 #nav button{flex:0 0 auto}
 #bMark{margin-left:auto}
-#bMark.on{background:var(--warn);color:#1a2330;border-color:var(--warn)}
+#bMark.on{background:var(--warn);color:var(--bg);border-color:var(--warn)}
 .marked .backhead::after,.marked .farm::after{content:" ★";color:var(--warn);font-size:16px}
-kbd{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px}
-#done{text-align:center;padding:40px;color:var(--txt2);font-size:17px}
+kbd{font-family:var(--mono);background:var(--surface2);border:1px solid var(--line);border-radius:var(--radius);padding:1px 6px;font-size:11px}
+#done{text-align:center;padding:40px;color:var(--muted);font-size:17px}
 #done button{margin-top:8px}
 #rate{display:none;gap:8px;justify-content:center}
 #rate.show{display:flex}
-#rate button{flex:1;max-width:160px;padding:11px 6px;font-weight:700;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:1px}
-#rate small{font-size:11px;font-weight:400;color:var(--txt2)}
-.r-again{border-color:var(--dang)!important;color:var(--dang)}
-.r-hard{border-color:var(--warn)!important;color:var(--warn)}
-.r-good{border-color:var(--acc)!important;color:var(--acc)}
-.r-easy{border-color:var(--acc2)!important;color:var(--acc2)}
-#prompt{text-align:center;color:var(--txt2);font-size:13px;padding:10px}
+#rate button{flex:1;max-width:160px;padding:11px 6px;font-weight:700;font-size:.78rem;display:flex;flex-direction:column;align-items:center;gap:2px}
+#rate small{font-size:10px;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0}
+.r-again{border-color:var(--err)!important;color:var(--err)!important}
+.r-hard{border-color:var(--warn)!important;color:var(--warn)!important}
+.r-good{border-color:var(--accent)!important;color:var(--accent)!important}
+.r-easy{border-color:var(--ok)!important;color:var(--ok)!important}
+#prompt{text-align:center;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-size:11px;padding:10px}
 #prompt.hide{display:none}
-.streak{font-size:13px;color:var(--warn);margin-top:8px;min-height:18px}
+.streak{font-family:var(--mono);font-size:11.5px;color:var(--warn);margin-top:8px;min-height:18px}
 </style>
 </head>
 <body>
+<header class="topbar">
+<div class="brand"><div class="logo"></div><a href="index.html">CÓRTEX / FARMACOLOGIA</a></div>
+<div class="center">FLASHCARDS · MECANISMO &amp; RAM</div>
+<div class="right"><span id="wm-slot"></span><button id="themeToggle" onclick="th()" title="Alternar tema claro/escuro" aria-label="Alternar tema">☀</button></div>
+</header>
 <div id="top">
 <select id="filtro" onchange="applyFilter()"></select>
 <button onclick="restart()">↺ Reiniciar sessão</button>
-<button onclick="th()">☀︎/☾</button>
 <span id="count"></span>
 <span id="saveNote">✓ Progresso salvo automaticamente neste navegador — pode fechar e voltar depois (até offline).</span>
 </div>

@@ -4,106 +4,125 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anatomia Patológica P2 — Site de Estudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* === RESET & BASE === */
+/* =================================================================
+   DOSSIÊ CÓRTEX — Anatomia Patológica P2
+   Brutalist editorial. Mono UI chrome. Display serif headings.
+   Bone / Ink / Cobalto.
+   ================================================================= */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;
-  --fg:#c9d1d9;--fg2:#8b949e;--fg3:#484f58;
-  --accent:#58a6ff;--accent2:#1f6feb;
-  --green:#3fb950;--red:#f85149;--yellow:#d29922;--purple:#bc8cff;
-  --border:#30363d;
-  --max-w:740px;--font:'Segoe UI',system-ui,-apple-system,sans-serif;
-  --mono:'SF Mono','Fira Code',monospace;
+  --bg:#0a0908;--bg2:#141311;--bg3:#1d1b18;
+  --fg:#e8e4d7;--fg2:#8a8573;--fg3:#6d6a5e;
+  --accent:#4d7cff;--accent2:#6a91ff;
+  --green:#4fb47a;--red:#ff5b55;--yellow:#d4a84b;--purple:#bc8cff;
+  --border:rgba(232,228,215,.14);--line-strong:rgba(232,228,215,.28);
+  --radius:2px;
+  --max-w:740px;
+  --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
 }
 [data-theme="light"]{
-  --bg:#fff;--bg2:#f6f8fa;--bg3:#eaeef2;
-  --fg:#1f2328;--fg2:#656d76;--fg3:#8b949e;
-  --accent:#0969da;--accent2:#0550ae;
-  --green:#1a7f37;--red:#cf222e;--yellow:#9a6700;--purple:#8250df;
-  --border:#d0d7de;
+  --bg:#f6f2e7;--bg2:#f6f2e7;--bg3:#ece7d7;
+  --fg:#0a0908;--fg2:#6a655a;--fg3:#8d8778;
+  --accent:#0033ff;--accent2:#002bd9;
+  --green:#006a3a;--red:#c8241e;--yellow:#8a5a00;--purple:#6b4fd8;
+  --border:rgba(10,9,8,.18);--line-strong:rgba(10,9,8,.42);
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.7;transition:background .3s,color .3s;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::selection{background:var(--accent);color:var(--bg)}
 
 /* === LAYOUT === */
-.container{max-width:var(--max-w);margin:0 auto;padding:2rem 1.5rem}
-.sidebar{position:fixed;top:0;left:0;width:280px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:1.5rem 1rem;z-index:100;transform:translateX(-100%);transition:transform .3s}
+.container{max-width:var(--max-w);margin:0 auto;padding:2.2rem 1.5rem}
+.sidebar{position:fixed;top:0;left:0;width:280px;height:100vh;background:var(--bg);border-right:1px solid var(--line-strong);overflow-y:auto;padding:1.4rem 1.1rem 2.5rem;z-index:100;transform:translateX(-100%);transition:transform .3s}
 .sidebar.open{transform:translateX(0)}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
 .sidebar.open+.sidebar-overlay{display:block}
 @media(min-width:1100px){
   .sidebar{transform:translateX(0)}
   .sidebar-overlay{display:none!important}
+  .site-header{margin-left:280px}
   .main-content{margin-left:280px}
   .menu-toggle{display:none!important}
 }
 
-/* === NAV === */
-.sidebar h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--fg2);margin:1.2rem 0 .5rem;padding-left:.5rem}
-.sidebar a{display:block;padding:.4rem .8rem;color:var(--fg);text-decoration:none;border-radius:6px;font-size:.9rem;transition:background .15s}
-.sidebar a:hover{background:var(--bg3)}
-.sidebar a.active{background:var(--accent2);color:#fff}
-.sidebar .nav-aula{font-weight:600;margin-top:.8rem;font-size:.95rem}
-.sidebar .nav-topic{padding-left:1.4rem;font-size:.85rem;color:var(--fg2)}
+/* === NAV (mono caps + hairlines) === */
+.sidebar h2{font-family:var(--mono);font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.16em;color:var(--fg3);margin:1.2rem 0 .4rem;padding:0 .2rem .5rem;border-bottom:1px solid var(--border)}
+.sidebar a{display:block;padding:.42rem .2rem .42rem .7rem;color:var(--fg2);text-decoration:none;border-radius:0;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;line-height:1.5;border-left:1px solid transparent;transition:color .15s,border-color .15s}
+.sidebar a:hover{background:none;color:var(--fg)}
+.sidebar a.active{background:none;color:var(--accent);border-left-color:var(--accent)}
+.sidebar .nav-aula{font-weight:500;color:var(--fg);margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.sidebar a.nav-aula:first-of-type{border-top:0;margin-top:.2rem}
+.sidebar .nav-aula:hover,.sidebar .nav-aula.active{color:var(--accent)}
+.sidebar .nav-topic{padding-left:1.5rem;font-size:.64rem;color:var(--fg2);letter-spacing:.09em}
+.sidebar::-webkit-scrollbar{width:0}
 
 /* === HEADER === */
-.site-header{position:sticky;top:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:.8rem 1.5rem;display:flex;align-items:center;gap:1rem;z-index:50}
-.menu-toggle{background:none;border:none;color:var(--fg);font-size:1.4rem;cursor:pointer;padding:.3rem}
-.site-title{font-size:1.1rem;font-weight:700;color:var(--accent)}
-.theme-toggle{margin-left:auto;background:none;border:1px solid var(--border);color:var(--fg);padding:.3rem .7rem;border-radius:6px;cursor:pointer;font-size:.85rem}
+.site-header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line-strong);padding:.65rem 1.5rem;display:flex;align-items:center;gap:1rem;z-index:50}
+.menu-toggle{background:none;border:none;color:var(--fg);font-size:1.25rem;cursor:pointer;padding:.3rem}
+.site-title{font-family:var(--mono);font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--fg2)}
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--fg2)!important;font-family:var(--mono)!important;font-weight:500;letter-spacing:.08em;border-radius:var(--radius)!important;padding:5px 10px;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+@media(max-width:720px){#wm-slot #wm{display:none!important}}
+.theme-toggle{background:none;border:1px solid var(--line-strong);color:var(--fg);width:34px;height:34px;min-width:34px;padding:0;border-radius:var(--radius);cursor:pointer;font-size:15px;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
 
 /* === CONTENT === */
-.aula{margin-bottom:4rem;padding-bottom:2rem;border-bottom:2px solid var(--border)}
-h1{font-size:1.8rem;margin:2rem 0 .5rem;color:var(--accent);border-bottom:2px solid var(--accent2);padding-bottom:.5rem}
-h2{font-size:1.4rem;margin:2rem 0 .8rem;color:var(--fg);padding-top:1rem}
-h3{font-size:1.15rem;margin:1.5rem 0 .5rem;color:var(--fg)}
-h4{font-size:1rem;margin:1rem 0 .4rem;color:var(--fg2)}
+.aula{margin-bottom:4.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--line-strong)}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.04;letter-spacing:-.02em;margin:2.2rem 0 .6rem;color:var(--fg);border-bottom:1px solid var(--line-strong);padding-bottom:.35em}
+#index h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.025em;margin-top:.8rem}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.35rem,2.6vw,1.7rem);line-height:1.15;letter-spacing:-.012em;margin:2.4rem 0 .8rem;color:var(--fg);padding-top:1rem;border-bottom:1px solid var(--border);padding-bottom:.35em;scroll-margin-top:70px}
+h3{font-family:var(--serif);font-weight:500;font-size:1.2rem;line-height:1.25;margin:1.6rem 0 .5rem;color:var(--fg)}
+h4{font-family:var(--mono);font-weight:500;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;margin:1.2rem 0 .4rem;color:var(--fg2)}
 p{margin-bottom:.8rem}
 ul,ol{margin:0 0 1rem 1.5rem}
 li{margin-bottom:.3rem}
 strong{color:var(--fg)}
 em{color:var(--fg2);font-style:italic}
-.aula-meta{color:var(--fg2);font-size:.9rem;margin-bottom:1.5rem}
+.aula-meta{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.14em;color:var(--fg2);margin-bottom:1.6rem}
 
 /* === TABLES === */
-table{width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.9rem}
-th,td{padding:.6rem .8rem;border:1px solid var(--border);text-align:left}
-th{background:var(--bg3);font-weight:600;color:var(--fg)}
-td{background:var(--bg2)}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0 1.6rem;font-size:.88rem;border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong)}
+th,td{padding:.55rem .8rem;border:1px solid var(--border);text-align:left}
+th{background:var(--bg2);font-family:var(--mono);font-weight:500;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:var(--fg2)}
+td{background:none}
 
 /* === DESTAQUES === */
-.destaque-professor{background:var(--bg2);border-left:4px solid var(--yellow);padding:1rem 1.2rem;margin:1.2rem 0;border-radius:0 8px 8px 0}
-.destaque-professor .destaque-icon{font-size:1.2rem;margin-right:.4rem}
+.destaque-professor{background:var(--bg2);border:1px solid var(--border);border-left:2px solid var(--yellow);padding:1rem 1.2rem;margin:1.2rem 0;border-radius:var(--radius)}
+.destaque-professor .destaque-icon{font-size:1rem;margin-right:.4rem}
 .destaque-professor p{margin-bottom:.5rem}
 .destaque-professor p:last-child{margin-bottom:0}
 
-.exemplo-clinico{background:var(--bg2);border-left:4px solid var(--accent);padding:1rem 1.2rem;margin:1.2rem 0;border-radius:0 8px 8px 0}
+.exemplo-clinico{background:var(--bg2);border:1px solid var(--border);border-left:2px solid var(--accent);padding:1rem 1.2rem;margin:1.2rem 0;border-radius:var(--radius)}
 .exemplo-clinico h4{color:var(--accent);margin-top:0}
 
-.resumo-aula{background:var(--bg3);border:1px solid var(--border);padding:1.2rem 1.5rem;margin:2rem 0;border-radius:8px}
-.resumo-aula h2{margin-top:.5rem;font-size:1.2rem}
+.resumo-aula{background:var(--bg2);border:1px solid var(--line-strong);padding:1.2rem 1.5rem;margin:2rem 0;border-radius:var(--radius)}
+.resumo-aula h2{margin-top:.4rem;font-size:1.15rem;padding-top:0}
 .resumo-aula ul{margin:1rem 0 0 1.2rem}
 .resumo-aula li{margin-bottom:.5rem}
 
+.conceito-chave{background:var(--bg2)!important;border:1px solid var(--border)!important;border-left:2px solid var(--accent)!important;border-radius:var(--radius);color:var(--fg)}
+
 /* === BACK TO TOP === */
-.back-top{position:fixed;bottom:2rem;right:2rem;background:var(--accent2);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.back-top{position:fixed;bottom:2rem;right:2rem;background:var(--bg);color:var(--fg);border:1px solid var(--line-strong);width:38px;height:38px;border-radius:var(--radius);font-size:1rem;font-family:var(--mono);cursor:pointer;display:none;align-items:center;justify-content:center;z-index:50;box-shadow:none}
+.back-top:hover{border-color:var(--accent);color:var(--accent)}
 .back-top.visible{display:flex}
 
 /* === INDEX PAGE === */
-.index-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin:1.5rem 0}
-.index-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.2rem;transition:border-color .2s}
-.index-card:hover{border-color:var(--accent)}
-.index-card h3{margin:0 0 .3rem;color:var(--accent)}
+.index-grid{display:grid;grid-template-columns:1fr;gap:0;margin:1.8rem 0;border-top:1px solid var(--line-strong)}
+.index-card{background:none;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:1.1rem .2rem;transition:none}
+.index-card:hover h3{color:var(--accent)}
+.index-card h3{margin:0 0 .3rem;color:var(--fg);font-family:var(--serif);font-weight:500;font-size:1.25rem;transition:color .15s}
 .index-card p{margin:0;color:var(--fg2);font-size:.9rem}
-.index-card a{text-decoration:none;color:inherit}
+.index-card a{text-decoration:none;color:inherit;display:block}
 
 /* === RESPONSIVE === */
 @media(max-width:768px){
-  .container{padding:1rem}
-  h1{font-size:1.5rem}
-  h2{font-size:1.2rem}
-  table{font-size:.8rem}
+  .container{padding:1.4rem 1rem}
+  table{font-size:.8rem;display:block;overflow-x:auto}
   th,td{padding:.4rem .5rem}
 }
 
@@ -125,7 +144,8 @@ td{background:var(--bg2)}
 <header class="site-header">
   <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
   <span class="site-title">Anatomia Patológica P2</span>
-  <button class="theme-toggle" onclick="toggleTheme()">&#9790; / &#9788;</button>
+  <span id="wm-slot"></span>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Alternar tema claro/escuro" aria-label="Alternar tema">&#9788;</button>
 </header>
 
 <!-- SIDEBAR NAV -->
@@ -2372,12 +2392,17 @@ td{background:var(--bg2)}
 
 <script>
 // Theme toggle
+function updateThemeBtn(){
+  const b=document.getElementById('themeToggle');
+  if(b)b.textContent=document.documentElement.dataset.theme==='dark'?'☀':'☾';
+}
 function toggleTheme(){
   const html=document.documentElement;
   html.dataset.theme=html.dataset.theme==='dark'?'light':'dark';
   localStorage.setItem('theme',html.dataset.theme);
+  updateThemeBtn();
 }
-(function(){const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t})();
+(function(){const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;updateThemeBtn()})();
 
 // Sidebar toggle
 function toggleSidebar(){
@@ -2409,5 +2434,6 @@ const observer=new IntersectionObserver(entries=>{
 document.querySelectorAll('section[id],h2[id]').forEach(s=>observer.observe(s));
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

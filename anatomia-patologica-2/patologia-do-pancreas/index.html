@@ -1771,6 +1771,40 @@ render();
 </script>
 
 <style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<style id="secrailcss">
+#secrail{position:fixed;left:26px;top:130px;width:172px;z-index:60;font-family:var(--mono,monospace);display:none}
+@media(min-width:1200px){#secrail.show{display:block}}
+#secrail a{display:block;margin:0 0 13px;text-decoration:none;color:var(--muted)}
+#secrail a b{display:block;font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+#secrail a span{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.45;padding-bottom:4px;border-bottom:1px solid var(--line-strong)}
+#secrail a.on{color:var(--ink)}
+#secrail a.on span{border-bottom:2px solid var(--accent)}
+#secrail a:hover{color:var(--ink)}
+</style>
+<script>
+(function(){
+  var panel=document.getElementById('panel-estudo');if(!panel)return;
+  var secs=[].slice.call(panel.querySelectorAll('h2[id]')).filter(function(s){return /^t\d+$/.test(s.id)});
+  if(secs.length<4)secs=[].slice.call(panel.querySelectorAll('section[id] > h2, section[id] h2')).map(function(h){return h.closest('section[id]')}).filter(Boolean);
+  if(secs.length<4)return;
+  var rail=document.createElement('nav');rail.id='secrail';
+  rail.innerHTML=secs.map(function(s,i){
+    var t=(s.tagName==='H2'?s:s.querySelector('h2')).textContent.replace(/^\s*\d+\s*[·.)\u2014-]\s*/,'').trim();
+    var curto=t.split(/ — |: /)[0].trim();if(curto.length>34)curto=curto.slice(0,32)+'…';
+    return '<a href="#'+s.id+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+curto+'</span></a>';
+  }).join('');
+  document.body.appendChild(rail);
+  function vis(){var ativo=panel.classList.contains('active')||getComputedStyle(panel).display!=='none';rail.classList.toggle('show',ativo)}
+  vis();
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tab,.hub-tab'))setTimeout(vis,60)});
+  var links=rail.querySelectorAll('a');
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+x.target.id)})}});
+  },{rootMargin:'0px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+})();
+</script>
+
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
 <script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
 </html>
