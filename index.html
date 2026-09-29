@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materiais de Estudo · Medicina</title>
+<meta name="description" content="Bancos de questões, resumões, dossiês e sites de estudo de Medicina, reunidos em um só lugar.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0a0d1f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Materiais de Estudo · Medicina">
+<meta property="og:description" content="Bancos de questões, resumões, dossiês e sites de estudo de Medicina, reunidos em um só lugar.">
+<meta property="og:url" content="https://cortexgbmd.github.io/estudos-medicina/">
+<meta property="og:image" content="https://cortexgbmd.github.io/estudos-medicina/assets/logo-512.png">
+<meta name="twitter:card" content="summary">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema')||'dark';}catch(e){}</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043; --ink:#f3f4fb; --muted:#9aa1c4; --faint:#6f76a0;
+    --line:rgba(255,255,255,.10); --nav:rgba(10,13,31,.82);
+    --chip-bg:rgba(255,255,255,.07); --chip-ink:#cdd2e6; --chip-on-bg:#e8eaf6; --chip-on-ink:#0a0d1f;
+    --accent:#818cf8; --on-accent:#0a0d1f; --gold:#e6b450; --radius:12px;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f3f8; --surface:#ffffff; --surface2:#eeecf6; --ink:#191c2b; --muted:#5b627c; --faint:#8a90a8;
+    --line:rgba(20,24,45,.10); --nav:rgba(244,243,248,.88);
+    --chip-bg:#e7e6ef; --chip-ink:#3b4160; --chip-on-bg:#181b2e; --chip-on-ink:#ffffff;
+    --accent:#4f46e5; --on-accent:#ffffff; --gold:#b7852a;
+  }
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+  ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+
+  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:22px;
+    padding:14px 42px;background:linear-gradient(180deg,var(--nav),transparent);backdrop-filter:blur(6px);transition:background .3s}
+  .nav.solid{background:var(--nav)}
+  .brand{font-weight:800;font-size:21px;letter-spacing:.4px;color:var(--ink)}
+  .brand b{color:var(--gold)}
+  .nav .links{display:flex;gap:18px}
+  .nav .links a{color:var(--muted);font-size:14px;font-weight:600}
+  .nav .links a:hover{color:var(--ink)}
+  .nav .sp{flex:1}
+  .search{background:var(--chip-bg);border:1px solid var(--line);color:var(--ink);padding:9px 14px;border-radius:999px;font-size:13px;width:210px;outline:none}
+  .search:focus{border-color:var(--accent)}
+  .tema{background:var(--chip-bg);border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:16px}
+
+  .hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;padding:0 42px 44px;
+    background:radial-gradient(120% 120% at 78% 8%, var(--hg1,#242047) 0%, var(--hg0,#14172f) 40%, var(--bg) 76%)}
+  :root[data-theme="light"] .hero{background:radial-gradient(120% 120% at 78% 8%, #e8e6f6 0%, #efeef7 42%, var(--bg) 78%)}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 3%,transparent 55%)}
+  .hero-in{position:relative;z-index:2;max-width:620px}
+  .kick{color:var(--gold);font-weight:700;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+  .hero h1{font-size:clamp(28px,4.6vw,48px);line-height:1.05;font-weight:800;margin-bottom:12px}
+  .hmeta{color:var(--muted);font-size:15px;margin-bottom:22px}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{border:0;border-radius:8px;padding:12px 26px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:9px}
+  .btn.play{background:var(--ink);color:var(--bg)}
+  .btn.play:hover{opacity:.9}
+
+  /* segmentação: abas de semestre (primário) + chips de matéria (secundário) */
+  .seg{position:relative;z-index:20;padding:10px 42px 2px;display:flex;flex-direction:column;gap:12px}
+  .semtabs{display:flex;gap:10px;flex-wrap:wrap}
+  .semtab{background:var(--chip-bg);border:1px solid var(--line);color:var(--ink);border-radius:11px;
+    padding:10px 22px;font-size:15px;font-weight:700;cursor:pointer;transition:.15s}
+  .semtab:hover{border-color:var(--accent)}
+  .semtab.on{background:var(--accent);color:var(--on-accent);border-color:transparent}
+  .chip-group{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--chip-bg);color:var(--chip-ink);border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
+  .chip:hover{color:var(--ink)}
+  .chip.on{background:var(--chip-on-bg);color:var(--chip-on-ink);border-color:transparent}
+
+  .rows{padding:12px 0 60px}
+  .row{margin:20px 0}
+  .row h2{font-size:19px;font-weight:700;margin:0 0 12px 42px}
+  .track{display:flex;gap:12px;overflow-x:auto;padding:6px 42px 14px;scroll-snap-type:x proximity;scrollbar-width:thin}
+  .results{padding:14px 42px 60px}
+  .results-head{color:var(--muted);font-size:15px;font-weight:600;margin:4px 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .vazio{color:var(--muted);padding:24px 0}
+
+  .card{scroll-snap-align:start;flex:0 0 auto;width:172px;height:258px;border-radius:var(--radius);position:relative;
+    overflow:hidden;cursor:pointer;background:linear-gradient(150deg,var(--g0),var(--g1));
+    box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .22s,box-shadow .22s}
+  .grid .card{width:auto}
+  .card:hover,.card:focus-visible{transform:scale(1.06) translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:5;outline:none}
+  .card::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(8,10,20,.10) 0%,rgba(8,10,20,.32) 45%,rgba(8,10,20,.72) 100%)}
+  .card .emoji{position:absolute;right:-12px;bottom:-16px;font-size:118px;opacity:.14;filter:saturate(.25);z-index:0}
+  .card .body{position:absolute;inset:0;z-index:2;padding:16px;display:flex;flex-direction:column}
+  .card .mat{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.82)}
+  .card .ttl{margin-top:auto;font-size:15px;font-weight:700;line-height:1.2;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+  .card .pill{margin-top:10px;align-self:flex-start;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px}
+  .card .sem{position:absolute;top:12px;right:12px;z-index:2;background:rgba(0,0,0,.42);color:#fff;font-size:10px;font-weight:800;padding:3px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.2)}
+  .card .play{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s}
+  .card:hover .play,.card:focus-visible .play{opacity:1}
+  .card .play span{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);color:#0a0d1f;display:flex;align-items:center;justify-content:center;font-size:19px}
+
+  .foot{color:var(--faint);text-align:center;font-size:12px;padding:34px}
+  @media (max-width:640px){
+    .nav{padding:12px 18px;gap:12px}.nav .links{display:none}.search{width:130px}
+    .hero{padding:0 18px 30px;min-height:48vh}.row h2{margin-left:18px}.track{padding:6px 18px 14px}
+    .seg,.results{padding-left:18px;padding-right:18px}.semtab{padding:9px 16px;font-size:14px}
+  }
+  @media (prefers-reduced-motion:reduce){.card,.tema{transition:none}.card:hover{transform:none}}
+</style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="brand">🧠 Córtex<b>.</b></div>
+    <div class="links"><a href="#" id="inicio">Início</a></div>
+    <div class="sp"></div>
+    <input class="search" id="busca" type="search" placeholder="🔍  Buscar aula, matéria…" aria-label="Buscar">
+    <button class="tema" id="temaBtn" title="Alternar tema" aria-label="Alternar tema">☀️</button>
+  </nav>
+
+  <div id="hero-slot"></div>
+  <div class="seg" id="chips"></div>
+  <main id="content" class="rows"></main>
+  <footer class="foot">Córtex Estudos · Medicina — Gabriel Medeiros</footer>
+
+<script>
+const MATS = [
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Face — SMAS, Nervo Facial e Trigêmeo (11/09)",
+    "url": "anatomia-topografica/face/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 09 — Lesões Nervosas do Membro Superior",
+    "url": "anatomia-topografica/lesoes-nervosas-ms/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Anatomia do Pescoço — Partes 1 e 2 (11/09 e 25/09)",
+    "url": "anatomia-topografica/pescoco/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Região Axilar e Desfiladeiro Cervicotorácico (18/09)",
+    "url": "anatomia-topografica/axila-desfiladeiro/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 08 — Topografia dos Membros Superiores",
+    "url": "anatomia-topografica/membros-superiores/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 07 — Região Inguinal",
+    "url": "anatomia-topografica/regiao-inguinal/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aulas 05–06 — Parede Abdominal e Hérnias",
+    "url": "anatomia-topografica/parede-abdominal/",
+    "date": "2026-09-28",
+    "repo": "lancar"
+  },
+  {
+    "title": "Fundamentos da Imunologia",
+    "tipo": "Site de estudo",
+    "url": "imunologia/p1/fundamentos/",
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P1",
+    "semestre": 3,
+    "date": "2026-09-25",
+    "repo": "lancar"
+  },
+  {
+    "title": "Cenários de Ativação Imune (TH1 · TH2 · TH17)",
+    "tipo": "Site de estudo",
+    "url": "imunologia/p1/cenarios/",
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P1",
+    "semestre": 3,
+    "date": "2026-09-25",
+    "repo": "lancar"
+  },
+  {
+    "title": "Resumo Completo — Imunologia P1",
+    "tipo": "Resumão",
+    "url": "imunologia/p1/resumao/",
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P1",
+    "semestre": 3,
+    "date": "2026-09-25",
+    "repo": "lancar"
+  },
+  {
+    "title": "Questões de Imunologia — P1",
+    "tipo": "Banco de questões",
+    "url": "imunologia/p1/questoes/",
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P1",
+    "semestre": 3,
+    "date": "2026-09-25",
+    "repo": "lancar"
+  },
+  {
+    "title": "Casos Clínicos — Imunologia P1",
+    "tipo": "Casos clínicos",
+    "url": "imunologia/p1/casos-clinicos/",
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P1",
+    "semestre": 3,
+    "date": "2026-09-25",
+    "repo": "lancar"
+  },
+  {
+    "title": "Simulado — Visão Geral da Imunologia",
+    "tipo": "Simulado",
+    "url": "imunologia/p1/simulado/",
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P1",
+    "semestre": 3,
+    "date": "2026-09-25",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Farmacoterapia",
+    "materia_key": "farmacoterapia",
+    "periodo": "P1",
+    "semestre": 4,
+    "tipo": "Simulado",
+    "title": "Simulado P1 — Banco de Questões (Aulas 01–06)",
+    "url": "farmacoterapia/simulado-p1/",
+    "date": "2026-09-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Farmacoterapia",
+    "materia_key": "farmacoterapia",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 06 — Contraceptivos e Fármacos Uterinos",
+    "url": "farmacoterapia/contraceptivos/",
+    "date": "2026-09-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Farmacoterapia",
+    "materia_key": "farmacoterapia",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aulas 04–05 — Drogas Lícitas e Ilícitas",
+    "url": "farmacoterapia/drogas-licitas-e-ilicitas/",
+    "date": "2026-09-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Puericultura",
+    "materia_key": "puericultura",
+    "periodo": "P1",
+    "semestre": 4,
+    "tipo": "Material de prova",
+    "title": "Prova de Objetivas — P1 (50 questões)",
+    "url": "puericultura/prova-p1/",
+    "date": "2026-09-23",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Puericultura",
+    "materia_key": "puericultura",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "P1 — Aulas 1–6 (Crescimento a Dermatites)",
+    "url": "puericultura/p1/",
+    "date": "2026-09-22",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Flashcards",
+    "title": "Flashcards — Roteiro Prático: Dorso, Tórax e Abdome (101)",
+    "url": "anatomia-topografica/flashcards-roteiro/",
+    "date": "2026-09-09",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Material de prova",
+    "title": "Resumão da Prova — Todas as Patologias (Aulas 1–5 + Simpósio)",
+    "url": "anatomia-patologica-2/resumao-prova/",
+    "date": "2026-09-09",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Material de prova",
+    "title": "Banco de Questões — TGI",
+    "url": "anatomia-patologica-2/banco-tgi/",
+    "date": "2026-09-08",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Simpósio",
+    "title": "Simpósio — Fígado e Estômago",
+    "url": "anatomia-patologica-2/simposio/",
+    "date": "2026-09-07",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 03 — Dorso",
+    "url": "anatomia-topografica/dorso/",
+    "date": "2026-08-25",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 05 — Patologias Intestinais",
+    "url": "anatomia-patologica-2/patologias-intestinais/",
+    "date": "2026-08-25",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 04 — Mama",
+    "url": "anatomia-topografica/mama/",
+    "date": "2026-08-25",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Farmacoterapia",
+    "materia_key": "farmacoterapia",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aulas 01–02 — Corticoides",
+    "url": "farmacoterapia/corticoides/",
+    "date": "2026-08-25",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Farmacoterapia",
+    "materia_key": "farmacoterapia",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 03 — Broncodilatadores e Anti-inflamatórios",
+    "url": "farmacoterapia/broncodilatadores-e-anti-inflamatorios/",
+    "date": "2026-08-25",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 04 — Patologias Hepáticas",
+    "url": "anatomia-patologica-2/patologias-hepaticas/",
+    "date": "2026-08-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 03 — Patologia do Estômago",
+    "url": "anatomia-patologica-2/patologia-do-estomago/",
+    "date": "2026-08-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 02 — Patologia do Pâncreas",
+    "url": "anatomia-patologica-2/patologia-do-pancreas/",
+    "date": "2026-08-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Patológica II",
+    "materia_key": "anatomia-patologica-2",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 01 — Patologia do Esôfago",
+    "url": "anatomia-patologica-2/patologia-do-esofago/",
+    "date": "2026-08-24",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 01 — Introdução à Anatomia Topográfica",
+    "url": "anatomia-topografica/introducao/",
+    "date": "2026-08-12",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Anatomia Topográfica",
+    "materia_key": "anatomia-topografica",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Aula completa",
+    "title": "Aula 02 — Parede Torácica",
+    "url": "anatomia-topografica/parede-toracica/",
+    "date": "2026-08-12",
+    "repo": "lancar"
+  },
+  {
+    "materia": "Roteiro de Férias",
+    "materia_key": "roteiro",
+    "periodo": "",
+    "semestre": 4,
+    "tipo": "Preview 4º semestre",
+    "title": "Roteiro de Férias · Preview 4º semestre",
+    "url": "roteiro/preview-4/",
+    "date": "2026-07-01",
+    "repo": "lancar"
+  },
+  {
+    "materia": "APH — Pré-Hospitalar",
+    "materia_key": "aph",
+    "periodo": "",
+    "tipo": "Flashcards",
+    "title": "Flashcards APH — Atendimento Pré-Hospitalar",
+    "url": "aph/flashcards/",
+    "date": "2026-06-25",
+    "repo": "flashcards-aph",
+    "semestre": 2
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "",
+    "tipo": "Material de estudo",
+    "title": "Material de Estudo — Farmacologia (Exame 25/06)",
+    "url": "farmacologia/exame/estudo/",
+    "date": "2026-06-24",
+    "repo": "estudo-farmacologia",
+    "semestre": 3
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "",
+    "tipo": "Material de prova",
+    "title": "Exame de Farmacologia — Material de Estudo",
+    "url": "farmacologia/exame/prova/",
+    "date": "2026-06-19",
+    "repo": "exame-farmaco",
+    "semestre": 3
+  },
+  {
+    "materia": "DIP — Infecto & Parasito",
+    "materia_key": "dip",
+    "periodo": "P3",
+    "tipo": "Cram / Flashcards",
+    "title": "DIP P3 — Cram · Resumo · Questões",
+    "url": "dip/p3/cram/",
+    "date": "2026-06-12",
+    "repo": "dip-p3-cram",
+    "semestre": 3
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "P4",
+    "tipo": "Decorar (revisão de 1 dia)",
+    "title": "DECORAR — Farmacologia P4 (1 dia)",
+    "url": "farmacologia/p4/decorar/",
+    "date": "2026-06-10",
+    "repo": "decorar-farmacos-p4",
+    "semestre": 3
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "P4",
+    "tipo": "Dossiê clínico",
+    "title": "Dossiê Clínico — Farmacologia P4",
+    "url": "farmacologia/p4/dossie/",
+    "date": "2026-06-02",
+    "repo": "farmaco-p4-dossie",
+    "semestre": 3
+  },
+  {
+    "materia": "Anatomia Patológica",
+    "materia_key": "anatomia-patologica",
+    "periodo": "",
+    "tipo": "Neoplasias",
+    "title": "StudyGen — Neoplasias (Anatomia Patológica)",
+    "url": "anatomia-patologica/neoplasias/",
+    "date": "2026-06-02",
+    "repo": "studygen-neoplasias",
+    "semestre": 3
+  },
+  {
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "P2",
+    "tipo": "Dossiê clínico",
+    "title": "Dossiê Imunologia P2 — Resposta Imune Adaptativa",
+    "url": "imunologia/p2/dossie/",
+    "date": "2026-05-31",
+    "repo": "imunologia-p2",
+    "semestre": 3
+  },
+  {
+    "materia": "Imunologia",
+    "materia_key": "imunologia",
+    "periodo": "",
+    "tipo": "Revisão",
+    "title": "Dossiê de Revisão — Autópsia de uma Reação",
+    "url": "imunologia/revisao/",
+    "date": "2026-05-30",
+    "repo": "imunomicro",
+    "semestre": 3
+  },
+  {
+    "materia": "Microbiologia",
+    "materia_key": "microbiologia",
+    "periodo": "P2",
+    "tipo": "Dossiê clínico",
+    "title": "DOSSIÊ · Microbiologia P2 — FASM",
+    "url": "microbiologia/p2/dossie/",
+    "date": "2026-05-25",
+    "repo": "microbiologia-p2",
+    "semestre": 3
+  },
+  {
+    "materia": "Bioestatística",
+    "materia_key": "bioestatistica",
+    "periodo": "P4",
+    "tipo": "Banco de questões",
+    "title": "Bioestatística Clínica — 50 Questões",
+    "url": "bioestatistica/p4/",
+    "date": "2026-05-21",
+    "repo": "bioestat-sticap4",
+    "semestre": 3
+  },
+  {
+    "materia": "Anatomia Patológica",
+    "materia_key": "anatomia-patologica",
+    "periodo": "P3",
+    "tipo": "StudyGen — aulas",
+    "title": "StudyGen Evidence — Anatomia Patológica · 4 aulas",
+    "url": "anatomia-patologica/p3/studygen/",
+    "date": "2026-05-15",
+    "repo": "anatopato-p3",
+    "semestre": 3
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "P3",
+    "tipo": "Dossiê clínico",
+    "title": "Farmacologia P3 — Dossiê Clínico",
+    "url": "farmacologia/p3/dossie/",
+    "date": "2026-05-12",
+    "repo": "farmaco-p3",
+    "semestre": 3
+  },
+  {
+    "materia": "DIP — Infecto & Parasito",
+    "materia_key": "dip",
+    "periodo": "",
+    "tipo": "Esquistossomose",
+    "title": "OPERAÇÃO · Esquistossomose Mansônica",
+    "url": "dip/esquistossomose/",
+    "date": "2026-04-24",
+    "repo": "esquistossomose",
+    "semestre": 3
+  },
+  {
+    "materia": "Geriatria",
+    "materia_key": "geriatria",
+    "periodo": "P1",
+    "tipo": "Site de estudo",
+    "title": "Geriatria — Prova 1 | Site de Estudo",
+    "url": "geriatria/p1/site/",
+    "date": "2026-04-20",
+    "repo": "barrinhaestudo",
+    "semestre": 7
+  },
+  {
+    "materia": "Geriatria",
+    "materia_key": "geriatria",
+    "periodo": "P1",
+    "tipo": "Banco de questões",
+    "title": "Banco de Questões — Geriatria P1",
+    "url": "geriatria/p1/questoes/",
+    "date": "2026-04-20",
+    "repo": "barrinhaquestoes",
+    "semestre": 7
+  },
+  {
+    "materia": "Geriatria",
+    "materia_key": "geriatria",
+    "periodo": "P1",
+    "tipo": "Resumão pré-prova",
+    "title": "Resumão Pré-Prova — Geriatria P1",
+    "url": "geriatria/p1/resumao/",
+    "date": "2026-04-20",
+    "repo": "barrinharesumao",
+    "semestre": 7
+  },
+  {
+    "materia": "DIP — Infecto & Parasito",
+    "materia_key": "dip",
+    "periodo": "P2",
+    "tipo": "Banco de questões",
+    "title": "DIP P2 — Banco de Questões",
+    "url": "dip/p2/questoes/",
+    "date": "2026-04-16",
+    "repo": "dipquestoesp2",
+    "semestre": 3
+  },
+  {
+    "materia": "Cardiologia",
+    "materia_key": "cardiologia",
+    "periodo": "",
+    "tipo": "Semiologia",
+    "title": "Semiologia Cardiovascular — Material de Estudo",
+    "url": "cardiologia/semiologia/",
+    "date": "2026-04-09",
+    "repo": "cardiojulaterza",
+    "semestre": 3
+  },
+  {
+    "materia": "Endocrinologia",
+    "materia_key": "endocrinologia",
+    "periodo": "",
+    "tipo": "Site de estudo",
+    "title": "Endocrinologia - Site de Estudo",
+    "url": "endocrinologia/site/",
+    "date": "2026-04-08",
+    "repo": "endocrinologia-site",
+    "semestre": 7
+  },
+  {
+    "materia": "Endocrinologia",
+    "materia_key": "endocrinologia",
+    "periodo": "",
+    "tipo": "Banco de questões",
+    "title": "Banco de Questões - Endocrinologia",
+    "url": "endocrinologia/questoes/",
+    "date": "2026-04-08",
+    "repo": "endocrinologia-questoes",
+    "semestre": 7
+  },
+  {
+    "materia": "Endocrinologia",
+    "materia_key": "endocrinologia",
+    "periodo": "",
+    "tipo": "Resumão pré-prova",
+    "title": "Resumão Pré-Prova - Endocrinologia",
+    "url": "endocrinologia/resumao/",
+    "date": "2026-04-08",
+    "repo": "endocrinologia-resumao",
+    "semestre": 7
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "P2",
+    "tipo": "Site de estudo",
+    "title": "Farmacologia P2 - Material de Estudo",
+    "url": "farmacologia/p2/site/",
+    "date": "2026-04-05",
+    "repo": "farmacop2resumo",
+    "semestre": 3
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "P2",
+    "tipo": "Banco de questões",
+    "title": "Banco de Questoes - Farmacologia P2",
+    "url": "farmacologia/p2/questoes/",
+    "date": "2026-04-05",
+    "repo": "farmacop2questoes",
+    "semestre": 3
+  },
+  {
+    "materia": "Farmacologia",
+    "materia_key": "farmacologia",
+    "periodo": "P2",
+    "tipo": "Resumão pré-prova",
+    "title": "Resumao - Farmacologia P2",
+    "url": "farmacologia/p2/resumao/",
+    "date": "2026-04-05",
+    "repo": "farmacop2resumaopreprova",
+    "semestre": 3
+  },
+  {
+    "materia": "Microbiologia",
+    "materia_key": "microbiologia",
+    "periodo": "P1",
+    "tipo": "Site de estudo",
+    "title": "Microbiologia P1 - Guia Completo de Estudo",
+    "url": "microbiologia/p1/site/",
+    "date": "2026-04-05",
+    "repo": "microp1resumo",
+    "semestre": 3
+  },
+  {
+    "materia": "Microbiologia",
+    "materia_key": "microbiologia",
+    "periodo": "P1",
+    "tipo": "Banco de questões",
+    "title": "Banco de Questoes - Microbiologia P1",
+    "url": "microbiologia/p1/questoes/",
+    "date": "2026-04-05",
+    "repo": "microp1questoes",
+    "semestre": 3
+  },
+  {
+    "materia": "Microbiologia",
+    "materia_key": "microbiologia",
+    "periodo": "P1",
+    "tipo": "Resumão pré-prova",
+    "title": "Resumao P1 - Microbiologia",
+    "url": "microbiologia/p1/resumao/",
+    "date": "2026-04-05",
+    "repo": "microp1resumao",
+    "semestre": 3
+  },
+  {
+    "materia": "Anatomia Patológica",
+    "materia_key": "anatomia-patologica",
+    "periodo": "P2",
+    "tipo": "Site de estudo",
+    "title": "Anatomia Patológica P2 — Site de Estudo",
+    "url": "anatomia-patologica/p2/site/",
+    "date": "2026-04-05",
+    "repo": "anatopatop2resumo",
+    "semestre": 3
+  },
+  {
+    "materia": "Anatomia Patológica",
+    "materia_key": "anatomia-patologica",
+    "periodo": "P2",
+    "tipo": "Resumão pré-prova",
+    "title": "Resumao Pre-Prova — Anatomia Patologica P2",
+    "url": "anatomia-patologica/p2/resumao/",
+    "date": "2026-04-05",
+    "repo": "anatopatop2resumaopreprova",
+    "semestre": 3
+  },
+  {
+    "materia": "Anatomia Patológica",
+    "materia_key": "anatomia-patologica",
+    "periodo": "P2",
+    "tipo": "Banco de questões",
+    "title": "Anatomia Patológica P2 — Banco de Questões",
+    "url": "anatomia-patologica/p2/questoes/",
+    "date": "2026-04-05",
+    "repo": "anatopatop2questoes",
+    "semestre": 3
+  }
+];
+
+const CFG = {
+  "farmacologia":        {e:"💊", g:["#241d3d","#463a6b"]},
+  "farmacoterapia":      {e:"💊", g:["#122a2a","#265050"]},
+  "puericultura":        {e:"👶", g:["#2b1d26","#57394b"]},
+  "anatomia-patologica": {e:"🔬", g:["#2e1c22","#5a3540"]},
+  "anatomia-patologica-2":{e:"🧫", g:["#2b1a2e","#553759"]},
+  "anatomia-topografica":{e:"🗺️", g:["#1c2733","#33475c"]},
+  "microbiologia":       {e:"🦠", g:["#16281f","#2c4a3d"]},
+  "imunologia":          {e:"🛡️", g:["#1a2238","#324166"]},
+  "dip":                 {e:"🦟", g:["#2a2114","#544020"]},
+  "bioestatistica":      {e:"📊", g:["#14262b","#204a54"]},
+  "cardiologia":         {e:"🫀", g:["#2c1a20","#583542"]},
+  "endocrinologia":      {e:"⚗️", g:["#271831","#4c2b56"]},
+  "geriatria":           {e:"🧓", g:["#241c12","#4a3a23"]},
+  "aph":                 {e:"🚑", g:["#2c1a1a","#573636"]},
+  "roteiro":             {e:"🏖️", g:["#2a1f14","#523f26"]},
+};
+function fallbackCfg(key){
+  let h=0; for(const c of String(key)) h=(h*31+c.charCodeAt(0))>>>0;
+  const hue=h%360; return {e:"📚", g:[`hsl(${hue} 24% 13%)`, `hsl(${hue} 30% 31%)`]};
+}
+const cfg = m => CFG[m.materia_key] || fallbackCfg(m.materia_key||m.materia||"x");
+const TIPO = {"Banco de questões":"Questões","Resumão pré-prova":"Resumão","Dossiê clínico":"Dossiê","Site de estudo":"Site","Material de estudo":"Estudo","Material de prova":"Prova","Cram / Flashcards":"Cram","Decorar (revisão de 1 dia)":"Decorar","StudyGen — aulas":"StudyGen"};
+const badge = m => TIPO[m.tipo] || m.tipo;
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function recentes(){
+  let arr=[]; try{arr=JSON.parse(localStorage.getItem('recentes')||'[]')}catch(e){}
+  const byUrl={}; MATS.forEach(m=>byUrl[m.url]=m);
+  return arr.map(u=>byUrl[u]).filter(Boolean);
+}
+function marcarAberto(url){
+  if(!url) return; let arr=[]; try{arr=JSON.parse(localStorage.getItem('recentes')||'[]')}catch(e){}
+  arr=arr.filter(u=>u!==url); arr.unshift(url); arr=arr.slice(0,24);
+  try{localStorage.setItem('recentes',JSON.stringify(arr))}catch(e){}
+}
+
+function poster(m){
+  const c=cfg(m);
+  const sem=m.semestre?`<span class="sem">${m.semestre}º</span>`:'';
+  const per=m.periodo?' · '+esc(m.periodo):'';
+  return `<a class="card" style="--g0:${c.g[0]};--g1:${c.g[1]}" href="${esc(m.url)}" aria-label="${esc(m.title)}">
+    <span class="emoji">${c.e}</span>${sem}
+    <span class="body"><span class="mat">${esc(m.materia)}${per}</span>
+    <span class="ttl">${esc(m.title)}</span><span class="pill">${esc(badge(m))}</span></span>
+    <span class="play"><span>▶</span></span></a>`;
+}
+function row(title, items){
+  if(!items.length) return '';
+  return `<section class="row"><h2>${esc(title)}</h2><div class="track">${items.map(poster).join('')}</div></section>`;
+}
+function semestres(){ return [...new Set(MATS.map(m=>m.semestre).filter(Boolean))].sort((a,b)=>a-b); }
+function ordAula(m){ const x=/Aulas?\s*0?(\d+)/i.exec(m.title||''); return x?Number(x[1]):999; }
+function sortAulas(arr){ return [...arr].sort((a,b)=>ordAula(a)-ordAula(b)); }
+function materiasDe(sem){
+  const by={}; MATS.filter(m=>String(m.semestre)===String(sem)).forEach(m=>{(by[m.materia]=by[m.materia]||[]).push(m)});
+  return Object.entries(by).sort((a,b)=>b[1].length-a[1].length).map(([mat,its])=>[mat,sortAulas(its)]);
+}
+
+const SEMS = semestres();
+const SEM_LABEL = {2:"2º semestre",3:"3º semestre",4:"4º semestre",7:"7º semestre"};
+const SEM_DEFAULT = (MATS[0] && MATS[0].semestre) || SEMS[SEMS.length-1] || null;
+let fSem = SEM_DEFAULT, fMat = null, termo = '';
+
+function heroEl(){
+  const cont=recentes(); const feat=cont[0]||MATS[0]; if(!feat) return '';
+  const c=cfg(feat); const kicker=cont.length?'Continue de onde parou':'Adicionado recentemente';
+  return `<header class="hero" style="--hg0:${c.g[0]};--hg1:${c.g[1]}"><div class="hero-in">
+    <div class="kick">${c.e} ${kicker}</div>
+    <h1>${esc(feat.title)}</h1>
+    <div class="hmeta">${esc(feat.materia)}${feat.semestre?' • '+(SEM_LABEL[feat.semestre]||feat.semestre+'º sem'):''} • ${esc(feat.tipo)}</div>
+    <div class="btns"><a class="btn play" href="${esc(feat.url)}">▶ Estudar</a></div>
+  </div></header>`;
+}
+function segEl(){
+  let h='<div class="semtabs">';
+  h+=SEMS.map(s=>`<button class="semtab ${fSem==s?'on':''}" data-sem="${s}">${SEM_LABEL[s]||s+'º sem'}</button>`).join('');
+  h+='</div>';
+  const mats=materiasDe(fSem).map(([m])=>m);
+  if(mats.length>1){
+    h+='<div class="chip-group">';
+    h+=`<button class="chip ${!fMat?'on':''}" data-mat="">Todas</button>`;
+    h+=mats.map(m=>`<button class="chip ${fMat===m?'on':''}" data-mat="${esc(m)}">${esc(m)}</button>`).join('');
+    h+='</div>';
+  }
+  return h;
+}
+function render(){
+  const busca=!!termo;
+  document.getElementById('hero-slot').innerHTML = (busca||fMat) ? '' : heroEl();
+  document.getElementById('chips').innerHTML = busca ? '' : segEl();
+  const wrap=document.getElementById('content');
+  if(busca){
+    const t=termo.toLowerCase();
+    const items=MATS.filter(m=>((m.title||'')+' '+(m.materia||'')+' '+(m.tipo||'')+' '+(m.periodo||'')).toLowerCase().includes(t));
+    wrap.className='results';
+    wrap.innerHTML=`<div class="results-head">${items.length} resultado(s) para "${esc(termo)}"</div>`+
+      (items.length?`<div class="grid">${items.map(poster).join('')}</div>`:`<p class="vazio">Nada encontrado.</p>`);
+    return;
+  }
+  const doSem=MATS.filter(m=>String(m.semestre)===String(fSem));
+  if(fMat){
+    const sel=sortAulas(doSem.filter(m=>m.materia===fMat));
+    wrap.className='results';
+    wrap.innerHTML=`<div class="results-head">${sel[0]?cfg(sel[0]).e+' ':''}${esc(fMat)} · ${sel.length} materiai(s)</div>`+
+      `<div class="grid">${sel.map(poster).join('')}</div>`;
+  } else {
+    wrap.className='rows';
+    let html=''; materiasDe(fSem).forEach(([mat,its])=>{ html+=row(cfg(its[0]).e+'  '+mat, its); });
+    wrap.innerHTML = html || `<p class="vazio" style="padding-left:42px">Ainda não há materiais neste semestre.</p>`;
+  }
+}
+
+document.getElementById('chips').addEventListener('click',e=>{
+  const t=e.target.closest('.semtab'), c=e.target.closest('.chip');
+  if(t){ fSem=Number(t.getAttribute('data-sem')); fMat=null; render(); window.scrollTo(0,0); }
+  else if(c){ fMat=c.getAttribute('data-mat')||null; render(); window.scrollTo(0,0); }
+});
+document.getElementById('inicio').addEventListener('click',e=>{
+  e.preventDefault(); fSem=SEM_DEFAULT; fMat=null; termo=''; document.getElementById('busca').value=''; render();
+  window.scrollTo(0,0);
+});
+let buscaT=null;
+document.getElementById('busca').addEventListener('input',e=>{
+  clearTimeout(buscaT);
+  buscaT=setTimeout(()=>{termo=e.target.value.trim(); render();},120);
+});
+document.addEventListener('click',e=>{ const a=e.target.closest('a.card, a.btn.play'); if(a) marcarAberto(a.getAttribute('href')); });
+function toggleTema(){
+  const cur=document.documentElement.dataset.theme==='light'?'dark':'light';
+  document.documentElement.dataset.theme=cur;
+  try{localStorage.setItem('tema',cur)}catch(e){}
+  document.getElementById('temaBtn').textContent=cur==='light'?'🌙':'☀️';
+}
+document.getElementById('temaBtn').addEventListener('click',toggleTema);
+document.getElementById('temaBtn').textContent=(document.documentElement.dataset.theme==='light')?'🌙':'☀️';
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>40),{passive:true});
+
+render();
+</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>

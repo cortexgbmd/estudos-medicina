@@ -1,0 +1,1509 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Pescoço · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Pescoço — Partes 1 e 2</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aulas de 11/09 e 25/09</p>
+  <h1 class="page-h1">Anatomia do Pescoço</h1>
+  <p class="lead">Vinte a trinta centímetros com tudo dentro: as fáscias e a bainha carótica, os trígonos e o que mora em cada um, a tireoide da embriologia à cirurgia, a via aérea de urgência — e, na parte 2, os quatro nervos cranianos do pescoço com seus sinais clássicos, o plexo cervical, o frênico, o simpático e a síndrome de Horner, as carótidas e jugulares, e a drenagem linfática que termina no nódulo de Virchow.</p>
+
+  <nav class="toc">
+    <h2>Nestas aulas</h2>
+    <ol>
+      <li><a href="#t1">O pescoço: transição vital e seus limites</a></li>
+      <li><a href="#t2">As fáscias cervicais e as três lâminas</a></li>
+      <li><a href="#t3">A bainha carótica e sua sintopia</a></li>
+      <li><a href="#t4">Os músculos que servem de referência</a></li>
+      <li><a href="#t5">Os trígonos: anterior × lateral</a></li>
+      <li><a href="#t6">Trígono submentual — e o linfoma que "matou a charada"</a></li>
+      <li><a href="#t7">Trígono submandibular</a></li>
+      <li><a href="#t8">Trígono carótico — o andar das lesões vasculares</a></li>
+      <li><a href="#t9">Trígono muscular — as vísceras atrás da "cortina"</a></li>
+      <li><a href="#t10">Trígono lateral: occipital, supraclavicular e o acessório</a></li>
+      <li><a href="#t11">Tireoide: forma, coloide e embriologia</a></li>
+      <li><a href="#t12">Sintopia da tireoide (e as paratireoides)</a></li>
+      <li><a href="#t13">O laríngeo recorrente e a tireoidectomia</a></li>
+      <li><a href="#t14">Vasos e linfa da tireoide — e o nódulo que engole</a></li>
+      <li><a href="#t15">Via aérea cirúrgica: crico × traqueostomia</a></li>
+      <li><a href="#t16">Parte 2 · O forame jugular e seus três nervos</a></li>
+      <li><a href="#t17">Glossofaríngeo (IX): o nervo do reflexo nauseoso</a></li>
+      <li><a href="#t18">Vago (X): laríngeos e o sinal da cortina</a></li>
+      <li><a href="#t19">Acessório (XI): o mais lesado do trígono lateral</a></li>
+      <li><a href="#t20">Hipoglosso (XII): a língua que aponta a lesão</a></li>
+      <li><a href="#t21">Plexo cervical: o ponto de Erb e os sensitivos</a></li>
+      <li><a href="#t22">Alça cervical e ramos profundos</a></li>
+      <li><a href="#t23">Frênico: o nervo do diafragma (e do soluço)</a></li>
+      <li><a href="#t24">Simpático cervical e a síndrome de Horner</a></li>
+      <li><a href="#t25">Carótidas: origens, bifurcação, seio e corpo</a></li>
+      <li><a href="#t26">Carótida externa: a regra 3-2-1 e os terminais</a></li>
+      <li><a href="#t27">Subclávia no pescoço e seus troncos</a></li>
+      <li><a href="#t28">Jugulares: anteriores, externa e interna</a></li>
+      <li><a href="#t29">Linfáticos: o colar, os ductos e o nódulo de Virchow</a></li>
+      <li><a href="#t30">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O pescoço: transição vital e seus limites</h2>
+  <ul>
+    <li>O pescoço é a <b>transição entre o crânio e o tórax</b> — e em <b>20–30 cm</b> passa <b>tudo</b>: sistema respiratório, digestório, nervoso, vascular e glândulas endócrinas, "tudo aglomerado, uma estrutura juntinho da outra". 🎯 Qualquer crescimento ali <b>comprime ou desvia</b> um vizinho.</li>
+    <li><b>Limite SUPERIOR:</b> borda inferior da <b>MANDÍBULA</b> → conduto auditivo → processo <b>MASTOIDE</b> → protuberância <b>OCCIPITAL</b>.</li>
+    <li><b>Limite INFERIOR:</b> <b>ESTERNO</b> (manúbrio) → <b>CLAVÍCULA</b> → articulação <b>ACROMIOCLAVICULAR</b> → linha por <b>C7</b>.</li>
+    <li>A região posterior (suboccipital, trapézio, esplênios) já foi vista no dorso — o alvo agora são as regiões <b>ANTERIOR e LATERAL</b>, onde estão as estruturas vitais.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide10-05-regioes.jpg" alt="Regiões e trígonos do pescoço">
+  <figcaption>O mapa geral: o pescoço visto de lado com seus trígonos coloridos — carótico, muscular, submandibular e submentual na frente do esternocleidomastóideo; occipital e supraclavicular atrás dele; e a região cervical posterior, que pertence ao estudo do dorso.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · As fáscias cervicais e as três lâminas</h2>
+  <ul>
+    <li>As fáscias são <b>um sistema contínuo</b> de tecido conjuntivo: a fáscia cervical <b>continua com a da parótida</b> para cima e <b>com a do tórax</b> para baixo — "só muda de nome por causa da região".</li>
+    <li>Há uma <b>fáscia SUPERFICIAL</b> (praticamente a gordura sob a pele) e a <b>FÁSCIA CERVICAL PROFUNDA em TRÊS LÂMINAS</b>:</li>
+  </ul>
+  <div class="diagrama"><p class="t">As três lâminas da fáscia cervical profunda</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>LÂMINA SUPERFICIAL (MUSCULAR)</b> — <span class="d">o "envelope" dos músculos superficiais: <b>esternocleidomastóideo e trapézio</b>.</span></div></li>
+    <li><span class="n">2</span><div><b>LÂMINA VISCERAL (média/pré-traqueal)</b> — <span class="d">reveste as vísceras: <b>laringe, faringe, tireoide, traqueia</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>LÂMINA PRÉ-VERTEBRAL (profunda)</b> — <span class="d">em volta dos <b>músculos da coluna</b> (longo da cabeça/pescoço, retos, escalenos por perto).</span></div></li>
+  </ol></div>
+  <div class="box prof"><p class="h">🎯 Para que servem — e o segredo da dissecção</p>
+  <p>As lâminas deixam tudo <b>estabilizado e deslizando sem atrito</b> — por isso dá para "soltar até com o dedo" os planos numa tireoidectomia. "<b>Quando você sangra num procedimento, é porque entrou no lugar errado</b> — não está naquela fáscia."</p></div>
+  <figure class="fig"><img src="img/slide10-06-fascias.jpg" alt="Corte transversal com as fáscias cervicais">
+  <figcaption>O corte transversal do pescoço (a mesma imagem que a tomografia fatia): coluna atrás, vísceras na frente, vasos nas laterais — e as três lâminas da fáscia profunda envolvendo cada compartimento em cores diferentes.</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · A bainha carótica e sua sintopia</h2>
+  <ul>
+    <li>🎯 A <b>BAINHA CARÓTICA</b> é formada pela <b>CONVERGÊNCIA/FUSÃO DAS TRÊS LÂMINAS</b> da fáscia profunda — "não apareceu do nada". Vai <b>da base do crânio à raiz do pescoço</b>.</li>
+    <li><b>Conteúdo — o feixe vasculonervoso do pescoço:</b> <b>ARTÉRIA CARÓTIDA</b> (comum/interna), <b>VEIA JUGULAR INTERNA</b> e <b>NERVO VAGO</b>.</li>
+    <li>🎯 <b>Sintopia constante dentro da bainha:</b> <b>carótida MEDIAL</b> · <b>jugular interna LATERAL</b> · <b>vago ENTRE as duas e POSTERIOR</b> (póstero-intermediário).</li>
+    <li>O <b>vago é o maior nervo craniano</b>: desce do forame jugular, atravessa pescoço e tórax e vai ao abdome — "viram que ele VAGAVA por todo o corpo".</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · Os músculos que servem de referência</h2>
+  <ul>
+    <li><b>ESCALENOS (anterior, médio, posterior):</b> laterais profundos, das vértebras cervicais à <b>1ª e 2ª costelas</b>. 🎯 Referências: o <b>anterior está NA FRENTE da saída do plexo braquial</b>; o <b>médio, ATRÁS</b>; o <b>frênico desce na frente do anterior</b>. São <b>músculos ACESSÓRIOS DA RESPIRAÇÃO</b> (elevam as costelas na dispneia).</li>
+    <li><b>PRÉ-VERTEBRAIS:</b> longo da cabeça, longo do pescoço, retos anteriores e laterais — na frente da coluna (e na frente dos corpos vertebrais, o <b>ligamento longitudinal anterior</b>).</li>
+    <li><b>Grupo POSTERIOR</b> (revisão do dorso): trapézio (inervado pelo <b>ACESSÓRIO</b>), esplênio da cabeça, semiespinais, retos e oblíquos, levantador da escápula.</li>
+    <li>Variação muscular é rara — "quando muda, a gente documenta" (um omo-hióideo de duas cabeças já rendeu registro).</li>
+  </ul>
+
+  <h2 class="topic" id="t5">5 · Os trígonos: anterior × lateral</h2>
+  <ul>
+    <li>O pescoço lateralizado parece um <b>quadrilátero</b> atravessado pelo <b>ESTERNOCLEIDOMASTÓIDEO</b> — que o divide em <b>DOIS TRIÂNGULOS</b>. 🎯 O ECM é <b>LIMITE, não conteúdo</b>.</li>
+    <li><b>TRÍGONO ANTERIOR:</b> linha mediana do pescoço + borda inferior da <b>mandíbula</b> + <b>borda ANTERIOR do ECM</b> (um direito e um esquerdo).</li>
+    <li><b>TRÍGONO LATERAL:</b> <b>borda POSTERIOR do ECM</b> + <b>borda anterior do TRAPÉZIO</b> + <b>terço médio da CLAVÍCULA</b>.</li>
+    <li>Teto de ambos: a <b>fáscia cervical</b> (com o platisma, que só existe nas laterais).</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ "Lateral" ou "posterior"?</p>
+  <p>Os livros chamam de <b>trígono POSTERIOR</b>. O professor prefere <b>trígono LATERAL</b>, "para não confundir com a REGIÃO POSTERIOR do pescoço" (a do dorso). <b>Os dois nomes estão certos</b> — na prova dele, use lateral.</p></div>
+  <ul>
+    <li>A lógica é a mesma das nove regiões do abdome: <b>cada trígono tem seu conjunto de estruturas</b> — saber a região é saber o que procurar (e o que uma lesão ali compromete).</li>
+  </ul>
+
+  <h2 class="topic" id="t6">6 · Trígono submentual — e o linfoma que "matou a charada"</h2>
+  <ul>
+    <li><b>Único trígono ÍMPAR:</b> entre os <b>ventres ANTERIORES dos dois digástricos</b> e o <b>osso HIOIDE</b> (base); ápice na sínfise da mandíbula (mento = queixo). <b>Assoalho = MILO-HIÓIDEO</b>; teto = fáscia.</li>
+    <li><b>Conteúdo:</b> gordura, <b>LINFONODOS SUBMENTUAIS</b>, vasos linfáticos e as pequenas veias que formam as <b>JUGULARES ANTERIORES</b>.</li>
+    <li>Utilidade: infecção de <b>lábio, afta, dente anterior</b> → "aparecem bolinhas" ali (linfonodos reativos).</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 O nódulo insignificante que deu o diagnóstico</p>
+  <p>Paciente renal crônico com <b>nódulos cervicais duros havia semanas</b> — biópsia dos nódulos grandes junto da jugular exigiria anestesia geral. A saída: <b>tirar o nódulo SUBMENTUAL com anestesia local</b>. Resultado: <b>LINFOMA</b> — diagnóstico fechado pela via mais simples, "a região que parecia insignificante matou a charada". Linfoma compromete qualquer linfonodo do sistema.</p></div>
+
+  <h2 class="topic" id="t7">7 · Trígono submandibular</h2>
+  <ul>
+    <li><b>Limites:</b> <b>MANDÍBULA</b> + <b>ventres ANTERIOR e POSTERIOR do DIGÁSTRICO</b> (o "V" que só a mandíbula fecha).</li>
+    <li><b>Conteúdo:</b> a <b>GLÂNDULA SALIVAR SUBMANDIBULAR</b> + os <b>VASOS FACIAIS</b> (a artéria facial cruza a glândula e passa <b>sobre a mandíbula — palpável</b> na frente do masseter) + <b>LINFONODOS submandibulares</b> + o <b>NERVO HIPOGLOSSO</b> na profundidade, sob a glândula, a caminho da língua.</li>
+    <li><b>Assoalho:</b> <b>MILO-HIÓIDEO + HIOGLOSSO</b> (+ constritor médio da faringe, nos slides). Teto: platisma + fáscia.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide10-47-submandibular.jpg" alt="Trígono submandibular">
+  <figcaption>O trígono submandibular aberto: a glândula ocupando o espaço entre os dois ventres do digástrico e a mandíbula, com os vasos faciais cruzando-a — e, na profundidade, o plano do milo-hióideo por onde passa o hipoglosso.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Trígono carótico — o andar das lesões vasculares</h2>
+  <ul>
+    <li><b>Limites:</b> <b>ventre POSTERIOR do DIGÁSTRICO</b> + <b>ventre SUPERIOR do OMO-HIÓIDEO</b> + <b>borda ANTERIOR do ECM</b>.</li>
+    <li><b>Conteúdo:</b> a <b>BAINHA CARÓTICA</b> com a <b>BIFURCAÇÃO da carótida</b> (e o <b>seio e o corpo caróticos</b>), a jugular interna, o <b>vago</b>, o <b>HIPOGLOSSO cruzando NA FRENTE das carótidas</b> e a <b>ALÇA CERVICAL</b> sobre a bainha.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 Facada no trígono carótico = lesão vascular grave</p>
+  <p>🎯 O raciocínio por região: lesão penetrante ali é <b>vascular até prova em contrário</b>. <b>CARÓTIDA</b> lesada: "esguicha, duas bombeadas e perdeu quase toda a volemia" — ou <b>ISQUEMIA CEREBRAL</b> com sequela imediata (hemiplegia) se pegar a comum/interna. <b>JUGULAR</b>: a veia contrai, forma <b>hematoma</b> — dá tempo de chegar ao hospital.</p></div>
+  <figure class="fig"><img src="img/slide10-56-carotico.jpg" alt="Trígono carótico">
+  <figcaption>O trígono carótico: quando o esternocleidomastóideo foge para trás, a bifurcação carotídea fica desprotegida entre o digástrico e o omo-hióideo — a "região nobre" onde moram o seio carótico, o corpo carótico e a saída da interna e da externa.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Trígono muscular — as vísceras atrás da "cortina"</h2>
+  <ul>
+    <li><b>Limites:</b> <b>ventre superior do OMO-HIÓIDEO</b> + <b>linha mediana</b> + <b>borda anterior do ECM</b> (do hioide para baixo).</li>
+    <li><b>Conteúdo:</b> os <b>músculos INFRA-HIÓIDEOS</b> cobrindo as <b>VÍSCERAS: tireoide, traqueia, laringe, esôfago</b>. 🎯 Lesão ali = <b>pensar em víscera</b>, raramente vaso.</li>
+    <li>🎯 Os infra-hióideos são "<b>uma cortina</b>": para chegar à tireoide ou à traqueia, <b>abre-se na LINHA MEDIANA e AFASTA-SE</b> — não se corta músculo. (Supra-hióideos: milo-hióideo, gênio-hióideo, estilo-hióideo, digástrico · infra-hióideos: esterno-hióideo, esternotireóideo, tíreo-hióideo, omo-hióideo.)</li>
+  </ul>
+  <figure class="fig"><img src="img/slide10-40-trigono-anterior.jpg" alt="Trígono anterior do pescoço">
+  <figcaption>O trígono anterior por inteiro — da mandíbula à incisura jugular — com a "cortina" dos infra-hióideos cobrindo as vísceras na parte baixa (o trígono muscular) e os vasos subindo para o andar carótico.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Trígono lateral: occipital, supraclavicular e o acessório</h2>
+  <ul>
+    <li>O <b>ventre INFERIOR do OMO-HIÓIDEO</b> subdivide o trígono lateral em: <b>TRÍGONO OCCIPITAL</b> (grande, superior) e <b>TRÍGONO SUPRACLAVICULAR (ou SUBCLÁVIO</b> — a artéria subclávia passa ali, sobre a clavícula).</li>
+    <li><b>Conteúdo geral:</b> <b>linfonodos e NERVOS</b> — nervo ACESSÓRIO, plexo cervical (sensitivo), porção supraclavicular do <b>plexo braquial</b>, <b>veia jugular externa</b>, artérias occipital, supraescapular e transversa do pescoço.</li>
+    <li>🎯 <b>O nervo mais lesado da região é o ACESSÓRIO</b> — ele cruza o trígono <b>muito superficialmente</b> (só gordura e fáscia por cima, correndo sobre o levantador da escápula). O clássico: retirada de "lipoma" com anestesia local → corta o acessório → <b>ombro caído e braço que não sobe</b>.</li>
+    <li>Na parte mais baixa (raiz do pescoço), o risco muda de figura: <b>subclávia e plexo braquial</b> — área de trauma grave.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide10-70-lateral.jpg" alt="Trígono lateral do pescoço">
+  <figcaption>O trígono lateral (posterior) com seus limites — borda posterior do esternocleidomastóideo, borda anterior do trapézio e terço médio da clavícula — e o ventre inferior do omo-hióideo separando o trígono occipital do supraclavicular.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Tireoide: forma, coloide e embriologia</h2>
+  <ul>
+    <li>Formato de <b>BORBOLETA</b>: <b>lobos direito e esquerdo + ISTMO</b>; ~<b>20 g</b>; logo <b>abaixo da proeminência laríngea, na frente dos primeiros anéis traqueais</b> — dentro do <b>trígono MUSCULAR</b>.</li>
+    <li>🎯 <b>A ÚNICA glândula que ARMAZENA hormônio</b>: estoca em forma de <b>COLOIDE</b> (tireoglobulina nos folículos) e quebra sob demanda. E é <b>a maior glândula PURAMENTE endócrina</b> (o pâncreas é maior, mas é misto).</li>
+    <li><b>Embriologia (4ª semana):</b> nasce na <b>BASE DA LÍNGUA</b> (o <b>forame CEGO</b>) e desce pelo <b>DUCTO TIREOGLOSSO</b>, que depois se fecha — como a veia umbilical vira ligamento redondo.</li>
+    <li>🎯 <b>Persistência do ducto = CISTO TIREOGLOSSO</b>: epitélio tipo respiratório produz <b>muco</b> → "bolinha" cervical anterior que pode inflamar. "Pode cair em prova."</li>
+    <li><b>Hipotireoidismo congênito:</b> detectado no <b>TESTE DO PEZINHO</b> (TSH/T4); sem tratamento → atraso neurológico e físico = <b>CRETINISMO</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t12">12 · Sintopia da tireoide (e as paratireoides)</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Face da tireoide</th><th>Quem está lá</th></tr>
+    <tr><td><b>ANTERIOR / LATERAL</b></td><td>os músculos <b>INFRA-HIÓIDEOS</b> — o "escudo" que se afasta na cirurgia</td></tr>
+    <tr><td><b>MEDIAL</b> (o que ela abraça)</td><td><b>traqueia, laringe, faringe, esôfago</b> — e os <b>NERVOS LARÍNGEOS</b></td></tr>
+    <tr><td><b>POSTERIOR</b></td><td><b>bainha carótica</b> + <b>tronco SIMPÁTICO cervical</b> + <b>PARATIREOIDES</b></td></tr>
+  </table></div>
+  <ul>
+    <li>🎯 As <b>PARATIREOIDES</b> ficam <b>coladas na cápsula posterior</b> — na tireoidectomia, <b>ficam lá</b>: produzem o <b>PARATORMÔNIO</b> (metabolismo do cálcio).</li>
+    <li>🎯 Pegadinha do professor: "<b>quem inerva a tireoide?</b>" — <b>NÃO é o laríngeo</b> (ele é DA LARINGE, só passa colado). É o <b>TRONCO SIMPÁTICO CERVICAL</b> — e a inervação é só <b>VASOMOTORA</b>: quem comanda a produção hormonal é a <b>HIPÓFISE (TSH)</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t13">13 · O laríngeo recorrente e a tireoidectomia</h2>
+  <ul>
+    <li>O <b>LARÍNGEO RECORRENTE (laríngeo inferior)</b>, ramo do vago, sobe pelo <b>SULCO TRAQUEOESOFÁGICO</b> (entre traqueia e esôfago), passa <b>colado na face medial/posterior da tireoide</b> e entra na laringe — inervando <b>TODA a musculatura da laringe</b>.</li>
+    <li>Por que "recorrente"? Porque <b>desce e VOLTA</b>: 🎯 o <b>DIREITO</b> dá a volta <b>embaixo da SUBCLÁVIA</b>; o <b>ESQUERDO, embaixo do ARCO DA AORTA</b> (no mediastino) — origens diferentes, mesmo trajeto final.</li>
+    <li>🎯 <b>Lesão UNILATERAL</b> na tireoidectomia: prega vocal paralisada de um lado → <b>ROUQUIDÃO/disfonia</b> ("operei ontem e estou falando assim…"). <b>Lesão BILATERAL</b>: <b>sussurro + FALTA DE AR</b> — as pregas podem paralisar fechadas, obstruindo a passagem. Muito mais grave.</li>
+    <li>Na cirurgia da tireoide, "a principal estrutura que eu tenho que ver <b>não é a tireoide</b> — é o nervo".</li>
+  </ul>
+
+  <h2 class="topic" id="t14">14 · Vasos e linfa da tireoide — e o nódulo que engole</h2>
+  <ul>
+    <li><b>ARTÉRIAS (2):</b> <b>TIREÓIDEA SUPERIOR</b> ← <b>carótida externa</b> (entra por cima) e <b>TIREÓIDEA INFERIOR</b> ← <b>TRONCO TIREOCERVICAL da subclávia</b> (entra por baixo). Rara: <b>tireóidea IMA</b>, do tronco braquiocefálico.</li>
+    <li><b>VEIAS (3):</b> <b>superior e MÉDIA → JUGULAR INTERNA</b>; 🎯 as <b>INFERIORES descem DIRETO para as veias BRAQUIOCEFÁLICAS</b> (a jugular "está longe").</li>
+    <li><b>Linfa:</b> linfonodos <b>periviscerais</b> (pré-laríngeos, pré-traqueais, em volta) → <b>cadeia da jugular</b>. No câncer, explorar e limpar os comprometidos.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 O caroço que sobe quando engole</p>
+  <p>"Apareceu uma íngua" na frente do pescoço — mas era <b>duro, não doloroso, no trígono muscular</b>. Manobra da aula: <b>pedir para ENGOLIR</b> — a tireoide é aderida à laringe/traqueia, então 🎯 <b>nódulo que SOBE E DESCE com a deglutição é da TIREOIDE</b>. Ultrassom → PAAF → tireoidectomia total + exploração dos linfonodos. Era tumor; segue em tratamento, falando bem.</p></div>
+
+  <h2 class="topic" id="t15">15 · Via aérea cirúrgica: crico × traqueostomia</h2>
+  <ul>
+    <li>🎯 <b>URGÊNCIA = CRICOTIREOIDOSTOMIA</b> — abrir a <b>MEMBRANA CRICOTIREÓIDEA</b> (entre as cartilagens tireoide e cricóidea). Referência: <b>pomo de Adão → desce o dedo → a PRIMEIRA DEPRESSÃO</b> (2–3 cm abaixo). Engasgo, edema de glote, trauma de face com sangue: "não vê nada na intubação → vai direto para a crico".</li>
+    <li>🎯 <b>Por que NÃO traqueostomia na urgência?</b> Porque <b>a TIREOIDE está na frente da traqueia</b> — extremamente vascularizada: "mexe aqui, mexe ali, começa a sangrar, e você ainda piorou".</li>
+    <li><b>Criança &lt; 10 anos:</b> NÃO abrir (destruiria a laringe) — <b>PUNÇÃO da membrana com agulha</b> e ventilar/soprar até o hospital.</li>
+    <li><b>A crico é provisória: no máximo 48 h</b> (fica perto das pregas vocais → inflamação → <b>estenose</b>). Depois converte-se em <b>TRAQUEOSTOMIA</b> — eletiva, no centro cirúrgico, <b>entre o 2º e o 3º anéis traqueais</b> (afastando os infra-hióideos na linha média). Intubado 10–15 dias → traqueostomizar também. "Não é para errar mais isso nas provas."</li>
+  </ul>
+
+  <h2 class="topic" id="t16">16 · Parte 2 · O forame jugular e seus três nervos</h2>
+  <ul>
+    <li>Na base do crânio, ao lado do forame magno, o <b>FORAME JUGULAR</b> ("um rasgado"): por ele descem a <b>VEIA JUGULAR INTERNA</b> e <b>TRÊS nervos cranianos: IX (glossofaríngeo), X (vago) e XI (acessório)</b>.</li>
+    <li>🎯 O <b>HIPOGLOSSO (XII) NÃO passa ali</b> — tem o próprio <b>CANAL DO HIPOGLOSSO</b>, anterior ao forame magno.</li>
+    <li>Tumor, trauma ou fratura no forame jugular → <b>compromete os três juntos</b> (+ a drenagem venosa): disfagia + rouquidão + ombro caído — e, se alcançar o canal vizinho, língua desviada. É a síndrome do caso da aula: massa na base do crânio com IX, X, XI e XII pegos de uma vez.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-03-forame-jugular.jpg" alt="Forame jugular e os nervos IX, X e XI">
+  <figcaption>O "hub de saída" da base do crânio: pelo forame jugular passam juntos o glossofaríngeo, o vago e o acessório — uma lesão única nesse ponto compromete deglutição, voz e força do ombro simultaneamente.</figcaption></figure>
+
+  <h2 class="topic" id="t17">17 · Glossofaríngeo (IX): o nervo do reflexo nauseoso</h2>
+  <ul>
+    <li>Nervo <b>MISTO</b> do bulbo; desce pelo forame jugular rumo à <b>faringe e à raiz da língua</b>.</li>
+    <li>🎯 <b>Quase todo SENSITIVO:</b> mucosa do <b>palato, tonsila/loja amigdaliana, raiz da língua e faringe</b> — é ele o nervo do <b>REFLEXO NAUSEOSO</b> (a ânsia do abaixador de língua) e da dor da <b>amigdalite</b>.</li>
+    <li>🎯 <b>Única parte MOTORA: o músculo ESTILOFARÍNGEO</b> (que eleva a faringe). O resto da deglutição quase não sente a falta dele.</li>
+  </ul>
+
+  <h2 class="topic" id="t18">18 · Vago (X): laríngeos e o sinal da cortina</h2>
+  <ul>
+    <li>O vago dá os <b>LARÍNGEOS SUPERIORES</b> (parte alta da laringe) e os <b>LARÍNGEOS INFERIORES/RECORRENTES</b> — que inervam <b>toda a musculatura da laringe</b> (tópico 13) — e segue: brônquios, coração, pericárdio, esôfago, abdome.</li>
+    <li>🎯 <b>SINAL DA CORTINA:</b> peça "faça AAAH" — o véu palatino de um lado não sobe e a <b>ÚVULA DESVIA PARA O LADO BOM</b> (o lado são traciona). <b>Movimento do palato = VAGO</b>; o glossofaríngeo é a sensibilidade (e só o estilofaríngeo de motor).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-20-uvula.jpg" alt="Sinal da cortina — desvio da úvula">
+  <figcaption>O sinal da cortina: com a lesão do vago, o arco do palato cai do lado doente e a úvula é puxada para o lado normal — o desvio aponta para o lado BOM, ao contrário do sinal da língua.</figcaption></figure>
+
+  <h2 class="topic" id="t19">19 · Acessório (XI): o mais lesado do trígono lateral</h2>
+  <ul>
+    <li><b>Exclusivamente MOTOR</b>: <b>ESTERNOCLEIDOMASTÓIDEO + TRAPÉZIO (todo ele)</b>. Formado por <b>raízes ESPINAIS</b> (que sobem pelo forame magno) <b>+ raízes CRANIANAS</b>; sai pelo <b>forame jugular</b>.</li>
+    <li><b>Trajeto:</b> passa <b>na frente/por cima da JUGULAR INTERNA</b> → <b>atravessa o ECM</b> (dando ramos) → cruza o <b>TRÍGONO LATERAL superficialmente</b> (sobre o levantador da escápula) → <b>TRAPÉZIO</b>.</li>
+    <li>🎯 <b>Lesão:</b> <b>ombro caído e dolorido</b>, trapézio atrofiado, <b>abdução que não passa da horizontal</b> (deltoide e supraespinal só levam até ali) — e, se a lesão for alta, dificuldade de rodar a cabeça (ECM). <b>Teste:</b> elevar os ombros e virar o pescoço <b>contra resistência</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-21-acessorio.jpg" alt="Nervo acessório — esquema">
+  <figcaption>O acessório em esquema: raiz espinal subindo pelo forame magno, raiz craniana acompanhando o vago, saída pelo forame jugular — e os dois alvos finais, esternocleidomastóideo e trapézio. "Área de risco cirúrgico: preservação obrigatória."</figcaption></figure>
+
+  <h2 class="topic" id="t20">20 · Hipoglosso (XII): a língua que aponta a lesão</h2>
+  <ul>
+    <li>Desce pelo <b>CANAL DO HIPOGLOSSO</b> e vai à língua: 🎯 inerva <b>TODOS os músculos da língua, EXCETO o PALATOGLOSSO</b> (que é do palato — vago).</li>
+    <li><b>Trajeto no pescoço:</b> 🎯 cruza <b>NA FRENTE das carótidas interna e externa</b> no <b>TRÍGONO CARÓTICO</b>, faz o arco por baixo do digástrico e entra no <b>TRÍGONO SUBMANDIBULAR</b>, profundo à glândula, rumo à língua.</li>
+    <li>🎯 <b>SINAL DA LÍNGUA:</b> na protrusão, <b>a ponta DESVIA PARA O LADO LESADO</b> — o lado são "vence" e empurra a língua para o lado atrofiado. (Compare: úvula desvia para o lado BOM; língua, para o lado DOENTE.)</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-36-hipoglosso.jpg" alt="Trajeto do nervo hipoglosso">
+  <figcaption>O hipoglosso descendo da base do crânio, cruzando na frente das carótidas no trígono carótico — onde dá a raiz superior da alça cervical — e mergulhando no trígono submandibular a caminho dos músculos da língua.</figcaption></figure>
+
+  <h2 class="topic" id="t21">21 · Plexo cervical: o ponto de Erb e os sensitivos</h2>
+  <ul>
+    <li><b>PLEXO CERVICAL = C1–C4</b> (de C5 em diante começa o braquial), profundo, <b>atrás do ECM</b>, emergindo entre o <b>levantador da escápula e o escaleno médio</b>.</li>
+    <li>🎯 Os <b>ramos SENSITIVOS emergem TODOS de um mesmo ponto</b> na borda posterior do ECM — o <b>PONTO DE ERB</b> ("ponto nervoso do pescoço"):</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Nervo</th><th>Território de pele</th></tr>
+    <tr><td><b>AURICULAR MAGNO</b> (C2-C3)</td><td>região da orelha e do ângulo da mandíbula</td></tr>
+    <tr><td><b>OCCIPITAL MENOR</b> (C2)</td><td>atrás da orelha</td></tr>
+    <tr><td><b>CERVICAL TRANSVERSO</b> (C2-C3)</td><td>toda a região anterior do pescoço</td></tr>
+    <tr><td><b>SUPRACLAVICULARES</b> (C3-C4; medial/intermédio/lateral)</td><td>a pele baixa do pescoço, clavícula e ombro</td></tr>
+  </table></div>
+  <ul>
+    <li>🎯 Fronteira sensitiva: <b>da mandíbula para cima é TRIGÊMEO</b> (três ramos na face); o plexo cervical cuida do pescoço e da moldura da orelha.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-57-plexo-esquema.jpg" alt="Esquema do plexo cervical">
+  <figcaption>O esquema do plexo cervical: C1 pegando carona no hipoglosso para formar a raiz superior da alça, C2-C3 formando a raiz inferior, os quatro sensitivos saindo para o ponto de Erb — e, embaixo, o frênico nascendo de C3-C5.</figcaption></figure>
+
+  <h2 class="topic" id="t22">22 · Alça cervical e ramos profundos</h2>
+  <ul>
+    <li><b>Ramos PROFUNDOS (motores):</b> para os <b>pré-vertebrais</b> (longo da cabeça/pescoço, retos), <b>escalenos</b> e parte do levantador da escápula — e os dois especiais: a alça e o frênico.</li>
+    <li>🎯 <b>ALÇA CERVICAL:</b> <b>raiz SUPERIOR (C1</b>, que desce "pegando carona" junto ao hipoglosso) + <b>raiz INFERIOR (C2-C3)</b> — a alcinha fica <b>SOBRE A BAINHA CARÓTICA, no trígono carótico</b>, e inerva os <b>INFRA-HIÓIDEOS</b> (esterno-hióideo, esternotireóideo, omo-hióideo).</li>
+    <li>Pode ser cortada sem grande prejuízo — "mas se puder preservar, melhor".</li>
+  </ul>
+
+  <h2 class="topic" id="t23">23 · Frênico: o nervo do diafragma (e do soluço)</h2>
+  <ul>
+    <li><b>Formação: C4 principal + contribuições de C3 e C5.</b> 🎯 <b>Identificação na peça:</b> ache o plexo braquial (entre os escalenos) → o músculo NA FRENTE dele é o <b>escaleno ANTERIOR</b> → o fio fino descendo <b>sobre o escaleno anterior</b> é o frênico (lateral à bainha carótica).</li>
+    <li>Desce entre os vasos subclávios → tórax <b>junto da pleura mediastinal e do pericárdio</b>, com os <b>vasos PERICARDICOFRÊNICOS</b> → diafragma. É <b>sensitivo</b> (pleura, pericárdio, peritônio diafragmático) e <b>o ÚNICO MOTOR do diafragma</b>.</li>
+    <li>🎯 <b>SOLUÇO = contração involuntária do diafragma</b> por irritação do frênico: abscesso subfrênico, pneumonia de base, derrame, tumor… <b>Soluço PERSISTENTE precisa ser investigado</b> (RX/TC de tórax e abdome) — pode ser banal ou pode ser o primeiro sinal de algo grave.</li>
+    <li>🎯 <b>Paralisia frênica: CÚPULA ELEVADA no RX</b> — o diafragma flácido sobe, ajudado pela <b>pressão NEGATIVA do tórax</b> (que puxa) contra a <b>positiva do abdome</b> (que empurra). Clínica: dispneia aos esforços; a bilateral não abole a respiração (musculatura acessória).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-61-frenico.jpg" alt="Nervo frênico — esquema C3-C5">
+  <figcaption>O frênico como "linha de suporte vital": nasce de C3-C4-C5, desce sobre o escaleno anterior e termina em ramos pleurais, pericárdicos e diafragmáticos — a falha de sinal paralisa o diafragma ipsilateral e eleva a cúpula.</figcaption></figure>
+  <figure class="fig"><img src="img/slide11-68-paralisia-frenico.jpg" alt="Paralisia do frênico no RX">
+  <figcaption>A tradução radiológica da paralisia frênica: a cúpula diafragmática elevada do lado paralisado — flácida, sugada pela pressão negativa do tórax e empurrada pela pressão positiva do abdome.</figcaption></figure>
+
+  <h2 class="topic" id="t24">24 · Simpático cervical e a síndrome de Horner</h2>
+  <ul>
+    <li><b>TRONCO SIMPÁTICO CERVICAL: 3 gânglios</b> — <b>SUPERIOR</b> (nível C2, o maior), <b>MÉDIO</b> (C5-C6, inconstante) e <b>INFERIOR = CERVICOTORÁCICO = GÂNGLIO ESTRELADO</b> (fundido com o 1º torácico, na transição com o tórax).</li>
+    <li><b>Onde:</b> bem <b>profundos, ATRÁS da bainha carótica</b>, sobre os músculos longo da cabeça/longo do pescoço.</li>
+    <li><b>O que fazem:</b> inervação <b>vasomotora</b> (inclusive da tireoide), glândulas (sudorese), <b>músculo tarsal da pálpebra superior</b> e <b>DILATADOR DA PUPILA</b> — o sistema da reação de "fuga ou luta".</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Síndrome de Claude Bernard-Horner</p>
+  <p>Lesão do simpático cervical (do gânglio estrelado em especial): <b>PTOSE palpebral</b> (cai o tarsal) + <b>MIOSE</b> (pupila pontiforme, sem o dilatador) + <b>ENOFTALMIA aparente</b> ("o olho parece menor, mais para dentro") + <b>ANIDROSE</b> + <b>face quente e vasodilatada</b> do lado da lesão.</p></div>
+  <div class="box caso"><p class="h">🩺 O tumor que não está no pescoço</p>
+  <p>Tumor do <b>ÁPICE PULMONAR</b> pode "grudar" no gânglio estrelado <b>e</b> no laríngeo recorrente: paciente com <b>Horner + rouquidão + emagrecimento e tosse</b> — <b>sem nada palpável no pescoço</b>. "Desce um pouquinho: RX de tórax, tomografia, laringoscopia. As coisas estão distantes e aparecem na nossa cara — analise o paciente como um todo."</p></div>
+  <figure class="fig"><img src="img/slide11-74-horner.jpg" alt="Síndrome de Horner">
+  <figcaption>A cara da síndrome de Horner: ptose discreta, miose e a falsa impressão de olho afundado — a assinatura visível de uma falha no simpático cervical, às vezes a quilômetros do problema real.</figcaption></figure>
+
+  <h2 class="topic" id="t25">25 · Carótidas: origens, bifurcação, seio e corpo</h2>
+  <ul>
+    <li><b>Origens diferentes:</b> a <b>DIREITA</b> nasce do <b>TRONCO BRAQUIOCEFÁLICO</b> (atrás da articulação esternoclavicular); a <b>ESQUERDA, DIRETO DO ARCO DA AORTA</b> (dentro do mediastino). Sobem <b>ao lado da traqueia e da laringe</b> — onde se palpa o pulso.</li>
+    <li>🎯 <b>Bifurcação em INTERNA e EXTERNA na altura de C4 — margem SUPERIOR da cartilagem tireoide</b> (a linha do pomo de Adão).</li>
+    <li>Na bifurcação: o <b>SEIO CARÓTICO</b> (a dilatação — <b>barorreceptores</b>, regula a pressão) e o <b>CORPO/GLOMO CARÓTICO</b> (<b>quimiorreceptores</b> — oxigênio).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-78-bifurcacao.jpg" alt="Bifurcação carotídea">
+  <figcaption>O "marco zero": a carótida comum sobe sem dar ramos até se dividir em interna e externa — com o seio carótico (barorreceptor) e o glomo carótico (quimiorreceptor) montando guarda na bifurcação.</figcaption></figure>
+
+  <h2 class="topic" id="t26">26 · Carótida externa: a regra 3-2-1 e os terminais</h2>
+  <ul>
+    <li>🎯 <b>A INTERNA NÃO DÁ RAMOS NO PESCOÇO</b> — "rota expressa" para o crânio (oftálmica, cerebrais média e anterior, polígono de Willis). <b>Na peça: a que tem ramos é a EXTERNA.</b></li>
+    <li><b>Ramos colaterais da EXTERNA — 3 anteriores, 2 posteriores, 1 medial:</b> <b>TIREÓIDEA SUPERIOR</b> (laringe + tireoide) · <b>LINGUAL</b> (assoalho da boca + língua) · <b>FACIAL</b> · <b>OCCIPITAL</b> e <b>AURICULAR POSTERIOR</b> (couro cabeludo posterior) · <b>FARÍNGEA ASCENDENTE</b> (a medial, para toda a faringe).</li>
+    <li><b>Terminais (2): MAXILAR + TEMPORAL SUPERFICIAL.</b> A <b>MAXILAR é a mais calibrosa</b> — face profunda, dentes (alveolares), fraturas de face sangram por ela; fica <b>atrás do colo da mandíbula</b>. A <b>temporal superficial</b> atravessa a parótida e é <b>palpável sobre o zigomático</b>, na frente da orelha.</li>
+    <li><b>A FACIAL:</b> tortuosa, <b>atravessa o trígono submandibular</b>, cruza a mandíbula (palpável), dá labiais superior/inferior, mentual, lateral do nariz — e 🎯 <b>termina no canto do olho como ARTÉRIA ANGULAR</b>.</li>
+    <li>Curiosidade que fecha o mapa: <b>a TESTA é da carótida INTERNA</b> — ramos <b>supraorbital/supratroclear da OFTÁLMICA</b> saindo pelos forames supraorbitais. O couro cabeludo é uma <b>rede de anastomoses</b> — "por isso sangra demais".</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-89-carotida-externa.jpg" alt="Ramos da carótida externa">
+  <figcaption>A carótida externa e sua prole: três ramos anteriores (tireóidea superior, lingual, facial), dois posteriores (occipital, auricular posterior), um medial (faríngea ascendente) e os dois terminais — temporal superficial e a calibrosa maxilar.</figcaption></figure>
+
+  <h2 class="topic" id="t27">27 · Subclávia no pescoço e seus troncos</h2>
+  <ul>
+    <li>Ramos cervicais da <b>SUBCLÁVIA</b>: <b>VERTEBRAL</b> (só um pedacinho visível — logo entra nos forames transversos rumo ao cérebro) · <b>TORÁCICA INTERNA</b> (desce) · <b>TRONCO TIREOCERVICAL</b> · <b>TRONCO COSTOCERVICAL</b> (menor, posterior).</li>
+    <li>🎯 <b>Do TRONCO TIREOCERVICAL saem:</b> <b>TIREÓIDEA INFERIOR</b> + <b>cervical ascendente</b> + <b>CERVICAL TRANSVERSA</b> + <b>SUPRAESCAPULAR</b> — "a arvorezinha" perto do escaleno anterior (com o frênico na frente). É o nutridor da parte baixa do pescoço: para cima é carótida, para baixo é subclávia.</li>
+  </ul>
+
+  <h2 class="topic" id="t28">28 · Jugulares: anteriores, externa e interna</h2>
+  <ul>
+    <li><b>Rede SUPERFICIAL:</b> <b>JUGULARES ANTERIORES</b> — um par, uma de cada lado da linha mediana, nascendo na região submentual e descendo <b>sobre os infra-hióideos</b> (sob a fáscia) até desembocar na <b>jugular externa ou na subclávia</b>. 🎯 É por elas que a tireoidectomia/traqueostomia <b>abre exatamente na linha mediana</b> — para não machucá-las.</li>
+    <li><b>JUGULAR EXTERNA:</b> 🎯 formada pela união da <b>RETROMANDIBULAR</b> (que é a <b>temporal superficial que mudou de nome</b> ao passar atrás da mandíbula) <b>+ AURICULAR POSTERIOR</b>. Desce <b>SOBRE o ECM</b>, cruza o trígono lateral, perfura a fáscia e desemboca na <b>SUBCLÁVIA</b>. Fica visível na manobra de força — e muito dilatada na <b>compressão da veia cava</b> (o caso da aula). Serve de acesso venoso não-grave.</li>
+    <li><b>JUGULAR INTERNA:</b> 🎯 <b>continuação do SEIO SIGMOIDE</b> a partir do <b>forame jugular</b>; desce na bainha (lateral) recebendo tributárias: seio petroso inferior, faríngeas, <b>facial, lingual, TIREÓIDEAS SUPERIOR E MÉDIA</b> (as INFERIORES não — vão às braquiocefálicas) — e termina unindo-se à subclávia = <b>veia BRAQUIOCEFÁLICA</b>. É <b>o acesso central da UTI</b> (cateter até a cava/átrio: PVC, drogas centrais).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11-113-retorno-superficial.jpg" alt="Jugular externa e anterior — esquema">
+  <figcaption>O retorno superficial em fluxograma: a jugular externa nascendo de auricular posterior + retromandibular e morrendo na subclávia; as jugulares anteriores nascendo no submentual e desembocando na externa ou na subclávia.</figcaption></figure>
+  <figure class="fig"><img src="img/slide11-120-jugular-interna.jpg" alt="Jugular interna e tributárias">
+  <figcaption>O grande coletor: a jugular interna como continuação do seio sigmoide, recebendo faríngeas, facial, lingual e as tireóideas superior e média — até se unir à subclávia e formar a braquiocefálica.</figcaption></figure>
+
+  <h2 class="topic" id="t29">29 · Linfáticos: o colar, os ductos e o nódulo de Virchow</h2>
+  <ul>
+    <li>As três grandes concentrações de tecido linfático do corpo: <b>PESCOÇO, mediastino e retroperitônio</b> — e 🎯 <b>só o pescoço é palpável</b> no exame físico.</li>
+    <li><b>Nível superficial — o COLAR LINFÁTICO PERICERVICAL</b> (a transição cabeça-pescoço): linfonodos <b>occipitais, mastóideos, parotídeos, submandibulares e submentuais</b> (+ os que acompanham a jugular externa). Viroses (rubéola, toxo, CMV) → occipitais/colar; faringite/amigdalite → jugulares; afta/lábio → submentuais.</li>
+    <li><b>Nível profundo:</b> cadeias que acompanham a <b>JUGULAR INTERNA</b> (jugulares altos, médios e baixos) + <b>periviscerais</b> (pré-laríngeos, pré/paratraqueais, retrofaríngeos) → tudo converge para os <b>DUCTOS terminais</b>.</li>
+    <li>🎯 <b>A grande assimetria:</b> o <b>DUCTO TORÁCICO</b> (nasce da <b>cisterna do quilo</b>, sobe na frente da coluna entre a ázigo e a aorta, vira <b>à ESQUERDA</b>) recebe <b>quase o corpo inteiro</b> e desemboca no <b>ÂNGULO VENOSO ESQUERDO</b> (jugular interna + subclávia esquerdas). O <b>DUCTO LINFÁTICO DIREITO</b> só drena o <b>quadrante superior direito</b>, no ângulo venoso direito.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 O nódulo supraclavicular esquerdo — Virchow</p>
+  <p>O <b>gânglio de VIRCHOW</b> (fossa supraclavicular ESQUERDA, onde o ducto torácico termina) foi descrito para o <b>câncer de ESTÔMAGO</b> — mas pâncreas, útero, ovário, rim, próstata, mama, pulmão e <b>até um melanoma escondido na planta do pé</b> podem dar a primeira cara ali. É o <b>diagnóstico retrógrado pela metástase</b>: acha-se o linfonodo, biopsia, e sai-se rastreando o primário. "O lado esquerdo é muito complicado — tem muita coisa que pode aparecer ali."</p></div>
+  <figure class="fig"><img src="img/slide11-136-assimetria-linfatica.jpg" alt="Ducto torácico × ducto linfático direito">
+  <figcaption>A grande assimetria da drenagem terminal: o ducto linfático direito coleta só o quadrante superior direito; o ducto torácico — nascido da cisterna do quilo — recebe todo o resto do corpo e desemboca no ângulo venoso esquerdo. É por isso que Virchow mora à esquerda.</figcaption></figure>
+
+  <h2 class="topic" id="t30">30 · Resumo rápido</h2>
+  <ul>
+    <li><b>Fáscias:</b> 3 lâminas (muscular, visceral, pré-vertebral) → fundem-se na <b>BAINHA CARÓTICA</b> (carótida medial, jugular lateral, vago entre-e-atrás).</li>
+    <li><b>Trígonos:</b> ECM divide anterior × lateral (ECM = limite). Anterior subdividido (digástrico + omo-hióideo) em <b>submentual</b> (linfonodos; o linfoma da anestesia local), <b>submandibular</b> (glândula + vasos faciais + hipoglosso), <b>carótico</b> (bifurcação + seio/corpo + hipoglosso na frente + alça; facada = vascular) e <b>muscular</b> (vísceras atrás da "cortina" dos infra-hióideos). Lateral = occipital + supraclavicular; <b>acessório é o mais lesado</b> (superficial).</li>
+    <li><b>Tireoide:</b> borboleta de 20 g que <b>armazena</b> hormônio; nasce na base da língua (ducto tireoglosso → cisto); sintopia = infra-hióideos / vísceras + laríngeos / bainha + simpático + <b>paratireoides</b>; <b>recorrente</b>: uni = rouquidão, bi = sussurro + dispneia; artérias superior (carótida externa) + inferior (tronco tireocervical); veias sup/média → jugular interna, <b>inferiores → braquiocefálicas</b>; nódulo que <b>engole e sobe = tireoide</b>.</li>
+    <li><b>Via aérea:</b> urgência = <b>CRICO</b> (membrana cricotireóidea; 1ª depressão abaixo do pomo; criança &lt;10 = punção); <b>48 h → traqueostomia</b> (2º-3º anéis; a tireoide na frente da traqueia é o porquê de não traquear na urgência).</li>
+    <li><b>Forame jugular:</b> jugular interna + IX, X, XI (XII no canal próprio). IX = reflexo nauseoso + estilofaríngeo; X = laríngeos + <b>úvula desvia p/ lado BOM</b>; XI = ECM + trapézio, <b>ombro caído</b>; XII = língua toda menos palatoglosso, <b>língua desvia p/ lado LESADO</b>.</li>
+    <li><b>Plexo cervical (C1-C4):</b> sensitivos no <b>ponto de ERB</b> (auricular magno, occipital menor, cervical transverso, supraclaviculares); <b>alça cervical</b> (C1+C2-C3, sobre a bainha) → infra-hióideos; <b>FRÊNICO (C3-C5)</b> sobre o escaleno anterior — <b>soluço persistente investiga; paralisia = cúpula elevada</b>.</li>
+    <li><b>Simpático cervical:</b> gânglios superior/médio/<b>estrelado</b>, atrás da bainha; inerva vasos (tireoide!), pálpebra e pupila → lesão = <b>HORNER</b> (ptose + miose + enoftalmia + anidrose) — lembrar do tumor do ápice pulmonar.</li>
+    <li><b>Vasos:</b> carótida D (braquiocefálico) × E (aorta); <b>bifurcação em C4</b> (cartilagem tireoide) com seio (pressão) e corpo (O₂); <b>interna sem ramos no pescoço</b> (testa = oftálmica!); externa 3-2-1 + <b>maxilar</b> (fraturas de face) e temporal superficial; subclávia → <b>tronco tireocervical</b>. Jugulares: anteriores (linha mediana!), externa (retromandibular + auricular posterior → subclávia), <b>interna = seio sigmoide</b> → braquiocefálica (acesso central).</li>
+    <li><b>Linfa:</b> colar pericervical → profundos da jugular → ductos: <b>torácico (corpo quase todo, ângulo venoso ESQUERDO — VIRCHOW)</b> × linfático direito (quadrante superior direito).</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Pescoço</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aulas de 11/09 e 25/09 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-fascias">Fáscias & bainha</a>
+    <a class="a1" href="#p-trigonos">Trígonos</a>
+    <a class="a1" href="#p-tireoide">Tireoide & via aérea</a>
+    <a class="a1" href="#p-nervos">Nervos</a>
+    <a class="a1" href="#p-vasos">Vasos & linfa</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-fascias">
+  <span class="aula-tag t1">Fáscias e bainha carótica</span>
+  <ul>
+    <li>Fáscia cervical profunda em <b class="k">3 LÂMINAS: MUSCULAR (ECM+trapézio) · VISCERAL (laringe/faringe/tireoide/traqueia) · PRÉ-VERTEBRAL</b>. Contínuas com parótida (acima) e tórax (abaixo).</li>
+    <li><b class="k">BAINHA CARÓTICA = fusão das 3 lâminas</b> · sintopia fixa: <b class="k">CARÓTIDA MEDIAL · JUGULAR INTERNA LATERAL · VAGO entre as duas e POSTERIOR</b> · da base do crânio à raiz do pescoço.</li>
+    <li>"Sangrou no procedimento = entrou no plano errado" — a dissecção corre pelas fáscias.</li>
+    <li>Escalenos: anterior NA FRENTE do plexo braquial, médio ATRÁS; inserem na 1ª-2ª costelas = <b>acessórios da respiração</b>; frênico desce na frente do anterior.</li>
+  </ul>
+</section>
+
+<section id="p-trigonos">
+  <span class="aula-tag t1">Trígonos (ECM divide; ele é LIMITE)</span>
+  <div class="tw"><table>
+    <tr><th>Trígono</th><th>Limites</th><th>Conteúdo-chave</th></tr>
+    <tr><td><b>SUBMENTUAL</b> (ímpar)</td><td>ventres ant. dos digástricos + hioide; assoalho MILO-HIÓIDEO</td><td>linfonodos submentuais (afta/lábio/dente; o linfoma da anestesia local)</td></tr>
+    <tr><td><b>SUBMANDIBULAR</b></td><td>mandíbula + 2 ventres do digástrico</td><td>glândula + VASOS FACIAIS + linfonodos + HIPOGLOSSO profundo</td></tr>
+    <tr><td><b>CARÓTICO</b></td><td>digástrico post. + omo-hióideo sup. + ECM</td><td><b class="k">bifurcação + seio/corpo + hipoglosso na frente + alça cervical</b> · facada = VASCULAR</td></tr>
+    <tr><td><b>MUSCULAR</b></td><td>omo-hióideo + linha mediana + ECM</td><td><b class="k">VÍSCERAS atrás da "cortina" dos infra-hióideos</b> (abrir na linha média e AFASTAR)</td></tr>
+    <tr><td><b>LATERAL</b> (livros: posterior)</td><td>ECM post. + trapézio + clavícula (÷ omo-hióideo inf. em occipital + supraclavicular)</td><td>linfonodos e nervos — <b class="k">ACESSÓRIO = o mais lesado (superficial!)</b>; raiz do pescoço = subclávia + plexo</td></tr>
+  </table></div>
+  <ul>
+    <li>Carótida lesada = exsanguinação/isquemia cerebral · jugular = contrai, hematoma, dá tempo.</li>
+  </ul>
+</section>
+
+<section id="p-tireoide">
+  <span class="aula-tag t1">Tireoide e via aérea</span>
+  <ul>
+    <li><b class="k">ÚNICA glândula que ARMAZENA hormônio (coloide)</b> · maior PURAMENTE endócrina · 20 g, borboleta, istmo nos primeiros anéis traqueais.</li>
+    <li>Embrio: base da língua (forame CEGO) → <b class="k">ducto TIREOGLOSSO</b> → persistiu = <b>CISTO tireoglosso</b> (muco). Hipotireoidismo congênito → teste do PEZINHO → sem tratar = cretinismo.</li>
+    <li>Sintopia: ant/lat = infra-hióideos · medial = vísceras + <b class="k">NERVOS LARÍNGEOS</b> · post = bainha + simpático + <b class="k">PARATIREOIDES (preservar! cálcio)</b>.</li>
+    <li><b class="k">RECORRENTE: uni = ROUQUIDÃO · bilateral = SUSSURRO + FALTA DE AR</b> (pregas fecham) · sobe no sulco traqueoesofágico · D sob a subclávia, E sob o arco da aorta.</li>
+    <li>Inervação da tireoide = <b class="k">TRONCO SIMPÁTICO (vasomotora)</b> — produção é da HIPÓFISE (TSH). Laríngeo é da laringe!</li>
+    <li>Artérias: <b>superior ← carótida externa · inferior ← tronco tireocervical</b> (+ ima rara) · veias: <b class="k">sup + MÉDIA → jugular interna · INFERIORES → braquiocefálicas</b>.</li>
+    <li><b class="k">Nódulo que SOBE AO ENGOLIR = tireoide</b> (aderida à laringe/traqueia).</li>
+    <li><b class="k">URGÊNCIA = CRICOTIREOIDOSTOMIA</b> (membrana cricotireóidea = 1ª depressão abaixo do pomo) — <b>nunca traqueo na urgência (a TIREOIDE sangra)</b> · criança &lt;10a = PUNÇÃO · crico vale <b>48 h</b> → traqueostomia eletiva (2º-3º anéis).</li>
+  </ul>
+</section>
+
+<section id="p-nervos">
+  <span class="aula-tag t2">Nervos (parte 2)</span>
+  <ul>
+    <li><b class="k">FORAME JUGULAR = jugular interna + IX + X + XI</b> · XII tem CANAL próprio. Massa ali = os quatro sinais juntos.</li>
+    <li><b>IX glossofaríngeo:</b> sensitivo (faringe/tonsila/raiz da língua — <b class="k">reflexo NAUSEOSO</b>, dor da amigdalite) · motor SÓ <b>estilofaríngeo</b>.</li>
+    <li><b>X vago:</b> laríngeos sup + RECORRENTES (toda a laringe) · <b class="k">SINAL DA CORTINA: úvula desvia p/ o lado BOM</b> (palato = vago).</li>
+    <li><b>XI acessório:</b> SÓ motor (ECM + TODO o trapézio) · cruza jugular → ECM → trígono lateral SUPERFICIAL → trapézio · lesão = <b class="k">ombro caído, abdução não passa da horizontal</b> · teste contra resistência.</li>
+    <li><b>XII hipoglosso:</b> canal próprio · <b class="k">cruza NA FRENTE das carótidas</b> (trígono carótico → submandibular) · toda a língua EXCETO palatoglosso · <b class="k">língua desvia p/ o lado LESADO</b>.</li>
+    <li><b>Plexo cervical C1-C4:</b> sensitivos no <b class="k">PONTO DE ERB</b>: auricular magno, occipital menor, cervical transverso, supraclaviculares (acima da mandíbula = TRIGÊMEO) · <b class="k">ALÇA CERVICAL (C1 + C2-C3), SOBRE a bainha → infra-hióideos</b>.</li>
+    <li><b class="k">FRÊNICO C3-C5 (C4)</b>: desce SOBRE o escaleno anterior, lateral à bainha, com os pericardicofrênicos · único motor do diafragma · <b class="k">SOLUÇO persistente → investigar</b> · paralisia = <b>CÚPULA ELEVADA</b> (pressão negativa do tórax puxa).</li>
+    <li><b>Simpático cervical:</b> gânglios superior (C2) · médio (C5-6) · <b class="k">ESTRELADO (cervicotorácico)</b>, ATRÁS da bainha · lesão = <b class="k">HORNER: ptose + miose + enoftalmia + anidrose</b> + face quente · lembrar do tumor do ÁPICE do pulmão (+ rouquidão).</li>
+  </ul>
+</section>
+
+<section id="p-vasos">
+  <span class="aula-tag t2">Vasos e linfáticos (parte 2)</span>
+  <ul>
+    <li>Carótida comum: <b>D ← tronco braquiocefálico · E ← arco da aorta</b> · <b class="k">bifurca em C4 (margem sup. da cartilagem tireoide)</b> · SEIO = barorreceptor · CORPO/glomo = quimiorreceptor.</li>
+    <li><b class="k">INTERNA: SEM ramos no pescoço</b> (a que tem ramos na peça = EXTERNA) · oftálmica → <b>TESTA (supraorbital/supratroclear)</b>.</li>
+    <li><b>EXTERNA 3-2-1:</b> ant = tireóidea sup · lingual · FACIAL (→ <b class="k">artéria ANGULAR</b> no canto do olho) · post = occipital + auricular post · medial = faríngea ascendente · <b class="k">terminais = MAXILAR (a calibrosa das fraturas de face) + temporal superficial (palpável no zigomático)</b>.</li>
+    <li>Subclávia: vertebral · torácica interna · <b class="k">TRONCO TIREOCERVICAL (tireóidea inf + cervical asc + cervical transversa + supraescapular)</b> · costocervical.</li>
+    <li>Veias: <b>JUGULARES ANTERIORES</b> na linha mediana (por isso a cervicotomia mediana!) · <b class="k">EXTERNA = retromandibular + auricular posterior → subclávia</b> (sobre o ECM; dilata na compressão da cava) · <b class="k">INTERNA = continuação do SEIO SIGMOIDE</b> (forame jugular), recebe facial/lingual/tireóideas sup+média → + subclávia = braquiocefálica · acesso central da UTI.</li>
+    <li>Linfa: <b class="k">COLAR PERICERVICAL</b> (occipitais, mastóideos, parotídeos, submandibulares, submentuais) → profundos da JUGULAR → ductos.</li>
+    <li><b class="k">DUCTO TORÁCICO (cisterna do quilo → ângulo venoso ESQUERDO) drena quase tudo · ducto linfático DIREITO só o quadrante sup. D</b>.</li>
+    <li><b class="k">VIRCHOW: supraclavicular ESQUERDO</b> — estômago (clássico), pâncreas, rim, próstata, mama, pulmão, melanoma do pé… <b>diagnóstico retrógrado pela metástase</b>.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>Úvula × língua (desvio)</td><td>úvula → lado BOM (vago) × língua → lado LESADO (hipoglosso)</td></tr>
+    <tr><td>Glossofaríngeo × vago no palato</td><td>IX = SENSIBILIDADE (nauseoso) × X = MOVIMENTO (cortina)</td></tr>
+    <tr><td>Forame jugular × canal do hipoglosso</td><td>IX, X, XI + jugular × só o XII</td></tr>
+    <tr><td>Crico × traqueostomia</td><td>URGÊNCIA na membrana (48 h máx) × eletiva no 2º-3º anel (a tireoide explica)</td></tr>
+    <tr><td>Seio × corpo carótico</td><td>PRESSÃO (baro) × OXIGÊNIO (quimio)</td></tr>
+    <tr><td>Carótida interna × externa</td><td>SEM ramos cervicais × 3-2-1 + terminais (na peça: quem tem ramo é externa)</td></tr>
+    <tr><td>Veias tireóideas</td><td>superior e MÉDIA → jugular interna × INFERIORES → braquiocefálicas</td></tr>
+    <tr><td>Jugular externa × interna</td><td>SOBRE o ECM (retromandibular+auricular post) × na BAINHA (seio sigmoide)</td></tr>
+    <tr><td>Quem inerva a tireoide</td><td>tronco SIMPÁTICO (vasomotor) — não o laríngeo (que é da laringe)</td></tr>
+    <tr><td>Ducto torácico × linfático direito</td><td>quase o corpo todo, à ESQUERDA (Virchow) × só o quadrante superior direito</td></tr>
+    <tr><td>Trígono lateral × região posterior</td><td>atrás do ECM (occipital+supraclavicular) × o dorso propriamente (trapézio p/ trás)</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Pescoço</h2>
+    <p>Anatomia Topográfica · Aulas de 11/09 e 25/09 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>32</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>6</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Pescoço</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">Os limites que definem o território do pescoço, conforme a aula, são:</div>`,alts:[`superior: osso hioide e cartilagem tireoide; inferior: primeira costela e vértebra T1`,`superior: arco zigomático e processo mastoide; inferior: segunda costela e escápula`,`superior: borda superior da mandíbula; inferior: manúbrio e primeira vértebra torácica`,`superior: mandíbula, mastoide e occipital; inferior: esterno, clavícula, acrômio e C7`,`superior: processo estiloide e côndilo da mandíbula; inferior: fúrcula esternal e T4`],correta:3,just:[`Hioide e cartilagens são referências INTERNAS do pescoço — não os limites dele. [tipo: vizinhança plausível]`,`O zigomático já é face, e a escápula é dorso — marcos errados dos dois lados. [tipo: recombinação plausível]`,`A borda é a INFERIOR da mandíbula; e embaixo o marco vertebral é C7, não T1. [tipo: erro de marco plausível]`,`Correta. LIMITE SUPERIOR: borda INFERIOR da mandíbula → conduto auditivo → processo MASTOIDE → protuberância OCCIPITAL. LIMITE INFERIOR: ESTERNO → CLAVÍCULA → articulação ACROMIOCLAVICULAR → linha por C7.`,`Estiloide e fúrcula não delimitam o pescoço da aula. [tipo: recombinação plausível]`],ref:'Limites do pescoço'},
+{n:2,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre as três lâminas da fáscia cervical profunda e o que cada uma envolve:</div>`,alts:[`muscular (ECM e trapézio) · visceral (vísceras do pescoço) · pré-vertebral (músculos da coluna)`,`muscular (os escalenos) · visceral (a tireoide isolada) · pré-vertebral (ECM e trapézio)`,`superficial (platisma) · média (os vasos do pescoço) · profunda (as vísceras)`,`muscular (os infra-hióideos) · visceral (a bainha carótica) · pré-vertebral (o esôfago)`,`superficial (a pele) · visceral (as glândulas salivares) · profunda (o plexo braquial)`],correta:0,just:[`Correta. Lâmina SUPERFICIAL/MUSCULAR = o envelope do ECM e do trapézio · lâmina VISCERAL (média/pré-traqueal) = laringe, faringe, tireoide e traqueia · lâmina PRÉ-VERTEBRAL = os músculos ao redor da coluna. Elas deslizam entre si e estabilizam tudo.`,`Os escalenos são profundos/laterais — o envelope superficial é do ECM e trapézio. [tipo: permutação plausível]`,`O platisma é músculo (na fáscia superficial), e os vasos ganham bainha própria — não uma lâmina só deles. [tipo: recombinação plausível]`,`A bainha carótica não é uma lâmina — é a FUSÃO das três. [tipo: par confundível]`,`Pele e plexo não definem lâminas da fáscia profunda. [tipo: recombinação plausível]`],ref:'Fáscias cervicais'},
+{n:3,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a bainha carótica — formação e sintopia interna — a aula estabelece:</div>`,alts:[`é um espessamento isolado da lâmina visceral; carótida lateral, jugular medial, vago anterior`,`é derivada do músculo platisma; contém carótida, jugular externa e nervo frênico`,`fusão das três lâminas; carótida medial, jugular lateral, vago entre as duas e posterior`,`é derivada só da lâmina pré-vertebral; contém carótida, vago e tronco simpático`,`é a continuação do pericárdio; carótida anterior, jugular posterior, vago medial`],correta:2,just:[`A formação envolve as TRÊS lâminas, e as posições estão trocadas. [tipo: recombinação plausível]`,`O platisma é superficial; a jugular da bainha é a INTERNA, e o frênico corre fora, sobre o escaleno. [tipo: par confundível]`,`Correta. A BAINHA CARÓTICA nasce da CONVERGÊNCIA/FUSÃO DAS TRÊS LÂMINAS e vai da base do crânio à raiz do pescoço. Sintopia constante: CARÓTIDA MEDIAL · JUGULAR INTERNA LATERAL · VAGO entre as duas e POSTERIOR.`,`O tronco simpático fica ATRÁS da bainha, fora dela. [tipo: vizinhança plausível]`,`Pericárdio é outro andar — e a disposição descrita não existe. [tipo: recombinação plausível]`],ref:'Bainha carótica'},
+{n:4,aula:1,nivel:'facil',enun:`<div class="pergunta">Quem divide o pescoço nos trígonos anterior e lateral — e qual o papel desse divisor?</div>`,alts:[`o omo-hióideo, que aparece como conteúdo simultâneo dos dois trígonos do pescoço`,`o esternocleidomastóideo, que serve de limite e não é conteúdo de nenhum`,`o digástrico, cujo tendão intermédio marcaria a linha divisória entre eles`,`o trapézio, que separa o pescoço da região posterior do tórax e do dorso`,`o platisma, que cobre um dos trígonos e deixa o outro descoberto`],correta:1,just:[`O omo-hióideo SUBDIVIDE os trígonos (carótico/muscular; occipital/supraclavicular) — não é o divisor principal. [tipo: par confundível]`,`Correta. O ESTERNOCLEIDOMASTÓIDEO atravessa o "quadrilátero" do pescoço e o divide em TRÍGONO ANTERIOR (até a linha mediana e a mandíbula) e TRÍGONO LATERAL (até o trapézio e a clavícula) — e ele é LIMITE, "não entra como conteúdo".`,`O digástrico subdivide o trígono anterior lá em cima. [tipo: par confundível]`,`O trapézio é o limite POSTERIOR do trígono lateral. [tipo: verdade no contexto errado]`,`O platisma é só parte do teto, nas laterais. [tipo: vizinhança plausível]`],ref:'Trígonos — divisor'},
+{n:5,aula:1,nivel:'dificil',enun:`<span class="vinheta">Motociclista sofre ferimento penetrante na região delimitada pelo ventre posterior do digástrico, pelo ventre superior do omo-hióideo e pela borda anterior do esternocleidomastóideo. Chega hipotenso, com sangramento pulsátil.</span><div class="pergunta">Sobre a lesão, o raciocínio por regiões ensinado em aula indica:</div>`,alts:[`trígono muscular — a preocupação principal seria lesão de traqueia ou de esôfago cervical`,`trígono submandibular — a glândula salivar explicaria o sangramento volumoso`,`trígono lateral do pescoço — o nervo acessório seria a estrutura atingida com mais probabilidade`,`trígono submentual — os linfonodos da região justificariam o quadro descrito`,`trígono carótico — lesão vascular grave: carótida exsanguina; a jugular contrai e faz hematoma`],correta:4,just:[`No muscular a preocupação é víscera — mas os limites citados são os do CARÓTICO. [tipo: par confundível]`,`A glândula não gera sangramento pulsátil de choque. [tipo: nível de gravidade errado]`,`Os limites citados são do trígono carótico, não do lateral — e o acessório não pulsa. [tipo: par confundível]`,`O submentual é "quase nada": gordura e linfonodos. [tipo: par confundível]`,`Correta. Os limites descritos são do TRÍGONO CARÓTICO — ali mora a bainha com a BIFURCAÇÃO. Lição da aula: lesão ali é VASCULAR — CARÓTIDA = "esguicha, duas bombeadas" ou ISQUEMIA CEREBRAL com sequela; JUGULAR = contrai, faz hematoma e "dá tempo de chegar ao hospital".`],ref:'Trígono carótico — trauma'},
+{n:6,aula:1,nivel:'facil',enun:`<div class="pergunta">O trígono anterior é subdividido em quatro trígonos menores. Os divisores e os quatro nomes são:</div>`,alts:[`digástrico e omo-hióideo; submentual, submandibular, carótico e muscular`,`escalenos e digástrico; carótico, occipital, muscular e subclávio`,`omo-hióideo e trapézio; submentual, occipital, subclávio e visceral`,`digástrico e milo-hióideo; submandibular, sublingual, carótico e traqueal`,`esterno-hióideo e digástrico; muscular, visceral, carótico e parotídeo`],correta:0,just:[`Correta. O DIGÁSTRICO (dois ventres) e o OMO-HIÓIDEO (ventre superior) recortam o trígono anterior em: SUBMENTUAL, SUBMANDIBULAR, CARÓTICO e MUSCULAR — cada um com seu conteúdo característico.`,`Occipital e subclávio são as subdivisões do trígono LATERAL. [tipo: par confundível]`,`Mistura dos dois lados do pescoço — occipital/subclávio são laterais. [tipo: recombinação plausível]`,`"Sublingual" e "traqueal" não são trígonos da divisão clássica. [tipo: pseudo-nomenclatura plausível]`,`O parotídeo é região da face — não subdivisão do trígono anterior. [tipo: vizinhança plausível]`],ref:'Subdivisões do anterior'},
+{n:7,aula:1,nivel:'medio',enun:`<div class="pergunta">São conteúdos do trígono submandibular, além da glândula homônima:</div>`,alts:[`os vasos linguais, o nervo vago e os linfonodos jugulares mais altos`,`a artéria maxilar, o nervo lingual e o ducto parotídeo em trajeto comum`,`o tronco tireocervical, o nervo frênico e os linfonodos supraclaviculares`,`os vasos faciais, os linfonodos submandibulares e o hipoglosso profundo`,`a artéria angular, o nervo acessório e a veia retromandibular superficial`],correta:3,just:[`Os vasos linguais correm mais profundos e mediais; o vago está na bainha. [tipo: vizinhança plausível]`,`A maxilar fica atrás do colo da mandíbula, e o ducto parotídeo é da bochecha. [tipo: recombinação plausível]`,`Tronco tireocervical e frênico são da raiz do pescoço. [tipo: nível anatômico errado]`,`Correta. No SUBMANDIBULAR: a GLÂNDULA + os VASOS FACIAIS (a artéria facial cruza a glândula e passa sobre a mandíbula — palpável) + LINFONODOS submandibulares + o NERVO HIPOGLOSSO na profundidade, sob a glândula, indo à língua. Assoalho: milo-hióideo + hioglosso.`,`A angular é o FIM da facial no canto do olho; o acessório é do trígono lateral. [tipo: recombinação plausível]`],ref:'Submandibular'},
+{n:8,aula:1,nivel:'medio',enun:`<div class="pergunta">São conteúdos do trígono carótico:</div>`,alts:[`a bifurcação com seio e corpo, o hipoglosso cruzando as carótidas e a alça sobre a bainha`,`a artéria subclávia com o tronco tireocervical e o nervo frênico descendo sobre o escaleno anterior`,`a glândula submandibular, os vasos faciais e o ducto da glândula em trajeto para a boca`,`só os músculos infra-hióideos, cobrindo a laringe, a traqueia, o esôfago e a tireoide`,`a veia jugular externa, o ponto de Erb e os quatro nervos sensitivos do plexo cervical`],correta:0,just:[`Correta. No TRÍGONO CARÓTICO: a BAINHA com a BIFURCAÇÃO da carótida (SEIO barorreceptor + CORPO quimiorreceptor), jugular interna, vago — mais o HIPOGLOSSO cruzando NA FRENTE das carótidas e a ALÇA CERVICAL apoiada sobre a bainha.`,`Subclávia, tronco tireocervical e frênico são da raiz do pescoço / trígono lateral baixo. [tipo: nível anatômico errado]`,`Esse é o conteúdo do SUBMANDIBULAR. [tipo: par confundível]`,`Os infra-hióideos como cortina de vísceras definem o trígono MUSCULAR. [tipo: par confundível]`,`Jugular externa e ponto de Erb pertencem à borda do ECM / trígono lateral. [tipo: par confundível]`],ref:'Carótico — conteúdo'},
+{n:9,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre o trígono lateral do pescoço e sua subdivisão:</div>`,alts:[`é dividido pelo digástrico em occipital e submentual, com a subclávia no superior`,`é dividido pelo ventre superior do omo-hióideo em trígonos carótico e muscular`,`é dividido pelo ventre inferior do omo-hióideo em occipital e supraclavicular`,`não possui subdivisões, sendo ocupado por inteiro pelo plexo braquial`,`é dividido pelo escaleno anterior em compartimentos pré e retroescalênico`],correta:2,just:[`O digástrico trabalha no andar de cima do trígono ANTERIOR. [tipo: par confundível]`,`Carótico e muscular são as subdivisões BAIXAS do trígono anterior — e esse é o ventre superior. [tipo: par confundível]`,`Correta. O VENTRE INFERIOR DO OMO-HIÓIDEO atravessa o trígono lateral e o divide em TRÍGONO OCCIPITAL (grande, superior) e TRÍGONO SUPRACLAVICULAR/SUBCLÁVIO (pequeno, sobre a clavícula — onde passa a artéria subclávia).`,`Tem subdivisão — e o plexo braquial ocupa só a parte baixa. [tipo: generalização indevida]`,`Os escalenos organizam a RAIZ do pescoço (e o desfiladeiro), não a subdivisão do trígono. [tipo: par confundível]`],ref:'Trígono lateral'},
+{n:10,aula:1,nivel:'dificil',enun:`<span class="vinheta">Paciente operou "um lipoma" na região lateral do pescoço com anestesia local. Semanas depois: a ferida cicatrizou bem, não dói — mas o ombro está caído, o braço não sobe acima da horizontal e o trapézio está atrofiando.</span><div class="pergunta">A explicação anatômica é:</div>`,alts:[`lesão do plexo braquial na saída interescalênica, com paralisia do deltoide`,`lesão do nervo acessório, que cruza o trígono lateral muito superficialmente`,`lesão do nervo frênico, com dor referida ao ombro pela irritação da pleura`,`lesão dos supraclaviculares do plexo cervical, com paralisia sensitivo-motora`,`lesão do nervo axilar no espaço quadrangular durante a infiltração local`],correta:1,just:[`Lesão do plexo daria déficits do MEMBRO (mão/antebraço) — e o deltoide eleva só até a horizontal, que é justamente o que restou. [tipo: par confundível]`,`Correta. O clássico da aula: o NERVO ACESSÓRIO cruza o TRÍGONO LATERAL quase na superfície (só gordura e fáscia por cima, sobre o levantador da escápula). Exérese de "lipoma" com anestesia local o corta: OMBRO CAÍDO, trapézio atrofiado, abdução que PARA NA HORIZONTAL (deltoide e supraespinal só levam até ali).`,`O frênico desce na frente do escaleno rumo ao diafragma — não explica paralisia do trapézio. [tipo: par confundível]`,`Os supraclaviculares são SÓ SENSITIVOS — não atrofiam músculo. [tipo: mecanismo invertido]`,`O espaço quadrangular fica no ombro, longe do campo dessa cirurgia. [tipo: nível anatômico errado]`],ref:'Acessório no trígono lateral'},
+{n:11,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre a origem embriológica da tireoide e sua principal malformação:</div>`,alts:[`nasce na base da língua e desce pelo ducto tireoglosso; o ducto persistente gera o cisto`,`nasce no mediastino e sobe junto com o timo; a falha da subida gera a tireoide lingual`,`nasce nos arcos faríngeos laterais e migra para o centro; a falha gera os cistos branquiais`,`nasce no assoalho da boca junto às glândulas salivares; a falha gera rânula cervical`,`nasce da bolsa faríngea com as paratireoides; a falha gera cisto paratireóideo`],correta:0,just:[`Correta. Na 4ª semana a tireoide nasce na BASE DA LÍNGUA (o FORAME CEGO é a cicatriz) e desce pelo DUCTO TIREOGLOSSO, que deve se fechar. PERSISTIU = CISTO TIREOGLOSSO: epitélio tipo respiratório produzindo muco — a "bolinha" cervical anterior que pode inflamar. "Pode cair em prova."`,`O trajeto é o inverso: ela DESCE da língua — não sobe do tórax. [tipo: mecanismo invertido]`,`Os cistos branquiais são laterais e de outra origem — o tireoglosso é mediano. [tipo: diagnóstico diferencial]`,`Rânula é das salivares — outro órgão. [tipo: par confundível]`,`As paratireoides vêm de bolsas faríngeas — a tireoide tem via própria, mediana. [tipo: par confundível]`],ref:'Embriologia da tireoide'},
+{n:12,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a sintopia da glândula tireoide, a correspondência correta é:</div>`,alts:[`anterior: bainha carótica · medial: os infra-hióideos · posterior: traqueia e esôfago cervical`,`anterior: platisma direto na cápsula · medial: as paratireoides · posterior: a laringe`,`anterior: infra-hióideos · medial: vísceras e laríngeos · posterior: bainha, simpático e paratireoides`,`anterior: o esternocleidomastóideo · medial: o plexo cervical · posterior: os escalenos`,`anterior: traqueia · medial: bainha carótica · posterior: músculos infra-hióideos`],correta:2,just:[`Inverteu tudo: a bainha é POSTERIOR e as vísceras são MEDIAIS. [tipo: permutação plausível]`,`As paratireoides são POSTERIORES, coladas na cápsula — não mediais; e há músculos entre o platisma e a glândula. [tipo: permutação plausível]`,`Correta. ANTERIOR/LATERAL = músculos INFRA-HIÓIDEOS (o "escudo" que se afasta) · MEDIAL = o que ela abraça: TRAQUEIA, LARINGE, FARINGE, ESÔFAGO + os NERVOS LARÍNGEOS · POSTERIOR = BAINHA CARÓTICA + TRONCO SIMPÁTICO + PARATIREOIDES (que ficam! — paratormônio/cálcio).`,`ECM, plexo e escalenos nem tocam a glândula. [tipo: recombinação plausível]`,`A traqueia é MEDIAL (ela abraça), não anterior à glândula. [tipo: permutação plausível]`],ref:'Sintopia da tireoide'},
+{n:13,aula:1,nivel:'medio',enun:`<span class="vinheta">No pós-operatório de tireoidectomia total, a paciente acorda falando — mas rouca, com voz soprosa. Em outro caso, após a mesma cirurgia, o paciente só sussurra e evolui com estridor e falta de ar.</span><div class="pergunta">A explicação para os dois quadros é:</div>`,alts:[`lesão do laríngeo superior no 1º caso e do glossofaríngeo no 2º`,`edema de glote no 1º caso e lesão unilateral do recorrente no 2º caso`,`lesão do hipoglosso no 1º caso e do vago cervical alto no 2º`,`lesão unilateral do laríngeo recorrente no 1º caso e bilateral no 2º`,`hipocalcemia por retirada acidental das paratireoides nos dois casos`],correta:3,just:[`O laríngeo superior dá outra assinatura (voz que cansa/agudos); o IX é sensitivo da faringe. [tipo: par confundível]`,`Edema de glote não é a lição da aula aqui — e a lesão UNILATERAL dá rouquidão, não estridor. [tipo: recombinação plausível]`,`Hipoglosso muda a LÍNGUA; o quadro é de prega vocal. [tipo: par confundível]`,`Correta. O RECORRENTE passa colado na face medial/posterior da tireoide. Lesão UNILATERAL = uma prega paralisada → ROUQUIDÃO/voz soprosa. BILATERAL = sussurro + as pregas podem paralisar fechadas → ESTRIDOR e FALTA DE AR — muito mais grave.`,`Hipocalcemia dá parestesias/tetania — não rouquidão nem estridor imediato. [tipo: diagnóstico diferencial]`],ref:'Recorrente na tireoidectomia'},
+{n:14,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre a vascularização da tireoide, a versão da aula é:</div>`,alts:[`artérias superior (da subclávia) e inferior (da carótida externa); as três veias drenam para a jugular interna`,`superior ← carótida externa, inferior ← tronco tireocervical; veias inferiores → braquiocefálicas`,`uma artéria única, a tireóidea ima, vinda do tronco braquiocefálico; veias para a jugular externa`,`artérias superior e inferior, ambas ramos diretos da carótida comum; veias para a subclávia`,`artérias superior (da carótida interna) e inferior (da vertebral); veias para o plexo faríngeo`],correta:1,just:[`Inverteu as origens das duas artérias. [tipo: mecanismo invertido]`,`Correta. TIREÓIDEA SUPERIOR ← CARÓTIDA EXTERNA (entra por cima) · TIREÓIDEA INFERIOR ← TRONCO TIREOCERVICAL da subclávia (por baixo) · rara tireóidea IMA do braquiocefálico. VEIAS: superior e MÉDIA → JUGULAR INTERNA; as INFERIORES descem DIRETO para as BRAQUIOCEFÁLICAS.`,`A ima é RARA e acessória — não a artéria única. [tipo: generalização indevida]`,`A carótida COMUM não dá ramos cervicais — "rota sem ramos" até a bifurcação. [tipo: misconception clássica]`,`A interna não dá ramos no pescoço; a vertebral vai para a coluna e o cérebro. [tipo: recombinação plausível]`],ref:'Vasos da tireoide'},
+{n:15,aula:1,nivel:'facil',enun:`<span class="vinheta">Paciente nota um "caroço" na frente do pescoço. Ao exame: nódulo duro na região infra-hióidea, próximo à linha média.</span><div class="pergunta">A manobra da aula para dizer se o nódulo é da tireoide é:</div>`,alts:[`pedir para engolir — nódulo da tireoide sobe e desce com a deglutição`,`pedir para o paciente falar — nódulo da tireoide vibra com a fonação`,`transiluminar o nódulo — o conteúdo coloide brilharia à luz do foco`,`auscultar o nódulo — sopro sistólico confirma origem tireoidiana`,`pedir para protrair a língua — nódulo da tireoide sobe com a protrusão`],correta:0,just:[`Correta. A tireoide é ADERIDA à laringe/traqueia: 🎯 nódulo que SOBE E DESCE quando o paciente ENGOLE é da TIREOIDE. Foi assim no caso da aula — nódulo duro que subia → ultrassom → punção → tireoidectomia.`,`Vibração com fonação não localiza a glândula. [tipo: pseudo-manobra plausível]`,`Transiluminação é de hidrocele — outro capítulo. [tipo: verdade no contexto errado]`,`Sopro sugere vascularização aumentada (Graves), não define a origem do nódulo. [tipo: verdade no contexto errado]`,`Subir com a PROTRUSÃO DA LÍNGUA é a manobra do CISTO TIREOGLOSSO (preso ao trajeto do ducto). [tipo: par confundível]`],ref:'Nódulo que engole'},
+{n:16,aula:1,nivel:'medio',enun:`<span class="vinheta">Num restaurante, um adulto engasga, evolui para inconsciência e as manobras de desobstrução falham. Não há como intubar.</span><div class="pergunta">Sobre o acesso cirúrgico à via aérea, a doutrina da aula é:</div>`,alts:[`traqueostomia imediata entre o 2º e o 3º anéis, o acesso preferencial e seguro fora do hospital`,`punção da membrana cricotireóidea reservada aos adultos; em criança, abrir a traqueia`,`cricotireoidostomia de urgência condicionada a material estéril e iluminação disponíveis`,`traqueostomia de urgência, pois a membrana cricotireóidea ficaria profunda demais para palpar`,`cricotireoidostomia na primeira depressão abaixo do pomo; criança pequena = punção; converter em até 48 h`],correta:4,just:[`Traqueostomia na urgência esbarra na TIREOIDE ("extremamente vascularizada") na frente da traqueia — sangra e piora tudo. [tipo: misconception clássica]`,`É o inverso: a punção é a via DA CRIANÇA (&lt;10 anos, para não destruir a laringe). [tipo: mecanismo invertido]`,`Urgência não espera esterilidade: "qualquer coisa tubular — canudo — e ventila". [tipo: barreira falsa plausível]`,`A membrana é SUPERFICIAL — pomo de Adão, desce o dedo, primeira depressão. [tipo: mecanismo invertido]`,`Correta. URGÊNCIA = CRICOTIREOIDOSTOMIA na MEMBRANA CRICOTIREÓIDEA (a 1ª depressão 2–3 cm abaixo do pomo). CRIANÇA &lt;10 anos = PUNÇÃO com agulha. A crico é provisória: perto das pregas vocais, estenosa — em ATÉ 48 h converte-se em TRAQUEOSTOMIA eletiva (2º-3º anéis). "Não é para errar mais isso nas provas."`],ref:'Crico × traqueo'},
+{n:17,aula:2,nivel:'facil',enun:`<div class="pergunta">Passam pelo forame jugular, na base do crânio:</div>`,alts:[`a veia jugular interna e os nervos IX, X e XII`,`a veia jugular interna e os nervos IX, X e XI`,`a carótida interna e os nervos VII, IX e X`,`a veia jugular externa e os nervos X, XI e XII`,`a veia jugular interna e só o nervo vago`],correta:1,just:[`O XII (hipoglosso) tem canal PRÓPRIO, anterior ao forame magno. [tipo: misconception clássica]`,`Correta. Pelo FORAME JUGULAR descem a VEIA JUGULAR INTERNA (continuação do seio sigmoide) e os nervos GLOSSOFARÍNGEO (IX), VAGO (X) e ACESSÓRIO (XI) — por isso uma lesão ali compromete os três juntos.`,`A carótida interna entra pelo canal carótico; o VII vai pelo meato acústico interno. [tipo: recombinação plausível]`,`A externa se forma FORA do crânio (retromandibular + auricular posterior). [tipo: par confundível]`,`São TRÊS nervos acompanhando a veia, não um. [tipo: generalização indevida]`],ref:'Forame jugular'},
+{n:18,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre o nervo glossofaríngeo (IX), a aula destaca:</div>`,alts:[`quase todo sensitivo (faringe, tonsila, raiz da língua); motor: só o estilofaríngeo`,`é um nervo quase todo motor, inervando os constritores da faringe e todo o palato mole`,`é um nervo puramente sensitivo, sem componente motor ou parassimpático algum`,`inerva a musculatura da laringe, sendo o grande responsável pela fonação`,`conduz a gustação dos dois terços anteriores da língua, até o V lingual`],correta:0,just:[`Correta. O IX desce pelo forame jugular rumo à faringe e à raiz da língua: quase todo SENSITIVO — mucosa do palato, TONSILA, raiz da língua e faringe (é o nervo do REFLEXO NAUSEOSO e da dor da amigdalite). Motor: SÓ o músculo ESTILOFARÍNGEO.`,`Os constritores e o palato são do VAGO — o IX só empresta o estilofaríngeo. [tipo: par confundível]`,`Ele é MISTO: tem o estilofaríngeo e fibras parassimpáticas. [tipo: generalização indevida]`,`A laringe é território dos LARÍNGEOS do vago. [tipo: par confundível]`,`Os 2/3 anteriores são da corda do tímpano (VII); o IX cuida da RAIZ. [tipo: par confundível]`],ref:'Glossofaríngeo'},
+{n:19,aula:2,nivel:'medio',enun:`<span class="vinheta">Ao pedir "faça AAAH", o médico nota que o véu palatino direito não se eleva e a úvula desvia para a esquerda.</span><div class="pergunta">A interpretação correta do sinal, segundo a aula:</div>`,alts:[`sinal da cortina — lesão do glossofaríngeo esquerdo, que move o palato`,`sinal da cortina — lesão do hipoglosso direito, com desvio compensatório do véu`,`sinal da cortina — lesão do vago direito: a úvula desvia para o lado BOM`,`reflexo nauseoso abolido — lesão do vago esquerdo, do lado do desvio`,`sinal da cortina — lesão do vago esquerdo, pois a úvula aponta a lesão`],correta:2,just:[`O movimento do palato é do VAGO — "glossofaríngeo é sensibilidade" (e só o estilofaríngeo de motor). [tipo: par confundível]`,`O hipoglosso é da LÍNGUA — outro sinal, outra direção. [tipo: par confundível]`,`Correta. SINAL DA CORTINA: o lado são traciona o véu e a ÚVULA DESVIA PARA O LADO BOM — aqui, esquerda boa, lesão do VAGO DIREITO. (Compare: a LÍNGUA, no XII, desvia para o lado LESADO.)`,`Reflexo nauseoso é via do IX — e o achado descrito é motor. [tipo: par confundível]`,`Direção invertida: a úvula foge da lesão — aponta o lado SADIO. [tipo: mecanismo invertido]`],ref:'Sinal da cortina'},
+{n:20,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre o trajeto e a função do nervo acessório (XI):</div>`,alts:[`nervo sensitivo e motor, descendo dentro da bainha carótica até a região do ombro`,`motor restrito ao trapézio, entrando direto no músculo sem cruzar o pescoço`,`motor do esternocleidomastóideo e do platisma, correndo profundo aos escalenos`,`exclusivamente motor: cruza a jugular, atravessa o ECM e corre superficial até o trapézio`,`nervo misto, inervando o trapézio e dando também a sensibilidade do ombro`],correta:3,just:[`Quem mora na bainha é o VAGO — o acessório cruza por fora. [tipo: par confundível]`,`Ele inerva TAMBÉM o ECM — e atravessa o trígono lateral para chegar ao trapézio. [tipo: generalização indevida]`,`O platisma é do FACIAL (VII); e o trajeto do XI é superficial, não profundo aos escalenos. [tipo: recombinação plausível]`,`Correta. O ACESSÓRIO é EXCLUSIVAMENTE MOTOR (ECM + TODO o trapézio — fibras descendentes, transversas e ascendentes). Trajeto: passa na frente/por cima da JUGULAR INTERNA → atravessa o ECM dando ramos → cruza o TRÍGONO LATERAL quase na pele → trapézio. Teste: elevar os ombros e virar o pescoço CONTRA RESISTÊNCIA.`,`A sensibilidade do ombro é dos SUPRACLAVICULARES (plexo cervical). [tipo: recombinação plausível]`],ref:'Acessório'},
+{n:21,aula:2,nivel:'facil',enun:`<div class="pergunta">O nervo hipoglosso (XII) inerva:</div>`,alts:[`só os músculos extrínsecos da língua, ficando os intrínsecos com o vago`,`todos os músculos da língua, exceto o palatoglosso (que é do vago)`,`todos os músculos da língua e também o milo-hióideo do assoalho`,`a metade anterior da língua, ficando a raiz com o glossofaríngeo`,`os músculos da língua e a sensibilidade gustativa de toda ela`],correta:1,just:[`Ele pega extrínsecos E intrínsecos — a exceção é uma só. [tipo: divisão falsa plausível]`,`Correta. O HIPOGLOSSO (canal próprio, anterior ao forame magno) inerva TODOS os músculos da língua, EXCETO o PALATOGLOSSO — que pertence ao palato e fica com o VAGO.`,`O milo-hióideo é do V3 (mandibular) — assoalho tem outro dono. [tipo: vizinhança plausível]`,`A divisão do IX na língua é SENSITIVA (raiz) — a motricidade é toda do XII. [tipo: par confundível]`,`O XII é MOTOR — gustação é VII (corda do tímpano) e IX (raiz). [tipo: recombinação plausível]`],ref:'Hipoglosso — território'},
+{n:22,aula:2,nivel:'dificil',enun:`<span class="vinheta">Paciente com massa na base do crânio à esquerda chega com: disfagia (em uso de sonda), voz rouca, ombro esquerdo caído — e, à protrusão, a língua desvia para a esquerda.</span><div class="pergunta">Sobre a síndrome e o valor localizatório do desvio da língua:</div>`,alts:[`lesão isolada do vago esquerdo; a língua desvia por fraqueza do palato`,`lesão de IX e X à direita; a língua desvia para o lado são por compensação`,`lesão de IX, X e XI no forame jugular direito, poupando o hipoglosso`,`lesão bilateral dos recorrentes; o desvio da língua é achado inespecífico`,`IX, X, XI e XII comprometidos à esquerda: a língua aponta o lado LESADO`],correta:4,just:[`Vago sozinho não explica ombro caído nem língua desviada. [tipo: generalização indevida]`,`Os sinais são todos à ESQUERDA — e a língua aponta a LESÃO, não o lado são. [tipo: mecanismo invertido]`,`O lado certo é o esquerdo, e a língua desviada DENUNCIA o hipoglosso junto. [tipo: recombinação plausível]`,`Recorrentes bilaterais dariam estridor/sussurro — e o desvio da língua é sinal ESPECÍFICO do XII. [tipo: recombinação plausível]`,`Correta. Massa na base do crânio pega o FORAME JUGULAR (IX = disfagia/sensibilidade, X = rouquidão, XI = ombro caído) e o CANAL vizinho (XII): na protrusão, o lado são "vence" e a PONTA DA LÍNGUA APONTA PARA O LADO LESADO — esquerda. Os quatro sinais fecham a topografia.`],ref:'Síndrome do forame jugular'},
+{n:23,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre os ramos sensitivos do plexo cervical e o ponto de Erb:</div>`,alts:[`auricular magno, occipital menor, cervical transverso e supraclaviculares emergem juntos num só ponto do ECM`,`os quatro emergem espalhados ao longo do trapézio, cada um por um ponto próprio de saída`,`auricular magno, o nervo frênico, a alça cervical e os supraclaviculares emergiriam do mesmo ponto do pescoço`,`o ponto de Erb ficaria na borda anterior do ECM, junto da bainha carótica ali exposta`,`os sensitivos do plexo cervical cobririam também toda a face, dividindo-a com o trigêmeo`],correta:0,just:[`Correta. Os quatro SENSITIVOS do plexo cervical — AURICULAR MAGNO (orelha/ângulo da mandíbula), OCCIPITAL MENOR (atrás da orelha), CERVICAL TRANSVERSO (frente do pescoço) e SUPRACLAVICULARES (pescoço baixo/ombro) — emergem TODOS do mesmo ponto na borda POSTERIOR do ECM: o PONTO DE ERB ("ponto nervoso do pescoço").`,`É o contrário — a marca registrada é saírem de UM ponto só. [tipo: mecanismo invertido]`,`Frênico e alça são ramos PROFUNDOS/motores — não emergem no ponto de Erb. [tipo: recombinação plausível]`,`O ponto é na borda POSTERIOR, no trígono lateral. [tipo: mecanismo invertido]`,`A FACE é do TRIGÊMEO — o plexo cervical para na mandíbula/moldura da orelha. [tipo: verdade no contexto errado]`],ref:'Ponto de Erb'},
+{n:24,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre a alça cervical:</div>`,alts:[`é uma alça sensitiva, formada por C3-C4, para a pele infra-hióidea do pescoço`,`é formada por C4-C5 e constituiria a origem real do nervo frênico no pescoço`,`raiz superior de C1 e inferior de C2-C3; deita sobre a bainha e inerva os infra-hióideos`,`nasce do hipoglosso propriamente dito e inerva os músculos supra-hióideos`,`ficaria situada atrás da bainha carótica, junto aos gânglios do tronco simpático cervical alto`],correta:2,just:[`Ela é MOTORA — a pele é dos sensitivos do ponto de Erb. [tipo: mecanismo invertido]`,`O frênico é C3-C5 com C4 principal — outra formação. [tipo: par confundível]`,`Correta. ALÇA CERVICAL: raiz SUPERIOR de C1 (desce "pegando carona" junto ao hipoglosso) + raiz INFERIOR de C2-C3 — a alcinha apoia-se SOBRE A BAINHA CARÓTICA no trígono carótico e inerva os INFRA-HIÓIDEOS (esterno-hióideo, esternotireóideo, omo-hióideo). Cortá-la traz pouco prejuízo, "mas se puder preservar, melhor".`,`As fibras são de C1 usando o hipoglosso de estrada — não nascem dele; e o alvo são os INFRA-hióideos. [tipo: misconception clássica]`,`ATRÁS da bainha mora o simpático — a alça fica NA FRENTE, sobre ela. [tipo: mecanismo invertido]`],ref:'Alça cervical'},
+{n:25,aula:2,nivel:'medio',enun:`<div class="pergunta">Na dissecção, para identificar o nervo frênico no pescoço, a receita da aula é:</div>`,alts:[`procurá-lo no interior da bainha carótica, medial à jugular interna e junto à artéria carótida`,`achar o plexo braquial: quem está à frente é o escaleno anterior — o fio sobre ele é o frênico`,`segui-lo a partir do ponto de Erb, de onde emergiria com os ramos sensitivos`,`procurá-lo logo atrás do músculo escaleno médio, junto do nervo torácico longo`,`identificá-lo cruzando o trígono submandibular por baixo da glândula salivar`],correta:1,just:[`Dentro da bainha está o VAGO — o frênico é LATERAL à bainha. [tipo: par confundível]`,`Correta. Receita da aula: ache o PLEXO BRAQUIAL (emerge ENTRE os escalenos) → quem está NA FRENTE dele é o ESCALENO ANTERIOR → o fio fino descendo SOBRE o escaleno anterior é o FRÊNICO (C3-C5, C4 principal), lateral à bainha, rumo ao tórax com os vasos pericardicofrênicos.`,`No ponto de Erb saem os SENSITIVOS — o frênico é ramo profundo. [tipo: par confundível]`,`Atrás do escaleno médio desce o TORÁCICO LONGO — vizinho, mas outro nervo. [tipo: par confundível]`,`O submandibular é rota do HIPOGLOSSO. [tipo: par confundível]`],ref:'Frênico — identificação'},
+{n:26,aula:2,nivel:'facil',enun:`<span class="vinheta">Paciente com soluços há dez dias, sem melhora com medicação.</span><div class="pergunta">Sobre o significado do soluço persistente, a aula ensina:</div>`,alts:[`costuma ser um evento totalmente benigno e autolimitado, que dispensa investigação`,`seria patognomônico de doença primária do sistema nervoso central`,`indicaria uma lesão bilateral do frênico com paralisia diafragmática associada`,`algo pode estar irritando o frênico ou o diafragma — é preciso investigar com imagem`,`decorreria de compressão crônica do vago dentro da bainha carótica`],correta:3,just:[`"Pode ser simples" — mas o PERSISTENTE exige investigação. [tipo: generalização indevida]`,`Pode ser central, mas não é patognomônico — a lista é longa. [tipo: generalização indevida]`,`Paralisia deixa o diafragma PARADO (cúpula elevada) — soluço é o oposto: contração repetida. [tipo: mecanismo invertido]`,`Correta. SOLUÇO = contração involuntária do diafragma por estímulo do FRÊNICO. Persistindo: procurar o que irrita o nervo/diafragma — abscesso subfrênico, pneumonia de base, derrame, tumor — com RX/TC de tórax e abdome. "Pode ser banal ou pode ser o primeiro sinal de algo grave."`,`O vago tem outras assinaturas (bradicardia, voz) — o soluço é via frênica. [tipo: par confundível]`],ref:'Soluço'},
+{n:27,aula:2,nivel:'dificil',enun:`<span class="vinheta">Homem, tabagista, com emagrecimento, tosse e rouquidão. Ao exame: pálpebra direita caída, pupila direita miótica, hemiface direita quente e seca. Nada palpável no pescoço.</span><div class="pergunta">A síntese anatômica que explica TODO o quadro é:</div>`,alts:[`AVC de tronco cerebral comprometendo os núcleos do vago e do oculomotor`,`lesão do oculomotor por aneurisma: ptose, porém com midríase, e com a voz normal`,`compressão do simpático cervical por bócio mergulhante retroesternal`,`paralisia facial periférica com síndrome do olho seco e disfonia funcional`,`tumor do ápice pulmonar invadindo o gânglio estrelado e o laríngeo recorrente`],correta:4,just:[`AVC de tronco daria déficits neurológicos maiores — e não explica a sequência tabagismo + emagrecimento. [tipo: diagnóstico diferencial]`,`No III par a ptose vem com MIDRÍASE (perde o parassimpático) — aqui a pupila é MIÓTICA: é o simpático que falhou. [tipo: par confundível]`,`Bócio comprimiria mais estruturas cervicais palpáveis — e "não há nada no pescoço". [tipo: vizinhança plausível]`,`Paralisia facial derruba a MÍMICA, não a pálpebra por ptose simpática — e não faz miose. [tipo: par confundível]`,`Correta. O caso da aula: TUMOR DO ÁPICE PULMONAR "gruda" no GÂNGLIO ESTRELADO → SÍNDROME DE HORNER (ptose + miose + enoftalmia aparente + anidrose + face quente) e engloba o RECORRENTE → rouquidão. "Não tem nada no pescoço — desce um pouquinho": RX/TC de tórax.`],ref:'Horner + Pancoast'},
+{n:28,aula:2,nivel:'facil',enun:`<div class="pergunta">Sobre a origem e a bifurcação das artérias carótidas comuns:</div>`,alts:[`direita do braquiocefálico, esquerda do arco da aorta; bifurcação em C4 (cartilagem tireoide)`,`as duas nascem direto do arco da aorta e bifurcam-se ao nível da cricóidea`,`a esquerda nasce do tronco braquiocefálico e a direita do arco da aorta`,`as duas nascem das artérias subclávias e bifurcam-se na altura do osso hioide`,`a direita nasce da subclávia direita e a esquerda do tronco braquiocefálico`],correta:0,just:[`Correta. CARÓTIDA COMUM DIREITA ← TRONCO BRAQUIOCEFÁLICO (atrás da articulação esternoclavicular) · ESQUERDA ← direto do ARCO DA AORTA (mediastino). Sobem ao lado da traqueia/laringe e BIFURCAM-SE em C4 — margem SUPERIOR da cartilagem tireoide (a linha do pomo de Adão) — onde ficam o SEIO (baro) e o CORPO (quimio) caróticos.`,`Só a ESQUERDA vem direto do arco. [tipo: generalização indevida]`,`Trocou os lados. [tipo: mecanismo invertido]`,`As subclávias são vizinhas, não mães das carótidas. [tipo: recombinação plausível]`,`Recombinação dos vasos da base — nenhuma das duas nasce assim. [tipo: recombinação plausível]`],ref:'Carótidas — origens'},
+{n:29,aula:2,nivel:'medio',enun:`<div class="pergunta">Na prática anatômica, diante da bifurcação carotídea, como reconhecer a carótida interna — e por quê?</div>`,alts:[`é a mais anterior das duas artérias, cruzando superficialmente o ECM`,`é a que emite a artéria tireóidea superior logo após a bifurcação`,`é a que não emite ramos no pescoço — segue "expressa" para o crânio`,`é a mais medial das duas, colada na laringe e na traqueia cervical`,`é a que pulsa com mais força à palpação dentro do trígono carótico`],correta:2,just:[`Posição varia — o critério da aula é outro. [tipo: pseudo-critério plausível]`,`A tireóidea superior é o primeiro ramo da EXTERNA — achou ramo, achou a externa. [tipo: mecanismo invertido]`,`Correta. 🎯 A INTERNA NÃO DÁ RAMOS NO PESCOÇO — "rota expressa" até o crânio (oftálmica, cerebrais, polígono de Willis). Na peça: A QUE TEM RAMOS É A EXTERNA. Bônus: a testa é da INTERNA (supraorbital/supratroclear da oftálmica).`,`Colada nas vísceras está a carótida COMUM em seu trajeto — não é critério da bifurcação. [tipo: pseudo-critério plausível]`,`Pulso não diferencia as duas na bifurcação. [tipo: pseudo-critério plausível]`],ref:'Interna × externa'},
+{n:30,aula:2,nivel:'dificil',enun:`<div class="pergunta">Sobre os ramos da carótida externa, a organização da aula ("3-2-1 + terminais") é:</div>`,alts:[`anteriores: tireóidea superior, faríngea ascendente e lingual; terminais: a facial e a occipital`,`anteriores: lingual, facial e maxilar; posteriores: temporal e auricular posterior; terminal: occipital`,`anteriores: tireóidea inferior, lingual e facial; medial: vertebral; terminais: maxilar e temporal`,`ant: tireóidea superior, lingual, facial · post: occipital, auricular · medial: faríngea · terminais: maxilar e temporal`,`posteriores: occipital, auricular e mastóidea; anteriores: tireóideas superior e inferior; terminal: angular`],correta:3,just:[`A faríngea ascendente é o ramo MEDIAL; e occipital não é terminal. [tipo: permutação plausível]`,`A maxilar é TERMINAL, não anterior; occipital é posterior. [tipo: permutação plausível]`,`A tireóidea INFERIOR é da subclávia; a vertebral também. [tipo: recombinação plausível]`,`Correta. EXTERNA: 3 ANTERIORES (TIREÓIDEA SUPERIOR → laringe+tireoide · LINGUAL → assoalho+língua · FACIAL → tortuosa, cruza o submandibular e a mandíbula, termina no canto do olho como ANGULAR) · 2 POSTERIORES (OCCIPITAL + AURICULAR POSTERIOR) · 1 MEDIAL (FARÍNGEA ASCENDENTE) · TERMINAIS: MAXILAR (a mais calibrosa — face profunda, dentes, fraturas) + TEMPORAL SUPERFICIAL (palpável no zigomático).`,`"Mastóidea" não entra na lista, e a angular é o FIM da facial — não ramo terminal da externa. [tipo: pseudo-nomenclatura plausível]`],ref:'Externa — 3-2-1'},
+{n:31,aula:2,nivel:'facil',enun:`<div class="pergunta">A veia jugular externa é formada pela união de:</div>`,alts:[`a veia facial + a veia lingual, terminando juntas na jugular interna`,`retromandibular + auricular posterior, descendo sobre o ECM até a subclávia`,`veia auricular posterior + veia supraorbital, terminando na veia braquiocefálica`,`veia temporal superficial + veia occipital, terminando direto na subclávia`,`veias tireóideas inferiores + veia cervical transversa, unindo-se na fúrcula`],correta:1,just:[`Facial e lingual são tributárias da INTERNA. [tipo: par confundível]`,`Correta. JUGULAR EXTERNA = RETROMANDIBULAR (a temporal superficial que mudou de nome atrás da mandíbula) + AURICULAR POSTERIOR → desce SOBRE o ECM, cruza o trígono lateral, perfura a fáscia e desemboca na SUBCLÁVIA. Fica visível na força — e muito dilatada na compressão da veia cava.`,`A supraorbital é da testa (sistema oftálmico/angular). [tipo: recombinação plausível]`,`A temporal superficial vira RETROMANDIBULAR antes — é ela que entra na conta. [tipo: quase-verdade nominal]`,`As tireóideas inferiores vão às braquiocefálicas — outra história. [tipo: recombinação plausível]`],ref:'Jugular externa'},
+{n:32,aula:2,nivel:'medio',enun:`<span class="vinheta">Homem, 62 anos, com linfonodo endurecido na fossa supraclavicular ESQUERDA. A endoscopia encontra adenocarcinoma gástrico.</span><div class="pergunta">A explicação anatômica para a metástase aparecer exatamente ali é:</div>`,alts:[`a drenagem do estômago sobe pela cadeia jugular externa até o colar pericervical`,`o ducto linfático direito receberia a linfa abdominal e cruzaria para a esquerda`,`os linfonodos supraclaviculares esquerdos drenam diretamente a parede gástrica`,`é coincidência topográfica — as duas fossas supraclaviculares têm o mesmo risco`,`o ducto torácico, que drena quase todo o corpo, desemboca no ângulo venoso esquerdo — Virchow mora ali`],correta:4,just:[`A jugular externa é veia — e o colar pericervical drena a cabeça, não o abdome. [tipo: recombinação plausível]`,`O ducto DIREITO só coleta o quadrante superior direito — não cruza. [tipo: mecanismo invertido]`,`Não há via direta estômago→pescoço; a linfa sobe pelo DUCTO TORÁCICO. [tipo: pseudo-atalho plausível]`,`A assimetria é o coração da questão: o lado ESQUERDO é o da desembocadura do ducto torácico. [tipo: nega o mecanismo]`,`Correta. A linfa do abdome (cisterna do quilo) sobe pelo DUCTO TORÁCICO e desemboca no ÂNGULO VENOSO ESQUERDO (jugular interna + subclávia esquerdas). O GÂNGLIO DE VIRCHOW fica nessa chegada: estômago (descrição clássica), pâncreas, rim, próstata, mama, pulmão — e até melanoma da planta do pé — podem dar ali o primeiro sinal. Diagnóstico retrógrado pela metástase.`],ref:'Virchow'}
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`No pronto-socorro, dois feridos da mesma ocorrência: um com ferimento penetrante entre o digástrico, o omo-hióideo e o esternocleidomastóideo, sangrando; outro com ferimento baixo, na linha média infra-hióidea, com enfisema subcutâneo e voz alterada.`,perg:[`a) Nomeie o trígono atingido em cada paciente e o raciocínio "por regiões" da aula.`,`b) No primeiro paciente, diferencie as consequências da lesão de carótida e da lesão de jugular.`,`c) No segundo, quais estruturas estão sob suspeita e por que a abordagem cirúrgica ali abre na linha mediana?`],resp:[["a) As regiões","1º paciente: TRÍGONO CARÓTICO (digástrico posterior + omo-hióideo superior + borda anterior do ECM) — território da bainha carótica: 'lesão ali é VASCULAR'. 2º: TRÍGONO MUSCULAR (omo-hióideo + linha mediana + ECM) — território de VÍSCERA: laringe, traqueia, esôfago, tireoide. É a lógica das regiões: cada trígono tem seu conteúdo e sua suspeita."],["b) Carótida × jugular","CARÓTIDA: sangramento arterial maciço — 'esguicha, duas bombeadas e perde quase toda a volemia' — ou, se ocluir/lesar comum/interna, ISQUEMIA CEREBRAL com sequela imediata (hemiplegia). JUGULAR: a veia CONTRAI, forma HEMATOMA e contém parcialmente — 'dá tempo de chegar ao hospital'."],["c) O trígono muscular","Suspeitas: TRAQUEIA e LARINGE (enfisema subcutâneo, voz), ESÔFAGO, TIREOIDE. Os INFRA-HIÓIDEOS são uma 'CORTINA' na frente das vísceras: a via de acesso abre na LINHA MEDIANA (entre os ventres musculares, onde só há conjuntivo — e onde não se machucam as JUGULARES ANTERIORES, que descem uma de cada lado) e AFASTA os músculos, sem cortá-los."]],ref:'Trígonos no trauma'},
+{n:2,aula:1,caso:`Tireoidectomia total por carcinoma. O cirurgião comenta com o residente: "a principal estrutura que eu tenho que ver hoje não é a tireoide".`,perg:[`a) Descreva a sintopia da tireoide pelas três faces — e diga o que são e onde ficam as paratireoides.`,`b) Explique o trajeto do laríngeo recorrente e as consequências da lesão uni e bilateral.`,`c) De onde vêm e para onde vão os vasos da tireoide — e qual manobra do exame físico diz que um nódulo cervical é tireoidiano?`],resp:[["a) Sintopia","ANTERIOR/LATERAL: músculos INFRA-HIÓIDEOS (afastados na cirurgia). MEDIAL (o que ela abraça): TRAQUEIA, LARINGE, FARINGE, ESÔFAGO + NERVOS LARÍNGEOS. POSTERIOR: BAINHA CARÓTICA, TRONCO SIMPÁTICO CERVICAL e as PARATIREOIDES — 4 glandulinhas coladas na cápsula posterior, produtoras de PARATORMÔNIO (cálcio): na tireoidectomia, FICAM."],["b) O recorrente","Ramo do vago que RECORRE: o DIREITO dá a volta sob a SUBCLÁVIA, o ESQUERDO sob o ARCO DA AORTA; ambos sobem pelo SULCO TRAQUEOESOFÁGICO, colados à face medial/posterior da tireoide, e inervam TODA a musculatura da laringe. Lesão UNILATERAL: prega paralisada → ROUQUIDÃO/voz soprosa. BILATERAL: sussurro + pregas podem fechar → ESTRIDOR/insuficiência respiratória — muito mais grave."],["c) Vasos e a manobra","ARTÉRIAS: TIREÓIDEA SUPERIOR ← carótida EXTERNA · TIREÓIDEA INFERIOR ← TRONCO TIREOCERVICAL (subclávia) · rara IMA (braquiocefálico). VEIAS: superior e MÉDIA → JUGULAR INTERNA · INFERIORES → BRAQUIOCEFÁLICAS. Linfa: periviscerais → cadeia jugular (explorar no câncer). Manobra: pedir para ENGOLIR — nódulo que SOBE E DESCE com a deglutição é da tireoide (aderida à laringe/traqueia)."]],ref:'Tireoide cirúrgica'},
+{n:3,aula:1,caso:`Emergência fora do hospital: adulto engasgado, inconsciente, manobras falharam, intubação impossível. Você tem um canivete e um canudo.`,perg:[`a) Qual o acesso indicado, onde exatamente ele é feito e como se acha a referência com o dedo?`,`b) Por que NÃO fazer traqueostomia nessa cena — e o que muda se a vítima for uma criança de 6 anos?`,`c) O paciente chegou ao hospital com o acesso funcionando. O que precisa acontecer em até 48 horas, e por quê?`],resp:[["a) Crico","CRICOTIREOIDOSTOMIA: abertura da MEMBRANA CRICOTIREÓIDEA, entre as cartilagens TIREOIDE e CRICÓIDEA. Referência: palpa o POMO DE ADÃO → desce o dedo → a PRIMEIRA DEPRESSÃO (2–3 cm abaixo) é a membrana. Abre, passa qualquer tubo ('um canudo') e ventila — 'chama o SAMU e vai soprando'."],["b) Por que não traqueo — e a criança","A TIREOIDE está NA FRENTE da traqueia e é extremamente vascularizada: tentar traqueostomia na urgência = sangramento + tempo perdido num paciente em apneia. CRIANÇA &lt;10 anos: NÃO se abre (destruiria a laringe) — faz-se PUNÇÃO da membrana com agulha e ventilação por ela até o hospital."],["c) As 48 horas","A crico fica ao lado das PREGAS VOCAIS: cânula ali por muito tempo → inflamação → ESTENOSE subglótica. Por isso converte-se em TRAQUEOSTOMIA (eletiva, centro cirúrgico, entre o 2º e o 3º ANÉIS traqueais, afastando os infra-hióideos na linha média) em ATÉ 48 h. Intubação prolongada (10–15 dias) também indica traqueostomizar."]],ref:'Via aérea cirúrgica'},
+{n:4,aula:2,caso:`Homem com massa na base do crânio à direita. No exame: engasga com líquidos e o reflexo nauseoso está abolido à direita; voz rouca; ombro direito caído com trapézio hipotrófico; a língua protruída desvia para a direita.`,perg:[`a) Que estrutura óssea explica três dos quatro nervos comprometidos — e qual o trajeto do quarto?`,`b) Atribua cada sinal do paciente ao seu nervo e explique a DIREÇÃO do desvio da úvula e da língua.`,`c) Cite o teste clínico rápido de cada um dos quatro nervos.`],resp:[["a) O forame e o canal","O FORAME JUGULAR (ao lado do forame magno) dá passagem à JUGULAR INTERNA + IX (glossofaríngeo) + X (vago) + XI (acessório) — uma massa ali pega os três juntos. O XII (HIPOGLOSSO) desce pelo CANAL DO HIPOGLOSSO, logo anterior — massas grandes alcançam os dois orifícios e fecham a síndrome dos quatro nervos."],["b) Sinal a sinal","Reflexo nauseoso abolido + engasgos = IX (sensibilidade da faringe). Rouquidão = X (laríngeos → pregas vocais). Ombro caído + trapézio atrófico = XI. Língua desviada = XII. Direções: a ÚVULA desvia para o lado BOM (o lado são traciona o véu — sinal da cortina, vago); a LÍNGUA desvia para o lado LESADO (o lado são empurra a ponta para o lado atrofiado)."],["c) Testes","IX: tocar a parede faríngea/tonsila → reflexo nauseoso. X: 'faça AAAH' → elevação simétrica do véu (cortina). XI: elevar os OMBROS e virar o PESCOÇO contra resistência. XII: protrair a língua (desvio?) e empurrá-la contra a bochecha (força)."]],ref:'Forame jugular — os 4 nervos'},
+{n:5,aula:2,caso:`Na prática de anatomia, a monitora pede três estruturas na mesma peça: os nervos sensitivos "brotando de um ponto só" na borda do esternocleidomastóideo, uma alcinha nervosa deitada sobre a bainha carótica, e um fio fino descendo verticalmente sobre um músculo profundo do pescoço.`,perg:[`a) Nomeie o ponto e os quatro nervos que emergem dele, com seus territórios.`,`b) Explique a formação e o alvo da alça cervical.`,`c) Identifique o "fio fino", ensine a receita da aula para achá-lo — e descreva soluço e paralisia frênica como suas síndromes.`],resp:[["a) Ponto de Erb","PONTO DE ERB (ponto nervoso do pescoço), no meio da borda POSTERIOR do ECM. Emergem: AURICULAR MAGNO (orelha e ângulo da mandíbula) · OCCIPITAL MENOR (atrás da orelha) · CERVICAL TRANSVERSO (frente do pescoço) · SUPRACLAVICULARES medial/intermédio/lateral (pescoço baixo, clavícula, ombro). Acima da mandíbula, a pele é do TRIGÊMEO."],["b) Alça cervical","Raiz SUPERIOR: fibras de C1 que descem 'pegando carona' junto ao HIPOGLOSSO · raiz INFERIOR: C2-C3. A alça fecha-se SOBRE a bainha carótica (trígono carótico) e inerva os INFRA-HIÓIDEOS (esterno-hióideo, esternotireóideo, omo-hióideo). Pode ser sacrificada com pouco prejuízo — melhor preservar."],["c) O frênico","É o NERVO FRÊNICO (C3-C5, C4 principal). Receita: ache o PLEXO BRAQUIAL entre os escalenos → o músculo NA FRENTE é o ESCALENO ANTERIOR → o fio fino sobre ele é o frênico (lateral à bainha; desce com os pericardicofrênicos, entre pleura e pericárdio). SOLUÇO = contração involuntária por irritação (abscesso subfrênico, pneumonia de base, tumor — persistiu, INVESTIGAR). PARALISIA = diafragma flácido, CÚPULA ELEVADA ao RX (a pressão negativa do tórax puxa; a positiva do abdome empurra), dispneia aos esforços."]],ref:'Plexo cervical e frênico'},
+{n:6,aula:2,caso:`Ambulatório: mulher com nódulo supraclavicular esquerdo, duro. Nega queixas cervicais. Enquanto isso, na sala ao lado, um estudante confunde as jugulares na peça e chama a externa de interna.`,perg:[`a) Organize as veias do pescoço: formação e destino das jugulares anteriores, externa e interna.`,`b) Explique a assimetria da drenagem linfática terminal do corpo.`,`c) O que é o gânglio de Virchow, que tumores podem aparecer ali — e qual o raciocínio do "diagnóstico retrógrado"?`],resp:[["a) As jugulares","ANTERIORES: par que nasce na região submentual e desce ao lado da LINHA MEDIANA sobre os infra-hióideos → jugular externa ou subclávia (por isso a cervicotomia abre exatamente no meio). EXTERNA: RETROMANDIBULAR (continuação da temporal superficial atrás da mandíbula) + AURICULAR POSTERIOR → desce SOBRE o ECM → perfura a fáscia → SUBCLÁVIA (dilata na compressão da cava; acesso venoso não-grave). INTERNA: continuação do SEIO SIGMOIDE no forame jugular → desce na bainha (lateral) recebendo petroso inferior, faríngeas, FACIAL, LINGUAL, TIREÓIDEAS SUPERIOR e MÉDIA → + subclávia = BRAQUIOCEFÁLICA (o acesso central da UTI)."],["b) A assimetria","DUCTO TORÁCICO: nasce da CISTERNA DO QUILO (lombar), sobe na frente da coluna entre a ÁZIGO e a AORTA, vira à ESQUERDA e desemboca no ÂNGULO VENOSO ESQUERDO (jugular interna + subclávia). Recebe a linfa de QUASE TODO o corpo: membros inferiores, abdome, hemitórax e hemicorpo esquerdos. DUCTO LINFÁTICO DIREITO: pequeno — só o QUADRANTE SUPERIOR DIREITO, no ângulo venoso direito."],["c) Virchow","GÂNGLIO DE VIRCHOW = linfonodo da fossa SUPRACLAVICULAR ESQUERDA, na chegada do ducto torácico. Descrito para o CÂNCER DE ESTÔMAGO, mas pâncreas, útero, ovário, rim, próstata, mama, pulmão — e até um melanoma escondido na planta do pé — podem estrear ali. DIAGNÓSTICO RETRÓGRADO: acha-se a metástase palpável no pescoço, biopsia, e rastreia-se o primário 'revirando o paciente' — a lição: o que aparece no pescoço nem sempre É do pescoço."]],ref:'Jugulares, ductos e Virchow'}
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">${q.aula===2?"Parte 2":"Parte 1"}</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">${q.aula===2?"Parte 2":"Parte 1"}</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas das aulas de 11/09 e 25/09 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Parte 1 — Trígonos, Tireoide e Via Aérea",kicker:"ANATOMIA TOPOGRÁFICA · 11/09",desc:"Fáscias e bainha carótica, os trígonos e seus conteúdos, a tireoide da embriologia à cirurgia e a via aérea de urgência.",cards:[
+{area:"Conceito",cat:"conceito",q:"Quais são os limites do pescoço?",a:"SUPERIOR: borda inferior da MANDÍBULA → conduto auditivo → MASTOIDE → protuberância OCCIPITAL. INFERIOR: ESTERNO → CLAVÍCULA → articulação ACROMIOCLAVICULAR → linha por C7."},
+{area:"Fáscias",cat:"prof",q:"As três lâminas da fáscia cervical profunda — e o que cada uma envolve?",a:"MUSCULAR (superficial): ECM + trapézio · VISCERAL (média/pré-traqueal): laringe, faringe, tireoide, traqueia · PRÉ-VERTEBRAL: músculos da coluna.",obs:"'Sangrou no procedimento = entrou no plano errado' — a dissecção corre pelas fáscias."},
+{area:"Fáscias",cat:"prof",q:"Como se forma a bainha carótica — e qual a sintopia interna?",a:"FUSÃO DAS TRÊS LÂMINAS da fáscia profunda; da base do crânio à raiz do pescoço. Dentro: CARÓTIDA MEDIAL · JUGULAR INTERNA LATERAL · VAGO entre as duas e POSTERIOR."},
+{area:"Músculos",cat:"conceito",q:"Como localizar os escalenos anterior e médio — e qual sua função acessória?",a:"O ANTERIOR fica NA FRENTE da saída do plexo braquial; o MÉDIO, ATRÁS. Inserem-se na 1ª-2ª costelas → músculos ACESSÓRIOS DA RESPIRAÇÃO (dispneia). O frênico desce na frente do anterior."},
+{area:"Trígonos",cat:"prof",q:"Quem divide o pescoço em trígonos anterior e lateral?",a:"O ESTERNOCLEIDOMASTÓIDEO — e ele é LIMITE, 'não entra como conteúdo'. Anterior: linha mediana + mandíbula + borda anterior do ECM. Lateral: borda posterior do ECM + trapézio + terço médio da clavícula.",obs:"Livros: 'trígono posterior'. Aula prefere LATERAL, para não confundir com a região posterior (dorso)."},
+{area:"Trígonos",cat:"conceito",q:"As 4 subdivisões do trígono anterior — e os divisores?",a:"DIGÁSTRICO + OMO-HIÓIDEO (ventre superior) recortam: SUBMENTUAL · SUBMANDIBULAR · CARÓTICO · MUSCULAR."},
+{area:"Trígonos",cat:"caso",q:"O nódulo submentual que fechou um diagnóstico difícil — como?",a:"Paciente com nódulos cervicais duros: biópsia junto da jugular exigiria anestesia geral. Tirou-se o nódulo SUBMENTUAL com ANESTESIA LOCAL → LINFOMA. 'A região insignificante matou a charada.'"},
+{area:"Trígonos",cat:"conceito",q:"Conteúdo do trígono submandibular?",a:"GLÂNDULA SUBMANDIBULAR + VASOS FACIAIS (artéria facial palpável sobre a mandíbula) + LINFONODOS + NERVO HIPOGLOSSO na profundidade. Assoalho: milo-hióideo + hioglosso."},
+{area:"Trígonos",cat:"prof",q:"Conteúdo do trígono carótico?",a:"BAINHA CARÓTICA com a BIFURCAÇÃO (SEIO barorreceptor + CORPO quimiorreceptor) + jugular interna + vago + HIPOGLOSSO cruzando NA FRENTE das carótidas + ALÇA CERVICAL sobre a bainha."},
+{area:"Trígonos",cat:"caso",q:"Facada no trígono carótico: carótida × jugular?",a:"CARÓTIDA: 'esguicha, duas bombeadas' = exsanguinação — ou ISQUEMIA CEREBRAL com sequela. JUGULAR: contrai, forma HEMATOMA — 'dá tempo de chegar ao hospital'. Lesão ali é VASCULAR até prova em contrário."},
+{area:"Trígonos",cat:"prof",q:"Trígono muscular: conteúdo e o truque cirúrgico?",a:"VÍSCERAS (tireoide, traqueia, laringe, esôfago) atrás da 'CORTINA' dos INFRA-HIÓIDEOS. Acesso: abrir na LINHA MEDIANA e AFASTAR os músculos — nunca cortar."},
+{area:"Trígonos",cat:"alerta",q:"Qual o nervo mais lesado do trígono lateral — e por quê?",a:"O ACESSÓRIO (XI): cruza o trígono quase NA PELE (só gordura e fáscia por cima, sobre o levantador da escápula). O clássico: exérese de 'lipoma' com anestesia local → ombro caído."},
+{area:"Trígonos",cat:"conceito",q:"Subdivisões do trígono lateral?",a:"O VENTRE INFERIOR do omo-hióideo divide em: TRÍGONO OCCIPITAL (grande) e TRÍGONO SUPRACLAVICULAR/SUBCLÁVIO (sobre a clavícula — passa a artéria subclávia). Raiz do pescoço = área de trauma grave (subclávia + plexo)."},
+{area:"Tireoide",cat:"prof",q:"O que a tireoide tem de único entre as glândulas?",a:"É a ÚNICA que ARMAZENA hormônio (COLOIDE com tireoglobulina nos folículos) — e a maior glândula PURAMENTE endócrina (o pâncreas é misto). Borboleta de ~20 g: 2 lobos + istmo, na frente dos primeiros anéis traqueais."},
+{area:"Tireoide",cat:"prof",q:"Embriologia da tireoide — e a malformação de prova?",a:"Nasce na BASE DA LÍNGUA (forame CEGO) na 4ª semana e desce pelo DUCTO TIREOGLOSSO, que se fecha. PERSISTIU = CISTO TIREOGLOSSO (epitélio tipo respiratório → muco → 'bolinha' mediana que inflama)."},
+{area:"Tireoide",cat:"conceito",q:"Como o hipotireoidismo congênito é pego — e o que acontece sem tratamento?",a:"TESTE DO PEZINHO (TSH/T4). Sem tratar: atraso neurológico e físico = CRETINISMO."},
+{area:"Tireoide",cat:"prof",q:"Sintopia da tireoide pelas três faces?",a:"ANTERIOR/LATERAL: infra-hióideos · MEDIAL: traqueia, laringe, faringe, esôfago + NERVOS LARÍNGEOS · POSTERIOR: bainha carótica + tronco SIMPÁTICO + PARATIREOIDES (ficam! paratormônio/cálcio)."},
+{area:"Tireoide",cat:"alerta",q:"Quem inerva a tireoide? (pegadinha do professor)",a:"O TRONCO SIMPÁTICO CERVICAL — inervação VASOMOTORA apenas. O laríngeo é DA LARINGE (só passa colado). Quem comanda a produção hormonal é a HIPÓFISE (TSH)."},
+{area:"Tireoide",cat:"alerta",q:"Lesão do recorrente na tireoidectomia: uni × bilateral?",a:"UNILATERAL: prega paralisada → ROUQUIDÃO/voz soprosa. BILATERAL: sussurro + pregas podem paralisar FECHADAS → estridor e FALTA DE AR — muito mais grave. Trajeto: sulco TRAQUEOESOFÁGICO, colado à face medial/posterior da glândula."},
+{area:"Tireoide",cat:"conceito",q:"Artérias e veias da tireoide?",a:"ARTÉRIAS: superior ← CARÓTIDA EXTERNA · inferior ← TRONCO TIREOCERVICAL (subclávia) · rara IMA (braquiocefálico). VEIAS: superior + MÉDIA → JUGULAR INTERNA · INFERIORES → BRAQUIOCEFÁLICAS."},
+{area:"Tireoide",cat:"caso",q:"Como saber, no exame físico, que o nódulo cervical é da tireoide?",a:"Pedir para ENGOLIR: a tireoide é aderida à laringe/traqueia — nódulo que SOBE E DESCE com a deglutição é tireoidiano. (Cisto tireoglosso: sobe com a PROTRUSÃO DA LÍNGUA.)"},
+{area:"Via aérea",cat:"prof",q:"Via aérea cirúrgica de URGÊNCIA: qual, onde e como achar?",a:"CRICOTIREOIDOSTOMIA na MEMBRANA CRICOTIREÓIDEA: palpa o POMO DE ADÃO, desce o dedo — a PRIMEIRA DEPRESSÃO (2–3 cm abaixo) é ela. Abre e passa qualquer tubo ('um canudo') e ventila."},
+{area:"Via aérea",cat:"alerta",q:"Por que NÃO traqueostomia na urgência — e o que muda na criança?",a:"A TIREOIDE está na frente da traqueia — extremamente vascularizada: sangra e piora tudo. CRIANÇA &lt;10 anos: não se abre a laringe — PUNÇÃO da membrana com agulha e ventilação."},
+{area:"Via aérea",cat:"prof",q:"Quanto tempo a crico pode ficar — e qual o destino dela?",a:"MÁXIMO 48 h (vizinha das pregas vocais → inflamação → ESTENOSE). Converte-se em TRAQUEOSTOMIA eletiva, entre o 2º e o 3º ANÉIS traqueais. Intubação por 10–15 dias também indica traqueostomia.",obs:"'Não é para errar mais isso nas provas.'"}
+]},
+a2:{name:"Parte 2 — Nervos, Vasos e Linfáticos",kicker:"ANATOMIA TOPOGRÁFICA · 25/09",desc:"O forame jugular e os quatro nervos com seus sinais, plexo cervical, frênico, simpático e Horner — e as carótidas, jugulares e os ductos linfáticos.",cards:[
+{area:"Nervos",cat:"prof",q:"O que passa pelo forame jugular — e quem NÃO passa?",a:"VEIA JUGULAR INTERNA + IX (glossofaríngeo) + X (vago) + XI (acessório). O XII (hipoglosso) NÃO — tem o CANAL DO HIPOGLOSSO, anterior ao forame magno.",obs:"Massa ali = os três (ou quatro) sinais juntos."},
+{area:"Nervos",cat:"conceito",q:"Glossofaríngeo (IX): o que faz?",a:"Quase todo SENSITIVO: mucosa do palato, TONSILA, raiz da língua e faringe — o nervo do REFLEXO NAUSEOSO e da dor da amigdalite. Motor: SÓ o ESTILOFARÍNGEO."},
+{area:"Nervos",cat:"prof",q:"Sinal da cortina: o que é e para onde desvia a úvula?",a:"Lesão do VAGO: no 'AAAH', o véu do lado doente não sobe e a ÚVULA DESVIA PARA O LADO BOM (o são traciona). Movimento do palato = VAGO; IX é sensibilidade."},
+{area:"Nervos",cat:"prof",q:"Acessório (XI): função, trajeto e teste?",a:"EXCLUSIVAMENTE MOTOR: ECM + TODO o trapézio. Cruza a jugular interna → atravessa o ECM → cruza o TRÍGONO LATERAL superficialmente → trapézio. Teste: elevar os ombros e virar o pescoço CONTRA RESISTÊNCIA."},
+{area:"Nervos",cat:"caso",q:"Clínica da lesão do acessório?",a:"OMBRO CAÍDO e dolorido, trapézio ATROFIADO, abdução que NÃO PASSA DA HORIZONTAL (deltoide/supraespinal só até ali) — e, em lesão alta, dificuldade de virar a cabeça (ECM)."},
+{area:"Nervos",cat:"prof",q:"Hipoglosso (XII): território e trajeto no pescoço?",a:"TODOS os músculos da língua EXCETO o PALATOGLOSSO (vago). Cruza NA FRENTE das carótidas no TRÍGONO CARÓTICO → sob o digástrico → TRÍGONO SUBMANDIBULAR → língua."},
+{area:"Nervos",cat:"alerta",q:"Para onde desvia a língua na lesão do hipoglosso?",a:"PARA O LADO LESADO — o lado são 'vence' e empurra a ponta para o lado atrofiado. Compare: ÚVULA → lado BOM (vago); LÍNGUA → lado DOENTE (XII)."},
+{area:"Plexo cervical",cat:"prof",q:"O ponto de Erb e seus quatro nervos?",a:"PONTO DE ERB (ponto nervoso do pescoço), borda POSTERIOR do ECM — dele emergem: AURICULAR MAGNO (orelha/ângulo da mandíbula) · OCCIPITAL MENOR (atrás da orelha) · CERVICAL TRANSVERSO (frente do pescoço) · SUPRACLAVICULARES (pescoço baixo/ombro).",obs:"Acima da mandíbula, a pele é do TRIGÊMEO."},
+{area:"Plexo cervical",cat:"prof",q:"Alça cervical: formação, posição e alvo?",a:"Raiz SUPERIOR: C1 (desce junto ao hipoglosso) · raiz INFERIOR: C2-C3. Deita-se SOBRE A BAINHA CARÓTICA (trígono carótico) e inerva os INFRA-HIÓIDEOS. Pode ser cortada com pouco prejuízo — melhor preservar."},
+{area:"Frênico",cat:"prof",q:"Como achar o frênico na peça?",a:"Ache o PLEXO BRAQUIAL entre os escalenos → o músculo NA FRENTE é o ESCALENO ANTERIOR → o fio fino descendo SOBRE ele é o FRÊNICO (C3-C5, C4 principal), LATERAL à bainha carótica, rumo ao tórax com os vasos pericardicofrênicos."},
+{area:"Frênico",cat:"alerta",q:"Soluço persistente: qual a leitura da aula?",a:"Algo IRRITA o frênico/diafragma: abscesso subfrênico, pneumonia de base, derrame, tumor. Soluço que não passa → INVESTIGAR com RX/TC de tórax e abdome. 'Pode ser banal — ou o primeiro sinal de algo grave.'"},
+{area:"Frênico",cat:"prof",q:"Paralisia frênica: imagem e fisiologia?",a:"CÚPULA DIAFRAGMÁTICA ELEVADA no RX: o diafragma flácido é PUXADO pela pressão NEGATIVA do tórax e EMPURRADO pela positiva do abdome. Clínica: dispneia aos esforços; bilateral não abole a respiração (acessórios)."},
+{area:"Simpático",cat:"prof",q:"O tronco simpático cervical: gânglios e localização?",a:"3 gânglios: SUPERIOR (C2, o maior) · MÉDIO (C5-C6) · INFERIOR = CERVICOTORÁCICO = ESTRELADO (fundido com o 1º torácico). Ficam PROFUNDOS, ATRÁS DA BAINHA CARÓTICA, sobre o longo da cabeça/pescoço."},
+{area:"Simpático",cat:"alerta",q:"Síndrome de Claude Bernard-Horner: os sinais?",a:"PTOSE (músculo tarsal) + MIOSE (perde o dilatador) + ENOFTALMIA aparente + ANIDROSE + face QUENTE/vasodilatada — tudo do lado da lesão do simpático cervical."},
+{area:"Simpático",cat:"caso",q:"Horner + rouquidão sem nada no pescoço: pensar em quê?",a:"TUMOR DO ÁPICE PULMONAR grudando no GÂNGLIO ESTRELADO (Horner) e no RECORRENTE (rouquidão). 'Desce um pouquinho: RX/TC de tórax, laringoscopia — analise o paciente como um todo.'"},
+{area:"Vasos",cat:"conceito",q:"Origens das carótidas comuns — e onde bifurcam?",a:"DIREITA ← TRONCO BRAQUIOCEFÁLICO · ESQUERDA ← ARCO DA AORTA (mediastino). Bifurcação em C4 — margem SUPERIOR da cartilagem tireoide (linha do pomo de Adão)."},
+{area:"Vasos",cat:"prof",q:"Seio × corpo carótico?",a:"SEIO = a dilatação da bifurcação — BARORRECEPTOR (pressão). CORPO/GLOMO = QUIMIORRECEPTOR (oxigênio). Ambos na altura da bifurcação, no trígono carótico."},
+{area:"Vasos",cat:"alerta",q:"Na peça: qual é a carótida interna?",a:"A QUE NÃO TEM RAMOS — 'rota expressa' para o crânio (oftálmica, cerebrais, polígono de Willis). A que dá ramos é a EXTERNA. Bônus: a TESTA é da INTERNA (supraorbital/supratroclear, da oftálmica)."},
+{area:"Vasos",cat:"prof",q:"Ramos da carótida externa — a regra 3-2-1 + terminais?",a:"3 ANTERIORES: tireóidea superior · lingual · FACIAL (→ termina como ANGULAR no canto do olho) · 2 POSTERIORES: occipital + auricular posterior · 1 MEDIAL: faríngea ascendente · TERMINAIS: MAXILAR + TEMPORAL SUPERFICIAL."},
+{area:"Vasos",cat:"conceito",q:"Qual o ramo mais calibroso da externa — e sua importância?",a:"A MAXILAR: face profunda, dentes (alveolares), esfenopalatina — as FRATURAS DE FACE sangram por ela. Fica atrás do colo da mandíbula, sob a parótida. A temporal superficial é palpável sobre o ZIGOMÁTICO."},
+{area:"Vasos",cat:"conceito",q:"O que sai do tronco tireocervical (subclávia)?",a:"TIREÓIDEA INFERIOR + cervical ascendente + CERVICAL TRANSVERSA + SUPRAESCAPULAR — 'a arvorezinha' perto do escaleno anterior. Da subclávia saem ainda: VERTEBRAL, TORÁCICA INTERNA e tronco COSTOCERVICAL."},
+{area:"Veias",cat:"prof",q:"Jugular externa: formação e destino?",a:"RETROMANDIBULAR (a temporal superficial que mudou de nome atrás da mandíbula) + AURICULAR POSTERIOR → desce SOBRE o ECM → perfura a fáscia → SUBCLÁVIA. Dilata na manobra de força e na compressão da veia cava."},
+{area:"Veias",cat:"prof",q:"Jugular interna: origem, tributárias e destino?",a:"Continuação do SEIO SIGMOIDE no forame jugular. Recebe: petroso inferior, faríngeas, FACIAL, LINGUAL, TIREÓIDEAS SUPERIOR E MÉDIA (inferiores NÃO — vão às braquiocefálicas). Término: + subclávia = BRAQUIOCEFÁLICA. O acesso central da UTI."},
+{area:"Veias",cat:"alerta",q:"Por que a cirurgia cervical mediana abre exatamente na linha média?",a:"As JUGULARES ANTERIORES descem UMA DE CADA LADO da linha mediana (sobre os infra-hióideos): abrindo no meio, não se machuca nenhuma — e afastam-se os músculos como cortina."},
+{area:"Linfa",cat:"prof",q:"O colar linfático pericervical?",a:"A transição cabeça-pescoço: linfonodos OCCIPITAIS, MASTÓIDEOS, PAROTÍDEOS, SUBMANDIBULARES e SUBMENTUAIS (+ os da jugular externa). Viroses → occipitais/colar; faringite → jugulares; afta/lábio → submentuais. Depois: profundos da JUGULAR INTERNA."},
+{area:"Linfa",cat:"prof",q:"A grande assimetria da drenagem linfática terminal?",a:"DUCTO TORÁCICO (da cisterna do quilo, entre ázigo e aorta, vira à ESQUERDA): drena QUASE TODO o corpo → ÂNGULO VENOSO ESQUERDO. DUCTO LINFÁTICO DIREITO: só o QUADRANTE SUPERIOR DIREITO."},
+{area:"Linfa",cat:"caso",q:"Gânglio de Virchow: o que é e o que significa?",a:"Linfonodo da fossa SUPRACLAVICULAR ESQUERDA, na chegada do ducto torácico. Clássico do CÂNCER DE ESTÔMAGO — mas pâncreas, rim, próstata, mama, pulmão e até melanoma do pé estreiam ali. DIAGNÓSTICO RETRÓGRADO pela metástase.",obs:"'O que aparece no pescoço nem sempre É do pescoço.'"}
+]}
+};
+
+Object.keys(DECKS).forEach(k=>DECKS[k].cards.forEach((c,i)=>c.id=k+'-'+i));
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-pescoco-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1','a2'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1'+(k===cur?' on':'');
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>

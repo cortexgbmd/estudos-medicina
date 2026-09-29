@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Aula 09 — Lesões Nervosas do Membro Superior · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Aula 09 — Lesões Nervosas do MS</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula 09</p>
+  <h1 class="page-h1">Lesões Nervosas do Membro Superior</h1>
+  <p class="lead">Por que o nervo periférico regenera (e o central não), como se sutura e se enxerta um nervo, a construção do plexo braquial raiz por raiz — e as lesões: Erb-Duchenne com a mão do garçom, Klumpke com a garra e a síndrome de Horner, a paralisia obstétrica, e as síndromes de cada nervo terminal: a mão em bênção do mediano, o túnel do carpo, o túnel cubital do ulnar e a mão caída do radial.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O nervo por dentro: epineuro, perineuro, endoneuro</a></li>
+      <li><a href="#t2">Neurorrafia: suturando o "tecido condutivo"</a></li>
+      <li><a href="#t3">Degeneração, prazos e a fisioterapia do cérebro</a></li>
+      <li><a href="#t4">Enxertos de nervo: de onde tirar</a></li>
+      <li><a href="#t5">Neuropraxia, axonotmese, neurotmese</a></li>
+      <li><a href="#t6">Onde o plexo rompe: pré × pós-ganglionar</a></li>
+      <li><a href="#t7">A construção do plexo braquial</a></li>
+      <li><a href="#t8">Ramos terminais e colaterais: quem vem de quem</a></li>
+      <li><a href="#t9">Erb-Duchenne: a paralisia alta e a mão do garçom</a></li>
+      <li><a href="#t10">Por que a escápula alada é rara na lesão do plexo</a></li>
+      <li><a href="#t11">Klumpke: a paralisia baixa — e Horner</a></li>
+      <li><a href="#t12">Paralisia braquial obstétrica (PBO)</a></li>
+      <li><a href="#t13">Paralisia completa (Erb-Klumpke)</a></li>
+      <li><a href="#t14">Musculocutâneo e a sensibilidade da mão (com Leonardo)</a></li>
+      <li><a href="#t15">Mediano: mão em bênção e as três compressões</a></li>
+      <li><a href="#t16">Túnel do carpo: dor, não paralisia</a></li>
+      <li><a href="#t17">Ulnar: garra, túnel cubital e canal de Guyon</a></li>
+      <li><a href="#t18">Radial: o dono do compartimento posterior</a></li>
+      <li><a href="#t19">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O nervo por dentro: epineuro, perineuro, endoneuro</h2>
+  <div class="diagrama"><p class="t">As bainhas do nervo — de fora para dentro</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>EPINEURO (externo e interno)</b> — <span class="d">o envelope macroscópico do nervo (25–75% do volume), o que se vê e se segura na peça.</span></div></li>
+    <li><span class="n">2</span><div><b>PERINEURO</b> — <span class="d">envolve cada <b>FASCÍCULO</b> (grupo de axônios) — controla a difusão iônica, protege contra infecção, mantém a pressão positiva.</span></div></li>
+    <li><span class="n">3</span><div><b>ENDONEURO</b> — <span class="d">em volta de cada axônio, formando o <b>tubo das CÉLULAS DE SCHWANN</b>.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>🎯 <b>Por que o nervo PERIFÉRICO regenera?</b> Porque o endoneuro tem <b>CÉLULA DE SCHWANN</b>. No sistema nervoso central é o oligodendrócito — <b>e não regenera</b>. "Qualquer lesão nervosa periférica é potencialmente recuperável."</li>
+  </ul>
+
+  <h2 class="topic" id="t2">2 · Neurorrafia: suturando o "tecido condutivo"</h2>
+  <ul>
+    <li>As suturas possíveis: <b>EPINEURAL externa, epineural interna e PERINEURAL</b> (a mais delicada, fascículo a fascículo — microcirurgia).</li>
+    <li>🎯 A lógica: <b>suturar o tecido condutivo para CANALIZAR a regeneração</b> — "senão cresce aleatoriamente".</li>
+    <li>Mesmo com sutura perfeita, <b>a ordem das fibras se perde</b>: quando o crescimento chega às placas motoras, o mapa cerebral está "com as vírgulas trocadas" — o paciente comanda o polegar e mexe outro dedo. Daí a <b>FISIOTERAPIA prolongada</b> (às vezes um ano) para o cérebro reaprender. O sensitivo recupera mais rápido que o motor (é território, não placa).</li>
+  </ul>
+
+  <h2 class="topic" id="t3">3 · Degeneração, prazos e a fisioterapia do cérebro</h2>
+  <ul>
+    <li><b>Degeneração DISTAL = WALLERIANA</b> (centrífuga): perde-se tudo abaixo da lesão. Há também a <b>proximal (axônica</b>, centrípeta) — e a <b>degeneração MUSCULAR</b>: aos <b>3 meses</b> já há sinais de fibrose muscular.</li>
+    <li>🎯 <b>Os números da aula:</b> reinervar idealmente <b>entre 1 e 3 meses</b> · reinervação funcional em 1–3 anos · <b>não se espera reinervação após 3 anos</b> · regeneração a <b>1–2 mm/dia</b>.</li>
+    <li>Nervos de placa motora "marcada" (face, laringe) exigem reparo rápido; nervos grandes toleram mais espera.</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · Enxertos de nervo: de onde tirar</h2>
+  <ul>
+    <li>Perdeu-se um segmento (esmagamento, arma branca)? <b>Enxerta-se um nervo doador</b> — 🎯 <b>melhor enxerto do que sutura sob tensão</b>; em condições favoráveis, sutura e enxerto empatam. O leito precisa ser bem vascularizado (os <b>vasa nervorum</b> alimentam a célula de Schwann).</li>
+    <li><b>Doadores clássicos:</b> 🎯 <b>NERVO SURAL</b> (o grande doador — sensibilidade posterior da perna, "perder sensibilidade é o de menos", acesso fácil) · <b>SAFENO</b> · <b>cutâneos medial e lateral do antebraço</b> · <b>ramo superficial do radial</b> · <b>ulnar</b> quando se precisa de calibre.</li>
+  </ul>
+
+  <h2 class="topic" id="t5">5 · Neuropraxia, axonotmese, neurotmese</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Tipo</th><th>O que é</th><th>Exemplo da aula</th></tr>
+    <tr><td><b>NEUROPRAXIA</b></td><td><b>interrupção TEMPORÁRIA da condução</b> (compressão → isquemia dos capilares → edema), sem lesão estrutural</td><td>a mochila pesada; a <b>paralisia facial periférica</b> virótica (edema no forame estilomastóideo)</td></tr>
+    <tr><td><b>AXONOTMESE</b></td><td><b>lesão PARCIAL do axônio e da mielina</b>, com os tubos conjuntivos preservados</td><td>compressões mais graves, tração</td></tr>
+    <tr><td><b>NEUROTMESE</b></td><td><b>ROTURA COMPLETA do nervo</b></td><td>laceração, avulsão — precisa de cirurgia</td></tr>
+  </table></div>
+
+  <h2 class="topic" id="t6">6 · Onde o plexo rompe: pré × pós-ganglionar</h2>
+  <ul>
+    <li><b>+90% das lesões do plexo são traumáticas</b> (o resto: neoplasias, anomalias) e a maioria é <b>SUPRACLAVICULAR</b> — o plexo emerge <b>entre os escalenos anterior e médio</b>, e é ali, na margem do escaleno, que as raízes costumam romper. Também há lesões <b>retroclaviculares</b> (fascículos) e <b>infraclaviculares</b> (divisões/ramos).</li>
+    <li>🎯 <b>PRÉ-GANGLIONAR = AVULSÃO da raiz no forame intervertebral</b> — gravíssima: acesso complicadíssimo, prognóstico ruim. <b>PÓS-GANGLIONAR</b> = a que se espera: viável, acessível, operável.</li>
+    <li>Mecanismos: trauma direto, <b>tração por hiperabdução</b> (a queda segurando a barra — o coracoide e o tendão do peitoral menor viram fulcro sobre o plexo), compressão. (A síndrome do desfiladeiro fica na aula própria — lá é vascular + nervo.)</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-17-neuropatia-plexo.jpg" alt="Lesões do plexo — pré e pós-ganglionar">
+  <figcaption>O mapa das lesões do plexo: mais de 90% traumáticas, a maioria supraclavicular — e a diferença crucial entre a lesão pós-ganglionar (viável) e a avulsão pré-ganglionar da raiz, arrancada do forame intervertebral.</figcaption></figure>
+
+  <h2 class="topic" id="t7">7 · A construção do plexo braquial</h2>
+  <ul>
+    <li><b>TRONCOS:</b> SUPERIOR = C5+C6 · MÉDIO = C7 (sozinho) · INFERIOR = C8+T1. 🎯 <b>PRÉ-FIXADO</b> = contribuição de <b>C4</b> · <b>PÓS-FIXADO</b> = contribuição de <b>T2</b> — o comum nos cadáveres do laboratório, com o <b>intercostobraquial</b> (do 2º espaço intercostal) se juntando ao cutâneo medial do braço.</li>
+    <li><b>DIVISÕES:</b> cada tronco dá uma anterior e uma posterior. <b>Todas as POSTERIORES convergem</b> → <b>FASCÍCULO POSTERIOR = C5-C6-C7-C8-T1 (completo)</b>. Anteriores do superior + médio → <b>FASCÍCULO LATERAL (C5-C7)</b>. Anterior do inferior sozinha → <b>FASCÍCULO MEDIAL (C8-T1)</b>.</li>
+    <li>Relação cobrada na prova de axila: os fascículos <b>lateral e medial "abraçam" a artéria axilar</b> (as raízes do mediano na frente dela) e o posterior fica atrás.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-19-plexo-ilustracao.jpg" alt="Plexo braquial — ilustração anatômica">
+  <figcaption>O plexo braquial completo com as raízes coloridas: troncos entre os escalenos, divisões atrás da clavícula, fascículos abraçando a artéria axilar — e os ramos colaterais saindo em cada andar.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Ramos terminais e colaterais: quem vem de quem</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Nervo</th><th>Raízes (versão da aula)</th><th>Detalhe</th></tr>
+    <tr><td><b>MUSCULOCUTÂNEO</b></td><td>C5-C7</td><td>🎯 motor até a fossa cubital — e <b>continua como CUTÂNEO LATERAL DO ANTEBRAÇO</b></td></tr>
+    <tr><td><b>AXILAR</b></td><td><b>C5-C6</b></td><td>deltoide + redondo MENOR</td></tr>
+    <tr><td><b>RADIAL</b></td><td><b>C5-T1 (completo)</b></td><td>todo o compartimento posterior</td></tr>
+    <tr><td><b>MEDIANO</b></td><td>C6-T1 (<b>sem C5</b>)</td><td>raízes lateral + medial na frente da artéria axilar</td></tr>
+    <tr><td><b>ULNAR</b></td><td>C8-T1</td><td>do fascículo medial</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Colaterais:</b> <b>TORÁCICO LONGO (C5-C7)</b> → serrátil anterior · <b>DORSAL DA ESCÁPULA (C5)</b> → romboides + levantador · <b>SUPRAESCAPULAR</b> (tronco superior) → supra e infraespinal · <b>peitorais lateral/medial</b> (dos fascículos homônimos) · <b>subescapulares superior e inferior</b> (C5-C6, fascículo posterior) → subescapular + <b>redondo MAIOR</b> · <b>TORACODORSAL (C6-C8)</b> → latíssimo do dorso — 🎯 "o músculo do NADADOR": latíssimo estende o braço, peitoral maior flexiona.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-31-plexo-esquema.jpg" alt="Esquema do plexo com todos os ramos">
+  <figcaption>A construção completa que o professor monta em aula: raízes → troncos → divisões → fascículos → ramos terminais, com cada colateral pendurado no seu andar — o esquema que ele pede para redesenhar na prova.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Erb-Duchenne: a paralisia alta e a mão do garçom</h2>
+  <ul>
+    <li><b>PARALISIA ALTA (C5-C6, às vezes C7 — tronco superior): 80–90% dos casos, a mais comum — e a de MELHOR prognóstico</b> (acesso cirúrgico fácil ao tronco superior).</li>
+    <li><b>Nervos comprometidos:</b> supraescapular, axilar, musculocutâneo, radial (parte alta), subescapulares. <b>Músculos:</b> supra/infraespinal, deltoide, redondo menor, bíceps, braquiorradial, extensores radiais do carpo, supinador.</li>
+  </ul>
+  <div class="diagrama"><p class="t">🎯 A postura — cada peça explicada</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Braço caído, ADUZIDO, sem movimento</b> — <span class="d">perdeu deltoide (axilar) e supraespinal.</span></div></li>
+    <li><span class="n">2</span><div><b>OMBRO RODADO INTERNAMENTE</b> — <span class="d">perdeu os rotadores laterais (infraespinal/supraescapular, redondo menor).</span></div></li>
+    <li><span class="n">3</span><div><b>COTOVELO ESTENDIDO</b> — <span class="d">perdeu a flexão (musculocutâneo); o tríceps (radial baixo) está livre e estende.</span></div></li>
+    <li><span class="n">4</span><div><b>PUNHO FLETIDO (e pronado)</b> — <span class="d">perdeu braquiorradial + extensores radiais + supinador (radial alto); o mediano íntegro flexiona.</span></div></li>
+  </ol></div>
+  <div class="box prof"><p class="h">🎯 "A mão do garçom"</p>
+  <p>A postura é a do garçom antigo recebendo <b>gorjeta</b> por trás: braço estendido ao lado do corpo, rodado para dentro, palma fletida voltada para trás. <b>Reflexo BICIPITAL AUSENTE</b> (bíceps paralisado). Nome mundial da síndrome.</p></div>
+  <figure class="fig"><img src="img/slide9-37-erb-clinica.jpg" alt="Postura de Erb-Duchenne">
+  <figcaption>A clínica da paralisia alta: ombro rodado internamente, cotovelo estendido, punho fletido — a "gorjeta do garçom" — com os achados associados possíveis, do sinal da escápula à síndrome de Horner nas formas extensas.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Por que a escápula alada é rara na lesão do plexo</h2>
+  <div class="box alerta"><p class="h">⚠️ O raciocínio do professor sobre o torácico longo</p>
+  <p>O torácico longo é C5-C6-C7 — deveria cair junto na lesão alta, certo? <b>Não:</b> as raízes rompem <b>na margem do escaleno</b>, e <b>o torácico longo já saiu ANTES e desceu</b> pela parede do tórax. Por isso, <b>escápula alada por lesão do plexo é rara</b> (só nas avulsões pré-ganglionares). A escápula alada clássica é da <b>lesão ISOLADA do torácico longo</b> — tiro, facada, trauma na parede lateral do tórax (carregar peso, "operador de máquina, jogador de tênis"). Alguns livros a colocam na Erb; o professor explica por que normalmente não está lá.</p></div>
+
+  <h2 class="topic" id="t11">11 · Klumpke: a paralisia baixa — e Horner</h2>
+  <ul>
+    <li><b>PARALISIA BAIXA (Déjerine-Klumpke): C8-T1</b> (tronco inferior) — mecanismo: <b>abdução excessiva/tração para cima</b> (queda segurando a barra; parto de nádegas).</li>
+    <li>🎯 <b>A postura invertida da Erb:</b> <b>COTOVELO FLETIDO</b> (tríceps paralisado — o radial baixo é C8-T1; o bíceps C5-C6 está livre) + <b>antebraço SUPINADO</b> (pronadores comprometidos) + <b>MÃO EM GARRA</b> (intrínsecos ulnar/mediano paralisados) + 🎯 <b>SEM reflexo de PREENSÃO PALMAR</b>.</li>
+    <li><b>Reflexos BICIPITAL e ESTILORRADIAL PRESENTES</b> (C5-C6 íntegros — o braquiorradial e o ramo superficial do radial vêm de cima); <b>tricipital AUSENTE</b>.</li>
+    <li>Nervos: <b>ulnar, mediano (mão), interósseo anterior e radial (parte baixa)</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Klumpke = SÍNDROME DE HORNER</p>
+  <p><b>T1 leva as fibras simpáticas ao gânglio ESTRELADO</b> (cervicotorácico). Lesão baixa/avulsão de T1 → <b>PTOSE + MIOSE</b> (Horner). Por que a ptose? O simpático inerva o músculo tarsal — e, na leitura didática do professor, a pálpebra cai "para proteger o olho que perdeu as glândulas": <b>o simpático cervical inerva TODAS as glândulas da cabeça</b> (lacrimal, salivares), não só a pupila. Na Erb alta o T1 escapa; na Klumpke e na completa, Horner vem junto.</p></div>
+  <figure class="fig"><img src="img/slide9-43-klumpke.jpg" alt="Paralisia de Klumpke">
+  <figcaption>A paralisia de Déjerine-Klumpke: lesão do tronco inferior (C8-T1) com paralisia dos intrínsecos da mão — a garra —, flexores ulnares comprometidos, dermátomo C8/T1 dormente e, na avulsão de T1, a síndrome de Horner.</figcaption></figure>
+
+  <h2 class="topic" id="t12">12 · Paralisia braquial obstétrica (PBO)</h2>
+  <ul>
+    <li><b>Tração ou compressão do plexo nas manobras de parto</b> — separação forçada cabeça-ombro (Erb) ou tração com o braço para cima / parto de nádegas (Klumpke). Fatores: <b>RN grande + mãe pequena</b>, parto prolongado, crânio volumoso.</li>
+    <li>🎯 <b>Erb-Duchenne = ~75–90% das PBO</b> (paralisia alta C5-C6, <b>arreflexia bicipital</b>); <b>Klumpke é a menos comum</b> (baixa, C8-T1, cotovelo fletido, sem preensão palmar). 🎯 As fibras superiores são as que mais sofrem <b>neurotmese e avulsão</b>.</li>
+    <li>O fórceps de antigamente lesava também o <b>FACIAL</b>: o recém-nascido <b>não tem processo mastoide</b> — o nervo emerge desprotegido atrás da orelha.</li>
+    <li>No bebê com avulsão completa não há muito a operar precocemente — a <b>mielinização só completa por volta dos 2 anos</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-33-mecanismos-erb-klumpke.jpg" alt="Mecanismos de Erb e Klumpke">
+  <figcaption>Os dois mecanismos lado a lado: aumento do ângulo pescoço-ombro tracionando as raízes ALTAS (Erb) × braço puxado violentamente para cima tracionando as raízes BAIXAS (Klumpke) — no parto ou na queda.</figcaption></figure>
+
+  <h2 class="topic" id="t13">13 · Paralisia completa (Erb-Klumpke)</h2>
+  <ul>
+    <li><b>C5 a T1 — o membro inteiro flácido, com TODOS os reflexos ausentes</b>; com o tempo, atrofia global (a posição final é a que o tônus residual determinar). É <b>a mais grave</b> — na prática, só um enxerto completo de plexo tentaria reverter.</li>
+    <li>A lesão mais frequente nessa forma: <b>ruptura de C5-C6-C7 + AVULSÃO de C8-T1</b>. E nem toda completa é trauma: <b>neoplasias e doenças desmielinizantes periféricas</b> também destroem o plexo.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-50-completa.jpg" alt="Paralisia completa do plexo">
+  <figcaption>A paralisia completa: o membro superior pendente, flácido e arreflexo — C5 a T1 fora do ar, tipicamente por ruptura das raízes altas com avulsão das baixas.</figcaption></figure>
+
+  <h2 class="topic" id="t14">14 · Musculocutâneo e a sensibilidade da mão (com Leonardo)</h2>
+  <ul>
+    <li><b>Lesão isolada do MUSCULOCUTÂNEO:</b> 🎯 <b>sem reflexo bicipital</b> + <b>parestesia anterolateral do antebraço</b> (o cutâneo lateral do antebraço é a continuação sensitiva dele) + <b>fraqueza de flexão E de supinação</b> (o bíceps é supinador potente — sobra uma supinação lenta pelo supinador próprio).</li>
+    <li>🎯 <b>Mapa sensitivo da mão (nunca esquecer):</b> <b>1º, 2º, 3º dedos + metade LATERAL do 4º = MEDIANO</b> · <b>5º + metade MEDIAL do 4º = ULNAR</b>. Teste com estilete: anestesia no indicador = neuropatia do mediano; no mínimo = ulnar. Sem paralisia, <b>a sensibilidade é o teste</b> das neuropatias periféricas.</li>
+  </ul>
+  <div class="box caso"><p class="h">🖋️ O dedo da aliança — Leonardo da Vinci, ~1500</p>
+  <p>Dissecando a mão, Leonardo descreveu os dois nervos digitais do 4º dedo — um vindo do mediano, outro do ulnar — e o batizou: <b>dedo ANELAR, o dedo da ALIANÇA — a união dos dois nervos</b>. E completou: à esquerda, esses nervos "se ligam ao coração" — o lado da união definitiva. Seiscentos anos depois, a aliança continua no mesmo dedo.</p></div>
+  <figure class="fig"><img src="img/slide9-61-mediano-sensibilidade.jpg" alt="Território sensitivo do mediano">
+  <figcaption>O território do mediano: palma lateral, três primeiros dedos e metade lateral do anelar — incluindo o dorso das falanges distais. O que sobra é do ulnar (e o dorso, do radial).</figcaption></figure>
+
+  <h2 class="topic" id="t15">15 · Mediano: mão em bênção e as três compressões</h2>
+  <ul>
+    <li><b>Lesão do MEDIANO (alta):</b> ao fechar a mão, polegar e indicador não flexionam — 🎯 <b>MÃO EM BÊNÇÃO</b> (o "sinal da bênção"). Atrofia TENAR ("mão de macaco/achatada"), perda da <b>OPONÊNCIA e da pinça</b>, pronação caindo (pronadores redondo e quadrado). Punho: desvio ulnar (flexor ulnar preservado). Lesões de PUNHO pegam muito o mediano — ele é o mais superficial ali.</li>
+    <li>🎯 <b>Não confundir:</b> <b>MÃO EM BÊNÇÃO = MEDIANO</b> (ao tentar fechar) × <b>MÃO EM GARRA = ULNAR</b> (em repouso).</li>
+    <li><b>As TRÊS síndromes compressivas do mediano:</b> 1) <b>INTERÓSSEO ANTERIOR</b> (no arco tendíneo do flexor superficial dos dedos — fraqueza da flexão do polegar-indicador-médio, dor proximal) · 2) <b>PRONADOR REDONDO</b> (entre as duas cabeças do músculo) · 3) <b>TÚNEL DO CARPO</b> (tópico 16).</li>
+    <li>Corte de <b>nervo digital comum</b> na palma: perde a <b>sensibilidade</b> do dedo, <b>não a motricidade</b> — 🎯 os flexores estão no ANTEBRAÇO; a flexão interfalângica é do flexor profundo + <b>LUMBRICAIS</b>. (Por isso a garra ulnar ainda "dobra": o flexor profundo dos 3 primeiros é mediano, intacto.) Reconstrução digital com enxerto de sural funciona bem.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-65-mao-bencao.jpg" alt="Mão em bênção">
+  <figcaption>O sinal da bênção: ao tentar fechar a mão, o polegar e o indicador ficam para trás — a assinatura da lesão alta do nervo mediano.</figcaption></figure>
+
+  <h2 class="topic" id="t16">16 · Túnel do carpo: dor, não paralisia</h2>
+  <ul>
+    <li><b>A mononeuropatia compressiva mais comum.</b> Etiologia principal: <b>tendossinovite inespecífica dos flexores</b> apertando o mediano sob o retináculo.</li>
+    <li>🎯 <b>Clínica: DOR + PARESTESIA dos 3 dedos e meio laterais</b>, pior <b>à NOITE</b> (o paciente acorda e "sacode as mãos" — melhora a perfusão do nervo), dificuldade de fechar a mão, hipoestesia palmar. <b>A motricidade grossa está preservada</b>: os flexores longos estão no ANTEBRAÇO — o túnel só compromete a musculatura TENAR e os intrínsecos que o mediano dá na mão.</li>
+    <li><b>O túnel:</b> 🎯 <b>9 tendões + o mediano</b> (flexor longo do polegar + 4 superficiais + 4 profundos) sob o retináculo dos flexores. A incisão/infiltração segue <b>a projeção da linha do polegar</b> na palma. Tratamento: infiltração com corticoide → cirurgia (abrir o retináculo).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-74-tunel-carpo.jpg" alt="Síndrome do túnel do carpo">
+  <figcaption>A compressão do mediano no túnel do carpo: o território doloroso e parestésico dos três dedos e meio, o retináculo apertando o nervo entre os nove tendões flexores — dor noturna que acorda, motricidade preservada.</figcaption></figure>
+
+  <h2 class="topic" id="t17">17 · Ulnar: garra, túnel cubital e canal de Guyon</h2>
+  <ul>
+    <li><b>Lesão do ULNAR:</b> 🎯 <b>MÃO EM GARRA (semigarra ulnar)</b> — anular e mínimo hiperestendidos na metacarpofalângica e fletidos nas interfalângicas (os LUMBRICAIS mediais pararam; o flexor profundo desses dedos — metade ulnar — puxa). <b>Atrofia HIPOTENAR</b> e dos interósseos (o vale entre indicador e polegar afunda: 1º interósseo dorsal + adutor do polegar). Sensibilidade: 5º dedo + metade medial do 4º.</li>
+    <li><b>Compressões:</b> 🎯 <b>TÚNEL CUBITAL</b> no cotovelo (atrás do epicôndilo medial — <b>o nervo mais superficial e exposto do corpo</b>; "60% de toda cirurgia de nervo periférico é ulnar no cotovelo — depois vem o ciático") · <b>CANAL DE GUYON</b> no punho (entre pisiforme e hâmulo do hamato — a aponeurose própria que os livros modernos já incluem).</li>
+    <li>Acesso cirúrgico do ulnar no cotovelo é o mais fácil que existe — "uma incisãozinha e ele está exposto".</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-85-ulnar-garra.jpg" alt="Garra ulnar">
+  <figcaption>A garra ulnar: anular e mínimo hiperestendidos na metacarpofalângica e fletidos nas interfalângicas, atrofia hipotenar e dos interósseos — a mão da lesão do fascículo medial que chegou ao punho.</figcaption></figure>
+  <figure class="fig"><img src="img/slide9-87-cubital-guyon.jpg" alt="Túnel cubital e canal de Guyon">
+  <figcaption>Os dois estrangulamentos do ulnar: o túnel cubital atrás do epicôndilo medial — o ponto de compressão nervosa mais operado do corpo — e o canal de Guyon entre o pisiforme e o hâmulo do hamato.</figcaption></figure>
+
+  <h2 class="topic" id="t18">18 · Radial: o dono do compartimento posterior</h2>
+  <ul>
+    <li>🎯 <b>Conceito para levar: o RADIAL inerva TODA a musculatura POSTERIOR do membro superior</b> — braço (tríceps) e antebraço (extensores).</li>
+    <li><b>A lesão isolada mais comum: FRATURA DO TERÇO MÉDIO DO ÚMERO</b> (o nervo abraça o osso no sulco espiral). Também: muletas, "paralisia do sábado à noite" (dormir sobre o braço). Clínica: <b>MÃO CAÍDA</b> (sem extensão de punho/dedos), sem extensão do cotovelo se a lesão for alta (tríceps), <b>sensibilidade: dorso da mão entre polegar e indicador</b> (alteração mais típica é o punho caído; a área sensitiva mais constante é essa).</li>
+    <li>🎯 Lesão do <b>INTERÓSSEO POSTERIOR</b> (próximo ao epicôndilo lateral, no supinador): só motora — cai a extensão dos dedos, mas o <b>extensor radial longo escapa</b> → extensão do punho COM DESVIO RADIAL (não é mão caída completa).</li>
+    <li><b>Identificação na peça (4 pontos):</b> 1) na saída do plexo (fascículo posterior) · 2) <b>entre as cabeças do tríceps</b> · 3) <b>no supinador</b> · 4) na divisão em <b>ramo PROFUNDO (= interósseo posterior)</b> + <b>ramo SUPERFICIAL (sensitivo</b>, ao lado do braquiorradial). ⚠️ Não confundir o ramo superficial (posterolateral) com o <b>cutâneo lateral do antebraço</b> (anterolateral, do musculocutâneo).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide9-93-radial.jpg" alt="Nervo radial — visão geral">
+  <figcaption>O radial em visão geral: do fascículo posterior à mão, inervando tríceps e todos os extensores — com os territórios sensitivos posteriores do braço, do antebraço e do dorso lateral da mão.</figcaption></figure>
+  <figure class="fig"><img src="img/slide9-98-fratura-umero.jpg" alt="Lesão do radial na fratura do úmero">
+  <figcaption>A fratura do terço médio do úmero prendendo o radial no sulco espiral — a causa clássica da lesão isolada — e a mão caída resultante.</figcaption></figure>
+  <figure class="fig"><img src="img/slide9-101-mao-caida.jpg" alt="Mão caída — paralisia do radial">
+  <figcaption>A mão caída da paralisia radial: sem extensores, o punho despenca — a compressão da muleta ou do braço esquecido no encosto da cadeira produz o mesmo quadro da fratura.</figcaption></figure>
+
+  <h2 class="topic" id="t19">19 · Resumo rápido</h2>
+  <ul>
+    <li><b>Estrutura:</b> epineuro → perineuro (fascículo) → endoneuro (axônio + SCHWANN = regeneração; central não regenera). Neurorrafia sutura o "tecido condutivo"; a ordem das fibras se perde → fisioterapia. Regeneração 1–2 mm/dia; reinervar em 1–3 meses; nada após 3 anos; fibrose muscular aos 3 meses.</li>
+    <li><b>Enxertos:</b> SURAL (o doador), safeno, cutâneos do antebraço; melhor enxerto que sutura sob tensão.</li>
+    <li><b>Tipos:</b> NEUROPRAXIA (condução, temporária — mochila, paralisia facial) · AXONOTMESE (axônio parcial) · NEUROTMESE (rotura). Plexo: +90% traumáticas, supraclaviculares, rompem na margem do escaleno; PRÉ-ganglionar (avulsão no forame) = gravíssima.</li>
+    <li><b>Plexo:</b> troncos C5-6/C7/C8-T1 (pré-fixado C4, pós-fixado T2); posteriores todos → fascículo POSTERIOR completo; lateral C5-C7; medial C8-T1. Terminais: musculocutâneo C5-C7 (vira cutâneo lateral), axilar C5-C6, radial completo, mediano sem C5, ulnar C8-T1.</li>
+    <li><b>ERB (alta, C5-C6±C7):</b> 80-90%, melhor prognóstico; ombro rodado interno + cotovelo estendido + punho fletido = MÃO DO GARÇOM; sem bicipital. Escápula alada é RARA (torácico longo já desceu).</li>
+    <li><b>KLUMPKE (baixa, C8-T1):</b> cotovelo FLETIDO + supinado + GARRA + sem preensão palmar; bicipital/estilorradial presentes, tricipital ausente; <b>T1 → gânglio estrelado → HORNER</b>.</li>
+    <li><b>PBO:</b> Erb ~75-90%; RN grande + mãe pequena; fórceps antigo lesava o facial (sem mastoide); COMPLETA = flácido arreflexo (ruptura C5-C7 + avulsão C8-T1).</li>
+    <li><b>Mediano:</b> sensibilidade 3½ dedos laterais; MÃO EM BÊNÇÃO; 3 compressões (interósseo anterior, pronador redondo, TÚNEL DO CARPO — dor noturna + parestesia, motricidade preservada, 9 tendões + nervo). Digital comum cortado: só sensibilidade.</li>
+    <li><b>Ulnar:</b> GARRA + atrofia hipotenar; túnel CUBITAL (60% das cirurgias de periférico) e canal de GUYON.</li>
+    <li><b>Radial:</b> TODO o compartimento posterior; fratura do terço médio do úmero = mão caída; interósseo posterior = extensão com desvio radial; 4 pontos de identificação (plexo, tríceps, supinador, divisão).</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Lesões Nervosas do MS</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aula 09 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-nervo">Nervo & reparo</a>
+    <a class="a1" href="#p-plexo">Plexo</a>
+    <a class="a1" href="#p-paralisias">Erb × Klumpke</a>
+    <a class="a1" href="#p-terminais">Mediano · Ulnar · Radial</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-nervo">
+  <span class="aula-tag t1">O nervo e o reparo</span>
+  <ul>
+    <li>Bainhas: <b class="k">EPINEURO → PERINEURO (fascículo) → ENDONEURO (axônio + célula de SCHWANN)</b> — Schwann = por que o periférico REGENERA (central: oligodendrócito, não regenera).</li>
+    <li><b>Números:</b> regeneração <b class="k">1–2 mm/dia</b> · reinervar em <b class="k">1–3 meses</b> · fibrose muscular aos 3 meses · <b>nada após 3 anos</b>.</li>
+    <li>Neurorrafia (epineural/perineural) = suturar o <b>tecido condutivo</b> p/ canalizar; a ordem das fibras se perde → <b class="k">fisioterapia p/ o cérebro reaprender</b>.</li>
+    <li>Enxertos: <b class="k">SURAL</b> (o doador), safeno, cutâneos do antebraço · <b>melhor enxerto que sutura sob TENSÃO</b> · leito vascularizado (vasa nervorum).</li>
+    <li><b class="k">NEUROPRAXIA</b> (condução; mochila, paralisia facial periférica) · <b class="k">AXONOTMESE</b> (axônio parcial) · <b class="k">NEUROTMESE</b> (rotura total).</li>
+  </ul>
+</section>
+
+<section id="p-plexo">
+  <span class="aula-tag t1">Plexo braquial</span>
+  <ul>
+    <li>Troncos: <b>SUPERIOR C5-C6 · MÉDIO C7 · INFERIOR C8-T1</b> · <b class="k">pré-fixado = C4 · pós-fixado = T2</b> (o do cadáver, c/ intercostobraquial).</li>
+    <li>Fascículos: <b class="k">POSTERIOR = C5–T1 (completo) · LATERAL = C5-C7 · MEDIAL = C8-T1</b> — lateral e medial "abraçam" a artéria axilar.</li>
+    <li>Terminais: <b>musculocutâneo C5-C7</b> (vira <b class="k">cutâneo lateral do antebraço</b> na fossa cubital) · <b>axilar C5-C6</b> · <b class="k">radial COMPLETO</b> · <b>mediano SEM C5</b> · <b>ulnar C8-T1</b>.</li>
+    <li>Lesões: <b class="k">+90% traumáticas, SUPRACLAVICULARES</b> (rompem na margem do escaleno) · <b class="k">PRÉ-ganglionar = avulsão no forame = gravíssima</b> · pós = operável.</li>
+  </ul>
+</section>
+
+<section id="p-paralisias">
+  <span class="aula-tag t1">As três paralisias</span>
+  <div class="tw"><table>
+    <tr><th></th><th>ERB-DUCHENNE (alta)</th><th>KLUMPKE (baixa)</th></tr>
+    <tr><td>Raízes</td><td><b>C5-C6 (±C7)</b> — 80–90%, melhor prognóstico</td><td><b>C8-T1</b> — menos comum</td></tr>
+    <tr><td>Mecanismo</td><td>separação cabeça×ombro (parto, queda no ombro)</td><td>tração c/ braço p/ cima; parto de nádegas</td></tr>
+    <tr><td>Postura</td><td><b class="k">rodado interno + cotovelo ESTENDIDO + punho fletido = MÃO DO GARÇOM</b></td><td><b class="k">cotovelo FLETIDO + supinado + MÃO EM GARRA</b></td></tr>
+    <tr><td>Reflexos</td><td><b>bicipital AUSENTE</b></td><td>bicipital/estilorradial presentes · <b>tricipital ausente · SEM preensão palmar</b></td></tr>
+    <tr><td>Extra</td><td>escápula alada RARA (torácico longo já desceu)</td><td>🎯 <b class="k">T1 → gânglio ESTRELADO → HORNER</b></td></tr>
+  </table></div>
+  <ul>
+    <li><b>COMPLETA (Erb-Klumpke)</b>: C5–T1, membro flácido, <b class="k">todos os reflexos ausentes</b>; típica = ruptura C5-C7 + AVULSÃO C8-T1.</li>
+    <li><b>PBO:</b> Erb ~75-90% · RN grande + mãe pequena · fórceps antigo lesava o <b>FACIAL</b> (RN sem mastoide) · bebê: mielinização completa só ~2 anos.</li>
+  </ul>
+</section>
+
+<section id="p-terminais">
+  <span class="aula-tag t1">Nervos terminais</span>
+  <ul>
+    <li><b>Musculocutâneo:</b> sem bicipital + <b class="k">parestesia anterolateral do antebraço</b> + fraqueza de flexão E SUPINAÇÃO (bíceps supina).</li>
+    <li><b class="k">Sensibilidade da mão: 1º-3º + ½ lateral do 4º = MEDIANO · 5º + ½ medial do 4º = ULNAR</b> (dedo anelar = "dedo da aliança" de Leonardo). Sem paralisia → testar SENSIBILIDADE.</li>
+    <li><b>MEDIANO:</b> <b class="k">MÃO EM BÊNÇÃO</b> (ao fechar) · atrofia TENAR, perde oponência/pinça · 3 compressões: <b class="k">interósseo anterior · pronador redondo · TÚNEL DO CARPO</b>.</li>
+    <li><b class="k">TÚNEL DO CARPO: DOR + parestesia 3½ dedos, PIOR À NOITE (sacode a mão), motricidade preservada</b> (flexores no antebraço; só tenar sofre) · 9 tendões + nervo · tendossinovite · infiltração na linha do polegar.</li>
+    <li>Digital comum cortado = <b>só sensibilidade</b> (flexão = flexor profundo + LUMBRICAIS).</li>
+    <li><b>ULNAR:</b> <b class="k">GARRA</b> (4º-5º MF hiperestendidos + IF fletidas) + atrofia HIPOTENAR/interósseos · <b class="k">túnel CUBITAL (60% das cirurgias de periférico!)</b> · canal de GUYON (pisiforme-hamato).</li>
+    <li><b>RADIAL:</b> <b class="k">TODA a musculatura POSTERIOR</b> · lesão isolada mais comum = <b class="k">fratura do TERÇO MÉDIO do úmero</b> → MÃO CAÍDA · interósseo posterior = extensão c/ desvio radial · 4 pontos na peça: plexo, cabeças do tríceps, supinador, divisão (profundo=interósseo posterior / superficial=sensitivo).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>Mão em BÊNÇÃO × em GARRA</td><td>MEDIANO (ao tentar fechar) × ULNAR (em repouso)</td></tr>
+    <tr><td>Erb × Klumpke (cotovelo)</td><td>ESTENDIDO (perdeu o bíceps) × FLETIDO (perdeu o tríceps)</td></tr>
+    <tr><td>Horner: em qual paralisia?</td><td>KLUMPKE/completa (T1 → estrelado) — não na Erb pura</td></tr>
+    <tr><td>Neuropraxia × axonotmese × neurotmese</td><td>condução × axônio parcial × rotura total</td></tr>
+    <tr><td>Pré × pós-ganglionar</td><td>avulsão no forame (gravíssima) × rotura distal (operável)</td></tr>
+    <tr><td>Túnel do carpo × lesão do mediano</td><td>DOR/parestesia com motricidade preservada × bênção + tenar atrofiada</td></tr>
+    <tr><td>Escápula alada</td><td>lesão ISOLADA do torácico longo (tórax) — rara na lesão do plexo</td></tr>
+    <tr><td>Ramo superficial do radial × cutâneo lateral do antebraço</td><td>posterolateral (radial) × anterolateral (musculocutâneo)</td></tr>
+    <tr><td>Interósseo anterior × posterior</td><td>do MEDIANO (flexão 1º-3º) × do RADIAL (extensores; punho c/ desvio radial)</td></tr>
+    <tr><td>Redondo maior × menor</td><td>subescapulares (fasc. posterior) × AXILAR</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Lesões Nervosas do MS</h2>
+    <p>Anatomia Topográfica · Aula 09 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 09 — Lesões Nervosas do MS</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">O nervo periférico regenera após lesão — ao contrário do sistema nervoso central — porque:</div>`,alts:[`o epineuro externo produz fatores contínuos de crescimento axonal no coto`,`o perineuro isola cada fascículo da resposta inflamatória local`,`o endoneuro forma o tubo das células de Schwann, que guiam a regeneração`,`os axônios periféricos são amielínicos e se reconstituem por brotamento`,`os vasa nervorum supririam oxigênio em dobro após a lesão do tronco`],correta:2,just:[`O epineuro é o envelope mecânico — quem guia a regeneração mora mais fundo. [tipo: vizinhança plausível]`,`O perineuro protege e mantém a pressão — mas não é o motivo da regeneração. [tipo: verdade no contexto errado]`,`Correta. O ENDONEURO forma o tubo das CÉLULAS DE SCHWANN — é por elas que o periférico REGENERA. No central, a mielina é do oligodendrócito: não regenera.`,`Os periféricos têm mielina (de Schwann) — o brotamento existe, mas guiado pelo tubo endoneural. [tipo: mecanismo invertido]`,`A vascularização importa (nutre a Schwann), mas não dobra nem é o mecanismo. [tipo: pseudo-explicação plausível]`],ref:'Por que regenera'},
+{n:2,aula:1,nivel:'medio',enun:`<span class="vinheta">Estudante passa o dia com uma mochila pesada; à noite, nota dormência e fraqueza transitórias no membro superior, que revertem em dias.</span><div class="pergunta">A classificação da lesão e seu mecanismo são:</div>`,alts:[`axonotmese — lesão parcial do axônio com tubos conjuntivos preservados`,`neurotmese — rotura completa do tronco do nervo pela compressão mantida ali`,`degeneração walleriana — perda de todo o segmento distal à compressão`,`avulsão pré-ganglionar — arrancamento da raiz no forame intervertebral`,`neuropraxia — interrupção temporária da condução por compressão e edema`],correta:4,just:[`Na axonotmese já há lesão estrutural do axônio — aqui tudo reverteu em dias. [tipo: par confundível]`,`Neurotmese é rotura — não acontece por mochila. [tipo: nível de gravidade errado]`,`Walleriana é a consequência distal de lesão axonal — não houve. [tipo: par confundível]`,`Avulsão é trauma violento de tração — outro mundo. [tipo: nível de gravidade errado]`,`Correta. NEUROPRAXIA: a compressão fecha os capilares (vasa nervorum) → edema → INTERRUPÇÃO TEMPORÁRIA DA CONDUÇÃO, sem lesão estrutural. É o mesmo mecanismo da paralisia facial periférica (edema no canal).`],ref:'Neuropraxia'},
+{n:3,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre os prazos e a dinâmica da regeneração nervosa, os números da aula são:</div>`,alts:[`1–2 mm/dia; reinervar idealmente entre 1 e 3 meses; sem expectativa após 3 anos`,`regeneração de 1–2 cm/dia; reinervar idealmente já na primeira semana após a lesão`,`regeneração instantânea após a neurorrafia, com função plena em 30 dias`,`regeneração de 1–2 mm/mês; a reinervação pode ser esperada por até dez anos`,`regeneração de 5 mm/dia, mas exclusiva das fibras sensitivas do nervo`],correta:0,just:[`Correta. Números da aula: o axônio cresce 1–2 MM/DIA; o ideal é REINERVAR ENTRE 1 E 3 MESES (a fibrose muscular começa aos 3 meses); reinervação funcional em 1–3 anos — e NÃO SE ESPERA reinervação após 3 anos.`,`Centímetros por dia é dez vezes a realidade — e uma semana não é o prazo. [tipo: erro numérico plausível]`,`A sutura canaliza; o axônio ainda precisa CRESCER milímetro a milímetro. [tipo: mecanismo invertido]`,`Milímetros por MÊS tornaria qualquer reparo inútil; e 10 anos passa do teto. [tipo: erro numérico plausível]`,`As motoras também regeneram — o sensitivo apenas recupera mais rápido. [tipo: generalização indevida]`],ref:'Prazos'},
+{n:4,aula:1,nivel:'facil',enun:`<div class="pergunta">O doador clássico para enxerto de nervo — e o porquê da escolha — é:</div>`,alts:[`o nervo mediano, pelo grande calibre e pela fácil dissecção que oferece no antebraço`,`o nervo frênico, por ser puramente motor e de trajeto bem previsível`,`o nervo facial, pela abundância de fascículos finos e bem paralelos`,`o sural, sensitivo, de acesso fácil — "perder sensibilidade é o de menos"`,`o nervo ciático, pelo grande comprimento disponível em um só segmento`],correta:3,just:[`Sacrificar o mediano criaria déficit motor e sensitivo enorme — é o nervo que se RECONSTRÓI, não o doador. [tipo: mecanismo invertido]`,`O frênico é o único motor do diafragma — impensável como doador. [tipo: absurdo funcional controlado]`,`O facial é motor da mímica — lesioná-lo é o que se tenta evitar. [tipo: absurdo funcional controlado]`,`Correta. O SURAL é o grande doador: puramente SENSITIVO (posterior da perna — déficit aceitável), acesso fácil ("corta aqui, corta ali e tira"). Alternativas: safeno, cutâneos do antebraço, ramo superficial do radial.`,`O ciático é o tronco motor do membro inferior — jamais doador. [tipo: absurdo funcional controlado]`],ref:'Enxertos'},
+{n:5,aula:1,nivel:'dificil',enun:`<span class="vinheta">Motociclista sofre tração violenta do pescoço contra o ombro. A ressonância mostra raízes arrancadas do forame intervertebral.</span><div class="pergunta">Sobre esse padrão de lesão do plexo braquial:</div>`,alts:[`é pós-ganglionar, o padrão de melhor prognóstico cirúrgico das lesões do plexo`,`lesão pré-ganglionar (avulsão) — a mais grave, de acesso e reparo difíceis`,`é retroclavicular, comprometendo os fascículos atrás da clavícula`,`é infraclavicular, atingindo as divisões anteriores e posteriores`,`é uma neuropraxia extensa, com recuperação esperada em semanas`],correta:1,just:[`Pós-ganglionar é a rotura DISTAL ao gânglio — essa é a viável. Aqui a raiz saiu do forame. [tipo: mecanismo invertido]`,`Correta. AVULSÃO DA RAIZ NO FORAME INTERVERTEBRAL = lesão PRÉ-GANGLIONAR: a mais grave do plexo — acesso complicadíssimo, sem coto proximal para suturar, prognóstico ruim. As pós-ganglionares (margem do escaleno para fora) são as operáveis.`,`Retroclavicular descreve o NÍVEL dos fascículos — o problema aqui é a raiz no forame. [tipo: par confundível]`,`Infraclavicular é o andar das divisões/ramos — mais distal ainda. [tipo: par confundível]`,`Neuropraxia é reversível e sem lesão estrutural — o oposto de raiz arrancada. [tipo: nível de gravidade errado]`],ref:'Pré × pós-ganglionar'},
+{n:6,aula:1,nivel:'medio',enun:`<div class="pergunta">Na construção do plexo braquial, o fascículo POSTERIOR se caracteriza por:</div>`,alts:[`receber as divisões anteriores dos troncos superior e médio do plexo`,`ser formado só pela divisão anterior do tronco inferior do plexo`,`dar origem direta aos nervos mediano e musculocutâneo do braço`,`receber contribuição de C8 e T1, e de nenhuma raiz mais alta`,`receber as posteriores dos três troncos — todas as raízes, C5 a T1`],correta:4,just:[`As anteriores de superior + médio formam o fascículo LATERAL. [tipo: par confundível]`,`A divisão anterior do inferior sozinha forma o fascículo MEDIAL. [tipo: par confundível]`,`Mediano (lateral+medial) e musculocutâneo (lateral) não saem do posterior. [tipo: recombinação plausível]`,`C8-T1 sozinhos definem o fascículo MEDIAL. [tipo: par confundível]`,`Correta. As divisões POSTERIORES dos TRÊS troncos convergem: o FASCÍCULO POSTERIOR carrega TODAS as raízes (C5-T1) — por isso o RADIAL, seu ramo, é o nervo "completo" do plexo (e o axilar fica só com C5-C6).`],ref:'Fascículo posterior'},
+{n:7,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre as variações pré-fixada e pós-fixada do plexo braquial:</div>`,alts:[`pré-fixado recebe T2 e pós-fixado recebe C4, ambos pelos escalenos`,`pré-fixado significaria origem intradural das raízes; pós-fixado, extradural delas`,`pré-fixado recebe C4; pós-fixado recebe T2 — o achado comum nos cadáveres do laboratório`,`seriam sinônimos das lesões pré e pós-ganglionares do plexo braquial`,`o pré-fixado é exclusividade fetal e desaparece com o desenvolvimento`],correta:2,just:[`Inverteu os dois: C4 em cima = PRÉ; T2 embaixo = PÓS. [tipo: mecanismo invertido]`,`Dura-máter não entra na definição — é questão de raiz a mais. [tipo: pseudo-definição plausível]`,`Correta. PRÉ-FIXADO = contribuição de C4 · PÓS-FIXADO = contribuição de T2 — o achado frequente nas peças do laboratório, em que o INTERCOSTOBRAQUIAL (do 2º espaço intercostal) se junta ao cutâneo medial do braço.`,`Pré/pós-GANGLIONAR é classificação de LESÃO — outra conversa. [tipo: par confundível]`,`É variação anatômica do adulto, presente em boa parte da população. [tipo: pseudo-regra plausível]`],ref:'Pré × pós-fixado'},
+{n:8,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre as raízes dos ramos terminais do plexo, a versão construída em aula:</div>`,alts:[`axilar C5-C6 · radial completo (C5-T1) · mediano sem C5 · ulnar C8-T1`,`axilar C8-T1 · radial só C7 · mediano completo · ulnar C5-C6`,`todos os cinco ramos terminais recebem as cinco raízes igualmente`,`musculocutâneo C8-T1 · axilar C7 · radial C5-C6 · ulnar completo (C5-T1)`,`mediano C5-C6 · ulnar C6-C7 · radial C8-T1 · axilar completo`],correta:0,just:[`Correta. AXILAR = C5-C6 (por isso a lesão alta tira a abdução) · RADIAL = COMPLETO (fascículo posterior, C5-T1) · MEDIANO = C6-T1, SEM C5 · ULNAR = C8-T1 · musculocutâneo = C5-C7.`,`Trocou tudo de andar — o axilar é o nervo ALTO (C5-C6). [tipo: permutação plausível]`,`Só o radial é "completo" — cada terminal tem sua assinatura de raízes. [tipo: generalização indevida]`,`Musculocutâneo é C5-C7 (alto), não C8-T1. [tipo: permutação plausível]`,`O mediano nasce de C6 para baixo; o axilar é o oposto de completo. [tipo: permutação plausível]`],ref:'Raízes dos terminais'},
+{n:9,aula:1,nivel:'medio',enun:`<span class="vinheta">Recém-nascido de parto difícil: braço direito caído junto ao corpo, ombro rodado para dentro, cotovelo estendido e punho fletido. Reflexo bicipital ausente.</span><div class="pergunta">Sobre o diagnóstico e sua explicação anatômica:</div>`,alts:[`paralisia de Klumpke — perda dos intrínsecos da mão pela lesão baixa de C8-T1`,`paralisia completa — membro flácido com todas as raízes do plexo avulsionadas`,`lesão isolada do nervo radial — mão caída por compressão no sulco espiral`,`Erb-Duchenne (C5-C6): perdeu rotação lateral, abdução e flexão do cotovelo — a "mão do garçom"`,`lesão isolada do axilar — deltoide paralisado pela fratura do colo do úmero`],correta:3,just:[`Klumpke é a BAIXA: cotovelo FLETIDO, garra, preensão ausente — o oposto da postura descrita. [tipo: par confundível]`,`Na completa não sobra reflexo nenhum nem postura organizada — aqui o padrão é seletivo. [tipo: nível de gravidade errado]`,`O radial isolado não explica ombro rodado nem bicipital ausente. [tipo: par confundível]`,`Correta. ERB-DUCHENNE (alta, C5-C6±C7 — 80-90% dos casos, melhor prognóstico): sem supra/infraespinal e redondo menor (rotação interna), sem deltoide (adução), sem bíceps (cotovelo estendido, bicipital abolido), sem extensores radiais/supinador (punho fletido) = MÃO DO GARÇOM.`,`O axilar isolado pouparia o bíceps — o bicipital estaria presente. [tipo: par confundível]`],ref:'Erb-Duchenne'},
+{n:10,aula:1,nivel:'dificil',enun:`<div class="pergunta">O torácico longo é C5-C7 — as mesmas raízes da paralisia alta. Por que a escápula alada é RARA na lesão do plexo, segundo o professor?</div>`,alts:[`porque o serrátil receberia dupla inervação e compensaria pelo lado oposto`,`as raízes rompem na margem do escaleno — o torácico longo já saiu antes e desceu`,`porque o torácico longo nasce do fascículo posterior, distal à lesão típica`,`porque a escápula alada exigiria lesão simultânea do dorsal da escápula`,`porque o trapézio íntegro impediria toda báscula visível da escápula alada`],correta:1,just:[`Não há dupla inervação salvadora do serrátil — o mecanismo é topográfico. [tipo: pseudo-explicação plausível]`,`Correta. As roturas do plexo acontecem NA MARGEM DO ESCALENO — e o TORÁCICO LONGO já emergiu ANTES desse ponto e desceu pela parede do tórax. Só a avulsão pré-ganglionar o pega. A escápula alada clássica é da lesão ISOLADA (tiro, facada, trauma na parede lateral do tórax).`,`Ele nasce DAS RAÍZES (C5-C7), bem proximal — o argumento é outro: já desceu. [tipo: erro de origem plausível]`,`O dorsal da escápula cuida de romboides/levantador — não é pré-requisito da alada. [tipo: recombinação plausível]`,`O trapézio compensa pouco — não é ele que "segura" a escápula contra o gradil. [tipo: pseudo-explicação plausível]`],ref:'Escápula alada'},
+{n:11,aula:1,nivel:'medio',enun:`<div class="pergunta">Na paralisia de Erb-Duchenne, estão comprometidos os seguintes nervos:</div>`,alts:[`ulnar, mediano distal e interósseo anterior, com a mão em garra típica`,`só o axilar e o torácico longo, poupando o tronco superior inteiro`,`frênico, acessório e supraescapular, pela vizinhança cervical`,`mediano e ulnar completos, com anestesia de toda a mão e do punho`,`supraescapular, axilar, musculocutâneo e a parte alta do radial`],correta:4,just:[`Esse é o pacote da KLUMPKE (baixa) — a Erb é o andar de cima. [tipo: par confundível]`,`O tronco superior é justamente o lesado — e o torácico longo costuma escapar. [tipo: mecanismo invertido]`,`Frênico e acessório não são ramos do plexo braquial em questão. [tipo: recombinação plausível]`,`Mediano e ulnar são C6-T1/C8-T1 — os poupados relativos da lesão alta. [tipo: par confundível]`,`Correta. ERB (C5-C6): SUPRAESCAPULAR (supra/infraespinal), AXILAR (deltoide, redondo menor), MUSCULOCUTÂNEO (bíceps) e a PARTE ALTA DO RADIAL (braquiorradial, extensores radiais, supinador) + subescapulares. Está montada a mão do garçom.`],ref:'Erb — nervos'},
+{n:12,aula:1,nivel:'medio',enun:`<div class="pergunta">Na paralisia de Klumpke, o cotovelo fica FLETIDO e o antebraço supinado porque:</div>`,alts:[`o tríceps (radial C8-T1) e os pronadores param — bíceps e supinador seguem livres`,`o bíceps estaria paralisado e o tríceps, hiperativo, tracionaria em flexão`,`a espasticidade central flexiona o cotovelo, como em toda lesão nervosa`,`os flexores do carpo puxariam o cotovelo por ação sinérgica reflexa local`,`a dor da avulsão manteria o membro em posição antálgica fletida crônica`],correta:0,just:[`Correta. KLUMPKE (C8-T1): o TRÍCEPS cai (a contribuição baixa do radial) → sem extensão, o BÍCEPS ÍNTEGRO (C5-C6) flexiona; os PRONADORES caem (mediano baixo) → o bíceps e o supinador SUPINAM. Completa-se com a GARRA e a ausência de preensão palmar; bicipital e estilorradial presentes, tricipital ausente.`,`É o inverso — o bíceps é dos poupados da lesão baixa. [tipo: mecanismo invertido]`,`Espasticidade é lesão CENTRAL (neurônio motor superior); aqui é flácido com desequilíbrio. [tipo: par confundível]`,`Flexores do carpo não fazem o cotovelo fletir — a mecânica é bíceps × tríceps. [tipo: pseudo-explicação plausível]`,`A postura é por desequilíbrio muscular, não antálgica. [tipo: pseudo-explicação plausível]`],ref:'Klumpke — mecânica'},
+{n:13,aula:1,nivel:'facil',enun:`<div class="pergunta">A síndrome de Horner acompanha a paralisia de Klumpke porque:</div>`,alts:[`C5 carrega as fibras parassimpáticas da pupila ao gânglio ciliar`,`o nervo frênico lesado deixaria de inervar o músculo tarsal da pálpebra superior`,`T1 leva as fibras simpáticas ao gânglio estrelado — a lesão baixa as corta`,`o fascículo lateral conduz as fibras simpáticas oculares ao crânio`,`a dor crônica da lesão produz miose reflexa persistente no mesmo lado`],correta:2,just:[`As fibras em questão são SIMPÁTICAS, e o andar é T1 — não C5. [tipo: recombinação plausível]`,`O frênico é do diafragma; o tarsal é simpático. [tipo: par confundível]`,`Correta. T1 leva as fibras SIMPÁTICAS que alimentam o GÂNGLIO ESTRELADO (cervicotorácico): a lesão baixa/avulsão de T1 corta a via → PTOSE + MIOSE (Horner). Na Erb alta o T1 escapa; na Klumpke e na completa, Horner vem junto.`,`Os fascículos do plexo não carregam a via simpática ocular. [tipo: recombinação plausível]`,`Miose de Horner é por perda do DILATADOR (simpático), não reflexo doloroso. [tipo: pseudo-explicação plausível]`],ref:'Klumpke + Horner'},
+{n:14,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a paralisia braquial obstétrica (PBO), os dados da aula incluem:</div>`,alts:[`Klumpke é a forma mais comum, pela tração cefálica habitual do parto`,`a forma completa é a regra, pois o plexo do RN não tolera tração parcial`,`fórceps antigos lesavam também o trigêmeo, no forame oval exposto`,`Erb responde por ~75–90%; RN grande e mãe pequena são o cenário típico`,`a cirurgia imediata ao nascimento é o padrão nas avulsões completas`],correta:3,just:[`A mais comum é a ERB (tração cabeça×ombro); Klumpke exige o braço tracionado para cima. [tipo: mecanismo invertido]`,`As formas parciais (altas) são a regra — a completa é exceção grave. [tipo: generalização indevida]`,`O nervo do fórceps era o FACIAL: o RN não tem processo mastoide e ele emerge desprotegido. [tipo: par confundível]`,`Correta. PBO: ERB-DUCHENNE = ~75–90% (separação forçada cabeça-ombro; arreflexia bicipital); KLUMPKE é a menos comum (nádegas, braço para cima). Cenário: RN GRANDE + MÃE PEQUENA, parto prolongado. As fibras superiores sofrem mais neurotmese e avulsão.`,`No bebê espera-se: a mielinização só completa por volta dos 2 anos — avulsão completa tem pouco reparo precoce. [tipo: mecanismo invertido]`],ref:'PBO'},
+{n:15,aula:1,nivel:'medio',enun:`<span class="vinheta">Homem jovem, após acidente de moto, com o membro superior inteiro pendente, flácido, sem qualquer reflexo (bicipital, tricipital e estilorradial ausentes).</span><div class="pergunta">Sobre esse padrão:</div>`,alts:[`é uma paralisia alta extensa, pois os reflexos baixos estariam poupados nela`,`paralisia completa (C5-T1) — ruptura das raízes altas com avulsão de C8-T1`,`é uma lesão bilateral simétrica dos nervos periféricos terminais`,`é uma lesão central espástica, dada a perda global de movimento`,`é neuropraxia difusa do plexo, com recuperação integral esperada`],correta:1,just:[`Alta pouparia tríceps e mão — aqui não sobrou reflexo nenhum. [tipo: par confundível]`,`Correta. PARALISIA COMPLETA (Erb-Klumpke): C5 a T1, membro FLÁCIDO e ARREFLEXO, atrofia global com o tempo. O padrão lesional mais frequente: RUPTURA de C5-C6-C7 + AVULSÃO de C8-T1. E nem toda completa é trauma — neoplasias e doenças desmielinizantes periféricas também.`,`Um acidente unilateral com membro único acometido não é doença bilateral. [tipo: recombinação plausível]`,`Central dá ESPASTICIDADE e hiperreflexia — aqui é flácido e arreflexo (neurônio motor inferior). [tipo: par confundível]`,`Neuropraxia reverte em dias/semanas e não costuma varrer o plexo todo com arreflexia total. [tipo: nível de gravidade errado]`],ref:'Completa'},
+{n:16,aula:1,nivel:'facil',enun:`<div class="pergunta">A lesão isolada do nervo musculocutâneo produz:</div>`,alts:[`arreflexia bicipital, parestesia lateral do antebraço, fraqueza de flexão e supinação`,`mão caída com anestesia do dorso da mão entre o polegar e o dedo indicador`,`garra ulnar com atrofia da região hipotenar e dos músculos interósseos`,`mão em bênção com atrofia tenar e perda completa do movimento de pinça`,`escápula alada com incapacidade de elevar o braço acima da horizontal`],correta:0,just:[`Correta. MUSCULOCUTÂNEO: sem BÍCEPS (arreflexia bicipital, fraqueza de FLEXÃO e de SUPINAÇÃO — o bíceps é supinador potente) + PARESTESIA ANTEROLATERAL DO ANTEBRAÇO, porque ele continua como CUTÂNEO LATERAL DO ANTEBRAÇO após a fossa cubital.`,`Mão caída e esse dorso são assinatura do RADIAL. [tipo: par confundível]`,`Garra e hipotenar são do ULNAR. [tipo: par confundível]`,`Bênção e tenar são do MEDIANO. [tipo: par confundível]`,`Escápula alada é do TORÁCICO LONGO; horizontal é história do acessório/deltoide. [tipo: recombinação plausível]`],ref:'Musculocutâneo'},
+{n:17,aula:1,nivel:'dificil',enun:`<span class="vinheta">Sem déficit motor aparente, você testa a sensibilidade da mão de um paciente com um estilete: anestesia no 5º dedo e na metade medial do 4º; o restante da mão está normal.</span><div class="pergunta">A conclusão — e o fundamento anatômico — é:</div>`,alts:[`neuropatia do nervo mediano, dono da sensibilidade dos dedos mediais da mão`,`neuropatia do radial, que inerva as polpas digitais de toda a mão`,`lesão do cutâneo medial do antebraço, que desce até os dedos mediais`,`neuropatia do interósseo anterior, o ramo sensitivo distal do mediano`,`neuropatia do ulnar: 5º dedo e metade medial do 4º são o seu território`],correta:4,just:[`O mediano é o LATERAL: 1º-3º e metade lateral do 4º. [tipo: mecanismo invertido]`,`O radial cuida do DORSO lateral — polpas palmares não são dele. [tipo: par confundível]`,`O cutâneo medial do antebraço para no ANTEBRAÇO — não chega aos dedos. [tipo: erro de território plausível]`,`O interósseo anterior é essencialmente MOTOR (flexores profundos) — não dá polpa digital. [tipo: par confundível]`,`Correta. Mapa da aula: 1º-3º + METADE LATERAL do 4º = MEDIANO · 5º + METADE MEDIAL do 4º = ULNAR. O 4º é o "dedo da ALIANÇA" de Leonardo — a união dos dois nervos. Sem paralisia, a SENSIBILIDADE é o teste das neuropatias.`],ref:'Mapa sensitivo'},
+{n:18,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre os sinais "mão em bênção" e "mão em garra":</div>`,alts:[`bênção = ulnar ao fechar a mão; garra = mediano com a mão parada em repouso`,`os dois seriam sinais de lesão do radial em níveis diferentes do braço`,`bênção = mediano (1º-3º não fletem ao fechar); garra = ulnar (4º-5º em garra MF/IF)`,`bênção = lesão alta de C5-C6; garra = lesão do fascículo posterior`,`os dois sinais só apareceriam juntos, na lesão combinada alta e baixa do plexo`],correta:2,just:[`Inverteu os donos: a bênção é do MEDIANO; a garra, do ULNAR. [tipo: mecanismo invertido]`,`O radial dá MÃO CAÍDA — nem bênção nem garra. [tipo: par confundível]`,`Correta. MÃO EM BÊNÇÃO = lesão do MEDIANO: ao tentar fechar, polegar-indicador (e médio) ficam para trás. MÃO EM GARRA = lesão do ULNAR: 4º-5º hiperestendidos na metacarpofalângica e fletidos nas interfalângicas (lumbricais mediais parados; o flexor profundo mediano segue puxando).`,`C5-C6 dá a mão do garçom; o fascículo posterior daria padrão radial. [tipo: recombinação plausível]`,`Cada um aparece na lesão do seu nervo, isoladamente. [tipo: generalização indevida]`],ref:'Bênção × garra'},
+{n:19,aula:1,nivel:'dificil',enun:`<span class="vinheta">Corte na palma secciona um nervo digital comum. O paciente perde a sensibilidade das faces adjacentes de dois dedos — mas continua flexionando-os normalmente.</span><div class="pergunta">A motricidade foi poupada porque:</div>`,alts:[`o nervo digital do dedo vizinho reinervaria a área por brotamento colateral`,`haveria regeneração imediata da porção motora do nervo digital seccionado`,`os interósseos dorsais assumiriam a flexão interfalângica por pura sinergia`,`os nervos digitais ali são sensitivos — os ventres flexores moram no antebraço`,`a flexão digital dependeria do punho, poupado na lesão da palma distal`],correta:3,just:[`Brotamento colateral cobre pele lentamente — não devolve motricidade que nunca se perdeu. [tipo: pseudo-explicação plausível]`,`Nervo seccionado não regenera "imediatamente" — leva meses, se suturado. [tipo: mecanismo invertido]`,`Interósseos fazem abdução/adução e ajudam MF — não substituem o flexor profundo. [tipo: pseudo-explicação plausível]`,`Correta. Os DIGITAIS COMUNS/PRÓPRIOS na palma distal são SENSITIVOS: a flexão vem dos FLEXORES LONGOS (superficial → interfalângica proximal; profundo → distal), cujos ventres estão NO ANTEBRAÇO, mais os LUMBRICAIS — inervados antes. Perde-se sensação, não movimento (regenerar exige sutura de pelo menos um ponto).`,`O punho influencia a tenodese, mas a razão é a topografia dos ventres flexores. [tipo: pseudo-explicação plausível]`],ref:'Digitais — só sensibilidade'},
+{n:20,aula:1,nivel:'facil',enun:`<span class="vinheta">Mulher, 45 anos, acorda de madrugada com dor e formigamento no polegar, indicador e dedo médio — melhora "sacudindo as mãos". Sem fraqueza para flexionar os dedos.</span><div class="pergunta">Sobre o diagnóstico:</div>`,alts:[`túnel do carpo: mediano comprimido sob o retináculo — dor noturna, motricidade preservada`,`síndrome do túnel cubital: compressão do nervo ulnar por trás do epicôndilo medial do úmero`,`síndrome do pronador redondo: dor proximal ao esforço repetido de pronação`,`radiculopatia de C8-T1 com padrão noturno e força de preensão preservada`,`síndrome do interósseo anterior, com falha da pinça polegar-indicador`],correta:0,just:[`Correta. TÚNEL DO CARPO — a mononeuropatia compressiva mais comum (tendossinovite dos flexores): DOR + PARESTESIA dos 3½ dedos laterais, PIOR À NOITE (acorda e sacode as mãos — melhora a perfusão do nervo). A motricidade grossa fica: os flexores estão no ANTEBRAÇO; só a musculatura TENAR sofre. Túnel = 9 tendões + o mediano.`,`Território errado: o cubital daria 5º dedo e metade do 4º. [tipo: par confundível]`,`O pronador comprime mais alto e dói no antebraço proximal — não é o padrão noturno clássico. [tipo: par confundível]`,`C8-T1 pegaria o lado ULNAR da mão. [tipo: recombinação plausível]`,`O interósseo anterior é MOTOR (flexão profunda do 1º-3º) — sem parestesia. [tipo: par confundível]`],ref:'Túnel do carpo'},
+{n:21,aula:1,nivel:'medio',enun:`<div class="pergunta">As três síndromes compressivas do nervo mediano, na ordem proximal → distal, são:</div>`,alts:[`túnel de Guyon, túnel do carpo e canal dos lumbricais`,`pronador redondo, interósseo anterior e túnel do carpo`,`túnel cubital, canal de Guyon e, por fim, o túnel do carpo`,`desfiladeiro torácico, túnel cubital e o canal radial do cotovelo`,`síndrome do supinador, arco do flexor ulnar e túnel do carpo`],correta:1,just:[`Guyon é passagem do ULNAR — e "canal dos lumbricais" não existe. [tipo: par confundível]`,`Correta. As TRÊS do MEDIANO: PRONADOR REDONDO (entre as duas cabeças do músculo) → INTERÓSSEO ANTERIOR (no arco tendíneo do flexor superficial — fraqueza da flexão do 1º-3º, dor proximal) → TÚNEL DO CARPO (a mais comum). "O mediano é um nervo bem complexo."`,`Cubital e Guyon são as duas do ULNAR. [tipo: par confundível]`,`Desfiladeiro é síndrome do plexo+vasos; canal radial é do outro nervo. [tipo: recombinação plausível]`,`Supinador comprime o RADIAL (interósseo posterior); arco do flexor ulnar não é descrição da aula. [tipo: recombinação plausível]`],ref:'Compressões do mediano'},
+{n:22,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre o nervo ulnar e suas compressões, a aula destaca:</div>`,alts:[`o canal de Guyon, situado no cotovelo, seria o ponto mais operado do corpo`,`a sua compressão típica aconteceria no túnel do carpo, que ele dividiria com o nervo mediano`,`a garra ulnar impediria a flexão interfalângica dos dedos mediais da mão`,`no túnel cubital o nervo seria profundo e de acesso cirúrgico trabalhoso`,`no túnel cubital é o nervo mais exposto do corpo — ~60% das cirurgias de nervo periférico`],correta:4,just:[`Guyon fica no PUNHO (pisiforme-hâmulo do hamato); o campeão de cirurgia é o CUBITAL, no cotovelo. [tipo: permutação plausível]`,`O ulnar NÃO passa no túnel do carpo — passa por cima/ao lado, no Guyon. [tipo: misconception clássica]`,`A garra MANTÉM a flexão interfalângica (flexor profundo mediano puxa) — o que falha é a extensão IF/os lumbricais. [tipo: mecanismo invertido]`,`É o oposto: atrás do epicôndilo medial ele está quase na pele — "uma incisãozinha e está exposto". [tipo: mecanismo invertido]`,`Correta. No TÚNEL CUBITAL (atrás do epicôndilo medial) o ulnar é o nervo MAIS SUPERFICIAL E EXPOSTO do corpo — inflama com apoio, tênis, flexão repetida: "60% de toda cirurgia de nervo periférico é do ulnar no cotovelo; depois vem o ciático". A segunda passagem é o CANAL DE GUYON, no punho.`],ref:'Ulnar — compressões'},
+{n:23,aula:1,nivel:'facil',enun:`<div class="pergunta">O conceito-síntese sobre o nervo radial — e sua lesão isolada mais comum — é:</div>`,alts:[`inerva os flexores todos do antebraço; a lesão típica estaria na luxação anterior do ombro`,`inerva a musculatura tenar da mão; a lesão típica estaria no túnel do carpo`,`toda a musculatura posterior do membro; lesão típica na fratura do terço médio do úmero`,`seria puramente sensitivo no braço; lesão típica no canal de Guyon do punho`,`inerva os intrínsecos da mão; a lesão típica estaria no túnel cubital`],correta:2,just:[`Flexores do antebraço = mediano/ulnar; luxação do ombro lesa o AXILAR. [tipo: recombinação plausível]`,`Tenar e túnel do carpo pertencem ao MEDIANO. [tipo: par confundível]`,`Correta. Conceito para levar: o RADIAL inerva TODA a musculatura POSTERIOR do membro superior (tríceps + extensores). Lesão isolada mais comum: FRATURA DO TERÇO MÉDIO DO ÚMERO — o nervo abraça o osso no sulco espiral → MÃO CAÍDA (também muletas, dormir sobre o braço).`,`Ele tem enorme componente motor; Guyon é do ulnar. [tipo: recombinação plausível]`,`Intrínsecos da mão = ulnar (e tenar mediano); cubital é do ulnar. [tipo: par confundível]`],ref:'Radial — conceito'},
+{n:24,aula:1,nivel:'medio',enun:`<div class="pergunta">Na prática, os pontos de identificação do nervo radial na peça — e o cuidado com seus ramos — são:</div>`,alts:[`na saída da bainha carótica, no trígono carótico e depois na fossa cubital`,`só na axila, porque distalmente ele seria fino demais para dissecção segura`,`na frente do epicôndilo medial, junto do nervo ulnar ali exposto na pele`,`saída do plexo, cabeças do tríceps, supinador e a divisão em dois ramos`,`no túnel do carpo, por onde acompanharia os nove tendões flexores da mão`],correta:3,just:[`Bainha carótica e trígono carótico são pescoço — outro capítulo. [tipo: recombinação plausível]`,`Ele é dissecável do plexo à mão — a aula dá quatro pontos. [tipo: generalização indevida]`,`Atrás do epicôndilo medial mora o ULNAR; o radial passa do lado lateral. [tipo: par confundível]`,`Correta. Os 4 PONTOS: 1) saída do plexo (fascículo posterior) · 2) ENTRE AS CABEÇAS DO TRÍCEPS · 3) NO SUPINADOR · 4) na divisão: ramo PROFUNDO = INTERÓSSEO POSTERIOR (motor) + ramo SUPERFICIAL (sensitivo, ao lado do braquiorradial). ⚠️ Não confundir o superficial (posterolateral) com o cutâneo lateral do antebraço (anterolateral).`,`No túnel do carpo passa o MEDIANO. [tipo: par confundível]`],ref:'Radial — identificação'}
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Recém-nascido de parto distócico (RN grande, mãe pequena): braço direito imóvel junto ao corpo, ombro rodado internamente, cotovelo estendido, punho fletido; reflexo bicipital ausente. A escápula não está alada.`,perg:[`a) Classifique a paralisia, dê as raízes e explique cada elemento da postura.`,`b) Por que essa é a forma mais comum de paralisia braquial obstétrica — e qual seu prognóstico relativo?`,`c) O torácico longo compartilha as raízes C5-C7: por que a escápula NÃO está alada?`],resp:[["a) Erb-Duchenne","PARALISIA ALTA (ERB-DUCHENNE), C5-C6 (às vezes C7) — tronco superior. Postura ('mão do garçom'): OMBRO RODADO INTERNAMENTE (perdeu supra/infraespinal — supraescapular — e redondo menor — axilar); braço ADUZIDO e caído (deltoide/axilar); COTOVELO ESTENDIDO (perdeu o bíceps/musculocutâneo — bicipital abolido; tríceps livre estende); PUNHO FLETIDO E PRONADO (perdeu braquiorradial, extensores radiais e supinador — a parte alta do radial; o mediano íntegro flexiona)."],["b) Por que a mais comum","O mecanismo obstétrico típico é a SEPARAÇÃO FORÇADA ENTRE CABEÇA E OMBRO na distócia de ombro — tração exatamente sobre o tronco superior. Erb = ~75–90% das PBO. PROGNÓSTICO: o MELHOR das paralisias do plexo — o tronco superior é o de acesso cirúrgico mais fácil, e boa parte recupera."],["c) O torácico longo","As roturas do plexo acontecem NA MARGEM DO ESCALENO — e o TORÁCICO LONGO já emergiu das raízes ANTES desse ponto e desceu pela parede do tórax: escapa da lesão. Escápula alada por lesão do plexo é rara (só nas avulsões pré-ganglionares); a forma clássica é a lesão ISOLADA do nervo (tiro/facada/trauma da parede lateral do tórax)."]],ref:'Erb-Duchenne'},
+{n:2,aula:1,caso:`Jovem cai de uma barra fixa segurando-se com a mão: o braço ficou hiperabduzido e tracionado para cima. Evolui com mão em garra, ausência de preensão palmar, cotovelo fletido, antebraço supinado — e, dias depois, nota-se ptose e miose no mesmo lado.`,perg:[`a) Classifique a lesão, dê as raízes e explique a mecânica do cotovelo fletido/supinado.`,`b) Preveja o estado dos reflexos bicipital, estilorradial, tricipital e de preensão palmar — justificando.`,`c) Explique a ptose e a miose: que estrutura foi comprometida e por qual via?`],resp:[["a) Klumpke","PARALISIA BAIXA (DÉJERINE-KLUMPKE), C8-T1 — tronco inferior, por ABDUÇÃO EXCESSIVA/TRAÇÃO para cima. COTOVELO FLETIDO: o tríceps cai (contribuição C8-T1 do radial) e o bíceps (C5-C6) fica sozinho. SUPINADO: os pronadores (mediano baixo) caem; bíceps + supinador supinam. MÃO EM GARRA + sem oponência: intrínsecos (ulnar/mediano da mão) paralisados. Nervos: ulnar, mediano (mão), interósseo anterior, radial baixo."],["b) Reflexos","BICIPITAL PRESENTE (C5-C6 íntegros) · ESTILORRADIAL PRESENTE (braquiorradial é radial ALTO, C5-C6) · TRICIPITAL AUSENTE (tríceps C8-T1 comprometido) · PREENSÃO PALMAR AUSENTE (flexores profundos/intrínsecos da mão fora do ar) — a assinatura da lesão baixa."],["c) Horner","SÍNDROME DE CLAUDE BERNARD-HORNER: T1 carrega as fibras SIMPÁTICAS que alimentam o GÂNGLIO ESTRELADO (cervicotorácico). A avulsão/lesão de T1 corta a via → PTOSE (músculo tarsal) + MIOSE (perde o dilatador) ± anidrose. Lembrete da aula: o simpático cervical inerva TODAS as glândulas da cabeça, não só a pupila. Horner acompanha a Klumpke e a completa — não a Erb pura."]],ref:'Klumpke + Horner'},
+{n:3,aula:1,caso:`Digitadora de 48 anos: dor e formigamento noturnos no polegar, indicador e médio há meses — acorda e "sacode as mãos". Flexiona os dedos com força normal, mas a eminência tenar começa a achatar.`,perg:[`a) Dê o diagnóstico, o mecanismo e o conteúdo do túnel envolvido.`,`b) Por que a motricidade dos dedos está preservada — e o que explica a atrofia tenar?`,`c) Cite as outras duas síndromes compressivas do mesmo nervo e onde cada uma aperta.`],resp:[["a) Túnel do carpo","SÍNDROME DO TÚNEL DO CARPO — a mononeuropatia compressiva mais comum. Mecanismo: TENDOSSINOVITE INESPECÍFICA dos flexores apertando o MEDIANO sob o retináculo. Conteúdo do túnel: 9 TENDÕES (flexor longo do polegar + 4 superficiais + 4 profundos) + O NERVO MEDIANO. Clínica: DOR + PARESTESIA dos 3½ dedos laterais, PIOR À NOITE (sacudir melhora a perfusão do nervo). Tratamento: infiltração (na projeção da linha do polegar) → abertura cirúrgica do retináculo."],["b) Motricidade × tenar","Os FLEXORES LONGOS dos dedos têm os ventres NO ANTEBRAÇO — seus tendões só passam pelo túnel: a força de flexão fica. O que o mediano inerva DEPOIS do túnel é a musculatura TENAR (oponente, abdutor curto, flexor curto) e os lumbricais laterais — por isso a compressão crônica atrofia a eminência tenar ('mão de macaco') e ameaça a oponência/pinça."],["c) As outras duas","SÍNDROME DO PRONADOR REDONDO: compressão entre as DUAS CABEÇAS do pronador redondo (dor proximal ao esforço). SÍNDROME DO INTERÓSSEO ANTERIOR: compressão no ARCO TENDÍNEO do flexor superficial dos dedos — fraqueza da flexão profunda do 1º-3º dedos (falha a pinça distal), essencialmente motora. Com o túnel do carpo, são as TRÊS do mediano."]],ref:'Túnel do carpo'},
+{n:4,aula:1,caso:`Homem sofre corte profundo no punho com secção completa do nervo mediano. Na cirurgia, o coto perdeu 3 cm — sutura direta só ficaria sob tensão. Meses depois de reconstruído, ele flexiona os dedos, mas confunde os comandos finos e segue em fisioterapia.`,perg:[`a) Que técnica está indicada em vez da sutura sob tensão? De onde tirar o doador e por quê?`,`b) Descreva as bainhas do nervo, o que cada sutura une — e por que o periférico regenera.`,`c) Explique os prazos esperados da regeneração e por que a fisioterapia prolongada é necessária mesmo com cirurgia perfeita.`],resp:[["a) Enxerto","ENXERTO DE NERVO — 'melhor do que sutura sob tensão' (em condições favoráveis, enxerto e sutura se equivalem; o leito precisa ser vascularizado, pois os vasa nervorum nutrem as células de Schwann). Doador clássico: NERVO SURAL (sensitivo puro, região posterior da perna — 'perder sensibilidade é o de menos', acesso fácil). Alternativas: safeno, cutâneos medial/lateral do antebraço, ramo superficial do radial."],["b) Bainhas e regeneração","EPINEURO (externo/interno — o envelope macroscópico) → PERINEURO (em volta de cada FASCÍCULO — controla difusão iônica, protege, mantém pressão) → ENDONEURO (em volta de cada axônio, formando o TUBO DAS CÉLULAS DE SCHWANN). As neurorrafias EPINEURAL e PERINEURAL unem o 'tecido condutivo' para CANALIZAR o crescimento. O periférico regenera porque tem SCHWANN; o central (oligodendrócito) não."],["c) Prazos e fisioterapia","Crescimento de 1–2 MM/DIA; reinervar idealmente em 1–3 MESES (fibrose muscular inicia aos 3 meses); função ao longo de 1–3 anos; sem expectativa APÓS 3 ANOS. Mesmo com sutura perfeita, A ORDEM DAS FIBRAS SE PERDE ('vermelho não casa com vermelho'): quando os axônios chegam às placas, o mapa cortical está trocado — o paciente comanda um dedo e move outro. A FISIOTERAPIA (até ~1 ano) reeduca o cérebro; o sensitivo recupera antes do motor."]],ref:'Neurorrafia e enxerto'}
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 09</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 09</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 09 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 09 — Lesões Nervosas do Membro Superior",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Estrutura e regeneração do nervo, o plexo braquial e suas paralisias (Erb, Klumpke, completa, PBO) — e as síndromes do mediano, ulnar e radial.",cards:[
+{area:"Estrutura",cat:"prof",q:"As três bainhas do nervo — e qual delas explica a regeneração?",a:"EPINEURO (externo/interno — o envelope) → PERINEURO (cada fascículo) → ENDONEURO (cada axônio). O ENDONEURO forma o tubo das CÉLULAS DE SCHWANN = por isso o periférico REGENERA (central: oligodendrócito, não regenera)."},
+{area:"Estrutura",cat:"conceito",q:"O que a neurorrafia sutura — e por quê?",a:"O 'TECIDO CONDUTIVO' (epineuro ou perineuro, fascículo a fascículo) para CANALIZAR a regeneração — 'senão cresce aleatoriamente'."},
+{area:"Estrutura",cat:"alerta",q:"Por que a fisioterapia é longa mesmo com sutura perfeita?",a:"A ORDEM DAS FIBRAS SE PERDE: quando os axônios chegam às placas motoras, o mapa cerebral está com 'as vírgulas trocadas' — comanda o polegar, mexe outro dedo. Até ~1 ano reeducando. O sensitivo recupera antes do motor."},
+{area:"Estrutura",cat:"prof",q:"Os números da regeneração?",a:"1–2 MM/DIA de crescimento · reinervar idealmente em 1–3 MESES (fibrose muscular inicia aos 3 meses) · função em 1–3 anos · NADA se espera após 3 ANOS."},
+{area:"Estrutura",cat:"conceito",q:"Degeneração walleriana é qual?",a:"A DISTAL (centrífuga): perde-se todo o segmento abaixo da lesão. Há também a proximal (axônica, centrípeta) — e a degeneração MUSCULAR com fibrose a partir dos 3 meses."},
+{area:"Enxertos",cat:"prof",q:"O doador clássico de enxerto de nervo — e as alternativas?",a:"NERVO SURAL (sensitivo puro, posterior da perna, acesso fácil — 'perder sensibilidade é o de menos'). Alternativas: SAFENO, cutâneos medial/lateral do antebraço, ramo superficial do radial.",obs:"Melhor ENXERTO do que sutura sob TENSÃO; leito vascularizado (vasa nervorum nutrem a Schwann)."},
+{area:"Lesões",cat:"prof",q:"Neuropraxia × axonotmese × neurotmese?",a:"NEUROPRAXIA: interrupção TEMPORÁRIA da condução (compressão → edema; a mochila; a paralisia facial periférica). AXONOTMESE: lesão PARCIAL do axônio/mielina, tubos preservados. NEUROTMESE: ROTURA COMPLETA do nervo."},
+{area:"Lesões",cat:"alerta",q:"Lesão pré-ganglionar × pós-ganglionar do plexo?",a:"PRÉ = AVULSÃO da raiz no FORAME INTERVERTEBRAL: a mais grave, sem coto para suturar, acesso complicadíssimo. PÓS = rotura distal (margem do escaleno para fora): a operável. +90% das lesões do plexo são traumáticas e SUPRACLAVICULARES."},
+{area:"Plexo",cat:"prof",q:"A construção do plexo: troncos e fascículos?",a:"TRONCOS: superior C5-C6 · médio C7 · inferior C8-T1. FASCÍCULOS: POSTERIOR = todas as divisões posteriores (C5-T1, completo) · LATERAL = anteriores de superior+médio (C5-C7) · MEDIAL = anterior do inferior (C8-T1)."},
+{area:"Plexo",cat:"conceito",q:"Plexo pré-fixado × pós-fixado?",a:"PRÉ-FIXADO: contribuição de C4. PÓS-FIXADO: contribuição de T2 — o comum nos cadáveres do laboratório, com o INTERCOSTOBRAQUIAL (2º espaço) se juntando ao cutâneo medial do braço."},
+{area:"Plexo",cat:"prof",q:"Raízes dos cinco ramos terminais (versão da aula)?",a:"MUSCULOCUTÂNEO C5-C7 · AXILAR C5-C6 · RADIAL COMPLETO (C5-T1) · MEDIANO C6-T1 (SEM C5) · ULNAR C8-T1."},
+{area:"Plexo",cat:"alerta",q:"O musculocutâneo 'acaba' na fossa cubital?",a:"O componente MOTOR sim — dali ele CONTINUA como CUTÂNEO LATERAL DO ANTEBRAÇO (sensitivo). 'Detalhe super importante': parestesia lateral do antebraço = musculocutâneo."},
+{area:"Plexo",cat:"conceito",q:"Principais colaterais e seus alvos?",a:"TORÁCICO LONGO (C5-C7) → serrátil · DORSAL DA ESCÁPULA (C5) → romboides+levantador · SUPRAESCAPULAR → supra/infraespinal · SUBESCAPULARES (C5-C6) → subescapular + redondo MAIOR · TORACODORSAL (C6-C8) → latíssimo ('músculo do NADADOR') · peitorais lateral/medial."},
+{area:"Erb",cat:"prof",q:"Erb-Duchenne: raízes, frequência e prognóstico?",a:"PARALISIA ALTA: C5-C6 (±C7), tronco superior — 80–90% dos casos, a MAIS COMUM e de MELHOR prognóstico (acesso fácil ao tronco superior)."},
+{area:"Erb",cat:"prof",q:"A postura da Erb — peça por peça?",a:"Braço caído ADUZIDO (deltoide/axilar) · OMBRO RODADO INTERNAMENTE (supra/infraespinal, redondo menor) · COTOVELO ESTENDIDO (perdeu bíceps; tríceps livre) · PUNHO FLETIDO e pronado (perdeu extensores radiais/supinador; mediano flexiona) = MÃO DO GARÇOM (a gorjeta por trás).",obs:"Reflexo BICIPITAL AUSENTE."},
+{area:"Erb",cat:"alerta",q:"Por que a escápula alada é rara na lesão do plexo?",a:"As raízes rompem NA MARGEM DO ESCALENO — e o TORÁCICO LONGO já saiu antes e desceu pelo tórax: escapa. Escápula alada clássica = lesão ISOLADA do torácico longo (tiro/facada/parede lateral do tórax). Só a avulsão pré-ganglionar o pega."},
+{area:"Klumpke",cat:"prof",q:"Klumpke: raízes, mecanismo e postura?",a:"PARALISIA BAIXA: C8-T1 (tronco inferior), por ABDUÇÃO EXCESSIVA/tração para cima (queda da barra; parto de nádegas). COTOVELO FLETIDO (tríceps caiu; bíceps livre) + SUPINADO (pronadores caíram) + MÃO EM GARRA + SEM PREENSÃO PALMAR."},
+{area:"Klumpke",cat:"conceito",q:"Os reflexos na Klumpke?",a:"BICIPITAL e ESTILORRADIAL PRESENTES (C5-C6 íntegros — braquiorradial é radial alto) · TRICIPITAL AUSENTE · reflexo de PREENSÃO PALMAR AUSENTE."},
+{area:"Klumpke",cat:"alerta",q:"Por que a Klumpke vem com síndrome de Horner?",a:"T1 leva as fibras SIMPÁTICAS ao GÂNGLIO ESTRELADO (cervicotorácico): avulsão/lesão de T1 → PTOSE + MIOSE (± anidrose). Na Erb pura o T1 escapa — Horner marca a lesão BAIXA ou completa.",obs:"O simpático cervical inerva TODAS as glândulas da cabeça, não só a pupila."},
+{area:"PBO",cat:"prof",q:"Paralisia braquial obstétrica: números e cenário?",a:"ERB = ~75–90% das PBO (separação forçada cabeça×ombro). KLUMPKE = a menos comum (nádegas/braço para cima). Cenário: RN GRANDE + MÃE PEQUENA, parto prolongado. Fibras superiores sofrem mais neurotmese/avulsão."},
+{area:"PBO",cat:"caso",q:"Além do plexo, que nervo o fórceps antigo lesava — e por quê?",a:"O FACIAL: o recém-nascido NÃO TEM PROCESSO MASTOIDE — o nervo emerge desprotegido atrás da orelha, direto sob a colher do fórceps."},
+{area:"PBO",cat:"conceito",q:"Paralisia completa (Erb-Klumpke): quadro e padrão lesional?",a:"C5–T1: membro FLÁCIDO, TODOS os reflexos ausentes, atrofia global. Padrão típico: RUPTURA de C5-C6-C7 + AVULSÃO de C8-T1. Nem toda completa é trauma: neoplasias e desmielinizantes periféricas também.",obs:"No bebê, pouco reparo precoce: mielinização completa só ~2 anos."},
+{area:"Mediano",cat:"prof",q:"O mapa sensitivo da mão que 'não se pode esquecer nunca'?",a:"1º, 2º, 3º dedos + METADE LATERAL do 4º = MEDIANO · 5º + METADE MEDIAL do 4º = ULNAR. Sem paralisia, a SENSIBILIDADE (estilete) é o teste das neuropatias."},
+{area:"Mediano",cat:"caso",q:"Por que o 4º dedo é o 'dedo da aliança'?",a:"Leonardo da Vinci (~1500), dissecando a mão, viu os dois nervos digitais do anelar — um do MEDIANO, um do ULNAR — e o batizou dedo da ALIANÇA: a união dos dois nervos ('e à esquerda, ligados ao coração')."},
+{area:"Mediano",cat:"prof",q:"Mão em bênção: o que é e de quem é?",a:"Lesão do MEDIANO: ao TENTAR FECHAR a mão, polegar e indicador (e parte do médio) não flexionam — ficam 'abençoando'. + atrofia TENAR (mão de macaco), perda de oponência/pinça, pronação fraca."},
+{area:"Mediano",cat:"prof",q:"As três síndromes compressivas do mediano?",a:"1) PRONADOR REDONDO (entre as duas cabeças) · 2) INTERÓSSEO ANTERIOR (arco tendíneo do flexor superficial — fraqueza da flexão profunda do 1º-3º) · 3) TÚNEL DO CARPO (a mais comum)."},
+{area:"Mediano",cat:"alerta",q:"Túnel do carpo: clínica e por que a motricidade fica?",a:"DOR + PARESTESIA dos 3½ dedos laterais, PIOR À NOITE (acorda e sacode as mãos). Motricidade grossa PRESERVADA: os flexores longos estão no ANTEBRAÇO — o túnel só compromete a musculatura TENAR. Túnel = 9 TENDÕES + o mediano; etiologia: tendossinovite; infiltração na linha do polegar."},
+{area:"Mediano",cat:"conceito",q:"Corte de nervo digital comum na palma: o que se perde?",a:"SÓ A SENSIBILIDADE do território. A flexão fica: flexor superficial (IF proximal) e profundo (IF distal) têm os ventres no ANTEBRAÇO + LUMBRICAIS já inervados. Para regenerar a sensação: suturar pelo menos um ponto."},
+{area:"Ulnar",cat:"prof",q:"A garra ulnar: mecânica e atrofias?",a:"4º-5º dedos HIPERESTENDIDOS na metacarpofalângica e FLETIDOS nas interfalângicas (lumbricais mediais parados; flexor profundo mediano puxa). Atrofia HIPOTENAR + interósseos (afunda o 1º espaço). Sensibilidade: 5º + metade medial do 4º."},
+{area:"Ulnar",cat:"alerta",q:"As duas compressões do ulnar — e qual é o recorde nacional de cirurgia?",a:"TÚNEL CUBITAL (atrás do epicôndilo medial — o nervo mais superficial e exposto do corpo): '60% de toda cirurgia de nervo periférico é do ulnar no cotovelo; depois vem o ciático'. E o CANAL DE GUYON no punho (pisiforme × hâmulo do hamato)."},
+{area:"Radial",cat:"prof",q:"O conceito-síntese do radial?",a:"Inerva TODA A MUSCULATURA POSTERIOR do membro superior — tríceps no braço, extensores no antebraço. Sensibilidade mais constante: DORSO DA MÃO entre polegar e indicador."},
+{area:"Radial",cat:"prof",q:"A lesão isolada mais comum do radial?",a:"FRATURA DO TERÇO MÉDIO DO ÚMERO (o nervo abraça o osso no sulco espiral) → MÃO CAÍDA. Também: muletas e 'paralisia do sábado à noite' (dormir sobre o braço)."},
+{area:"Radial",cat:"conceito",q:"Lesão do interósseo posterior: por que não é mão caída completa?",a:"Compressão no SUPINADOR (perto do epicôndilo lateral), só motora: caem os extensores dos dedos, mas o EXTENSOR RADIAL LONGO (mais alto) escapa → extensão do punho COM DESVIO RADIAL."},
+{area:"Radial",cat:"prof",q:"Os 4 pontos para identificar o radial na peça?",a:"1) Saída do plexo (fascículo posterior) · 2) ENTRE AS CABEÇAS DO TRÍCEPS · 3) NO SUPINADOR · 4) na DIVISÃO: ramo PROFUNDO = INTERÓSSEO POSTERIOR + ramo SUPERFICIAL (sensitivo, ao lado do braquiorradial).",obs:"Não confundir o superficial (posterolateral) com o cutâneo lateral do antebraço (anterolateral)."},
+{area:"Plexo",cat:"caso",q:"Qual a relação dos fascículos com a artéria axilar — cobrada na prova de axila?",a:"Os fascículos LATERAL e MEDIAL 'ABRAÇAM' a artéria axilar (as raízes do MEDIANO se unem na frente dela); o POSTERIOR fica atrás. O mediano então segue a braquial até a fossa cubital e o túnel do carpo."},
+{area:"Lesões",cat:"caso",q:"Schwannoma: o que é?",a:"Tumor benigno da CÉLULA DE SCHWANN (neurinoma) — o exemplo clássico é o do acústico. Neuromas de nervo periférico também se formam em cotos de secção (o 'neuroma de mediano' da aula)."}
+]}
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-lesoes-nervosas-ms-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>

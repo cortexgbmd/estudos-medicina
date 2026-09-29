@@ -1,0 +1,1367 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Aula 08 — Topografia dos Membros Superiores · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Aula 08 — Membros Superiores</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula 08</p>
+  <h1 class="page-h1">Topografia dos Membros Superiores</h1>
+  <p class="lead">O eixo arterial da subclávia aos arcos palmares — com a circulação colateral do cotovelo e a lógica das artérias recorrentes —, a sintopia dos nervos do plexo braquial ao redor da artéria, a manobra de Allen e por que ela é obrigatória, o sistema venoso superficial (cefálica × basílica) e a flebotomia, a fossa cubital plano a plano — com a pegadinha do nervo ulnar — e a drenagem linfática do membro até o ducto torácico.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O eixo arterial: subclávia → axilar → braquial</a></li>
+      <li><a href="#t2">Braquial × braquial profunda: condução × nutrição</a></li>
+      <li><a href="#t3">Sintopia: os nervos ao redor da artéria</a></li>
+      <li><a href="#t4">A circulação colateral do cotovelo: colaterais e recorrentes</a></li>
+      <li><a href="#t5">Antebraço: radial, ulnar e as interósseas</a></li>
+      <li><a href="#t6">Arco cárpico, arcos palmares e artérias digitais</a></li>
+      <li><a href="#t7">Manobra de Allen: por que é obrigatória</a></li>
+      <li><a href="#t8">Aneurisma e pseudoaneurisma: a bolota pulsátil</a></li>
+      <li><a href="#t9">Sistema venoso: superficial × profundo (70/30)</a></li>
+      <li><a href="#t10">Cefálica e basílica: os dois trajetos</a></li>
+      <li><a href="#t11">Intermédias, M venoso, variações — e as profundas duplas</a></li>
+      <li><a href="#t12">Flebotomia: o acesso de quem não tem acesso</a></li>
+      <li><a href="#t13">Fossa cubital: limites e os dois planos</a></li>
+      <li><a href="#t14">O ulnar fora da fossa — e o caso da coleta</a></li>
+      <li><a href="#t15">Drenagem linfática: os grupos axilares e os territórios</a></li>
+      <li><a href="#t16">Ducto torácico × ducto subclávio direito</a></li>
+      <li><a href="#t17">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O eixo arterial: subclávia → axilar → braquial</h2>
+  <ul>
+    <li>A <b>SUBCLÁVIA</b> começa no <b>tronco braquiocefálico</b> (à direita) ou <b>direto na aorta</b> (à esquerda) — e <b>acaba na PRIMEIRA COSTELA</b>.</li>
+    <li>Da primeira costela em diante ela vira <b>ARTÉRIA AXILAR</b>; a axilar <b>acaba na margem do REDONDO MAIOR</b>, onde começa a <b>ARTÉRIA BRAQUIAL</b>.</li>
+    <li>A braquial <b>corre medial ao úmero e depois passa anterior a ele</b>, chegando à região da fossa cubital — onde vai se dividir.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência de referência: qual margem do redondo maior?</p>
+  <p>Na aula, a axilar termina na <b>margem LATERAL do redondo maior</b>. Nos livros (Moore, Netter), o limite clássico é a <b>margem INFERIOR do redondo maior</b>. O marco é o mesmo músculo — na prova do professor, use a versão da aula.</p></div>
+  <figure class="fig"><img src="img/slide8-02-arterias-geral.jpg" alt="Visão geral das artérias do membro superior">
+  <figcaption>O eixo arterial do membro superior de ponta a ponta: braquial, braquial profunda, radial, ulnar e interósseas, terminando no arco palmar — com as artérias em regressão embriológica (central primária, mediana) que explicam parte das variações.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · Braquial × braquial profunda: condução × nutrição</h2>
+  <ul>
+    <li>Logo no seu início, a braquial origina a <b>ARTÉRIA BRAQUIAL PROFUNDA</b> — <b>o ramo mais importante da braquial</b>, que sai <b>posterolateral</b> e desce <b>junto do NERVO RADIAL</b> pela face posterior do braço.</li>
+    <li>🎯 Divisão de trabalho: a <b>braquial profunda NUTRE</b> os tecidos do membro; a <b>braquial CONDUZ</b> o sangue para baixo.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 A analogia do professor: igual à femoral</p>
+  <p>"Uma artéria de condução, que é a braquial, e uma artéria de nutrição para os tecidos — igual a femoral: a femoral desce e conduz o sangue para o membro inferior, e a femoral profunda nutre os tecidos." Guarde o par: <b>tronco de condução + ramo profundo de nutrição</b>, nos dois membros.</p></div>
+
+  <h2 class="topic" id="t3">3 · Sintopia: os nervos ao redor da artéria</h2>
+  <div class="diagrama"><p class="t">A artéria braquial e os ramos do plexo (de qual fascículo vem cada um)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>MEDIANO — CRUZA a artéria de LATERAL para MEDIAL</b> — <span class="d">é a união dos <b>fascículos LATERAL + MEDIAL</b>; desce colado na braquial.</span></div></li>
+    <li><span class="n">2</span><div><b>MUSCULOCUTÂNEO — LATERAL à artéria</b> — <span class="d">vem do <b>fascículo LATERAL</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>ULNAR — MEDIAL à artéria</b> — <span class="d">vem do <b>fascículo MEDIAL</b>.</span></div></li>
+    <li><span class="n">4</span><div><b>RADIAL — POSTERIOR à artéria braquial</b> — <span class="d">e, um pouco mais alto, o <b>AXILAR atrás da artéria axilar</b> — ambos do <b>fascículo POSTERIOR</b>.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>A <b>VEIA braquial é medial à artéria</b> — e <b>pode ser dupla</b>: aí fica uma veia medial e uma lateral à artéria.</li>
+    <li>Mais abaixo, o <b>mediano cruza ANTERIOR à artéria ulnar</b> e segue para o antebraço; a ulnar vai para a parte medial e passa a correr <b>junto do nervo ulnar</b>. A radial desce <b>sob o braquiorradial</b>, acompanhada do <b>ramo superficial do nervo radial</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · A circulação colateral do cotovelo: colaterais e recorrentes</h2>
+  <ul>
+    <li>Do lado <b>LATERAL</b>: a braquial profunda se divide em <b>COLATERAL RADIAL e COLATERAL MÉDIA</b>, que se anastomosam com a <b>RECORRENTE RADIAL</b> — ramo da radial.</li>
+    <li>Do lado <b>MEDIAL</b>: a braquial dá as <b>COLATERAIS ULNARES SUPERIOR e INFERIOR</b>, que se anastomosam entre si e com a <b>RECORRENTE ULNAR</b> — ramo da ulnar.</li>
+    <li>🎯 Utilidade clínica: com uma <b>obstrução da braquial</b> (uma placa no meio do braço), o sangue vem por <b>braquial profunda → colateral radial → recorrente radial → radial</b> — e chega à mão. "As colaterais dão conta do recado."</li>
+    <li>Atrás da fossa cubital existe uma <b>grande rede de anastomoses</b> unindo colaterais e recorrentes — é a <b>circulação colateral do cotovelo</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Por que "recorrente"? Porque o fluxo RECORRE</p>
+  <p>O sentido normal do sangue arterial é coração → periferia. Numa artéria <b>recorrente, o fluxo corre ao contrário — para CIMA</b> — para encontrar a colateral que desce. Recorrente radial e colateral radial são <b>artérias diferentes que normalmente se unem</b> (embriologicamente podem nem se unir).</p></div>
+  <figure class="fig"><img src="img/slide8-13-anastomoses-cotovelo.jpg" alt="Anastomoses arteriais ao redor do cotovelo">
+  <figcaption>A rede anastomótica do cotovelo nas vistas anterior e posterior: colaterais radial e média (da braquial profunda) encontrando as recorrentes radial e interóssea; colaterais ulnares superior e inferior encontrando as recorrentes ulnares — o desvio pronto para qualquer obstrução da braquial.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Antebraço: radial, ulnar e as interósseas</h2>
+  <ul>
+    <li>A braquial <b>se divide na altura da CABEÇA (às vezes colo) do RÁDIO</b> em <b>RADIAL</b> e <b>ULNAR</b>. A radial segue junto do rádio; a ulnar, junto da ulna, passando <b>sob o pronador redondo e os flexores</b>.</li>
+    <li>A <b>ULNAR origina a INTERÓSSEA COMUM</b> — 🎯 <b>curtinha (1–2 cm)</b> — que logo se divide em <b>interóssea ANTERIOR e POSTERIOR</b>, correndo na frente e atrás da <b>membrana interóssea</b> (por isso o nome).</li>
+    <li>🎯 Detalhe de prova: <b>a interóssea POSTERIOR perfura a membrana interóssea</b> e desce por trás dela.</li>
+  </ul>
+
+  <h2 class="topic" id="t6">6 · Arco cárpico, arcos palmares e artérias digitais</h2>
+  <ul>
+    <li>No carpo, <b>radial + ulnar + interóssea</b> formam o <b>ARCO CÁRPICO</b>.</li>
+    <li>Na palma, radial e ulnar formam os <b>DOIS ARCOS PALMARES</b>:</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>Arco palmar SUPERFICIAL</th><th>Arco palmar PROFUNDO</th></tr>
+    <tr><td><b>Suprimento principal</b></td><td><b>artéria ULNAR</b></td><td><b>artéria RADIAL</b></td></tr>
+    <tr><td><b>Complemento</b></td><td>ramo palmar SUPERFICIAL da radial</td><td>ramo PROFUNDO da ulnar</td></tr>
+    <tr><td><b>Importância</b></td><td>🎯 <b>o mais importante — mais calibroso</b></td><td>menos calibroso</td></tr>
+  </table></div>
+  <ul>
+    <li>Dos arcos saem as <b>artérias DIGITAIS COMUNS</b> e depois as <b>DIGITAIS PRÓPRIAS</b> — uma <b>lateral e uma medial a cada dedo</b>.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 Anestesia na base do dedo: aspire antes</p>
+  <p>Para suturar um dedo cortado, o bloqueio é na base do dedo — exatamente onde passam as digitais próprias, lateral e medial. <b>Sempre aspirar antes de injetar</b>, para não jogar anestésico dentro da artéria digital.</p></div>
+  <figure class="fig"><img src="img/slide8-14-arcos-palmares.jpg" alt="Arcos palmares e suas variações">
+  <figcaption>Os arcos palmares na vista geral — e, embaixo, o motivo da manobra de Allen: as variações. Arcos completos, arcos incompletos, radial suprindo só polegar e indicador, até a interóssea participando do arco.</figcaption></figure>
+
+  <h2 class="topic" id="t7">7 · Manobra de Allen: por que é obrigatória</h2>
+  <ul>
+    <li><b>Como faz:</b> comprime <b>radial E ulnar</b> no punho → o paciente <b>abre e fecha a mão 10 vezes</b> (esvazia a palma) → <b>solta uma das artérias</b> e observa a perfusão voltar. Depois testa a outra.</li>
+    <li><b>O que ela responde:</b> se o <b>arco palmar é completo</b> — se a ulnar sozinha consegue irrigar todos os dedos e a palma. 🎯 "Se todo mundo tivesse arcos completos, ninguém teria isquemia trombosando a radial. Mas <b>nem todo mundo tem</b>."</li>
+    <li><b>Quando é obrigatória — todo procedimento que ocupa a radial:</b>
+      <b>cateterismo cardíaco pela radial</b> · <b>PAI</b> (pressão arterial invasiva na UTI/cirurgia — um cateter dentro da radial medindo a pressão) · <b>fístula arteriovenosa para hemodiálise</b> (normalmente <b>radial → cefálica</b>: roda o fluxo da artéria para dentro da veia).</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O recado do professor</p>
+  <p>"Se vocês forem intensivistas, hemodinamicistas, anestesistas — <b>não esqueçam da manobra de Allen</b>. Quantas gangrenas de dedo e de mão inteira a gente já não pegou, teve que amputar dedo, amputar mão." Se a radial trombosar num arco incompleto, o polegar — ou a mão — entra em sofrimento.</p></div>
+
+  <h2 class="topic" id="t8">8 · Aneurisma e pseudoaneurisma: a bolota pulsátil</h2>
+  <ul>
+    <li>Na arteriografia da aula: uma <b>dilatação da artéria AXILAR</b> — um <b>aneurisma verdadeiro</b>.</li>
+    <li>No punho, após um <b>trauma</b>, formou-se uma tumoração na topografia da radial: <b>massa PULSÁTIL</b> à palpação = <b>PSEUDOANEURISMA</b> da artéria radial — "não é um aneurisma verdadeiro, porque foi pós-traumático".</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 Palpe toda bolota antes de passar o bisturi</p>
+  <p>A armadilha: achar que é um <b>abscesso</b> e incisar para drenar — "aquilo explode num jato de sangue arterial". <b>Se a bolota é pulsátil, é artéria.</b> Palpação sempre, antes de qualquer drenagem.</p></div>
+  <figure class="fig"><img src="img/slide8-16-pseudoaneurisma.jpg" alt="Massa pulsátil no punho — pseudoaneurisma">
+  <figcaption>O caso da aula: tumoração no punho após trauma, exatamente na topografia da artéria radial. A palpação revelou massa pulsátil — pseudoaneurisma, não abscesso. Incisar isso seria abrir uma artéria.</figcaption></figure>
+  <figure class="fig"><img src="img/slide8-09-arteriografia.jpg" alt="Arteriografia com dilatação da artéria axilar">
+  <figcaption>Arteriografia mostrando a grande dilatação sacular da artéria axilar — o aneurisma verdadeiro que o professor usou para apresentar o exame.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Sistema venoso: superficial × profundo (70/30)</h2>
+  <ul>
+    <li><b>Superficial</b> = acima da fáscia, no subcutâneo. <b>Profundo</b> = dentro dos compartimentos musculares/fasciais. Vale para membro superior e inferior.</li>
+    <li>🎯 <b>No MEMBRO SUPERIOR: ~70% da drenagem venosa é SUPERFICIAL</b> (20–30% profunda). <b>No MEMBRO INFERIOR é o INVERSO</b>: 70–80% profunda.</li>
+    <li>É por isso que a cefálica costuma ser <b>mais calibrosa que a braquial</b> — e é por isso que, no membro inferior, <b>dá para tirar as varizes</b> (o sistema superficial de lá é dispensável).</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Campeão de variações</p>
+  <p>"O sistema venoso é o que mais apresenta variação anatômica no corpo humano" — de <b>pessoa para pessoa e de braço para braço na MESMA pessoa</b>. As quatro veias habituais do superficial: <b>CEFÁLICA, BASÍLICA, INTERMÉDIA DO ANTEBRAÇO e INTERMÉDIA DO COTOVELO</b>.</p></div>
+  <figure class="fig"><img src="img/slide8-20-veias-superficiais.jpg" alt="Veias superficiais do membro superior">
+  <figcaption>O sistema superficial em panorama: cefálica subindo lateral até o sulco deltopeitoral, basílica medial com seu hiato na fáscia, intermédias do antebraço e do cotovelo, e as perfurantes comunicando com o plano profundo.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Cefálica e basílica: os dois trajetos</h2>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>Veia CEFÁLICA</th><th>Veia BASÍLICA</th></tr>
+    <tr><td><b>Origem</b></td><td>arco venoso DORSAL da mão, parte <b>LATERAL</b> (+ veias do polegar)</td><td>arco venoso DORSAL da mão, parte <b>MEDIAL</b> (+ veias do 5º dedo)</td></tr>
+    <tr><td><b>Trajeto</b></td><td>face lateral do antebraço → fossa cubital → lateral ao bíceps → <b>SULCO DELTOPEITORAL</b></td><td>face medial do antebraço → recebe a intermédia do cotovelo → medial ao bíceps</td></tr>
+    <tr><td><b>Onde vira profunda</b></td><td>perfura a fáscia clavipeitoral no <b>hiato</b> e desemboca na <b>AXILAR</b></td><td>🎯 perfura a fáscia do bíceps no <b>TERÇO MÉDIO do braço</b></td></tr>
+    <tr><td><b>Desfecho</b></td><td>cefálica + axilar = <b>SUBCLÁVIA</b></td><td>basílica + braquial = <b>AXILAR</b></td></tr>
+  </table></div>
+  <ul>
+    <li>🎯 A sequência completa das uniões: <b>braquial + basílica = AXILAR → axilar + cefálica = SUBCLÁVIA → subclávia + jugular interna = BRAQUIOCEFÁLICA</b> → as duas braquiocefálicas formam a <b>cava superior</b>.</li>
+    <li>O <b>sulco deltopeitoral</b> fica <b>entre o deltoide e o peitoral maior</b> — a cefálica sobe por ele antes de mergulhar no hiato.</li>
+  </ul>
+
+  <h2 class="topic" id="t11">11 · Intermédias, M venoso, variações — e as profundas duplas</h2>
+  <ul>
+    <li>A <b>INTERMÉDIA DO COTOVELO</b> na maioria das vezes <b>sai da cefálica em direção à basílica</b>, cruzando a fossa cubital.</li>
+    <li>A <b>INTERMÉDIA DO ANTEBRAÇO</b> sobe da palma pelo meio do antebraço e <b>normalmente desemboca na intermédia do cotovelo</b> — às vezes desenhando um <b>"M" venoso</b> na fossa.</li>
+    <li>Mas há fossas <b>sem intermédia do cotovelo</b> (a do antebraço desemboca direto na basílica) e inúmeros outros arranjos — variação é a regra.</li>
+    <li><b>Sistema profundo:</b> as veias acompanham as artérias — 🎯 e <b>no antebraço são DUPLAS</b>: duas veias ulnares e duas radiais para cada artéria, que se unem formando a <b>veia braquial</b>. Às vezes há duas braquiais (uma medial e uma lateral à artéria); duas axilares ou duas subclávias é bem mais raro.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide8-24-fossa-cubital.jpg" alt="Veias da fossa cubital">
+  <figcaption>Um dos arranjos possíveis da fossa cubital: a cefálica originando a intermédia do cotovelo, que sobe ao encontro da basílica, com a intermédia do antebraço desembocando nela — o padrão que a punção venosa procura, mas nem sempre encontra.</figcaption></figure>
+
+  <h2 class="topic" id="t12">12 · Flebotomia: o acesso de quem não tem acesso</h2>
+  <div class="box caso"><p class="h">🩺 O cenário</p>
+  <p>Politraumatizado chega <b>chocado</b> ao pronto-socorro — choque hipovolêmico, precisa de infusão maciça de volume — e <b>ninguém consegue um acesso calibroso</b> no braço. A saída: <b>dissecar a veia</b> e abri-la. Flebo = veia, tomia = corte: <b>FLEBOTOMIA</b>.</p></div>
+  <ul>
+    <li>🎯 <b>A referência anatômica: EPICÔNDILO MEDIAL → 2 cm PARA CIMA + 2 cm LATERAL</b> → corte transverso → ali está a <b>BASÍLICA</b>, que se disseca rapidamente.</li>
+    <li>Alternativas: a <b>CEFÁLICA</b> (do lado lateral) — ou, no membro inferior, a <b>SAFENA MAGNA anterior ao MALÉOLO MEDIAL</b>, onde ela é bem superficial.</li>
+    <li>Técnica: abre a parede anterior da veia com bisturi e insere um <b>cateter de grosso calibre</b> para infundir volume, sangue ou medicamentos.</li>
+  </ul>
+
+  <h2 class="topic" id="t13">13 · Fossa cubital: limites e os dois planos</h2>
+  <ul>
+    <li>🎯 "<b>O mais importante do membro superior é lembrar da fossa cubital</b>" — a região de <b>transição entre braço e antebraço</b>, em forma de <b>V</b>.</li>
+  </ul>
+  <div class="diagrama"><p class="t">Os limites do V — e o que há em cada plano</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>SUPERIOR</b> — <span class="d">linha imaginária transversa <b>entre os EPICÔNDILOS</b> medial e lateral.</span></div></li>
+    <li><span class="n">2</span><div><b>LATERAL</b> — <span class="d">músculo <b>BRAQUIORRADIAL</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>MEDIAL</b> — <span class="d">músculo <b>PRONADOR REDONDO</b>.</span></div></li>
+    <li><span class="n">4</span><div><b>ASSOALHO</b> — <span class="d">o músculo <b>BRAQUIAL</b>, que está por baixo de tudo.</span></div></li>
+  </ol></div>
+  <div class="tablewrap"><table>
+    <tr><th>Plano SUPERFICIAL (acima da fáscia)</th><th>Plano PROFUNDO (tirando a fáscia e a aponeurose do bíceps)</th></tr>
+    <tr><td><b>Veia CEFÁLICA</b> (lateral) + ramos do <b>n. CUTÂNEO LATERAL do antebraço</b><br><b>Veia BASÍLICA</b> (medial) + ramos do <b>n. CUTÂNEO MEDIAL do antebraço</b><br><b>Intermédia do cotovelo</b> e <b>intermédia do antebraço</b></td><td><b>TENDÃO DO BÍCEPS</b><br><b>ARTÉRIA BRAQUIAL</b> + veia braquial ao lado<br><b>NERVO MEDIANO</b> (medial à artéria)<br><b>NERVO RADIAL</b> (escondido sob o braquiorradial)<br><b>NERVO MUSCULOCUTÂNEO</b> (entre o bíceps e o braquial)</td></tr>
+  </table></div>
+
+  <h2 class="topic" id="t14">14 · O ulnar fora da fossa — e o caso da coleta</h2>
+  <div class="box alerta"><p class="h">⚠️ "Toda prova põe" — o nervo ULNAR NÃO passa na fossa cubital</p>
+  <p>O ulnar está <b>FORA da fossa</b>: ele passa <b>ATRÁS do EPICÔNDILO MEDIAL</b>. "Toda prova, sempre, na meia dúzia de alternativas, põe lá o nervo ulnar dentro da fossa cubital — <b>ele passa fora</b>, junto do epicôndilo medial." Não caia.</p></div>
+  <div class="box caso"><p class="h">🩺 A coleta de sangue que complica</p>
+  <p>A técnica vai puncionar a <b>intermédia do cotovelo</b>, inclina um pouco mais a agulha e punciona <b>profundo</b>: pega a <b>ARTÉRIA BRAQUIAL</b> — já aconteceu: hematoma enorme e pulsátil que precisou ser aberto e suturado — ou dá <b>choque na mão</b>: pegou o <b>NERVO MEDIANO</b>, e a mão fica dormente. Numa simples coleta, as complicações moram <b>logo abaixo da fáscia</b>.</p></div>
+
+  <h2 class="topic" id="t15">15 · Drenagem linfática: os grupos axilares e os territórios</h2>
+  <ul>
+    <li><b>Grupo AXILAR — as 5 cadeias da aula:</b> <b>INFRACLAVICULAR · PEITORAL (anterior) · SUBESCAPULAR (posterior) · CENTRAL · APICAL</b>. Grupo <b>NÃO axilar</b>: linfonodos <b>isolados</b> do braço/antebraço + o <b>SUPRATROCLEAR</b> (pode ou não existir, acima da tróclea).</li>
+    <li>🎯 <b>Territórios:</b> toda a linfa <b>ACIMA da CICATRIZ UMBILICAL (na frente)</b> e <b>ACIMA da CRISTA ILÍACA (atrás, incluindo a nuca)</b> drena para o grupamento axilar. Abaixo dessas linhas → <b>linfonodos INGUINAIS</b>.</li>
+    <li><b>Quem drena o quê:</b> <b>MEMBRO SUPERIOR → INFRACLAVICULAR</b> (7–12 linfonodos, abaixo da clavícula, junto da veia axilar) — 🎯 <b>exceto os linfáticos que acompanham a veia CEFÁLICA, que vão DIRETO ao APICAL</b> · <b>parede abdominal e torácica</b> (acima da cicatriz) <b>→ PEITORAL</b> (4–5 linfonodos na margem do peitoral) · <b>dorso, escápula e nuca → SUBESCAPULAR</b> (9–12, junto do latíssimo do dorso).</li>
+    <li><b>O funil final:</b> tudo converge <b>→ CENTRAL</b> (3–4 linfonodos na gordura da axila) <b>→ APICAL</b> (~7 linfonodos, supraclaviculares, junto da subclávia) — o <b>coletor final</b>. Exemplo do tumor de mama: peitoral → central → apical — "a metástase se espalha pelos linfonodos".</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência de nomenclatura com os livros</p>
+  <p>Nos livros (Moore), os grupos axilares são <b>anterior (peitoral), posterior (subescapular), LATERAL (umeral), central e apical</b> — é o grupo <b>UMERAL</b> que recebe quase toda a linfa do membro superior, e o "infraclavicular" (deltopeitoral) fica <b>fora da axila</b>, na via da cefálica. Na aula, o <b>INFRACLAVICULAR entra como cadeia axilar e é a porta de entrada do membro superior</b>, com a via da cefálica indo direto ao apical. <b>Na prova, vale a aula.</b></p></div>
+  <div class="box caso"><p class="h">🩺 Raciocínio de território: onde está o abscesso?</p>
+  <p>Coleção de pus na <b>parede abdominal</b> (acima da cicatriz): a linfa leva as bactérias ao grupo <b>PEITORAL</b>. Abscesso no <b>couro cabeludo/nuca</b>: vai ao <b>SUBESCAPULAR</b>. É o mesmo mapa que a metástase usa.</p></div>
+  <figure class="fig"><img src="img/slide8-06-axilar.jpg" alt="Linfonodos axilares e veias da axila">
+  <figcaption>A axila aberta: linfonodos infraclaviculares junto da veia axilar, cadeias peitoral e central, apicais no topo — e os supratrocleares lá embaixo, os isolados do grupo não axilar. Repare na cadeia linfática axilar acompanhando os vasos.</figcaption></figure>
+
+  <h2 class="topic" id="t16">16 · Ducto torácico × ducto subclávio direito</h2>
+  <ul>
+    <li>Do grupo <b>apical</b> de cada lado forma-se um <b>DUCTO SUBCLÁVIO</b> (nomenclatura da aula).</li>
+    <li>🎯 <b>Lado DIREITO: o ducto subclávio desemboca DIRETO na veia</b> — normalmente no ângulo entre subclávia e jugular interna direitas.</li>
+    <li>🎯 <b>Lado ESQUERDO: o ducto subclávio desemboca no DUCTO TORÁCICO</b> — e é o ducto torácico que desemboca nas veias.</li>
+    <li><b>O trajeto do ducto torácico:</b> nasce da <b>CISTERNA DO QUILO</b> (o grande reservatório de linfa do abdome — recebe intestino, membros inferiores, parede) → sobe no tórax <b>ATRÁS DO ESÔFAGO, ao lado da AORTA</b> → no pescoço faz a <b>curva para a ESQUERDA</b> → recebe o ducto subclávio esquerdo → desemboca no <b>ÂNGULO JÚGULO-SUBCLÁVIO ESQUERDO</b> (entre jugular interna e subclávia esquerdas).</li>
+    <li><b>Proporções e números da aula:</b> o ducto torácico drena <b>¾ do corpo</b>; o ducto subclávio direito, <b>¼</b>. Passam por ele <b>no mínimo 3 litros de linfa por dia</b>. Quem ladeia o ducto no tórax: as veias <b>ÁZIGO e HEMIÁZIGO</b>.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 Quilotórax — e a erisipela bolhosa</p>
+  <p>Lesão do ducto torácico dentro do tórax → linfa caindo na cavidade pleural → <b>QUILOTÓRAX</b>, o derrame pleural de linfa ("quilo" pelo produto de degradação do intestino, da cisterna do quilo). E no braço <b>inchado, vermelho e cheio de bolhas</b>: <b>ERISIPELA BOLHOSA</b> — infecção grave em que as bactérias <b>ascendem pelos vasos linfáticos</b>, desenhando o trajeto linfático.</p></div>
+  <div class="box alerta"><p class="h">⚠️ Nomenclatura nos livros</p>
+  <p>O que a aula chama de "ducto subclávio" aparece nos livros como <b>TRONCO SUBCLÁVIO</b> — que à direita se une aos troncos jugular e broncomediastinal formando o <b>DUCTO LINFÁTICO DIREITO</b>. A lógica é idêntica (direito → direto na veia; esquerdo → ducto torácico); só muda o nome. Na prova do professor, "ducto subclávio".</p></div>
+
+  <h2 class="topic" id="t17">17 · Resumo rápido</h2>
+  <ul>
+    <li><b>Eixo arterial:</b> subclávia (acaba na 1ª costela) → axilar (acaba no redondo maior) → braquial → divide na cabeça do rádio em radial e ulnar; a ulnar dá a interóssea comum (1–2 cm) → anterior + posterior (a posterior perfura a membrana).</li>
+    <li><b>Braquial CONDUZ, braquial profunda NUTRE</b> — e desce com o nervo radial.</li>
+    <li><b>Cotovelo:</b> colaterais (de cima) + recorrentes (fluxo para cima) = circulação colateral que salva a mão na obstrução da braquial.</li>
+    <li><b>Arcos palmares:</b> superficial = ulnar + ramo superficial da radial (o mais calibroso/importante); profundo = radial + ramo profundo da ulnar. Variações são a regra → <b>manobra de ALLEN antes de cateterismo, PAI e fístula AV</b>.</li>
+    <li><b>Sintopia:</b> mediano CRUZA lateral→medial; musculocutâneo lateral; ulnar medial; radial (e axilar) posteriores — fascículo posterior.</li>
+    <li><b>Veias:</b> MS drena 70% pelo superficial (MI é o inverso); cefálica = lateral → sulco deltopeitoral → axilar; basílica = medial, perfura a fáscia no terço médio → + braquial = axilar; axilar + cefálica = subclávia. Profundas do antebraço são duplas.</li>
+    <li><b>Flebotomia:</b> epicôndilo medial + 2 cm acima + 2 cm lateral = basílica (ou cefálica; ou safena magna anterior ao maléolo medial).</li>
+    <li><b>Fossa cubital:</b> V entre os epicôndilos, braquiorradial (lateral) e pronador redondo (medial), assoalho = braquial; profundo = tendão do bíceps + a. braquial + mediano (+ radial sob o braquiorradial, musculocutâneo entre bíceps e braquial). <b>ULNAR NÃO PASSA NELA</b> — atrás do epicôndilo medial.</li>
+    <li><b>Linfa:</b> acima da cicatriz umbilical/crista ilíaca → axilares (MS → infraclavicular, exceto via da cefálica → apical; parede → peitoral; dorso/nuca → subescapular; tudo → central → apical) → ductos subclávios: direito direto na veia, esquerdo no ducto torácico (cisterna do quilo → atrás do esôfago → curva à esquerda → ângulo júgulo-subclávio esquerdo; ¾ × ¼; ≥3 L/dia; quilotórax se lesar).</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Membros Superiores</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aula 08 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-arterias">Artérias</a>
+    <a class="a1" href="#p-arcos">Arcos & Allen</a>
+    <a class="a1" href="#p-nervos">Sintopia</a>
+    <a class="a1" href="#p-veias">Veias</a>
+    <a class="a1" href="#p-fossa">Fossa cubital</a>
+    <a class="a1" href="#p-linfa">Linfáticos</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-arterias">
+  <span class="aula-tag t1">Eixo arterial e colaterais</span>
+  <ul>
+    <li><b class="k">Subclávia acaba na 1ª COSTELA → axilar acaba no REDONDO MAIOR → braquial divide na CABEÇA DO RÁDIO</b> em radial e ulnar.</li>
+    <li><b>Braquial CONDUZ · braquial profunda NUTRE</b> (sai posterolateral, desce <b>com o nervo RADIAL</b>) — "igual femoral/femoral profunda".</li>
+    <li><b class="k">ULNAR origina a INTERÓSSEA COMUM (1–2 cm)</b> → anterior + posterior (a <b>POSTERIOR perfura a membrana</b>).</li>
+    <li>Cotovelo: colaterais <b>radial/média</b> (da braquial profunda) ↔ <b>recorrente radial</b>; colaterais <b>ulnares sup/inf</b> ↔ <b>recorrente ulnar</b>. <b class="k">Recorrente = fluxo RECORRE (sobe)</b>. Obstruiu a braquial → colateral → recorrente → sangue chega à mão.</li>
+    <li><b>Massa pulsátil pós-trauma = PSEUDOANEURISMA</b> — palpe TODA bolota antes de drenar "abscesso".</li>
+  </ul>
+</section>
+
+<section id="p-arcos">
+  <span class="aula-tag t1">Arcos palmares e manobra de Allen</span>
+  <ul>
+    <li>Carpo: radial + ulnar + interóssea = <b>arco CÁRPICO</b>. Palma: <b class="k">SUPERFICIAL = ULNAR + ramo superficial da radial (MAIS CALIBROSO/importante)</b> · <b>PROFUNDO = RADIAL + ramo profundo da ulnar</b>.</li>
+    <li>Digitais comuns → <b>digitais PRÓPRIAS (lateral e medial a cada dedo)</b> → na anestesia da base do dedo, <b class="k">ASPIRAR antes de injetar</b>.</li>
+    <li><b class="k">ALLEN SEMPRE antes de: cateterismo pela radial · PAI · fístula AV (radial-cefálica)</b> — comprime as duas, abre-fecha a mão 10×, solta uma. Arcos <b>incompletos existem</b> → trombose da radial = gangrena de polegar/mão.</li>
+  </ul>
+</section>
+
+<section id="p-nervos">
+  <span class="aula-tag t1">Sintopia da braquial (fascículos)</span>
+  <div class="tw"><table>
+    <tr><th>Nervo</th><th>Posição</th><th>Fascículo</th></tr>
+    <tr><td><b>MEDIANO</b></td><td><b class="k">CRUZA lateral → medial</b></td><td>lateral + medial</td></tr>
+    <tr><td><b>MUSCULOCUTÂNEO</b></td><td>lateral</td><td>lateral</td></tr>
+    <tr><td><b>ULNAR</b></td><td>medial</td><td>medial</td></tr>
+    <tr><td><b>RADIAL (e AXILAR)</b></td><td>posterior</td><td>posterior</td></tr>
+  </table></div>
+  <ul>
+    <li>Depois: mediano cruza <b>anterior à a. ulnar</b>; radial desce <b>sob o braquiorradial</b> com o ramo superficial do n. radial; veia braquial <b>medial</b> à artéria (pode ser dupla).</li>
+  </ul>
+</section>
+
+<section id="p-veias">
+  <span class="aula-tag t1">Veias e flebotomia</span>
+  <ul>
+    <li><b class="k">MS: 70% superficial · MI: inverso (70–80% profundo)</b> — por isso varizes do MI podem sair.</li>
+    <li><b>CEFÁLICA</b>: arco dorsal LATERAL → lateral → <b class="k">sulco DELTOPEITORAL → hiato → AXILAR</b>. <b>BASÍLICA</b>: arco dorsal MEDIAL → medial → <b class="k">perfura a fáscia do bíceps no TERÇO MÉDIO</b> → + braquial = <b>AXILAR</b>.</li>
+    <li><b class="k">Braquial+basílica=AXILAR · axilar+cefálica=SUBCLÁVIA · +jugular interna=BRAQUIOCEFÁLICA</b> → cava superior.</li>
+    <li>Intermédia do cotovelo (da cefálica → basílica) + intermédia do antebraço (desemboca nela; "M" venoso). <b>Variação é a regra</b> — pessoa a pessoa e braço a braço. Profundas do antebraço <b>DUPLAS</b>.</li>
+    <li><b class="k">FLEBOTOMIA: epicôndilo medial + 2 cm ACIMA + 2 cm LATERAL → BASÍLICA</b> (ou cefálica; ou <b>safena magna ANTERIOR ao maléolo medial</b>) — politrauma chocado sem acesso.</li>
+  </ul>
+</section>
+
+<section id="p-fossa">
+  <span class="aula-tag t1">Fossa cubital ("o mais importante do MS")</span>
+  <ul>
+    <li>V: <b class="k">linha entre os EPICÔNDILOS (sup.) · BRAQUIORRADIAL (lat.) · PRONADOR REDONDO (med.)</b> · assoalho = <b>m. BRAQUIAL</b>.</li>
+    <li><b>Superficial:</b> cefálica + n. cutâneo LATERAL do antebraço · basílica + n. cutâneo MEDIAL · intermédias.</li>
+    <li><b>Profundo:</b> tendão do BÍCEPS · <b class="k">a. BRAQUIAL + veia · n. MEDIANO (medial à artéria)</b> · n. RADIAL sob o braquiorradial · musculocutâneo entre bíceps e braquial.</li>
+    <li><b class="k">ULNAR NÃO PASSA NA FOSSA — atrás do EPICÔNDILO MEDIAL ("toda prova põe")</b>.</li>
+    <li>Coleta funda na intermédia do cotovelo → pega <b>a. braquial</b> (hematoma pulsátil) ou <b>mediano</b> (choque/dormência).</li>
+  </ul>
+</section>
+
+<section id="p-linfa">
+  <span class="aula-tag t1">Linfáticos</span>
+  <ul>
+    <li>Axilares (aula): <b class="k">INFRACLAVICULAR · PEITORAL(ant.) · SUBESCAPULAR(post.) · CENTRAL · APICAL</b> + não axilares (isolados, supratroclear).</li>
+    <li>Territórios: <b class="k">acima da CICATRIZ UMBILICAL (frente) / CRISTA ILÍACA (atrás, com a nuca) → AXILARES</b>; abaixo → inguinais.</li>
+    <li><b>MS → INFRACLAVICULAR</b> (7–12, junto da v. axilar), <b class="k">EXCETO via da CEFÁLICA → APICAL direto</b> · parede abd./torácica → PEITORAL · dorso/nuca → SUBESCAPULAR · tudo → CENTRAL → <b>APICAL (coletor final)</b>. Mama: peitoral→central→apical.</li>
+    <li><b class="k">Ducto subclávio DIREITO → direto na veia · ESQUERDO → DUCTO TORÁCICO</b> (cisterna do quilo → atrás do ESÔFAGO, ao lado da AORTA, ladeado pelas ÁZIGOS → curva à ESQUERDA → ângulo JÚGULO-SUBCLÁVIO esquerdo).</li>
+    <li>Números: <b>¾ × ¼ do corpo · ≥3 L de linfa/dia</b>. Lesão torácica do ducto = <b class="k">QUILOTÓRAX</b>. Braço vermelho + bolhas = <b>erisipela BOLHOSA</b> (bactérias sobem pelo trajeto linfático).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>Braquial × braquial profunda</td><td>condução × NUTRIÇÃO (e a profunda desce com o n. radial)</td></tr>
+    <tr><td>Colateral × recorrente</td><td>desce da braquial/braquial profunda × SOBE da radial/ulnar (fluxo recorre) — unem-se no cotovelo</td></tr>
+    <tr><td>Arco superficial × profundo</td><td>ULNAR manda (mais calibroso) × RADIAL manda</td></tr>
+    <tr><td>Aneurisma × pseudoaneurisma</td><td>dilatação verdadeira × pós-TRAUMA (massa pulsátil no punho) — ambos pulsam, nunca incisar</td></tr>
+    <tr><td>Cefálica × basílica</td><td>LATERAL → sulco deltopeitoral → axilar × MEDIAL → perfura fáscia no terço médio → +braquial=axilar</td></tr>
+    <tr><td>Fossa cubital: quem NÃO passa</td><td>o nervo ULNAR — fica atrás do epicôndilo medial ("toda prova põe")</td></tr>
+    <tr><td>MS × MI (drenagem venosa)</td><td>70% superficial × 70–80% profunda (por isso MI pode perder as varizes)</td></tr>
+    <tr><td>Ducto subclávio direito × esquerdo</td><td>desemboca DIRETO na veia × desemboca no DUCTO TORÁCICO</td></tr>
+    <tr><td>Infraclavicular × apical</td><td>porta de entrada do MS (7–12, sob a clavícula) × coletor FINAL supraclavicular (via da cefálica chega direto)</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Membros Superiores</h2>
+    <p>Anatomia Topográfica · Aula 08 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 08 — Membros Superiores</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre os limites que marcam a transição entre as artérias do eixo do membro superior, a aula estabelece:</div>`,alts:[`a subclávia termina na clavícula e a axilar, na margem do peitoral menor`,`a subclávia termina na primeira costela e a axilar, na margem do redondo maior`,`a subclávia termina na primeira costela e a axilar, na inserção do deltoide`,`a axilar termina na primeira costela e a braquial, na margem inferior do redondo maior`,`a subclávia termina no tronco braquiocefálico e a axilar, na fossa cubital`],correta:1,just:[`O peitoral menor divide a AXILAR em porções — mas não é onde ela acaba. [tipo: verdade no contexto errado]`,`Correta. A SUBCLÁVIA (do tronco braquiocefálico à direita, da aorta à esquerda) acaba na PRIMEIRA COSTELA → vira AXILAR; a axilar acaba na margem do REDONDO MAIOR → vira BRAQUIAL. (Aula: margem lateral; livros: margem inferior.)`,`A inserção do deltoide é marco muscular do úmero — não delimita a axilar. [tipo: vizinhança plausível]`,`Embaralhou a sequência: quem acaba na 1ª costela é a SUBCLÁVIA. [tipo: mecanismo invertido]`,`O tronco braquiocefálico é a ORIGEM da subclávia direita, não o fim — e a axilar nem chega ao cotovelo. [tipo: momento errado]`],ref:'Eixo arterial'},
+{n:2,aula:1,nivel:'medio',enun:`<div class="pergunta">Comparando a artéria braquial com a artéria braquial profunda, a aula define:</div>`,alts:[`a braquial profunda conduz o sangue ao antebraço e a braquial nutre o braço`,`as duas são de condução, e a nutrição do braço cabe às colaterais ulnares`,`a braquial profunda é ramo da axilar, destinado à nutrição do ombro`,`a braquial conduz o sangue do membro e a braquial profunda nutre os tecidos`,`a braquial equivale à femoral profunda: uma artéria de nutrição da raiz do membro`],correta:3,just:[`Inverteu os papéis: quem CONDUZ é a braquial; quem NUTRE é a profunda. [tipo: mecanismo invertido]`,`As colaterais ulnares existem, mas são vias de anastomose do cotovelo — não o ramo de nutrição. [tipo: verdade no contexto errado]`,`A braquial profunda nasce da BRAQUIAL (logo no início, posterolateral) — não da axilar. [tipo: par confundível]`,`Correta. BRAQUIAL = artéria de CONDUÇÃO; BRAQUIAL PROFUNDA = seu ramo mais importante, de NUTRIÇÃO — "igual a femoral e a femoral profunda" no membro inferior.`,`A analogia é a oposta: a braquial corresponde à FEMORAL (condução); a profunda é que espelha a femoral profunda. [tipo: par confundível]`],ref:'Condução × nutrição'},
+{n:3,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a sintopia do nervo mediano com a artéria braquial no braço:</div>`,alts:[`cruza a artéria da parte lateral para a parte medial, descendo colado a ela`,`cruza a artéria da parte medial para a parte lateral, acompanhando o tendão do bíceps`,`mantém-se posterior à artéria por todo o braço, junto do nervo radial`,`mantém-se lateral à artéria por todo o braço, como o musculocutâneo`,`desce medial à artéria por todo o braço, no mesmo plano do nervo ulnar`],correta:0,just:[`Correta. O MEDIANO — união dos fascículos LATERAL + MEDIAL — CRUZA a artéria braquial da parte LATERAL para a MEDIAL, descendo junto dela (e depois cruza anterior à artéria ulnar).`,`Sentido invertido: ele começa lateral e termina medial. [tipo: mecanismo invertido]`,`Posterior à artéria é a posição do RADIAL (fascículo posterior). [tipo: verdade no contexto errado]`,`Lateral fixo é o MUSCULOCUTÂNEO — o mediano não para de um lado só. [tipo: verdade no contexto errado]`,`Medial fixo é o ULNAR (fascículo medial) — o mediano cruza. [tipo: verdade no contexto errado]`],ref:'Sintopia — mediano'},
+{n:4,aula:1,nivel:'facil',enun:`<div class="pergunta">No plexo braquial, os nervos radial e axilar originam-se:</div>`,alts:[`do fascículo lateral, em conjunto com o nervo musculocutâneo`,`do fascículo medial, em conjunto com o nervo ulnar`,`do fascículo posterior, atrás das artérias braquial e axilar`,`da união dos fascículos lateral e medial, como o mediano`,`diretamente dos troncos do plexo, antes da formação dos fascículos`],correta:2,just:[`Do fascículo lateral saem o MUSCULOCUTÂNEO e parte do mediano. [tipo: par confundível]`,`Do fascículo medial saem o ULNAR e a outra raiz do mediano. [tipo: par confundível]`,`Correta. RADIAL (posterior à artéria braquial) e AXILAR (atrás da artéria axilar, um pouco mais alto) vêm ambos do FASCÍCULO POSTERIOR.`,`A união lateral + medial forma o MEDIANO — não os posteriores. [tipo: par confundível]`,`Os dois são ramos terminais de fascículo, não ramos de tronco. [tipo: momento errado]`],ref:'Fascículo posterior'},
+{n:5,aula:1,nivel:'dificil',enun:`<span class="vinheta">Homem, 58 anos, tem oclusão aterosclerótica da artéria braquial no meio do braço — e mesmo assim a mão continua perfundida.</span><div class="pergunta">Pela aula, o trajeto que explica a chegada do sangue à artéria radial é:</div>`,alts:[`braquial profunda → recorrente radial → colateral radial → radial`,`colateral ulnar superior → colateral média → interóssea comum → ulnar`,`axilar → circunflexa do úmero → recorrente interóssea → interóssea posterior`,`braquial proximal → colateral ulnar inferior → arco cárpico → arcos palmares`,`braquial profunda → colateral radial → recorrente radial → radial`],correta:4,just:[`Ordem invertida: a COLATERAL desce da braquial profunda e encontra a RECORRENTE, que sobe da radial. [tipo: mecanismo invertido]`,`Misturou os lados: as colaterais ulnares se unem à RECORRENTE ULNAR, não à colateral média. [tipo: recombinação plausível]`,`As circunflexas são do ombro e a recorrente interóssea é via acessória — não é o eixo descrito. [tipo: vizinhança plausível]`,`A colateral ulnar inferior devolve o sangue à ULNAR pela recorrente ulnar — não pula direto ao arco cárpico. [tipo: momento errado]`,`Correta. Na obstrução da braquial: BRAQUIAL PROFUNDA → COLATERAL RADIAL (e média) → anastomose → RECORRENTE RADIAL → RADIAL. "As colaterais dão conta do recado" — o sangue chega à mão.`],ref:'Circulação colateral'},
+{n:6,aula:1,nivel:'medio',enun:`<div class="pergunta">As artérias "recorrentes" do cotovelo recebem esse nome porque:</div>`,alts:[`recorrem ao sistema interósseo quando o eixo principal está ocluído`,`seu fluxo corre em sentido contrário ao habitual — sobe, em vez de descer`,`são ramos que retornam à própria artéria de origem, formando alças fechadas`,`aparecem de forma inconstante, "recorrendo" em parte dos indivíduos`,`acompanham nervos de trajeto recorrente por trás dos epicôndilos`],correta:1,just:[`A função colateral existe, mas não é a origem do NOME. [tipo: verdade no contexto errado]`,`Correta. O sentido normal do sangue arterial é coração → periferia; na RECORRENTE, o fluxo RECORRE — corre para CIMA — ao encontro da colateral que desce (recorrente radial ← radial; recorrente ulnar ← ulnar).`,`Elas se unem às COLATERAIS (artérias diferentes), não voltam à própria origem. [tipo: mecanismo invertido]`,`A união pode faltar embriologicamente, mas o nome vem do FLUXO, não da frequência. [tipo: pseudo-etimologia plausível]`,`Nervo "recorrente" é história da laringe — aqui é o sangue que volta. [tipo: par confundível]`],ref:'Recorrentes'},
+{n:7,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre a artéria interóssea comum, a aula destaca que ela:</div>`,alts:[`nasce da radial e desce anterior à membrana interóssea em todo o antebraço`,`nasce da braquial antes da bifurcação, na altura dos epicôndilos`,`é longa, percorrendo o antebraço inteiro antes de se dividir em ramos`,`é curta (1–2 cm), ramo da ulnar, e divide-se em anterior e posterior`,`é ramo da ulnar que termina contribuindo para o arco palmar superficial`],correta:3,just:[`A origem é a ULNAR — e só a interóssea ANTERIOR corre na frente da membrana. [tipo: par confundível]`,`Ela nasce DEPOIS da bifurcação, como ramo da ulnar. [tipo: momento errado]`,`É o contrário: "curtinha, dá um, dois centímetros e já divide". [tipo: mecanismo invertido]`,`Correta. A ULNAR origina a INTERÓSSEA COMUM — curtinha (1–2 cm) — que se divide em ANTERIOR (na frente da membrana) e POSTERIOR (que perfura a membrana e desce por trás).`,`Chegar ao arco palmar é VARIAÇÃO rara mostrada nos esquemas — não o padrão. [tipo: generalização indevida]`],ref:'Interósseas'},
+{n:8,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a formação e a hierarquia dos arcos palmares, a aula estabelece:</div>`,alts:[`superficial = ulnar + ramo palmar superficial da radial; é o mais calibroso`,`superficial = radial + ramo profundo da ulnar; é o mais calibroso dos dois`,`profundo = ulnar + ramo palmar superficial da radial; é o mais importante`,`superficial = interóssea + ramo da radial, com a ulnar como complemento`,`profundo = radial + ramo profundo da ulnar; é o mais calibroso e importante`],correta:0,just:[`Correta. ARCO PALMAR SUPERFICIAL = artéria ULNAR + ramo palmar SUPERFICIAL da radial — o MAIS CALIBROSO e mais importante. O PROFUNDO = radial + ramo profundo da ulnar.`,`Trocou os formadores: no superficial quem manda é a ULNAR. [tipo: mecanismo invertido]`,`Essa composição é a do SUPERFICIAL — atribuída ao arco errado. [tipo: verdade no contexto errado]`,`A interóssea só chega ao arco em VARIAÇÃO — não na formação habitual. [tipo: generalização indevida]`,`A composição do profundo está certa — mas o MAIS calibroso é o superficial. [tipo: verdade no contexto errado]`],ref:'Arcos palmares'},
+{n:9,aula:1,nivel:'medio',enun:`<span class="vinheta">Mulher, 62 anos, doença renal crônica, vai confeccionar fístula arteriovenosa radial-cefálica para hemodiálise.</span><div class="pergunta">Antes do procedimento, a manobra de Allen é obrigatória porque:</div>`,alts:[`mede a pressão arterial invasiva comparando os dois punhos do paciente`,`avalia o refluxo venoso da cefálica, que vai receber o fluxo da artéria`,`verifica se o arco palmar é completo e se a ulnar supre a mão sozinha`,`detecta trombose prévia da artéria braquial, acima da fossa cubital`,`confirma a patência do arco cárpico, que substituirá os arcos palmares`],correta:2,just:[`PAI é outro procedimento (cateter DENTRO da radial medindo pressão) — e também exige Allen antes. [tipo: par confundível]`,`A fístula rouba fluxo DA ARTÉRIA; o que se testa é o lado arterial da mão, não o refluxo da veia. [tipo: verdade no contexto errado]`,`Correta. A fístula "ocupa" a radial. A manobra de ALLEN (comprime as duas artérias, abre-fecha a mão 10×, solta uma) mostra se o ARCO PALMAR É COMPLETO — se a ULNAR consegue irrigar os dedos e a palma. Arco incompleto + radial ocupada = risco de gangrena do polegar.`,`O problema testado fica na MÃO (variações do arco), não no braço. [tipo: nível anatômico errado]`,`O arco cárpico é do CARPO e não assume o papel dos palmares. [tipo: par confundível]`],ref:'Manobra de Allen'},
+{n:10,aula:1,nivel:'dificil',enun:`<span class="vinheta">Homem, 67 anos, cateterismo cardíaco pela radial direita. Horas depois: polegar e indicador frios, pálidos e dolorosos — os demais dedos estão normais.</span><div class="pergunta">A explicação anatômica mais provável para o quadro é:</div>`,alts:[`trombose da ulnar, que habitualmente irriga o polegar e o indicador`,`lesão do nervo mediano na punção, com alteração vasomotora referida`,`arco palmar completo compensando — evolução esperada e benigna`,`dissecção da braquial, comprometendo por igual os cinco dedos`,`trombose da radial num arco incompleto em que ela supria esses dedos`],correta:4,just:[`Territórios trocados: quem foi instrumentada (e trombosou) foi a RADIAL. [tipo: mecanismo invertido]`,`Lesão de nervo dá dormência/choque — não isquemia fria e seletiva por território arterial. [tipo: par confundível]`,`Se o arco fosse completo, a ulnar supriria a mão e NÃO haveria dedos isquêmicos. [tipo: verdade no contexto errado]`,`Comprometimento do tronco atingiria a mão como um todo — o quadro é seletivo. [tipo: nível anatômico errado]`,`Correta. É a variação do slide: ARCO PALMAR INCOMPLETO com a RADIAL suprindo polegar e indicador. Trombosada a radial pós-cateterismo, esses dedos ficam sem retaguarda — exatamente o que a manobra de Allen teria previsto.`],ref:'Arco incompleto'},
+{n:11,aula:1,nivel:'facil',enun:`<div class="pergunta">Ao anestesiar a base de um dedo para suturar um corte, deve-se aspirar antes de injetar porque:</div>`,alts:[`as digitais próprias passam lateral e medial ao dedo, e a injeção pode ser intra-arterial`,`o arco palmar superficial cruza a base dos dedos no plano do subcutâneo`,`as artérias digitais comuns terminam na polpa digital, o ponto da injeção`,`a agulha nessa altura alcança o arco cárpico e o ramo da interóssea`,`o nervo digital fica anterior à artéria e seria bloqueado antes dela`],correta:0,just:[`Correta. As artérias DIGITAIS PRÓPRIAS correm LATERAL e MEDIAL a cada dedo — exatamente onde o bloqueio é feito. ASPIRAR antes de injetar evita jogar anestésico dentro da artéria digital.`,`O arco superficial fica na PALMA, não na base dos dedos. [tipo: nível anatômico errado]`,`As comuns se dividem em próprias ANTES dos dedos — não vão à polpa. [tipo: momento errado]`,`O arco cárpico é do punho — longe da base do dedo. [tipo: nível anatômico errado]`,`A ordem nervo × artéria não é o motivo — o risco descrito na aula é a injeção INTRA-ARTERIAL. [tipo: vizinhança plausível]`],ref:'Digitais — anestesia'},
+{n:12,aula:1,nivel:'medio',enun:`<span class="vinheta">Jovem sofre trauma no punho. Semanas depois, surge tumoração local na topografia da artéria radial; à palpação, a massa é pulsátil.</span><div class="pergunta">Sobre o quadro, a orientação da aula é:</div>`,alts:[`trata-se de abscesso em organização, e a conduta é a drenagem por incisão`,`massa pulsátil após trauma caracteriza aneurisma verdadeiro da radial`,`trata-se de cisto sinovial do punho, o diagnóstico comum da topografia`,`é um pseudoaneurisma da radial — palpar toda "bolota" antes de drenar`,`é tumor de partes moles, com pulso transmitido pela artéria vizinha`],correta:3,just:[`É a armadilha exata da aula: incisar isso "explode num jato de sangue arterial". [tipo: misconception clássica]`,`Pós-traumático NÃO é verdadeiro — é PSEUDOaneurisma. [tipo: par confundível]`,`O cisto existe na região, mas não pulsa — a pulsatilidade denuncia artéria. [tipo: diagnóstico diferencial]`,`Correta. Massa PULSÁTIL pós-trauma na topografia da radial = PSEUDOANEURISMA. Lição da aula: PALPAR toda tumoração antes de qualquer drenagem — "se é pulsátil, é artéria".`,`Pulso transmitido é possível em massa sobre artéria — mas aqui a massa É a lesão arterial pós-trauma. [tipo: diagnóstico diferencial]`],ref:'Pseudoaneurisma'},
+{n:13,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a origem das veias cefálica e basílica, a aula estabelece que elas nascem:</div>`,alts:[`do arco palmar superficial, respectivamente lateral e medialmente`,`do arco venoso dorsal da mão — cefálica da parte lateral, basílica da medial`,`do arco venoso dorsal da mão — a cefálica da parte medial, a basílica da lateral`,`das veias intermédias do antebraço, que se bifurcam na altura do punho`,`das veias profundas do antebraço, ao perfurarem a fáscia junto ao punho`],correta:1,just:[`Arco PALMAR é estrutura ARTERIAL — a origem venosa é dorsal. [tipo: par confundível]`,`Correta. Ambas nascem do ARCO VENOSO DORSAL da mão: a CEFÁLICA da parte LATERAL (com contribuição do polegar) e a BASÍLICA da parte MEDIAL (com veias do 5º dedo).`,`Inverteu os lados — cefálica é a LATERAL. [tipo: mecanismo invertido]`,`É o caminho contrário: as intermédias DESEMBOCAM no sistema, não o originam. [tipo: mecanismo invertido]`,`As superficiais nascem no subcutâneo — quem vira profunda perfura a fáscia bem mais ACIMA. [tipo: momento errado]`],ref:'Origem venosa'},
+{n:14,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre o trajeto da veia basílica no braço, a aula descreve que ela:</div>`,alts:[`sobe lateral ao bíceps e perfura a fáscia clavipeitoral no hiato`,`permanece superficial até a axila, onde desemboca na subclávia`,`perfura a fáscia logo acima do punho, tornando-se profunda cedo`,`recebe a cefálica no terço médio do braço, formando a veia axilar`,`perfura a fáscia do bíceps no terço médio e, com a braquial, forma a axilar`],correta:4,just:[`Sulco deltopeitoral, hiato e fáscia clavipeitoral são o caminho da CEFÁLICA. [tipo: par confundível]`,`Ela vira PROFUNDA na metade do braço — não chega superficial à axila. [tipo: momento errado]`,`Cedo demais: o ponto é o TERÇO MÉDIO do braço. [tipo: momento errado]`,`Quem se une à cefálica é a AXILAR (formando a subclávia) — e não nesse nível. [tipo: recombinação plausível]`,`Correta. A BASÍLICA sobe medial, recebe a intermédia do cotovelo, PERFURA A FÁSCIA DO BÍCEPS NO TERÇO MÉDIO do braço, torna-se profunda e se une à BRAQUIAL = VEIA AXILAR.`],ref:'Basílica'},
+{n:15,aula:1,nivel:'facil',enun:`<div class="pergunta">A veia cefálica alcança o sistema venoso profundo passando:</div>`,alts:[`pelo hiato basílico, no terço médio da face medial do braço`,`entre os músculos peitorais maior e menor, direto na subclávia`,`pelo sulco deltopeitoral, mergulhando no hiato até a veia axilar`,`por trás do deltoide, junto da artéria circunflexa posterior`,`pela fossa cubital, acompanhando a artéria braquial em profundidade`],correta:2,just:[`Terço médio medial é o ponto da BASÍLICA. [tipo: par confundível]`,`Ela desemboca na AXILAR — a subclávia se forma DEPOIS dessa união. [tipo: momento errado]`,`Correta. A CEFÁLICA sobe lateral, entra no SULCO DELTOPEITORAL (entre deltoide e peitoral maior), perfura a fáscia clavipeitoral no HIATO e desemboca na VEIA AXILAR — e dessa união nasce a subclávia.`,`Atrás do deltoide passa o feixe do nervo axilar — não a cefálica. [tipo: vizinhança plausível]`,`Na fossa cubital ela passa, mas SUPERFICIAL — não é ali que vira profunda. [tipo: verdade no contexto errado]`],ref:'Cefálica'},
+{n:16,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a distribuição do retorno venoso entre os sistemas superficial e profundo, a aula apresenta:</div>`,alts:[`no membro superior ~70% do fluxo é superficial; no inferior, 70–80% é profundo`,`no membro superior ~70% do fluxo é profundo; no inferior, o superficial é que domina`,`nos dois membros o sistema profundo responde por cerca de 70% do fluxo`,`nos dois membros o superficial domina — por isso não se retiram varizes`,`a proporção é próxima de 50/50 nos dois, variando conforme a posição`],correta:0,just:[`Correta. No MEMBRO SUPERIOR, ~70% da drenagem é SUPERFICIAL (por isso a cefálica é mais calibrosa que a braquial); no MEMBRO INFERIOR é o INVERSO — 70–80% profunda, e por isso as varizes de lá podem ser retiradas.`,`Inverteu os membros. [tipo: mecanismo invertido]`,`Generalizou o padrão do membro INFERIOR para os dois. [tipo: generalização indevida]`,`Generalizou o padrão do SUPERIOR — e a conclusão sobre varizes ficou às avessas. [tipo: generalização indevida]`,`A aula dá números assimétricos e espelhados — não um empate. [tipo: neutro plausível]`],ref:'70/30'},
+{n:17,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre o sistema venoso profundo do membro superior, a aula destaca:</div>`,alts:[`cada artéria do antebraço é acompanhada por uma única veia homônima`,`as veias profundas do antebraço desembocam diretamente na cefálica`,`a veia braquial, quando é única, corre lateral à artéria braquial`,`no antebraço as veias são duplas — duas radiais e duas ulnares por artéria`,`a duplicidade venosa é típica da axilar e da subclávia, não do antebraço`],correta:3,just:[`No antebraço a regra é o PAR de veias por artéria. [tipo: mecanismo invertido]`,`Elas se unem formando a BRAQUIAL — a cefálica é superficial. [tipo: par confundível]`,`Única, ela é MEDIAL à artéria (dupla: uma de cada lado). [tipo: mecanismo invertido]`,`Correta. As profundas acompanham as artérias e, NO ANTEBRAÇO, SÃO DUPLAS: duas veias radiais e duas ulnares, que se unem na VEIA BRAQUIAL (que também pode ser dupla; axilar/subclávia duplas são bem mais raras).`,`Inverteu a frequência: dupla no ANTEBRAÇO é a regra; axilar/subclávia duplas são raras. [tipo: mecanismo invertido]`],ref:'Profundas duplas'},
+{n:18,aula:1,nivel:'dificil',enun:`<span class="vinheta">Politraumatizado em choque hipovolêmico chega ao pronto-socorro; nenhum acesso periférico calibroso é obtido, e a equipe indica flebotomia no membro superior.</span><div class="pergunta">A referência anatômica ensinada em aula para o acesso é:</div>`,alts:[`dois centímetros acima e lateralmente ao epicôndilo lateral — ali está a cefálica`,`dois centímetros acima e lateralmente ao epicôndilo medial — ali está a basílica`,`o sulco deltopeitoral, onde a cefálica tem posição constante e calibrosa`,`a região anterior ao maléolo medial, sítio preferencial descrito na técnica`,`a prega do punho, na topografia da radial, pela superficialidade do vaso`],correta:1,just:[`Trocou o lado: a referência da aula parte do epicôndilo MEDIAL, e a veia é a BASÍLICA. [tipo: par confundível]`,`Correta. Referência da flebotomia: EPICÔNDILO MEDIAL → 2 cm PARA CIMA + 2 cm LATERAL → corte transverso → disseca-se a BASÍLICA e insere-se cateter de grosso calibre. (Alternativas: cefálica; ou safena magna no tornozelo.)`,`No sulco a cefálica está prestes a mergulhar no hiato — não é o sítio de dissecção do braço. [tipo: verdade no contexto errado]`,`Anterior ao maléolo medial está a SAFENA MAGNA — é a alternativa do MEMBRO INFERIOR, não a referência pedida no braço. [tipo: verdade no contexto errado]`,`Flebotomia é acesso de VEIA — a radial é artéria. [tipo: par confundível]`],ref:'Flebotomia'},
+{n:19,aula:1,nivel:'facil',enun:`<div class="pergunta">Formam o "V" da fossa cubital, conforme os limites dados em aula:</div>`,alts:[`linha entre os dois epicôndilos, pronador redondo lateral e braquiorradial medial`,`tendão do bíceps, braquiorradial e o músculo flexor ulnar do carpo`,`linha entre os epicôndilos, o bíceps braquial e o pronador redondo`,`epicôndilo medial, olécrano e cabeça do rádio, na face posterior`,`linha entre os epicôndilos, braquiorradial lateral e pronador redondo medial`],correta:4,just:[`Músculos certos, lados trocados: braquiorradial é o LATERAL. [tipo: mecanismo invertido]`,`O tendão do bíceps é CONTEÚDO da fossa — não limite; e o flexor ulnar não entra. [tipo: verdade no contexto errado]`,`O bíceps não faz margem — o limite lateral é o BRAQUIORRADIAL. [tipo: vizinhança plausível]`,`Esses são marcos POSTERIORES do cotovelo — a fossa é anterior. [tipo: par confundível]`,`Correta. FOSSA CUBITAL em V: limite SUPERIOR = linha imaginária entre os EPICÔNDILOS · LATERAL = BRAQUIORRADIAL · MEDIAL = PRONADOR REDONDO. O assoalho é o músculo BRAQUIAL.`],ref:'Fossa — limites'},
+{n:20,aula:1,nivel:'medio',enun:`<div class="pergunta">Compõem o plano PROFUNDO da fossa cubital:</div>`,alts:[`veia cefálica, nervo cutâneo lateral do antebraço e intermédia do cotovelo`,`artéria braquial, nervo ulnar e o tendão distal do tríceps braquial`,`tendão do bíceps, artéria braquial com sua veia, nervos mediano e radial`,`artéria radial já bifurcada, nervo mediano e a veia basílica ao lado`,`nervo musculocutâneo, veia intermédia do antebraço e o arco cárpico`],correta:2,just:[`Esse conjunto é o plano SUPERFICIAL, acima da fáscia. [tipo: verdade no contexto errado]`,`O ULNAR está FORA da fossa; e o tríceps é posterior. [tipo: par confundível]`,`Correta. Plano PROFUNDO: TENDÃO DO BÍCEPS + ARTÉRIA BRAQUIAL (com a veia ao lado) + NERVO MEDIANO (medial à artéria) + NERVO RADIAL (sob o braquiorradial) — e o musculocutâneo entre o bíceps e o braquial.`,`A braquial se divide NO nível da fossa (cabeça do rádio) — e a basílica é superficial. [tipo: momento errado]`,`O musculocutâneo está lá, mas a intermédia é superficial e o arco cárpico é do punho. [tipo: recombinação plausível]`],ref:'Fossa — profundo'},
+{n:21,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre o nervo ulnar na região do cotovelo, a aula adverte que ele:</div>`,alts:[`não passa na fossa cubital — corre atrás do epicôndilo medial`,`atravessa a fossa cubital em posição medial à artéria braquial`,`passa na fossa escondido sob o braquiorradial, com a artéria radial`,`cruza a fossa superficialmente, acompanhando a veia basílica`,`contorna o epicôndilo lateral, em trajeto comum com o nervo radial`],correta:0,just:[`Correta. O NERVO ULNAR NÃO PASSA na fossa cubital — está FORA, ATRÁS do EPICÔNDILO MEDIAL. "Toda prova põe o ulnar dentro da fossa" — é a pegadinha anunciada pelo professor.`,`Medial à artéria, na fossa, está o MEDIANO — é exatamente a troca que a prova arma. [tipo: par confundível]`,`Sob o braquiorradial passa o RADIAL. [tipo: par confundível]`,`Com a basílica correm os ramos do cutâneo MEDIAL do antebraço. [tipo: par confundível]`,`O lado do ulnar é o MEDIAL — e ele não divide trajeto com o radial. [tipo: mecanismo invertido]`],ref:'Ulnar fora da fossa'},
+{n:22,aula:1,nivel:'dificil',enun:`<span class="vinheta">Durante coleta na veia intermédia do cotovelo, a agulha é inclinada demais e aprofunda-se além da fáscia. O paciente sente choque na mão e, em seguida, forma-se hematoma pulsátil em expansão.</span><div class="pergunta">As estruturas atingidas foram, respectivamente:</div>`,alts:[`o nervo ulnar e a artéria radial, no assoalho da fossa cubital`,`o nervo cutâneo medial do antebraço e a própria veia basílica`,`o nervo radial e a artéria interóssea comum, sob o braquiorradial`,`o nervo mediano e a artéria braquial, no plano profundo da fossa`,`o nervo musculocutâneo e a artéria colateral ulnar inferior`],correta:3,just:[`O ulnar NEM PASSA na fossa — está atrás do epicôndilo medial. [tipo: misconception clássica]`,`Estruturas superficiais explicariam dor local — não choque na mão nem hematoma PULSÁTIL. [tipo: nível anatômico errado]`,`O radial fica lateral, sob o braquiorradial — longe do trajeto da punção medial; e a interóssea é mais distal. [tipo: vizinhança plausível]`,`Correta. Logo abaixo da fáscia, no plano profundo, estão o NERVO MEDIANO (o choque/dormência na mão) e a ARTÉRIA BRAQUIAL (o hematoma pulsátil — caso real da aula, que precisou de sutura arterial).`,`O musculocutâneo está entre bíceps e braquial, mas o vaso do hematoma pulsátil é a BRAQUIAL, não uma colateral. [tipo: vizinhança plausível]`],ref:'Fossa — o caso da coleta'},
+{n:23,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a drenagem linfática do membro superior, a versão da aula estabelece:</div>`,alts:[`a linfa do membro vai ao grupo peitoral, exceto a via da basílica, que segue ao grupo central`,`a linfa do membro vai aos infraclaviculares, exceto a via da cefálica, direto ao apical`,`a linfa do membro vai direto ao apical, e a via da cefálica passa antes pelo central`,`a linfa do membro vai aos supratrocleares e destes segue ao grupo subescapular`,`a linfa da parede torácica vai aos infraclaviculares, e a do membro, ao peitoral`],correta:1,just:[`O peitoral recebe PAREDE torácica/abdominal — e a exceção famosa é a via da CEFÁLICA. [tipo: recombinação plausível]`,`Correta. O MEMBRO SUPERIOR drena para os INFRACLAVICULARES (7–12 linfonodos, sob a clavícula, junto da veia axilar) — EXCETO os vasos linfáticos que acompanham a veia CEFÁLICA, que vão DIRETO ao grupo APICAL.`,`Inverteu as vias: o apical direto é o privilégio da via da cefálica. [tipo: mecanismo invertido]`,`O supratroclear é do grupo NÃO axilar e inconstante — não é a via principal; e o subescapular recebe DORSO e nuca. [tipo: verdade no contexto errado]`,`Trocou os territórios: parede → PEITORAL; membro → INFRACLAVICULAR. [tipo: mecanismo invertido]`],ref:'Linfa — territórios'},
+{n:24,aula:1,nivel:'dificil',enun:`<span class="vinheta">Pós-operatório de cirurgia do esôfago torácico: o paciente evolui com derrame pleural volumoso de aspecto leitoso.</span><div class="pergunta">Sobre a estrutura lesada e seu trajeto, a aula ensina:</div>`,alts:[`é o ducto subclávio direito, que cruza o mediastino por trás da traqueia`,`é o ducto torácico, que sobe anterior ao esôfago e desemboca no lado direito`,`é o ducto torácico, que sobe atrás do esôfago, ao lado da aorta, e desemboca à esquerda`,`é a cisterna do quilo, situada na base do pescoço, na origem dos ductos`,`é o ducto subclávio esquerdo, que desemboca direto na veia subclávia esquerda`],correta:2,just:[`O ducto subclávio DIREITO é curto e cervical — desemboca direto na veia, sem cruzar o mediastino. [tipo: par confundível]`,`Posições invertidas: ele sobe ATRÁS do esôfago e termina à ESQUERDA. [tipo: mecanismo invertido]`,`Correta. QUILOTÓRAX = linfa na pleura por lesão do DUCTO TORÁCICO — que nasce na CISTERNA DO QUILO, sobe ATRÁS DO ESÔFAGO ao lado da AORTA (ladeado pelas ázigos), curva à ESQUERDA e desemboca no ÂNGULO JÚGULO-SUBCLÁVIO ESQUERDO. Drena ¾ do corpo, ≥3 L/dia.`,`A cisterna fica no ABDOME — é a origem do ducto, não uma estrutura cervical. [tipo: nível anatômico errado]`,`O subclávio ESQUERDO desemboca no DUCTO TORÁCICO — quem cai direto na veia é o direito. [tipo: mecanismo invertido]`],ref:'Ducto torácico'}
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Mulher, 58 anos, doença renal crônica em preparo para hemodiálise: o cirurgião vascular programa fístula arteriovenosa radial-cefálica no punho esquerdo — e, antes de qualquer coisa, comprime os dois pulsos da paciente e manda abrir e fechar a mão.`,perg:[`a) Descreva a manobra que o cirurgião está fazendo e o que ela avalia.`,`b) Explique a formação dos dois arcos palmares e diga qual deles é o mais importante — e por quê.`,`c) O que pode acontecer se o procedimento for feito sem essa avaliação — e que outros procedimentos exigem a mesma manobra?`],resp:[["a) Manobra de Allen","Comprimem-se RADIAL e ULNAR no punho → paciente abre e fecha a mão 10× (esvazia a palma) → solta-se UMA das artérias, observando a reperfusão; depois testa-se a outra. Avalia se o ARCO PALMAR É COMPLETO — se a ulnar, sozinha, irriga todos os dedos e a palma."],["b) Os arcos","ARCO PALMAR SUPERFICIAL = artéria ULNAR + ramo palmar SUPERFICIAL da radial — o MAIS CALIBROSO e mais importante. ARCO PROFUNDO = artéria RADIAL + ramo PROFUNDO da ulnar. Dos arcos saem as digitais comuns → digitais próprias (lateral e medial a cada dedo). Há muitas variações: arcos incompletos, radial suprindo só polegar/indicador, até interóssea chegando ao arco."],["c) Riscos e indicações","A fístula 'rouba' o fluxo da radial: se o arco for INCOMPLETO, o território que dependia dela (tipicamente o polegar) pode entrar em isquemia e GANGRENA — 'quantas gangrenas de dedo e mão a gente já pegou'. A manobra é obrigatória antes de TODO procedimento que ocupa a radial: CATETERISMO CARDÍACO pela radial, PAI (pressão arterial invasiva) e a própria FÍSTULA AV."]],ref:'Allen e arcos'},
+{n:2,aula:1,caso:`Numa coleta de rotina na veia intermédia do cotovelo, a agulha aprofunda-se além do planejado. O paciente refere choque na mão; minutos depois há hematoma pulsátil em expansão na prega do cotovelo.`,perg:[`a) Delimite a fossa cubital (o "V" da aula) e diga qual músculo forma seu assoalho.`,`b) Separe o conteúdo superficial do conteúdo profundo da fossa.`,`c) Quais estruturas foram atingidas no caso — e qual nervo da região NÃO poderia ter sido, por quê?`],resp:[["a) Limites","FOSSA CUBITAL em V: limite SUPERIOR = linha imaginária transversa entre os EPICÔNDILOS medial e lateral · LATERAL = músculo BRAQUIORRADIAL · MEDIAL = PRONADOR REDONDO. O ASSOALHO é o músculo BRAQUIAL."],["b) Os dois planos","SUPERFICIAL (acima da fáscia): veia CEFÁLICA + ramos do n. cutâneo LATERAL do antebraço · veia BASÍLICA + ramos do n. cutâneo MEDIAL · intermédias do COTOVELO e do ANTEBRAÇO. PROFUNDO (tirada a fáscia e a aponeurose do bíceps): TENDÃO DO BÍCEPS · ARTÉRIA BRAQUIAL + veia · NERVO MEDIANO (medial à artéria) · NERVO RADIAL (sob o braquiorradial) · MUSCULOCUTÂNEO (entre bíceps e braquial)."],["c) O caso — e a pegadinha","Choque na mão = NERVO MEDIANO; hematoma PULSÁTIL = ARTÉRIA BRAQUIAL (caso real da aula: precisou abrir e suturar a artéria). Quem NÃO poderia ser atingido ali é o NERVO ULNAR — ele NÃO passa na fossa cubital, corre ATRÁS do epicôndilo medial ('toda prova põe o ulnar dentro da fossa')."]],ref:'Fossa cubital'},
+{n:3,aula:1,caso:`Politraumatizado chega chocado ao pronto-socorro, precisando de infusão maciça de volume — e nenhum acesso periférico calibroso é conseguido. O cirurgião pede o bisturi: "vamos dissecar".`,perg:[`a) O que é a flebotomia e quando ela está indicada?`,`b) Dê a referência anatômica ensinada em aula para o membro superior — qual veia se busca e quais as alternativas (inclusive fora do membro superior)?`,`c) Por que o sistema superficial do membro superior sustenta esse acesso? Descreva as uniões venosas dessa via até a cava superior.`],resp:[["a) Conceito e indicação","FLEBOTOMIA = 'cortar a veia' (flebo = veia, tomia = corte): dissecção cirúrgica de uma veia superficial com abertura da sua parede anterior para inserir CATETER DE GROSSO CALIBRE. Indicada no paciente grave (ex.: choque hipovolêmico do politrauma) SEM acesso venoso periférico possível, para infundir volume, sangue e medicamentos."],["b) Referências","EPICÔNDILO MEDIAL → 2 cm PARA CIMA + 2 cm LATERAL → corte transverso → encontra-se a BASÍLICA, de dissecção rápida. Alternativas: a CEFÁLICA, do lado lateral; e, no membro inferior, a SAFENA MAGNA, ANTERIOR AO MALÉOLO MEDIAL, onde é bem superficial."],["c) Por que funciona","No MEMBRO SUPERIOR, ~70% da drenagem venosa é SUPERFICIAL (no inferior é o inverso) — a basílica e a cefálica são vias de verdade. A via segue: basílica perfura a fáscia do bíceps no TERÇO MÉDIO → une-se à BRAQUIAL = VEIA AXILAR → a axilar une-se à CEFÁLICA = SUBCLÁVIA → + JUGULAR INTERNA = BRAQUIOCEFÁLICA → as duas braquiocefálicas formam a CAVA SUPERIOR."]],ref:'Flebotomia'},
+{n:4,aula:1,caso:`Pós-operatório de esofagectomia: dreno torácico com débito alto de líquido leitoso. A equipe discute a anatomia do sistema linfático para entender a complicação — e para explicar por que o membro do mesmo paciente, semanas antes, tivera placas vermelhas e bolhas ascendendo pelo braço.`,perg:[`a) Descreva o trajeto completo do ducto torácico, da origem à desembocadura.`,`b) Diferencie a drenagem linfática final do lado direito e do lado esquerdo do corpo (com as proporções da aula).`,`c) Explique o derrame leitoso (nome, mecanismo, volume diário em jogo) e o quadro do braço.`],resp:[["a) Trajeto","O ducto torácico nasce da CISTERNA DO QUILO (reservatório de linfa do abdome: intestino, membros inferiores, parede) → sobe no tórax ATRÁS DO ESÔFAGO, AO LADO DA AORTA, ladeado pelas veias ÁZIGO/HEMIÁZIGO → no pescoço faz CURVA PARA A ESQUERDA → recebe o ducto subclávio esquerdo → desemboca no ÂNGULO JÚGULO-SUBCLÁVIO ESQUERDO (entre jugular interna e subclávia esquerdas)."],["b) Direito × esquerdo","Do grupo APICAL de cada lado forma-se um DUCTO SUBCLÁVIO (nome da aula; nos livros, tronco subclávio). O DIREITO desemboca DIRETO na veia (ângulo direito) e responde por ¼ do corpo; o ESQUERDO desemboca no DUCTO TORÁCICO — que drena ¾ do corpo. Não existe ducto torácico à direita."],["c) Quilotórax e erisipela","Lesão do ducto torácico → linfa na cavidade pleural = QUILOTÓRAX (derrame de QUILO, o produto de degradação intestinal que dá nome à cisterna). Volume em jogo: NO MÍNIMO 3 LITROS de linfa/dia. No braço: ERISIPELA BOLHOSA — infecção grave em que as bactérias ASCENDEM PELOS VASOS LINFÁTICOS, desenhando o trajeto linfático na pele (edema, vermelhidão e bolhas)."]],ref:'Ducto torácico'}
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 08</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 08</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 08 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 08 — Topografia dos Membros Superiores",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Eixo arterial e circulação colateral do cotovelo, arcos palmares e manobra de Allen, sintopia dos nervos, veias superficiais e flebotomia, fossa cubital — e a linfa até o ducto torácico.",cards:[
+{area:"Artérias",cat:"conceito",q:"Onde acaba a subclávia — e onde acaba a axilar?",a:"SUBCLÁVIA acaba na PRIMEIRA COSTELA (nasce do tronco braquiocefálico à direita, da aorta à esquerda). AXILAR acaba na margem do REDONDO MAIOR — dali começa a BRAQUIAL.",obs:"Aula: margem LATERAL do redondo maior; livros: margem inferior."},
+{area:"Artérias",cat:"prof",q:"Braquial × braquial profunda: qual a divisão de trabalho?",a:"BRAQUIAL = artéria de CONDUÇÃO; BRAQUIAL PROFUNDA (o ramo mais importante, sai posterolateral) = NUTRIÇÃO dos tecidos. 'Igual a femoral e a femoral profunda.'"},
+{area:"Artérias",cat:"conceito",q:"Quem acompanha a braquial profunda na face posterior do braço?",a:"O NERVO RADIAL — a artéria desce junto dele. (E a radial, no antebraço, desce sob o braquiorradial com o RAMO SUPERFICIAL do nervo radial.)"},
+{area:"Artérias",cat:"conceito",q:"Onde a braquial se bifurca e em quê?",a:"Na altura da CABEÇA (às vezes colo) DO RÁDIO → artéria RADIAL (junto do rádio) e artéria ULNAR (junto da ulna, passando sob o pronador redondo e os flexores)."},
+{area:"Artérias",cat:"prof",q:"A interóssea comum: origem, tamanho e destino?",a:"Ramo da ULNAR, CURTINHA (1–2 cm) → divide-se em interóssea ANTERIOR (na frente da membrana) e POSTERIOR — que PERFURA a membrana interóssea e desce por trás."},
+{area:"Artérias",cat:"conceito",q:"O que forma o arco cárpico?",a:"No carpo: ramos da RADIAL + ULNAR + INTERÓSSEA. (Nos arcos palmares a interóssea só chega em variação.)"},
+{area:"Cotovelo",cat:"prof",q:"Por que uma artéria se chama 'recorrente'?",a:"Porque o FLUXO RECORRE — corre ao contrário do habitual (sobe, da periferia em direção ao coração) para encontrar a colateral que desce. Recorrente radial ← radial; recorrente ulnar ← ulnar."},
+{area:"Cotovelo",cat:"conceito",q:"Monte o desvio lateral do cotovelo numa obstrução da braquial.",a:"BRAQUIAL PROFUNDA → COLATERAL RADIAL (e colateral MÉDIA) → anastomose → RECORRENTE RADIAL → RADIAL. 'As colaterais dão conta do recado' — o sangue chega à mão."},
+{area:"Cotovelo",cat:"conceito",q:"E o desvio medial do cotovelo?",a:"COLATERAIS ULNARES SUPERIOR e INFERIOR (da braquial) → anastomose entre si e com a RECORRENTE ULNAR → ULNAR. Atrás da fossa cubital há uma grande rede de anastomoses."},
+{area:"Cotovelo",cat:"alerta",q:"Colateral radial e recorrente radial são o mesmo vaso?",a:"NÃO — são artérias DIFERENTES que normalmente SE UNEM (colateral desce da braquial profunda; recorrente sobe da radial). Embriologicamente podem nem se unir."},
+{area:"Arcos & Allen",cat:"prof",q:"Composição e hierarquia dos arcos palmares?",a:"SUPERFICIAL = ULNAR + ramo palmar superficial da radial — o MAIS CALIBROSO e mais importante. PROFUNDO = RADIAL + ramo profundo da ulnar."},
+{area:"Arcos & Allen",cat:"prof",q:"Como se faz a manobra de Allen — e o que ela responde?",a:"Comprime RADIAL + ULNAR no punho → abre e fecha a mão 10× → solta UMA artéria e observa a reperfusão (depois a outra). Responde: o ARCO PALMAR É COMPLETO? A ulnar supre a mão sozinha?"},
+{area:"Arcos & Allen",cat:"alerta",q:"Antes de quais procedimentos a Allen é obrigatória?",a:"Todo procedimento que OCUPA a RADIAL: CATETERISMO cardíaco pela radial · PAI (pressão arterial invasiva) · FÍSTULA ARTERIOVENOSA para hemodiálise (radial-cefálica). Arco incompleto + radial trombosada = gangrena de polegar/mão."},
+{area:"Arcos & Allen",cat:"caso",q:"Pós-cateterismo pela radial: polegar e indicador frios, resto da mão normal. O que houve?",a:"TROMBOSE DA RADIAL num ARCO INCOMPLETO em que ela supria polegar e indicador (variação dos slides). A Allen teria previsto."},
+{area:"Arcos & Allen",cat:"caso",q:"Anestesia na base do dedo: qual o cuidado da aula?",a:"As DIGITAIS PRÓPRIAS passam LATERAL e MEDIAL a cada dedo — ASPIRAR antes de injetar, para não jogar anestésico dentro da artéria."},
+{area:"Nervos",cat:"prof",q:"Sintopia da braquial: onde está cada nervo?",a:"MEDIANO = CRUZA de LATERAL para MEDIAL (fascículos lateral+medial) · MUSCULOCUTÂNEO = lateral (fasc. lateral) · ULNAR = medial (fasc. medial) · RADIAL = posterior + AXILAR atrás da axilar (fasc. POSTERIOR)."},
+{area:"Nervos",cat:"conceito",q:"Depois do braço, com quem o mediano e a ulnar se encontram?",a:"O MEDIANO cruza ANTERIOR à artéria ULNAR e desce ao antebraço; a artéria ulnar segue medial, correndo JUNTO DO NERVO ULNAR."},
+{area:"Nervos",cat:"conceito",q:"Posição da veia braquial em relação à artéria?",a:"MEDIAL à artéria. Quando é DUPLA (pode ser), fica uma veia medial e uma lateral."},
+{area:"Procedimentos",cat:"caso",q:"Massa pulsátil no punho semanas após trauma — o que é e o que NÃO fazer?",a:"PSEUDOANEURISMA da radial (pós-traumático — não é aneurisma verdadeiro). NÃO incisar achando que é abscesso: 'explode num jato de sangue arterial'. PALPAR toda bolota antes de drenar."},
+{area:"Veias",cat:"prof",q:"Qual sistema venoso domina em cada membro?",a:"MEMBRO SUPERIOR: ~70% SUPERFICIAL (cefálica mais calibrosa que a braquial). MEMBRO INFERIOR: o inverso — 70–80% PROFUNDO (por isso dá para tirar as varizes)."},
+{area:"Veias",cat:"conceito",q:"De onde nascem cefálica e basílica?",a:"Do ARCO VENOSO DORSAL da mão: CEFÁLICA da parte LATERAL (+ veias do polegar) · BASÍLICA da parte MEDIAL (+ veias do 5º dedo)."},
+{area:"Veias",cat:"prof",q:"Trajeto da cefálica até virar profunda?",a:"Face LATERAL do antebraço → fossa cubital → lateral ao bíceps → SULCO DELTOPEITORAL (deltoide × peitoral maior) → perfura a fáscia clavipeitoral no HIATO → desemboca na AXILAR."},
+{area:"Veias",cat:"prof",q:"Trajeto da basílica até virar profunda?",a:"Face MEDIAL do antebraço → recebe a intermédia do cotovelo → medial ao bíceps → PERFURA A FÁSCIA DO BÍCEPS NO TERÇO MÉDIO do braço → une-se à BRAQUIAL = VEIA AXILAR."},
+{area:"Veias",cat:"conceito",q:"Monte a sequência de uniões venosas até a cava superior.",a:"BRAQUIAL + BASÍLICA = AXILAR → AXILAR + CEFÁLICA = SUBCLÁVIA → SUBCLÁVIA + JUGULAR INTERNA = BRAQUIOCEFÁLICA → as duas braquiocefálicas = CAVA SUPERIOR."},
+{area:"Veias",cat:"conceito",q:"Intermédias do cotovelo e do antebraço: quem desemboca em quem?",a:"A INTERMÉDIA DO COTOVELO sai da CEFÁLICA em direção à BASÍLICA; a INTERMÉDIA DO ANTEBRAÇO sobe da palma e desemboca NELA — às vezes desenhando o 'M' venoso. Variação é a regra (pessoa a pessoa, braço a braço)."},
+{area:"Veias",cat:"alerta",q:"Qual a particularidade das veias profundas do antebraço?",a:"São DUPLAS: duas radiais e duas ulnares por artéria → unem-se na VEIA BRAQUIAL (que também pode ser dupla). Axilar/subclávia duplas: bem mais raro."},
+{area:"Procedimentos",cat:"prof",q:"Flebotomia no MS: a referência anatômica exata?",a:"EPICÔNDILO MEDIAL → 2 cm PARA CIMA + 2 cm LATERAL → corte transverso → BASÍLICA (disseca rápido, abre a parede anterior, cateter de grosso calibre). Alternativas: CEFÁLICA (lateral) ou SAFENA MAGNA anterior ao MALÉOLO MEDIAL.",obs:"Indicação: paciente chocado sem acesso periférico possível."},
+{area:"Fossa cubital",cat:"prof",q:"Os limites do 'V' da fossa cubital — e o assoalho?",a:"SUPERIOR = linha imaginária entre os EPICÔNDILOS · LATERAL = BRAQUIORRADIAL · MEDIAL = PRONADOR REDONDO · ASSOALHO = músculo BRAQUIAL.",obs:"'O mais importante do membro superior é lembrar da fossa cubital.'"},
+{area:"Fossa cubital",cat:"conceito",q:"Conteúdo superficial da fossa cubital?",a:"CEFÁLICA + ramos do n. cutâneo LATERAL do antebraço · BASÍLICA + ramos do n. cutâneo MEDIAL · INTERMÉDIAS do cotovelo e do antebraço — tudo acima da fáscia."},
+{area:"Fossa cubital",cat:"conceito",q:"Conteúdo profundo da fossa cubital?",a:"TENDÃO DO BÍCEPS · ARTÉRIA BRAQUIAL + veia ao lado · NERVO MEDIANO (medial à artéria) · NERVO RADIAL (sob o braquiorradial) · MUSCULOCUTÂNEO (entre bíceps e braquial)."},
+{area:"Fossa cubital",cat:"alerta",q:"Qual nervo NÃO passa na fossa cubital — 'toda prova põe'?",a:"O NERVO ULNAR. Ele corre FORA da fossa, ATRÁS do EPICÔNDILO MEDIAL. 'Sempre, na meia dúzia de alternativas, põem o ulnar dentro da fossa — ele passa fora.'"},
+{area:"Fossa cubital",cat:"caso",q:"Coleta na intermédia do cotovelo que aprofunda demais: o que pega?",a:"A ARTÉRIA BRAQUIAL (hematoma enorme e PULSÁTIL — caso real: precisou abrir e suturar) ou o NERVO MEDIANO (choque na mão, dormência). As complicações moram logo abaixo da fáscia."},
+{area:"Linfáticos",cat:"prof",q:"As 5 cadeias axilares da aula — e o grupo não axilar?",a:"INFRACLAVICULAR · PEITORAL (anterior) · SUBESCAPULAR (posterior) · CENTRAL · APICAL. Não axilar: linfonodos ISOLADOS do braço/antebraço + SUPRATROCLEAR (inconstante, acima da tróclea)."},
+{area:"Linfáticos",cat:"prof",q:"Os territórios que drenam para a axila?",a:"Tudo ACIMA da CICATRIZ UMBILICAL (na frente) e ACIMA da CRISTA ILÍACA (atrás, incluindo a NUCA) → grupos AXILARES. Abaixo dessas linhas → linfonodos INGUINAIS."},
+{area:"Linfáticos",cat:"conceito",q:"Quem drena para infraclavicular, peitoral e subescapular?",a:"MEMBRO SUPERIOR → INFRACLAVICULAR (7–12, junto da veia axilar) — EXCETO a via da CEFÁLICA → APICAL direto · parede abdominal/torácica (acima da cicatriz) → PEITORAL (4–5) · dorso, escápula e nuca → SUBESCAPULAR (9–12)."},
+{area:"Linfáticos",cat:"conceito",q:"Qual o funil final da linfa axilar?",a:"Tudo converge → CENTRAL (3–4 linfonodos na gordura da axila) → APICAL (~7, supraclaviculares, junto da subclávia) = coletor final. Ex. da mama: peitoral → central → apical — 'a metástase se espalha pelos linfonodos'."},
+{area:"Linfáticos",cat:"prof",q:"Ducto subclávio direito × esquerdo: qual a diferença-chave?",a:"DIREITO: desemboca DIRETO na veia (ângulo júgulo-subclávio direito) — drena ¼ do corpo. ESQUERDO: desemboca no DUCTO TORÁCICO — que drena ¾ do corpo. Não existe ducto torácico à direita.",obs:"Nos livros: 'tronco subclávio' e ducto linfático direito."},
+{area:"Linfáticos",cat:"prof",q:"O trajeto do ducto torácico?",a:"CISTERNA DO QUILO (abdome) → sobe ATRÁS DO ESÔFAGO, ao lado da AORTA, ladeado pelas veias ÁZIGO/HEMIÁZIGO → CURVA À ESQUERDA no pescoço → recebe o ducto subclávio esquerdo → ÂNGULO JÚGULO-SUBCLÁVIO ESQUERDO (jugular interna × subclávia)."},
+{area:"Linfáticos",cat:"caso",q:"Derrame pleural leitoso pós-cirurgia de esôfago — nome e mecanismo?",a:"QUILOTÓRAX: lesão do DUCTO TORÁCICO → linfa (quilo) na cavidade pleural. Em jogo: NO MÍNIMO 3 LITROS de linfa por dia."},
+{area:"Linfáticos",cat:"caso",q:"Braço inchado, vermelho e com bolhas ascendendo — o que é?",a:"ERISIPELA BOLHOSA — infecção grave em que as bactérias SOBEM PELOS VASOS LINFÁTICOS, desenhando o trajeto linfático na pele. Bolhas = forma mais grave."}
+]}
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-membros-superiores-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>

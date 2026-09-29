@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Face — SMAS, Nervo Facial e Trigêmeo · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Face — Facial e Trigêmeo</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula de 11/09</p>
+  <h1 class="page-h1">Face: SMAS, Nervo Facial e Trigêmeo</h1>
+  <p class="lead">As camadas da face e o sistema que a cirurgia plástica traciona, os músculos da mímica e sua origem branquial, o corpo adiposo de Bichat — e os dois nervos da prova: o facial, do sulco bulbopontino à paralisia de Bell e às lesões ramo a ramo; e o trigêmeo, o sensitivo da cabeça, com seus forames, seus pontos de bloqueio e a neuralgia que "é tudo trigêmeo".</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">As camadas da face e o SMAS</a></li>
+      <li><a href="#t2">Linhas de força: por onde cortar</a></li>
+      <li><a href="#t3">Mímica e mastigação: a origem branquial</a></li>
+      <li><a href="#t4">O corpo adiposo de Bichat (e a bichectomia)</a></li>
+      <li><a href="#t5">Nervo facial: origem e trajeto intraósseo</a></li>
+      <li><a href="#t6">Os ramos do facial: do estilomastóideo à parótida</a></li>
+      <li><a href="#t7">Paralisia central × periférica</a></li>
+      <li><a href="#t8">Paralisia de Bell: o quadro completo</a></li>
+      <li><a href="#t9">Bell: números, lágrimas de crocodilo e tratamento</a></li>
+      <li><a href="#t10">Lesões ramo a ramo do facial</a></li>
+      <li><a href="#t11">Trigêmeo: o sensitivo da cabeça (e a dura-máter)</a></li>
+      <li><a href="#t12">Oftálmico, maxilar, mandibular — e seus forames</a></li>
+      <li><a href="#t13">O mandibular por dentro: mastigação, lingual e a "aliança"</a></li>
+      <li><a href="#t14">Os três pontos de bloqueio da face</a></li>
+      <li><a href="#t15">Neuralgia do trigêmeo</a></li>
+      <li><a href="#t16">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · As camadas da face e o SMAS</h2>
+  <ul>
+    <li>Na face, as camadas mudam em relação ao resto do corpo: <b>1) pele · 2) tela subcutânea</b> (sem a camada lamelar do abdome) · <b>3) o SMAS</b> · 4) espaço com os <b>ligamentos de retenção</b> · 5) <b>fáscia profunda</b> · 6) periósteo.</li>
+    <li>🎯 <b>SMAS = Sistema Músculo-Aponeurótico Superficial</b>: a aponeurose que <b>ANCORA os músculos da expressão facial</b> — por isso nenhuma mímica é totalmente isolada ("você não consegue sorrir só de um lado sem mexer o outro").</li>
+    <li>🎯 Descrito por um cirurgião plástico (~1950), <b>revolucionou a cirurgia plástica</b>: antes se "puxava a pele e cortava"; <b>hoje se traciona o SMAS</b>. As "harmonizações faciais" atuais também mexem exatamente nesse plano — cheio de vasos.</li>
+    <li>Dá para separar o SMAS na peça: levanta-se a pele, e uma segunda incisão levanta o SMAS (trabalho do grupo do professor com alunos de iniciação científica).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-24-camadas.jpg" alt="Camadas anatômicas da face">
+  <figcaption>As camadas da face em corte: pele, subcutâneo, o SMAS ancorando a mímica, os ligamentos de retenção, a fáscia profunda e o periósteo — o mapa que a cirurgia plástica e a harmonização facial percorrem.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · Linhas de força: por onde cortar</h2>
+  <ul>
+    <li>🎯 As <b>linhas de tensão da pele são PERPENDICULARES às fibras musculares</b>: o frontal tem fibras longitudinais → as rugas (e as linhas de incisão) são transversais.</li>
+    <li>Regra cirúrgica geral: <b>respeitar as linhas</b> — a incisão paralela à linha de tensão cicatriza melhor e lesa menos (vale para a face como para o abdome).</li>
+  </ul>
+
+  <h2 class="topic" id="t3">3 · Mímica e mastigação: a origem branquial</h2>
+  <ul>
+    <li>🎯 A musculatura da cabeça é <b>BRANQUIAL</b> (por isso os americanos separam do "somático"): <b>1º ARCO branquial → músculos da MASTIGAÇÃO → nervo TRIGÊMEO</b> · <b>2º ARCO → músculos da MÍMICA → nervo FACIAL</b> (3º arco → glossofaríngeo).</li>
+    <li>🎯 Exceções — os músculos da cabeça que são <b>SOMÍTICOS</b> (não branquiais): <b>a LÍNGUA e os músculos DO OLHO</b> (vêm dos somitos, lá do neuróporo rostral).</li>
+    <li>O epicrânio (occipitofrontal) e a lista completa da mímica ficam no roteiro — revisar para a prática (inclusive os auriculares e o <b>ramo cervical descendo para o PLATISMA</b>).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-27-musculos.jpg" alt="Músculos da face">
+  <figcaption>Os músculos da expressão facial rotulados — do occipitofrontal e orbicular do olho ao bucinador, orbicular da boca, zigomáticos e platisma: todos filhos do 2º arco branquial, todos inervados pelo facial.</figcaption></figure>
+
+  <h2 class="topic" id="t4">4 · O corpo adiposo de Bichat (e a bichectomia)</h2>
+  <ul>
+    <li>Sobre o <b>BUCINADOR</b> mora o <b>CORPO ADIPOSO DA BOCHECHA</b> (o antigo "corpo adiposo de Bichat") — volume que varia de pessoa a pessoa (de "bochechudo" à fóvea).</li>
+    <li>🎯 A <b>BICHECTOMIA</b> retira essa gordura <b>por dentro da boca</b> — o coxim é livre e destacável. (Curiosidade da peça: a <b>parótida ACESSÓRIA</b>, variação que avança sobre o bucinador junto ao ducto.)</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-32-bichectomia.jpg" alt="Corpo adiposo da bochecha e bichectomia">
+  <figcaption>O corpo adiposo da bochecha (Bichat) apoiado no bucinador — e a bichectomia, feita por via intraoral, removendo o coxim que define o contorno da bochecha.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Nervo facial: origem e trajeto intraósseo</h2>
+  <ul>
+    <li><b>VII par, MISTO</b> — origem aparente no <b>SULCO BULBOPONTINO</b> (lateral ao VI, medial ao VIII), acompanhado do <b>nervo INTERMÉDIO</b>.</li>
+    <li><b>Trajeto:</b> meato acústico interno → canal do facial no temporal → <b>JOELHO com o GÂNGLIO GENICULADO</b> → sai do crânio pelo 🎯 <b>FORAME ESTILOMASTÓIDEO</b> (origem aparente craniana).</li>
+    <li><b>Colaterais INTRAÓSSEOS</b> (a porção sensitiva/autônoma): <b>PETROSO MAIOR</b> → gânglio pterigopalatino → <b>glândula LACRIMAL</b> · <b>nervo do ESTAPÉDIO</b> (amortece o som) · <b>CORDA DO TÍMPANO</b> → 🎯 pega carona no <b>LINGUAL</b> (trigêmeo) → <b>gustação dos 2/3 ANTERIORES da língua + parassimpático das glândulas SUBLINGUAL e SUBMANDIBULAR</b>.</li>
+    <li>Os ramos <b>extraósseos</b> logo após o forame: <b>auricular posterior, ramo digástrico</b> (ventre posterior) <b>e estilo-hióideo</b> — e daí o tronco entra na parótida.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-06-estilomastoideo.jpg" alt="Forame estilomastóideo — saída do facial">
+  <figcaption>A origem aparente craniana do facial: o forame estilomastóideo, entre o processo estiloide e a mastoide — o ponto em que o nervo deixa o osso temporal e mergulha em direção à parótida.</figcaption></figure>
+  <figure class="fig"><img src="img/slide11f-08-componentes.jpg" alt="Componentes funcionais do facial">
+  <figcaption>Os componentes funcionais do facial em cores: motor branquial para a mímica, parassimpático para lacrimal/salivares, gustação dos 2/3 anteriores — o "nervo misto" completo num só desenho.</figcaption></figure>
+
+  <h2 class="topic" id="t6">6 · Os ramos do facial: do estilomastóideo à parótida</h2>
+  <ul>
+    <li>Dentro da <b>PARÓTIDA</b>, o tronco divide-se nos troncos temporofacial e cervicofacial → 🎯 os <b>CINCO ramos terminais: TEMPORAL · ZIGOMÁTICO · BUCAL · MARGINAL DA MANDÍBULA · CERVICAL</b> (o leque clássico sobre a face).</li>
+    <li>A parótida <b>não é inervada pelo facial</b> — ele só a atravessa; a secreção parotídea é do <b>GLOSSOFARÍNGEO</b> (que também pega carona no trigêmeo, via aurículo-temporal — tópico 13).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-34-parotida-ramos.jpg" alt="Ramos do facial na parótida">
+  <figcaption>A parótida seccionada mostrando o plexo intraparotídeo: o tronco do facial se abrindo em temporal, zigomático, bucal, marginal da mandíbula e cervical — o leque que qualquer corte profundo da região ameaça.</figcaption></figure>
+
+  <h2 class="topic" id="t7">7 · Paralisia central × periférica</h2>
+  <ul>
+    <li>🎯 <b>CENTRAL (AVC): POUPA O QUADRANTE SUPERIOR</b> — o paciente <b>enruga a testa e fecha os olhos</b>, mas a boca desvia. Por quê? O núcleo do facial que cuida da testa recebe fibras <b>dos dois hemisférios</b>.</li>
+    <li><b>PERIFÉRICA: a HEMIFACE INTEIRA</b> paralisa — testa lisa, olho que não fecha, boca caída.</li>
+    <li>🎯 O gesto clínico da aula: viu paralisia? <b>Peça para enrugar a testa e fechar os olhos.</b> Conseguiu = <b>CENTRAL = AVC = corra</b> (isquêmico precisa de conduta imediata; hemorrágico ameaça a vida). Não conseguiu = periférica — feia, mas de outro prognóstico.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-36-central-periferica.jpg" alt="Paralisia central × periférica — diagrama">
+  <figcaption>O diagrama que explica a regra: a metade superior do núcleo do facial recebe córtex dos dois lados — a lesão central derruba só o quadrante inferior contralateral; a lesão periférica leva a hemiface inteira.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Paralisia de Bell: o quadro completo</h2>
+  <ul>
+    <li><b>Paralisia facial periférica AGUDA SEM CAUSA DETECTÁVEL</b> — descrita por <b>Sir Charles Bell (1821)</b>, que sofreu e desenhou o próprio quadro. Associações: <b>VIROSES (herpes</b> em especial) com edema do nervo no canal — uma <b>neuropraxia</b>; há relatos com choque térmico.</li>
+    <li>🎯 O quadro típico: "<b>acordou de manhã com paralisia</b>" — instalação rápida; sulcos da testa e <b>nasolabial APAGADOS</b>, comissura caída, <b>rima palpebral AUMENTADA</b> (olho que não fecha), boca e língua desviando para o lado sadio, dificuldade de falar/assobiar, <b>LACRIMEJAMENTO CONSTANTE</b> (a pálpebra não espalha o filme) e salivação escorrendo.</li>
+    <li>🎯 <b>SINAL DE BELL: o globo ocular SOBE na tentativa de fechar a pálpebra</b> — a lubrificação tenta se completar sem o orbicular.</li>
+    <li><b>Dor retroauricular intensa</b> ("a orelha dói demais"): o facial inerva a região do pavilhão/mastoide — analgesia entra no tratamento.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-40-bell.jpg" alt="Paralisia de Bell — fotos">
+  <figcaption>A cara da paralisia de Bell: ptose do fechamento, rima aumentada, sulcos apagados e a comissura caída — a hemiface inteira fora do ar, na forma periférica que costuma bater à porta "de manhã, do nada".</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Bell: números, lágrimas de crocodilo e tratamento</h2>
+  <ul>
+    <li>🎯 <b>Os números da aula:</b> <b>dor retroauricular ~50%</b> · <b>↓ sensibilidade gustativa ~30%</b> · <b>↓ produção lacrimal ~5%</b> · <b>hiperacusia</b> (som alto/eco — perdeu o ESTAPÉDIO) · e o teste positivo em <b>~70%</b>:</li>
+    <li>🎯 <b>SÍNDROME DAS LÁGRIMAS DE CROCODILO:</b> pinga-se <b>ácido acético (vinagre)</b> na língua — o <b>estímulo SALIVATÓRIO faz LACRIMEJAR</b> (as fibras autonômicas regeneram/cruzam trocadas). Positivo em ~70% dos pacientes com paralisia.</li>
+    <li><b>Tratamento escalonado:</b> 1) <b>anti-inflamatório</b> (corticoide — desinchar o nervo no canal) → 2) falhou em ~15 dias? <b>DESCOMPRESSÃO CIRÚRGICA</b>: abre-se a mastoide e <b>alarga-se o canal com broca</b>, liberando o nervo → 3) nervo destruído? <b>ENXERTO</b> (sural, cutâneos). Prognóstico geral de Bell: <b>bom</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-45-hiperacusia.jpg" alt="Hiperacusia e fraqueza periférica × central">
+  <figcaption>Dois clássicos lado a lado: a hiperacusia (o telefone "grita" no ouvido sem o estapédio) e a comparação da fraqueza facial periférica × central — quem enruga a testa e quem não enruga.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Lesões ramo a ramo do facial</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Ramo lesado</th><th>O que o paciente perde</th></tr>
+    <tr><td><b>TEMPORAL</b></td><td>enrugar a testa e <b>corrugar o supercílio</b> (frontal/corrugador)</td></tr>
+    <tr><td><b>ZIGOMÁTICO</b></td><td><b>fechar o olho</b> (orbicular do olho)</td></tr>
+    <tr><td><b>BUCAL</b></td><td><b>sorrir, ASSOPRAR, SUGAR</b> (bucinador!) — com distúrbios de mastigação/deglutição (o bolo cai no vestíbulo)</td></tr>
+    <tr><td><b>MARGINAL DA MANDÍBULA</b></td><td><b>abaixar o lábio inferior</b> (abaixadores)</td></tr>
+    <tr><td><b>CERVICAL</b></td><td>esticar o <b>PLATISMA</b></td></tr>
+  </table></div>
+  <div class="box alerta"><p class="h">⚠️ MARGINAL da mandíbula ≠ MANDIBULAR — "isso vai cair na prova"</p>
+  <p><b>MARGINAL DA MANDÍBULA = ramo do FACIAL</b> (motor da mímica do lábio inferior). <b>MANDIBULAR = ramo do TRIGÊMEO</b> (sensitivo + mastigação). Há livro que escreve errado — o professor avisou: não confundir.</p></div>
+
+  <h2 class="topic" id="t11">11 · Trigêmeo: o sensitivo da cabeça (e a dura-máter)</h2>
+  <ul>
+    <li>🎯 <b>O trigêmeo é O nervo sensitivo da cabeça</b> — "na dúvida na prova, responda trigêmeo". As exceções de rodapé: o <b>terço POSTERIOR da língua e a faringe (GLOSSOFARÍNGEO</b> — por isso o reflexo do vômito: IX e X são os aferentes do <b>centro do vômito</b> no bulbo) e a sensibilidade do <b>pavilhão da orelha</b>, dividida com VII, IX e X.</li>
+    <li>🎯 <b>A DURA-MÁTER é inervada pelo TRIGÊMEO</b> → <b>enxaqueca e cefaleias "são tudo trigêmeo"</b> — dor que pode vir com vômito e alterações visuais (o quadro neurovegetativo).</li>
+    <li><b>Neuroanatomia:</b> maior nervo da <b>PONTE</b>; os núcleos sensitivos (espinal, principal, mesencefálico) são a <b>continuação da coluna posterior da medula</b> — ocupam o tronco quase inteiro. Parte <b>motora = mastigação</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t12">12 · Oftálmico, maxilar, mandibular — e seus forames</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Ramo</th><th>Forame de saída</th><th>Principais ramos da aula</th></tr>
+    <tr><td><b>OFTÁLMICO (V1)</b></td><td>🎯 <b>fissura orbital SUPERIOR</b></td><td><b>SUPRAORBITAL, SUPRATROCLEAR, ETMOIDAL, LACRIMAL</b> (+ ramo meníngeo)</td></tr>
+    <tr><td><b>MAXILAR (V2)</b></td><td>🎯 <b>forame REDONDO</b></td><td><b>INFRAORBITAL</b> (pálpebra inferior, nariz, lábio superior, gengiva), <b>ALVEOLARES SUPERIORES</b> (dentes), <b>PALATINOS maior/menor</b> (palato, até a fossa incisiva) — e o seio maxilar no caminho</td></tr>
+    <tr><td><b>MANDIBULAR (V3)</b></td><td>🎯 <b>forame OVAL</b></td><td>o único <b>MISTO</b> — tópico 13</td></tr>
+  </table></div>
+  <ul>
+    <li>Todos os três dão <b>ramos MENÍNGEOS</b> — "não pode esquecer".</li>
+  </ul>
+
+  <h2 class="topic" id="t13">13 · O mandibular por dentro: mastigação, lingual e a "aliança"</h2>
+  <ul>
+    <li><b>Parte MOTORA:</b> músculos da <b>MASTIGAÇÃO</b> (temporal — ramos temporais profundos —, <b>MASSETER</b> — nervo massetérico —, pterigóideos) <b>+ MILO-HIÓIDEO e VENTRE ANTERIOR do digástrico</b> (os abaixadores da mandíbula — "por isso ele abre a boca").</li>
+    <li><b>LINGUAL:</b> sensibilidade geral dos <b>2/3 ANTERIORES da língua</b> — e recebe a 🎯 <b>CORDA DO TÍMPANO (facial)</b>: gustação dos 2/3 + parassimpático sublingual/submandibular. <b>"A aliança facial-trigêmeo — essa não pode faltar nunca."</b></li>
+    <li><b>ALVEOLAR INFERIOR:</b> entra na mandíbula (dentes inferiores) e sai no forame mentual como <b>nervo MENTUAL</b> (mento e lábio inferior). É "o quinto nervo mais pedido" na peça.</li>
+    <li><b>AURÍCULO-TEMPORAL:</b> sensitivo do pavilhão/têmpora — e leva de carona as fibras do <b>GLOSSOFARÍNGEO para a PARÓTIDA</b>. 🎯 Os três "auriculares" da sensibilidade do pavilhão: <b>auricular MAGNO (plexo cervical), auricular POSTERIOR (facial) e AURÍCULO-TEMPORAL (trigêmeo)</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide11f-14-facial-trigemeo.jpg" alt="Facial e trigêmeo — vista medial">
+  <figcaption>A vista medial que junta os dois nervos: o gânglio trigeminal com seus três ramos, a corda do tímpano descendo do facial para se unir ao lingual, o alveolar inferior entrando na mandíbula — a "aliança" desenhada.</figcaption></figure>
+
+  <h2 class="topic" id="t14">14 · Os três pontos de bloqueio da face</h2>
+  <ul>
+    <li>🎯 Para anestesiar a face num corte grande, basta conhecer as três saídas — <b>alinhadas verticalmente</b> (na linha da pupila): <b>SUPRAORBITAL</b> (V1, no forame/incisura supraorbital) · <b>INFRAORBITAL</b> (V2, no forame infraorbital) · <b>MENTUAL</b> (V3, no forame mentual).</li>
+    <li>"Se souber onde sai o tronco sensitivo, faz o bloqueio e mexe à vontade" — sutura de face com três agulhadas.</li>
+  </ul>
+
+  <h2 class="topic" id="t15">15 · Neuralgia do trigêmeo</h2>
+  <ul>
+    <li><b>Dor lancinante nos territórios de V</b>, disparada por <b>PONTOS DE GATILHO</b> (tocar a face, mastigar, escovar).</li>
+    <li>🎯 <b>É uma neuropatia CENTRAL</b> (dos núcleos sensitivos — a continuação da coluna posterior): por isso <b>não adianta "trocar" o nervo</b> com enxerto — bloqueia-se a dor perifericamente e ela volta por outro raminho.</li>
+    <li><b>Tratamento:</b> medicação (e infiltração dos pontos de gatilho alivia mas não cura) → procedimentos no <b>GÂNGLIO trigeminal</b>: <b>COMPRESSÃO POR BALÃO</b> (percutânea, a preferida hoje), radiofrequência/radiocirurgia, até a <b>GANGLIOTOMIA</b> (tira toda a sensibilidade da cabeça, mas tira a dor). Antigamente: <b>álcool</b> (dissolve a mielina) — o mesmo princípio da alcoolização dos intercostais no câncer torácico.</li>
+  </ul>
+
+  <h2 class="topic" id="t16">16 · Resumo rápido</h2>
+  <ul>
+    <li><b>Camadas da face:</b> pele → subcutâneo → <b>SMAS</b> (ancora a mímica; a cirurgia plástica traciona ELE) → ligamentos → fáscia profunda. Incisões perpendiculares às fibras (= nas linhas de tensão).</li>
+    <li><b>Origem branquial:</b> 1º arco = mastigação/trigêmeo · 2º arco = mímica/facial · exceções somíticas: língua e músculos do olho. <b>Bichat</b> sobre o bucinador (bichectomia intraoral).</li>
+    <li><b>Facial:</b> sulco bulbopontino → gânglio geniculado → <b>forame ESTILOMASTÓIDEO</b>; intraósseos: petroso maior (lacrimal), estapédio, <b>corda do tímpano</b> (gustação 2/3 + sublingual/submandibular, via lingual); extraósseos: auricular posterior, digástrico, estilo-hióideo → parótida → <b>temporal, zigomático, bucal, marginal da mandíbula, cervical</b>.</li>
+    <li><b>Paralisias:</b> CENTRAL poupa o quadrante superior (testa/olho funcionam = AVC = corra) · PERIFÉRICA = hemiface toda. <b>BELL:</b> aguda sem causa (herpes/edema); dor retroauricular 50%, gustação 30%, lacrimal 5%, <b>crocodilo 70%</b>, hiperacusia (estapédio), <b>sinal de Bell</b> (globo sobe); tratamento: corticoide → descompressão com broca → enxerto.</li>
+    <li><b>Lesões por ramo:</b> temporal=testa · zigomático=fechar o olho · bucal=soprar/sugar/sorrir · <b>marginal da mandíbula</b> (FACIAL! ≠ mandibular do trigêmeo)=lábio inferior · cervical=platisma.</li>
+    <li><b>Trigêmeo:</b> sensitivo da cabeça (exceções: terço posterior da língua/faringe=IX; pavilhão=VII/IX/X) · <b>dura-máter=trigêmeo → enxaquecas</b> · V1=fissura orbital superior (supraorbital, supratroclear, etmoidal, lacrimal) · V2=forame redondo (infraorbital, alveolares superiores, palatinos) · V3=forame oval (misto: mastigação + milo-hióideo/ventre anterior; <b>lingual + corda do tímpano = a aliança</b>; alveolar inferior→mentual; aurículo-temporal com a carona do IX à parótida).</li>
+    <li><b>Bloqueios:</b> supraorbital · infraorbital · mentual — os três na mesma linha. <b>Neuralgia de V:</b> central, pontos de gatilho, balão/gangliotomia — enxerto não resolve.</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Face, Facial e Trigêmeo</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aula de 11/09 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-camadas">SMAS & músculos</a>
+    <a class="a1" href="#p-facial">Facial</a>
+    <a class="a1" href="#p-bell">Paralisias & Bell</a>
+    <a class="a1" href="#p-trigemeo">Trigêmeo</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-camadas">
+  <span class="aula-tag t1">Camadas, SMAS e músculos</span>
+  <ul>
+    <li>Camadas: pele → subcutâneo → <b class="k">SMAS (Sistema Músculo-Aponeurótico Superficial — ANCORA a mímica)</b> → ligamentos de retenção → fáscia profunda → periósteo.</li>
+    <li><b class="k">A cirurgia plástica moderna traciona o SMAS</b> (não a pele) — descrição ~1950; harmonização facial mexe nesse plano (cheio de vasos).</li>
+    <li>Incisões: <b>perpendiculares às fibras musculares</b> (= paralelas às linhas de tensão da pele).</li>
+    <li><b class="k">1º arco branquial = MASTIGAÇÃO = TRIGÊMEO · 2º arco = MÍMICA = FACIAL</b> · somíticos (exceção): LÍNGUA e músculos DO OLHO.</li>
+    <li><b>Corpo adiposo de BICHAT</b> sobre o bucinador → <b>bichectomia por via INTRAORAL</b>. Parótida acessória = variação.</li>
+  </ul>
+</section>
+
+<section id="p-facial">
+  <span class="aula-tag t1">Nervo facial (VII)</span>
+  <ul>
+    <li>Origem: <b>sulco BULBOPONTINO</b> (com o intermédio) → canal do facial → <b>joelho/gânglio GENICULADO</b> → <b class="k">forame ESTILOMASTÓIDEO</b>.</li>
+    <li>Intraósseos: <b>PETROSO MAIOR</b> → lacrimal · <b>ESTAPÉDIO</b> (sem ele = hiperacusia) · <b class="k">CORDA DO TÍMPANO → carona no LINGUAL → gustação 2/3 anteriores + sublingual/submandibular</b>.</li>
+    <li>Extraósseos: auricular posterior, digástrico (ventre post.), estilo-hióideo → parótida → <b class="k">TEMPORAL · ZIGOMÁTICO · BUCAL · MARGINAL DA MANDÍBULA · CERVICAL</b>.</li>
+    <li>Parótida: o facial só ATRAVESSA — secreção é do <b>GLOSSOFARÍNGEO</b> (carona no aurículo-temporal).</li>
+  </ul>
+  <div class="tw"><table>
+    <tr><th>Ramo lesado</th><th>Perde</th></tr>
+    <tr><td>TEMPORAL</td><td>enrugar testa / corrugar supercílio</td></tr>
+    <tr><td>ZIGOMÁTICO</td><td><b>fechar o olho</b></td></tr>
+    <tr><td>BUCAL</td><td><b>soprar, sugar, sorrir</b> (bucinador)</td></tr>
+    <tr><td>MARGINAL DA MANDÍBULA</td><td>abaixar o lábio inferior</td></tr>
+    <tr><td>CERVICAL</td><td>platisma</td></tr>
+  </table></div>
+</section>
+
+<section id="p-bell">
+  <span class="aula-tag t1">Paralisias e Bell</span>
+  <ul>
+    <li><b class="k">CENTRAL (AVC): POUPA o quadrante superior</b> — enruga a testa e fecha o olho → <b>corra</b> (isquêmico: conduta imediata). <b>PERIFÉRICA: hemiface INTEIRA</b>.</li>
+    <li><b>BELL</b> (1821; ele mesmo teve): periférica AGUDA sem causa — viroses/<b>HERPES</b> com edema no canal (neuropraxia). "Acordou com paralisia."</li>
+    <li>Quadro: sulcos apagados, rima aumentada, desvio p/ o lado são, <b class="k">SINAL DE BELL (globo sobe ao tentar fechar)</b>, lacrimejamento constante, <b>dor retroauricular</b>.</li>
+    <li><b class="k">Números: dor retroauricular 50% · gustação 30% · lacrimal 5% · LÁGRIMAS DE CROCODILO 70%</b> (vinagre na língua → lacrimeja) · hiperacusia (estapédio).</li>
+    <li>Tratamento: <b class="k">corticoide → descompressão cirúrgica (broca alarga o canal) → enxerto (sural)</b>. Prognóstico: bom.</li>
+  </ul>
+</section>
+
+<section id="p-trigemeo">
+  <span class="aula-tag t1">Trigêmeo (V)</span>
+  <ul>
+    <li><b class="k">O sensitivo da cabeça</b> ("na dúvida, trigêmeo") · exceções: terço POSTERIOR da língua/faringe = IX (aferente do centro do vômito, com o X) · pavilhão = VII/IX/X.</li>
+    <li><b class="k">DURA-MÁTER = TRIGÊMEO → enxaqueca/cefaleia "é tudo trigêmeo"</b> · núcleos sensitivos = continuação da COLUNA POSTERIOR (ocupam o tronco) · maior nervo da PONTE.</li>
+    <li><b class="k">V1 oftálmico → FISSURA ORBITAL SUPERIOR</b> (supraorbital, supratroclear, etmoidal, lacrimal) · <b class="k">V2 maxilar → forame REDONDO</b> (infraorbital, alveolares superiores, palatinos) · <b class="k">V3 mandibular → forame OVAL</b> (o único MISTO).</li>
+    <li>V3: mastigação (temporal, MASSETER, pterigóideos) + <b>milo-hióideo e ventre ANTERIOR do digástrico</b> · <b class="k">LINGUAL + CORDA DO TÍMPANO = "a aliança facial-trigêmeo"</b> · ALVEOLAR INFERIOR → nervo MENTUAL · AURÍCULO-TEMPORAL (+ carona do IX à parótida).</li>
+    <li><b class="k">Bloqueios em linha: SUPRAORBITAL · INFRAORBITAL · MENTUAL</b> — anestesia a face em três pontos.</li>
+    <li><b>Neuralgia de V:</b> dor com <b>PONTOS DE GATILHO</b>; é <b class="k">CENTRAL (núcleos)</b> → enxerto não resolve · tratamento: medicação → <b>balão no gânglio</b>/radiofrequência/gangliotomia (antigamente: álcool).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td><b>Marginal da mandíbula × mandibular</b></td><td>ramo do FACIAL (mímica do lábio) × ramo do TRIGÊMEO (misto) — "cai na prova"</td></tr>
+    <tr><td>Central × periférica</td><td>poupa o quadrante superior (AVC!) × hemiface inteira</td></tr>
+    <tr><td>Sensibilidade × gustação da língua (2/3 ant.)</td><td>geral = LINGUAL (V3) × gustativa = CORDA DO TÍMPANO (VII) — no mesmo cabo</td></tr>
+    <tr><td>Quem inerva a parótida</td><td>GLOSSOFARÍNGEO (via aurículo-temporal) — o facial só passa por dentro</td></tr>
+    <tr><td>Os 3 "auriculares"</td><td>magno (plexo cervical) × posterior (facial) × aurículo-temporal (trigêmeo)</td></tr>
+    <tr><td>Forames de V</td><td>V1 fissura orbital superior × V2 redondo × V3 oval</td></tr>
+    <tr><td>Neuralgia de V × Bell</td><td>DOR central com gatilhos (V) × PARALISIA periférica aguda (VII)</td></tr>
+    <tr><td>Hiperacusia em Bell</td><td>perdeu o ESTAPÉDIO (ramo do facial) — o som "grita"</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Face, Facial e Trigêmeo</h2>
+    <p>Anatomia Topográfica · Aula de 11/09 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Face — Facial e Trigêmeo</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">O SMAS (Sistema Músculo-Aponeurótico Superficial) da face corresponde:</div>`,alts:[`à fáscia profunda que separaria a mímica dos músculos da mastigação profunda`,`à aponeurose que ancora a mímica — o plano que a cirurgia plástica traciona`,`à camada lamelar do subcutâneo, idêntica à da parede do abdome`,`ao periósteo espessado da maxila e da mandíbula sob os músculos`,`aos ligamentos de retenção que prendem a pele diretamente ao osso`],correta:1,just:[`A fáscia profunda é outra camada, mais interna que o SMAS. [tipo: par confundível]`,`Correta. SMAS = a aponeurose que FIXA/ANCORA a musculatura da expressão (por isso nenhuma mímica é isolada). Descrito ~1950 por um cirurgião plástico: a cirurgia moderna TRACIONA O SMAS, não a pele — e as harmonizações mexem nesse plano.`,`Na face NÃO há a camada lamelar — a arquitetura muda em relação ao abdome. [tipo: verdade no contexto errado]`,`Periósteo é a última camada, sobre o osso — longe do plano da mímica. [tipo: vizinhança plausível]`,`Os ligamentos de retenção existem, mas são outro elemento, no espaço abaixo do SMAS. [tipo: par confundível]`],ref:'SMAS'},
+{n:2,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a origem embriológica da musculatura da cabeça, a aula estabelece:</div>`,alts:[`toda a musculatura da cabeça seria somítica, como a do tronco e dos membros`,`1º arco = mímica (nervo facial); 2º arco = mastigação (nervo trigêmeo) da cabeça`,`os músculos do olho derivariam do 2º arco branquial, junto com o platisma facial`,`1º arco = mastigação (trigêmeo); 2º = mímica (facial); exceções somíticas: língua e músculos do olho`,`a língua derivaria do 1º arco branquial, sendo por isso inervada pelo trigêmeo`],correta:3,just:[`A musculatura da cabeça é BRANQUIAL — as exceções somíticas são só duas. [tipo: generalização indevida]`,`Inverteu os arcos: o 1º é do TRIGÊMEO (mastigação); o 2º, do FACIAL (mímica). [tipo: mecanismo invertido]`,`Os músculos do olho são SOMÍTICOS — vêm dos somitos, não de arco. [tipo: par confundível]`,`Correta. Regra da aula: 1º ARCO → MASTIGAÇÃO → TRIGÊMEO · 2º ARCO → MÍMICA → FACIAL (3º → glossofaríngeo). Exceções somíticas da cabeça: a LÍNGUA e os MÚSCULOS DO OLHO (vêm dos somitos do neuróporo rostral).`,`A língua é justamente uma das EXCEÇÕES somíticas — e sua motricidade é do hipoglosso. [tipo: recombinação plausível]`],ref:'Arcos branquiais'},
+{n:3,aula:1,nivel:'medio',enun:`<span class="vinheta">Homem, 58 anos, hipertenso, chega com a boca desviada para a esquerda. Ao exame: enruga a testa e fecha os olhos normalmente dos dois lados.</span><div class="pergunta">A leitura da aula para esse achado é:</div>`,alts:[`paralisia facial CENTRAL — o quadrante superior poupado aponta AVC: "corra"`,`paralisia de Bell típica, com bom prognóstico e conduta ambulatorial simples`,`lesão periférica do ramo bucal isolado, sem urgência associada`,`neuropraxia do facial por edema no canal, tratável com corticoide`,`lesão do trigêmeo mandibular, com paresia mastigatória à direita`],correta:0,just:[`Correta. Se o paciente ENRUGA A TESTA E FECHA OS OLHOS, o quadrante superior está poupado = paralisia CENTRAL = AVC — o núcleo da metade superior da face recebe córtex dos DOIS hemisférios. "É um AVC e é grave — corram": isquêmico pede conduta imediata; hemorrágico ameaça a vida.`,`Bell é PERIFÉRICA — pegaria a hemiface inteira, testa incluída. [tipo: par confundível]`,`O bucal isolado não desviaria a boca com esse padrão — e ignoraria o sinal do quadrante. [tipo: nível anatômico errado]`,`Neuropraxia do canal é o mecanismo da PERIFÉRICA (Bell) — aqui a testa funciona. [tipo: verdade no contexto errado]`,`O trigêmeo é sensitivo + mastigação — não desvia a boca em repouso. [tipo: par confundível]`],ref:'Central × periférica'},
+{n:4,aula:1,nivel:'facil',enun:`<div class="pergunta">O nervo facial deixa o crânio (origem aparente craniana) através do:</div>`,alts:[`forame oval, descendo junto com o ramo mandibular do trigêmeo`,`meato acústico externo, atravessando a própria membrana timpânica`,`forame redondo, seguindo em direção à fossa pterigopalatina`,`forame jugular, acompanhando os nervos cranianos IX, X e XI`,`forame estilomastóideo, entre o processo estiloide e a mastoide`],correta:4,just:[`O oval é a porta do MANDIBULAR (V3). [tipo: par confundível]`,`O facial passa pelo meato acústico INTERNO no início — nunca pelo externo. [tipo: par confundível]`,`O redondo é do MAXILAR (V2). [tipo: par confundível]`,`O jugular é dos nervos IX, X e XI com a jugular interna. [tipo: par confundível]`,`Correta. Depois do trajeto intraósseo (meato acústico interno → joelho com o gânglio GENICULADO), o facial sai pelo FORAME ESTILOMASTÓIDEO — e dali mergulha rumo à parótida.`],ref:'Estilomastóideo'},
+{n:5,aula:1,nivel:'dificil',enun:`<span class="vinheta">Estudante acorda com metade da face paralisada: não fecha o olho direito, dor intensa atrás da orelha, sons "gritando" no ouvido direito e comida sem gosto na ponta da língua.</span><div class="pergunta">Sobre o diagnóstico e a explicação da queixa auditiva:</div>`,alts:[`AVC isquêmico — a hiperacusia decorre do córtex auditivo isquêmico`,`neuralgia do trigêmeo — a dor otológica dispararia por pontos de gatilho locais`,`paralisia de Bell — a hiperacusia vem da perda do estapédio, ramo do facial`,`otite média aguda — a paralisia é compressiva e a audição, abafada`,`síndrome do forame jugular — IX, X e XI explicam o conjunto do quadro`],correta:2,just:[`AVC pouparia a testa (central) — e a hiperacusia de Bell é periférica, do estapédio. [tipo: par confundível]`,`Neuralgia de V dá DOR lancinante em salvas — não paralisia nem ageusia. [tipo: diagnóstico diferencial]`,`Correta. PARALISIA DE BELL: periférica aguda ("acordou com paralisia"), dor retroauricular (~50%), ↓gustação dos 2/3 anteriores (corda do tímpano, ~30%) — e HIPERACUSIA porque o nervo DO ESTAPÉDIO (ramo intraósseo do facial) paralisa o músculo que amortece o som.`,`Otite explicaria dor e abafamento — aqui o som AUMENTA (hiperacusia) e há ageusia. [tipo: diagnóstico diferencial]`,`O forame jugular daria disfagia, rouquidão e ombro caído — outra síndrome. [tipo: par confundível]`],ref:'Bell + hiperacusia'},
+{n:6,aula:1,nivel:'medio',enun:`<div class="pergunta">A corda do tímpano, ramo do facial, é responsável por:</div>`,alts:[`gustação dos 2/3 anteriores + parassimpático sublingual/submandibular, de carona no lingual`,`sensibilidade geral dos 2/3 anteriores da língua, viajando junto do hipoglosso`,`a inervação motora do estapédio e a sensibilidade geral do meato acústico externo`,`todo o parassimpático da glândula parótida, através do gânglio ótico local`,`a gustação do terço posterior da língua, junto com o nervo glossofaríngeo`],correta:0,just:[`Correta. A CORDA DO TÍMPANO sai do facial no canal, "PEGA CARONA" NO LINGUAL (trigêmeo) e leva: GUSTAÇÃO DOS 2/3 ANTERIORES + fibras PARASSIMPÁTICAS para as glândulas SUBLINGUAL E SUBMANDIBULAR — "a aliança facial-trigêmeo".`,`A sensibilidade GERAL dos 2/3 é do LINGUAL (V3) — a corda leva a gustativa; e o hipoglosso é motor. [tipo: par confundível]`,`O estapédio tem nervo próprio (também do facial) — não é a corda. [tipo: par confundível]`,`A parótida é do GLOSSOFARÍNGEO (via aurículo-temporal). [tipo: par confundível]`,`O terço POSTERIOR é território do IX — gustação e sensibilidade. [tipo: par confundível]`],ref:'Corda do tímpano'},
+{n:7,aula:1,nivel:'facil',enun:`<div class="pergunta">Os cinco ramos terminais do facial, no leque que emerge da parótida, são:</div>`,alts:[`oftálmico, maxilar, mandibular, bucal e cervical do trigêmeo`,`temporal, zigomático, infraorbital, mentual e cervical misturados`,`frontal, orbital, nasal, labial e mentoniano em sequência`,`temporal, zigomático, bucal, marginal da mandíbula e cervical`,`auricular posterior, digástrico, estilo-hióideo, bucal e cervical`],correta:3,just:[`Oftálmico/maxilar/mandibular são os ramos do TRIGÊMEO. [tipo: par confundível]`,`Infraorbital e mentual são nervos SENSITIVOS do trigêmeo (V2/V3). [tipo: recombinação plausível]`,`Nomenclatura inventada — não é a divisão clássica. [tipo: pseudo-nomenclatura plausível]`,`Correta. O plexo intraparotídeo abre o leque: TEMPORAL · ZIGOMÁTICO · BUCAL · MARGINAL DA MANDÍBULA · CERVICAL — os cinco motores da mímica.`,`Auricular posterior, digástrico e estilo-hióideo são os ramos EXTRAÓSSEOS que saem ANTES da parótida. [tipo: momento errado]`],ref:'Ramos do facial'},
+{n:8,aula:1,nivel:'medio',enun:`<span class="vinheta">Corte profundo na região temporal-lateral da fronte. Semanas depois: o paciente não enruga a testa daquele lado nem franze o supercílio, mas fecha o olho normalmente.</span><div class="pergunta">O ramo lesado foi:</div>`,alts:[`o zigomático, responsável pelo andar superior da mímica facial`,`o temporal, que leva o frontal e o corrugador do supercílio`,`o oftálmico do trigêmeo, com paresia sensitivo-motora frontal`,`o bucal, cuja lesão alta atinge também a musculatura frontal`,`o marginal da mandíbula, em trajeto anômalo ascendente raro`],correta:1,just:[`O zigomático cuida do ORBICULAR DO OLHO (fechar o olho) — que aqui está normal. [tipo: par confundível]`,`Correta. RAMO TEMPORAL do facial → frontal + corrugador do supercílio: a lesão apaga as rugas da testa e o franzir, poupando o fechamento ocular (zigomático íntegro).`,`O oftálmico (V1) é SENSITIVO — não move músculo da mímica. [tipo: par confundível]`,`O bucal trabalha no andar médio (sorriso, bucinador) — não sobe à testa. [tipo: nível anatômico errado]`,`O marginal cuida do lábio inferior, no andar oposto da face. [tipo: nível anatômico errado]`],ref:'Ramo temporal'},
+{n:9,aula:1,nivel:'medio',enun:`<div class="pergunta">A lesão do ramo BUCAL do facial compromete tipicamente:</div>`,alts:[`a mastigação propriamente dita, por paralisia do músculo masseter`,`a oclusão da pálpebra, com lagoftalmo e lacrimejamento constante do olho`,`a sensibilidade da bochecha e da gengiva superior ipsilateral`,`o abaixamento do lábio inferior, com sorriso assimétrico baixo`,`sorrir, assoprar e sugar — o bucinador para, e o alimento fica no vestíbulo`],correta:4,just:[`Masseter é MASTIGAÇÃO = trigêmeo (nervo massetérico). [tipo: par confundível]`,`Fechar o olho é o ramo ZIGOMÁTICO. [tipo: par confundível]`,`Sensibilidade da bochecha/gengiva é do TRIGÊMEO (bucal de V3/infraorbital). [tipo: par confundível]`,`O lábio inferior é do MARGINAL DA MANDÍBULA. [tipo: par confundível]`,`Correta. O ramo BUCAL leva o BUCINADOR e a mímica média: sem ele o paciente NÃO SORRI, NÃO ASSOPRA, NÃO SUGA — e a comida cai no vestíbulo (distúrbio de mastigação/deglutição por acúmulo).`],ref:'Ramo bucal'},
+{n:10,aula:1,nivel:'dificil',enun:`<div class="pergunta">"Marginal da mandíbula" e "mandibular" — a distinção que o professor avisou que cai na prova — é:</div>`,alts:[`seriam sinônimos aceitos; os livros modernos usariam um ou outro nome`,`marginal da mandíbula seria sensitivo (V3) e mandibular, motor (VII)`,`marginal da mandíbula é ramo do FACIAL; mandibular é ramo do TRIGÊMEO (o misto)`,`os dois seriam ramos do trigêmeo, em níveis diferentes da mandíbula`,`os dois seriam ramos do facial: um intraósseo e o outro extraósseo`],correta:2,just:[`Não são sinônimos — e há livro que escreve errado, "pode corrigir o original". [tipo: misconception clássica]`,`Inverteu os donos e as funções. [tipo: mecanismo invertido]`,`Correta. MARGINAL DA MANDÍBULA = ramo do FACIAL (motor dos abaixadores do lábio inferior). MANDIBULAR (V3) = ramo do TRIGÊMEO, o único misto (sensibilidade + mastigação). Nome parecido, nervos diferentes.`,`O marginal não é do trigêmeo — é o leque do facial. [tipo: generalização indevida]`,`O mandibular não é do facial em nível nenhum. [tipo: recombinação plausível]`],ref:'Marginal × mandibular'},
+{n:11,aula:1,nivel:'facil',enun:`<div class="pergunta">O "sinal de Bell", observado na paralisia facial periférica, é:</div>`,alts:[`o globo ocular subindo quando o paciente tenta fechar a pálpebra`,`o desvio da língua para o lado paralisado durante a protrusão dela`,`o desvio da úvula para o lado são durante a fonação do "ah"`,`o lacrimejamento ao estímulo gustativo com ácido acético`,`a dor retroauricular à palpação do processo mastoide local`],correta:0,just:[`Correta. SINAL DE BELL: na tentativa de fechar o olho, a pálpebra não obedece (orbicular paralisado) e o GLOBO OCULAR SOBE — o olho "revira" buscando lubrificação.`,`Língua desviada é sinal do HIPOGLOSSO (XII). [tipo: par confundível]`,`Úvula para o lado são é o sinal da cortina — VAGO. [tipo: par confundível]`,`Isso é a síndrome das LÁGRIMAS DE CROCODILO — outro achado de Bell, não o "sinal de Bell". [tipo: par confundível]`,`A dor retroauricular existe no quadro, mas o sinal epônimo é ocular. [tipo: verdade no contexto errado]`],ref:'Sinal de Bell'},
+{n:12,aula:1,nivel:'medio',enun:`<div class="pergunta">Os percentuais aproximados apresentados em aula para a paralisia de Bell são:</div>`,alts:[`dor retroauricular 5% · gustação 50% · lágrimas de crocodilo 30% ao todo`,`dor retroauricular 90% · gustação 70% · produção lacrimal 50%`,`todos os achados ocorrem em menos de 10% dos pacientes com Bell`,`retroauricular ~50% · gustação ~30% · lacrimal ~5% · crocodilo ~70%`,`lágrimas de crocodilo 100%, por definição diagnóstica da doença`],correta:3,just:[`Embaralhou os números — a dor é a metade dos casos; o crocodilo, 70%. [tipo: permutação plausível]`,`Superestimou tudo — os números da aula são bem menores. [tipo: erro numérico plausível]`,`A dor retroauricular sozinha já atinge metade dos pacientes. [tipo: erro numérico plausível]`,`Correta. Números da aula: DOR RETROAURICULAR ~50% · ↓SENSIBILIDADE GUSTATIVA ~30% · ↓PRODUÇÃO LACRIMAL ~5% · e o teste das LÁGRIMAS DE CROCODILO positivo em ~70%. ("Nada é baixo: 100 pessoas, 30 com gustação comprometida.")`,`70%, não 100% — e não é critério diagnóstico obrigatório. [tipo: generalização indevida]`],ref:'Bell — números'},
+{n:13,aula:1,nivel:'medio',enun:`<div class="pergunta">A "síndrome das lágrimas de crocodilo" da paralisia facial é pesquisada assim:</div>`,alts:[`compressão da glândula parótida — o refluxo salivar confirmaria a obstrução ductal`,`gota de ácido acético na língua — o estímulo salivatório provoca lacrimejamento`,`oclusão forçada das pálpebras — o transbordamento marca o teste positivo`,`estímulo doloroso retroauricular — o lacrimejamento reflexo aparece`,`inspeção noturna — o olho aberto durante o sono produz lágrima contínua`],correta:1,just:[`Parótida e seu ducto não participam do fenômeno. [tipo: recombinação plausível]`,`Correta. Pinga-se uma gota de ÁCIDO ACÉTICO (vinagre) na língua: o ESTÍMULO SALIVATÓRIO dispara LACRIMEJAMENTO — as fibras autonômicas do facial se cruzam/regeneram trocadas. Positivo em ~70% das paralisias.`,`Fechar o olho não dispara a via gustativo-lacrimal. [tipo: pseudo-teste plausível]`,`A dor retroauricular é achado do quadro, não o gatilho do teste. [tipo: recombinação plausível]`,`Lagoftalmo dá ressecamento e lacrimejamento constante — mas o TESTE é gustativo. [tipo: verdade no contexto errado]`],ref:'Lágrimas de crocodilo'},
+{n:14,aula:1,nivel:'dificil',enun:`<span class="vinheta">Paralisia de Bell tratada com corticoide por 15 dias, sem qualquer melhora. A equipe discute o próximo passo.</span><div class="pergunta">A sequência terapêutica ensinada em aula é:</div>`,alts:[`repetir o corticoide por mais 60 dias antes de outra medida adicional`,`enxerto de nervo sural imediato, antes que o músculo fibrose de vez`,`descompressão: abrir a mastoide e alargar o canal com broca — nervo destruído, enxerto`,`fisioterapia isolada — a cirurgia não tem papel na paralisia de Bell`,`toxina botulínica no lado são, equilibrando a mímica definitivamente ali`],correta:2,just:[`Prolongar a mesma medicação que falhou não é o degrau seguinte. [tipo: momento errado]`,`O enxerto é o ÚLTIMO degrau, para nervo destruído — antes tenta-se liberar o próprio nervo. [tipo: momento errado]`,`Correta. Falhou o anti-inflamatório (o nervo segue edemaciado num canal ósseo SEM espaço) → DESCOMPRESSÃO: abre-se a mastoide, "pega a broca e alarga o buraquinho", liberando o nervo → reabilitação. Se o nervo estiver perdido: ENXERTO (sural/cutâneo). Prognóstico geral: bom.`,`Tem papel, sim: "quando o medicamento não funciona, pense em cirurgia". [tipo: nega o mecanismo]`,`Toxina no lado são é recurso estético/paliativo — não a sequência da aula. [tipo: recombinação plausível]`],ref:'Bell — tratamento'},
+{n:15,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre enxaqueca e cefaleias, a ligação anatômica destacada pelo professor é:</div>`,alts:[`o couro cabeludo, inervado pelo plexo cervical, seria a grande origem da dor`,`os seios venosos, inervados pelo vago, disparam a dor pulsátil`,`o núcleo do hipoglosso participa do quadro neurovegetativo álgico`,`o periósteo craniano, inervado pelo facial, é o gerador da dor`,`a DURA-MÁTER é inervada pelo TRIGÊMEO — "dor de cabeça é tudo trigêmeo"`],correta:4,just:[`O plexo cervical cobre pele — a dor "de dentro" vem das meninges. [tipo: vizinhança plausível]`,`O vago não é o sensitivo das meninges. [tipo: recombinação plausível]`,`O hipoglosso é motor da língua — fora do circuito álgico. [tipo: recombinação plausível]`,`O facial não inerva periósteo craniano. [tipo: recombinação plausível]`,`Correta. A DURA-MÁTER é inervada pelo TRIGÊMEO (ramos meníngeos de V1, V2 e V3): enxaqueca e cefaleias funcionam como "neuralgia do trigêmeo" — dor que pode vir com vômito e alterações visuais (quadro neurovegetativo).`],ref:'Dura-máter e cefaleia'},
+{n:16,aula:1,nivel:'facil',enun:`<div class="pergunta">Os forames de saída dos três ramos do trigêmeo são, respectivamente (V1 · V2 · V3):</div>`,alts:[`fissura orbital superior · forame redondo · forame oval`,`forame redondo · fissura orbital superior · forame espinhoso`,`fissura orbital inferior · forame oval · forame redondo`,`canal óptico · forame redondo · forame oval, nessa ordem`,`fissura orbital superior · forame oval · forame redondo`],correta:0,just:[`Correta. OFTÁLMICO (V1) → FISSURA ORBITAL SUPERIOR · MAXILAR (V2) → FORAME REDONDO · MANDIBULAR (V3) → FORAME OVAL. ("Lembra do primeiro ano? Eles têm utilidade agora.")`,`Trocou V1 e V2 — e o espinhoso é da artéria meníngea média. [tipo: permutação plausível]`,`A fissura é a SUPERIOR, e V2/V3 estão trocados. [tipo: permutação plausível]`,`O canal óptico é do nervo ÓPTICO (II). [tipo: par confundível]`,`V2 e V3 trocados: redondo é do maxilar. [tipo: permutação plausível]`],ref:'Forames de V'},
+{n:17,aula:1,nivel:'medio',enun:`<div class="pergunta">Os ramos do OFTÁLMICO (V1) pedidos em prova, segundo a aula, são:</div>`,alts:[`infraorbital, alveolar superior, palatino maior e nasociliar juntos`,`supraorbital, infratroclear, zigomático-facial e meníngeo médio`,`frontal, lacrimal, mentual e etmoidal em conjunto na órbita`,`supraorbital, supratroclear, etmoidal e lacrimal — os quatro`,`supraorbital, mentual, lacrimal e o nervo petroso maior`],correta:3,just:[`Infraorbital, alveolares e palatinos são do MAXILAR (V2). [tipo: par confundível]`,`Mistura: infratroclear e zigomático-facial não são os quatro da aula. [tipo: recombinação plausível]`,`O mentual é de V3 (fim do alveolar inferior). [tipo: recombinação plausível]`,`Correta. Os quatro de V1 que interessam: SUPRAORBITAL e SUPRATROCLEAR (o frontal que se divide), ETMOIDAL e LACRIMAL — "lateral é o lacrimal, medial vai ao nariz". Visíveis por cima nas peças.`,`Mentual é V3 e o petroso maior é ramo do FACIAL. [tipo: recombinação plausível]`],ref:'Ramos de V1'},
+{n:18,aula:1,nivel:'medio',enun:`<div class="pergunta">O ramo MANDIBULAR (V3) é o único misto do trigêmeo. Sua parte motora inerva:</div>`,alts:[`os músculos da mímica de todo o andar inferior da face, somados ao platisma cervical`,`o masseter somando-se ao bucinador, na parede lateral da bochecha`,`mastigação (temporal, masseter, pterigóideos) + milo-hióideo e ventre anterior`,`a musculatura da língua inteira, dividida com o nervo hipoglosso homolateral`,`o estilofaríngeo somado ao ventre posterior do digástrico homolateral`],correta:2,just:[`Mímica e platisma são do FACIAL (2º arco). [tipo: par confundível]`,`O masseter sim (nervo massetérico) — mas o BUCINADOR é mímica: facial. [tipo: verdade parcial]`,`Correta. V3 motor = MASTIGAÇÃO (temporal — temporais profundos —, MASSETER, pterigóideos) + MILO-HIÓIDEO + VENTRE ANTERIOR DO DIGÁSTRICO (os abaixadores que abrem a boca) + tensores (véu/tímpano).`,`A motricidade da língua é do HIPOGLOSSO (exceto palatoglosso/vago). [tipo: par confundível]`,`Estilofaríngeo é do IX; o ventre POSTERIOR do digástrico é do FACIAL. [tipo: recombinação plausível]`],ref:'V3 motor'},
+{n:19,aula:1,nivel:'facil',enun:`<div class="pergunta">Os três pontos clássicos de bloqueio anestésico sensitivo da face são:</div>`,alts:[`supratroclear, zigomático-facial e bucal, na linha do canto do olho`,`supraorbital, infraorbital e mentual — alinhados verticalmente`,`lacrimal, etmoidal e palatino maior, na parede medial da órbita`,`aurículo-temporal, occipital menor e mentual, atrás do trago`,`frontal, nasal e labial, seguindo a linha média da face`],correta:1,just:[`Não são os três troncos das saídas principais. [tipo: recombinação plausível]`,`Correta. Os três forames em LINHA (na vertical da pupila): SUPRAORBITAL (V1) · INFRAORBITAL (V2) · MENTUAL (V3). "Se souber onde sai o tronco, bloqueia e mexe à vontade" — a face suturada com três agulhadas.`,`São ramos profundos/orbitais — não pontos de bloqueio de superfície. [tipo: recombinação plausível]`,`Aurículo-temporal e occipital menor cobrem a lateral — não a frente da face. [tipo: recombinação plausível]`,`Nomenclatura solta, sem os forames palpáveis. [tipo: pseudo-nomenclatura plausível]`],ref:'Bloqueios'},
+{n:20,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre a sensibilidade geral da cabeça, a síntese da aula — com as exceções "de rodapé" — é:</div>`,alts:[`a face pelo trigêmeo e todo o restante da cabeça pelo plexo cervical alto`,`a metade anterior pelo facial e a metade posterior pelo trigêmeo da ponte`,`o couro cabeludo pelo occipital maior e a face inteira pelo glossofaríngeo`,`haveria predomínio do vago, com o trigêmeo restrito à córnea e à íris`,`quase tudo é trigêmeo — exceções: terço posterior da língua/faringe (IX) e o pavilhão`],correta:4,just:[`O plexo cervical cobre pescoço e a moldura baixa — a cabeça em si é V. [tipo: par confundível]`,`O facial é MOTOR da mímica — sensibilidade geral não é dele (salvo pavilhão). [tipo: par confundível]`,`O IX cobre faringe/terço posterior — não a face. [tipo: recombinação plausível]`,`O vago só participa no pavilhão — o resto é V. [tipo: mecanismo invertido]`,`Correta. "Na dúvida, TRIGÊMEO": sensibilidade geral da cabeça é V — exceções: TERÇO POSTERIOR DA LÍNGUA E FARINGE = GLOSSOFARÍNGEO (aferente do centro do vômito, com o X) e o PAVILHÃO da orelha, repartido entre VII, IX e X (com o aurículo-temporal de V3).`],ref:'Sensibilidade da cabeça'},
+{n:21,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a neuralgia do trigêmeo e seu tratamento, a aula ensina:</div>`,alts:[`seria neuropatia periférica — a secção do ramo doente curaria em definitivo`,`o enxerto de sural substituiria o ramo comprometido com bons resultados`,`os pontos de gatilho seriam exclusividade do ramo oftálmico superior da face`,`é dor de origem CENTRAL — medicação e procedimentos no gânglio (balão, radiofrequência)`,`a infiltração de lidocaína nos gatilhos eliminaria a causa da doença local`],correta:3,just:[`É CENTRAL — bloqueio periférico alivia e a dor volta "por outro raminho". [tipo: mecanismo invertido]`,`Trocar o nervo não resolve doença de NÚCLEO — o enxerto é para lesão periférica. [tipo: verdade no contexto errado]`,`Os gatilhos aparecem nos três territórios. [tipo: generalização indevida]`,`Correta. A neuralgia de V é CENTRAL (núcleo sensitivo — a continuação da coluna posterior). Tratamento: medicação → procedimentos no GÂNGLIO trigeminal: COMPRESSÃO POR BALÃO percutânea (a preferida), radiofrequência/radiocirurgia, até GANGLIOTOMIA. Antigamente: álcool (dissolve a mielina).`,`A infiltração "tira a dor, não tira a causa" — palavras do professor. [tipo: verdade no contexto errado]`],ref:'Neuralgia de V'},
+{n:22,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre o nervo aurículo-temporal (V3), a aula destaca que ele:</div>`,alts:[`dá sensibilidade ao pavilhão/têmpora e leva a carona do glossofaríngeo à parótida`,`seria o motor dos músculos auriculares da orelha, junto ao ramo temporal do nervo facial`,`conduz a gustação dos 2/3 anteriores da língua até o gânglio ótico`,`seria ramo do plexo cervical, homólogo do nervo auricular magno mais alto`,`inervaria a articulação temporomandibular e nada além dessa cápsula dela`],correta:0,just:[`Correta. O AURÍCULO-TEMPORAL (V3) dá SENSIBILIDADE ao pavilhão e à região temporal — e leva DE CARONA as fibras parassimpáticas do GLOSSOFARÍNGEO (gânglio ótico) para a PARÓTIDA. Os três "auriculares": magno (plexo cervical), posterior (facial) e aurículo-temporal (V3).`,`Os auriculares (músculos) são mímica = FACIAL. [tipo: par confundível]`,`Gustação dos 2/3 é a CORDA DO TÍMPANO via lingual — outra carona. [tipo: par confundível]`,`O auricular MAGNO é do plexo cervical — são nervos diferentes com nomes parecidos. [tipo: par confundível]`,`Ele participa da ATM, mas seu papel é bem mais amplo (pavilhão + carona do IX). [tipo: generalização indevida]`],ref:'Aurículo-temporal'},
+{n:23,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre o corpo adiposo da bochecha (Bichat) e a bichectomia:</div>`,alts:[`o coxim fica sob o masseter e é retirado por acesso pré-auricular`,`é a cápsula adiposa da parótida, removida junto com a glândula local`,`o coxim apoia-se no bucinador e a retirada é feita por dentro da boca`,`é tecido linfático que involui na adolescência em toda a população`,`fica entre a pele e o platisma, sendo aspirado por lipossucção cervical`],correta:2,just:[`O plano é o do BUCINADOR, e o acesso é INTRAORAL — não pré-auricular. [tipo: recombinação plausível]`,`Não é cápsula da parótida (a parótida ACESSÓRIA é outra variação da região). [tipo: par confundível]`,`Correta. O CORPO ADIPOSO DA BOCHECHA (antigo "de Bichat") mora SOBRE O BUCINADOR — coxim livre, destacável — e a BICHECTOMIA o retira POR DENTRO DA BOCA. O volume varia: do "bochechudo" à fóvea.`,`É gordura, não linfa — e persiste no adulto. [tipo: pseudo-explicação plausível]`,`Platisma é pescoço — outra topografia. [tipo: recombinação plausível]`],ref:'Bichat'},
+{n:24,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre o nervo LINGUAL e a "aliança facial-trigêmeo" na língua:</div>`,alts:[`o nervo lingual seria um ramo do próprio facial, recebendo a gustação diretamente de V3`,`o lingual (V3) dá a sensibilidade GERAL dos 2/3 — a corda do tímpano (VII) viaja nele`,`o lingual conduziria a motricidade da língua em parceria com o hipoglosso`,`a corda do tímpano dá a sensibilidade geral e o lingual, a gustativa`,`o lingual terminaria como nervo mentual após atravessar toda a mandíbula`],correta:1,just:[`Inverteu a aliança: o lingual é de V3; quem pega carona é a corda (VII). [tipo: mecanismo invertido]`,`Correta. LINGUAL (V3) = sensibilidade GERAL dos 2/3 ANTERIORES da língua; nele viaja a CORDA DO TÍMPANO (facial) com a GUSTAÇÃO dos 2/3 + o parassimpático sublingual/submandibular. "A aliança facial-trigêmeo — não pode faltar nunca."`,`Motricidade da língua = HIPOGLOSSO; o lingual é sensitivo. [tipo: par confundível]`,`Trocou os papéis das duas fibras no mesmo cabo. [tipo: mecanismo invertido]`,`Quem vira MENTUAL é o ALVEOLAR INFERIOR, no forame mentual. [tipo: par confundível]`],ref:'Lingual + corda'}
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Mulher, 26 anos, acorda com a hemiface direita paralisada: não fecha o olho, a testa não enruga à direita, dor forte atrás da orelha e os sons "estouram" no ouvido direito. Nega outros déficits.`,perg:[`a) Central ou periférica? Justifique com o achado-chave — e diga qual seria a urgência no outro cenário.`,`b) Monte o quadro completo da paralisia de Bell com os percentuais da aula e o sinal epônimo.`,`c) Descreva a escada terapêutica até o enxerto.`],resp:[["a) Periférica","PERIFÉRICA: a TESTA NÃO ENRUGA — a hemiface INTEIRA está fora. Na paralisia CENTRAL o quadrante superior é POUPADO (o núcleo da testa recebe córtex dos dois hemisférios): paciente que enruga a testa e fecha os olhos com a boca desviada = AVC — 'corram' (isquêmico exige conduta imediata; hemorrágico ameaça a vida)."],["b) O quadro de Bell","Paralisia periférica AGUDA sem causa detectável (Bell, 1821 — ele mesmo teve): associação com VIROSES/HERPES (edema do nervo no canal = neuropraxia). Achados: sulcos frontal e nasolabial apagados, rima palpebral aumentada, desvio para o lado são, lacrimejamento constante, HIPERACUSIA (perdeu o ESTAPÉDIO). Números: DOR RETROAURICULAR ~50% · ↓GUSTAÇÃO ~30% (corda do tímpano) · ↓LACRIMAL ~5% · LÁGRIMAS DE CROCODILO ~70% (vinagre na língua → lacrimeja). SINAL DE BELL: o globo ocular SOBE na tentativa de fechar."],["c) Tratamento","1) ANTI-INFLAMATÓRIO (corticoide) para desinchar o nervo no canal ósseo. 2) Sem resposta (~15 dias): DESCOMPRESSÃO CIRÚRGICA — abre-se a mastoide e ALARGA-SE O CANAL COM BROCA, liberando o nervo → reabilitação. 3) Nervo destruído: ENXERTO (sural, cutâneos do antebraço). O prognóstico global de Bell é BOM."]],ref:'Bell'},
+{n:2,aula:1,caso:`Vítima de vidro estilhaçado com cortes em três alturas da hemiface esquerda: na têmpora, na bochecha e na borda da mandíbula. Na revisão: não enruga a testa, não consegue assobiar nem manter líquido na boca, e o lábio inferior não desce.`,perg:[`a) Nomeie os cinco ramos terminais do facial e o trajeto que os expõe a cortes faciais.`,`b) Atribua cada déficit do paciente ao ramo lesado.`,`c) Explique a pegadinha "marginal da mandíbula × mandibular" — e diga quem inerva a sensibilidade da região cortada.`],resp:[["a) O leque","O facial sai pelo FORAME ESTILOMASTÓIDEO, dá os extraósseos (auricular posterior, digástrico, estilo-hióideo) e entra na PARÓTIDA, onde o plexo intraparotídeo abre os CINCO ramos: TEMPORAL · ZIGOMÁTICO · BUCAL · MARGINAL DA MANDÍBULA · CERVICAL — um leque superficial que qualquer corte profundo da face pode seccionar."],["b) Déficit a déficit","Testa lisa (não enruga/não corruga) = ramo TEMPORAL (frontal + corrugador). Não assobia/não segura líquido = ramo BUCAL (bucinador + mímica média — sorrir, soprar, sugar; comida acumula no vestíbulo). Lábio inferior que não desce = MARGINAL DA MANDÍBULA (abaixadores). (Fechar o olho testaria o ZIGOMÁTICO; esticar o pescoço, o CERVICAL/platisma.)"],["c) A pegadinha e a sensibilidade","MARGINAL DA MANDÍBULA = ramo do FACIAL (motor). MANDIBULAR (V3) = ramo do TRIGÊMEO (misto) — nomes parecidos, nervos diferentes ('tem livro errado; pode corrigir'). A SENSIBILIDADE das áreas cortadas é toda do TRIGÊMEO: têmpora (aurículo-temporal/V3 e V1), bochecha (infraorbital/bucal de V2-V3) e mento (MENTUAL, fim do alveolar inferior de V3)."]],ref:'Ramos do facial'},
+{n:3,aula:1,caso:`Um ferimento corto-contuso extenso atravessa a fronte, a região infraorbital e o mento do mesmo lado. Você precisa suturar tudo com o paciente acordado.`,perg:[`a) Quais os três bloqueios que anestesiam a face — e qual a relação topográfica entre eles?`,`b) Para cada ponto, dê o ramo de origem do trigêmeo e o forame correspondente.`,`c) Complete o mapa sensitivo: o que V2 cobre entre o olho e o lábio — e quais as exceções da sensibilidade da cabeça que não são trigêmeo?`],resp:[["a) Os três pontos","SUPRAORBITAL · INFRAORBITAL · MENTUAL — os três forames ALINHADOS na mesma vertical (linha da pupila). 'Se souber onde sai o tronco sensitivo, bloqueia e mexe à vontade': três agulhadas anestesiam a fronte, o terço médio e o mento."],["b) Ramos e forames","SUPRAORBITAL ← OFTÁLMICO (V1), que entra pela FISSURA ORBITAL SUPERIOR (ramos da aula: supraorbital, supratroclear, etmoidal, lacrimal). INFRAORBITAL ← MAXILAR (V2), pelo FORAME REDONDO → forame infraorbital. MENTUAL ← MANDIBULAR (V3), pelo FORAME OVAL → alveolar inferior → forame mentual."],["c) V2 e as exceções","O INFRAORBITAL cobre pálpebra inferior, asa do nariz, lábio superior e gengiva — V2 ainda dá os ALVEOLARES SUPERIORES (dentes) e os PALATINOS maior/menor (palato até a fossa incisiva). Exceções da sensibilidade geral da cabeça (que não são V): TERÇO POSTERIOR DA LÍNGUA E FARINGE = GLOSSOFARÍNGEO (aferente do centro do vômito com o X) e o PAVILHÃO, dividido entre VII, IX e X."]],ref:'Bloqueios da face'},
+{n:4,aula:1,caso:`Homem, 60 anos, com choques lancinantes na hemiface ao escovar os dentes e ao toque no lábio — crises breves, repetidas, com pontos que disparam a dor. Já tentou dois medicamentos.`,perg:[`a) Dê o diagnóstico e explique por que essa dor é considerada "central" — inclusive na sua relação com a enxaqueca.`,`b) Por que substituir o nervo por enxerto não cura essa doença?`,`c) Liste as opções de tratamento em escada, das medicações aos procedimentos no gânglio.`],resp:[["a) Neuralgia do trigêmeo","NEURALGIA DO TRIGÊMEO: dor lancinante nos territórios de V disparada por PONTOS DE GATILHO. É doença CENTRAL — dos NÚCLEOS SENSITIVOS de V, que são a continuação da COLUNA POSTERIOR da medula subindo pelo tronco. A mesma lógica explica a enxaqueca: a DURA-MÁTER é inervada pelo trigêmeo — 'dor de cabeça é tudo trigêmeo', podendo vir com vômito e alterações visuais (IX/X aferentes do centro do vômito)."],["b) Por que o enxerto falha","Porque a doença NÃO está no tronco periférico: bloqueia-se ou sesquare o ramo, a dor some — e VOLTA 'por outro raminho' meses depois, porque o gerador é o núcleo. Enxerto troca cabo; a central continua. (Diferente da lesão traumática periférica, onde o enxerto de sural resolve.)"],["c) A escada","MEDICAÇÃO (anticonvulsivantes; infiltração dos gatilhos com lidocaína alivia mas 'não tira a causa') → procedimentos no GÂNGLIO TRIGEMINAL: COMPRESSÃO POR BALÃO percutânea (a preferida hoje — implode o gânglio), RADIOFREQUÊNCIA/radiocirurgia → GANGLIOTOMIA (radical: tira toda a sensibilidade da cabeça, mas tira a dor). Histórico: ÁLCOOL (dissolve a bainha de mielina — o mesmo princípio da alcoolização dos intercostais no câncer de tórax)."]],ref:'Neuralgia de V'}
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Face</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Face</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da aula de Face (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Face: SMAS, Nervo Facial e Trigêmeo",kicker:"ANATOMIA TOPOGRÁFICA · 11/09",desc:"Camadas da face e SMAS, mímica e mastigação, o facial do sulco bulbopontino à paralisia de Bell — e o trigêmeo com seus forames, bloqueios e neuralgia.",cards:[
+{area:"Camadas",cat:"prof",q:"O que é o SMAS — e por que a cirurgia plástica gira em torno dele?",a:"Sistema Músculo-Aponeurótico Superficial: a aponeurose que ANCORA os músculos da expressão (nenhuma mímica é isolada). Descrito ~1950: a plástica moderna TRACIONA O SMAS, não a pele — e a harmonização facial trabalha nesse plano."},
+{area:"Camadas",cat:"conceito",q:"As camadas da face, da pele ao osso?",a:"PELE → TELA SUBCUTÂNEA (sem camada lamelar na face) → SMAS → espaço com LIGAMENTOS DE RETENÇÃO → FÁSCIA PROFUNDA → PERIÓSTEO."},
+{area:"Camadas",cat:"conceito",q:"Como orientar incisões na face (e no corpo)?",a:"As linhas de tensão da pele são PERPENDICULARES às fibras musculares — cortar paralelo às linhas (ex.: transversal na testa, onde o frontal é longitudinal) cicatriza melhor e lesa menos."},
+{area:"Músculos",cat:"prof",q:"A regra embriológica da musculatura da cabeça?",a:"1º ARCO BRANQUIAL → MASTIGAÇÃO → TRIGÊMEO · 2º ARCO → MÍMICA → FACIAL (3º → glossofaríngeo). Exceções SOMÍTICAS: a LÍNGUA e os MÚSCULOS DO OLHO."},
+{area:"Músculos",cat:"caso",q:"Corpo adiposo de Bichat: onde fica e como se opera?",a:"SOBRE O BUCINADOR — coxim livre e destacável, de volume variável. BICHECTOMIA: retirada POR DENTRO DA BOCA. (Vizinha curiosa: a parótida ACESSÓRIA, variação sobre o ducto.)"},
+{area:"Facial",cat:"prof",q:"O trajeto do facial, da origem à saída do crânio?",a:"Origem aparente no SULCO BULBOPONTINO (com o nervo intermédio) → meato acústico interno → canal do facial → JOELHO com o GÂNGLIO GENICULADO → sai pelo FORAME ESTILOMASTÓIDEO."},
+{area:"Facial",cat:"prof",q:"Os três colaterais intraósseos do facial?",a:"PETROSO MAIOR → gânglio pterigopalatino → glândula LACRIMAL · nervo do ESTAPÉDIO (amortece o som) · CORDA DO TÍMPANO → gustação dos 2/3 anteriores + parassimpático SUBLINGUAL/SUBMANDIBULAR (via lingual)."},
+{area:"Facial",cat:"alerta",q:"Corda do tímpano: o que leva e em quem 'pega carona'?",a:"Sai do facial e viaja NO NERVO LINGUAL (V3): GUSTAÇÃO dos 2/3 ANTERIORES da língua + PARASSIMPÁTICO das glândulas sublingual e submandibular. 'A aliança facial-trigêmeo — não pode faltar nunca.'"},
+{area:"Facial",cat:"prof",q:"Os 5 ramos terminais do facial na parótida?",a:"TEMPORAL · ZIGOMÁTICO · BUCAL · MARGINAL DA MANDÍBULA · CERVICAL — o leque do plexo intraparotídeo. Antes da parótida: auricular posterior, ramo digástrico (ventre posterior) e estilo-hióideo."},
+{area:"Facial",cat:"alerta",q:"Quem inerva a glândula parótida?",a:"O GLOSSOFARÍNGEO (IX) — que pega carona no AURÍCULO-TEMPORAL (V3) para chegar lá. O facial apenas ATRAVESSA a glândula."},
+{area:"Paralisias",cat:"prof",q:"Central × periférica: a regra do quadrante superior?",a:"CENTRAL (AVC): POUPA o quadrante superior — enruga a testa e fecha o olho (o núcleo da testa recebe córtex dos DOIS lados). PERIFÉRICA: a HEMIFACE INTEIRA paralisa.",obs:"Enrugou a testa com a boca torta = AVC = 'corram'."},
+{area:"Bell",cat:"prof",q:"O que define a paralisia de Bell?",a:"Paralisia facial PERIFÉRICA AGUDA SEM CAUSA DETECTÁVEL (Bell, 1821 — ele mesmo teve). Associações: VIROSES (HERPES) com edema do nervo no canal = neuropraxia; há relatos com choque térmico. 'Acordou de manhã paralisado.'"},
+{area:"Bell",cat:"prof",q:"Os números de Bell (aula)?",a:"DOR RETROAURICULAR ~50% (o pavilhão/mastoide é do facial — dói muito) · ↓GUSTAÇÃO ~30% · ↓PRODUÇÃO LACRIMAL ~5% · LÁGRIMAS DE CROCODILO ~70% · + HIPERACUSIA (estapédio)."},
+{area:"Bell",cat:"conceito",q:"O sinal de Bell?",a:"Na tentativa de fechar a pálpebra paralisada, o GLOBO OCULAR SOBE — o olho 'revira' buscando lubrificação. Some o sulco da testa e o nasolabial; a rima palpebral aumenta; lacrimejamento constante."},
+{area:"Bell",cat:"conceito",q:"O teste das lágrimas de crocodilo?",a:"Gota de ÁCIDO ACÉTICO (vinagre) na língua → o estímulo SALIVATÓRIO faz LACRIMEJAR (fibras autonômicas cruzadas/regeneradas trocadas). Positivo em ~70% das paralisias."},
+{area:"Bell",cat:"alerta",q:"A escada de tratamento de Bell?",a:"1) CORTICOIDE (desinchar o nervo no canal) → 2) falhou (~15 dias): DESCOMPRESSÃO cirúrgica — abre a mastoide e ALARGA O CANAL COM BROCA → 3) nervo destruído: ENXERTO (sural/cutâneos). Prognóstico geral: BOM."},
+{area:"Ramos",cat:"prof",q:"Lesão ramo a ramo: o que cada um leva embora?",a:"TEMPORAL → testa/corrugador · ZIGOMÁTICO → fechar o olho · BUCAL → sorrir, ASSOPRAR, SUGAR (bucinador; comida no vestíbulo) · MARGINAL DA MANDÍBULA → abaixar o lábio inferior · CERVICAL → platisma."},
+{area:"Ramos",cat:"alerta",q:"Marginal da mandíbula × mandibular?",a:"MARGINAL DA MANDÍBULA = ramo do FACIAL (mímica do lábio inferior). MANDIBULAR (V3) = ramo do TRIGÊMEO (o misto). 'Tem livro errado — pode corrigir o original.'"},
+{area:"Trigêmeo",cat:"prof",q:"Qual o nervo sensitivo da cabeça — e as exceções 'de rodapé'?",a:"O TRIGÊMEO ('na dúvida na prova, responda trigêmeo'). Exceções: TERÇO POSTERIOR da língua e faringe = GLOSSOFARÍNGEO (aferente do centro do vômito, com o vago) · PAVILHÃO da orelha = dividido entre VII, IX e X (+ aurículo-temporal de V3)."},
+{area:"Trigêmeo",cat:"prof",q:"Quem inerva a dura-máter — e o que isso explica?",a:"O TRIGÊMEO (ramos meníngeos de V1, V2 e V3) → 'enxaqueca e dor de cabeça é tudo trigêmeo' — dor que pode vir com vômito e alterações visuais (quadro neurovegetativo)."},
+{area:"Trigêmeo",cat:"conceito",q:"A neuroanatomia do trigêmeo em uma linha?",a:"Maior nervo da PONTE; os núcleos sensitivos (espinal, principal, mesencefálico) são a CONTINUAÇÃO DA COLUNA POSTERIOR da medula — ocupam o tronco quase inteiro. Parte motora = mastigação."},
+{area:"Trigêmeo",cat:"prof",q:"Os forames de V1, V2 e V3?",a:"OFTÁLMICO → FISSURA ORBITAL SUPERIOR · MAXILAR → FORAME REDONDO · MANDIBULAR → FORAME OVAL. Todos dão ramos MENÍNGEOS."},
+{area:"Trigêmeo",cat:"conceito",q:"Os 4 ramos de V1 pedidos em prova?",a:"SUPRAORBITAL e SUPRATROCLEAR (divisões do frontal) + ETMOIDAL + LACRIMAL — 'lateral é o lacrimal, medial vai ao nariz'."},
+{area:"Trigêmeo",cat:"conceito",q:"Os territórios de V2 (maxilar)?",a:"INFRAORBITAL (pálpebra inferior, asa do nariz, lábio superior, gengiva) · ALVEOLARES SUPERIORES (dentes) · PALATINOS maior/menor (palato até a fossa incisiva) — passando pelo seio maxilar."},
+{area:"Trigêmeo",cat:"prof",q:"V3 motor: quem mastiga — e quem abre a boca?",a:"TEMPORAL (temporais profundos) · MASSETER (nervo massetérico) · PTERIGÓIDEOS + MILO-HIÓIDEO e VENTRE ANTERIOR DO DIGÁSTRICO (os abaixadores — abrem a boca). O ventre POSTERIOR do digástrico é do FACIAL."},
+{area:"Trigêmeo",cat:"conceito",q:"O caminho do alveolar inferior?",a:"Entra na mandíbula (dentes inferiores) e SAI NO FORAME MENTUAL como nervo MENTUAL (mento + lábio inferior). 'O quinto nervo mais pedido na peça.'"},
+{area:"Trigêmeo",cat:"prof",q:"Aurículo-temporal: as duas funções?",a:"SENSIBILIDADE do pavilhão/têmpora + a CARONA do GLOSSOFARÍNGEO para a PARÓTIDA. Os 3 'auriculares': MAGNO (plexo cervical) · POSTERIOR (facial) · AURÍCULO-TEMPORAL (V3)."},
+{area:"Bloqueios",cat:"prof",q:"Os três pontos de bloqueio da face?",a:"SUPRAORBITAL (V1) · INFRAORBITAL (V2) · MENTUAL (V3) — os três forames ALINHADOS na vertical da pupila. Três agulhadas anestesiam a face para sutura."},
+{area:"Neuralgia",cat:"prof",q:"Por que a neuralgia do trigêmeo não se cura com enxerto?",a:"Porque é doença CENTRAL — dos NÚCLEOS sensitivos (a coluna posterior continuada). Bloqueio periférico alivia e a dor volta 'por outro raminho'. Enxerto troca cabo; o gerador continua."},
+{area:"Neuralgia",cat:"alerta",q:"A escada de tratamento da neuralgia de V?",a:"MEDICAÇÃO (infiltração dos GATILHOS alivia, 'não tira a causa') → procedimentos no GÂNGLIO: COMPRESSÃO POR BALÃO percutânea (preferida), radiofrequência/radiocirurgia → GANGLIOTOMIA (radical). Antigamente: ÁLCOOL (dissolve a mielina — como na alcoolização dos intercostais)."},
+{area:"Facial",cat:"caso",q:"Por que o recém-nascido era vítima do fórceps no nervo facial?",a:"O RN NÃO TEM PROCESSO MASTOIDE: o facial emerge do estilomastóideo desprotegido, logo sob a pele — a colher do fórceps o comprimia direto. (Revisão da aula de lesões nervosas.)"},
+{area:"Paralisias",cat:"caso",q:"Paralisia facial periférica que 'apareceu do nada': mecanismo?",a:"NEUROPRAXIA: virose (herpes) inflama o nervo DENTRO do canal ósseo — sem espaço, o edema interrompe a condução. Mesmo princípio da mochila no plexo: compressão → isquemia dos vasa nervorum → edema → bloqueio."}
+]}
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-face-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>

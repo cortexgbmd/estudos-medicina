@@ -1,0 +1,1384 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Região Axilar e Desfiladeiro Cervicotorácico · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Axila e Desfiladeiro — 18/09</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aulas de 18/09</p>
+  <h1 class="page-h1">Região Axilar e Desfiladeiro Cervicotorácico</h1>
+  <p class="lead">A artéria axilar dividida em três partes pelo peitoral menor — com a sintopia exata dos fascículos em cada parte e a regra 1-2-3 dos ramos —, os espaços quadrangular e triangular de Velpeau, a circulação colateral do ombro; e o desfiladeiro cervicotorácico com seus três pontos de compressão (trígono interescalênico, espaço costoclavicular e retropeitoral), a costela cervical, a síndrome de Paget-Schroetter, as manobras diagnósticas — fechando com a pincelada do professor sobre os nervos frênico e vago.</p>
+
+  <nav class="toc">
+    <h2>Nestas aulas</h2>
+    <ol>
+      <li><a href="#t1">A artéria axilar em três PARTES</a></li>
+      <li><a href="#t2">Sintopia com o plexo, parte por parte</a></li>
+      <li><a href="#t3">O caso do desfiladeiro traumático</a></li>
+      <li><a href="#t4">Subclávia: broto embrionário e as suas três partes</a></li>
+      <li><a href="#t5">A regra 1-2-3 dos ramos da axilar</a></li>
+      <li><a href="#t6">Segunda parte: toracoacromial e torácica lateral</a></li>
+      <li><a href="#t7">Terceira parte: subescapular, toracodorsal e circunflexas</a></li>
+      <li><a href="#t8">O caso da vovó: colo do úmero e nervo axilar</a></li>
+      <li><a href="#t9">A veia axilar — e quem se mete entre ela e a artéria</a></li>
+      <li><a href="#t10">Linfonodos centrais e a circulação colateral do ombro</a></li>
+      <li><a href="#t11">Espaço QUADRANGULAR de Velpeau</a></li>
+      <li><a href="#t12">Espaço TRIANGULAR de Velpeau</a></li>
+      <li><a href="#t13">O desfiladeiro: conceito, clínica e os três espaços</a></li>
+      <li><a href="#t14">Trígono interescalênico — e por que a veia escapa</a></li>
+      <li><a href="#t15">Costela cervical e as variações musculofasciais</a></li>
+      <li><a href="#t16">Espaço costoclavicular: Paget-Schroetter e os acessos centrais</a></li>
+      <li><a href="#t17">Espaço retropeitoral e as compressões raras</a></li>
+      <li><a href="#t18">Diagnóstico, manobras e o "albatroz" do tratamento</a></li>
+      <li><a href="#t19">Nervo frênico: trajeto e paralisia diafragmática</a></li>
+      <li><a href="#t20">Nervo vago: bainha carótica, recorrentes e troncos vagais</a></li>
+      <li><a href="#t21">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · A artéria axilar em três PARTES</h2>
+  <ul>
+    <li>🎯 Vocabulário da aula: artéria não tem "porção" — <b>artéria se divide em PARTES</b> (primeira parte da axilar, primeira parte da subclávia, parte descendente da aorta).</li>
+    <li>A <b>ARTÉRIA AXILAR</b> (da primeira costela à margem do redondo maior) é dividida <b>em TRÊS PARTES pelo músculo PEITORAL MENOR</b>:</li>
+  </ul>
+  <div class="diagrama"><p class="t">As três partes — a referência é sempre o peitoral menor</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>PRIMEIRA PARTE</b> — <span class="d"><b>MEDIAL</b> ao peitoral menor.</span></div></li>
+    <li><span class="n">2</span><div><b>SEGUNDA PARTE</b> — <span class="d"><b>POSTERIOR</b> ao peitoral menor (atrás dele).</span></div></li>
+    <li><span class="n">3</span><div><b>TERCEIRA PARTE</b> — <span class="d"><b>LATERAL</b> ao peitoral menor.</span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/slideax-42-ramos-axilar.jpg" alt="Partes e ramos da artéria axilar">
+  <figcaption>A vista anterior com a numeração 1-2-3 marcando as três partes da artéria axilar em relação ao peitoral menor — e, saindo de cada parte, os ramos que a regra 1-2-3 organiza. Embaixo, a vista posterior da escápula com a circunflexa da escápula fazendo a volta.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · Sintopia com o plexo, parte por parte</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Parte</th><th>Relação com o plexo braquial</th></tr>
+    <tr><td><b>1ª parte</b></td><td>fascículos <b>LATERAL e POSTERIOR passam LATERAIS</b> à artéria · 🎯 o fascículo <b>MEDIAL passa POSTERIOR</b> à artéria · a <b>veia axilar</b> faz a sintopia medial</td></tr>
+    <tr><td><b>2ª parte</b></td><td>🎯 <b>correspondência EXATA dos nomes</b>: fascículo lateral é LATERAL, o medial é MEDIAL e o posterior é POSTERIOR à artéria</td></tr>
+    <tr><td><b>3ª parte</b></td><td>já são os RAMOS: <b>MUSCULOCUTÂNEO lateral</b> · <b>ULNAR medial</b> (entre a artéria e a veia) · <b>RADIAL e AXILAR posteriores</b> · as <b>raízes do MEDIANO anteriores</b> — o mediano se forma lateralmente e <b>CRUZA a artéria, anterior, de lateral para medial</b></td></tr>
+  </table></div>
+  <ul>
+    <li>É a sintopia que explica a gravidade do trauma local: <b>lesões dessa região podem pegar artéria, veia e nervos de uma vez</b>.</li>
+  </ul>
+  <figure class="fig"><img src="img/slideax-38-partes-sintopia.jpg" alt="Dissecção da axila com plexo e artéria">
+  <figcaption>A axila aberta: a artéria axilar envolvida pelos fascículos do plexo braquial, a veia axilar medial, o peitoral menor seccionado marcando as três partes — e os ramos já se distribuindo para o braço.</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · O caso do desfiladeiro traumático</h2>
+  <div class="box caso"><p class="h">🩺 O atropelado de 23 anos</p>
+  <p>Fratura de clavícula com lesão de <b>artéria axilar + veia axilar + plexo braquial</b> — "a síndrome do desfiladeiro mais traumática". Chegou <b>14 horas depois</b>, sangrando, com um <b>curativo tentando tamponar</b> lesão arterial profunda ("tira o curativo e jorrava na parede — absurdo"). Sobreviveu porque tinha 23 anos; o membro ficou <b>disfuncional</b> (plexo lesado), mas perfundido pela circulação colateral.</p></div>
+  <ul>
+    <li>🎯 Lição de conduta: <b>é melhor um membro disfuncional do que desarticular</b> — a desarticulação na cintura escapular é um procedimento gravíssimo. E lesão vascular dessa região não se tampona com curativo: precisa de abordagem cirúrgica imediata.</li>
+  </ul>
+
+  <h2 class="topic" id="t4">4 · Subclávia: broto embrionário e as suas três partes</h2>
+  <ul>
+    <li>🎯 <b>A artéria SUBCLÁVIA é o broto embrionário de formação do MEMBRO SUPERIOR</b> — como a <b>artéria ISQUIÁTICA</b> é o broto do membro inferior.</li>
+    <li>A subclávia também se divide em <b>três partes</b> — o divisor aqui é o <b>músculo ESCALENO ANTERIOR</b>: <b>1ª parte MEDIAL</b>, <b>2ª POSTERIOR</b> e <b>3ª LATERAL</b> ao músculo.</li>
+    <li>Os escalenos <b>anterior e médio</b> vêm das vértebras cervicais e se inserem na <b>PRIMEIRA COSTELA</b> — guarde essa inserção: ela monta o trígono interescalênico do desfiladeiro (tópico 14).</li>
+  </ul>
+
+  <h2 class="topic" id="t5">5 · A regra 1-2-3 dos ramos da axilar</h2>
+  <div class="diagrama"><p class="t">🎯 "Fica fácil: da primeira parte, um ramo; da segunda, dois; da terceira, três"</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>1ª PARTE → 1 ramo: TORÁCICA SUPERIOR</b> — <span class="d">(a antiga "torácica suprema") — irriga a musculatura do <b>1º e 2º espaços intercostais</b>, com ramificação peitoral.</span></div></li>
+    <li><span class="n">2</span><div><b>2ª PARTE → 2 ramos: TORACOACROMIAL + TORÁCICA LATERAL</b> — <span class="d">detalhadas no tópico 6.</span></div></li>
+    <li><span class="n">3</span><div><b>3ª PARTE → 3 ramos: SUBESCAPULAR + CIRCUNFLEXA POSTERIOR + CIRCUNFLEXA ANTERIOR DO ÚMERO</b> — <span class="d">detalhadas no tópico 7.</span></div></li>
+  </ol></div>
+
+  <h2 class="topic" id="t6">6 · Segunda parte: toracoacromial e torácica lateral</h2>
+  <ul>
+    <li><b>TRONCO (ou artéria) TORACOACROMIAL</b> — dele saem <b>QUATRO ramos: PEITORAL, DELTÓIDEO, ACROMIAL e CLAVICULAR</b>.</li>
+    <li>🎯 Aviso para a peça: <b>variação é a regra</b> — na maioria das vezes NÃO há um tronco único: um ramo sai à parte, ou dois, ou <b>todos saem diretos da axilar</b> sem formar tronco. "Quem disseca vê a variação."</li>
+    <li><b>TORÁCICA LATERAL</b> — sai <b>rente à borda lateral do peitoral menor</b> → vai ao <b>SERRÁTIL ANTERIOR</b>, ao gradil costal e à <b>MAMA</b> (os <b>ramos mamários laterais</b> — não esquecer o papel dela na irrigação da mama).</li>
+  </ul>
+
+  <h2 class="topic" id="t7">7 · Terceira parte: subescapular, toracodorsal e circunflexas</h2>
+  <ul>
+    <li><b>ARTÉRIA SUBESCAPULAR</b> — origina a <b>CIRCUNFLEXA DA ESCÁPULA</b> (que "faz a volta" para a face posterior da escápula) e a <b>TORACODORSAL</b>.</li>
+    <li>A <b>toracodorsal</b> desce acompanhada do <b>nervo e da veia toracodorsais</b> — 🎯 ordem <b>NERVO · ARTÉRIA · VEIA</b> (o nervo lateral, como na femoral) — em direção ao <b>LATÍSSIMO DO DORSO</b>.</li>
+    <li>🎯 Dica de prática: a torácica lateral solta confunde com a toracodorsal — mas <b>a toracodorsal está "presa" no latíssimo do dorso</b>; siga o vaso até o músculo.</li>
+    <li><b>CIRCUNFLEXA POSTERIOR DO ÚMERO</b> — dá a volta <b>atrás do colo do úmero</b>, junto do <b>nervo axilar</b>, passando pelo espaço quadrangular (tópico 11). Normalmente é <b>mais calibrosa</b> que a <b>CIRCUNFLEXA ANTERIOR</b>, que contorna o colo pela frente.</li>
+  </ul>
+
+  <h2 class="topic" id="t8">8 · O caso da vovó: colo do úmero e nervo axilar</h2>
+  <div class="box caso"><p class="h">🩺 Escorregou, caiu, fraturou o colo do úmero</p>
+  <p>A fratura do colo do úmero pode lesar a <b>circunflexa posterior do úmero</b> (hematoma — geralmente pequeno, o vaso não é calibroso) e, mais importante, o <b>NERVO AXILAR</b>: o <b>ombro fica caído</b> e o braço <b>perde a rotação</b> — mais a rotação do que a elevação, porque outros músculos ajudam a elevar.</p></div>
+  <div class="box alerta"><p class="h">⚠️ "O mais potente rotador" — versão da aula × livros</p>
+  <p>Na aula, a rotação perdida se explica pelo <b>REDONDO MENOR</b> — "o mais potente rotador do membro superior é o redondo". Nos livros, o principal rotador LATERAL do braço é o <b>INFRAESPINAL</b>, com o redondo menor como coadjuvante (ambos inervados de formas diferentes — o redondo menor é do nervo axilar, e é por isso que a rotação sofre na lesão dele). Na prova do professor, responda pela aula.</p></div>
+
+  <h2 class="topic" id="t9">9 · A veia axilar — e quem se mete entre ela e a artéria</h2>
+  <ul>
+    <li>A <b>VEIA AXILAR é MEDIAL à artéria</b> — mas é <b>CONTÍGUA à artéria SÓ NA PRIMEIRA PARTE</b>.</li>
+    <li>🎯 Na <b>2ª parte</b>, quem fica <b>entre a artéria e a veia</b> é o <b>FASCÍCULO MEDIAL</b> do plexo; na <b>3ª parte</b>, é o <b>NERVO ULNAR</b>.</li>
+    <li>Aplicação: <b>em criança se disseca muito a veia axilar para flebotomia</b> (cateter para infusão) — cuidado com o ulnar e com o fascículo medial, que estão colados no caminho.</li>
+  </ul>
+
+  <h2 class="topic" id="t10">10 · Linfonodos centrais e a circulação colateral do ombro</h2>
+  <ul>
+    <li>Na <b>gordura da axila</b> ficam os linfonodos do <b>grupo CENTRAL</b> — <b>3 a 5 grandes linfonodos</b> que devem ser <b>palpados</b>, principalmente na mulher, pelos tumores de mama.</li>
+    <li><b>Circulação colateral do ombro:</b> ramos da <b>SUBCLÁVIA</b> (supraescapular, escapular dorsal — a mesma "dorsal da escápula") se anastomosam com ramos da <b>AXILAR</b> (circunflexas, rede acromial) e com a <b>BRAQUIAL PROFUNDA</b>.</li>
+    <li>🎯 Consequência: <b>o membro superior compensa MAIS que o inferior</b> nos processos obstrutivos — tem muita anastomose e <b>massa muscular menor</b> para nutrir. Por isso oclusões abaixo da subclávia costumam ser bem toleradas.</li>
+    <li>Aparte do professor (para a Patologia): saber discernir <b>aterosclerose</b> (placa no lúmen) de <b>arteriosclerose</b> (endurecimento da parede) e da <b>doença de Mönckeberg</b> (calcificação da média) — "a doença que mais mata é o infarto".</li>
+  </ul>
+  <figure class="fig"><img src="img/slideax-48-colaterais-ombro.jpg" alt="Circulação colateral do ombro">
+  <figcaption>A rede colateral do ombro: supraescapular e ramos da subclávia encontrando a rede acromial, as circunflexas do úmero e a braquial profunda — as anastomoses que mantêm o membro superior perfundido quando o eixo principal oclui.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Espaço QUADRANGULAR de Velpeau (úmero-tricipital)</h2>
+  <div class="diagrama"><p class="t">Quatro limites — visto por trás da escápula</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>LATERAL</b> — <span class="d">o <b>ÚMERO</b>, na região do <b>colo cirúrgico</b> (sulco intertubercular).</span></div></li>
+    <li><span class="n">2</span><div><b>MEDIAL</b> — <span class="d">a <b>CABEÇA LONGA DO TRÍCEPS</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>SUPERIOR</b> — <span class="d">o <b>REDONDO MENOR</b> (olhando pela frente aparece o subescapular — mas o limite real é o redondo menor).</span></div></li>
+    <li><span class="n">4</span><div><b>INFERIOR</b> — <span class="d">o <b>REDONDO MAIOR</b>.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>🎯 <b>Conteúdo: NERVO AXILAR + ARTÉRIA CIRCUNFLEXA POSTERIOR DO ÚMERO</b> — é por isso que a fratura do colo do úmero (tópico 8) ameaça exatamente essa dupla.</li>
+    <li>Curiosidade da aula: Velpeau é o mesmo da <b>tipoia</b> (fixação de Velpeau) e da palpação da mama.</li>
+  </ul>
+  <figure class="fig"><img src="img/slideax-43-espacos-velpeau.jpg" alt="Espaços quadrangular e triangular">
+  <figcaption>As vistas anterior e posterior do ombro com os dois espaços de Velpeau: o quadrangular com o nervo axilar e a circunflexa posterior do úmero atravessando, e o triangular, mais medial, com a circunflexa da escápula.</figcaption></figure>
+
+  <h2 class="topic" id="t12">12 · Espaço TRIANGULAR de Velpeau (omo-tricipital)</h2>
+  <div class="diagrama"><p class="t">Três limites — e a resposta de prova</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>LATERAL</b> — <span class="d">a <b>CABEÇA LONGA DO TRÍCEPS</b> (a mesma que é limite MEDIAL do quadrangular — não confunda).</span></div></li>
+    <li><span class="n">2</span><div><b>INFERIOR</b> — <span class="d">o <b>REDONDO MAIOR</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>SUPERIOR</b> — <span class="d">🎯 <b>a ESCÁPULA</b> — "para a prova: ESCÁPULA" (tirando o redondo menor por trás, ou o subescapular pela frente, o que aparece é a escápula; o nome omo-tricipital vem de omoplata + tríceps).</span></div></li>
+  </ol></div>
+  <ul>
+    <li><b>Conteúdo: SÓ a ARTÉRIA CIRCUNFLEXA DA ESCÁPULA</b> (ramo da subescapular), contribuindo para a irrigação da face posterior do ombro.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência com os livros no limite superior</p>
+  <p>Os atlas costumam dar o limite superior do espaço triangular como o <b>redondo MENOR</b>. O professor foi explícito: <b>na prova dele, o limite superior é a ESCÁPULA</b> — o argumento é que, removendo o redondo menor (ou o subescapular, pela frente), a estrutura que de fato limita é a escápula. Nos livros, saiba converter.</p></div>
+
+  <h2 class="topic" id="t13">13 · O desfiladeiro: conceito, clínica e os três espaços</h2>
+  <ul>
+    <li>O <b>DESFILADEIRO CERVICOTORÁCICO</b> é o corredor entre o pescoço/tórax e o membro superior, onde músculos e ossos podem <b>comprimir as estruturas nobres: ARTÉRIA, VEIA e NERVO</b>.</li>
+    <li>🎯 <b>Os TRÊS locais de compressão</b>, de cima para baixo: <b>1) TRÍGONO INTERESCALÊNICO · 2) ESPAÇO COSTOCLAVICULAR · 3) ESPAÇO RETROPEITORAL</b> (retrocoracopeitoral).</li>
+    <li><b>A clínica típica:</b> "levanto o braço no ônibus e a mão dorme, o braço pesa, perco a força — baixo o braço e melhora". Exame: <b>palpar os pulsos dos DOIS lados</b> e fazer <b>manobras de elevação</b> — a elevação comprime e o pulso <b>diminui ou some</b>.</li>
+    <li><b>Classificação da síndrome</b> pela estrutura comprimida: <b>NEUROGÊNICA ~95%</b> (a imensa maioria) · <b>VENOSA ~2%</b> · <b>ARTERIAL ~1%</b> (a mais rara).</li>
+  </ul>
+
+  <h2 class="topic" id="t14">14 · Trígono interescalênico — e por que a veia escapa</h2>
+  <ul>
+    <li><b>Limites:</b> <b>ESCALENO ANTERIOR</b> (na frente — origem em C4–C6, inserção no <b>tubérculo escaleno da 1ª costela</b>) + <b>ESCALENO MÉDIO</b> (atrás — inserção mais lateral na 1ª costela) + base = <b>PRIMEIRA COSTELA</b>.</li>
+    <li><b>Quem passa DENTRO:</b> a <b>ARTÉRIA SUBCLÁVIA</b> (atrás do escaleno anterior — é ele que a divide em três partes) e o <b>PLEXO BRAQUIAL</b> (atrás da artéria).</li>
+    <li>🎯 <b>A VEIA SUBCLÁVIA passa NA FRENTE do escaleno anterior</b> — portanto <b>a veia NÃO é comprimida no trígono</b>. Compressão venosa acontece mais abaixo, no costoclavicular.</li>
+    <li>O mecanismo: inserção do escaleno anterior mais para trás, ou do médio mais para frente, <b>estreita o triângulo</b> → mais compressão. Hipertrofia dos escalenos (musculação do pescoço) também.</li>
+    <li>🎯 <b>Por que o NERVO sofre mais que a artéria?</b> "A artéria é pulsátil — quando pulsa, expande" e escapa da compressão leve; <b>o nervo é parado</b> e comprime fácil. A artéria só sofre com fibrose intensa ou costela cervical.</li>
+  </ul>
+  <figure class="fig"><img src="img/slideax-47-escapula-posterior.jpg" alt="Escalenos, plexo e subclávia no trígono">
+  <figcaption>A região interescalênica: escaleno anterior e médio com o plexo braquial e a artéria subclávia passando entre eles rumo à primeira costela — o primeiro andar do desfiladeiro. Repare como a veia ficaria na frente do escaleno anterior, fora do trígono.</figcaption></figure>
+
+  <h2 class="topic" id="t15">15 · Costela cervical e as variações musculofasciais</h2>
+  <ul>
+    <li><b>COSTELA CERVICAL:</b> presente em <b>até 1,5% da população</b>; entre os que têm síndrome do desfiladeiro, <b>~5% têm costela cervical</b>. <b>Mulheres: mais de 2× a incidência</b> dos homens.</li>
+    <li>Origina-se no <b>processo transverso de C7</b> e vai à primeira costela — <b>completa ou INCOMPLETA</b> (termina em lâmina, fáscia ou banda fibrosa; a fusão pode ser articulação ou fibrose).</li>
+    <li>🎯 Ela <b>passa DENTRO do trígono interescalênico</b> → comprime principalmente <b>nervo</b>, pode comprimir <b>artéria</b> — <b>a veia não</b> (está fora do trígono). <b>50% dos portadores têm sintomas</b>, a maioria neurológicos.</li>
+    <li><b>SINAL DA TECLA:</b> estrutura endurecida palpável na região <b>supraclavicular</b>. E 🎯 <b>um RX simples mostra a costela cervical</b> — não precisa de tomografia para o diagnóstico.</li>
+    <li><b>Outras variações que apertam o trígono:</b> bandas fibrosas embrionárias atrás do escaleno anterior · <b>fáscia de SIBSON</b> (do escaleno à cúpula pleural, que ela reveste) · <b>músculo ESCALENO MÍNIMO</b> (entre anterior e médio) · <b>1ª costela anômala</b> (inserção alta ou na 2ª costela) · <b>calo de fratura</b> da 1ª costela.</li>
+  </ul>
+
+  <h2 class="topic" id="t16">16 · Espaço costoclavicular: Paget-Schroetter e os acessos centrais</h2>
+  <ul>
+    <li><b>Limites:</b> na frente, o <b>terço médio/medial da CLAVÍCULA</b> com o <b>músculo SUBCLÁVIO</b> e o <b>ligamento COSTOCLAVICULAR</b>; atrás, a <b>face anterior da PRIMEIRA COSTELA</b>. Nesse estreito passam <b>artéria, veia e ramos do plexo</b>.</li>
+    <li>🎯 <b>É AQUI que a veia é comprimida</b> — a veia tem parede delgada e complacente: "duas estruturas ósseas comprimindo a veia, ela entope". Trombose da subclávia/axilar por compressão no desfiladeiro = <b>SÍNDROME DE PAGET-SCHROETTER</b>.</li>
+    <li>Na flebografia dinâmica da aula: braço para baixo, veia normal; <b>braço elevado, a veia pinça</b> no espaço costoclavicular.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 A ordem dos acessos venosos centrais (doutrina da aula)</p>
+  <p><b>1º JUGULAR INTERNA DIREITA</b> (o trajeto mais retilíneo com a cava) → <b>2º jugular interna esquerda</b> (faz curva, caminho mais longo) → <b>3º femoral direita → 4º femoral esquerda → 5º subclávia direita → 6º subclávia esquerda</b>. A subclávia fica por último <b>justamente pela compressão costoclavicular</b>: com cateter dentro, a chance de trombose é maior. Vale para criança e adulto, clínico e cirúrgico.</p></div>
+
+  <h2 class="topic" id="t17">17 · Espaço retropeitoral e as compressões raras</h2>
+  <ul>
+    <li><b>ESPAÇO RETROPEITORAL (retrocoracopeitoral):</b> atrás do <b>PEITORAL MENOR</b>, junto da sua inserção no <b>processo CORACOIDE</b> — por baixo passam a <b>artéria axilar na 2ª parte</b>, a veia e os fascículos do plexo.</li>
+    <li>🎯 Mecanismo: <b>HIPERABDUÇÃO do braço</b> (pior virando o pescoço para o lado oposto) comprime as estruturas sob o peitoral menor.</li>
+    <li><b>Compressões raras da região:</b> a <b>cabeça/colo do ÚMERO</b> no retropeitoral · <b>raízes do MEDIANO posteriorizadas</b> "garroteando" a artéria axilar (e o atrito crônico pode até favorecer placa aterosclerótica local) · o <b>músculo AXILOPEITORAL de LANGER</b> (arcada de Langer, o "músculo do suspensório" — raríssimo: o professor achou 1 em centenas de dissecções).</li>
+  </ul>
+
+  <h2 class="topic" id="t18">18 · Diagnóstico, manobras e o "albatroz" do tratamento</h2>
+  <ul>
+    <li><b>Manobras da aula:</b> <b>ROSS</b> — palpar os pulsos em repouso e com o membro <b>elevado a 90°</b> (a pulsação diminui se há compressão) · <b>ADSON</b> — hiperabdução com o pescoço virado <b>para o MESMO lado</b> · manobra <b>costoclavicular</b> — pescoço para o lado <b>CONTRALATERAL</b> com hiperabdução · <b>WRIGHT</b> — pela extensão do membro superior · e o <b>sinal da tecla</b> na palpação supraclavicular.</li>
+    <li><b>Exames DINÂMICOS:</b> arteriografia/flebografia (ou angiotomografia) <b>com o braço elevado</b> — a compressão só aparece na posição que comprime. 🎯 <b>Compressão de NERVO não aparece na imagem</b> (nervo não tem fluxo nem dilata) — infere-se: se a artéria está comprimida, o nervo também está.</li>
+    <li><b>Consequências arteriais:</b> a compressão crônica gera <b>dilatação PÓS-estenótica</b> (até aneurisma — que pode regredir após descompressão), <b>trombose</b> e <b>microembolias para os dedos</b> (trombo local fragmenta → gangrena de dedos). Compressão arterial com dilatação = <b>cirurgia obrigatória</b>.</li>
+    <li><b>Tratamento cirúrgico:</b> compressão pelo escaleno → <b>secção do escaleno</b>; costela cervical → <b>ressecção da costela</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O "albatroz" do pós-operatório</p>
+  <p>"Essas pessoas viram um albatroz na nossa cabeça — o pássaro que fica perseguindo." A cirurgia (principalmente a secção do escaleno anterior) pode gerar <b>FIBROSE intensa</b> que comprime de novo artéria e plexo: melhora momentânea e <b>recidiva — às vezes pior do que estava</b>. Opera-se mesmo assim quando a sintomatologia exige e sempre que há <b>compressão arterial com dilatação</b> (risco de trombose e embolia digital).</p></div>
+
+  <h2 class="topic" id="t19">19 · Nervo frênico: trajeto e paralisia diafragmática</h2>
+  <ul>
+    <li><b>Origem: PLEXO CERVICAL, raiz C4</b> — às vezes pré-fixado (C3) ou pós-fixado (C5). Desce <b>SOBRE o músculo ESCALENO ANTERIOR</b>.</li>
+    <li>🎯 A diferença dos lados na base do pescoço: à <b>DIREITA</b> passa <b>na frente da 1ª parte da SUBCLÁVIA</b>; à <b>ESQUERDA</b> passa <b>ENTRE a SUBCLÁVIA e a CARÓTIDA COMUM</b>.</li>
+    <li>No tórax: junto da <b>cava superior</b> (direita) / sobre o <b>arco da aorta</b> (esquerda), <b>lateral ao pericárdio</b>, descendo <b>com os vasos PERICARDICOFRÊNICOS</b> (que irrigam e drenam o pericárdio). No diafragma, divide-se em <b>3 a 5 ramificações</b> de cada lado — com fibras <b>aferentes E eferentes</b>.</li>
+    <li>🎯 <b>Paralisia frênica</b> (mais no trauma): a <b>cúpula diafragmática se ELEVA</b> (perde o movimento). <b>Uni ou bilateral — e a bilateral NÃO abole a respiração</b>: intercostais e musculatura acessória mantêm (com esforço, às vezes tiragem). Ausculta: murmúrio abolido nas bases. Reconstrução possível com <b>enxerto de nervo SURAL</b> (o grande doador de enxertos).</li>
+  </ul>
+
+  <h2 class="topic" id="t20">20 · Nervo vago: bainha carótica, recorrentes e troncos vagais</h2>
+  <ul>
+    <li><b>X par craniano</b> — "nervos vagos... porque vagam": atuação parassimpática ocular, cardíaca, respiratória, visceral.</li>
+    <li><b>No pescoço, dentro da BAINHA CARÓTICA:</b> carótida + <b>jugular interna</b> + o <b>vago ENTRE as duas e um pouco POSTERIOR</b>. Comprimir a região = <b>MANOBRA VAGAL → BRADICARDIA + HIPOTENSÃO</b>. 🎯 <b>Nunca comprimir as DUAS carótidas</b>: parada cardíaca (manobra vagal bilateral + isquemia cerebral — "carótida" vem do grego <i>karos</i>, sono profundo).</li>
+    <li>🎯 <b>Laríngeos recorrentes</b> (os laríngeos superiores já saíram lá em cima): o <b>DIREITO</b> nasce do vago e passa <b>embaixo da SUBCLÁVIA DIREITA</b>; o <b>ESQUERDO</b> passa <b>embaixo do ARCO DA AORTA</b>, em relação com o <b>LIGAMENTO ARTERIAL</b> (o antigo ducto) — na ligadura do canal arterial patente da criança, <b>atenção ao recorrente esquerdo</b>. E nunca diga "artéria aorta" — <b>aorta já é artéria</b>.</li>
+    <li><b>No tórax e abdome:</b> ramos cardíacos bilaterais · inervação brônquica · e no esôfago: 🎯 <b>TRONCO VAGAL ANTERIOR = vago ESQUERDO</b> (na maior parte) e <b>TRONCO VAGAL POSTERIOR = vago DIREITO</b> (com fibras cruzadas dos dois lados) → plexos <b>CELÍACO, MESENTÉRICO SUPERIOR e INFERIOR</b> para a inervação visceral.</li>
+    <li><b>Vago e estômago:</b> estimula a produção de <b>ácido clorídrico</b> — daí as antigas <b>VAGOTOMIAS</b> (troncular, seletiva, superseletiva) para úlcera. 🎯 <b>O inibidor de bomba de prótons (omeprazol) acabou com a vagotomia</b> — hoje só se pensa nela em úlcera de repetição refratária.</li>
+  </ul>
+
+  <h2 class="topic" id="t21">21 · Resumo rápido</h2>
+  <ul>
+    <li><b>Axilar em 3 partes (peitoral menor):</b> 1ª medial, 2ª posterior, 3ª lateral. Sintopia: 1ª parte = lateral+posterior laterais, MEDIAL POSTERIOR à artéria; 2ª = nomes exatos; 3ª = musculocutâneo lateral, ulnar medial (entre A e V), radial+axilar posteriores, mediano cruza anterior.</li>
+    <li><b>Ramos 1-2-3:</b> torácica superior · toracoacromial (4 ramos, variação é regra) + torácica lateral (mamários laterais) · subescapular (circunflexa da escápula + toracodorsal → latíssimo) + circunflexas do úmero (posterior maior, com o nervo axilar).</li>
+    <li><b>Colo do úmero fraturado</b> = nervo axilar + circunflexa posterior → ombro caído, perde rotação (redondo menor).</li>
+    <li><b>Espaços de Velpeau:</b> QUADRANGULAR (úmero, cabeça longa do tríceps, redondo menor, redondo maior — conteúdo: nervo axilar + circunflexa posterior) · TRIANGULAR (cabeça longa lateral, redondo maior, ESCÁPULA na prova — conteúdo: só circunflexa da escápula).</li>
+    <li><b>Desfiladeiro — 3 andares:</b> trígono interescalênico (artéria + plexo; VEIA FORA, na frente do escaleno anterior) · costoclavicular (VEIA comprimida → PAGET-SCHROETTER; acessos centrais: JID primeiro, subclávias por último) · retropeitoral (hiperabdução; Langer raríssimo).</li>
+    <li><b>Síndrome:</b> neurogênica 95% · venosa 2% · arterial 1%. Nervo sofre mais (artéria pulsa e expande). Costela cervical: C7, 1,5% da população, 2× mulher, sinal da tecla, RX simples basta.</li>
+    <li><b>Manobras:</b> Ross (90°), Adson (mesmo lado), costoclavicular (contralateral), Wright; exames DINÂMICOS (braço elevado); compressão de nervo não aparece na imagem. Dilatação pós-estenótica = cirurgia; cuidado com o "albatroz" (fibrose recidivante).</li>
+    <li><b>Frênico:</b> C4 (C3–C5), sobre o escaleno anterior; direita = na frente da subclávia, esquerda = entre subclávia e carótida; desce com os pericardicofrênicos; paralisia = cúpula elevada; bilateral não abole a respiração.</li>
+    <li><b>Vago:</b> bainha carótica (entre carótida e jugular, posterior); manobra vagal = bradicardia + hipotensão (nunca as duas carótidas); recorrente direito sob a subclávia, esquerdo sob o arco da aorta (ligamento arterial!); tronco vagal anterior = vago esquerdo, posterior = direito; vagotomia morreu com o omeprazol.</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Axila e Desfiladeiro</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aulas de 18/09 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-partes">Partes & sintopia</a>
+    <a class="a1" href="#p-ramos">Ramos 1-2-3</a>
+    <a class="a1" href="#p-velpeau">Velpeau</a>
+    <a class="a1" href="#p-desf">Desfiladeiro</a>
+    <a class="a1" href="#p-frenvago">Frênico & vago</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-partes">
+  <span class="aula-tag t1">Axilar: partes e sintopia</span>
+  <ul>
+    <li><b class="k">PEITORAL MENOR divide a axilar em 3 PARTES</b> (1ª medial · 2ª posterior · 3ª lateral). É PARTE, não "porção".</li>
+    <li><b>1ª parte:</b> fasc. lateral + posterior LATERAIS à artéria · <b class="k">fasc. MEDIAL passa POSTERIOR</b> · veia contígua medial. <b>2ª parte:</b> <b class="k">nomes exatos</b> (lateral lateral, medial medial, posterior posterior). <b>3ª parte:</b> musculocutâneo lateral · <b class="k">ULNAR entre artéria e veia</b> · radial + axilar posteriores · raízes do MEDIANO anteriores (cruza lateral→medial).</li>
+    <li>Veia contígua SÓ na 1ª parte: na 2ª interpõe-se o <b>fascículo medial</b>; na 3ª, o <b>nervo ulnar</b> (cuidado na flebotomia axilar da criança).</li>
+    <li><b class="k">SUBCLÁVIA = broto embrionário do MS</b> (isquiática no MI); 3 partes pelo <b>ESCALENO ANTERIOR</b>.</li>
+  </ul>
+</section>
+
+<section id="p-ramos">
+  <span class="aula-tag t1">Ramos da axilar (1-2-3)</span>
+  <div class="tw"><table>
+    <tr><th>Parte</th><th>Ramos</th><th>Chave</th></tr>
+    <tr><td><b>1ª</b></td><td><b>TORÁCICA SUPERIOR</b> (suprema)</td><td>1º-2º espaços intercostais</td></tr>
+    <tr><td><b>2ª</b></td><td><b>TORACOACROMIAL</b> + <b>TORÁCICA LATERAL</b></td><td>4 ramos (peitoral/deltóideo/acromial/clavicular; variação é regra) · mamários laterais p/ MAMA</td></tr>
+    <tr><td><b>3ª</b></td><td><b>SUBESCAPULAR</b> + <b>CIRCUNFLEXAS do úmero</b></td><td>subescapular → circunflexa da ESCÁPULA + TORACODORSAL (nervo·artéria·veia → latíssimo) · posterior &gt; anterior, c/ NERVO AXILAR</td></tr>
+  </table></div>
+  <ul>
+    <li><b class="k">Colo do úmero fraturado = n. AXILAR + circunflexa POSTERIOR</b> → ombro caído, perde ROTAÇÃO (aula: redondo menor).</li>
+    <li>Colaterais do ombro: supraescapular/escapular dorsal (subclávia) ↔ circunflexas/acromial ↔ braquial profunda → <b>MS compensa mais que MI</b>.</li>
+    <li>Linfonodos <b>CENTRAIS</b>: 3–5 na gordura da axila — palpar (mama).</li>
+  </ul>
+</section>
+
+<section id="p-velpeau">
+  <span class="aula-tag t1">Espaços de Velpeau</span>
+  <div class="tw"><table>
+    <tr><th></th><th>QUADRANGULAR (úmero-tricipital)</th><th>TRIANGULAR (omo-tricipital)</th></tr>
+    <tr><td>Lateral</td><td><b>úmero (colo cirúrgico)</b></td><td><b>cabeça longa do tríceps</b></td></tr>
+    <tr><td>Medial</td><td><b>cabeça longa do tríceps</b></td><td>—</td></tr>
+    <tr><td>Superior</td><td><b>redondo MENOR</b></td><td>🎯 <b>ESCÁPULA (na prova!)</b></td></tr>
+    <tr><td>Inferior</td><td><b>redondo MAIOR</b></td><td><b>redondo MAIOR</b></td></tr>
+    <tr><td>Conteúdo</td><td><b class="k">n. AXILAR + circunflexa POSTERIOR do úmero</b></td><td><b class="k">SÓ a circunflexa da ESCÁPULA</b></td></tr>
+  </table></div>
+</section>
+
+<section id="p-desf">
+  <span class="aula-tag t1">Desfiladeiro cervicotorácico</span>
+  <ul>
+    <li><b class="k">3 andares: TRÍGONO INTERESCALÊNICO → COSTOCLAVICULAR → RETROPEITORAL</b>. Síndrome: <b class="k">neurogênica 95% · venosa 2% · arterial 1%</b>.</li>
+    <li><b>Trígono</b> (escaleno ant. + médio + 1ª costela): passa <b>SUBCLÁVIA (atrás do escaleno ant.) + PLEXO</b>. <b class="k">A VEIA passa NA FRENTE do escaleno ant. → NÃO comprime no trígono</b>. Nervo sofre mais (artéria pulsa/expande).</li>
+    <li><b>Costela cervical:</b> C7 → 1ª costela, completa ou incompleta; 1,5% da população, <b>2× mulher</b>; 50% sintomáticos; <b class="k">sinal da TECLA</b> supraclavicular; <b>RX simples mostra</b>. Passa DENTRO do trígono.</li>
+    <li>Variações: bandas fibrosas · <b>fáscia de SIBSON</b> (cúpula pleural) · <b>escaleno MÍNIMO</b> · 1ª costela anômala/calo.</li>
+    <li><b>Costoclavicular</b> (clavícula + subclávio + lig. costoclavicular × 1ª costela): <b class="k">AQUI a veia entope → PAGET-SCHROETTER</b> (trombose venosa do desfiladeiro).</li>
+    <li><b class="k">Acessos centrais (ordem da aula): JUGULAR INTERNA D → JI E → femoral D → femoral E → subclávia D → subclávia E</b> (subclávia por último pela compressão costoclavicular).</li>
+    <li><b>Retropeitoral</b> (atrás do peitoral menor/coracoide): comprime na <b>HIPERABDUÇÃO</b>; raras: cabeça do úmero, raízes do mediano, <b>arcada de LANGER</b>.</li>
+    <li><b>Manobras:</b> ROSS (pulsos a 90°) · ADSON (pescoço p/ MESMO lado) · costoclavicular (contralateral) · WRIGHT (extensão). Exames <b class="k">DINÂMICOS (braço elevado)</b>; nervo NÃO aparece na imagem. Dilatação pós-estenótica/aneurisma + microembolia digital = <b>cirurgia</b>; fibrose pós-op = <b>"albatroz"</b> (recidiva).</li>
+  </ul>
+</section>
+
+<section id="p-frenvago">
+  <span class="aula-tag t1">Frênico e vago (pincelada)</span>
+  <ul>
+    <li><b>FRÊNICO (C4</b>; pré/pós-fixado C3/C5): desce <b>SOBRE o escaleno anterior</b> · <b class="k">D = na frente da 1ª parte da subclávia · E = entre subclávia e carótida comum</b> · desce c/ vasos <b>pericardicofrênicos</b>, lateral ao pericárdio · 3–5 ramos no diafragma.</li>
+    <li><b class="k">Paralisia frênica = cúpula ELEVADA</b>; bilateral <b>NÃO abole</b> a respiração (intercostais/acessórios); enxerto: nervo <b>SURAL</b>.</li>
+    <li><b>VAGO (X):</b> bainha carótica — <b class="k">entre carótida e jugular interna, posterior</b>. Manobra vagal = <b>bradicardia + hipotensão</b>; nunca as 2 carótidas (parada; "karos" = sono profundo).</li>
+    <li><b class="k">Laríngeo recorrente D = sob a SUBCLÁVIA D · E = sob o ARCO DA AORTA</b> (relação c/ LIGAMENTO ARTERIAL — ligadura do canal na criança!). "Aorta já é artéria" — nunca "artéria aorta".</li>
+    <li><b class="k">Tronco vagal ANTERIOR = vago ESQUERDO · POSTERIOR = vago DIREITO</b> → plexos celíaco + mesentéricos sup./inf.</li>
+    <li>Vago → <b>HCl</b> no estômago → vagotomias mortas pelo <b class="k">OMEPRAZOL (IBP)</b>; só úlcera refratária de repetição.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>1ª × 2ª parte (sintopia)</td><td>na 1ª o fasc. MEDIAL é POSTERIOR à artéria × na 2ª cada nome está no seu lugar</td></tr>
+    <tr><td>Torácica lateral × toracodorsal</td><td>borda do peitoral menor → serrátil/mama × "presa" no LATÍSSIMO (siga até o músculo)</td></tr>
+    <tr><td>Quadrangular × triangular</td><td>cabeça longa do tríceps é MEDIAL no quadrangular × LATERAL no triangular; conteúdos: axilar+circunflexa posterior × só circunflexa da escápula</td></tr>
+    <tr><td>Trígono interescalênico × costoclavicular</td><td>comprime ARTÉRIA+NERVO (veia fora) × comprime a VEIA (Paget-Schroetter)</td></tr>
+    <tr><td>Adson × manobra costoclavicular</td><td>pescoço para o MESMO lado × para o lado CONTRALATERAL</td></tr>
+    <tr><td>Frênico D × E</td><td>na frente da subclávia × entre subclávia e carótida</td></tr>
+    <tr><td>Recorrente D × E</td><td>sob a subclávia direita × sob o ARCO DA AORTA (ligamento arterial)</td></tr>
+    <tr><td>Tronco vagal anterior × posterior</td><td>vago ESQUERDO × vago DIREITO</td></tr>
+    <tr><td>Aterosclerose × arteriosclerose</td><td>placa no lúmen × parede endurecida (e Mönckeberg = calcificação da média)</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Axila e Desfiladeiro</h2>
+    <p>Anatomia Topográfica · Aulas de 18/09 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>28</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>5</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Axila e Desfiladeiro</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">A artéria axilar é dividida em três partes tomando como referência:</div>`,alts:[`o músculo peitoral maior — 1ª parte superior, 2ª posterior e 3ª inferior a ele`,`a primeira costela — 1ª parte medial, 2ª posterior e 3ª lateral a ela`,`o músculo peitoral menor — 1ª parte medial, 2ª posterior e 3ª lateral a ele`,`o músculo escaleno anterior — 1ª parte medial, 2ª posterior e 3ª lateral`,`a margem do redondo maior — 1ª parte acima, 2ª atrás e 3ª abaixo dela`],correta:2,just:[`O peitoral maior cobre a região, mas o divisor clássico é o MENOR. [tipo: par confundível]`,`A primeira costela marca o INÍCIO da axilar (fim da subclávia) — não a divide. [tipo: verdade no contexto errado]`,`Correta. O PEITORAL MENOR divide a ARTÉRIA AXILAR em três PARTES (vocabulário da aula: parte, não porção): 1ª MEDIAL, 2ª POSTERIOR e 3ª LATERAL ao músculo.`,`O escaleno anterior é o divisor da SUBCLÁVIA em três partes. [tipo: par confundível]`,`O redondo maior marca o FIM da axilar (início da braquial). [tipo: verdade no contexto errado]`],ref:'Partes da axilar'},
+{n:2,aula:1,nivel:'medio',enun:`<div class="pergunta">Na PRIMEIRA parte da artéria axilar, a sintopia com o plexo braquial descrita em aula é:</div>`,alts:[`fascículos lateral e posterior laterais à artéria; o medial, posterior a ela`,`cada fascículo ocupa a posição do próprio nome em relação à artéria`,`os três fascículos passam posteriores à artéria, entre ela e o subescapular`,`fascículo medial entre artéria e veia; lateral e posterior anteriores à artéria`,`os ramos terminais já formados envolvem a artéria por todos os lados`],correta:0,just:[`Correta. Na 1ª PARTE: fascículos LATERAL e POSTERIOR passam LATERAIS à artéria, e o fascículo MEDIAL passa POSTERIOR a ela — a exceção que a prova cobra. A veia axilar faz a sintopia medial.`,`A correspondência exata dos nomes é a marca da SEGUNDA parte. [tipo: verdade no contexto errado]`,`Só o medial fica atrás — os outros dois ficam laterais. [tipo: generalização indevida]`,`O medial ENTRE artéria e veia é sintopia da SEGUNDA parte. [tipo: momento errado]`,`Os ramos terminais aparecem na TERCEIRA parte — na 1ª ainda são fascículos. [tipo: momento errado]`],ref:'Sintopia — 1ª parte'},
+{n:3,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a SEGUNDA parte da artéria axilar, o professor destacou que ela é especial porque:</div>`,alts:[`é a única parte em contato direto com a veia axilar em todo o trajeto`,`é onde nascem os ramos terminais do plexo, incluindo o nervo mediano`,`fica na frente do peitoral menor, protegida das compressões do braço`,`é a parte que atravessa o trígono interescalênico com o plexo braquial`,`nela os fascículos ocupam exatamente a posição que os nomes indicam`],correta:4,just:[`É o contrário: a veia é contígua à artéria SÓ na primeira parte. [tipo: mecanismo invertido]`,`Os ramos aparecem na TERCEIRA parte. [tipo: momento errado]`,`Ela fica ATRÁS do peitoral menor — e é comprimida no espaço retropeitoral. [tipo: mecanismo invertido]`,`O trígono interescalênico é andar da SUBCLÁVIA, não da axilar. [tipo: par confundível]`,`Correta. Na 2ª PARTE a correspondência é EXATA: fascículo LATERAL lateral, MEDIAL medial e POSTERIOR posterior à artéria — "a correlação exata dos fascículos".`],ref:'Sintopia — 2ª parte'},
+{n:4,aula:1,nivel:'facil',enun:`<div class="pergunta">Na TERCEIRA parte da artéria axilar, passa ENTRE a artéria e a veia axilar:</div>`,alts:[`o nervo musculocutâneo, recém-saído do fascículo lateral`,`o nervo ulnar, vindo do fascículo medial do plexo braquial`,`o nervo radial, em seu trajeto para a face posterior do braço`,`o fascículo posterior, antes de se dividir em radial e axilar`,`a raiz medial do nervo mediano, cruzando anteriormente a artéria`],correta:1,just:[`O musculocutâneo fica LATERAL à artéria. [tipo: par confundível]`,`Correta. Na 3ª parte, o NERVO ULNAR (fascículo medial) passa ENTRE A ARTÉRIA E A VEIA axilar — na 2ª parte, quem se interpõe é o próprio fascículo medial.`,`O radial passa POSTERIOR à artéria. [tipo: par confundível]`,`O fascículo posterior fica atrás da artéria — e na 3ª parte já virou radial e axilar. [tipo: momento errado]`,`As raízes do mediano são ANTERIORES à artéria — não entram entre ela e a veia. [tipo: par confundível]`],ref:'Sintopia — 3ª parte'},
+{n:5,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre os ramos da artéria axilar, a associação correta com as três partes ("regra 1-2-3") é:</div>`,alts:[`1ª: toracoacromial · 2ª: torácica superior e lateral · 3ª: subescapular e circunflexas`,`1ª: torácica lateral · 2ª: toracoacromial e subescapular · 3ª: circunflexas e toracodorsal`,`1ª: torácica superior · 2ª: subescapular e toracodorsal · 3ª: toracoacromial e circunflexas`,`1ª: torácica superior · 2ª: toracoacromial e torácica lateral · 3ª: subescapular e circunflexas`,`1ª: torácica suprema e a lateral · 2ª: as circunflexas do úmero · 3ª: subescapular e toracoacromial`],correta:3,just:[`A toracoacromial é da 2ª parte — a 1ª tem só a torácica superior. [tipo: permutação plausível]`,`A torácica lateral é da 2ª parte, e a subescapular, da 3ª. [tipo: permutação plausível]`,`Subescapular e toracodorsal pertencem à 3ª parte (a toracodorsal nem é ramo direto). [tipo: permutação plausível]`,`Correta. Regra da aula: 1ª PARTE → 1 ramo (TORÁCICA SUPERIOR/suprema) · 2ª → 2 ramos (TORACOACROMIAL + TORÁCICA LATERAL) · 3ª → 3 ramos (SUBESCAPULAR + CIRCUNFLEXA POSTERIOR + CIRCUNFLEXA ANTERIOR do úmero).`,`"Suprema" é só o nome antigo da torácica superior — e as circunflexas são da 3ª parte. [tipo: recombinação plausível]`],ref:'Regra 1-2-3'},
+{n:6,aula:1,nivel:'facil',enun:`<div class="pergunta">São os quatro ramos do tronco toracoacromial:</div>`,alts:[`peitoral, deltóideo, acromial e clavicular`,`peitoral, mamário lateral, acromial e deltóideo`,`clavicular, subescapular, acromial e peitoral`,`deltóideo, acromial, supraescapular e peitoral`,`peitoral, deltóideo, clavicular e circunflexo anterior`],correta:0,just:[`Correta. O TRONCO TORACOACROMIAL dá QUATRO ramos: PEITORAL, DELTÓIDEO, ACROMIAL e CLAVICULAR — lembrando que a variação é a regra: às vezes não há tronco único e os ramos saem diretos da axilar.`,`Os mamários laterais vêm da TORÁCICA LATERAL. [tipo: par confundível]`,`A subescapular é ramo direto da 3ª parte da axilar. [tipo: recombinação plausível]`,`A supraescapular vem da SUBCLÁVIA — é vizinha, não ramo do tronco. [tipo: par confundível]`,`As circunflexas do úmero são ramos da 3ª parte. [tipo: recombinação plausível]`],ref:'Toracoacromial'},
+{n:7,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a artéria torácica lateral, a aula destaca que ela:</div>`,alts:[`nasce da 1ª parte da artéria axilar e irriga os dois primeiros espaços intercostais`,`origina a circunflexa da escápula e a toracodorsal em trajeto comum`,`desce rente à borda lateral do peitoral menor e dá os ramos mamários laterais`,`acompanha o nervo torácico longo até inserir-se no latíssimo do dorso`,`é o ramo mais calibroso da axilar, destinado ao músculo deltoide`],correta:2,just:[`Essa descrição é da TORÁCICA SUPERIOR, o ramo da 1ª parte. [tipo: par confundível]`,`Quem origina essas duas é a SUBESCAPULAR, na 3ª parte. [tipo: par confundível]`,`Correta. A TORÁCICA LATERAL sai da 2ª parte, RENTE À BORDA LATERAL DO PEITORAL MENOR, e vai ao serrátil anterior, ao gradil costal e à MAMA — os ramos MAMÁRIOS LATERAIS, que não podem ser esquecidos na irrigação mamária.`,`Quem se "prende" no latíssimo é a TORACODORSAL — é a dica para não confundi-las na peça. [tipo: par confundível]`,`Calibre e deltoide apontam para outros ramos — o deltóideo é do toracoacromial. [tipo: recombinação plausível]`],ref:'Torácica lateral'},
+{n:8,aula:1,nivel:'medio',enun:`<div class="pergunta">Na dissecção, um vaso solto na parede lateral do tórax confunde o aluno: torácica lateral ou toracodorsal? A dica do professor para diferenciá-las é:</div>`,alts:[`a torácica lateral desce acompanhada da veia cefálica em seu trajeto`,`a toracodorsal é ramo direto da artéria axilar; a torácica lateral, da subescapular`,`a torácica lateral cruza o espaço quadrangular junto do nervo axilar`,`a toracodorsal é mais medial que a torácica lateral em todo o trajeto`,`seguir o vaso até o músculo: a toracodorsal está "presa" no latíssimo do dorso`],correta:4,just:[`A cefálica corre no sulco deltopeitoral — outro território. [tipo: recombinação plausível]`,`É o inverso: a torácica lateral é ramo direto (2ª parte) e a toracodorsal vem da SUBESCAPULAR. [tipo: mecanismo invertido]`,`No quadrangular passam o nervo axilar e a circunflexa POSTERIOR. [tipo: par confundível]`,`A posição relativa varia — não é critério confiável na peça. [tipo: pseudo-regra plausível]`,`Correta. A dica prática: siga o vaso até o destino — a TORACODORSAL está "PRESA" no LATÍSSIMO DO DORSO (desce com o nervo e a veia toracodorsais, ordem nervo·artéria·veia); a torácica lateral fica solta no gradil.`],ref:'Toracodorsal × torácica lateral'},
+{n:9,aula:1,nivel:'medio',enun:`<span class="vinheta">Idosa escorrega, cai e fratura o colo do úmero. Dias depois, o ombro está caído e ela não consegue rodar o braço adequadamente.</span><div class="pergunta">As estruturas lesadas na fratura, conforme a aula, foram:</div>`,alts:[`o nervo radial e a artéria braquial profunda, no sulco do nervo radial`,`o nervo axilar e a artéria circunflexa posterior do úmero`,`o nervo supraescapular e a artéria supraescapular, na incisura da escápula`,`o fascículo posterior e a artéria subescapular, na parede posterior da axila`,`o nervo axilar e a artéria toracodorsal, no espaço triangular`],correta:1,just:[`Radial + braquial profunda se lesam na fratura da DIÁFISE do úmero (sulco espiral). [tipo: par confundível]`,`Correta. A fratura do COLO DO ÚMERO ameaça a dupla do espaço quadrangular: NERVO AXILAR + CIRCUNFLEXA POSTERIOR DO ÚMERO. Resultado: ombro caído e perda da ROTAÇÃO (mais que da elevação — na aula, pelo redondo menor).`,`O supraescapular passa na incisura da escápula — outra topografia de lesão. [tipo: par confundível]`,`O fascículo posterior é mais proximal — a fratura do colo pega o ramo já formado. [tipo: nível anatômico errado]`,`O nervo está certo, mas a artéria do quadrangular é a circunflexa posterior — a toracodorsal vai ao latíssimo. [tipo: recombinação plausível]`],ref:'Colo do úmero'},
+{n:10,aula:1,nivel:'dificil',enun:`<span class="vinheta">Numa flebotomia de veia axilar em criança, o cirurgião disseca com cuidado extremo o plano entre a artéria e a veia.</span><div class="pergunta">O que ele encontra interposto entre os dois vasos depende da altura: conforme a aula,</div>`,alts:[`nada na 3ª parte, o fascículo lateral na 2ª parte e o nervo mediano na 1ª`,`o nervo musculocutâneo na 2ª parte e o fascículo posterior na 3ª`,`o nervo ulnar em todo o trajeto, da primeira à terceira parte`,`nada na 1ª (contíguas), o fascículo medial na 2ª e o nervo ulnar na 3ª`,`a veia cefálica na 1ª parte e o nervo torácico longo na 2ª parte`],correta:3,just:[`Inverteu a ordem — a contiguidade sem interposição é na PRIMEIRA parte. [tipo: mecanismo invertido]`,`O musculocutâneo é LATERAL à artéria; o posterior fica atrás. [tipo: recombinação plausível]`,`O ulnar só existe como ramo na 3ª parte — antes disso é fascículo medial. [tipo: generalização indevida]`,`Correta. Veia MEDIAL à artéria e CONTÍGUA só na 1ª PARTE; na 2ª interpõe-se o FASCÍCULO MEDIAL e na 3ª o NERVO ULNAR — exatamente os que a flebotomia axilar da criança precisa poupar.`,`A cefálica DESEMBOCA na axilar, não corre entre os vasos; o torácico longo desce no serrátil. [tipo: recombinação plausível]`],ref:'Artéria × veia axilar'},
+{n:11,aula:1,nivel:'medio',enun:`<div class="pergunta">São os quatro limites do espaço QUADRANGULAR de Velpeau (úmero-tricipital):</div>`,alts:[`úmero lateral, cabeça longa do tríceps medial, redondo menor superior, redondo maior inferior`,`escápula superior, redondo maior inferior, cabeça longa do tríceps lateral e úmero medial`,`subescapular superior, redondo menor inferior, úmero medial e cabeça lateral do tríceps`,`redondo maior superior, redondo menor inferior, úmero lateral e cabeça longa do tríceps medial`,`acrômio superior, redondo maior inferior, colo do úmero medial e tríceps lateral`],correta:0,just:[`Correta. QUADRANGULAR (úmero-tricipital): LATERAL = ÚMERO no colo cirúrgico (sulco intertubercular) · MEDIAL = CABEÇA LONGA DO TRÍCEPS · SUPERIOR = REDONDO MENOR (pela frente aparece o subescapular) · INFERIOR = REDONDO MAIOR.`,`Escápula como teto e tríceps lateral descrevem o espaço TRIANGULAR. [tipo: par confundível]`,`O subescapular é a "fachada anterior" do limite superior — mas o limite é o redondo menor; e a cabeça é a LONGA. [tipo: recombinação plausível]`,`Inverteu os redondos: o MENOR é o de cima, o MAIOR o de baixo. [tipo: mecanismo invertido]`,`O acrômio está longe do espaço — e úmero/tríceps trocaram de lado. [tipo: recombinação plausível]`],ref:'Quadrangular — limites'},
+{n:12,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre o espaço TRIANGULAR de Velpeau (omo-tricipital), a versão que o professor pediu para a prova é:</div>`,alts:[`limite superior = redondo menor; conteúdo = nervo axilar e circunflexa da escápula`,`limite lateral = úmero; conteúdo = artéria circunflexa posterior do úmero`,`limite superior = escápula; conteúdo = somente a artéria circunflexa da escápula`,`limite inferior = redondo menor; conteúdo = artéria toracodorsal e seu nervo`,`limite medial = cabeça longa do tríceps; conteúdo = artéria subescapular e veia`],correta:2,just:[`Redondo menor é a resposta dos atlas — o professor foi explícito: NA PROVA, escápula. E o nervo axilar é do quadrangular. [tipo: misconception clássica]`,`Úmero como limite e circunflexa posterior são marcas do QUADRANGULAR. [tipo: par confundível]`,`Correta. TRIANGULAR (omo-tricipital): LATERAL = cabeça longa do tríceps · INFERIOR = redondo maior · SUPERIOR = ESCÁPULA ("para a prova: escápula" — omo = omoplata). Conteúdo: SÓ a CIRCUNFLEXA DA ESCÁPULA.`,`O redondo do limite inferior é o MAIOR — e a toracodorsal segue ao latíssimo, fora do espaço. [tipo: recombinação plausível]`,`No triangular a cabeça longa é o limite LATERAL (medial ela é no quadrangular); a subescapular fica antes da divisão. [tipo: mecanismo invertido]`],ref:'Triangular — prova'},
+{n:13,aula:1,nivel:'facil',enun:`<div class="pergunta">O conteúdo do espaço quadrangular de Velpeau é:</div>`,alts:[`a artéria circunflexa da escápula e o nervo subescapular`,`o nervo axilar e a artéria circunflexa posterior do úmero`,`o nervo radial e a artéria braquial profunda`,`o nervo axilar e a artéria circunflexa anterior do úmero`,`o nervo supraescapular e a artéria circunflexa da escápula`],correta:1,just:[`A circunflexa da escápula é o conteúdo (único) do espaço TRIANGULAR. [tipo: par confundível]`,`Correta. Pelo QUADRANGULAR passam o NERVO AXILAR e a ARTÉRIA CIRCUNFLEXA POSTERIOR DO ÚMERO — a dupla ameaçada na fratura do colo do úmero.`,`Radial + braquial profunda descem juntos, mas pela face posterior do BRAÇO. [tipo: par confundível]`,`O nervo está certo; a artéria companheira é a circunflexa POSTERIOR, que contorna o colo por trás. [tipo: verdade parcial]`,`O supraescapular passa na incisura da escápula, acima — outro caminho. [tipo: par confundível]`],ref:'Quadrangular — conteúdo'},
+{n:14,aula:1,nivel:'medio',enun:`<div class="pergunta">Do ponto de vista embriológico, a aula compara os membros: o broto arterial de formação do membro superior é</div>`,alts:[`a artéria axilar, como a femoral profunda no membro inferior`,`a artéria braquial, como a artéria poplítea no membro inferior`,`o tronco braquiocefálico, como a ilíaca comum no membro inferior`,`a artéria torácica interna, como a epigástrica inferior no inferior`,`a artéria subclávia, como a artéria isquiática no membro inferior`],correta:4,just:[`A axilar é continuação do eixo — o broto nomeado na aula é mais proximal. [tipo: vizinhança plausível]`,`Braquial e poplítea são continuações adultas, não os brotos embrionários citados. [tipo: par confundível]`,`O tronco braquiocefálico é origem da subclávia DIREITA no adulto — não o broto do membro. [tipo: par confundível]`,`Torácica interna e epigástrica formam a anastomose da parede — outra história. [tipo: verdade no contexto errado]`,`Correta. A SUBCLÁVIA é o broto embrionário de formação do MEMBRO SUPERIOR — assim como a ARTÉRIA ISQUIÁTICA é o broto do membro inferior.`],ref:'Embriologia'},
+{n:15,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a circulação colateral do ombro, a aula explica que o membro superior tolera bem oclusões porque:</div>`,alts:[`ramos da subclávia se anastomosam com circunflexas, rede acromial e braquial profunda — e a massa muscular a nutrir é menor`,`a artéria axilar é duplicada na maioria das pessoas, garantindo via alternativa completa quando o tronco arterial principal oclui`,`o sistema venoso superficial assume a irrigação por refluxo quando a pressão arterial cai abaixo do ponto crítico`,`as artérias intercostais revascularizam o braço diretamente por perfurantes que atravessam a parede da axila`,`os arcos palmares completos em toda a população garantem fluxo retrógrado suficiente para o antebraço e o braço`],correta:0,just:[`Correta. Ramos da SUBCLÁVIA (supraescapular, escapular dorsal) + ramos da AXILAR (circunflexas, rede acromial) + BRAQUIAL PROFUNDA formam muitas anastomoses — e o MS tem MASSA MUSCULAR MENOR que o MI, então compensa mais nos processos obstrutivos.`,`Duplicação de axilar é raridade venosa — não é o mecanismo. [tipo: recombinação plausível]`,`Veia não irriga — refluxo venoso não substitui fluxo arterial. [tipo: absurdo fisiológico controlado]`,`As intercostais irrigam a parede — a ponte para o braço é escapular/umeral. [tipo: vizinhança plausível]`,`Os arcos palmares nem são completos em todos — foi justamente a lição da manobra de Allen. [tipo: generalização indevida]`],ref:'Colaterais do ombro'},
+{n:16,aula:1,nivel:'medio',enun:`<span class="vinheta">Jovem de 23 anos, atropelado, com fratura de clavícula e sangramento volumoso na raiz do membro superior, chega 14 horas após o trauma com curativo compressivo local.</span><div class="pergunta">Sobre o caso contado em aula, é correto afirmar:</div>`,alts:[`o curativo compressivo foi a conduta adequada, pois tamponou o sangramento até a cirurgia`,`a fratura de clavícula raramente compromete os vasos, e o sangramento era só muscular`,`a desarticulação precoce do membro seria a conduta de escolha nesse trauma`,`a fratura lesou artéria e veia axilares e o plexo — lesão arterial ali pede cirurgia, não curativo`,`a perda funcional do membro se deveu à isquemia arterial, já que não há colaterais na região`],correta:3,just:[`"Tira o curativo e jorrava na parede" — tamponar lesão arterial profunda com curativo foi o absurdo do caso. [tipo: misconception clássica]`,`A clavícula fraturada está exatamente sobre o feixe — foi ela que lesou os três. [tipo: nega o mecanismo]`,`A lição foi a oposta: membro disfuncional é melhor que desarticulação (procedimento gravíssimo na cintura escapular). [tipo: mecanismo invertido]`,`Correta. A fratura de clavícula lesou ARTÉRIA AXILAR + VEIA AXILAR + PLEXO BRAQUIAL ("a síndrome do desfiladeiro mais traumática"). Lesão vascular dessa região precisa de abordagem imediata — o membro sobreviveu pela circulação colateral, mas ficou disfuncional pelo plexo.`,`Havia colaterais — o membro se manteve perfundido; a disfunção veio do PLEXO. [tipo: mecanismo invertido]`],ref:'Trauma da axila'},
+{n:17,aula:2,nivel:'facil',enun:`<div class="pergunta">Os três locais de compressão do desfiladeiro cervicotorácico, de cima para baixo, são:</div>`,alts:[`trígono interescalênico, espaço quadrangular e espaço costoclavicular`,`trígono interescalênico, espaço costoclavicular e espaço retropeitoral`,`espaço costoclavicular, trígono femoral e espaço retrocoracopeitoral`,`o sulco deltopeitoral, o espaço costoclavicular e o trígono interescalênico`,`trígono interescalênico, espaço retropeitoral e espaço triangular`],correta:1,just:[`O quadrangular é espaço de Velpeau, do ombro — não do desfiladeiro. [tipo: par confundível]`,`Correta. Os três andares do DESFILADEIRO CERVICOTORÁCICO: 1) TRÍGONO INTERESCALÊNICO · 2) ESPAÇO COSTOCLAVICULAR · 3) ESPAÇO RETROPEITORAL (retrocoracopeitoral).`,`Trígono FEMORAL é da coxa — intruso óbvio de outro capítulo. [tipo: par confundível]`,`O sulco deltopeitoral é caminho da cefálica, não ponto de compressão; e a ordem está de cabeça para baixo. [tipo: recombinação plausível]`,`O espaço triangular é de Velpeau (circunflexa da escápula). [tipo: par confundível]`],ref:'Os três espaços'},
+{n:18,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre o trígono interescalênico e seu conteúdo, a aula estabelece:</div>`,alts:[`por ele passam artéria, veia subclávia e plexo braquial, todos juntos`,`a artéria subclávia passa na frente do músculo escaleno anterior; o plexo, atrás dele`,`passam a subclávia (atrás do escaleno anterior) e o plexo; a veia fica fora, na frente`,`por ele passa só o plexo braquial, pois os dois vasos correm sob a clavícula`,`a veia subclávia cruza o trígono na frente da artéria e atrás do plexo`],correta:2,just:[`A veia NÃO entra no trígono — passa na frente do escaleno anterior. [tipo: generalização indevida]`,`Inverteu: a ARTÉRIA passa ATRÁS do escaleno anterior (por isso ele a divide em 3 partes). [tipo: mecanismo invertido]`,`Correta. TRÍGONO INTERESCALÊNICO (escaleno anterior + médio + 1ª costela): passam a SUBCLÁVIA (atrás do escaleno anterior) e o PLEXO (atrás da artéria). A VEIA SUBCLÁVIA passa NA FRENTE do escaleno anterior — fora do trígono, livre da compressão ali.`,`Artéria e plexo passam pelo trígono — só a veia fica de fora. [tipo: generalização indevida]`,`A veia nem entra no trígono para cruzar o quê quer que seja. [tipo: recombinação plausível]`],ref:'Trígono interescalênico'},
+{n:19,aula:2,nivel:'facil',enun:`<div class="pergunta">Na síndrome do desfiladeiro cervicotorácico, a frequência de cada forma, pelos números da aula, é:</div>`,alts:[`forma neurogênica ~95%, venosa ~2% e arterial ~1%`,`forma arterial ~95%, neurogênica ~2% e venosa ~1%`,`forma venosa ~95%, arterial ~2% e neurogênica ~1%`,`as três formas dividem-se igualmente, cerca de um terço cada`,`neurogênica ~50%, venosa ~30% e arterial ~20%`],correta:0,just:[`Correta. Compressão de NERVO é disparada a mais comum: NEUROGÊNICA ~95% · VENOSA ~2% · ARTERIAL ~1% (a mais rara). O nervo é parado e comprime fácil; a artéria pulsa e "expande".`,`Inverteu a hierarquia: a arterial é a MAIS RARA. [tipo: mecanismo invertido]`,`A venosa fica no meio (~2%) — e acontece noutro andar (costoclavicular). [tipo: permutação plausível]`,`A distribuição é fortemente assimétrica, não equitativa. [tipo: neutro plausível]`,`Os números da aula são bem mais extremos que isso. [tipo: erro numérico plausível]`],ref:'Frequências'},
+{n:20,aula:2,nivel:'medio',enun:`<div class="pergunta">Por que, no desfiladeiro, o NERVO é comprimido com muito mais frequência que a artéria?</div>`,alts:[`porque o nervo passa mais superficialmente, logo abaixo da pele da região do pescoço`,`porque a artéria tem parede espessa demais para se deformar sob a pressão dos músculos`,`porque o nervo tem diâmetro maior que o da artéria nessa topografia do pescoço`,`porque a bainha de mielina atrai o processo inflamatório da compressão`,`porque a artéria pulsa e "expande", escapando da compressão leve — o nervo é estático`],correta:4,just:[`A profundidade dos dois é semelhante no trígono — não é questão de plano. [tipo: pseudo-explicação plausível]`,`A parede arterial se deforma, sim — o que a protege é o PULSO, não a rigidez. [tipo: pseudo-explicação plausível]`,`Calibre não é o argumento da aula. [tipo: pseudo-explicação plausível]`,`Mielina não "atrai" inflamação — mecanismo inventado. [tipo: pseudo-explicação plausível]`,`Correta. Explicação do professor: "a artéria é pulsátil — quando pulsa, expande" e vence a compressão leve; o NERVO É PARADO e sofre primeiro. A artéria só é comprimida com fibrose intensa ou costela cervical (e a veia, noutro andar).`],ref:'Nervo × artéria'},
+{n:21,aula:2,nivel:'dificil',enun:`<div class="pergunta">Sobre a costela cervical, os dados apresentados em aula incluem:</div>`,alts:[`origem no processo transverso de C5, trajeto anterior à veia subclávia`,`presença em metade da população geral, com predomínio masculino discreto`,`diagnóstico que exige tomografia, pois o RX simples não a demonstra`,`origem em C7, completa ou incompleta, mais comum na mulher, com sinal da tecla palpável`,`compressão preferencial da veia subclávia dentro do trígono interescalênico estreitado`],correta:3,just:[`A vértebra é C7 — e ela passa DENTRO do trígono, longe da veia. [tipo: erro numérico plausível]`,`É até 1,5% da população — e a MULHER tem mais que o dobro da incidência. [tipo: erro numérico plausível]`,`É o contrário enfatizado na aula: "um simples raio X mostra" — não precisa de tomo. [tipo: mecanismo invertido]`,`Correta. COSTELA CERVICAL: nasce no processo transverso de C7 e vai à 1ª costela — COMPLETA ou INCOMPLETA (lâmina/fáscia/banda fibrosa); até 1,5% da população, 2× mais na MULHER, 50% dos portadores sintomáticos; palpável como o SINAL DA TECLA supraclavicular; visível ao RX simples.`,`A veia está FORA do trígono — a costela cervical comprime nervo e artéria. [tipo: verdade no contexto errado]`],ref:'Costela cervical'},
+{n:22,aula:2,nivel:'medio',enun:`<span class="vinheta">Homem jovem, após dias de esforço repetido com o braço, evolui com edema e cianose do membro superior. O eco-Doppler mostra trombose da veia subclávia.</span><div class="pergunta">O epônimo e o local de compressão responsáveis são:</div>`,alts:[`síndrome de Adson, por compressão da veia no trígono interescalênico`,`síndrome de Paget-Schroetter, por compressão no espaço costoclavicular`,`síndrome de Velpeau, por compressão venosa no espaço quadrangular`,`síndrome de Wright, por compressão venosa no espaço retropeitoral`,`síndrome de Sibson, por compressão da veia junto à fáscia da cúpula pleural`],correta:1,just:[`Adson é MANOBRA diagnóstica — e no trígono a veia nem passa. [tipo: par confundível]`,`Correta. Trombose venosa do desfiladeiro = SÍNDROME DE PAGET-SCHROETTER, no ESPAÇO COSTOCLAVICULAR: a veia, de parede delgada, é pinçada entre clavícula (+ subclávio + ligamento costoclavicular) e 1ª costela.`,`Velpeau nomeia os espaços do OMBRO (e a tipoia) — não síndrome venosa. [tipo: par confundível]`,`Wright também é manobra, não síndrome. [tipo: par confundível]`,`A fáscia de Sibson é variação compressiva do TRÍGONO — sobre artéria e plexo. [tipo: verdade no contexto errado]`],ref:'Paget-Schroetter'},
+{n:23,aula:2,nivel:'dificil',enun:`<div class="pergunta">A ordem dos acessos venosos centrais ensinada em aula — e sua justificativa — é:</div>`,alts:[`subclávia direita primeiro, por ser a mais calibrosa e retilínea; jugulares por último`,`femorais primeiro, pela facilidade de punção; depois jugulares e subclávias`,`jugular interna direita primeiro e subclávias por último, pela compressão costoclavicular`,`jugular externa direita e esquerda primeiro; depois as subclávias e, por fim, as femorais`,`a ordem é indiferente na prática, desde que a punção seja guiada por ultrassom`],correta:2,just:[`A subclávia é a ÚLTIMA escolha — justamente pela trombose por compressão. [tipo: mecanismo invertido]`,`As femorais vêm DEPOIS das jugulares internas na ordem da aula. [tipo: permutação plausível]`,`Correta. Ordem da aula: JUGULAR INTERNA DIREITA (trajeto mais retilíneo com a cava) → JI esquerda (curva, caminho longo) → femoral D → femoral E → SUBCLÁVIA D → SUBCLÁVIA E — a subclávia por último porque a compressão costoclavicular aumenta a trombose com cateter dentro. Vale para criança e adulto.`,`As JUGULARES da técnica são as INTERNAS — e as femorais estão na sequência. [tipo: par confundível]`,`O ultrassom ajuda a puncionar, mas não muda a hierarquia anatômica ensinada. [tipo: neutro plausível]`],ref:'Acessos centrais'},
+{n:24,aula:2,nivel:'facil',enun:`<div class="pergunta">O espaço retropeitoral (retrocoracopeitoral) do desfiladeiro corresponde à região:</div>`,alts:[`atrás do peitoral menor, na inserção do coracoide — comprimida na hiperabdução`,`entre os músculos peitorais maior e menor, comprimida durante a adução forçada do braço`,`atrás da clavícula, entre o músculo subclávio e a primeira costela`,`entre o deltoide e o peitoral maior, seguindo o trajeto da veia cefálica`,`atrás do serrátil anterior, junto da parede lateral da caixa torácica`],correta:0,just:[`Correta. O ESPAÇO RETROPEITORAL fica ATRÁS DO PEITORAL MENOR, junto da inserção no processo CORACOIDE — por baixo passam a 2ª parte da artéria axilar, a veia e os fascículos; a HIPERABDUÇÃO (pior com o pescoço virado para o lado oposto) comprime.`,`O interpeitoral não é andar do desfiladeiro — e o gatilho é a hiperabdução, não a adução. [tipo: vizinhança plausível]`,`Essa é a descrição do espaço COSTOCLAVICULAR. [tipo: par confundível]`,`Sulco deltopeitoral = caminho da cefálica — não é ponto de compressão. [tipo: par confundível]`,`O serrátil forma a parede medial da axila — não define o espaço. [tipo: vizinhança plausível]`],ref:'Retropeitoral'},
+{n:25,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre as manobras e exames no diagnóstico da síndrome do desfiladeiro:</div>`,alts:[`a manobra de Adson vira o pescoço para o lado contralateral à hiperabdução`,`a arteriografia em repouso é o exame padrão, pois a compressão independe da posição`,`a manobra de Ross compara a ausculta cardíaca antes e depois do esforço`,`os exames devem ser dinâmicos, com o braço elevado — compressão de nervo não aparece`,`a ressonância magnética visualiza diretamente a condução do nervo comprimido`],correta:3,just:[`Adson é com o pescoço para o MESMO lado; a contralateral é a manobra costoclavicular. [tipo: mecanismo invertido]`,`Em repouso pode ser NORMAL — a compressão só aparece na posição que comprime. [tipo: mecanismo invertido]`,`Ross é palpação de PULSOS com o membro a 90°, não ausculta. [tipo: par confundível]`,`Correta. O diagnóstico é POSICIONAL: arteriografia/flebografia/angioTC DINÂMICAS, com o braço elevado. E "compressão de nervo não dá para ver" — nervo não tem fluxo nem dilata: se a artéria está comprimida, infere-se que o nervo também.`,`Imagem sugere espaço reduzido; condução é eletrofisiologia, não ressonância. [tipo: pseudo-explicação plausível]`],ref:'Manobras e exames'},
+{n:26,aula:2,nivel:'facil',enun:`<div class="pergunta">Sobre a origem e o trajeto cervical do nervo frênico:</div>`,alts:[`origem em T4, descendo por dentro do músculo escaleno médio`,`origem em C4 (plexo cervical), descendo sobre o músculo escaleno anterior`,`origem em C8–T1, descendo junto ao tronco inferior do plexo braquial no pescoço`,`origem no plexo braquial, fascículo medial, atrás da subclávia`,`origem em C1–C2, descendo com o nervo hipoglosso até o tórax`],correta:1,just:[`T4 é território intercostal — o frênico é cervical. [tipo: erro numérico plausível]`,`Correta. FRÊNICO: raiz C4 do PLEXO CERVICAL (às vezes pré-fixado C3 ou pós-fixado C5), descendo SOBRE o músculo ESCALENO ANTERIOR rumo ao tórax.`,`C8–T1 formam o tronco inferior do plexo BRAQUIAL — outro plexo. [tipo: par confundível]`,`O frênico é do plexo CERVICAL, não braquial. [tipo: par confundível]`,`C1–C2 e o hipoglosso pertencem à alça cervical — vizinhos, não o frênico. [tipo: vizinhança plausível]`],ref:'Frênico — origem'},
+{n:27,aula:2,nivel:'dificil',enun:`<span class="vinheta">Numa cirurgia de ligadura do canal arterial patente em uma criança, o cirurgião redobra o cuidado com um nervo que passa exatamente na região do ligamento arterial.</span><div class="pergunta">O nervo em risco e seu trajeto são:</div>`,alts:[`o nervo frênico esquerdo, que passa entre a subclávia e a carótida comum`,`o nervo vago direito, que origina o recorrente embaixo da subclávia direita`,`o laríngeo superior esquerdo, que desceria até o arco da aorta e o ligamento`,`o nervo frênico direito, que desce na frente da primeira parte da subclávia`,`o laríngeo recorrente esquerdo, que passa sob o arco da aorta, com o ligamento arterial`],correta:4,just:[`O trajeto citado é do frênico esquerdo, mas ele segue LATERAL ao pericárdio — quem abraça o ligamento arterial é outro. [tipo: par confundível]`,`Verdade anatômica — mas do lado DIREITO, longe do canal arterial. [tipo: verdade no contexto errado]`,`Os laríngeos SUPERIORES saem lá em cima e ficam na laringe — não descem ao arco. [tipo: par confundível]`,`Trajeto correto do frênico direito — mas é o lado e o nervo errados para o canal arterial. [tipo: verdade no contexto errado]`,`Correta. O LARÍNGEO RECORRENTE ESQUERDO nasce do vago esquerdo e passa EMBAIXO DO ARCO DA AORTA, em relação direta com o LIGAMENTO ARTERIAL (o antigo ducto) — por isso a atenção na ligadura do canal arterial patente. O recorrente DIREITO passa embaixo da subclávia direita.`],ref:'Recorrentes'},
+{n:28,aula:2,nivel:'medio',enun:`<div class="pergunta">Sobre os troncos vagais no esôfago, a regra da aula é:</div>`,alts:[`o tronco vagal anterior vem do vago direito e o posterior, do esquerdo`,`os dois vagos se fundem num só tronco, na face anterior do esôfago`,`o tronco anterior vem, na maior parte, do vago esquerdo; o posterior, do direito`,`os troncos vagais se formam abaixo do diafragma, já na altura dos plexos viscerais`,`o vago esquerdo termina já nos ramos cardíacos e não alcança o esôfago`],correta:2,just:[`Inverteu os lados — o ESQUERDO roda para a frente. [tipo: mecanismo invertido]`,`São DOIS troncos (anterior e posterior), não um. [tipo: generalização indevida]`,`Correta. TRONCO VAGAL ANTERIOR = vago ESQUERDO (na maior parte) · TRONCO VAGAL POSTERIOR = vago DIREITO — com fibras cruzadas dos dois lados. Dali seguem aos plexos CELÍACO e MESENTÉRICOS superior e inferior.`,`Eles se formam JUNTO AO ESÔFAGO, antes do diafragma — os plexos vêm depois. [tipo: momento errado]`,`Os ramos cardíacos saem no caminho — o vago continua até o esôfago e o abdome. [tipo: momento errado]`],ref:'Troncos vagais'}
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Na prova prática, a peça mostra a axila dissecada com o peitoral menor rebatido. O monitor percorre a artéria axilar com a pinça e pergunta as relações em cada segmento.`,perg:[`a) Como a artéria axilar é dividida e por quem? Delimite onde ela começa e termina.`,`b) Descreva a sintopia da artéria com o plexo braquial em cada uma das três partes.`,`c) Em que parte a veia axilar é contígua à artéria — e o que se interpõe entre elas nas demais?`],resp:[["a) Divisão","A ARTÉRIA AXILAR vai da PRIMEIRA COSTELA (fim da subclávia) à margem do REDONDO MAIOR (início da braquial) e é dividida em TRÊS PARTES pelo músculo PEITORAL MENOR: 1ª MEDIAL, 2ª POSTERIOR e 3ª LATERAL a ele. (Vocabulário da aula: artéria se divide em PARTES, não porções.)"],["b) Sintopia","1ª PARTE: fascículos LATERAL e POSTERIOR passam LATERAIS à artéria; o fascículo MEDIAL passa POSTERIOR a ela. 2ª PARTE: correspondência EXATA — lateral lateral, medial medial, posterior posterior. 3ª PARTE (já os ramos): MUSCULOCUTÂNEO lateral · ULNAR medial · RADIAL e AXILAR posteriores · raízes do MEDIANO anteriores — o mediano se forma lateralmente e CRUZA a artéria de lateral para medial."],["c) Artéria × veia","A veia axilar é MEDIAL e CONTÍGUA à artéria SÓ NA PRIMEIRA PARTE. Na 2ª parte interpõe-se o FASCÍCULO MEDIAL do plexo; na 3ª, o NERVO ULNAR — estruturas que a flebotomia da veia axilar (comum em criança) precisa respeitar."]],ref:'Axilar — partes e sintopia'},
+{n:2,aula:1,caso:`Idosa cai da própria altura e fratura o colo do úmero. Na evolução: ombro caído e incapacidade de rodar o braço. O preceptor pede a anatomia por trás da complicação.`,perg:[`a) Delimite o espaço quadrangular de Velpeau e cite seu conteúdo.`,`b) Delimite o espaço triangular — com a resposta que o professor pediu "para a prova" — e seu conteúdo.`,`c) Explique o quadro da paciente relacionando a fratura ao conteúdo do espaço quadrangular.`],resp:[["a) Quadrangular (úmero-tricipital)","LATERAL = ÚMERO no colo cirúrgico (sulco intertubercular) · MEDIAL = CABEÇA LONGA DO TRÍCEPS · SUPERIOR = REDONDO MENOR (pela frente aparece o subescapular, mas o limite é o redondo menor) · INFERIOR = REDONDO MAIOR. Conteúdo: NERVO AXILAR + ARTÉRIA CIRCUNFLEXA POSTERIOR DO ÚMERO."],["b) Triangular (omo-tricipital)","LATERAL = CABEÇA LONGA DO TRÍCEPS (a mesma que é limite MEDIAL do quadrangular) · INFERIOR = REDONDO MAIOR · SUPERIOR = ESCÁPULA — 'para a prova: ESCÁPULA' (nos livros aparece o redondo menor; o professor argumenta que, removidos redondo menor/subescapular, quem limita é a escápula). Conteúdo: SÓ a ARTÉRIA CIRCUNFLEXA DA ESCÁPULA."],["c) O caso","A fratura do COLO DO ÚMERO atinge o limite lateral do quadrangular e lesa seu conteúdo: o NERVO AXILAR (ombro caído; perda da ROTAÇÃO — na aula, pelo redondo menor — mais que da elevação, que outros músculos compensam) e a CIRCUNFLEXA POSTERIOR (hematoma geralmente pequeno, vaso de pouco calibre)."]],ref:'Espaços de Velpeau'},
+{n:3,aula:2,caso:`Estudante de 24 anos conta que, ao segurar a barra do ônibus, a mão dorme, o braço pesa e a força some — melhora ao baixar o braço. Você suspeita de síndrome do desfiladeiro cervicotorácico.`,perg:[`a) Cite os três espaços de compressão do desfiladeiro e as estruturas nobres em risco.`,`b) Delimite o trígono interescalênico, diga quem passa dentro dele e por que a veia subclávia escapa da compressão nesse andar.`,`c) Classifique a síndrome pelas frequências da aula e explique por que o nervo é o mais atingido. Que achado palpatório e que exame simples sugerem costela cervical?`],resp:[["a) Os três andares","1) TRÍGONO INTERESCALÊNICO · 2) ESPAÇO COSTOCLAVICULAR · 3) ESPAÇO RETROPEITORAL (retrocoracopeitoral). Estruturas nobres: ARTÉRIA, VEIA e NERVO (subclávias/axilares e plexo braquial). Exame: palpar os pulsos DOS DOIS lados + manobras de elevação (o pulso diminui ou some)."],["b) Trígono","ESCALENO ANTERIOR (origem C4–C6, inserção no tubérculo escaleno da 1ª costela) + ESCALENO MÉDIO (inserção mais lateral) + base = PRIMEIRA COSTELA. Dentro passam a ARTÉRIA SUBCLÁVIA (atrás do escaleno anterior, que a divide em 3 partes) e o PLEXO BRAQUIAL (atrás da artéria). A VEIA SUBCLÁVIA passa NA FRENTE do escaleno anterior — fora do trígono; a compressão venosa acontece mais abaixo, no costoclavicular."],["c) Classificação e costela","NEUROGÊNICA ~95% · VENOSA ~2% · ARTERIAL ~1%. O nervo sofre mais porque é ESTÁTICO; a artéria é PULSÁTIL — 'quando pulsa, expande' — e só cede com fibrose intensa ou COSTELA CERVICAL (C7 → 1ª costela; completa ou incompleta; 1,5% da população, 2× na mulher). Palpação: SINAL DA TECLA supraclavicular. Exame: RX SIMPLES já mostra — não precisa de tomografia."]],ref:'Desfiladeiro'},
+{n:4,aula:2,caso:`Homem jovem, após semanas de exercício intenso com os braços, interna com edema, peso e cianose do membro superior direito; o Doppler confirma trombose da veia subclávia. Na discussão, o professor aproveita para cobrar a ordem dos acessos venosos centrais.`,perg:[`a) Nomeie a síndrome, o espaço responsável e seus limites anatômicos.`,`b) Por que a veia é a vítima preferencial desse espaço — e como o diagnóstico por imagem deve ser feito?`,`c) Dê a ordem completa dos acessos venosos centrais ensinada em aula e a justificativa anatômica de cada extremo da fila.`],resp:[["a) Síndrome e espaço","SÍNDROME DE PAGET-SCHROETTER = trombose da veia subclávia/axilar por compressão no desfiladeiro. Espaço COSTOCLAVICULAR: na frente, o terço médio/medial da CLAVÍCULA com o músculo SUBCLÁVIO e o ligamento COSTOCLAVICULAR; atrás, a face anterior da PRIMEIRA COSTELA."],["b) Por que a veia","A veia tem PAREDE DELGADA e complacente — 'duas estruturas ósseas comprimindo a veia, ela entope' (a artéria pulsa e resiste; o nervo sofre no trígono). Imagem: exames DINÂMICOS — flebografia/angioTC com o braço ELEVADO, que mostram a veia pinçada no espaço; em repouso o exame pode ser normal."],["c) Ordem dos acessos","1º JUGULAR INTERNA DIREITA (trajeto mais retilíneo: braquiocefálica → cava) · 2º jugular interna ESQUERDA (faz curva, caminho mais longo) · 3º FEMORAL direita · 4º femoral esquerda · 5º SUBCLÁVIA direita · 6º subclávia esquerda. A subclávia fica por ÚLTIMO exatamente pela compressão costoclavicular: com cateter dentro, a chance de trombose é maior. Vale para criança e adulto, clínico ou cirúrgico."]],ref:'Paget-Schroetter e acessos'},
+{n:5,aula:2,caso:`No fim da aula, a "pincelada": um paciente com paralisia diafragmática à direita pós-trauma e, no mesmo dia, uma criança operada de canal arterial patente. Dois nervos diferentes explicam os dois cuidados.`,perg:[`a) Descreva origem e trajeto do nervo frênico, destacando a diferença entre os lados direito e esquerdo na base do pescoço.`,`b) O que acontece na paralisia frênica unilateral — e por que a bilateral não impede a respiração?`,`c) No caso da criança: qual nervo exige atenção, qual seu trajeto — e como isso se conecta aos troncos vagais no esôfago?`],resp:[["a) Frênico","Origem no PLEXO CERVICAL, raiz C4 (pré-fixado C3 / pós-fixado C5). Desce SOBRE o ESCALENO ANTERIOR; à DIREITA passa NA FRENTE da 1ª parte da SUBCLÁVIA, à ESQUERDA passa ENTRE A SUBCLÁVIA E A CARÓTIDA COMUM. No tórax: junto da cava superior (D) / sobre o arco da aorta (E), LATERAL AO PERICÁRDIO, descendo com os vasos PERICARDICOFRÊNICOS; no diafragma, 3 a 5 ramificações de cada lado (fibras aferentes e eferentes)."],["b) Paralisia","Unilateral: a CÚPULA DIAFRAGMÁTICA SE ELEVA (perde o movimento; murmúrio abolido na base). BILATERAL: as cúpulas se elevam, mas a respiração NÃO é abolida — intercostais e musculatura acessória mantêm a ventilação (com esforço; às vezes tiragem). Mais comum no TRAUMA; reconstrução possível com enxerto de nervo SURAL."],["c) O recorrente — e os troncos","O LARÍNGEO RECORRENTE ESQUERDO (ramo do vago esquerdo) passa EMBAIXO DO ARCO DA AORTA, em relação com o LIGAMENTO ARTERIAL (o antigo ducto) — atenção na ligadura do canal arterial. O direito passa embaixo da SUBCLÁVIA direita. Seguindo o vago: TRONCO VAGAL ANTERIOR = vago ESQUERDO · POSTERIOR = vago DIREITO (fibras cruzadas), rumo aos plexos celíaco e mesentéricos — a via que as antigas vagotomias seccionavam antes de o omeprazol aposentá-las."]],ref:'Frênico e vago'}
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">${q.aula===2?"Desfiladeiro":"Axila"}</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">${q.aula===2?"Desfiladeiro":"Axila"}</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas das aulas de 18/09 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Região Axilar",kicker:"ANATOMIA TOPOGRÁFICA · 18/09",desc:"As três partes da artéria axilar, a sintopia com o plexo, a regra 1-2-3 dos ramos, os espaços de Velpeau e a circulação colateral do ombro.",cards:[
+{area:"Partes",cat:"prof",q:"Quem divide a artéria axilar — e em quê?",a:"O músculo PEITORAL MENOR divide a artéria axilar em TRÊS PARTES: 1ª MEDIAL, 2ª POSTERIOR e 3ª LATERAL a ele.",obs:"Vocabulário da aula: artéria se divide em PARTES, não 'porções'."},
+{area:"Partes",cat:"conceito",q:"Onde a artéria axilar começa e onde termina?",a:"Começa na PRIMEIRA COSTELA (onde acaba a subclávia) e termina na margem do REDONDO MAIOR (onde começa a braquial)."},
+{area:"Sintopia",cat:"prof",q:"Sintopia da 1ª parte da axilar com o plexo?",a:"Fascículos LATERAL e POSTERIOR passam LATERAIS à artéria; o fascículo MEDIAL passa POSTERIOR a ela. A veia axilar faz a sintopia medial.",obs:"É a exceção que a prova cobra."},
+{area:"Sintopia",cat:"prof",q:"O que a 2ª parte tem de especial na sintopia?",a:"A correspondência EXATA dos nomes: fascículo LATERAL lateral, MEDIAL medial e POSTERIOR posterior à artéria."},
+{area:"Sintopia",cat:"prof",q:"Sintopia da 3ª parte (já com os ramos)?",a:"MUSCULOCUTÂNEO lateral · ULNAR medial (entre artéria e veia) · RADIAL e AXILAR posteriores · raízes do MEDIANO anteriores — o mediano se forma lateralmente e CRUZA a artéria de lateral para medial."},
+{area:"Sintopia",cat:"alerta",q:"Em que parte a veia axilar é contígua à artéria — e quem se interpõe nas outras?",a:"Contígua SÓ NA 1ª PARTE. Na 2ª: o FASCÍCULO MEDIAL entre artéria e veia. Na 3ª: o NERVO ULNAR.",obs:"Cuidado na flebotomia da veia axilar em criança."},
+{area:"Embriologia",cat:"conceito",q:"Qual é o broto embrionário arterial do membro superior — e o do inferior?",a:"MS: artéria SUBCLÁVIA. MI: artéria ISQUIÁTICA. A subclávia também tem 3 partes — divididas pelo ESCALENO ANTERIOR (1ª medial, 2ª posterior, 3ª lateral)."},
+{area:"Ramos",cat:"prof",q:"A regra 1-2-3 dos ramos da axilar?",a:"1ª PARTE → 1 ramo: TORÁCICA SUPERIOR (suprema). 2ª → 2 ramos: TORACOACROMIAL + TORÁCICA LATERAL. 3ª → 3 ramos: SUBESCAPULAR + CIRCUNFLEXA POSTERIOR + CIRCUNFLEXA ANTERIOR do úmero."},
+{area:"Ramos",cat:"conceito",q:"Os 4 ramos do tronco toracoacromial?",a:"PEITORAL, DELTÓIDEO, ACROMIAL e CLAVICULAR.",obs:"Variação é a regra: às vezes não há tronco e os ramos saem diretos da axilar — 'quem disseca vê a variação'."},
+{area:"Ramos",cat:"conceito",q:"Trajeto e territórios da torácica lateral?",a:"Sai RENTE À BORDA LATERAL DO PEITORAL MENOR → SERRÁTIL ANTERIOR, gradil costal e MAMA (ramos MAMÁRIOS LATERAIS)."},
+{area:"Ramos",cat:"prof",q:"O que nasce da artéria subescapular?",a:"A CIRCUNFLEXA DA ESCÁPULA (faz a volta para trás da escápula) e a TORACODORSAL — que desce com nervo e veia toracodorsais (ordem NERVO·ARTÉRIA·VEIA) até o LATÍSSIMO DO DORSO."},
+{area:"Ramos",cat:"alerta",q:"Na peça: torácica lateral ou toracodorsal?",a:"Siga o vaso até o músculo: a TORACODORSAL está 'PRESA' no LATÍSSIMO DO DORSO; a torácica lateral fica solta no gradil costal."},
+{area:"Ramos",cat:"conceito",q:"Qual circunflexa do úmero é mais calibrosa — e quem a acompanha?",a:"A CIRCUNFLEXA POSTERIOR (contorna o colo por trás) — acompanhada do NERVO AXILAR no espaço quadrangular. A anterior contorna o colo pela frente."},
+{area:"Casos",cat:"caso",q:"Vovó caiu e fraturou o colo do úmero: o que lesa e qual o quadro?",a:"NERVO AXILAR + CIRCUNFLEXA POSTERIOR DO ÚMERO (o conteúdo do quadrangular): OMBRO CAÍDO e perda da ROTAÇÃO — mais que da elevação (outros músculos elevam).",obs:"Aula: rotação pelo REDONDO MENOR (livros: infraespinal é o principal rotador lateral)."},
+{area:"Velpeau",cat:"prof",q:"Limites do espaço QUADRANGULAR (úmero-tricipital)?",a:"LATERAL = ÚMERO (colo cirúrgico/sulco intertubercular) · MEDIAL = CABEÇA LONGA DO TRÍCEPS · SUPERIOR = REDONDO MENOR (pela frente aparece o subescapular) · INFERIOR = REDONDO MAIOR."},
+{area:"Velpeau",cat:"prof",q:"Conteúdo do espaço quadrangular?",a:"NERVO AXILAR + ARTÉRIA CIRCUNFLEXA POSTERIOR DO ÚMERO — a dupla da fratura do colo do úmero."},
+{area:"Velpeau",cat:"alerta",q:"Espaço TRIANGULAR: limites (com a resposta 'para a prova') e conteúdo?",a:"LATERAL = cabeça longa do tríceps · INFERIOR = redondo maior · SUPERIOR = ESCÁPULA ('para a prova: escápula'; omo = omoplata). Conteúdo: SÓ a CIRCUNFLEXA DA ESCÁPULA.",obs:"Livros dão redondo menor como teto — na prova do professor, escápula."},
+{area:"Velpeau",cat:"conceito",q:"A cabeça longa do tríceps nos dois espaços?",a:"É limite MEDIAL do QUADRANGULAR e limite LATERAL do TRIANGULAR — o triangular é o mais medial dos dois.",obs:"Velpeau = o mesmo da tipoia (fixação de Velpeau)."},
+{area:"Colaterais",cat:"prof",q:"Por que o membro superior compensa oclusões melhor que o inferior?",a:"Muitas anastomoses (supraescapular e escapular dorsal da SUBCLÁVIA ↔ circunflexas e rede acromial da AXILAR ↔ BRAQUIAL PROFUNDA) + MASSA MUSCULAR MENOR para nutrir."},
+{area:"Colaterais",cat:"conceito",q:"Escapular dorsal e 'dorsal da escápula' são artérias diferentes?",a:"NÃO — é a MESMA artéria (ramo da subclávia), que se ramifica na margem medial da escápula, participando das colaterais do ombro."},
+{area:"Linfa",cat:"conceito",q:"Que linfonodos moram na gordura da axila — e por que palpá-los?",a:"O grupo CENTRAL: 3 a 5 grandes linfonodos. Palpar SEMPRE, principalmente na mulher — via de disseminação dos tumores de MAMA."},
+{area:"Casos",cat:"caso",q:"Atropelado, fratura de clavícula, sangramento na raiz do membro: o que lesou e qual foi o erro do hospital de origem?",a:"ARTÉRIA + VEIA AXILAR + PLEXO BRAQUIAL ('o desfiladeiro mais traumático'). Erro: CURATIVO tentando tamponar lesão arterial profunda — 'tira o curativo e jorrava'. Lesão vascular dessa região = abordagem cirúrgica imediata."},
+{area:"Casos",cat:"prof",q:"Membro disfuncional pós-lesão de plexo: amputar?",a:"NÃO — 'é melhor um membro disfuncional do que desarticular': a desarticulação na cintura escapular é procedimento gravíssimo. O membro perfunde pela circulação colateral."},
+{area:"Patologia",cat:"conceito",q:"Aterosclerose × arteriosclerose × Mönckeberg?",a:"ATEROSCLEROSE = placa (de colesterol) obstruindo o lúmen · ARTERIOSCLEROSE = endurecimento da parede (esclerose = endurecimento) · MÖNCKEBERG = calcificação da túnica média.",obs:"'A doença que mais mata é o infarto — estudem aterosclerose.'"}
+]},
+a2:{name:"Desfiladeiro Cervicotorácico",kicker:"ANATOMIA TOPOGRÁFICA · 18/09",desc:"Os três andares de compressão, costela cervical, Paget-Schroetter, manobras diagnósticas — e a pincelada sobre os nervos frênico e vago.",cards:[
+{area:"Conceito",cat:"prof",q:"Os três locais de compressão do desfiladeiro cervicotorácico?",a:"1) TRÍGONO INTERESCALÊNICO · 2) ESPAÇO COSTOCLAVICULAR · 3) ESPAÇO RETROPEITORAL (retrocoracopeitoral). Estruturas em risco: ARTÉRIA, VEIA e NERVO."},
+{area:"Conceito",cat:"conceito",q:"A clínica clássica da síndrome do desfiladeiro?",a:"Braço ELEVADO (segurar a barra do ônibus) → mão dormente, braço pesado, perda de força — melhora ao baixar. Exame: palpar os pulsos DOS DOIS lados + manobras de elevação (pulso diminui/some)."},
+{area:"Conceito",cat:"prof",q:"Frequência das formas da síndrome (números da aula)?",a:"NEUROGÊNICA ~95% · VENOSA ~2% · ARTERIAL ~1% (a mais rara)."},
+{area:"Trígono",cat:"prof",q:"Limites do trígono interescalênico — e quem passa dentro?",a:"ESCALENO ANTERIOR (frente) + ESCALENO MÉDIO (atrás) + base = PRIMEIRA COSTELA. Dentro: ARTÉRIA SUBCLÁVIA (atrás do escaleno anterior) + PLEXO BRAQUIAL (atrás da artéria)."},
+{area:"Trígono",cat:"alerta",q:"Por que a veia subclávia NÃO é comprimida no trígono?",a:"Porque ela passa NA FRENTE do músculo escaleno anterior — fora do trígono. Compressão de veia acontece mais abaixo, no espaço COSTOCLAVICULAR."},
+{area:"Trígono",cat:"prof",q:"Por que o nervo sofre mais compressão que a artéria?",a:"'A artéria é pulsátil — quando pulsa, expande' e escapa da compressão leve; o NERVO É ESTÁTICO e comprime fácil. Artéria só sofre com fibrose intensa ou costela cervical."},
+{area:"Trígono",cat:"conceito",q:"O que estreita o trígono interescalênico?",a:"Inserção do escaleno ANTERIOR mais para trás ou do MÉDIO mais para frente · hipertrofia dos escalenos (musculação) · bandas fibrosas · fáscia de SIBSON (reveste a cúpula pleural) · músculo ESCALENO MÍNIMO · costela cervical."},
+{area:"Costela cervical",cat:"prof",q:"Costela cervical: origem, formas e epidemiologia?",a:"Nasce no PROCESSO TRANSVERSO DE C7 → 1ª costela; COMPLETA ou INCOMPLETA (termina em lâmina/fáscia/fibrose). Até 1,5% da população; MULHER 2×; 50% dos portadores sintomáticos (maioria neurológicos)."},
+{area:"Costela cervical",cat:"alerta",q:"Como detectar costela cervical no exame físico e na imagem?",a:"SINAL DA TECLA: estrutura endurecida palpável na região SUPRACLAVICULAR. E 'um simples RX mostra' — não precisa de tomografia."},
+{area:"Costoclavicular",cat:"prof",q:"Limites do espaço costoclavicular?",a:"Na frente: terço médio/medial da CLAVÍCULA + músculo SUBCLÁVIO + ligamento COSTOCLAVICULAR. Atrás: face anterior da PRIMEIRA COSTELA. Passam artéria, VEIA e ramos do plexo."},
+{area:"Costoclavicular",cat:"prof",q:"O que é a síndrome de Paget-Schroetter?",a:"TROMBOSE DA VEIA SUBCLÁVIA/AXILAR por compressão no espaço COSTOCLAVICULAR — a veia, de parede delgada, é pinçada entre clavícula e 1ª costela ('duas estruturas ósseas comprimindo a veia, ela entope')."},
+{area:"Costoclavicular",cat:"alerta",q:"A ordem dos acessos venosos centrais (doutrina da aula)?",a:"1º JUGULAR INTERNA DIREITA (mais retilínea com a cava) → 2º JI esquerda → 3º femoral D → 4º femoral E → 5º SUBCLÁVIA D → 6º subclávia E. Subclávia por último: compressão costoclavicular + cateter = trombose.",obs:"Vale para criança e adulto, clínico e cirúrgico."},
+{area:"Retropeitoral",cat:"prof",q:"O espaço retropeitoral: onde fica e o que o comprime?",a:"ATRÁS DO PEITORAL MENOR, junto da inserção no processo CORACOIDE — por baixo passam a 2ª parte da artéria axilar, a veia e os fascículos. Comprime na HIPERABDUÇÃO (pior com o pescoço virado para o lado oposto)."},
+{area:"Retropeitoral",cat:"conceito",q:"Compressões raras da região retropeitoral?",a:"Cabeça/colo do ÚMERO · raízes do MEDIANO posteriorizadas 'garroteando' a artéria axilar · músculo AXILOPEITORAL de LANGER (arcada de Langer, o 'músculo do suspensório') — raríssimo: 1 em centenas de dissecções."},
+{area:"Diagnóstico",cat:"prof",q:"As manobras diagnósticas da aula?",a:"ROSS: palpar pulsos em repouso e com o membro a 90° · ADSON: hiperabdução com o pescoço para o MESMO lado · COSTOCLAVICULAR: pescoço CONTRALATERAL + hiperabdução · WRIGHT: extensão do membro. + SINAL DA TECLA na palpação."},
+{area:"Diagnóstico",cat:"alerta",q:"Como deve ser o exame de imagem no desfiladeiro — e o que ele NÃO mostra?",a:"DINÂMICO: arteriografia/flebografia/angioTC com o braço ELEVADO (em repouso pode ser normal). NÃO mostra compressão de NERVO (nervo não tem fluxo nem dilata) — infere-se: se a artéria comprime, o nervo também."},
+{area:"Diagnóstico",cat:"caso",q:"O que a compressão arterial crônica pode gerar — e por que ela obriga cirurgia?",a:"DILATAÇÃO PÓS-ESTENÓTICA (até aneurisma — pode regredir após descompressão), TROMBOSE e MICROEMBOLIAS para os dedos (trombo fragmenta → gangrena digital). Compressão arterial com dilatação = cirurgia obrigatória."},
+{area:"Tratamento",cat:"prof",q:"O tratamento cirúrgico do desfiladeiro — e o 'albatroz'?",a:"Escaleno comprimindo → SECÇÃO do escaleno; costela cervical → RESSECÇÃO. O 'albatroz': FIBROSE pós-operatória (principalmente após seccionar o escaleno anterior) → recidiva dos sintomas, 'às vezes pior do que estava'."},
+{area:"Frênico",cat:"prof",q:"Origem e trajeto cervical do frênico?",a:"PLEXO CERVICAL, raiz C4 (pré-fixado C3 / pós-fixado C5). Desce SOBRE o ESCALENO ANTERIOR. À DIREITA: passa NA FRENTE da 1ª parte da SUBCLÁVIA. À ESQUERDA: ENTRE a SUBCLÁVIA e a CARÓTIDA COMUM."},
+{area:"Frênico",cat:"conceito",q:"O trajeto torácico do frênico?",a:"Junto da CAVA SUPERIOR (direita) / sobre o ARCO DA AORTA (esquerda), LATERAL AO PERICÁRDIO, descendo com os vasos PERICARDICOFRÊNICOS (irrigam e drenam o pericárdio). No diafragma: 3–5 ramificações de cada lado, fibras aferentes E eferentes."},
+{area:"Frênico",cat:"alerta",q:"Paralisia frênica: o que acontece — e a bilateral mata?",a:"A CÚPULA DIAFRAGMÁTICA SE ELEVA (perde o movimento; murmúrio abolido na base). BILATERAL NÃO ABOLE a respiração: intercostais e acessórios mantêm (esforço, às vezes tiragem). Mais comum no TRAUMA; reconstrução: enxerto de nervo SURAL."},
+{area:"Vago",cat:"prof",q:"Onde está o vago na bainha carótica — e o que é a manobra vagal?",a:"ENTRE a carótida e a JUGULAR INTERNA, um pouco POSTERIOR aos vasos. Comprimir = MANOBRA VAGAL → BRADICARDIA + HIPOTENSÃO. NUNCA comprimir as duas carótidas: parada (vagal bilateral + hipóxia — 'karos' = sono profundo)."},
+{area:"Vago",cat:"prof",q:"Os laríngeos recorrentes: direito × esquerdo?",a:"DIREITO: passa EMBAIXO DA SUBCLÁVIA DIREITA. ESQUERDO: EMBAIXO DO ARCO DA AORTA, em relação com o LIGAMENTO ARTERIAL — atenção na ligadura do canal arterial patente da criança.",obs:"Os laríngeos SUPERIORES já saíram lá em cima. E 'aorta já é artéria' — nunca 'artéria aorta'."},
+{area:"Vago",cat:"prof",q:"Troncos vagais no esôfago: quem vem de quem?",a:"TRONCO VAGAL ANTERIOR = vago ESQUERDO (na maior parte) · TRONCO VAGAL POSTERIOR = vago DIREITO — com fibras cruzadas. Seguem para os plexos CELÍACO, MESENTÉRICO SUPERIOR e INFERIOR."},
+{area:"Vago",cat:"caso",q:"Por que a vagotomia praticamente acabou?",a:"O vago estimula a produção de ÁCIDO CLORÍDRICO no estômago; a vagotomia (troncular/seletiva/superseletiva) tratava úlcera — mas o INIBIDOR DE BOMBA DE PRÓTONS (omeprazol) resolveu clinicamente. Hoje só se cogita em úlcera refratária de repetição."}
+]}
+};
+
+Object.keys(DECKS).forEach(k=>DECKS[k].cards.forEach((c,i)=>c.id=k+'-'+i));
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-axila-desfiladeiro-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1','a2'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1'+(k===cur?' on':'');
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>

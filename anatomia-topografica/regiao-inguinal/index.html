@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Aula 07 — Região Inguinal · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tema-topo')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style><body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Aula 07 — Região Inguinal</span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Estudo completo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula 07</p>
+  <h1 class="page-h1">Região Inguinal</h1>
+  <p class="lead">O canal inguinal parede por parede, o funículo espermático e suas três túnicas, a descida do testículo e o conduto peritônio-vaginal, os dois trígonos inguinais (Hesselbach e Hessert), o anel femoral com seus quatro ligamentos, a bainha e o canal femoral com os gânglios de Cloquet — e o raciocínio completo das hérnias inguinais e femorais, do exame à tela.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">O canal inguinal: dos anéis às medidas</a></li>
+      <li><a href="#t2">As paredes do canal e o "tendão conjunto"</a></li>
+      <li><a href="#t3">Funículo espermático: as três túnicas (quem vem de quem)</a></li>
+      <li><a href="#t4">E na mulher? Ligamento redondo — e o ilioinguinal em ambos</a></li>
+      <li><a href="#t5">A descida do testículo: conduto peritônio-vaginal, retido × criptorquidia</a></li>
+      <li><a href="#t6">Hesselbach × Hessert: os dois trígonos inguinais</a></li>
+      <li><a href="#t7">Direta × indireta: as fossas decidem</a></li>
+      <li><a href="#t8">Anel femoral: os quatro ligamentos-limite</a></li>
+      <li><a href="#t9">Bainha femoral, canal femoral e os gânglios de Cloquet</a></li>
+      <li><a href="#t10">Hérnia femoral: por que é da mulher</a></li>
+      <li><a href="#t11">Hérnia umbilical e as fáscias de Richet</a></li>
+      <li><a href="#t12">Diagnóstico diferencial na bolsa: hidrocele, cisto de cordão, varicocele</a></li>
+      <li><a href="#t13">Estrangulamento, clínica e a era da tela</a></li>
+      <li><a href="#t14">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · O canal inguinal: dos anéis às medidas</h2>
+  <ul>
+    <li>O <b>CANAL INGUINAL</b> é o trajeto <b>entre o ANEL INGUINAL PROFUNDO</b> (a fenda no plano profundo, na <b>fossa inguinal lateral</b>) <b>e o ANEL INGUINAL SUPERFICIAL</b> (o orifício na aponeurose do oblíquo externo).</li>
+    <li>🎯 Medidas da aula: <b>≈ 5 cm no homem, ≈ 3 cm na mulher</b>.</li>
+    <li>Quem descreveu o canal pela primeira vez foi <b>COOPER</b> — "olha aí, tem mais de 200 anos" (os desenhos históricos dos slides são dele).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide7-03-canal-corte.jpg" alt="Camadas da região inguinal">
+  <figcaption>A região inguinal em camadas: oblíquo externo (e seu anel superficial), oblíquo interno, transverso, ligamento inguinal — e o funículo espermático já com o cremaster, atravessando o trajeto do canal.</figcaption></figure>
+
+  <h2 class="topic" id="t2">2 · As paredes do canal e o "tendão conjunto"</h2>
+  <div class="diagrama"><p class="t">Os limites do canal inguinal (o esquema da aula)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>ANTERIOR (cobertura)</b> — <span class="d">aponeurose do <b>OBLÍQUO EXTERNO</b> (a primeira que se abre na cirurgia).</span></div></li>
+    <li><span class="n">2</span><div><b>POSTERIOR (o "assoalho" da aula)</b> — <span class="d"><b>FÁSCIA TRANSVERSAL</b> — lembre-se: abaixo da linha arqueada não há aponeurose atrás, só fáscia transversal.</span></div></li>
+    <li><span class="n">3</span><div><b>SUPERIOR</b> — <span class="d"><b>TENDÃO CONJUNTO</b> = oblíquo interno + transverso. 🎯 "Não é um tendão — é a somatória das fibras dos dois", mas a clínica chama assim.</span></div></li>
+    <li><span class="n">4</span><div><b>LATERAL/INFERIOR</b> — <span class="d"><b>LIGAMENTO INGUINAL</b> (a reflexão da aponeurose do oblíquo externo).</span></div></li>
+    <li><span class="n">5</span><div><b>MEDIAL</b> — <span class="d">borda lateral do <b>RETO DO ABDOME</b>.</span></div></li>
+  </ol></div>
+  <div class="box alerta"><p class="h">⚠️ Nota de tradução para os livros</p>
+  <p>Os atlas costumam descrever: parede anterior = aponeurose do oblíquo externo · parede posterior = fáscia transversal · <b>teto</b> = fibras arqueadas do oblíquo interno + transverso · <b>assoalho</b> = ligamento inguinal (+ lacunar). O professor apresentou os mesmos elementos como "limites" (com a fáscia transversal chamada de assoalho/posterior) — na prova dele, use o esquema da aula; nos livros, saiba converter.</p></div>
+
+  <h2 class="topic" id="t3">3 · Funículo espermático: as três túnicas (quem vem de quem)</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Túnica</th><th>Vem de</th></tr>
+    <tr><td><b>Fáscia espermática EXTERNA</b></td><td>aponeurose do <b>OBLÍQUO EXTERNO</b></td></tr>
+    <tr><td><b>CREMASTER</b></td><td><b>OBLÍQUO INTERNO</b> (fibras que DESCEM — "poucos livros mostram isso")</td></tr>
+    <tr><td><b>Fáscia espermática INTERNA</b></td><td>do plano do <b>TRANSVERSO</b>, na versão da aula</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Conteúdo do funículo:</b> <b>DUCTO DEFERENTE</b>, <b>ARTÉRIA TESTICULAR</b>, as veias do <b>PLEXO PAMPINIFORME</b> e o <b>ramo GENITAL do nervo GENITOFEMORAL</b> — tudo embrulhado pelas túnicas acima.</li>
+    <li>As túnicas <b>acompanham o funículo até dentro da bolsa escrotal</b> — a mesma sequência de camadas desce com ele.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide7-11-tunicas-funiculo.jpg" alt="Anel profundo, trígono inguinal e fáscia espermática interna">
+  <figcaption>O plano profundo: anel inguinal profundo, nervo ilioinguinal, vasos epigástricos inferiores e o trígono inguinal (de Hesselbach) — com o funículo já revestido pela fáscia espermática interna.</figcaption></figure>
+
+  <h2 class="topic" id="t4">4 · E na mulher? Ligamento redondo — e o ilioinguinal em ambos</h2>
+  <ul>
+    <li>Na mulher, o canal contém <b>SOMENTE o LIGAMENTO REDONDO DO ÚTERO</b> — 🎯 <b>a artéria ovariana NÃO passa aqui</b> (ela fica dentro da cavidade, indo ao ovário).</li>
+    <li><b>Em AMBOS os sexos:</b> o <b>nervo ILIOINGUINAL</b> desce <b>entre o transverso e o oblíquo interno</b>, entra no canal e o percorre junto do funículo/ligamento redondo, saindo pelo anel superficial.</li>
+  </ul>
+
+  <h2 class="topic" id="t5">5 · A descida do testículo: conduto peritônio-vaginal, retido × criptorquidia</h2>
+  <ul>
+    <li>O testículo <b>se forma no ABDOME</b> e desce à bolsa escrotal <b>pelo canal inguinal</b>, empurrando à frente um dedo de peritônio: o <b>CONDUTO PERITÔNIO-VAGINAL</b> — que depois <b>se fecha</b>.</li>
+    <li>🎯 <b>Persistência do conduto = "porteira aberta"</b>: desce alça, desce omento → é a grande causa da <b>hérnia inguinal INDIRETA</b> (congênita).</li>
+    <li><b>Testículo RETIDO</b> = parou no caminho (por exemplo, dentro do canal — palpável); <b>CRIPTORQUIDIA</b> = ainda na cavidade abdominal. Nos dois casos, a bolsa vazia exige investigação.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide7-38-hernias-tipos.jpg" alt="Processo vaginal e hérnia indireta">
+  <figcaption>O destino do conduto peritônio-vaginal: fechado (normal), parcialmente patente e amplamente patente — a "porteira aberta" por onde a alça desce, formando a hérnia inguinal indireta congênita.</figcaption></figure>
+
+  <h2 class="topic" id="t6">6 · Hesselbach × Hessert: os dois trígonos inguinais</h2>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>Trígono INGUINAL ANATÔMICO (de HESSELBACH)</th><th>Trígono INGUINAL FUNCIONAL (de HESSERT)</th></tr>
+    <tr><td><b>Medial</b></td><td>borda lateral do reto do abdome</td><td>borda lateral do reto do abdome</td></tr>
+    <tr><td><b>Lateral/inferior</b></td><td>ligamento inguinal</td><td>ligamento inguinal</td></tr>
+    <tr><td><b>Superolateral</b></td><td><b>vasos EPIGÁSTRICOS INFERIORES</b> (a prega umbilical lateral)</td><td><b>borda do OBLÍQUO INTERNO</b> (rebatido)</td></tr>
+  </table></div>
+  <div class="box prof"><p class="h">🎯 Por que o funcional importa: o oblíquo interno decide</p>
+  <p>O trígono de Hessert é <b>VARIÁVEL</b>: se o oblíquo interno tem <b>inserção BAIXA, fecha o trígono e protege</b> a região; se a inserção é <b>ALTA, deixa o trígono grande e exposto</b> — e <b>quanto maior o trígono, maior a chance de hérnia</b>. "A importância do oblíquo interno na gênese das hérnias é grande."</p></div>
+
+  <h2 class="topic" id="t7">7 · Direta × indireta: as fossas decidem</h2>
+  <ul>
+    <li><b>Hérnia inguinal DIRETA:</b> ocorre na <b>FOSSA INGUINAL MEDIAL</b> — projeção "de frente" na parede, por <b>fraqueza</b>; <b>não desce à bolsa escrotal</b>.</li>
+    <li><b>Hérnia inguinal INDIRETA:</b> entra na <b>FOSSA INGUINAL LATERAL → ANEL PROFUNDO → CANAL</b>, junto do funículo — e no homem costuma <b>descer à bolsa</b> (inguinoescrotal). Pode carregar delgado, cólon, apêndice, tuba ou ovário.</li>
+    <li>Dificilmente a hérnia comprime o funículo ou a artéria testicular — o que o anel estreito comprime é a <b>ALÇA</b> (tópico 13).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide7-45-trigonos.jpg" alt="Pontos de hérnia da parede anterior">
+  <figcaption>Complemento da aula: os outros pontos herniários da parede anterior — linha alba (epigástrica), umbilical, incisional e linha semilunar (Spiegel) — para situar as inguinais no mapa geral.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Anel femoral: os quatro ligamentos-limite</h2>
+  <div class="diagrama"><p class="t">O anel femoral — transição do abdome para a raiz da coxa</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>SUPERIOR: LIGAMENTO INGUINAL</b> — <span class="d">(Poupart/Falópio)</span></div></li>
+    <li><span class="n">2</span><div><b>MEDIAL: LIGAMENTO LACUNAR (de GIMBERNAT)</b> — <span class="d">a reflexão do ligamento inguinal sobre o <b>tubérculo púbico</b>.</span></div></li>
+    <li><span class="n">3</span><div><b>INFERIOR: LIGAMENTO PECTÍNEO (de COOPER)</b> — <span class="d">sobre a <b>CRISTA PECTÍNEA</b> ("passem a mão na crista — é ali"). É continuação do lacunar.</span></div></li>
+    <li><span class="n">4</span><div><b>LATERAL: LIGAMENTO ILIOPECTÍNEO</b> — <span class="d">fecha o anel do lado de fora.</span></div></li>
+  </ol></div>
+  <div class="box alerta"><p class="h">⚠️ Anel INGUINAL ≠ anel FEMORAL — "muita gente confunde na prova"</p>
+  <p>O anel <b>inguinal</b> (profundo) é a porta do <b>canal inguinal</b>, ainda no abdome, na fossa inguinal lateral. O anel <b>FEMORAL</b> é a <b>transição abdome → raiz da coxa</b>, ABAIXO do ligamento inguinal — por ele a artéria femoral desce e a veia femoral sobe (virando ilíaca externa). O ligamento inguinal é ao mesmo tempo limite <b>lateral do trígono inguinal</b> e limite <b>superior do anel femoral</b>. E não confunda com o <b>trígono femoral</b> (sartório/adutor — na coxa, outra estrutura).</p></div>
+  <figure class="fig"><img src="img/slide7-13-vista-interna.jpg" alt="Vista interna: fossas e anel femoral">
+  <figcaption>Vista interna da parede: fáscia transversal, vasos epigástricos inferiores, fossas inguinais lateral (com o anel profundo) e medial — e, abaixo do ligamento, o anel femoral com o nervo femoral passando FORA dele.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Bainha femoral, canal femoral e os gânglios de Cloquet</h2>
+  <ul>
+    <li><b>BAINHA FEMORAL:</b> o envelope que desce com os <b>vasos femorais</b> — na versão da aula, formado pela <b>aponeurose do oblíquo externo</b> (na frente) e pela do <b>transverso</b> (atrás), que inferiormente <b>se continuam na ADVENTÍCIA</b> dos vasos.</li>
+    <li>🎯 Dentro do anel: artéria femoral (<b>a artéria é SEMPRE LATERAL à veia</b>), veia femoral e o <b>ramo FEMORAL do nervo genitofemoral</b> (pequenininho, difícil de ver). <b>O NERVO FEMORAL passa FORA do anel</b> — pegadinha clássica.</li>
+    <li><b>CANAL FEMORAL:</b> apenas o <b>espaço MEDIAL à veia femoral</b> (o anel femoral é o todo; o canal é essa fatia). Contém os <b>LINFONODOS INGUINAIS PROFUNDOS — os gânglios de CLOQUET</b>.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 A "íngua" — semiologia do povo</p>
+  <p>Processo infeccioso na perna → o linfonodo inguinal aumenta, endurece, dói — o paciente fala <b>"deu íngua na virilha"</b>. "Tem que saber a semiologia do povo — se você não entende o que o paciente fala, aponte o dedo para onde dói."</p></div>
+  <figure class="fig"><img src="img/slide7-17-anel-femoral.jpg" alt="Anel femoral, bainha e ligamentos">
+  <figcaption>O anel femoral e seus ligamentos (inguinal, lacunar de Gimbernat, pectíneo de Cooper, iliopectíneo), a bainha femoral com artéria lateral à veia — e o canal femoral medial, morada do gânglio de Cloquet.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Hérnia femoral: por que é da mulher</h2>
+  <ul>
+    <li>O anel femoral pode ser quadrilátero, quadrado ou cilíndrico — varia de pessoa a pessoa. 🎯 Quem tem o anel <b>mais LARGO é a MULHER</b>, porque a <b>pelve GINECOIDE é mais larga</b> → por isso a <b>hérnia femoral é tipicamente feminina</b>.</li>
+    <li>Mecanismo: pressão abdominal alta + anel largo → alça desce pelo <b>canal femoral</b> (medial à veia) e protrui <b>abaixo do ligamento inguinal</b> — mais <b>lateral e inferior</b> que as inguinais.</li>
+  </ul>
+
+  <h2 class="topic" id="t11">11 · Hérnia umbilical e as fáscias de Richet</h2>
+  <ul>
+    <li>Atrás da cicatriz umbilical existem fáscias transversas espessas — as <b>FÁSCIAS DE RICHET</b>. Elas <b>se espraiam</b> quando a parede estira: <b>obesidade</b> (engorda-emagrece-engorda), <b>gravidez</b>, <b>ASCITE</b> ("barriga d'água" — líquido na cavidade peritoneal).</li>
+    <li>Espraiou → perdeu a proteção retroumbilical → <b>hérnia UMBILICAL</b> (por isso, mais na <b>mulher</b>). Conteúdo habitual: <b>omento</b> (gordura), às vezes alça.</li>
+  </ul>
+
+  <h2 class="topic" id="t12">12 · Diagnóstico diferencial na bolsa: hidrocele, cisto de cordão, varicocele</h2>
+  <ul>
+    <li>Nem todo aumento inguinoescrotal é hérnia. Diferenciais citados: <b>HIDROCELE</b> (líquido na túnica vaginal — no tratamento, abre-se e <b>everte-se a túnica</b> para cessar a secreção), <b>CISTOS DE CORDÃO/FUNÍCULO</b> e as <b>varizes escrotais (VARICOCELE)</b>.</li>
+    <li>E na pele: <b>queloide não protrui de dentro</b> — é saliência da própria cicatriz, não confundir com hérnia incisional.</li>
+    <li>Outras localizações lembradas na aula: epigástrica (linha alba), linha semilunar (Spiegel) e <b>incisional</b> (a cicatriz vira ponto de fraqueza tardio).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide7-19-conduto.jpg" alt="Cortes da região inguinoescrotal">
+  <figcaption>Os cortes da região inguinoescrotal: as túnicas do funículo descendo com o testículo — o mapa para diferenciar hérnia, hidrocele e cisto de cordão no raciocínio anatômico.</figcaption></figure>
+
+  <h2 class="topic" id="t13">13 · Estrangulamento, clínica e a era da tela</h2>
+  <ul>
+    <li>Relembrando o conceito: hérnia = protrusão de conteúdo da cavidade por ponto de fraqueza (<b>congênito ou adquirido</b> — cirurgia, carga: "o estivador do porto que rasga a musculatura"), com <b>peritônio e pele ÍNTEGROS</b> — "ninguém vê alça de fora".</li>
+    <li><b>Anel largo:</b> a alça entra e sai, trânsito preservado — pode ficar anos sem repercussão (idoso com hérnia de 20 anos: sem clínica, não precisa operar). <b>Anel estreito:</b> obstrui o trânsito e comprime os vasos → <b>obstrução intestinal + isquemia/gangrena</b> — dor, parada de eliminação, vômitos (podem virar <b>fecaloides</b>) → cirurgia.</li>
+    <li>🎯 <b>Correção hoje: TELA (de Marlex)</b> — "fixa a tela e acabou", porque dá <b>menos recidiva</b>: as técnicas antigas aproximavam o tendão conjunto do ligamento inguinal/pectíneo e a musculatura <b>rasgava</b>. O preço da tela: material sintético <b>pode infectar</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t14">14 · Resumo rápido</h2>
+  <div class="resumo">
+    <p><b>Canal inguinal:</b> anel profundo (fossa lateral) → anel superficial (aponeurose do oblíquo externo); ≈5 cm ♂, ≈3 cm ♀; descrito por Cooper. Paredes (aula): anterior = oblíquo externo · posterior/assoalho = fáscia transversal · superior = tendão conjunto (OI+T, "não é tendão") · lateral = ligamento inguinal · medial = reto. <b>Funículo:</b> espermática externa (obl. externo) + cremaster (obl. interno) + espermática interna (plano do transverso); dentro: deferente, a. testicular, pampiniforme, ramo genital do genitofemoral. Mulher: só ligamento redondo (sem a. ovariana); ilioinguinal em ambos. <b>Conduto peritônio-vaginal</b> patente = hérnia indireta congênita; retido × criptorquidia. <b>Trígonos:</b> Hesselbach (anatômico — epigástricos inferiores) × Hessert (funcional — borda do oblíquo interno; inserção alta = trígono exposto = mais hérnia). Direta = fossa medial, não desce; indireta = fossa lateral → canal → escroto. <b>Anel femoral:</b> inguinal (superior) + lacunar/Gimbernat (medial) + pectíneo/Cooper (inferior) + iliopectíneo (lateral); mais largo na mulher (pelve ginecoide) → hérnia femoral feminina. <b>Bainha femoral:</b> artéria SEMPRE lateral à veia + ramo femoral do genitofemoral; nervo femoral FORA do anel. <b>Canal femoral</b> = medial à veia, com os gânglios de CLOQUET (a "íngua"). <b>Umbilical:</b> fáscias de RICHET espraiadas (obesidade, gravidez, ascite). DDx: hidrocele (everter túnica), cisto de cordão, varicocele; queloide não protrui. Anel estreito = obstrução + gangrena (vômito fecaloide); correção atual = TELA (Marlex — menos recidiva, risco de infecção).</p>
+  </div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Região Inguinal</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · Aula 07 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-canal">Canal</a>
+    <a class="a1" href="#p-funiculo">Funículo</a>
+    <a class="a1" href="#p-trigonos">Trígonos</a>
+    <a class="a1" href="#p-femoral">Anel femoral</a>
+    <a class="a1" href="#p-hernias">Hérnias/DDx</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-canal">
+  <span class="aula-tag t1">Canal inguinal</span>
+  <ul>
+    <li><b class="k">Anel PROFUNDO (fossa inguinal lateral) → anel SUPERFICIAL (aponeurose do oblíquo externo)</b> · ≈ <b>5 cm ♂ / 3 cm ♀</b> · descrito por COOPER (200+ anos).</li>
+    <li>Paredes (aula): <b>anterior</b> = aponeurose do obl. EXTERNO · <b>posterior/assoalho</b> = FÁSCIA TRANSVERSAL (abaixo da arqueada não há aponeurose atrás) · <b>superior</b> = <b class="k">TENDÃO CONJUNTO</b> (obl. interno + transverso — "não é tendão, é a somatória das fibras") · <b>lateral</b> = LIGAMENTO INGUINAL · <b>medial</b> = borda do RETO.</li>
+    <li>Testículo: forma no ABDOME → desce pelo canal → <b class="k">conduto peritônio-vaginal</b> fecha; patente = "porteira" = hérnia INDIRETA congênita. RETIDO = parou no caminho · CRIPTORQUIDIA = na cavidade.</li>
+  </ul>
+</section>
+
+<section id="p-funiculo">
+  <span class="aula-tag t1">Funículo espermático (e a mulher)</span>
+  <ul>
+    <li>Túnicas: <b class="k">espermática EXTERNA ← obl. EXTERNO · CREMASTER ← obl. INTERNO · espermática INTERNA ← plano do TRANSVERSO</b> (e descem com ele até a bolsa).</li>
+    <li>Conteúdo: <b>ducto deferente + a. testicular + plexo PAMPINIFORME + ramo GENITAL do genitofemoral</b>.</li>
+    <li>Mulher: <b class="k">SÓ ligamento redondo do útero</b> (a. ovariana fica NA CAVIDADE). Em ambos: <b>n. ILIOINGUINAL</b> desce entre transverso e obl. interno e percorre o canal.</li>
+  </ul>
+</section>
+
+<section id="p-trigonos">
+  <span class="aula-tag t1">Os dois trígonos inguinais</span>
+  <div class="tw"><table>
+    <tr><th></th><th>HESSELBACH (anatômico)</th><th>HESSERT (funcional)</th></tr>
+    <tr><td>Medial</td><td>reto do abdome</td><td>reto do abdome</td></tr>
+    <tr><td>Lateral</td><td>ligamento inguinal</td><td>ligamento inguinal</td></tr>
+    <tr><td>Superolateral</td><td><b>vasos epigástricos inferiores</b></td><td><b>borda do OBLÍQUO INTERNO</b></td></tr>
+  </table></div>
+  <ul>
+    <li><b class="k">Oblíquo interno com inserção BAIXA fecha/protege; ALTA expõe o trígono → mais hérnia.</b></li>
+    <li>DIRETA = fossa inguinal MEDIAL (projeção na parede, não desce) · INDIRETA = fossa LATERAL → anel profundo → canal → bolsa.</li>
+  </ul>
+</section>
+
+<section id="p-femoral">
+  <span class="aula-tag t1">Anel/bainha/canal femoral</span>
+  <ul>
+    <li>Limites do <b>ANEL FEMORAL</b>: <b class="k">superior = lig. INGUINAL · medial = lig. LACUNAR (GIMBERNAT) · inferior = lig. PECTÍNEO (COOPER, na crista pectínea) · lateral = lig. ILIOPECTÍNEO</b>.</li>
+    <li><b>Bainha femoral</b> (aula): aponeurose do obl. externo (frente) + do transverso (atrás) → viram a ADVENTÍCIA dos vasos. Dentro: <b class="k">ARTÉRIA SEMPRE LATERAL à veia</b> + ramo FEMORAL do genitofemoral. <b>N. FEMORAL fica FORA do anel</b>.</li>
+    <li><b>CANAL femoral</b> = só o espaço MEDIAL à veia → <b class="k">linfonodos inguinais profundos = gânglios de CLOQUET</b> (a "íngua" da virilha).</li>
+    <li><b class="k">Anel femoral mais LARGO na MULHER (pelve ginecoide) → hérnia femoral feminina</b>, abaixo do ligamento, lateral e inferior.</li>
+  </ul>
+</section>
+
+<section id="p-hernias">
+  <span class="aula-tag t1">Hérnias e diferenciais</span>
+  <ul>
+    <li>Conceito: protrusão por ponto de fraqueza (congênito/adquirido — carga, cirurgia) com <b class="k">peritônio e PELE ÍNTEGROS</b>.</li>
+    <li><b>Anel largo</b> = trânsito preservado, pode acompanhar (idoso assintomático não opera) · <b class="k">anel estreito = obstrução + isquemia/gangrena</b> (dor, parada de eliminação, vômito até FECALOIDE) = cirurgia.</li>
+    <li><b>Umbilical:</b> fáscias de <b class="k">RICHET</b> retroumbilicais espraiadas por obesidade/gravidez/ASCITE → mulher+.</li>
+    <li><b>DDx inguinoescrotal:</b> HIDROCELE (everter a túnica no tratamento) · cisto de cordão/funículo · VARICOCELE. Queloide não protrui de dentro.</li>
+    <li><b>Correção atual = TELA (Marlex)</b>: menos recidiva (as técnicas de aproximação rasgavam); risco = infecção do sintético.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>Anel INGUINAL × anel FEMORAL</td><td>porta do canal inguinal (abdome) × transição abdome→coxa, ABAIXO do ligamento ("cai na prova")</td></tr>
+    <tr><td>Anel femoral × CANAL femoral</td><td>o orifício todo × só a fatia MEDIAL à veia (com Cloquet)</td></tr>
+    <tr><td>Hesselbach × Hessert</td><td>limite superolateral: vasos epigástricos inferiores × borda do oblíquo interno (variável!)</td></tr>
+    <tr><td>Nervo femoral × ramo femoral do genitofemoral</td><td>FORA do anel × DENTRO da bainha (pequenininho)</td></tr>
+    <tr><td>Trígono inguinal × trígono FEMORAL</td><td>parede abdominal × raiz da coxa (sartório/adutor)</td></tr>
+    <tr><td>Retido × criptorquidia</td><td>parou no trajeto (ex.: canal) × ainda na cavidade abdominal</td></tr>
+    <tr><td>Direta × indireta</td><td>fossa MEDIAL, projeção na parede × fossa LATERAL→canal→bolsa (conduto patente)</td></tr>
+    <tr><td>Hérnia × hidrocele/cisto/varicocele</td><td>protrusão de conteúdo da cavidade × líquido/cisto/veias — diferenciais da bolsa</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Região Inguinal</h2>
+    <p>Anatomia Topográfica · Aula 07 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">📖 Modo Estudo</button>
+        <button data-modo="simulado">📝 Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 07 — Região Inguinal</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☀️':'🌙';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('tema-topo',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">O canal inguinal é definido como o trajeto compreendido:</div>`,alts:[`entre o anel femoral e o anel inguinal superficial, sob o ligamento`,`entre a fossa supravesical e o anel inguinal profundo, na parede posterior`,`entre o anel inguinal profundo e o anel inguinal superficial`,`entre o ligamento lacunar e o tubérculo púbico, sobre a crista pectínea`,`entre a linha arqueada e o anel inguinal profundo, atrás do reto`],correta:2,just:[`O anel femoral é outra estrutura — transição para a coxa, abaixo do ligamento. [tipo: par confundível]`,`A fossa supravesical é o espaço retropúbico (Retzius) — não é porta do canal. [tipo: par confundível]`,`Correta. O canal inguinal vai do ANEL INGUINAL PROFUNDO (a fenda do plano profundo, na fossa inguinal lateral) ao ANEL INGUINAL SUPERFICIAL (o orifício na aponeurose do oblíquo externo). Foi descrito por COOPER há mais de 200 anos.`,`Esse trajeto descreve os ligamentos do ANEL FEMORAL — outro capítulo. [tipo: par confundível]`,`A linha arqueada é referência da bainha do reto — não delimita o canal. [tipo: vizinhança plausível]`],ref:'Canal — definição'},
+{n:2,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre as medidas do canal inguinal citadas em aula, é correto afirmar:</div>`,alts:[`mede cerca de 5 cm no homem e cerca de 3 cm na mulher adulta`,`mede cerca de 3 cm no homem e cerca de 5 cm na mulher adulta`,`mede cerca de 10 cm em ambos os sexos, do púbis à espinha ilíaca`,`mede cerca de 1 cm em ambos, correspondendo só à espessura da parede`,`tem comprimento igual ao do ligamento inguinal em cada pessoa`],correta:0,just:[`Correta. Números da aula: ≈ 5 cm no HOMEM e ≈ 3 cm na MULHER — o trajeto entre os dois anéis.`,`Inverteu os sexos — o canal masculino é o mais longo. [tipo: mecanismo invertido]`,`10 cm é o comprimento aproximado do LIGAMENTO inguinal inteiro, não do canal. [tipo: erro numérico plausível]`,`1 cm ignoraria o trajeto oblíquo entre os anéis — o canal é um túnel, não um furo. [tipo: erro numérico plausível]`,`O ligamento serve de limite, mas o canal não copia o comprimento dele. [tipo: pseudo-regra plausível]`],ref:'Canal — medidas'},
+{n:3,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre as paredes do canal inguinal, conforme o esquema da aula, é correto afirmar:</div>`,alts:[`a parede anterior é a fáscia transversal e a parede posterior, o oblíquo externo`,`o limite medial é o ligamento inguinal e o lateral, o reto do abdome`,`o limite superior é dado pelo ligamento lacunar refletido sobre o púbis`,`a parede posterior é a fáscia transversal e a cobertura, o oblíquo externo`,`o assoalho é formado pela aponeurose do oblíquo interno duplicada`],correta:3,just:[`Trocou frente e trás: a cobertura é o oblíquo EXTERNO; atrás fica a fáscia transversal. [tipo: mecanismo invertido]`,`Trocou os lados: o ligamento inguinal é LATERAL; o reto é o limite MEDIAL. [tipo: mecanismo invertido]`,`O lacunar pertence ao ANEL FEMORAL — não é parede do canal inguinal. [tipo: par confundível]`,`Correta. Pelo esquema da aula: ANTERIOR = aponeurose do oblíquo EXTERNO · POSTERIOR ("assoalho") = FÁSCIA TRANSVERSAL (abaixo da linha arqueada não há aponeurose atrás) · SUPERIOR = tendão conjunto · LATERAL = ligamento inguinal · MEDIAL = reto.`,`O oblíquo interno entra no TENDÃO CONJUNTO (limite superior) — não duplica assoalho. [tipo: recombinação plausível]`],ref:'Paredes do canal'},
+{n:4,aula:1,nivel:'facil',enun:`<div class="pergunta">O chamado "tendão conjunto", limite superior do canal inguinal, corresponde:</div>`,alts:[`ao tendão de inserção do reto do abdome na sínfise púbica`,`à somatória das fibras do oblíquo interno e do transverso`,`à reflexão da aponeurose do oblíquo externo sobre o púbis`,`ao espessamento da fáscia transversal atrás do canal`,`à fusão do ligamento inguinal com o ligamento pectíneo`],correta:1,just:[`O reto é o limite MEDIAL — sua inserção púbica não forma o teto do canal. [tipo: par confundível]`,`Correta. TENDÃO CONJUNTO = a associação das fibras do OBLÍQUO INTERNO + TRANSVERSO fechando o canal por cima. Ressalva da aula: "não é um tendão de verdade — é a somatória das fibras", mas a clínica consagrou o nome.`,`Essa reflexão é o LIGAMENTO INGUINAL (limite lateral). [tipo: par confundível]`,`A fáscia transversal é a parede POSTERIOR — não o teto. [tipo: par confundível]`,`Inguinal + pectíneo se relacionam no ANEL FEMORAL (via lacunar) — outro andar. [tipo: par confundível]`],ref:'Tendão conjunto'},
+{n:5,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre as túnicas do funículo espermático e suas origens, a correspondência da aula é:</div>`,alts:[`externa ← oblíquo interno · cremaster ← oblíquo externo · interna ← transverso`,`externa ← transverso · cremaster ← oblíquo interno · interna ← oblíquo externo`,`externa ← oblíquo externo · cremaster ← transverso · interna ← oblíquo interno`,`externa ← fáscia superficial · cremaster ← reto · interna ← peritônio`,`externa ← oblíquo externo · cremaster ← oblíquo interno · interna ← transverso`],correta:4,just:[`Trocou as duas primeiras: a EXTERNA vem do oblíquo EXTERNO; o cremaster, do INTERNO. [tipo: permutação plausível]`,`Inverteu as pontas — a externa vem do músculo mais superficial, não do mais profundo. [tipo: permutação plausível]`,`O cremaster vem do oblíquo INTERNO (fibras que descem) — não do transverso. [tipo: permutação plausível]`,`Fáscia superficial, reto e peritônio não formam túnica do funículo. [tipo: recombinação implausível controlada]`,`Correta. FÁSCIA ESPERMÁTICA EXTERNA ← oblíquo EXTERNO · CREMASTER ← oblíquo INTERNO ("poucos livros mostram") · FÁSCIA ESPERMÁTICA INTERNA ← plano do TRANSVERSO, na versão da aula. As três descem com o funículo até a bolsa.`],ref:'Túnicas do funículo'},
+{n:6,aula:1,nivel:'medio',enun:`<div class="pergunta">São conteúdos do funículo espermático, além das túnicas que o revestem:</div>`,alts:[`ducto deferente, artéria testicular e o ramo femoral do nervo genitofemoral`,`ducto ejaculatório, artéria ovariana e o plexo pampiniforme venoso`,`ureter, artéria testicular e o nervo ílio-hipogástrico em trajeto conjunto`,`ducto deferente, artéria testicular, plexo pampiniforme e ramo genital do genitofemoral`,`ducto deferente, veia safena magna e o nervo femoral em trajeto comum`],correta:3,just:[`O ramo do funículo é o GENITAL; o ramo FEMORAL desce com os vasos femorais. [tipo: par confundível de ramos]`,`Ducto ejaculatório fica na próstata; artéria ovariana é da mulher — e nem ela passa no canal. [tipo: recombinação plausível]`,`O ureter é retroperitoneal e o ílio-hipogástrico não entra no canal. [tipo: recombinação plausível]`,`Correta. Conteúdo do funículo: DUCTO DEFERENTE + ARTÉRIA TESTICULAR + veias do PLEXO PAMPINIFORME + ramo GENITAL do nervo GENITOFEMORAL — embrulhados pelas três túnicas.`,`Safena e nervo femoral são da coxa — vizinhos de outro anel. [tipo: par confundível de território]`],ref:'Conteúdo do funículo'},
+{n:7,aula:1,nivel:'facil',enun:`<div class="pergunta">Na mulher, o canal inguinal contém:</div>`,alts:[`o ligamento redondo do útero junto com a artéria e a veia ovarianas`,`o ligamento suspensor do ovário acompanhado dos vasos ovarianos`,`somente o ligamento redondo do útero (com o nervo ilioinguinal)`,`o ligamento largo do útero e o ramo genital do genitofemoral`,`a tuba uterina em seu trajeto para os lábios do pudendo`],correta:2,just:[`🎯 A pegadinha exata da aula: a artéria ovariana NÃO passa no canal — fica na cavidade, indo ao ovário. [tipo: misconception clássica]`,`O suspensor do ovário (com os vasos) desce da parede posterior à pelve — não entra no canal. [tipo: par confundível]`,`Correta. Na mulher o canal contém SOMENTE o LIGAMENTO REDONDO DO ÚTERO (indo fixar-se nos lábios do pudendo) — acompanhado, como no homem, pelo NERVO ILIOINGUINAL.`,`O ligamento largo é a prega peritoneal que envolve o útero — não atravessa a parede. [tipo: par confundível]`,`A tuba termina junto ao ovário, dentro da pelve — não desce ao períneo. [tipo: recombinação plausível]`],ref:'Canal na mulher'},
+{n:8,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre o trajeto do nervo ilioinguinal até o anel superficial, é correto afirmar que ele desce:</div>`,alts:[`entre o transverso e o oblíquo interno, e depois percorre o canal inguinal`,`por dentro da bainha femoral, junto ao ramo femoral do nervo genitofemoral`,`atrás da fáscia transversal, diretamente colado ao peritônio parietal`,`entre o oblíquo externo e a pele, no plano subcutâneo da região inguinal`,`pelo interior do anel femoral, em posição medial à veia femoral`],correta:0,just:[`Correta. O ILIOINGUINAL desce ENTRE O TRANSVERSO E O OBLÍQUO INTERNO, entra no canal inguinal e o percorre junto do funículo (ou do ligamento redondo), saindo pelo anel superficial.`,`Na bainha femoral corre o ramo FEMORAL do genitofemoral — outro nervo, outro andar. [tipo: par confundível]`,`Colado ao peritônio é trajeto de estrutura intracavitária — o nervo corre entre músculos. [tipo: erro de plano plausível]`,`No subcutâneo ele só aparece DEPOIS do anel superficial — antes disso é intermuscular. [tipo: momento errado]`,`Medial à veia femoral fica o canal femoral (Cloquet) — nada de ilioinguinal ali. [tipo: par confundível]`],ref:'Ilioinguinal'},
+{n:9,aula:1,nivel:'medio',enun:`<span class="vinheta">Lactente com abaulamento inguinal que desce à bolsa escrotal ao choro, desde as primeiras semanas de vida.</span><div class="pergunta">A estrutura embriológica cuja persistência explica o quadro é:</div>`,alts:[`o úraco, que deveria ter se obliterado em prega mediana`,`a artéria umbilical, mantida pérvia após o clampeamento`,`o ligamento redondo do fígado, com a veia umbilical patente`,`o mesonefro, retido no trajeto de descida gonadal`,`o conduto peritônio-vaginal, que permaneceu aberto`],correta:4,just:[`O úraco vira a prega umbilical MEDIANA — sua persistência dá fístula/cisto umbilical, não hérnia escrotal. [tipo: par confundível]`,`As artérias umbilicais viram as pregas MEDIAIS — outra história. [tipo: par confundível]`,`A veia umbilical vira o ligamento redondo do FÍGADO — supraumbilical. [tipo: par confundível]`,`O mesonefro involui em estruturas genitais — não é conduto para alça. [tipo: vizinhança embriológica plausível]`,`Correta. O CONDUTO PERITÔNIO-VAGINAL — o dedo de peritônio que precede o testículo na descida — deveria se fechar. PATENTE, vira "porteira aberta": a alça desce pelo canal = HÉRNIA INGUINAL INDIRETA CONGÊNITA.`],ref:'Conduto peritônio-vaginal'},
+{n:10,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre a diferença entre testículo retido e criptorquidia, conforme a aula:</div>`,alts:[`retido é o que está na cavidade abdominal; criptorquidia, o que parou no canal`,`retido é o que parou no trajeto (ex.: canal); criptorquidia, na cavidade`,`são sinônimos, ambos indicando testículo dentro da bolsa escrotal alta`,`retido é o testículo herniado; criptorquidia é o testículo torcido`,`ambos indicam agenesia testicular bilateral com bolsa escrotal vazia`],correta:1,just:[`Inverteu os termos — o "escondido" (cripto) é o da cavidade. [tipo: mecanismo invertido]`,`Correta. TESTÍCULO RETIDO = parou no caminho da descida (por exemplo, dentro do canal — pode ser abordado e abaixado). CRIPTORQUIDIA = testículo ainda NA CAVIDADE ABDOMINAL. Nos dois, a bolsa vazia exige investigação.`,`Bolsa alta é outra situação (testículo retrátil) — os termos da aula marcam ONDE ele parou. [tipo: par confundível]`,`Hérnia e torção são diagnósticos diferentes — nenhum define os termos. [tipo: recombinação plausível]`,`Agenesia é ausência de formação — aqui o testículo existe, só não desceu. [tipo: par confundível]`],ref:'Retido × criptorquidia'},
+{n:11,aula:1,nivel:'medio',enun:`<div class="pergunta">Os limites do trígono inguinal ANATÔMICO (de Hesselbach) são:</div>`,alts:[`reto do abdome, ligamento inguinal e vasos epigástricos inferiores`,`reto do abdome, ligamento lacunar e vasos ilíacos externos`,`oblíquo interno, ligamento inguinal e vasos epigástricos superiores`,`linha alba, ligamento pectíneo e a artéria femoral em seu trajeto`,`reto do abdome, ligamento inguinal e borda do oblíquo interno`],correta:0,just:[`Correta. Trígono de HESSELBACH (anatômico): borda lateral do RETO (medial) + LIGAMENTO INGUINAL (lateral/inferior) + VASOS EPIGÁSTRICOS INFERIORES (superolateral — a prega umbilical lateral).`,`O lacunar e os ilíacos pertencem ao andar do anel femoral. [tipo: par confundível]`,`Os epigástricos do trígono são os INFERIORES — e o oblíquo interno é o marco do OUTRO trígono. [tipo: recombinação plausível]`,`Linha alba e pectíneo nem fazem fronteira com a região — montagem de vizinhos. [tipo: recombinação plausível]`,`Com a borda do oblíquo interno o trígono vira o FUNCIONAL (de Hessert) — não o anatômico. [tipo: par confundível]`],ref:'Hesselbach'},
+{n:12,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre o trígono inguinal FUNCIONAL (de Hessert) e seu papel na gênese das hérnias:</div>`,alts:[`difere do anatômico no limite medial, que passa a ser a linha alba`,`é fixo e idêntico em todas as pessoas, ao contrário do anatômico`,`quando o oblíquo interno insere baixo, o trígono cresce e a hérnia é mais provável`,`difere do anatômico no limite superolateral: a borda do oblíquo interno, variável`,`corresponde ao espaço compreendido entre o anel femoral e o canal femoral`],correta:3,just:[`O limite medial segue sendo o reto — a troca é no SUPEROLATERAL. [tipo: recombinação plausível]`,`É o oposto: o funcional é o VARIÁVEL, porque depende da inserção do oblíquo interno. [tipo: mecanismo invertido]`,`Direção invertida: inserção BAIXA fecha e PROTEGE; inserção ALTA é que expõe. [tipo: mecanismo invertido]`,`Correta. HESSERT (funcional) = mesmos limites do anatômico, exceto o SUPEROLATERAL, que passa a ser a BORDA DO OBLÍQUO INTERNO — variável: inserção baixa fecha o trígono (protege); inserção ALTA deixa-o grande e exposto → quanto maior o trígono, maior a chance de hérnia.`,`Anel e canal femoral são o andar de baixo — nada a ver com os trígonos inguinais. [tipo: par confundível]`],ref:'Hessert — o funcional'},
+{n:13,aula:1,nivel:'medio',enun:`<span class="vinheta">Dois pacientes: um com abaulamento que projeta a parede "de frente" sem descer; outro com abaulamento que desce até a bolsa escrotal.</span><div class="pergunta">As fossas de origem de cada hérnia são, respectivamente:</div>`,alts:[`supravesical e inguinal medial`,`inguinal medial e inguinal lateral`,`inguinal lateral e inguinal medial`,`inguinal lateral e supravesical`,`inguinal medial e supravesical`],correta:1,just:[`A supravesical é o espaço de Retzius — não é sede típica de hérnia inguinal. [tipo: par confundível]`,`Correta. Projeção "de frente", sem descer = DIRETA → FOSSA INGUINAL MEDIAL. Desce à bolsa = INDIRETA → FOSSA INGUINAL LATERAL (anel profundo → canal → escroto).`,`Inverteu o par — quem desce pelo canal é a da fossa LATERAL. [tipo: mecanismo invertido]`,`Metade certa (lateral = indireta), mas a direta é da fossa MEDIAL, não da supravesical. [tipo: recombinação plausível]`,`A primeira está certa, mas a segunda hérnia não nasce na supravesical. [tipo: recombinação plausível]`],ref:'Fossas × hérnias'},
+{n:14,aula:1,nivel:'dificil',enun:`<div class="pergunta">Os limites do ANEL FEMORAL, com seus epônimos, são:</div>`,alts:[`superior: lacunar · medial: inguinal · inferior: iliopectíneo · lateral: pectíneo`,`superior: pectíneo (Cooper) · medial: iliopectíneo · inferior: inguinal · lateral: lacunar`,`superior: inguinal · medial: lacunar (Gimbernat) · inferior: pectíneo (Cooper) · lateral: iliopectíneo`,`superior: iliopectíneo · medial: pectíneo · inferior: lacunar · lateral: inguinal`,`superior: inguinal · medial: pectíneo (Cooper) · inferior: lacunar (Gimbernat) · lateral: iliopectíneo`],correta:2,just:[`Rodou tudo: o teto é o INGUINAL; o lacunar é MEDIAL. [tipo: permutação plausível]`,`O pectíneo é o de BAIXO (sobre a crista pectínea) — não o teto. [tipo: permutação plausível]`,`Correta. ANEL FEMORAL: SUPERIOR = ligamento INGUINAL · MEDIAL = LACUNAR (GIMBERNAT — a reflexão do inguinal no tubérculo púbico) · INFERIOR = PECTÍNEO (COOPER, sobre a crista pectínea, continuação do lacunar) · LATERAL = ILIOPECTÍNEO.`,`Permutação sem nenhum par no lugar. [tipo: permutação plausível]`,`Trocou medial e inferior: Gimbernat é o MEDIAL; Cooper, o INFERIOR. [tipo: permutação plausível]`],ref:'Anel femoral — limites'},
+{n:15,aula:1,nivel:'medio',enun:`<div class="pergunta">O ligamento LACUNAR (de Gimbernat) corresponde:</div>`,alts:[`ao espessamento da fáscia ilíaca sobre o músculo iliopsoas`,`à continuação do pectíneo em direção à espinha ilíaca`,`ao arco que une os dois pilares do diafragma sobre a aorta`,`à reflexão do ligamento inguinal sobre o tubérculo púbico`,`à banda que separa o anel femoral do canal inguinal`],correta:3,just:[`Sobre o iliopsoas passa o arco ILIOPECTÍNEO — vizinho lateral, outra estrutura. [tipo: par confundível]`,`É o inverso: o PECTÍNEO é que continua o lacunar sobre a crista. [tipo: mecanismo invertido]`,`Esse é o ligamento arqueado MEDIANO — diafragma, outra aula. [tipo: par confundível]`,`Correta. O LACUNAR (GIMBERNAT) é a REFLEXÃO do ligamento inguinal sobre o TUBÉRCULO PÚBICO — e forma o limite MEDIAL do anel femoral (continuando-se no pectíneo, de Cooper).`,`Não há "banda separadora" — o canal femoral é parte do próprio anel. [tipo: pseudo-estrutura plausível]`],ref:'Gimbernat'},
+{n:16,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre o conteúdo do anel femoral e a posição do nervo femoral, a aula destacou:</div>`,alts:[`o nervo femoral atravessa o centro do anel, passando entre a artéria e a veia`,`os vasos femorais e o ramo femoral do genitofemoral; o nervo femoral passa por FORA`,`o anel recebe a veia femoral isolada; a artéria passa por fora com o nervo`,`o anel contém o nervo ilioinguinal, que desce da parede para a raiz da coxa`,`o nervo femoral e o obturatório atravessam juntos a bainha dos vasos femorais`],correta:1,just:[`É a pegadinha: o nervo femoral NÃO entra no anel. [tipo: misconception clássica]`,`Correta. Dentro do anel/bainha: ARTÉRIA e VEIA femorais + o pequeno RAMO FEMORAL do nervo GENITOFEMORAL ("difícil de ver na peça"). O NERVO FEMORAL passa FORA do anel, lateralmente.`,`Artéria e veia entram JUNTAS na bainha — a artéria não fica de fora. [tipo: recombinação plausível]`,`O ilioinguinal é do canal INGUINAL — não desce à coxa por aqui. [tipo: par confundível]`,`O obturatório desce pelo forame OBTURADO — outra saída da pelve. [tipo: par confundível]`],ref:'Nervo femoral fora do anel'},
+{n:17,aula:1,nivel:'facil',enun:`<div class="pergunta">Na bainha femoral, a relação constante entre os vasos citada em aula é:</div>`,alts:[`a veia femoral é que ocupa sempre a posição lateral à artéria`,`a artéria e a veia trocam de posição conforme a postura`,`a artéria fica anterior e a veia, posterior, em todo o trajeto`,`os dois vasos correm dentro do canal femoral, com os linfonodos`,`a artéria femoral ocupa sempre a posição lateral à veia`],correta:4,just:[`Inverteu — quem fica lateral é a ARTÉRIA. [tipo: mecanismo invertido]`,`A relação é constante — é justamente o que a torna referência de punção. [tipo: pseudo-variação plausível]`,`A relação da bainha é LATERAL × MEDIAL, não frente × trás. [tipo: erro de eixo plausível]`,`No canal femoral (medial à veia) moram os LINFONODOS — os vasos ficam nos próprios compartimentos. [tipo: par confundível]`,`Correta. Na bainha femoral, a ARTÉRIA é SEMPRE LATERAL à VEIA — e o canal femoral (com Cloquet) fica medial à veia.`],ref:'Artéria lateral à veia'},
+{n:18,aula:1,nivel:'dificil',enun:`<span class="vinheta">Paciente com infecção no pé; dias depois, nota um caroço doloroso e endurecido na virilha — "deu íngua", diz ele.</span><div class="pergunta">A estrutura acometida e sua localização anatômica precisa são:</div>`,alts:[`linfonodos inguinais superficiais, sobre a fáscia lata, distantes do anel femoral`,`o gânglio sentinela de Virchow, localizado na fossa supraclavicular esquerda`,`linfonodos inguinais profundos (de Cloquet), no canal femoral, medial à veia`,`o plexo pampiniforme congestionado dentro do funículo espermático`,`linfonodos ilíacos externos, situados dentro da cavidade abdominal`],correta:2,just:[`Os superficiais existem e também incham — mas os da aula, "de Cloquet", são os PROFUNDOS do canal femoral. [tipo: verdade no contexto errado]`,`Virchow é supraclavicular ESQUERDO, sentinela de neoplasia abdominal — outro contexto. [tipo: diagnóstico diferencial]`,`Correta. Os LINFONODOS INGUINAIS PROFUNDOS — gânglios de CLOQUET — moram no CANAL FEMORAL, o espaço MEDIAL à veia femoral. Infecção no membro → linfonodo aumentado, doloroso, endurado = a "ÍNGUA" ("semiologia do povo — tem que saber").`,`O pampiniforme é venoso e escrotal — congestão dele é varicocele, não íngua. [tipo: par confundível]`,`Os ilíacos são intracavitários — não formam caroço palpável na virilha. [tipo: erro de plano plausível]`],ref:'Cloquet — a íngua'},
+{n:19,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre a diferença entre o anel inguinal profundo e o anel femoral — "que muita gente confunde na prova":</div>`,alts:[`o inguinal abre o canal (ainda no abdome); o femoral é a transição para a coxa`,`ambos dão passagem ao funículo espermático em trajetos paralelos`,`o femoral é a porta do canal inguinal na mulher, substituindo o profundo`,`o inguinal fica abaixo do ligamento inguinal e o femoral, acima dele, na parede`,`são o mesmo orifício, observado por dentro e por fora da parede abdominal`],correta:0,just:[`Correta. ANEL INGUINAL PROFUNDO = a porta do CANAL INGUINAL, na fossa inguinal lateral, ainda no abdome. ANEL FEMORAL = orifício de TRANSIÇÃO abdome → raiz da coxa, ABAIXO do ligamento inguinal (por ele descem/sobem os vasos femorais). O ligamento inguinal é, ao mesmo tempo, limite lateral do trígono inguinal e teto do anel femoral.`,`Só o INGUINAL dá passagem ao funículo — pelo femoral passam os vasos femorais. [tipo: generalização indevida]`,`Na mulher o canal existe igual (com o ligamento redondo) — o femoral nunca o substitui. [tipo: pseudo-regra plausível]`,`Inverteu os andares: o INGUINAL está acima do ligamento; o FEMORAL, abaixo. [tipo: mecanismo invertido]`,`São orifícios distintos, em planos e andares diferentes. [tipo: misconception clássica]`],ref:'Inguinal × femoral'},
+{n:20,aula:1,nivel:'medio',enun:`<div class="pergunta">A hérnia femoral é mais comum na mulher porque:</div>`,alts:[`a gravidez rompe o ligamento lacunar na maioria das multíparas`,`o canal inguinal feminino, mais curto, desvia as alças para baixo`,`a musculatura feminina é incapaz de formar o tendão conjunto`,`a pelve ginecoide, mais larga, resulta em anel femoral mais largo`,`os linfonodos de Cloquet femininos atrofiam e deixam o canal vazio`],correta:3,just:[`A gravidez aumenta pressão, mas não "rompe" o lacunar — o fator é a geometria pélvica. [tipo: pseudo-mecanismo plausível]`,`O comprimento do canal inguinal não desvia alça para o andar de baixo. [tipo: pseudo-mecanismo plausível]`,`O tendão conjunto existe igualzinho na mulher. [tipo: generalização indevida]`,`Correta. A PELVE GINECOIDE é mais LARGA → o ANEL FEMORAL feminino é mais largo → mais espaço para a alça descer pelo canal femoral = hérnia FEMORAL tipicamente da MULHER (protruindo abaixo do ligamento, lateral e inferior às inguinais).`,`Cloquet não "atrofia" — e linfonodo não é o que segura hérnia. [tipo: pseudo-mecanismo plausível]`],ref:'Femoral — pelve ginecoide'},
+{n:21,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre as fáscias de RICHET e a hérnia umbilical, é correto afirmar:</div>`,alts:[`são fáscias longitudinais na linha alba, rompidas nas hérnias epigástricas`,`são as túnicas do funículo espermático espessadas atrás do umbigo`,`fáscias transversas retroumbilicais, espraiadas na obesidade e na gravidez`,`são pregas peritoneais que fecham o anel umbilical na vida adulta`,`são o remanescente do úraco fundido às artérias umbilicais obliteradas`],correta:2,just:[`Na linha alba a falha dá hérnia EPIGÁSTRICA — as de Richet são retroumbilicais e transversas. [tipo: par confundível]`,`As túnicas do funículo são do capítulo inguinal — outro endereço. [tipo: par confundível]`,`Correta. As FÁSCIAS DE RICHET são fáscias TRANSVERSAS espessas ATRÁS da cicatriz umbilical. Obesidade (engorda-emagrece), GRAVIDEZ e ASCITE ("barriga d'água") as ESPRAIAM → perde-se a proteção retroumbilical → HÉRNIA UMBILICAL (por isso, mais na mulher; conteúdo habitual: omento).`,`O anel umbilical não é fechado por peritônio pregueado — é pelas fáscias, que podem falhar. [tipo: pseudo-estrutura plausível]`,`Úraco e artérias viram as PREGAS umbilicais da face interna — outra formação. [tipo: par confundível]`],ref:'Fáscias de Richet'},
+{n:22,aula:1,nivel:'medio',enun:`<span class="vinheta">Homem com aumento escrotal indolor; a massa não se reduz ao deitar e não muda com esforço.</span><div class="pergunta">Entre os diferenciais de hérnia inguinoescrotal citados em aula, esse quadro sugere:</div>`,alts:[`hérnia inguinal indireta encarcerada de longa data, com alça fixa`,`hidrocele — líquido na túnica vaginal, tratada evertendo a túnica`,`hérnia inguinal direta com descida escrotal completa ao esforço`,`queloide de cicatriz inguinal prévia em crescimento progressivo`,`linfonodo de Cloquet aumentado, herniado para dentro da bolsa`],correta:1,just:[`Hérnia costuma variar com esforço/decúbito — e encarcerada dói mais do que "indolor crônico". [tipo: diagnóstico diferencial]`,`Correta. Massa escrotal que NÃO reduz e NÃO varia com esforço lembra HIDROCELE — água na túnica vaginal. Tratamento citado: abrir e EVERTER a túnica para cessar a secreção. Os outros diferenciais da lista: CISTOS DE CORDÃO/FUNÍCULO e VARIZES ESCROTAIS (varicocele).`,`A DIRETA tipicamente NÃO desce à bolsa — projeta na parede. [tipo: par confundível]`,`Queloide é saliência da própria pele/cicatriz — não vira massa escrotal. [tipo: diagnóstico diferencial]`,`Cloquet mora no canal femoral — linfonodo não "hernia" para a bolsa. [tipo: recombinação plausível]`],ref:'DDx — hidrocele'},
+{n:23,aula:1,nivel:'dificil',enun:`<span class="vinheta">Hérnia inguinoescrotal volumosa de anos, indolor. Em 24 h: dor intensa, parada de eliminação de gases e fezes, vômitos que se tornam fecaloides.</span><div class="pergunta">A interpretação correta da evolução é:</div>`,alts:[`o anel herniário largo permitiu a redução espontânea completa da alça`,`houve infecção da tela cirúrgica implantada previamente`,`a hérnia era direta e migrou para a fossa inguinal lateral`,`o anel estrangulou a alça: obstrução + isquemia — indicação cirúrgica`,`trata-se de hidrocele aguda hipertensa do adulto jovem`],correta:3,just:[`Anel largo preserva o trânsito — o quadro obstrutivo indica o oposto. [tipo: mecanismo invertido]`,`Não há cirurgia prévia na história — e infecção de tela não dá vômito fecaloide. [tipo: pseudo-história plausível]`,`Hérnias não "migram" de fossa — a classificação nasce com o trajeto. [tipo: pseudo-mecanismo plausível]`,`Correta. A escalada da aula: anel ESTREITO comprimindo a alça → PARA o trânsito (obstrução: dor, parada de eliminação, vômitos até FECALOIDES) e comprime os vasos → ISQUEMIA/GANGRENA da alça → cirurgia (às vezes com ressecção).`,`Hidrocele é líquido na túnica — não obstrui intestino nem gera vômito. [tipo: diagnóstico diferencial]`],ref:'Estrangulamento — clínica'},
+{n:24,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre a correção cirúrgica atual das hérnias inguinais, a aula destacou:</div>`,alts:[`a tela sintética — menos recidiva que as técnicas de aproximação, que rasgavam`,`a aproximação do tendão conjunto ao ligamento inguinal, o padrão-ouro dos serviços`,`a ressecção rotineira do funículo espermático para fechar o canal`,`o fechamento rotineiro do anel femoral em toda hérnia inguinal operada`,`a observação exclusiva, já que hérnia inguinal não tem tratamento cirúrgico`],correta:0,just:[`Correta. Hoje "fixa a TELA (de Marlex) e acabou": MENOS RECIDIVA — as técnicas antigas aproximavam o tendão conjunto do ligamento inguinal/pectíneo e a musculatura RASGAVA. O preço do sintético: pode INFECTAR.`,`Essa é a lógica das técnicas ANTIGAS (Bassini/McVay) — justamente as que recidivavam. [tipo: verdade no contexto errado (era anterior)]`,`O funículo é PRESERVADO — deixa-se espaço para ele na correção. [tipo: pseudo-conduta plausível]`,`O anel femoral só entra quando a hérnia é FEMORAL. [tipo: generalização indevida]`,`Hérnia com repercussão OPERA — observa-se apenas a assintomática de baixo risco. [tipo: generalização indevida]`],ref:'A era da tela'}
+];
+
+
+
+
+
+
+
+const dissertativas=[
+{n:1,aula:1,caso:`Na prova prática, o monitor abre a região inguinal plano a plano e pergunta os limites do canal — e por que "tendão conjunto" está entre aspas no seu caderno.`,perg:[`a) Liste as paredes/limites do canal inguinal conforme o esquema da aula.`,`b) O que é o tendão conjunto e qual a ressalva do professor sobre o nome?`,`c) Como os livros costumam nomear teto e assoalho — e como converter para o esquema da aula?`],resp:[["a) Limites (aula)","ANTERIOR (cobertura) = aponeurose do oblíquo EXTERNO · POSTERIOR ('assoalho' da aula) = FÁSCIA TRANSVERSAL (abaixo da linha arqueada não há aponeurose atrás) · SUPERIOR = tendão conjunto · LATERAL = LIGAMENTO INGUINAL · MEDIAL = borda lateral do RETO. Início: anel profundo; fim: anel superficial (≈5 cm ♂ / 3 cm ♀)."],["b) Tendão conjunto","A somatória das fibras do OBLÍQUO INTERNO + TRANSVERSO fechando o canal por cima. Ressalva: 'NÃO é um tendão — é a associação das fibras', mas o nome clínico consagrou-se."],["c) Conversão para os livros","Atlas: parede anterior = obl. externo · posterior = fáscia transversal · TETO = fibras arqueadas do obl. interno + transverso · ASSOALHO = ligamento inguinal (+ lacunar). Mesmos elementos; muda o rótulo — na prova do professor, use o esquema da aula."]],ref:'Paredes do canal'},
+{n:2,aula:1,caso:`Um recém-nascido chega com bolsa escrotal vazia à direita e abaulamento inguinal ao choro. O residente pergunta: "o que desceu, o que não desceu e o que ficou aberto?"`,perg:[`a) Descreva as três túnicas do funículo espermático e a origem de cada uma (versão da aula).`,`b) Explique a descida do testículo e o papel do conduto peritônio-vaginal — e diferencie retido de criptorquidia.`,`c) O que há no canal inguinal da mulher — e qual estrutura NÃO passa ali (pegadinha da aula)?`],resp:[["a) Túnicas","FÁSCIA ESPERMÁTICA EXTERNA ← aponeurose do OBLÍQUO EXTERNO · CREMASTER ← fibras descendentes do OBLÍQUO INTERNO ('poucos livros mostram') · FÁSCIA ESPERMÁTICA INTERNA ← plano do TRANSVERSO (versão da aula). Conteúdo embrulhado: ducto deferente, artéria testicular, plexo pampiniforme e ramo genital do genitofemoral."],["b) Descida e conduto","O testículo forma-se no ABDOME e desce pelo canal empurrando o CONDUTO PERITÔNIO-VAGINAL, que depois se fecha. PATENTE = 'porteira aberta' → hérnia inguinal INDIRETA congênita (o abaulamento ao choro). RETIDO = parou no trajeto (ex.: dentro do canal); CRIPTORQUIDIA = permaneceu na cavidade abdominal."],["c) Na mulher","SOMENTE o LIGAMENTO REDONDO DO ÚTERO (até os lábios do pudendo) + o nervo ILIOINGUINAL (que acompanha em ambos os sexos). A ARTÉRIA OVARIANA NÃO passa no canal — fica na cavidade."]],ref:'Funículo e descida'},
+{n:3,aula:1,caso:`O professor projeta a vista interna da parede: pede os dois trígonos inguinais, suas diferenças e o que cada fossa "produz" de hérnia.`,perg:[`a) Delimite o trígono inguinal anatômico (Hesselbach) e o funcional (Hessert).`,`b) Por que o trígono funcional é variável e qual a consequência prática?`,`c) Relacione as fossas inguinais medial e lateral com as hérnias direta e indireta (trajeto completo de cada).`],resp:[["a) Os dois trígonos","HESSELBACH (anatômico): reto (medial) + ligamento inguinal (lateral/inferior) + VASOS EPIGÁSTRICOS INFERIORES (superolateral). HESSERT (funcional): mesmos limites, trocando o superolateral pela BORDA DO OBLÍQUO INTERNO."],["b) Por que variável","A inserção do oblíquo interno muda de pessoa a pessoa: inserção BAIXA fecha o trígono e PROTEGE; inserção ALTA deixa o trígono GRANDE e exposto — e quanto maior o trígono, maior a chance de hérnia ('a importância do oblíquo interno na gênese das hérnias')."],["c) Fossas × hérnias","FOSSA INGUINAL MEDIAL → hérnia DIRETA: projeção 'de frente' na parede (trígono), sem descer à bolsa; anel largo, raramente estrangula. FOSSA INGUINAL LATERAL → hérnia INDIRETA: entra no ANEL PROFUNDO → percorre o CANAL junto ao funículo → pode descer à bolsa (inguinoescrotal); anel estreito, pode estrangular."]],ref:'Trígonos e fossas'},
+{n:4,aula:1,caso:`Mulher, 68 anos, multípara, com massa dolorosa abaixo da prega inguinal direita. O cirurgião comenta: "cuidado com os ligamentos do anel — e com o que mora medial à veia".`,perg:[`a) Delimite o anel femoral com os quatro ligamentos e seus epônimos.`,`b) O que contém a bainha femoral, qual a relação artéria-veia e onde fica o nervo femoral?`,`c) Defina o canal femoral e seu conteúdo — e explique por que a hérnia femoral é "da mulher".`],resp:[["a) O anel","SUPERIOR = ligamento INGUINAL (Poupart/Falópio) · MEDIAL = LACUNAR (GIMBERNAT — reflexão do inguinal no tubérculo púbico) · INFERIOR = PECTÍNEO (COOPER, sobre a crista pectínea — continuação do lacunar) · LATERAL = ILIOPECTÍNEO."],["b) Bainha","Vasos FEMORAIS — a ARTÉRIA SEMPRE LATERAL à VEIA — + o pequeno ramo FEMORAL do nervo GENITOFEMORAL. Na versão da aula, a bainha vem das aponeuroses do oblíquo externo (frente) e do transverso (atrás), continuando-se na ADVENTÍCIA dos vasos. O NERVO FEMORAL passa FORA do anel — pegadinha clássica."],["c) Canal femoral e a mulher","CANAL FEMORAL = apenas o espaço MEDIAL à veia, contendo os LINFONODOS INGUINAIS PROFUNDOS (gânglios de CLOQUET — a 'íngua'). A PELVE GINECOIDE é mais larga → ANEL FEMORAL mais largo → a alça desce pelo canal femoral = hérnia FEMORAL tipicamente FEMININA, protruindo ABAIXO do ligamento (mais lateral e inferior que as inguinais)."]],ref:'Andar femoral'}
+];
+
+
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 07</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 07</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 07 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 07 — Região Inguinal",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Canal inguinal, funículo e túnicas, conduto peritônio-vaginal, Hesselbach × Hessert, anel femoral, Cloquet — e as hérnias da região.",cards:[
+{area:"Canal",cat:"conceito",q:"Definição e medidas do canal inguinal?",a:"Trajeto do ANEL INGUINAL PROFUNDO (fossa inguinal lateral) ao ANEL SUPERFICIAL (aponeurose do oblíquo externo). ≈ 5 cm no homem, ≈ 3 cm na mulher.",obs:"Descrito por COOPER, há mais de 200 anos."},
+{area:"Canal",cat:"prof",q:"As paredes do canal inguinal (esquema da aula)?",a:"ANTERIOR = aponeurose do obl. EXTERNO · POSTERIOR/'assoalho' = FÁSCIA TRANSVERSAL · SUPERIOR = TENDÃO CONJUNTO (obl. interno + transverso) · LATERAL = LIGAMENTO INGUINAL · MEDIAL = borda do RETO."},
+{area:"Canal",cat:"prof",q:"O que é o 'tendão conjunto' — e a ressalva do professor?",a:"A SOMATÓRIA das fibras do OBLÍQUO INTERNO + TRANSVERSO fechando o canal por cima. 'Não é um tendão — é a associação das fibras', mas a clínica chama assim."},
+{area:"Canal",cat:"alerta",q:"Por que a parede posterior do canal é 'só fáscia transversal'?",a:"O canal fica ABAIXO DA LINHA ARQUEADA — ali as aponeuroses passam todas NA FRENTE do reto; atrás só resta FÁSCIA TRANSVERSAL (+ peritônio). Região frágil por natureza."},
+{area:"Funículo",cat:"prof",q:"As 3 túnicas do funículo e a origem de cada uma?",a:"FÁSCIA ESPERMÁTICA EXTERNA ← obl. EXTERNO · CREMASTER ← obl. INTERNO (fibras que DESCEM — 'poucos livros mostram') · FÁSCIA ESPERMÁTICA INTERNA ← plano do TRANSVERSO (versão da aula). Descem com o funículo até a bolsa."},
+{area:"Funículo",cat:"conceito",q:"Conteúdo do funículo espermático?",a:"DUCTO DEFERENTE + ARTÉRIA TESTICULAR + veias do PLEXO PAMPINIFORME + ramo GENITAL do nervo GENITOFEMORAL — embrulhados pelas 3 túnicas."},
+{area:"Funículo",cat:"prof",q:"O que passa no canal inguinal da MULHER — e o que NÃO passa?",a:"SOMENTE o LIGAMENTO REDONDO DO ÚTERO (vai aos lábios do pudendo). A ARTÉRIA OVARIANA NÃO passa (fica na cavidade). Em ambos os sexos: o nervo ILIOINGUINAL acompanha."},
+{area:"Funículo",cat:"conceito",q:"Trajeto do nervo ilioinguinal?",a:"Desce ENTRE O TRANSVERSO E O OBLÍQUO INTERNO → entra no canal inguinal → percorre-o junto do funículo/ligamento redondo → sai pelo anel superficial."},
+{area:"Descida",cat:"prof",q:"O conduto peritônio-vaginal: o que é e o que acontece se persistir?",a:"O 'dedo' de peritônio que precede o testículo na descida pelo canal; deve se FECHAR. PATENTE = 'porteira aberta' → alça desce = HÉRNIA INGUINAL INDIRETA CONGÊNITA (o lactente que abaúla ao choro)."},
+{area:"Descida",cat:"conceito",q:"Testículo retido × criptorquidia?",a:"RETIDO = parou no TRAJETO (ex.: dentro do canal — pode-se abaixá-lo). CRIPTORQUIDIA = ainda NA CAVIDADE abdominal. Bolsa vazia = investigar."},
+{area:"Trígonos",cat:"prof",q:"Trígono inguinal ANATÔMICO (Hesselbach): limites?",a:"Borda lateral do RETO (medial) + LIGAMENTO INGUINAL (lateral/inferior) + VASOS EPIGÁSTRICOS INFERIORES (superolateral — a prega umbilical lateral)."},
+{area:"Trígonos",cat:"prof",q:"Trígono inguinal FUNCIONAL (Hessert): o que muda e por que importa?",a:"Troca o limite superolateral pela BORDA DO OBLÍQUO INTERNO. É VARIÁVEL: inserção BAIXA fecha/protege; inserção ALTA expõe o trígono → quanto maior, mais hérnia.",obs:"'A importância do oblíquo interno na gênese das hérnias é grande.'"},
+{area:"Trígonos",cat:"alerta",q:"Fossa inguinal MEDIAL × LATERAL: qual hérnia nasce em cada uma?",a:"MEDIAL → hérnia DIRETA (projeção 'de frente' na parede; não desce à bolsa). LATERAL → hérnia INDIRETA (anel profundo → canal → pode descer ao escroto)."},
+{area:"Anel femoral",cat:"prof",q:"Os 4 ligamentos-limite do anel femoral (com epônimos)?",a:"SUPERIOR = lig. INGUINAL (Poupart/Falópio) · MEDIAL = LACUNAR (GIMBERNAT) · INFERIOR = PECTÍNEO (COOPER, na crista pectínea) · LATERAL = ILIOPECTÍNEO."},
+{area:"Anel femoral",cat:"conceito",q:"O que é o ligamento LACUNAR (Gimbernat)?",a:"A REFLEXÃO do ligamento inguinal sobre o TUBÉRCULO PÚBICO — limite MEDIAL do anel femoral; continua-se no PECTÍNEO (Cooper) sobre a crista pectínea."},
+{area:"Anel femoral",cat:"alerta",q:"Anel INGUINAL × anel FEMORAL ('muita gente confunde na prova')?",a:"INGUINAL (profundo) = porta do canal inguinal, ainda ABDOME, acima do ligamento. FEMORAL = transição abdome → RAIZ DA COXA, ABAIXO do ligamento (desce artéria, sobe veia femoral→ilíaca externa)."},
+{area:"Anel femoral",cat:"conceito",q:"Trígono inguinal × trígono FEMORAL?",a:"Inguinal = na PAREDE abdominal (Hesselbach/Hessert). FEMORAL = na RAIZ DA COXA (sartório/adutor longo/ligamento inguinal) — outra estrutura, outro capítulo."},
+{area:"Bainha",cat:"prof",q:"Conteúdo da bainha femoral e a relação constante dos vasos?",a:"ARTÉRIA e VEIA femorais — a ARTÉRIA SEMPRE LATERAL À VEIA — + o pequeno ramo FEMORAL do nervo genitofemoral. Na aula, a bainha vem das aponeuroses do obl. externo (frente) e do transverso (atrás) → viram a ADVENTÍCIA."},
+{area:"Bainha",cat:"alerta",q:"Onde passa o NERVO FEMORAL em relação ao anel femoral?",a:"FORA do anel (lateral). Dentro só entra o pequeno ramo FEMORAL do genitofemoral — pegadinha clássica de prova."},
+{area:"Bainha",cat:"prof",q:"Canal femoral: o que é e o que contém?",a:"Só o espaço MEDIAL À VEIA femoral (o anel é o todo; o canal é a fatia). Contém os LINFONODOS INGUINAIS PROFUNDOS = gânglios de CLOQUET.",obs:"É por ele que a hérnia femoral se exterioriza."},
+{area:"Bainha",cat:"caso",q:"'Deu íngua na virilha' — traduza para a anatomia.",a:"Linfonodo inguinal AUMENTADO, doloroso e endurado por infecção no membro — os profundos são os de CLOQUET, no canal femoral. 'Tem que saber a semiologia do povo.'"},
+{area:"Hérnias",cat:"prof",q:"Por que a hérnia femoral é 'da mulher'?",a:"PELVE GINECOIDE mais larga → ANEL FEMORAL mais largo → alça desce pelo canal femoral. Protrui ABAIXO do ligamento inguinal, mais lateral e inferior que as inguinais."},
+{area:"Hérnias",cat:"prof",q:"Fáscias de RICHET: o que são e como geram a hérnia umbilical?",a:"Fáscias TRANSVERSAS espessas ATRÁS da cicatriz umbilical. Espraiam-se com OBESIDADE, GRAVIDEZ e ASCITE → perde-se a proteção retroumbilical → hérnia UMBILICAL (mulher+; conteúdo habitual: omento)."},
+{area:"Hérnias",cat:"conceito",q:"DDx do aumento inguinoescrotal citados em aula?",a:"HIDROCELE (líquido na túnica vaginal — trata abrindo e EVERTENDO a túnica) · CISTOS DE CORDÃO/FUNÍCULO · VARIZES ESCROTAIS (varicocele). E queloide NÃO protrui de dentro."},
+{area:"Hérnias",cat:"caso",q:"Hérnia antiga indolor que vira dor + parada de eliminação + vômito fecaloide: o que houve?",a:"ESTRANGULAMENTO: o anel estreito parou o trânsito (obstrução) e comprimiu os vasos (isquemia/gangrena) → cirurgia, às vezes com ressecção da alça."},
+{area:"Hérnias",cat:"prof",q:"Por que hoje a correção é com TELA?",a:"MENOS RECIDIVA: as técnicas de aproximação (tendão conjunto ao inguinal/pectíneo) RASGAVAM a musculatura. Tela (Marlex) não rasga — mas, sintética, PODE INFECTAR."},
+{area:"Hérnias",cat:"conceito",q:"O que define hérnia no conceito da aula — e o detalhe 'mais importante'?",a:"Protrusão de conteúdo da cavidade por PONTO DE FRAQUEZA (congênito ou adquirido — carga, cirurgia). Detalhe-chave: PERITÔNIO E PELE ÍNTEGROS — 'ninguém vê alça de fora'."},
+{area:"Casos",cat:"caso",q:"Idoso com hérnia inguinal de 20 anos, assintomática: opera?",a:"Sem repercussão clínica → NÃO precisa operar; acompanha. Dor, obstrução ou estrangulamento → cirurgia."}
+]}
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-regiao-inguinal-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+</body>
+</html>
