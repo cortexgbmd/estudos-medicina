@@ -4,41 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resumao Pre-Prova — Anatomia Patologica P2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d;
-  --fg:#c9d1d9; --fg2:#8b949e;
-  --accent:#58a6ff; --accent2:#1f6feb;
-  --green:#3fb950; --red:#f85149; --yellow:#d29922; --purple:#bc8cff;
-  --border:#30363d;
+/* ===== DOSSIÊ CÓRTEX — bone/ink, mono chrome, serif display ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --bg2:#141311; --bg3:#1d1b18;
+  --fg:#e8e4d7; --fg2:#8a8573;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --accent2:#6a91ff;
+  --green:#4fb47a; --red:#ff5b55; --yellow:#d4a84b; --purple:#a793e0;
+  --border:var(--line);
+  --radius:2px;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --serif:'Fraunces',ui-serif,'Iowan Old Style',Georgia,serif;
+  --mono:'JetBrains Mono','IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
 }
-[data-theme="light"] {
-  --bg:#ffffff; --bg2:#f6f8fa; --bg3:#e1e4e8;
-  --fg:#24292f; --fg2:#57606a;
-  --accent:#0969da; --accent2:#0550ae;
-  --green:#1a7f37; --red:#cf222e; --yellow:#9a6700; --purple:#8250df;
-  --border:#d0d7de;
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --bg2:#f6f2e7; --bg3:#ece7d7;
+  --fg:#0a0908; --fg2:#6a655a;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --accent2:#002bd9;
+  --green:#006a3a; --red:#c8241e; --yellow:#8a5a00; --purple:#5b3fb5;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:56px}
-body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;line-height:1.55}
+::selection{background:var(--accent);color:var(--bg)}
 
 /* NAV FIXA */
-nav{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-nav a{color:var(--accent);text-decoration:none;font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap}
-nav a:hover{background:var(--bg3)}
-.nav-title{color:var(--fg);font-weight:700;font-size:13px;margin-right:auto}
-#theme-btn{background:none;border:1px solid var(--border);color:var(--fg2);cursor:pointer;font-size:12px;padding:3px 8px;border-radius:4px}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em}
+nav a{color:var(--fg2);text-decoration:none;font-size:10.5px;font-weight:500;padding:4px 1px;border-bottom:2px solid transparent;white-space:nowrap;transition:color .12s,border-color .12s}
+nav a:hover{color:var(--fg);border-bottom-color:var(--accent)}
+.nav-title{color:var(--fg2);font-weight:500;font-size:11px;margin-right:auto}
+#themeToggle{width:34px;height:34px;border:1px solid var(--line-strong);background:none;color:var(--fg);border-radius:var(--radius);cursor:pointer;font-size:14px;line-height:1;display:inline-flex;align-items:center;justify-content:center;padding:0}
+#themeToggle:hover{border-color:var(--accent);color:var(--accent)}
+#themeToggle::after{content:"☀"}
+:root[data-theme="light"] #themeToggle::after{content:"☾"}
+#wm-slot{display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;color:var(--fg2)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;font-family:var(--mono)!important;font-size:10px!important;letter-spacing:.08em!important;padding:5px 9px!important}
+@media(max-width:720px){#wm-slot #wm{display:none!important}}
 
 /* CONTAINER */
 .container{max-width:900px;margin:0 auto;padding:12px 16px 60px}
 
+/* PAGE HEAD */
+.page-head{margin:34px 0 30px}
+.page-head .kick{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--fg2);margin-bottom:10px}
+.page-head .kick::before{content:"";display:inline-block;width:6px;height:6px;background:var(--accent);margin-right:8px;vertical-align:1px}
+.page-h1{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.015em;font-weight:600;color:var(--fg);margin:0}
+.page-h1 em{font-style:italic;color:var(--accent);font-weight:400}
+
 /* SECAO */
-.aula-section{margin-bottom:24px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.aula-header{background:var(--bg2);padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:8px}
-.aula-header h2{font-size:15px;color:var(--accent);margin:0}
-.aula-header .badge{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;background:var(--accent2);color:#fff}
+.aula-section{margin-bottom:24px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.aula-header{background:var(--bg2);padding:10px 14px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;align-items:center;gap:10px}
+.aula-header h2{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--fg);margin:0}
+.aula-header .badge{font-family:var(--mono);font-size:9.5px;padding:2px 7px;border-radius:var(--radius);font-weight:500;letter-spacing:.1em;background:none;border:1px solid var(--accent);color:var(--accent)}
 .aula-body{padding:10px 14px}
 
 /* LISTAS */
@@ -48,21 +69,21 @@ li::marker{color:var(--accent)}
 
 /* TABELAS */
 table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
-th,td{padding:5px 8px;border:1px solid var(--border);text-align:left;vertical-align:top}
-th{background:var(--bg3);color:var(--fg);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+th,td{padding:5px 8px;border:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--bg3);color:var(--fg);font-family:var(--mono);font-weight:500;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em}
 td{background:var(--bg2)}
 
 /* TABELA COMPARATIVA */
-.tabela-comp{border-left:3px solid var(--purple)}
-.tabela-comp th{background:var(--accent2);color:#fff}
+.tabela-comp{border-left:2px solid var(--accent)}
+.tabela-comp th{background:var(--bg3);color:var(--accent)}
 
 /* NAO CONFUNDIR */
-.nao-confundir{background:var(--bg2);border:1px solid var(--red);border-left:4px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0}
-.nao-confundir::before{content:"NAO CONFUNDIR";display:block;font-size:10px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:4px}
+.nao-confundir{background:var(--bg2);border:1px solid var(--red);border-left:3px solid var(--red);border-radius:var(--radius);padding:8px 12px;margin:8px 0}
+.nao-confundir::before{content:"NAO CONFUNDIR";display:block;font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--red);letter-spacing:.12em;margin-bottom:4px}
 
 /* DESTAQUE PROVA */
-.destaque-prova{background:var(--bg2);border:1px solid var(--yellow);border-left:4px solid var(--yellow);border-radius:6px;padding:8px 12px;margin:8px 0}
-.destaque-prova::before{content:"DESTAQUE DE PROVA";display:block;font-size:10px;font-weight:700;color:var(--yellow);letter-spacing:1px;margin-bottom:4px}
+.destaque-prova{background:var(--bg2);border:1px solid var(--yellow);border-left:3px solid var(--yellow);border-radius:var(--radius);padding:8px 12px;margin:8px 0}
+.destaque-prova::before{content:"DESTAQUE DE PROVA";display:block;font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--yellow);letter-spacing:.12em;margin-bottom:4px}
 
 /* PALAVRA-CHAVE */
 .kw{color:var(--yellow);font-weight:700}
@@ -71,10 +92,11 @@ td{background:var(--bg2)}
 .kw-purple{color:var(--purple);font-weight:700}
 
 /* SEQUENCIA / FLUXO */
-.flow{background:var(--bg3);border-radius:6px;padding:8px 12px;margin:8px 0;font-family:monospace;font-size:13px;color:var(--green);line-height:1.7}
+.flow{background:var(--bg3);border:1px solid var(--line);border-radius:var(--radius);padding:8px 12px;margin:8px 0;font-family:var(--mono);font-size:12.5px;color:var(--green);line-height:1.7}
 
 /* SUBTITULO */
-h3{font-size:13px;color:var(--purple);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+h3{font-family:var(--mono);font-size:11px;color:var(--fg2);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+h3::before{content:"";display:inline-block;width:14px;height:1px;background:var(--accent);margin-right:8px;vertical-align:4px}
 h4{font-size:13px;color:var(--fg);margin:8px 0 4px;font-weight:600}
 
 strong{color:var(--fg)}
@@ -84,6 +106,7 @@ b{color:var(--yellow)}
 @media print {
   body{background:#fff;color:#000;font-size:10px;line-height:1.3}
   nav{display:none}
+  .page-head{display:none}
   .container{max-width:100%;padding:0}
   .aula-section{break-inside:avoid;border:1px solid #999;margin-bottom:8px}
   .aula-header{background:#eee;padding:4px 8px}
@@ -98,18 +121,19 @@ b{color:var(--yellow)}
   .flow{background:#eee;color:#000;font-size:9px;padding:4px 8px}
   ul,ol{padding-left:14px}
   li{margin-bottom:1px}
-  h3{font-size:10px;margin:6px 0 2px}
+  h3{font-size:10px;margin:6px 0 2px;color:#000}
   .kw,.kw-green,.kw-red,.kw-purple{color:#000;font-weight:700}
   strong,b{color:#000}
-  [data-theme] {--bg:#fff;--bg2:#f6f8fa;--bg3:#e1e4e8;--fg:#000;--fg2:#444;--border:#999}
+  :root,:root[data-theme="dark"],:root[data-theme="light"]{--bg:#fff;--bg2:#f6f8fa;--bg3:#e1e4e8;--fg:#000;--fg2:#444;--line:#999;--line-strong:#666;--accent:#0033ff}
 }
 
 @media(max-width:600px){
   nav{padding:4px 8px}
-  nav a{font-size:11px;padding:2px 6px}
+  nav a{font-size:10px;padding:2px 4px}
   .container{padding:8px}
   .aula-body{padding:8px 10px}
   table{font-size:12px}
+  .page-h1{font-size:clamp(1.9rem,9vw,2.5rem)}
 }
 </style>
 </head>
@@ -123,10 +147,16 @@ b{color:var(--yellow)}
   <a href="#a4">4-Necrose</a>
   <a href="#a5">5-Apoptose</a>
   <a href="#a6">6-Hemostasia</a>
-  <button id="theme-btn" onclick="toggleTheme()">Claro/Escuro</button>
+  <span id="wm-slot"></span>
+  <button id="themeToggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro"></button>
 </nav>
 
 <div class="container">
+
+<header class="page-head">
+  <p class="kick">Anatomia Patológica — P2 · 6 aulas</p>
+  <h1 class="page-h1">Resumão <em>pré-prova</em></h1>
+</header>
 
 <!-- ============================================================ -->
 <!-- AULA 1 -->
@@ -571,5 +601,6 @@ function toggleTheme(){
 </script>
 
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

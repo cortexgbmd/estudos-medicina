@@ -1,45 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DECORAR — Farmacologia P4 (1 dia)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0f1220;--panel:#1a1f33;--panel2:#222a44;--txt:#e8ecf8;--muted:#9aa3c0;--accent:#6ea8fe;--green:#36c98a;--yellow:#f0b429;--red:#f06a6a;--line:#2c3556}
+  /* ===== DOSSIÊ CÓRTEX — tokens ===== */
+  :root, :root[data-theme="dark"]{
+    --bg:#0a0908;--panel:#141311;--panel2:#1d1b18;
+    --txt:#e8e4d7;--muted:#8a8573;--accent:#4d7cff;
+    --green:#4fb47a;--yellow:#d4a84b;--red:#ff5b55;
+    --line:rgba(232,228,215,.14);--line-strong:rgba(232,228,215,.3);
+    --radius:2px;
+    --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f2e7;--panel:#f6f2e7;--panel2:#ece7d7;
+    --txt:#0a0908;--muted:#6a655a;--accent:#0033ff;
+    --green:#006a3a;--yellow:#8a5a00;--red:#c8241e;
+    --line:rgba(10,9,8,.18);--line-strong:rgba(10,9,8,.42);
+  }
   *{box-sizing:border-box}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center}
-  header{width:100%;max-width:780px;padding:18px 16px 6px;display:flex;flex-direction:column;gap:10px}
-  h1{font-size:18px;margin:0;font-weight:700}
+  body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+  ::selection{background:var(--accent);color:#f6f2e7}
+  header{width:100%;max-width:780px;padding:14px 16px 6px;display:flex;flex-direction:column;gap:12px}
+  .topline{display:flex;align-items:center;justify-content:flex-end;gap:10px;border-bottom:1px solid var(--line-strong);padding-bottom:10px}
+  #wm-slot{display:flex;align-items:center;margin-left:auto}
+  #wm-slot #wm{position:static!important;transform:none!important;margin:0 10px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;font-family:var(--mono)!important;letter-spacing:.08em;border-radius:var(--radius)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  @media(max-width:720px){#wm-slot #wm{display:none}}
+  #themeToggle{width:34px;height:34px;min-width:34px;flex-shrink:0;padding:0;display:inline-flex;align-items:center;justify-content:center;background:none;border:1px solid var(--line-strong);color:var(--txt);border-radius:var(--radius);font-size:15px;line-height:1;cursor:pointer}
+  #themeToggle:hover{border-color:var(--accent);color:var(--accent)}
+  h1{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4.2rem);line-height:.98;letter-spacing:-.015em;margin:0 0 .1em;font-weight:600}
   .sub{color:var(--muted);font-size:12.5px}
   .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:13px}
+  select{background:none;color:var(--txt);border:1px solid var(--line-strong);border-radius:var(--radius);padding:7px 9px;font-size:12px;font-family:var(--mono)}
   .chk{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12.5px;cursor:pointer;user-select:none}
-  .stats{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12.5px}
+  .stats{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
   .stats b{color:var(--txt)}
-  .bar{height:7px;background:var(--panel);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
-  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--accent));width:0%;transition:width .3s}
+  .bar{height:6px;background:var(--panel2);border-radius:0;overflow:hidden;border:1px solid var(--line)}
+  .bar>i{display:block;height:100%;background:var(--accent);width:0%;transition:width .3s}
   main{width:100%;max-width:780px;padding:8px 16px 90px;flex:1;display:flex;flex-direction:column}
-  .card{background:linear-gradient(180deg,var(--panel),#171c2e);border:1px solid var(--line);border-radius:18px;padding:26px 22px;min-height:300px;display:flex;flex-direction:column;justify-content:center;gap:16px;cursor:pointer;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.35)}
-  .tag{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:var(--accent);background:rgba(110,168,254,.12);border:1px solid rgba(110,168,254,.3);padding:3px 9px;border-radius:99px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px;min-height:300px;display:flex;flex-direction:column;justify-content:center;gap:16px;cursor:pointer;position:relative;box-shadow:none}
+  .tag{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:none;border:1px solid var(--line-strong);padding:3px 9px;border-radius:var(--radius)}
   .front{font-size:21px;font-weight:700;line-height:1.35}
-  .hint{color:var(--muted);font-size:12.5px}
+  .hint{color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
   .back{display:none}
-  .card.flipped .back{display:block;border-top:1px dashed var(--line);padding-top:14px;font-size:18px;line-height:1.5}
+  .card.flipped .back{display:block;border-top:1px dashed var(--line-strong);padding-top:14px;font-size:18px;line-height:1.5}
   .card.flipped .front{font-size:18px;color:var(--muted);font-weight:600}
-  .rate{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:10px;padding:12px 14px;background:linear-gradient(180deg,transparent,rgba(15,18,32,.92) 28%);backdrop-filter:blur(4px)}
-  .rate button{flex:1;max-width:220px;border:none;border-radius:12px;padding:14px 10px;font-size:15px;font-weight:700;color:#0c1020;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
-  .rate small{font-weight:600;font-size:11px;opacity:.75}
-  .b-red{background:var(--red)}.b-yellow{background:var(--yellow)}.b-green{background:var(--green)}
-  .mini{background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 10px;font-size:12.5px;cursor:pointer}
-  .done{text-align:center;padding:40px 10px;color:var(--muted)}.done b{color:var(--green);font-size:22px;display:block;margin-bottom:8px}
-  kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:11px;color:var(--muted)}
-  b{color:#8fd0ff}
+  .rate{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:10px;padding:12px 14px;background:var(--bg);border-top:1px solid var(--line-strong)}
+  .rate button{flex:1;max-width:220px;background:none;border:1px solid;border-radius:var(--radius);padding:13px 10px;font-family:var(--mono);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .rate small{font-weight:500;font-size:9.5px;opacity:.8;letter-spacing:.06em}
+  .b-red{border-color:var(--red);color:var(--red)}.b-yellow{border-color:var(--yellow);color:var(--yellow)}.b-green{border-color:var(--green);color:var(--green)}
+  .b-red:hover{background:color-mix(in srgb,var(--red) 10%,transparent)}
+  .b-yellow:hover{background:color-mix(in srgb,var(--yellow) 10%,transparent)}
+  .b-green:hover{background:color-mix(in srgb,var(--green) 10%,transparent)}
+  .mini{background:none;border:1px solid var(--line-strong);color:var(--muted);border-radius:var(--radius);padding:6px 10px;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+  .mini:hover{border-color:var(--accent);color:var(--accent)}
+  .done{text-align:center;padding:40px 10px;color:var(--muted)}.done b{color:var(--green);font-family:var(--serif);font-size:26px;display:block;margin-bottom:8px}
+  kbd{background:none;border:1px solid var(--line);border-radius:var(--radius);padding:1px 6px;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+  b{color:var(--accent)}
 </style>
 </head>
 <body>
 <header>
+  <div class="topline"><span id="wm-slot"></span><button id="themeToggle" onclick="toggleTheme()" title="Alternar tema">☀</button></div>
   <div><h1>DECORAR fármacos — 1 dia</h1>
-  <div class="sub">Cada fármaco = 1 carta (nome → ação · efeitos · uso). Erra → volta logo · fácil → vai pro fim. <kbd>espaço</kbd> vira · <kbd>1</kbd> errei · <kbd>2</kbd> quase · <kbd>3</kbd> fácil<br><span style="color:#36c98a;font-weight:600">💾 seu progresso é salvo automaticamente neste navegador</span></div></div>
+  <div class="sub">Cada fármaco = 1 carta (nome → ação · efeitos · uso). Erra → volta logo · fácil → vai pro fim. <kbd>espaço</kbd> vira · <kbd>1</kbd> errei · <kbd>2</kbd> quase · <kbd>3</kbd> fácil<br><span style="color:var(--green);font-weight:600">💾 seu progresso é salvo automaticamente neste navegador</span></div></div>
   <div class="controls">
     <select id="deck"></select>
     <label class="chk"><input type="checkbox" id="retire" checked> tirar quando decorar (2× fácil)</label>
@@ -97,7 +126,12 @@ document.getElementById("resetBtn").onclick=()=>{if(confirm("Reiniciar TODO o pr
 document.querySelectorAll(".rate button").forEach(b=>b.onclick=()=>rate(+b.dataset.r));
 document.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();if(!flipped)flip()}if(flipped){if(e.key==="1")rate(0);if(e.key==="2")rate(1);if(e.key==="3")rate(2)}});
 init(load());
+/* tema Dossiê Córtex — dark por padrão, persistente */
+function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('cortex-theme',t)}catch(e){}var b=document.getElementById('themeToggle');if(b)b.textContent=t==='dark'?'☀':'☾'}
+function toggleTheme(){setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')}
+try{setTheme(localStorage.getItem('cortex-theme')||'dark')}catch(e){setTheme('dark')}
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>

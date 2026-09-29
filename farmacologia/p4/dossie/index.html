@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dossiê Clínico — Farmacologia P4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
@@ -286,6 +287,102 @@
     .alert-danger { border-color: #e88; }
   }
 </style>
+<style id="skin-dossie">
+  /* ===== DOSSIÊ CÓRTEX — camada de conversão (override de tema) ===== */
+  :root, :root[data-theme="dark"] {
+    --serif: "Fraunces", ui-serif, "Iowan Old Style", Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --radius: 2px;
+    --bg-0: #0a0908; --bg-1: #141311; --bg-2: #1d1b18; --bg-3: #26231e;
+    --bg-glass: rgba(10, 9, 8, 0.9);
+    --text-0: #e8e4d7; --text-1: #cfcab9; --text-2: #8a8573; --text-3: #6d6a5e;
+    --accent-1: #4d7cff; --accent-2: #6a91ff; --accent-glow: rgba(77, 124, 255, 0.13);
+    --border: rgba(232, 228, 215, 0.14); --border-hover: rgba(232, 228, 215, 0.3);
+    --grad-1: #4d7cff; --grad-2: #4d7cff; --grad-hero: #0a0908;
+    --aula: #4d7cff; --aula-soft: rgba(77, 124, 255, 0.07); --aula-border: rgba(77, 124, 255, 0.3);
+    --externo: #4fb47a; --externo-soft: rgba(79, 180, 122, 0.07); --externo-border: rgba(79, 180, 122, 0.3);
+    --destaque: #d4a84b; --destaque-soft: rgba(212, 168, 75, 0.07); --destaque-border: rgba(212, 168, 75, 0.32);
+    --nota: #4fb8c9; --nota-soft: rgba(79, 184, 201, 0.07); --nota-border: rgba(79, 184, 201, 0.3);
+    --correct: #4fb47a; --wrong: #ff5b55;
+  }
+  :root[data-theme="light"] {
+    --bg-0: #f6f2e7; --bg-1: #f6f2e7; --bg-2: #ece7d7; --bg-3: #dcd6c3;
+    --bg-glass: rgba(246, 242, 231, 0.92);
+    --text-0: #0a0908; --text-1: #1c1a16; --text-2: #6a655a; --text-3: #8d8778;
+    --accent-1: #0033ff; --accent-2: #002bd9; --accent-glow: rgba(0, 51, 255, 0.08);
+    --border: rgba(10, 9, 8, 0.18); --border-hover: rgba(10, 9, 8, 0.42);
+    --grad-1: #0033ff; --grad-2: #0033ff; --grad-hero: #f6f2e7;
+    --aula: #0033ff; --aula-soft: rgba(0, 51, 255, 0.05); --aula-border: rgba(0, 51, 255, 0.3);
+    --externo: #006a3a; --externo-soft: rgba(0, 106, 58, 0.06); --externo-border: rgba(0, 106, 58, 0.3);
+    --destaque: #8a5a00; --destaque-soft: rgba(138, 90, 0, 0.06); --destaque-border: rgba(138, 90, 0, 0.32);
+    --nota: #0a7c8f; --nota-soft: rgba(10, 124, 143, 0.06); --nota-border: rgba(10, 124, 143, 0.3);
+    --correct: #006a3a; --wrong: #c8241e;
+  }
+  body { font-family: var(--sans); }
+  ::selection { background: var(--accent-1); color: #f6f2e7; }
+  /* hero */
+  .hero { background: var(--bg-0); }
+  .hero::before { display: none; }
+  .hero-title { font-family: var(--serif); font-weight: 600; font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 0.98; letter-spacing: -0.02em; }
+  .hero-title .highlight { background: none; -webkit-text-fill-color: currentColor; color: var(--accent-1); font-style: italic; font-weight: 400; }
+  .hero-meta { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .hero-meta .dot { border-radius: 0; background: var(--accent-1); width: 5px; height: 5px; }
+  .dossie-badge { background: none; border: 1px solid var(--border-hover); color: var(--text-2); border-radius: var(--radius); }
+  /* chrome em mono caps */
+  .ctrl-btn, .filter-btn, .q-filter, .btn-reset, .btn-reveal, .reveal-btn, .conf-btn, .btn-finish, #finish-simulado-btn, .mode-pill, .mode-pills .pill, .diag-jump, .diag-link {
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.68rem; border-radius: var(--radius);
+  }
+  .ctrl-btn { background: none; border: 1px solid var(--border-hover); color: var(--text-1); }
+  .ctrl-btn:hover { border-color: var(--accent-1); color: var(--accent-1); }
+  .filter-btn, .q-filter, .btn-reset, .btn-reveal, .reveal-btn { background: none; border: 1px solid var(--border); color: var(--text-2); }
+  .filter-btn.active { background: var(--accent-glow); border-color: var(--accent-1); color: var(--accent-1); }
+  .btn-finish, #finish-simulado-btn { background: var(--accent-1); color: #f6f2e7; border: 1px solid var(--accent-1); }
+  .kbd { background: none; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--mono); }
+  /* abas */
+  .tab { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; font-weight: 500; color: var(--text-2); }
+  .tab:hover { color: var(--text-0); }
+  .tab.active { color: var(--text-0); border-bottom-color: var(--accent-1); }
+  .tab .tab-count { background: none; border: 1px solid var(--border); border-radius: var(--radius); }
+  .tab.active .tab-count { background: none; border-color: var(--accent-1); color: var(--accent-1); }
+  /* geometria: cantos retos, sem sombra */
+  .block, .q-card, .essay-card, .fc, .alt, .checkpoint, .summary-box, .explanation, .gabarito, .roteiro, .diagnostic-panel, .diag-panel, .diag-topic, .notice, .search-box, .search-input, figure.slide, .comp-table, .data-table, .flow-step, .essay-textarea, .mode-pills, .tab-count, .badge, .block-tag, .kw, span.pill, .drug, .fc-tag, .nav-item, .aula-section figure img, .legend-bar { border-radius: var(--radius) !important; }
+  .mode-pills { background: none; border: 1px solid var(--border-hover); padding: 0; }
+  .mode-pill, .mode-pills .pill { border-radius: 0 !important; padding: 8px 14px; }
+  .mode-pill.active, .mode-pills .pill.active { background: var(--accent-glow); color: var(--accent-1); box-shadow: none; }
+  .fc:hover { transform: none; box-shadow: none; border-color: var(--accent-1); }
+  .search-box { box-shadow: none; }
+  /* títulos em serifa */
+  .section-title, .aula-header h2, .aula-section > h2, .aula-section h3, .block h3, .resumao-section h3, .r-section-title, .diag-title, .diagnostic-panel h3 { font-family: var(--serif); font-weight: 600; letter-spacing: -0.01em; }
+  .aula-header h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em; margin: 6px 0 10px; }
+  .aula-num { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-1); }
+  .aula-lead { color: var(--text-2); max-width: 70ch; }
+  .stat-val { font-family: var(--serif); font-weight: 500; }
+  .section-divider, hr { background: var(--border); }
+  /* recolorir fundos hardcoded pros tokens */
+  .alt.correct { background: color-mix(in srgb, var(--correct) 8%, transparent); }
+  .alt.wrong { background: color-mix(in srgb, var(--wrong) 8%, transparent); }
+  .badge-easy, .badge-facil { background: color-mix(in srgb, var(--correct) 12%, transparent); }
+  .badge-medium, .badge-medio { background: color-mix(in srgb, var(--destaque) 12%, transparent); }
+  .badge-hard, .badge-dificil { background: color-mix(in srgb, var(--wrong) 12%, transparent); }
+  .badge-diss { background: color-mix(in srgb, var(--aula) 12%, transparent); }
+  .block-tag.aula, .aula > .block-tag { background: color-mix(in srgb, var(--aula) 12%, transparent); }
+  .block-tag.externo, .externo > .block-tag { background: color-mix(in srgb, var(--externo) 12%, transparent); }
+  .block-tag.destaque, .destaque > .block-tag { background: color-mix(in srgb, var(--destaque) 12%, transparent); }
+  .block-tag.nota { background: color-mix(in srgb, var(--nota) 14%, transparent); }
+  .not-confuse, .alert-danger { background: color-mix(in srgb, var(--wrong) 6%, transparent); border: 1px solid color-mix(in srgb, var(--wrong) 25%, transparent); border-radius: var(--radius); }
+  .gabarito { background: var(--accent-glow); border: 1px solid color-mix(in srgb, var(--accent-1) 25%, transparent); }
+  .kw, span.pill { background: none; border: 1px solid var(--border-hover); color: var(--text-1); }
+  .drug { background: var(--bg-2); border: 1px solid var(--border); }
+  .diag-jump:hover, .diag-link:hover { background: var(--accent-1); color: #f6f2e7; }
+  /* selo ancorado no topo */
+  #wm-slot { display: flex; align-items: center; }
+  #wm-slot #wm { position: static !important; transform: none !important; margin: 0 10px; background: none !important; border: 1px solid var(--border-hover) !important; color: var(--text-2) !important; font-family: var(--mono) !important; letter-spacing: 0.08em; border-radius: var(--radius) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  @media (max-width: 720px) { #wm-slot #wm { display: none; } }
+  /* chip de tema ☀/☾ */
+  #themeToggle { width: 34px; height: 34px; min-width: 34px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: none; border: 1px solid var(--border-hover); color: var(--text-0); border-radius: var(--radius); font-size: 15px; line-height: 1; cursor: pointer; }
+  #themeToggle:hover { border-color: var(--accent-1); color: var(--accent-1); }
+</style>
 </head>
 <body>
 
@@ -294,7 +391,8 @@
     <div class="hero-top">
       <div class="dossie-badge">DOSSIÊ CLÍNICO Nº 004 · JUN 2026</div>
       <div class="hero-controls">
-        <button class="ctrl-btn" onclick="toggleTheme()">Tema <span class="kbd">T</span></button>
+        <span id="wm-slot"></span>
+        <button class="ctrl-btn" id="themeToggle" onclick="toggleTheme()" title="Alternar tema (T)">☀</button>
         <button class="ctrl-btn" onclick="openSearch()">Buscar <span class="kbd">⌘K</span></button>
       </div>
     </div>
@@ -3969,10 +4067,16 @@ function switchTab(id, el) {
 }
 
 /* ============ THEME ============ */
-function toggleTheme() {
-  const h = document.documentElement;
-  h.dataset.theme = h.dataset.theme === 'dark' ? 'light' : 'dark';
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('cortex-theme', t); } catch (e) {}
+  const b = document.getElementById('themeToggle');
+  if (b) b.textContent = t === 'dark' ? '☀' : '☾';
 }
+function toggleTheme() {
+  setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+}
+try { setTheme(localStorage.getItem('cortex-theme') || 'dark'); } catch (e) { setTheme('dark'); }
 
 /* ============ RENDER QUESTOES ============ */
 const LETTERS = ['A','B','C','D','E'];
@@ -4330,5 +4434,6 @@ function init() {
 document.addEventListener('DOMContentLoaded', init);
 </script>
 <!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script>
 </body>
 </html>
