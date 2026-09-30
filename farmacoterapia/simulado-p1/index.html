@@ -730,13 +730,23 @@ function fmtEnun(t){
     .replace(/\s+(É correto|A sequência correta|Assinale a)/g,'<br>$1')
     .replace(/^(<br>)+/,'');
 }
+function fmtDiss(t){
+  return fmtEnun(t)
+    .replace(/\s*·\s*(?=\(\d+\))/g,'<br>')
+    .replace(/\s*·\s*(?=(?:XI|X|IX|VIII|VII|VI|V|IV|III|II|I)\s+[A-ZÁÉÍÓÚÂÊÔÃÕ])/g,'<br>')
+    .replace(/\s+(?=Vias:)/g,'<br>')
+    .replace(/\s+(?=⚠️)/g,'<br>')
+    .replace(/\s+(?=[①②③④⑤])/g,'<br>')
+    .replace(/\s+(?=\[(?:Resposta corrigida|Gabarito revisado))/g,'<br>')
+    .replace(/^(<br>)+/,'');
+}
 function qHTML(q,modo){
   const img=q.img?`<figure class="qimg"><img loading="lazy" src="img/${q.img}" alt="Figura da questão ${q.id}">${q.imgcap?`<figcaption>${q.imgcap}</figcaption>`:''}</figure>`:'';
   const alts=q.alts.map((a,i)=>`<button class="alt" data-q="${q.id}" data-i="${i}"><span class="letra">${L4[i]})</span><span>${a}</span><span class="risc" title="Riscar alternativa">✕</span></button>`).join('');
   const varia=q.varia?`<p class="varia">↺ ${q.varia}</p>`:'';
   return `<div class="q" id="${modo}-${q.id}"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span></div>
   <div class="enun">${fmtEnun(q.enun)}</div>${img}<div class="alts">${alts}</div>${varia}
-  <div class="exp" id="${modo}-exp-${q.id}"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte da resposta: ${q.fonteResp}.</span></div></div>`;
+  <div class="exp" id="${modo}-exp-${q.id}"><b>Gabarito: ${L4[q.correta]})</b> — ${fmtDiss(q.exp)}<span class="fonte">Fonte da resposta: ${q.fonteResp}.</span></div></div>`;
 }
 
 /* ===== modo estudo ===== */
@@ -822,7 +832,7 @@ function simFinaliza(){
     return `<div class="q"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span>
       <span style="font-weight:800;color:${ok?'var(--ok)':'var(--err)'}">${ok?'✓ acertou':'✗ errou'}</span></div>
       <div class="rev">Sua resposta: <b>${r!=null?L4[r]+')':'em branco'}</b> · Correta: <b>${L4[q.correta]})</b></div>
-      <div class="exp show" style="margin-top:8px"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte: ${q.fonteResp}.</span></div></div>`;
+      <div class="exp show" style="margin-top:8px"><b>Gabarito: ${L4[q.correta]})</b> — ${fmtDiss(q.exp)}<span class="fonte">Fonte: ${q.fonteResp}.</span></div></div>`;
   }).join('');
   document.getElementById('sim-area').style.display='none';
   document.getElementById('sim-result').style.display='block';
@@ -871,9 +881,9 @@ function dissHTML(d){
   const img=d.img?`<figure class="qimg"><img loading="lazy" src="img/${d.img}" alt="Figura de ${d.id}">${d.imgcap?`<figcaption>${d.imgcap}</figcaption>`:''}</figure>`:'';
   const itens=d.itens.map((it,i)=>`<div class="item"><p class="perg">${it.p}</p>
     <button class="mini" data-t="${d.id}-${i}">👁 Revelar resposta modelo</button>
-    <div class="resp" id="resp-${d.id}-${i}">${it.r}</div></div>`).join('');
+    <div class="resp" id="resp-${d.id}-${i}">${fmtDiss(it.r)}</div></div>`).join('');
   return `<div class="q diss"><div class="qhead"><span class="qid">${d.id}</span>${d.org?`<span class="qorg">${d.org}</span>`:''}</div>
-    ${d.enun?`<div class="enun">${fmtEnun(d.enun)}</div>`:''}${img}${itens}</div>`;
+    ${d.enun?`<div class="enun">${fmtDiss(d.enun)}</div>`:''}${img}${itens}</div>`;
 }
 document.getElementById('lista-diss').innerHTML=DISSERTATIVAS.map(dissHTML).join('');
 document.getElementById('lista-lam').innerHTML=LAMINAS.map(dissHTML).join('');
