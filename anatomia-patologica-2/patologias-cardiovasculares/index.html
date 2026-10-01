@@ -1,0 +1,1679 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 07 — Patologias do Sistema Cardiovascular · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('cortex-theme')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style id="dossie-skin">/* ===== SKIN DOSSIÊ — override de tema (Córtex Estudos) ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --surface:#141311; --surface2:#1d1b18;
+  --ink:#e8e4d7; --ink-soft:#cfcab9; --muted:#8a8573; --faint:#6d6a5e;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --gold:#d4a84b; --caso:#4fb47a; --alerta:#ff5b55; --ok:#4fb47a; --err:#ff5b55;
+  --radius:2px;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --surface:#f6f2e7; --surface2:#ece7d7;
+  --ink:#0a0908; --ink-soft:#1c1a16; --muted:#6a655a; --faint:#8d8778;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --gold:#8a5a00; --caso:#006a3a; --alerta:#c8241e; --ok:#006a3a; --err:#c8241e;
+}
+/* tipografia dossiê */
+.page-h1,.hero h1,h1{font-family:var(--serif)!important;font-weight:600;letter-spacing:-.01em}
+.kick,.aula-tag,.badge,.chip,.lab,.lbl,.qnum,.qhead .aula,.ctl-label,.counter,.prog,.sub,.hubfoot,.stat .lab,.eyebrow{
+  font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.hub-brand,.tab,.hub-tab,.navbtn,.btn,.reveal-btn,.ghost{font-family:var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+/* superfícies quadradas + réguas */
+.card,.box,.panel .wrap section,.q,.fig,.vinheta,.modelo,.toc,.simbar,.stat,.dk,.stage{border-radius:var(--radius)!important}
+.btn,.tab,.hub-tab,.opt,.alt,.chip,.badge,.navbtn,.reveal-btn,.ghost,.seg{border-radius:var(--radius)!important}
+.card,.box,.q,.toc,.vinheta,.modelo{border:1px solid var(--line)!important;box-shadow:none!important}
+/* cabeçalho tipo topbar do dossiê */
+.hubhead{background:var(--bg)!important;border-bottom:1px solid var(--line-strong)!important;box-shadow:none!important}
+.hub-brand{color:var(--muted)!important}
+.hub-tab{border:0!important;background:none!important;border-bottom:2px solid transparent!important;color:var(--muted)!important;padding:10px 2px!important;margin-right:18px}
+.hub-tab.active,.hub-tab.on{color:var(--ink)!important;border-bottom-color:var(--accent)!important;background:none!important}
+/* botões de ação principais mantêm o cobalto */
+.btn{border:1px solid var(--line-strong)!important;background:var(--surface)!important;color:var(--ink)!important}
+.btn:hover{border-color:var(--accent)!important;color:var(--accent)!important}
+/* alternativas de questão */
+.opt,.alt{border:1px solid var(--line)!important;background:var(--surface)!important}
+.opt:hover,.alt:hover{border-color:var(--accent)!important}
+.opt.locked.correct,.alt.certa{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 8%,var(--surface))!important}
+.opt.locked.wrong,.alt.errada{border-color:var(--alerta)!important;background:color-mix(in srgb,var(--alerta) 8%,var(--surface))!important}
+.letra{font-family:var(--mono)!important;color:var(--accent)!important}
+/* selo/watermark ancorado */
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px 0 14px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+/* botão de tema: chip ☀/☾ */
+#themeToggle{border:1px solid var(--line-strong)!important;background:none!important;color:var(--ink)!important;border-radius:var(--radius)!important;min-width:34px;font-size:14px;line-height:1}
+/* hairlines nos títulos de seção */
+.panel .wrap section>h2,.box-h,h2{border-bottom:1px solid var(--line);padding-bottom:.35em;font-family:var(--serif);letter-spacing:0}
+/* stat band */
+.statgrid,.simbar{border-top:1px solid var(--line-strong)!important;border-bottom:1px solid var(--line-strong)!important}
+.stat b,.stat .big{font-family:var(--serif)!important}
+/* riscar mantém o tracejado na cor da linha */
+.risc{border-left:1px dashed var(--line-strong)!important;color:var(--muted)}
+/* refinamentos v2 */
+.page-h1{font-size:clamp(2.4rem,6vw,4.2rem)!important;line-height:.98!important;letter-spacing:-.015em!important;margin:.15em 0 .25em!important}
+#themeToggle{position:fixed;width:34px!important;height:34px!important;border-radius:var(--radius)!important;font-size:15px!important;background:var(--bg)!important}
+.lead{max-width:70ch}
+.hub-tab{font-size:.78rem!important}
+/* v3: emojis fora, segmentos mono */
+.tab .ico,.hub-tab .ico,.title-row .emoji{display:none!important}
+.seg{border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;background:none!important;overflow:hidden;padding:0!important}
+.seg button{font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem!important;background:none!important;color:var(--muted)!important;border:0!important;border-radius:0!important;padding:8px 14px!important}
+.seg button.active{color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.tab{font-family:var(--mono)!important;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem!important;border:0!important;background:none!important;border-bottom:2px solid transparent!important;border-radius:0!important;color:var(--muted)!important}
+.tab.active{color:var(--ink)!important;border-bottom-color:var(--accent)!important}
+nav.top #themeToggle{position:static!important;margin-left:14px;width:32px!important;height:32px!important}
+/* v4: header sem azul — tinta/mono como na referência */
+.hubhead a,.hub-brand,.hub-brand a,.hubhead .title a,.hubhead b{color:var(--ink)!important;text-decoration:none}
+.hubhead a:hover{color:var(--accent)!important}
+nav.top a,nav.top .brand,nav.top .brand a{color:var(--ink)!important;text-decoration:none}
+nav.top a:hover{color:var(--accent)!important}
+.kick{color:var(--muted)!important}
+.kick::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:9px}
+.hubhead .sub{color:var(--ink)!important}
+</style>
+<body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☀</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🫀</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 07 — Patologias do Sistema Cardiovascular</span><span id="wm-slot"></span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Conteúdo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 07 (dupla)</p>
+  <h1 class="page-h1">Patologias do Sistema Cardiovascular</h1>
+  <p class="lead">A aula mais densa do bloco: da bioquímica da contração ao laudo de necropsia de um infarto, passando pelos marcadores de lesão miocárdica, a placa aterosclerótica, as valvopatias (calcificada, reumática e do conjuntivo) e as comunicações septais. O fio condutor que a professora repetiu o tempo todo: <b>o problema é sempre o oxigênio → ATP</b> — e a clínica bem colhida é soberana sobre qualquer exame.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">Panorama: por que o coração ainda é quem mais mata</a></li>
+      <li><a href="#t2">Cardiopatia isquêmica: causas e o endotélio</a></li>
+      <li><a href="#t3">O cardiomiócito e a contração (a base dos marcadores)</a></li>
+      <li><a href="#t4">O que a isquemia faz na célula: ATP, cálcio, lactato e DAMPs</a></li>
+      <li><a href="#t5">Marcadores de lesão miocárdica: CK, mioglobina e troponinas</a></li>
+      <li><a href="#t6">Angina e as manifestações evolutivas</a></li>
+      <li><a href="#t7">Patologia do infarto: macro, micro e cicatriz</a></li>
+      <li><a href="#t8">Aterosclerose: da LDL à placa instável</a></li>
+      <li><a href="#t9">Valvopatias e a estenose aórtica calcificada</a></li>
+      <li><a href="#t10">Febre reumática: mimetismo molecular e critérios de Jones</a></li>
+      <li><a href="#t11">Valvopatias das doenças do conjuntivo (Marfan, Ehlers-Danlos)</a></li>
+      <li><a href="#t12">Cardiopatias congênitas: comunicações interatrial e interventricular</a></li>
+      <li><a href="#t13">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Panorama: por que o coração ainda é quem mais mata</h2>
+  <ul>
+    <li>As doenças cardiovasculares continuam sendo a <b>principal causa de morte no mundo</b> — e a estatística não melhora, piora. Quase <b>um terço</b> das mortes por doença cardíaca ocorre <b>antes dos 75 anos</b> (dano econômico), e as <b>cardiopatias isquêmicas</b> lideram.</li>
+    <li>O motor disso, segundo a professora, é o estilo de vida: <b>alimentação ultraprocessada</b>, sedentarismo, falta de tempo e de organização — e o infarto está ficando <b>cada vez mais jovem</b> (casos aos 20, 30 e até na adolescência).</li>
+    <li>Não é só coração: a mesma doença vascular aparece como AVC, isquemia mesentérica, de artéria renal.</li>
+    <li><b>Exercício aeróbico regular</b> (≈3×/semana) estimula a <b>ramificação das coronárias</b> (angiogênese miocárdica) — circulação colateral que protege antes que a idade o faça.</li>
+  </ul>
+  <div class="diagrama"><p class="t">As vias fisiopatológicas das lesões cardiovasculares (slide da aula)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Obstrução de fluxo</b> — <span class="d">a mais prevalente; por isso a aula começa por ela (cardiopatia isquêmica).</span></div></li>
+    <li><span class="n">2</span><div><b>Falência da bomba</b> — <span class="d">depois do infarto "o coração nunca mais é o mesmo": músculo trocado por cicatriz que não contrai nem relaxa.</span></div></li>
+    <li><span class="n">3</span><div><b>Fluxos regurgitantes</b> — <span class="d">valvas que não fecham (inclusive por lesão de músculo papilar no infarto, ou isoladamente pela LDL no folheto).</span></div></li>
+    <li><span class="n">4</span><div><b>Distúrbios de condução</b> — <span class="d">o feixe de His e as fibras de Purkinje estão entranhados no músculo: se ele morre, a condução "dança junto" → arritmias.</span></div></li>
+    <li><span class="n">5</span><div><b>Ruptura vascular ou cardíaca</b> e <b>defeitos congênitos</b> — <span class="d">a aula fecha com a descontinuidade de septo, que pode ser achada até no adulto.</span></div></li>
+  </ol></div>
+  <p>As setas não são uma sequência obrigatória: as realidades se cruzam (posso ter valvopatia pós-infarto ou valvopatia sem infarto nenhum).</p>
+
+  <h2 class="topic" id="t2">2 · Cardiopatia isquêmica: causas e o endotélio</h2>
+  <p>Isquemia = <b>desequilíbrio entre suprimento sanguíneo e demanda</b> de O<sub>2</sub> e nutrientes. Na grande maioria das vezes, por <b>redução da perfusão coronariana</b> por <b>doença aterosclerótica</b> (± trombo).</p>
+  <div class="box prof"><p class="h">🎯 O oxigênio é o "problemão", não a glicose</p>
+  <p>Uma glicose oferta 12 hidrogênios e exige no mínimo 6 O<sub>2</sub> para ser oxidada — então o <b>déficit de oxigênio se expressa muito antes</b> do déficit de substrato. Toda conduta na doença vascular corre contra o tempo para <b>devolver perfusão e oxigenação</b> (por isso a fibrinólise do trombo: quanto antes reperfundir, menos hidrogênio livre e menos acidose).</p></div>
+  <h3>Causas que NÃO são placa (a "minoria" do slide)</h3>
+  <ul>
+    <li><b>Crise hipertensiva:</b> a pressão é a velocidade do sangue nos tecidos; muito alta, a troca gasosa fica ineficaz → <b>infarto sem obstrução nenhuma</b>. Por isso crise hipertensiva é emergência.</li>
+    <li><b>Hipotensão grave/choque</b> (hemorragia, sepse com vasodilatação extrema): fluxo lento → hipóxia. Sem causa definida, expande-se volume enquanto se investiga.</li>
+    <li><b>Doença pulmonar grave</b> (a doença é oxigenatória, não circulatória), <b>anemias</b> mal conduzidas (talassemia, falciforme), <b>envenenamento por metais pesados</b> (mercúrio de garimpo, rejeitos de barragens): o metal ocupa o lugar do O<sub>2</sub> no ferro da hemoglobina e a 2,3-BPG não desfaz essa ligação.</li>
+    <li><b>Êmbolos que entram de repente</b> na circulação: líquido amniótico, gordura (fratura, lipoaspiração), ar. Não aderem à parede, mas ocupam o lúmen.</li>
+  </ul>
+  <h3>O endotélio é um órgão</h3>
+  <ul>
+    <li>Epitélio pavimentoso simples que reveste a luz — e é <b>sensor do cisalhamento</b>. Pressão sobe → produz <b>óxido nítrico</b> → difunde para a média → relaxa a musculatura lisa → vasodilatação. Pressão cai → libera <b>endotelina</b> → vasoconstrição. Esse ajuste acontece o dia inteiro (subir escada correndo, acordar de manhã).</li>
+    <li>O hipertenso/dislipidêmico de longa data tem <b>doença endotelial</b> muito antes da placa: o endotélio não responde. O agressor mais comum é a <b>LDL alta</b> depositada na superfície, com inflamação e destruição do epitélio.</li>
+    <li>Teste da função endotelial: <b>Doppler</b> de vaso de médio calibre antes e depois de um vasodilatador sublingual — quem não dilata tem doença endotelial e risco altíssimo (e não adianta insistir em drogas que dependem do endotélio).</li>
+  </ul>
+
+  <h2 class="topic" id="t3">3 · O cardiomiócito e a contração (a base dos marcadores)</h2>
+  <p>A professora revisou a fisiologia porque <b>os marcadores do infarto são proteínas de dentro do cardiomiócito</b> — saber quem são explica por que aparecem no sangue.</p>
+  <ul>
+    <li>Características do músculo cardíaco: <b>muitas mitocôndrias</b>, contração repetida a vida inteira, <b>incapaz de manter débito de O<sub>2</sub></b>, rápida oxidação e síntese de ATP, ≈ <b>1 capilar por fibra</b>. E <b>não faz mitose com eficácia</b>: célula morta vira cicatriz.</li>
+    <li>Kit proteico: <b>actina</b> (colar de pérolas) enovelada pela <b>tropomiosina</b>, na qual se prende o <b>complexo de troponinas I, C e T</b>; a <b>miosina</b> tem cabeças que precisam encaixar entre os monômeros de actina — mas o sítio está ocupado pelas troponinas.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide08-proteinas-contracao.jpg" alt="Estrutura proteica da contração: actina, tropomiosina, complexo de troponina e miosina">
+  <figcaption><b>Estrutura proteica da contração</b> — actina com a tropomiosina enrolada e o complexo de troponinas I-C-T; à direita, sarcômero, túbulo T e retículo sarcoplasmático (as reservas de cálcio). A troponina que "sobra" no sangue é a prova de que a célula rompeu.</figcaption></figure>
+  <div class="diagrama"><p class="t">A sequência da contração</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Potencial de membrana</b> — <span class="d">mantido pela bomba Na⁺/K⁺ (gasta ATP). Sem ele, a célula não sente o potencial de ação.</span></div></li>
+    <li><span class="n">2</span><div><b>Cálcio desencadeador</b> — <span class="d">o potencial de ação abre canais de cálcio voltagem-dependentes; entra cálcio vindo do <b>túbulo T</b>, pouco, mas que <b>dispara a avalanche</b> de cálcio do <b>retículo sarcoplasmático</b> (cálcio liberando cálcio).</span></div></li>
+    <li><span class="n">3</span><div><b>Troponina C</b> — <span class="d">o cálcio liga no receptor da troponina C, o complexo I-C-T se desloca e libera o sítio para a cabeça da miosina.</span></div></li>
+    <li><span class="n">4</span><div><b>Fosforilação da miosina</b> — <span class="d">pelo ATP, com o <b>magnésio como cofator</b> → ponte cruzada, deslizamento.</span></div></li>
+    <li><span class="n">5</span><div><b>Recaptação</b> — <span class="d">ao fim da sístole a <b>Ca²⁺-ATPase</b> (gasta ATP) tira o cálcio; o bloqueio volta e a fibra relaxa. Cálcio que fica dentro ativa caspases → morte.</span></div></li>
+  </ol></div>
+
+  <h2 class="topic" id="t4">4 · O que a isquemia faz na célula: ATP, cálcio, lactato e DAMPs</h2>
+  <div class="box prof"><p class="h">🎯 "O ATP é o único problema de tudo"</p>
+  <p>Sem O<sub>2</sub> → sem ATP → <b>(1)</b> a bomba Na⁺/K⁺ para: perde o potencial de membrana, entra sódio e água (degeneração hidrópica) e a célula fica <b>insensível ao potencial de ação</b>; <b>(2)</b> sem potencial de ação não abre canal de cálcio, não desloca troponina C, <b>não contrai</b> — área grande imóvel pode parar o coração inteiro; <b>(3)</b> o cálcio que entrou <b>não sai</b> (Ca²⁺-ATPase parada) e ativa <b>caspases → apoptose</b>. Resultado: na área infartada há células mortas por <b>necrose</b> (evolução da degeneração hidrópica, a via clássica) <b>e</b> por <b>apoptose</b> indesejada — o que pode ampliar a área de necrose além do território do vaso.</p></div>
+  <ul>
+    <li>Tolerância baixíssima: em ≈ <b>60 segundos</b> de déficit, ~50% das células já estão degeneradas; em ≈ <b>5 minutos</b>, rompem-se.</li>
+    <li>A única solução resolutiva é <b>reperfundir</b>: voltando o ATP, voltam as bombas. Quelante de cálcio, magnésio (otimiza a fosforilação da miosina nas paradas prolongadas) e anti-inflamatórios são <b>adjuvantes</b>, nunca a conduta primária — e estão em protocolo.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide13-lesao-reversivel-irreversivel.jpg" alt="Esquema de lesão celular isquêmica reversível e irreversível">
+  <figcaption><b>Da lesão reversível à irreversível</b> — queda de fosforilação oxidativa e ATP, falha da bomba Na⁺/K⁺ (tumefação), glicólise com <b>lactato</b> e queda de pH; na fase irreversível, influxo de cálcio ativando fosfolipases, proteases, endonucleases e ATPases, lesão de membrana e <b>saída de enzimas (CK, LDH)</b> para o sangue.</figcaption></figure>
+  <h3>Lactato: entender o mecanismo, não decorar número</h3>
+  <ul>
+    <li>Sem O<sub>2</sub> na cadeia respiratória, sobram hidrogênios → <b>acidose da matriz mitocondrial</b> → enzimas do <b>ciclo de Krebs desnaturam</b> → para NADH/FADH₂ → para o ATP.</li>
+    <li>A célula "não entende" e aumenta o substrato: fica mais permeável à glicose, faz mais glicólise → <b>piruvato + NADH</b> que não entram na mitocôndria doente → o NADH transfere o hidrogênio ao piruvato → <b>lactato</b>.</li>
+    <li>Lactato alto diz uma coisa só: <b>estou em respiração anaeróbia (hipóxia)</b> — seja infarto, hemorragia ou sepse (vasodilatação + alta demanda da resposta imune). A interpretação é a mesma, aplicada a cada história.</li>
+  </ul>
+  <h3>DAMPs e a lesão de reperfusão</h3>
+  <ul>
+    <li>O cardiomiócito que estoura libera <b>DAMPs</b> (ATP, pedaços de núcleo, de mitocôndria, de membrana). Macrófagos os reconhecem, liberam <b>citocinas</b>, atraem leucócitos — que produzem <b>radicais livres e enzimas</b> e destroem mais tecido. "A coisa já está feia e vem uma inflamação para acabar de lascar."</li>
+  </ul>
+
+  <h2 class="topic" id="t5">5 · Marcadores de lesão miocárdica: CK, mioglobina e troponinas</h2>
+  <p>Proteínas do citoplasma do cardiomiócito que caem primeiro nos <b>capilares do interstício</b> e só depois chegam à circulação sistêmica. O tempo até aparecerem depende da <b>quantidade</b> dentro da célula e do <b>tamanho</b> da molécula; a <b>degradação</b> no plasma (que não é o ambiente delas) define quanto tempo ficam detectáveis. Os estudos são de infartos de <b>pequeno a médio porte</b> (os grandes podem elevar antes).</p>
+  <div class="box prof"><p class="h">🎯 "Isso aqui tem que decorar" — e a prova traz o histórico com horário</p>
+  <p>A professora avisou que a prova dá a história (hora do início dos sintomas, sintomas) e você escolhe/interpreta o marcador. Sem saber as janelas, não há como usar a ferramenta.</p></div>
+  <div class="tablewrap"><table>
+    <tr><th>Marcador</th><th>O que é</th><th>Começa a subir</th><th>Pico</th><th>Normaliza</th><th>Sensib.</th><th>Uso preferencial</th></tr>
+    <tr><td><b>Mioglobina</b></td><td>reservatório de O<sub>2</sub> no músculo; abundante</td><td><b>1–2 h</b></td><td>6–9 h</td><td><b>12–24 h</b></td><td>95%</td><td><b>diagnóstico precoce</b> e <b>reinfarto</b>; inespecífica (músculo esquelético, renal, queimados, trauma)</td></tr>
+    <tr><td><b>CK-MB</b></td><td>creatina quinase (reserva de fosfato), isoforma cardíaca</td><td><b>4–6 h</b></td><td><b>18 h</b></td><td>48–72 h</td><td>93%</td><td>quem chega <b>tarde</b> (horas); ruim para diagnóstico precoce</td></tr>
+    <tr><td><b>Troponinas</b> (I, C, T)</td><td>proteína estrutural do complexo de contração; grande</td><td><b>4–6 h</b></td><td><b>36–72 h</b></td><td><b>5–14 dias</b></td><td>95%</td><td>quem chega <b>dias depois</b> ("semana passada joguei bola e passei mal")</td></tr>
+  </table></div>
+  <figure class="fig"><img src="img/slide22-curvas-marcadores.jpg" alt="Curvas de mioglobina, CK total, CK-MB, LDH e troponina após o infarto">
+  <figcaption><b>Curvas dos marcadores após o infarto</b> (eixo x em horas) — a mioglobina sobe e cai primeiro; CK e CK-MB vêm em seguida; a troponina sobe depois e fica elevada por muitos dias (cauda longa). É o gráfico que explica qual exame pedir para cada tempo de história.</figcaption></figure>
+  <h3>CK total × isoformas</h3>
+  <ul>
+    <li><b>CK total</b> (barata, acessível) não diz de onde veio: músculo esquelético, cérebro e coração têm CK. Agente de confusão = atividade física intensa, queda, trauma (o ciclista que "infartou" no passeio; o infartado que bateu o carro no muro da unidade).</li>
+    <li>Isoformas: <b>CK-MB = coração</b> · <b>CK-MM = músculo esquelético</b> · <b>CK-BB = cérebro</b>. Dá até para fazer CK total − MB para estimar o quanto veio do esquelético.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Triplicata e "casadinhos"</p>
+  <p>Uma CK-MB negativa 3 h após o início da dor <b>não exclui infarto</b> — está fora da janela. Repete-se em intervalos (<b>triplicata</b>), em vez de "dosar uma vez, dar analgésico e mandar para casa". E nunca se pede um marcador só: combina-se um <b>específico</b> com um <b>inespecífico</b> (ex.: TGO + mioglobina, TGO + CK-MB), somando clínica e eletrocardiograma — <b>a clínica é soberana</b>; quem pede exame sem saber a clínica só gera fator de confusão. O sangue é o material (a urina demora demais: "infarto é tudo para ontem").</p></div>
+  <div class="box caso"><p class="h">🩺 Mioglobina no reinfarto</p>
+  <p>Paciente infartado com mioglobina 4 (referência 1); ainda na emergência, volta a ter dor e a nova dosagem vem 6 — um <b>novo pico sobre o anterior</b> com dor = <b>reinfarto</b>. Uso clássico na emergência e na UTI, graças à subida e queda rápidas.</p></div>
+
+  <h2 class="topic" id="t6">6 · Angina e as manifestações evolutivas</h2>
+  <ul>
+    <li><b>Angina estável:</b> dor no esforço previsível (subir escada), alivia no repouso; estenose média de <b>~70%</b>. O coração <b>não dói</b> com obstrução abaixo de 70% — tolerância "péssima". E o paciente recua (troca a escada pelo elevador) em vez de investigar; a placa segue evoluindo.</li>
+    <li><b>Angina instável:</b> dor a pequenos esforços ou em repouso, contínua e crescente; estenose média de <b>~90%</b> — "um fio de sangue passando".</li>
+    <li><b>Angina por espasmo:</b> vasoconstrição somada a uma obstrução prévia — <b>frio</b> (vasoconstrição para conservar calor) e <b>catecolaminas</b> de grandes emoções (raiva, assalto, luto). Infartos por espasmo giravam em ~4% e foram a ~12% na pandemia.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide23-espectro-angina.jpg" alt="Espectro da angina: estável, por espasmo e instável">
+  <figcaption><b>O espectro da angina</b> — estável (esforço previsível, ~70% de estenose) → por espasmo → instável (pequenos esforços/repouso, ~90%), com o capilar passando de aeróbico a hipóxico e necrótico.</figcaption></figure>
+  <div class="diagrama"><p class="t">Manifestações clínicas evolutivas</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Infarto agudo do miocárdio</b> — <span class="d">morte de cardiomiócitos (necrose).</span></div></li>
+    <li><span class="n">2</span><div><b>Cardiopatia isquêmica com ICC</b> — <span class="d">após um IAM ou pela soma de pequenas lesões isquêmicas que deixam fibrose: o paciente que infartou 2, 3, 4 vezes até a cicatriz ser limitante.</span></div></li>
+    <li><span class="n">3</span><div><b>Morte súbita cardíaca</b> — <span class="d">lesão tecidual + arritmia fatal.</span></div></li>
+  </ol></div>
+  <ul>
+    <li><b>Infarto fulminante</b> = artéria de grande calibre e distribuição ampla. A causa prevalente é <b>aterosclerose + trombo agudo</b>: a placa (crônica) expõe o subendotélio e o trombo (agudo) fecha tudo — sem o trombo, o paciente teria uma angina instável e tempo de intervir.</li>
+  </ul>
+
+  <h2 class="topic" id="t7">7 · Patologia do infarto: macro, micro e cicatriz</h2>
+  <h3>Na verificação de óbito</h3>
+  <ul>
+    <li>Duas formas de laudar infarto: <b>ver a obstrução</b> (placa/trombo na coronária, achada tateando as áreas de rigidez) ou <b>ver a resposta</b> — a <b>hiperemia reativa</b>, área escurecida pela chegada de sangue e células inflamatórias atraídas pelos DAMPs (não é hiperperfusão: é demanda inflamatória).</li>
+    <li><b>Ruptura da parede:</b> necrose num órgão sob pressão "abre um buraco" → sangue no saco pericárdico → <b>tamponamento cardíaco</b>, que compromete sístole e diástole e mata mais rápido que o próprio infarto.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide26-ruptura-parede.jpg" alt="Coração com orifício de ruptura da parede ventricular após infarto">
+  <figcaption><b>Ruptura de parede pós-infarto</b> (círculo verde) — o orifício por onde o sangue saiu para o pericárdio, produzindo tamponamento. Necrose + pressão = buraco.</figcaption></figure>
+  <figure class="fig"><img src="img/slide27-macro-infarto-papilar.jpg" alt="Macroscopia de infarto recente do músculo papilar">
+  <figcaption><b>Infarto recente do músculo papilar</b> — necrose coagulativa (área pálida) cercada por <b>hiperemia reativa</b> (linha verde), ao lado de miocárdio normal. Músculo papilar lesado = valva mitral sem tração → regurgitação.</figcaption></figure>
+  <div class="box caso"><p class="h">🩺 A placa de 10–20% e o trombo de 100%</p>
+  <p>Senhora com sobrepeso, dedos amarelados de tabagista, esteatose hepática e fibrose apical pulmonar: tudo fator de risco de longa data. Dor precordial após o jantar, parada, óbito. Na coronária, uma <b>placa ateromatosa amarela que obstruía no máximo 10–20%</b> — o que fechou <b>100%</b> do lúmen foi o <b>trombo</b>: a LDL lesou o endotélio, expôs o <b>fator de von Willebrand</b> do subendotélio, que atrai plaquetas, que liberam mais von Willebrand e atraem mais plaquetas. A professora usou o caso para defender a proteção antitrombótica do paciente hipertenso com LDL alto (ela citou que a diretriz a preconiza, além do anti-hipertensivo e da estatina).</p></div>
+  <h3>Microscopia: necrose de coagulação → cicatriz</h3>
+  <ul>
+    <li>Na lâmina de H&amp;E trabalha-se com <b>membrana, núcleo e citosol</b>: citosol mais <b>eosinofílico</b>; núcleo <b>picnótico</b> (cromatina condensada), em <b>cariorrexe</b> (fragmentado) ou ausente (<b>cariólise</b>); cardiomiócitos separados por <b>edema</b> e <b>infiltrado inflamatório</b> intersticial.</li>
+    <li>Tecido de textura firme, proteínas estruturais e enzimas desnaturadas (por isso a arquitetura se mantém), células anucleadas e eosinofílicas.</li>
+    <li>Cronologia do infiltrado: primeiro <b>neutrófilos</b> (agudo), depois mistura com <b>linfócitos</b>. A inflamação remove os restos por fagocitose e suas citocinas ativam <b>fibroblastos</b> → <b>tecido conjuntivo denso</b>: a cicatriz que não contrai nem relaxa.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide29-necrose-coagulacao.jpg" alt="Necrose de coagulação no miocárdio com células inflamatórias">
+  <figcaption><b>Necrose de coagulação</b> — sequência do slide (desnaturação → células anucleadas e eosinofílicas → leucócitos e enzimas lisossômicas → fagocitose dos restos → fibroblastos e conjuntivo denso) e a histologia com <b>células inflamatórias entre os miócitos necróticos</b>.</figcaption></figure>
+  <figure class="fig"><img src="img/slide30-cicatriz-fibrose.jpg" alt="Cicatriz pós-infarto em macroscopia e histologia">
+  <figcaption><b>Cicatriz pós-infarto</b> — à esquerda, a necrose coagulativa já substituída por fibrose (área esbranquiçada no ventrículo esquerdo); à direita, a <b>fibrose cicatricial</b> densa e rosa no lugar do músculo. Extensa no VE = insuficiência cardíaca grave, às vezes incompatível com a vida.</figcaption></figure>
+  <p>Qualquer órgão infarta pela mesma lógica (alça intestinal torcida, rim, cérebro): o órgão vaza seus produtos e corre risco de romper — muda só a ferramenta diagnóstica.</p>
+
+  <h2 class="topic" id="t8">8 · Aterosclerose: da LDL à placa instável</h2>
+  <p>"Endurecimento das artérias": placas de lípides, células e tecido conjuntivo em vasos que sofrem <b>pressão elevada</b>. Fatores de risco do slide: <b>LDL elevado, HDL reduzido, hipertensão, diabetes, idade, obesidade, sedentarismo, tabagismo, sexo</b>. Lembrete das camadas: íntima (endotélio + subendotelial), média (músculo liso produtor de fibras elásticas, reticulares e colágenas) e adventícia (conjuntivo frouxo, vasos e nervos).</p>
+  <div class="diagrama"><p class="t">Fisiopatologia (slide "Fisiopatologia")</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>LDL</b> — <span class="d">acúmulo de LDL; geração de ânion superóxido → <b>LDL oxidada</b>; injúria endotelial, <b>↓ síntese de NO</b>. O endotélio passa a expressar <b>VCAM-1</b> e os <b>monócitos</b> aderem.</span></div></li>
+    <li><span class="n">2</span><div><b>Célula espumosa</b> — <span class="d">monócitos atravessam o endotélio, entram na íntima e viram <b>macrófagos</b>; pelo <b>receptor de varredura-A (SR-A)</b> captam LDL oxidada e viram <b>células espumosas</b> — não conseguem digerir a gordura e seguem liberando citocinas.</span></div></li>
+    <li><span class="n">3</span><div><b>Capa fibrosa</b> — <span class="d"><b>células musculares lisas da média migram para a íntima</b> e sintetizam colágeno (capa fibrosa). A inflamação atrai linfócitos T e produz <b>metaloproteinases</b> e citocinas que <b>enfraquecem a capa</b> → risco de trombose.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>O endotélio expressa o receptor <b>LOX-1</b> (internaliza LDLox) e sintetiza <b>ICAM-1, E-selectina, P-selectina (de plaquetas) e VCAM-1</b>, além de <b>IL-1, IL-6 e TNF-α</b> → adesão de leucócitos e plaquetas, infiltração subendotelial, atividade <b>pró-coagulante</b>.</li>
+    <li>Camada média: músculo liso <b>quiescente</b> pelo NO; <b>prolifera</b> com PDGF, endotelina, trombina, interferon e IL-1 → lesão vascular = proliferação de músculo liso e matriz invadindo a íntima.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide41-selectinas-icam.jpg" alt="Etapas da migração leucocitária: rolamento, adesão firme e transmigração">
+  <figcaption><b>Selectinas e ICAM em ação</b> — rolamento do leucócito sobre as selectinas, ativação da integrina, adesão firme via ICAM-1 e transmigração para o tecido. É o endotélio "doente" que expressa essas moléculas (o saudável não deixa o sangue aderir).</figcaption></figure>
+  <h3>Instabilidade da placa</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Fatores mecânicos</th><th>Fatores químicos</th></tr>
+    <tr><td>grau de obstrução da luz</td><td>conteúdo lipídico × cápsula fibrosa</td></tr>
+    <tr><td>força de turbulência × cisalhamento</td><td>metaloproteases agindo no endotélio e na média</td></tr>
+    <tr><td>remodelamento expansivo × enfraquecimento</td><td>inflamação × instabilidade</td></tr>
+  </table></div>
+  <figure class="fig"><img src="img/slide44-placa-fibroateromatosa.jpg" alt="Histologia de placa fibroateromatosa com calcificação">
+  <figcaption><b>Placa fibroateromatosa</b> — íntima tomada por tecido fibroso denso e área de <b>calcificação</b>, sobre a média (linha tracejada) e a adventícia.</figcaption></figure>
+  <figure class="fig"><img src="img/slide45-placa-com-trombo.jpg" alt="Aterosclerose com trombo na luz">
+  <figcaption><b>Aterosclerose com trombo</b> — íntima espessada pela placa e, na luz, o <b>trombo</b>: o evento agudo que transforma obstrução parcial em oclusão.</figcaption></figure>
+  <figure class="fig"><img src="img/slide47-placa-complicada-trombo.jpg" alt="Aorta aberta com placa ateromatosa complicada por trombo">
+  <figcaption><b>Placa ateromatosa complicada com trombo</b> (macroscopia de artéria aberta) — a faixa escura é o trombo sobre placas ulceradas (etiqueta da peça borrada).</figcaption></figure>
+  <figure class="fig"><img src="img/slide50-niveis-lipidios.jpg" alt="Tabela de valores de referência de colesterol total, LDL, HDL e triglicérides">
+  <figcaption><b>Acompanhamento dos lípides</b> — CT ótimo abaixo de 200; LDL ótimo abaixo de 100 (190 ou mais = muito alto); HDL abaixo de 40 baixo, acima de 60 alto; TG ótimo abaixo de 150. Exame anual de lípides e glicemia é a proteção que "a massa" não faz.</figcaption></figure>
+
+  <h2 class="topic" id="t9">9 · Valvopatias e a estenose aórtica calcificada</h2>
+  <ul>
+    <li>As valvas AV (mitral e tricúspide) abrem e fecham pela tração do músculo papilar via cordas tendíneas; aórtica e pulmonar, pela pressão do próprio fluxo.</li>
+    <li>O folheto é uma lâmina fina de <b>tecido conjuntivo</b> (matriz amorfa de proteoglicanos + muitas <b>fibras elásticas</b> e algumas colágenas, produzidas por fibroblastos) <b>revestida nas duas faces por endotélio</b>. Endotélio saudável não expressa moléculas de adesão; doente, expressa — no vaso <b>ou na valva</b>.</li>
+    <li><b>Estenose</b> = incapacidade de <b>abrir</b> completamente (dificuldade de passagem) · <b>Insuficiência</b> = incapacidade de <b>fechar</b> (regurgitação). Pode haver <b>dupla lesão</b>.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 "Tudo que agride o vaso agride a valva"</p>
+  <p>A causa mais comum de adoecimento valvar é a <b>valvopatia aterosclerótica calcificada</b>, com os <b>mesmos fatores de risco</b> da obstrução vascular (LDL alta, hipertensão, idade). A LDL toca o endotélio do folheto, ele expressa ICAM/VCAM/P-selectina, macrófagos fagocitam e viram espumosos, citocinas lesionam e ativam fibroblastos → <b>fibrose</b> (colágeno ganha das elásticas) ± <b>calcificação distrófica</b> pelo pH do ambiente inflamado. Resultado: valva espessa e rígida que <b>abre mal e fecha mal</b>.</p></div>
+  <ul>
+    <li><b>Números da aórtica:</b> área valvar normal ≈ <b>4 cm²</b>; na estenose cai para <b>0,5 até 0,1 cm²</b> (o caso da aula: 0,5 no diagnóstico, 0,1 na cirurgia — paciente que não conseguia tomar banho em pé).</li>
+    <li>Sintoma-guia: <b>dispneia</b> para coisas pequenas (varrer a casa), além de tontura e fraqueza.</li>
+    <li>Tratamento: lesão cicatricial <b>não tem volta → troca valvar</b>. Prótese dura em média <b>5–7 anos</b>; o paciente suporta em média <b>~3 trocas</b> na vida (complicação/óbito costuma vir na terceira) — por isso a doença em gente cada vez mais jovem preocupa. A valva só chega à patologia <b>depois de trocada</b> (ninguém biopsia valva).</li>
+  </ul>
+  <div class="diagrama"><p class="t">Cascata da estenose aórtica calcificada</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>70–80% de obstrução</b> — <span class="d">passa só 20–30% do volume; o resto fica retido no VE (sobrecarga).</span></div></li>
+    <li><span class="n">2</span><div><b>Hipertrofia ventricular esquerda</b> — <span class="d">resposta adaptativa para vencer a resistência: células maiores, com mais mitocôndrias e retículo... e <b>mais demanda</b> de O<sub>2</sub>.</span></div></li>
+    <li><span class="n">3</span><div><b>Isquemia e angina</b> — <span class="d">as coronárias nascem na base da aorta, logo após a valva doente: oferta baixa para demanda alta → <b>risco iminente de infarto</b>.</span></div></li>
+    <li><span class="n">4</span><div><b>ICC</b> — <span class="d">hiperfunção compensatória e exaustão; congestão pulmonar e estase favorecem <b>trombos</b> (tríade de Virchow), inclusive intracavitários. Operar antes que a hipertrofia seja expressiva.</span></div></li>
+  </ol></div>
+  <figure class="fig"><img src="img/slide57-valva-aortica-calcificada.jpg" alt="Valva aórtica calcificada e histologia com calcificação densa">
+  <figcaption><b>Valva aórtica calcificada</b> — nódulos de calcificação nas cúspides (setas) e, na histologia, áreas de densa calcificação (*) num conjuntivo hiperdenso, sem a distribuição harmônica de fibras elásticas e colágenas.</figcaption></figure>
+
+  <h2 class="topic" id="t10">10 · Febre reumática: mimetismo molecular e critérios de Jones</h2>
+  <p>A segunda grande causa de valvopatia (a professora: <b>segunda maior causa de morte por doença valvar</b>) — e fruto de uma "sucessão de incompetências" no manejo de algo simples: a <b>faringoamigdalite</b> pelo <b>estreptococo β-hemolítico do grupo A</b>.</p>
+  <h3>Mimetismo molecular</h3>
+  <p>Algumas proteínas do estreptococo diferem das nossas por um ou dois aminoácidos. O macrófago fagocita a bactéria, apresenta um epítopo ao linfócito T, que ativa o B → <b>anticorpo</b>. Se o epítopo for uma das sequências homólogas, o anticorpo <b>reconhece o tecido humano</b>, opsoniza, atrai fagócitos e inflama.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Estrutura bacteriana</th><th>Estrutura humana</th><th>Patologia</th></tr>
+    <tr><td><b>Proteína M</b> (no pili)</td><td><b>tropomiosina</b> dos cardiomiócitos</td><td><b>miocardite</b> reumática</td></tr>
+    <tr><td><b>N-acetilglicosamina</b> (parede)</td><td><b>glicoproteínas das valvas</b> (conjuntivo)</td><td><b>valvulite</b></td></tr>
+    <tr><td>mucoproteínas da parede</td><td>conjuntivo da <b>sinóvia</b></td><td><b>artrite</b> (poliarticular)</td></tr>
+    <tr><td>componentes da membrana protoplasmática</td><td>sarcolema dos <b>vasos</b></td><td>vasculite (eritema que segue o trajeto do vaso)</td></tr>
+    <tr><td>componentes da membrana protoplasmática</td><td>citoplasma do <b>núcleo caudado</b></td><td><b>coreia de Sydenham</b></td></tr>
+  </table></div>
+  <figure class="fig"><img src="img/slide62-mimetismo-molecular.jpg" alt="Esquema do estreptococo e reações cruzadas com tecidos humanos">
+  <figcaption><b>Mimetismo molecular do estreptococo β-hemolítico do grupo A</b> — cápsula, proteína M, carboidratos (N-acetilglicosamina), mucopeptídeo e membrana protoplasmática, cada um com sua reação cruzada: tropomiosina (miocárdio), glicoproteína (valva), sinóvia (articulação), sarcolema (miocárdio e vasos) e citoplasma neuronal (núcleo caudado).</figcaption></figure>
+  <ul>
+    <li><b>Pancardite</b> possível (pericárdio, miocárdio, endocárdio). Na cardite: anticorpos fixados ao endotélio valvar → ↑ <b>VCAM</b> → infiltração de neutrófilos, macrófagos e linfócitos T → inflamação e necrose.</li>
+    <li><b>Tempo:</b> anticorpos surgem <b>7–14 dias</b> após a infecção — o paciente com febre reumática <b>não</b> está com a garganta cheia de pus; ele tem uma história de dor de garganta semanas antes, que só conta se alguém perguntar.</li>
+    <li><b>Quem:</b> amigdalites predominam em crianças e jovens. Risco cresce com <b>infecções repetidas</b> (título de anticorpos crescente, como doses de vacina) e com <b>polimorfismo genético</b> (nem todo exposto desenvolve).</li>
+    <li>A inflamação na valva é <b>aguda</b>, mas <b>sem patógeno</b> no local (hemocultura negativa) — é resposta <b>adaptativa</b> (anticorpos), por isso o infiltrado é <b>linfocitário</b>. A valvulite aguda deixa folheto e cordas "melados", com eritema e edema; a ruptura de cordas tendíneas leva a colapso — <b>alto índice de óbito nas primeiras 48 h</b> do início dos sintomas.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Critérios de Jones modificados — "me preocupo muito mais com vocês sabendo Jones"</p>
+  <div class="tablewrap"><table>
+    <tr><th>Critérios MAIORES (onde o anticorpo liga)</th><th>Critérios MENORES (inflamação)</th></tr>
+    <tr><td>Cardite</td><td>Febre</td></tr>
+    <tr><td>Artrite</td><td>Artralgia</td></tr>
+    <tr><td>Coreia</td><td>Elevação de VHS e PCR</td></tr>
+    <tr><td>Eritema marginado</td><td>Alterações no ECG</td></tr>
+    <tr><td>Nódulos subcutâneos</td><td></td></tr>
+  </table></div>
+  <p><b>1 maior + 2 menores</b> ou <b>2 maiores + 1 menor</b> → abre a suspeita (dá "score" para ser febre reumática). A confirmação é a <b>evidência de contato com o estreptococo</b>: <b>ASLO</b> (anticorpo antiestreptolisina O — a enzima que lisa hemácias, a hemólise do ágar-sangue) positiva = <b>padrão-ouro</b>, já que não há bactéria para cultivar. A professora avisou que a prova traz <b>um caso com história e tabela de exames</b> para você montar Jones.</p></div>
+  <ul>
+    <li><b>Tratamento:</b> não há infecção para tratar — trata-se a resposta imune com <b>imunossupressão</b>; a memória imunológica não se apaga → vigilância e imunossupressão a cada nova atividade inflamatória.</li>
+    <li><b>Prevenção primária (o "mundo ideal" da diretriz):</b> na faringoamigdalite, colher <b>swab</b> → <b>Gram</b> (cocos Gram-positivos em fila = estreptococo; já inicia antibiótico com boa cobertura, em geral <b>penicilina</b>) → <b>cultura</b> (sensibilidade 90–95%, padrão-ouro; confirma β-hemolítico do grupo A) → <b>antibiograma</b>. Antibiótico errado prolonga a exposição aos antígenos e aumenta o risco. O tratamento com penicilina injetável é doloroso e longo — é preciso explicar à família para garantir adesão.</li>
+    <li>Tirar a amígdala <b>não</b> previne (a infecção só muda de lugar — faringite); amigdalectomia só por razão anatômica.</li>
+  </ul>
+  <h3>A lâmina: nódulos de Aschoff e células de Anitschkow</h3>
+  <ul>
+    <li>Infiltrado inflamatório <b>crônico linfocitário</b> expressivo + capilares congestos. A chave: <b>nódulos de Aschoff</b> (agregados de macrófagos, inclusive multinucleados — lembram granuloma; fazem fibrinólise tecidual e apresentam antígeno ao T) e <b>células de Anitschkow</b> (macrófago isolado hiperativado, "olho de coruja").</li>
+    <li>São <b>patognomônicos</b> da febre reumática — mas <b>não servem para diagnóstico</b>: só aparecem na valva <b>trocada</b> ou na necropsia (explicam a troca ou a morte).</li>
+  </ul>
+  <figure class="fig"><img src="img/slide66-nodulos-aschoff.jpg" alt="Nódulo de Aschoff no miocárdio com células de Anitschkow">
+  <figcaption><b>Nódulo de Aschoff no miocárdio</b> — agregado de macrófagos mononucleares e multinucleados entre as fibras, com células de <b>Anitschkow</b> e áreas de fibrinólise tecidual. Patognomônico, porém achado de peça cirúrgica/necropsia.</figcaption></figure>
+  <figure class="fig"><img src="img/slide67-valvas-reumaticas.jpg" alt="Valvas mitrais controles comparadas a valvas mitrais reumáticas">
+  <figcaption><b>Controles × valvas mitrais reumáticas</b> — em cima, folhetos delicados; embaixo, folhetos espessos, fibróticos e fundidos nas comissuras, com cordas encurtadas: a "fibrose sem precedentes" que só se resolve com troca.</figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Valvopatias das doenças do conjuntivo (Marfan, Ehlers-Danlos)</h2>
+  <ul>
+    <li>Doenças genéticas (raras, ~2–3% das causas de doença) com mutações nos genes das proteínas do conjuntivo: <b>Marfan</b> (fibrilina), <b>Ehlers-Danlos</b>, <b>osteogênese imperfeita</b> ("ossos de vidro"). Herdadas ou mutação nova no indivíduo.</li>
+    <li>A mesma fragilidade está <b>onde houver conjuntivo</b>: osso, pele, <b>média das artérias</b> (muito mais importante que nas veias, pois sustenta a PA) e <b>folhetos valvares</b>. Tratar só a ortopedia e esquecer o coração é o erro que a professora condenou.</li>
+    <li>Pistas de fenótipo: estatura muito alta e rosto alongado (Marfan); hiperelasticidade da pele, esclera azulada, articulações que fazem movimentos atípicos ("aquilo não é habilidade, é mutação"); <b>perdas gestacionais após o 1º trimestre</b> (o conjuntivo do útero não sustenta o colo quando o bebê ganha peso).</li>
+  </ul>
+  <div class="diagrama"><p class="t">Conjuntivo mutado: as duas consequências cardiovasculares</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>Artérias → aneurisma</b> — <span class="d">média menos resistente deforma antes de romper: aneurismas sem hipertensão nem aterosclerose (ex.: raiz/arco da aorta no Marfan; aneurisma cerebral). Se somar HAS, obesidade e aterosclerose, "é uma bomba atômica".</span></div></li>
+    <li><span class="n">2</span><div><b>Valvas → degeneração mixomatosa</b> — <span class="d">perda de elasticidade e acúmulo de material mucoide (proteoglicanos, basofílico); valva frouxa, abaulada, espessa, aumentada, com <b>prolapso</b>, cordas alongadas e delgadas → <b>insuficiência</b> e risco de rotura de corda.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>Histologia: na valva normal, a mistura harmônica do material amorfo (azul) com as fibras (rosa) dá um tom <b>lilás</b>; na mutada há <b>segregação</b> — bolo de material amorfo de um lado, fibras do outro, poucos fibroblastos (remodelamento comprometido). Macro: valva em <b>"couve-flor"</b>.</li>
+    <li>Sintoma número um: <b>dispneia sem causa aparente</b>.</li>
+    <li>Sem tratamento curativo (edição gênica ainda experimental); prótese cicatriza mal nesse tecido. O que vale: <b>descobrir cedo, afastar os fatores de risco somados</b> (peso, PA, colesterol) e <b>aconselhamento genético</b> (o Brasil tem só cerca de 400 geneticistas).</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 O que a professora quer (e o que NÃO quer)</p>
+  <p>"Eu não quero nome de gene": saiba que <b>aneurismas e valvopatias podem ter componente genético</b> e que Marfan, osteogênese imperfeita e Ehlers-Danlos são doenças do conjuntivo com repercussão cardiovascular. Mutações específicas não são cobradas.</p></div>
+  <figure class="fig"><img src="img/slide74-valva-mixomatosa.jpg" alt="Valva mixomatosa abaulada e histologia com colágeno e mucopolissacarídeo">
+  <figcaption><b>Valvopatia de doença do conjuntivo</b> — folhetos frouxos, abaulados e redundantes ("couve-flor") e, na histologia, colágeno de um lado e <b>mucopolissacarídeo</b> acumulado do outro: o tecido segregado que não suporta tração.</figcaption></figure>
+  <figure class="fig"><img src="img/slide77-marfan-aneurisma-raiz.jpg" alt="Aortografia mostrando aneurisma da raiz da aorta na síndrome de Marfan">
+  <figcaption><b>Marfan: aneurisma da raiz da aorta</b> — dilatação acentuada da raiz (setas brancas) e opacificação do VE por regurgitação aórtica (seta preta). Tratamento possível: prótese — com mortalidade relevante.</figcaption></figure>
+
+  <h2 class="topic" id="t12">12 · Cardiopatias congênitas: comunicações interatrial e interventricular</h2>
+  <ul>
+    <li>Cerca de <b>90%</b> são de <b>herança multifatorial</b> (predisposição genética + fatores ambientais lesando proteínas de sinalização e fatores de crescimento); o resto, síndromes. A embriologia cardíaca começa no fim da <b>3ª semana</b>.</li>
+    <li>O septo interventricular cresce rápido e quase sempre fecha; o <b>interatrial fecha mais tarde</b> (a mistura sanguínea é necessária até o fim da gestação — forame oval). Por isso, na aula, a <b>descontinuidade interatrial é a mais comum</b>.</li>
+    <li>Pode passar despercebida e aparecer <b>no adulto</b>; a triagem é o ultrassom morfológico no pré-natal e o exame do neonatologista.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Como ensinado na aula</th><th>Defeito do septo ATRIAL</th><th>Defeito do septo VENTRICULAR</th></tr>
+    <tr><td><b>Shunt</b></td><td><b>direita → esquerda</b> (o átrio direito, distendido pelas cavas, vence a pressão do retorno pulmonar)</td><td><b>esquerda → direita</b> (o VE, mais musculoso, vence o VD)</td></tr>
+    <tr><td><b>Consequência</b></td><td>sangue rico em CO<sub>2</sub> na circulação sistêmica → ↓ saturação → <b>cianose</b></td><td>mais volume para o pulmão → ↑ pressão e <b>resistência pulmonar</b> → <b>hipertrofia de VD</b> → insuficiência (edema pulmonar se grave)</td></tr>
+  </table></div>
+  <figure class="fig"><img src="img/slide83-desvios-fluxo.jpg" alt="Esquema dos desvios de fluxo direita-esquerda e esquerda-direita">
+  <figcaption><b>Desvios de fluxo (slide da aula)</b> — shunt direita→esquerda: desvio de sangue da circulação pulmonar, ↓ O<sub>2</sub> sistêmico, cianose (defeitos do septo atrial); shunt esquerda→direita: ↑ fluxo, pressão e resistência pulmonar, hipertrofia de VD e insuficiência (defeito do septo ventricular).</figcaption></figure>
+  <ul>
+    <li><b>Sinais clínicos:</b> <b>cianose periorbicular</b> e de extremidades (boquinha e pontas dos dedos roxas, principalmente ao chorar — o choro é o grande gasto energético do bebê), respiração rápida e curta, prostração, apatia e palidez (mama com pausas, cansado), aumento da área cardíaca, sinais de IC.</li>
+    <li><b>Correção:</b> a técnica é "simples" — o cirurgião contorna a borda do defeito com azul de metileno, carimba o molde numa gaze e recorta um <b>remendo de pericárdio</b>; o difícil é o caminho (circulação extracorpórea num bebê de ~3 kg com ~300 mL de sangue, sedação longa).</li>
+  </ul>
+
+  <div class="resumo" id="t13"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Isquemia:</b> problema = O<sub>2</sub> → ATP. Maioria aterosclerose ± trombo; minoria crise hipertensiva (infarto sem obstrução), choque, pneumopatia, anemia, metais pesados, êmbolos. Endotélio: NO dilata, endotelina contrai; doença endotelial precede a placa.</li>
+    <li><b>Na célula:</b> sem ATP → bomba Na⁺/K⁺ para (hidrópica, sem potencial de ação) → sem cálcio desencadeador, sem troponina C, sem contração → cálcio preso → caspases (apoptose). Necrose + apoptose. Lactato = anaerobiose. DAMPs → inflamação lesiva. Resolutivo = reperfundir.</li>
+    <li><b>Marcadores:</b> mioglobina 1–2 h / pico 6–9 h / some 12–24 h (precoce, reinfarto, inespecífica) · CK-MB 4–6 h / 18 h / 48–72 h (chegada tardia) · troponina 4–6 h / 36–72 h / 5–14 dias (chegada de dias). Triplicata, casadinhos, clínica soberana.</li>
+    <li><b>Angina:</b> estável ~70% · instável ~90% · espasmo (frio, emoção). IAM → ICC por fibrose acumulada → morte súbita. Fulminante = placa + trombo agudo.</li>
+    <li><b>Necropsia:</b> obstrução ou hiperemia reativa; ruptura → tamponamento. Micro: eosinofilia, picnose/cariorrexe/cariólise, neutrófilos → linfócitos → fibrose.</li>
+    <li><b>Aterosclerose:</b> LDLox → VCAM-1 → monócito/macrófago → SR-A → célula espumosa → músculo liso migra e faz capa fibrosa → metaloproteinases enfraquecem → trombo (von Willebrand).</li>
+    <li><b>Estenose aórtica calcificada:</b> mesmos fatores da aterosclerose; 4 cm² → 0,5–0,1; HVE → isquemia/angina → ICC; dispneia; troca (5–7 anos, ~3 trocas).</li>
+    <li><b>Febre reumática:</b> EBHGA, mimetismo (M–tropomiosina, N-acetilglicosamina–valva, sinóvia, vasos, núcleo caudado). Jones 1M+2m ou 2M+1m + ASLO (padrão-ouro). Imunossupressão. Aschoff/Anitschkow = patognomônicos, não diagnósticos. Prevenção = swab, Gram, cultura, antibiograma.</li>
+    <li><b>Conjuntivo:</b> Marfan/Ehlers-Danlos/osteogênese → aneurismas + valva mixomatosa (couve-flor, prolapso, insuficiência); sem nome de gene.</li>
+    <li><b>Congênitas:</b> interatrial mais comum; na aula: CIA = shunt D→E (cianose) · CIV = shunt E→D (hipertensão pulmonar, HVD). Remendo de pericárdio.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🫀 Resumão Pré-Prova — Patologias do Sistema Cardiovascular</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Aula 07 dupla · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-isq">Isquemia</a>
+    <a class="a1" href="#p-cel">Na célula</a>
+    <a class="a1" href="#p-marc">Marcadores</a>
+    <a class="a1" href="#p-angina">Angina/IAM</a>
+    <a class="a1" href="#p-pato">Necropsia</a>
+    <a class="a1" href="#p-atero">Aterosclerose</a>
+    <a class="a1" href="#p-valva">Valvopatias</a>
+    <a class="a1" href="#p-fr">Febre reumática</a>
+    <a class="a1" href="#p-conj">Conjuntivo</a>
+    <a class="a1" href="#p-cong">Congênitas</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-isq">
+  <span class="aula-tag t1">Cardiopatia isquêmica: causas</span>
+  <ul>
+    <li>Desequilíbrio <b>suprimento × demanda</b>; maioria = <b class="k">aterosclerose ± trombo</b>.</li>
+    <li>Minoria: <b>crise hipertensiva</b> (infarto <b>sem obstrução</b>), choque/hipotensão (hemorragia, sepse), pneumopatia grave, anemias, <b>metais pesados</b> (ocupam o O<sub>2</sub> na hemoglobina), êmbolos (líquido amniótico, gordura, ar).</li>
+    <li><b class="k">O<sub>2</sub> falta antes do nutriente</b> (1 glicose = 12 H, precisa de 6 O<sub>2</sub>).</li>
+    <li>Endotélio: cisalhamento ↑ → <b>NO</b> (dilata) · PA ↓ → <b>endotelina</b> (contrai). Doença endotelial vem antes da placa; testa-se com Doppler + vasodilatador.</li>
+    <li>Exercício aeróbico regular → ramificação coronariana (proteção).</li>
+  </ul>
+</section>
+
+<section id="p-cel">
+  <span class="aula-tag t1">O que falta de ATP faz</span>
+  <ul>
+    <li>Bomba Na⁺/K⁺ para → degeneração hidrópica + <b>célula insensível ao potencial de ação</b>.</li>
+    <li>Sem potencial de ação → sem <b>cálcio desencadeador</b> (túbulo T → libera o do retículo) → sem ligar <b>troponina C</b> → sem contração.</li>
+    <li>Ca²⁺-ATPase parada → cálcio preso → <b class="k">caspases → apoptose</b>. No infarto: <b>necrose + apoptose</b>.</li>
+    <li>Mg²⁺ = cofator da fosforilação da miosina. Quelante de Ca, Mg, anti-inflamatório = <b>adjuvantes</b>; resolutivo = <b>reperfundir</b>.</li>
+    <li><b class="k">Lactato</b>: Krebs desnatura na acidose → glicólise ↑ → piruvato + NADH no citosol → lactato = <b>anaerobiose</b> (infarto, hemorragia, sepse).</li>
+    <li><b>DAMPs</b> (ATP, núcleo, mitocôndria, membrana) → macrófago → citocinas → leucócitos com radicais livres → mais lesão.</li>
+    <li>~60 s → 50% das células degeneradas · ~5 min → rompem.</li>
+  </ul>
+</section>
+
+<section id="p-marc">
+  <span class="aula-tag t1">Marcadores (DECORAR)</span>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Sobe</th><th>Pico</th><th>Normaliza</th><th>Sens.</th><th>Use para</th></tr></thead>
+    <tbody>
+      <tr><td><b>Mioglobina</b></td><td>1–2 h</td><td>6–9 h</td><td>12–24 h</td><td>95%</td><td>precoce · <b>reinfarto</b> · inespecífica</td></tr>
+      <tr><td><b>CK-MB</b></td><td>4–6 h</td><td>18 h</td><td>48–72 h</td><td>93%</td><td>chegada <b>horas</b> depois</td></tr>
+      <tr><td><b>Troponina</b></td><td>4–6 h</td><td>36–72 h</td><td>5–14 dias</td><td>95%</td><td>chegada <b>dias</b> depois</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>Tempo depende de <b>quantidade</b> na célula + <b>tamanho</b> da molécula; ficam até serem degradadas no plasma.</li>
+    <li><b class="k">CK total</b> inespecífica (exercício, trauma). Isoformas: <b>MB coração · MM esquelético · BB cérebro</b>.</li>
+    <li>Negativo fora da janela ≠ sem infarto → <b class="k">triplicata</b>. Pedir <b>casadinhos</b> (específico + inespecífico). Sangue, não urina. Clínica soberana.</li>
+  </ul>
+</section>
+
+<section id="p-angina">
+  <span class="aula-tag t1">Angina e evolução</span>
+  <ul>
+    <li><b class="k">Estável</b>: esforço previsível, ~<b>70%</b> (não dói abaixo disso) · <b class="k">Instável</b>: pequeno esforço/repouso, contínua e crescente, ~<b>90%</b> · <b class="k">Espasmo</b>: frio, catecolaminas (4% → 12% na pandemia).</li>
+    <li>IAM (necrose) → <b>ICC</b> por fibrose acumulada (infartos repetidos) → <b>morte súbita</b> (arritmia fatal).</li>
+    <li>Fulminante = artéria grande + <b>placa + trombo agudo</b>.</li>
+  </ul>
+</section>
+
+<section id="p-pato">
+  <span class="aula-tag t1">Patologia do infarto</span>
+  <ul>
+    <li>Laudar: ver a <b>obstrução</b> ou a <b class="k">hiperemia reativa</b> (resposta inflamatória aos DAMPs).</li>
+    <li>Ruptura de parede → sangue no pericárdio → <b class="k">tamponamento</b>.</li>
+    <li>Placa de 10–20% + <b>trombo</b> de 100% (von Willebrand → plaquetas).</li>
+    <li>Necrose de <b>coagulação</b>: eosinofilia, picnose, cariorrexe, cariólise, edema; <b>neutrófilos → linfócitos → fibroblastos → fibrose</b> (não contrai, não relaxa).</li>
+  </ul>
+</section>
+
+<section id="p-atero">
+  <span class="aula-tag t1">Aterosclerose</span>
+  <ul>
+    <li>FR: LDL ↑, HDL ↓, HAS, DM, idade, obesidade, sedentarismo, tabagismo, sexo.</li>
+    <li>LDL → <b>LDLox</b> (superóxido) → ↓ NO + <b class="k">VCAM-1</b> → monócito adere, entra, vira macrófago → <b class="k">SR-A</b> capta LDLox → <b>célula espumosa</b>.</li>
+    <li>Endotélio: <b>LOX-1</b>, ICAM-1, E-selectina, P-selectina (plaqueta), VCAM-1; IL-1, IL-6, TNF-α → pró-coagulante.</li>
+    <li><b>Músculo liso da média migra para a íntima</b> → colágeno = <b>capa fibrosa</b>; PDGF, endotelina, trombina, IFN, IL-1 → proliferação; NO mantém quiescente.</li>
+    <li><b class="k">Metaloproteinases</b> + inflamação + muito lipídio + turbulência → <b>capa fraca → placa instável → trombo</b>.</li>
+    <li>LDL ótimo abaixo de 100 · HDL baixo abaixo de 40 · TG ótimo abaixo de 150 · CT ótimo abaixo de 200.</li>
+  </ul>
+</section>
+
+<section id="p-valva">
+  <span class="aula-tag t1">Valvopatias / estenose aórtica calcificada</span>
+  <ul>
+    <li>Folheto = conjuntivo <b>elástico</b> + endotélio nas duas faces. <b>Estenose</b> = não abre · <b>Insuficiência</b> = não fecha · dupla lesão possível.</li>
+    <li><b class="k">"O que agride o vaso agride a valva"</b>: mesmos FR da aterosclerose → fibrose + calcificação distrófica.</li>
+    <li>Área aórtica <b>4 cm² → 0,5–0,1 cm²</b>; 70–80% de obstrução → <b>HVE</b> → demanda ↑ com coronárias (base da aorta) mal perfundidas → <b>isquemia/angina</b> → ICC (exaustão).</li>
+    <li>Sintoma: <b>dispneia</b> a pequenos esforços. Tratamento: <b>troca</b> (prótese 5–7 anos; ~3 trocas na vida). Histologia só da valva removida.</li>
+  </ul>
+</section>
+
+<section id="p-fr">
+  <span class="aula-tag t1">Febre reumática (cai caso com Jones!)</span>
+  <div class="tw"><table>
+    <thead><tr><th>Bactéria</th><th>Humano</th><th>Doença</th></tr></thead>
+    <tbody>
+      <tr><td>Proteína M</td><td>tropomiosina</td><td>miocardite</td></tr>
+      <tr><td>N-acetilglicosamina</td><td>glicoproteína valvar</td><td>valvulite</td></tr>
+      <tr><td>mucoproteínas</td><td>sinóvia</td><td>artrite</td></tr>
+      <tr><td>membrana protoplasmática</td><td>sarcolema dos vasos</td><td>vasculite</td></tr>
+      <tr><td>membrana protoplasmática</td><td>núcleo caudado</td><td>coreia de Sydenham</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><b class="k">Jones</b>: maiores = cardite, artrite, coreia, eritema marginado, nódulos subcutâneos · menores = febre, artralgia, VHS/PCR ↑, ECG alterado. <b>1M+2m ou 2M+1m</b>.</li>
+    <li><b class="k">ASLO positiva = padrão-ouro</b> do contato com o estreptococo (não há bactéria para cultivar; hemocultura negativa).</li>
+    <li>Anticorpos 7–14 dias após a faringite · infecções repetidas + genética ↑ risco · infiltrado <b>linfocitário</b> · óbito alto nas primeiras <b>48 h</b> da valvulite aguda.</li>
+    <li>Tratamento = <b>imunossupressão</b> + vigilância. Prevenção = swab → Gram → <b>cultura (padrão-ouro, 90–95%)</b> → antibiograma; penicilina.</li>
+    <li><b class="k">Nódulos de Aschoff</b> (agregado de macrófagos) e <b>Anitschkow</b> (macrófago isolado, "olho de coruja"): patognomônicos, <b>não diagnósticos</b> (valva trocada/necropsia).</li>
+    <li>2ª causa de morte por doença valvar. Amigdalectomia não previne.</li>
+  </ul>
+</section>
+
+<section id="p-conj">
+  <span class="aula-tag t1">Doenças do conjuntivo</span>
+  <ul>
+    <li>Marfan (fibrilina), Ehlers-Danlos, osteogênese imperfeita: conjuntivo fraco em osso, pele, <b>média arterial</b> e <b>valvas</b>.</li>
+    <li>Artéria → <b class="k">aneurisma</b> (sem HAS/aterosclerose) · Valva → <b class="k">mixomatosa</b>: frouxa, abaulada, espessa, aumentada, <b>prolapso</b>, cordas alongadas → insuficiência ("couve-flor").</li>
+    <li>Histologia: material mucoide segregado das fibras (perde o "lilás"), poucos fibroblastos.</li>
+    <li>Pistas: hipermobilidade, esclera azulada, alta estatura, <b>perdas gestacionais após o 1º trimestre</b>. Aconselhamento genético. <b>Nome de gene não cai.</b></li>
+  </ul>
+</section>
+
+<section id="p-cong">
+  <span class="aula-tag t1">Cardiopatias congênitas</span>
+  <ul>
+    <li>~90% multifatoriais. Septo interatrial fecha por último (forame oval) → <b>CIA é a mais comum</b> (na aula).</li>
+    <li>Modelo da aula: <b class="k">CIA → shunt D→E → cianose</b> · <b class="k">CIV → shunt E→D → hiperfluxo/hipertensão pulmonar → HVD</b>.</li>
+    <li>⚠️ <b>Divergência aula × literatura:</b> na fisiologia atual, a CIA isolada também faz shunt <b>esquerda→direita</b> (átrio esquerdo tem pressão maior) e NÃO é cianótica de início; a cianose só aparece se a hipertensão pulmonar inverter o fluxo (síndrome de Eisenmenger). O slide associa shunt D→E aos defeitos do septo atrial — pra prova da disciplina, siga o modelo da aula; saiba que fora dela a resposta é E→D.</li>
+    <li>Sinais: cianose periorbicular/extremidades (ao chorar), taquipneia, prostração, palidez, mamada com pausas, cardiomegalia, IC.</li>
+    <li>Correção: remendo de pericárdio (difícil é a extracorpórea no bebê).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <ul>
+    <li><b class="k">Mioglobina</b> (cedo e some cedo — reinfarto) ≠ <b>troponina</b> (sobe em horas e fica dias — chegada tardia).</li>
+    <li><b class="k">CK-MB</b> (coração) ≠ <b>CK-MM</b> (esquelético) ≠ <b>CK-BB</b> (cérebro).</li>
+    <li><b class="k">Cálcio desencadeador</b> (túbulo T, pouco) ≠ <b>cálcio do retículo</b> (a avalanche).</li>
+    <li><b class="k">Hiperemia reativa</b> (demanda inflamatória) ≠ hiperperfusão.</li>
+    <li><b class="k">Estenose</b> (não abre) ≠ <b>insuficiência</b> (não fecha).</li>
+    <li><b class="k">ASLO</b> (diagnóstico da febre reumática) ≠ <b>cultura de orofaringe</b> (padrão-ouro da amigdalite estreptocócica) ≠ <b>Aschoff</b> (achado de peça, não diagnóstico).</li>
+    <li><b class="k">Valvopatia calcificada</b> (idoso, FR metabólicos, progressiva) ≠ <b>reumática</b> (jovem, súbita, pós-faringite, poliartrite) ≠ <b>mixomatosa</b> (fenótipo de conjuntivo, frouxa/prolapso).</li>
+    <li><b class="k">Infiltrado neutrofílico</b> (infarto agudo) ≠ <b>linfocitário</b> (valvulite reumática — resposta adaptativa).</li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologias do Sistema Cardiovascular</h2>
+    <p>Anato Pato II · Aula 07 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">Modo Estudo</button>
+        <button data-modo="simulado">Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 07 — Patologias do Sistema Cardiovascular</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☾':'☀';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('cortex-theme',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:"facil",enun:`<span class="vinheta">Um paciente chega à emergência com PA 240/140 mmHg e dor precordial. A angiografia não mostra nenhuma obstrução coronariana, mas os marcadores confirmam necrose miocárdica.</span><div class="pergunta">Qual a explicação dada na aula para esse infarto?</div>`,alts:["A velocidade excessiva do fluxo torna a troca gasosa ineficaz, gerando hipóxia","Um trombo foi lisado espontaneamente antes do exame, deixando apenas a necrose como evidência","A hipertensão rompeu a capa fibrosa de uma placa invisível à angiografia de rotina","O excesso de pressão bloqueia diretamente a ligação do cálcio à troponina C","O endotélio saudável liberou endotelina em excesso e ocluiu de vez as coronárias"],correta:0,just:["Correta. A pressão é a velocidade do sangue nos tecidos: existe uma velocidade ótima para a troca; muito acima dela a troca é ineficaz e o miocárdio infarta sem obstrução — por isso a crise hipertensiva é tratada como emergência.","Errada — a aula não atribuiu o quadro a trombólise espontânea; o ponto ensinado é justamente o infarto SEM obstrução. [tipo: explicação ad hoc]","Errada — a ruptura de placa é mecanismo de infarto COM obstrução (placa + trombo), não o modelo do infarto da crise hipertensiva. [tipo: verdade no contexto errado]","Errada — o bloqueio da troponina C ocorre por falta de cálcio desencadeador quando falta ATP, não por ação direta da pressão. [tipo: mecanismo inventado]","Errada — diante de PA ALTA o endotélio saudável libera óxido nítrico (vasodilata); endotelina é a resposta à queda da pressão. [tipo: mecanismo invertido]"],ref:"Aula 07 — Cardiopatia isquêmica: causas"},
+
+{n:2,aula:1,nivel:"facil",enun:`<span class="vinheta">Durante um exame com Doppler de artéria de médio calibre, o paciente recebe um vasodilatador sublingual e o diâmetro do vaso não se altera.</span><div class="pergunta">Como esse resultado foi interpretado na aula?</div>`,alts:["Resposta fisiológica esperada em adultos acima dos 40 anos","Doença endotelial: o endotélio não responde, e o risco cardiovascular é muito alto","Estenose valvar aórtica, que impede a transmissão da onda de pulso ao vaso estudado","Efeito de dose insuficiente, que deve ser dobrada antes de concluir qualquer coisa","Vasoespasmo protetor que indica circulação colateral coronariana bem desenvolvida"],correta:1,just:["Errada — a vasodilatação é a resposta normal de um endotélio íntegro, não um achado esperado da idade. [tipo: normalização do patológico]","Correta. O teste avalia se o endotélio funciona: quem não dilata tem doença endotelial (que antecede a placa), risco altíssimo e pouca resposta a drogas que dependem do endotélio.","Errada — o teste é sobre a reatividade da parede vascular, não sobre a valva aórtica. [tipo: verdade no contexto errado]","Errada — a aula interpretou a ausência de resposta como doença endotelial, não como erro de dose. [tipo: explicação ad hoc]","Errada — colateral coronariana se desenvolve com exercício aeróbico; vasoespasmo não é sinal de proteção. [tipo: par confundível]"],ref:"Aula 07 — O endotélio é um órgão"},
+
+{n:3,aula:1,nivel:"medio",enun:`<span class="vinheta">Na revisão da contração do cardiomiócito, a professora insistiu na diferença entre as duas fontes de cálcio que entram no citosol após o potencial de ação.</span><div class="pergunta">Qual é o papel do cálcio que entra vindo do túbulo T?</div>`,alts:["É a principal fonte de cálcio, suficiente sozinho para ligar todas as troponinas C","Ativa diretamente a Ca²⁺-ATPase para iniciar o relaxamento da fibra","Dispara a liberação maciça de cálcio do retículo sarcoplasmático","Liga-se à troponina I e fosforila a cabeça da miosina","Repolariza a membrana após a entrada de sódio pela bomba Na⁺/K⁺"],correta:2,just:["Errada — o volume que vem do túbulo T é pequeno e NÃO basta; a avalanche vem do retículo. [tipo: inversão de magnitude]","Errada — a Ca²⁺-ATPase retira o cálcio ao fim da sístole; o cálcio do túbulo T inicia a contração, não o relaxamento. [tipo: mecanismo invertido]","Correta. É o cálcio desencadeador: entra por canais voltagem-dependentes e o retículo, sensível ao cálcio citosólico, libera a grande reserva — cálcio liberando cálcio.","Errada — o cálcio liga na troponina C; a fosforilação da miosina é feita pelo ATP com o magnésio como cofator. [tipo: par confundível]","Errada — a bomba Na⁺/K⁺ mantém o potencial de membrana; o cálcio do túbulo T não tem papel de repolarização. [tipo: mecanismo inventado]"],ref:"Aula 07 — O cardiomiócito e a contração"},
+
+{n:4,aula:1,nivel:"medio",enun:`<span class="vinheta">Na discussão de um infarto por oclusão de ramo periférico, a área de necrose encontrada foi maior que o território esperado daquele vaso.</span><div class="pergunta">Qual mecanismo celular, enfatizado na aula, ajuda a explicar a ampliação da área de morte?</div>`,alts:["Regeneração exagerada dos cardiomiócitos vizinhos, que comprimem o território isquêmico","Excesso de oxigênio trazido pela circulação colateral, que forma radicais livres","Aumento de NO, que provoca roubo de fluxo coronariano","Cálcio retido no citosol por falta de ATP, ativando caspases e apoptose","Anticorpos contra a tropomiosina liberada pelas células mortas"],correta:3,just:["Errada — o cardiomiócito não faz mitose com eficácia; quem morre vira cicatriz, não há regeneração compressiva. [tipo: misconception clássica]","Errada — o problema do infarto é a FALTA de oxigênio, não o excesso trazido por colaterais. [tipo: mecanismo invertido]","Errada — a aula não citou roubo de fluxo por NO; o óxido nítrico é vasodilatador fisiológico do endotélio saudável. [tipo: mecanismo inventado]","Correta. Sem ATP a Ca²⁺-ATPase para, o cálcio que entrou fica preso e ativa caspases: além da necrose por degeneração hidrópica há apoptose indesejada, somada à desordem eletrolítica, que pode ampliar a área.","Errada — anticorpo contra tropomiosina é o mecanismo da miocardite reumática (mimetismo com a proteína M), não do infarto. [tipo: verdade no contexto errado]"],ref:"Aula 07 — O que a isquemia faz na célula"},
+
+{n:5,aula:1,nivel:"facil",enun:`<span class="vinheta">Paciente séptico, vasodilatado e febril tem lactato sérico elevado; outro paciente, baleado e hipovolêmico, também.</span><div class="pergunta">O que o lactato elevado informa nos dois casos, segundo a aula?</div>`,alts:["Que há necrose de cardiomiócitos e o diagnóstico de infarto está confirmado","Que o fígado perdeu a capacidade de metabolizar glicose em ambos","Que a glicólise está bloqueada e a célula ficou impermeável à glicose","Que existe infecção bacteriana ativa produzindo ácido lático no sangue","Que há respiração anaeróbia por hipóxia, qualquer que seja a causa"],correta:4,just:["Errada — lactato não é específico de miocárdio; indica anaerobiose de qualquer origem. [tipo: generalização indevida]","Errada — a aula explicou o lactato pela mitocôndria parada e glicólise aumentada, não por falência hepática. [tipo: mecanismo inventado]","Errada — é o contrário: a célula fica MAIS permeável à glicose e aumenta a glicólise, gerando piruvato que vira lactato. [tipo: mecanismo invertido]","Errada — bactérias não são a fonte do lactato discutido; na sepse ele vem da hipóxia tecidual e da alta demanda. [tipo: misconception clássica]","Correta. Sem O₂ o Krebs para por acidose, a célula força a glicólise e o NADH descarrega o hidrogênio no piruvato: lactato = anaerobiose; a causa (infarto, sangramento, sepse) vem da história."],ref:"Aula 07 — Lactato"},
+
+{n:6,aula:1,nivel:"medio",enun:`<span class="vinheta">Homem de 58 anos com dor precordial típica há 1 hora. Uma CK-MB colhida na chegada vem normal.</span><div class="pergunta">Qual a conduta coerente com o que foi ensinado?</div>`,alts:["Afastar infarto, prescrever analgésico e liberar com retorno se a dor voltar","Repetir em série (triplicata): a CK-MB só sobe após 4–6 h","Trocar por dosagem de CK total, que é mais específica para o miocárdio","Dosar o marcador na urina, onde aparece mais cedo que no sangue","Aguardar 5 dias para dosar troponina, que só então começa a se elevar"],correta:1,just:["Errada — é exatamente o erro que a aula condenou: dosar uma vez, dar analgésico e mandar para casa um infartado. [tipo: conduta perigosa]","Correta. Com 1 hora de dor, a CK-MB ainda está fora da janela (sobe em 4–6 h); negativa não exclui infarto — repete-se em série e associa-se a um marcador precoce como a mioglobina.","Errada — a CK total é INESPECÍFICA (músculo esquelético, cérebro); a isoforma cardíaca é a MB. [tipo: inversão de especificidade]","Errada — a urina é ultrafiltrado do sangue; o marcador aparece no sangue muito antes. [tipo: mecanismo invertido]","Errada — a troponina começa a subir em 4–6 h; os 5–14 dias são o tempo de NORMALIZAÇÃO. [tipo: troca de parâmetro]"],ref:"Aula 07 — Marcadores de lesão miocárdica"},
+
+{n:7,aula:1,nivel:"medio",enun:`<span class="vinheta">Um homem procura atendimento relatando que "semana passada, no futebol", teve forte dor no peito e mal-estar; hoje está assintomático.</span><div class="pergunta">Qual marcador tem maior chance de documentar o infarto nesse momento?</div>`,alts:["Troponina, que normaliza só entre 5 e 14 dias","Mioglobina, por ser a de maior sensibilidade nas primeiras horas","CK-MB, com pico tardio por volta do 5º dia","CK total, porque a atividade física aumenta sua especificidade","Lactato, elevado por semanas após a necrose"],correta:0,just:["Correta. A troponina é grande, sobe em 4–6 h, pica em 36–72 h e demora 5–14 dias para normalizar — é o marcador de quem chega dias depois.","Errada — a mioglobina é ótima no início, mas normaliza em 12–24 h; uma semana depois já sumiu. [tipo: verdade no contexto errado]","Errada — a CK-MB faz pico em ~18 h e normaliza em 48–72 h; no quinto dia já não ajuda. [tipo: troca de parâmetro]","Errada — exercício é agente de CONFUSÃO para a CK total, não aumenta especificidade. [tipo: mecanismo invertido]","Errada — lactato traduz anaerobiose no momento, não persiste semanas nem é marcador de necrose miocárdica. [tipo: generalização indevida]"],ref:"Aula 07 — Marcadores de lesão miocárdica"},
+
+{n:8,aula:1,nivel:"dificil",enun:`<span class="vinheta">Paciente internado por infarto tinha mioglobina 4 (referência até 1). Ainda na emergência, volta a referir dor precordial; nova dosagem: 6.</span><div class="pergunta">Qual a melhor interpretação?</div>`,alts:["Lesão muscular pela punção venosa repetida","Elevação esperada do pico natural do primeiro infarto, sem significado clínico","Novo pico sobre o anterior, com dor nova: reinfarto","Insuficiência renal aguda reduzindo a eliminação da mioglobina","Falso-positivo, pois a mioglobina não serve após o primeiro infarto"],correta:2,just:["Errada — punção venosa não gera elevação relevante; a nova dor precordial é o dado que orienta. [tipo: explicação ad hoc]","Errada — o caso tem dor nova; somar sintoma a novo pico é a definição usada na aula para reinfarto. [tipo: desconsidera a clínica]","Correta. Pela cinética rápida (sobe e cai cedo), a mioglobina é usada na emergência e na UTI para flagrar reinfarto: novo pico sobre o valor anterior acompanhado de dor.","Errada — a eliminação renal existe, mas não explica o salto associado a dor nova; a aula usou exatamente esse cenário como reinfarto. [tipo: verdade no contexto errado]","Errada — é o contrário: o reinfarto é um dos usos clássicos da mioglobina. [tipo: mecanismo invertido]"],ref:"Aula 07 — Mioglobina no reinfarto"},
+
+{n:9,aula:1,nivel:"facil",enun:`<span class="vinheta">Ciclista de 45 anos passa mal durante um passeio de longa distância, com vômitos e dor epigástrica, e é levado ao hospital com suspeita de infarto.</span><div class="pergunta">Por que a CK total é pouco útil nesse paciente?</div>`,alts:["Porque só se eleva após 14 dias do início da dor","Porque é uma enzima específica do tecido cerebral","Porque é degradada pelo ácido lático do exercício","Porque não existe CK no interior do cardiomiócito","Porque o exercício lesa músculo esquelético"],correta:4,just:["Errada — o problema é especificidade, não tempo; a CK sobe em horas. [tipo: troca de parâmetro]","Errada — a CK total vem de vários tecidos (esquelético, cardíaco, cerebral); a cerebral é a isoforma BB. [tipo: par confundível]","Errada — a aula não citou degradação da CK pelo lactato. [tipo: mecanismo inventado]","Errada — o cardiomiócito tem CK (isoforma MB), por isso ela é marcador de infarto. [tipo: negação do conceito]","Correta. A atividade de alta intensidade mata células musculares esqueléticas e eleva a CK total: agente de confusão — aqui se prefere a isoforma MB ou marcadores combinados."],ref:"Aula 07 — CK total × isoformas"},
+
+{n:10,aula:1,nivel:"medio",enun:`<span class="vinheta">Mulher de 62 anos sente dor no peito ao subir dois lances de escada, que passa ao sentar-se. Há meses passou a usar só o elevador.</span><div class="pergunta">Qual o quadro e a estenose média associada, segundo o slide da aula?</div>`,alts:["Angina instável, com estenose média em torno de 90%","Angina por espasmo, sem nenhuma placa prévia","Infarto agudo, com oclusão de 100% e necrose","Angina estável, com estenose média em torno de 70%","Morte súbita abortada, com arritmia fatal autolimitada"],correta:3,just:["Errada — a instável ocorre a pequenos esforços ou em repouso, contínua e crescente (~90%). [tipo: par confundível]","Errada — o espasmo depende de frio ou emoção somados a obstrução prévia, e o quadro aqui é de esforço previsível. [tipo: par confundível]","Errada — a dor cede no repouso; não há indício de necrose. [tipo: superestimação]","Correta. Dor ao esforço previsível que alivia no repouso = angina estável, estenose média de ~70% (abaixo disso o coração não dói). E o paciente recua (elevador) em vez de investigar.","Errada — não há síncope nem arritmia no relato. [tipo: distrator absurdo]"],ref:"Aula 07 — Angina"},
+
+{n:11,aula:1,nivel:"medio",enun:`<span class="vinheta">Em viagem de inverno, um homem com obstrução coronariana conhecida de ~70% tem dor anginosa intensa em repouso, numa manhã de frio extremo, logo após uma discussão acalorada.</span><div class="pergunta">Que mecanismo a aula apontou para essa instabilização?</div>`,alts:["Vasoconstrição (frio e catecolaminas) somada à obstrução prévia","Vasodilatação reflexa ao frio, com roubo de fluxo coronariano","Ruptura valvar aórtica desencadeada pela baixa temperatura","Destruição autoimune súbita da tropomiosina pelo estresse","Hipoglicemia pelo gasto calórico do frio, sem relação com o vaso"],correta:0,just:["Correta. Frio provoca vasoconstrição para conservar calor e emoções liberam catecolaminas: somadas a uma obstrução prévia, reduzem abruptamente o fluxo — angina por espasmo (que foi de ~4% a ~12% dos infartos na pandemia).","Errada — o frio faz vasoCONSTRIÇÃO, não vasodilatação. [tipo: mecanismo invertido]","Errada — a aula não relacionou frio a ruptura valvar. [tipo: mecanismo inventado]","Errada — destruição por anticorpo contra tropomiosina é miocardite reumática, não efeito de estresse. [tipo: verdade no contexto errado]","Errada — a aula atribuiu o quadro ao vaso (espasmo), não a distúrbio metabólico. [tipo: explicação ad hoc]"],ref:"Aula 07 — Angina por espasmo"},
+
+{n:12,aula:1,nivel:"facil",enun:`<span class="vinheta">Na necropsia de uma senhora tabagista que morreu de infarto após o jantar, a coronária mostra uma placa amarela que reduziria a luz em cerca de 10–20%, mas o lúmen está totalmente ocluído.</span><div class="pergunta">O que ocluiu o vaso e por qual mecanismo?</div>`,alts:["Espasmo persistente após a morte, que fecha artérias normais","Calcificação distrófica da placa, que cresceu em poucas horas","Trombo sobre o endotélio lesado, via von Willebrand","Êmbolo de líquido amniótico vindo da circulação venosa","Célula espumosa que se desprendeu e entupiu o vaso"],correta:2,just:["Errada — a aula identificou um trombo dentro do vaso, não espasmo pós-morte. [tipo: explicação ad hoc]","Errada — calcificação é processo crônico e não explica oclusão total aguda. [tipo: escala de tempo errada]","Correta. A LDL lesou e matou células endoteliais, expondo o von Willebrand do subendotélio; plaquetas aderem e liberam mais von Willebrand, recrutando mais plaquetas — o trombo fecha 100%.","Errada — embolia amniótica é causa rara, ligada ao parto, sem relação com o caso. [tipo: verdade no contexto errado]","Errada — a célula espumosa fica na íntima formando a placa; não é o material que ocluiu a luz. [tipo: par confundível]"],ref:"Aula 07 — Patologia do infarto"},
+
+{n:13,aula:1,nivel:"facil",enun:`<span class="vinheta">Um paciente morre pouco após um infarto extenso. Ao abrir o pericárdio, o legista encontra grande coágulo envolvendo o coração e um orifício na parede ventricular.</span><div class="pergunta">Qual complicação explica a morte rápida?</div>`,alts:["Endocardite infecciosa com perfuração de cúspide","Tamponamento cardíaco por ruptura da parede necrótica","Aneurisma de raiz da aorta por mutação da fibrilina","Insuficiência mitral aguda por ruptura de corda reumática","Pericardite fibrinosa sem sangramento"],correta:1,just:["Errada — não há dado infeccioso; o orifício é na parede e decorre de necrose. [tipo: distrator plausível sem suporte]","Correta. Necrose em órgão submetido a pressão abre um buraco; o sangue enche o saco pericárdico e comprime o coração (sístole e diástole) — tamponamento, que mata mais rápido que o próprio infarto.","Errada — aneurisma de raiz é complicação de doença do conjuntivo (Marfan), não de infarto. [tipo: verdade no contexto errado]","Errada — ruptura de corda é da valvulite reumática ou mixomatosa; aqui o achado é sangue no pericárdio. [tipo: par confundível]","Errada — o achado central é sangue coagulado no pericárdio. [tipo: contradição com o enunciado]"],ref:"Aula 07 — Patologia do infarto"},
+
+{n:14,aula:1,nivel:"medio",enun:`<span class="vinheta">Lâmina de miocárdio: cardiomiócitos intensamente eosinofílicos, sem núcleo ou com núcleos fragmentados, separados por edema e permeados por neutrófilos.</span><div class="pergunta">Qual o diagnóstico histológico e a fase?</div>`,alts:["Cicatriz pós-infarto antiga, fase de fibrose densa","Miocardite reumática com nódulos de Aschoff","Hipertrofia adaptativa por estenose aórtica","Necrose de coagulação recente (fase aguda)","Degeneração mixomatosa com material basofílico"],correta:3,just:["Errada — a cicatriz mostra colágeno denso no lugar das fibras, não miócitos necróticos com neutrófilos. [tipo: fase errada]","Errada — Aschoff são agregados de macrófagos com infiltrado linfocitário, não neutrófilos entre miócitos necróticos. [tipo: par confundível]","Errada — na hipertrofia as células aumentam de tamanho, mantêm núcleo e não há necrose. [tipo: par confundível]","Correta. Eosinofilia, cariólise/cariorrexe e edema = necrose de coagulação; neutrófilos marcam a fase aguda, antes da mistura com linfócitos e da fibrose.","Errada — mixomatosa é doença valvar com acúmulo de mucopolissacarídeo, não lesão de miocárdio. [tipo: verdade no contexto errado]"],ref:"Aula 07 — Necrose de coagulação"},
+
+{n:15,aula:1,nivel:"medio",enun:`<span class="vinheta">Na aterogênese descrita na aula, o monócito adere ao endotélio, atravessa-o e se diferencia em macrófago na íntima.</span><div class="pergunta">Por qual receptor o macrófago capta a LDL oxidada e vira célula espumosa?</div>`,alts:["VCAM-1","E-selectina","Receptor de LDL clássico hepático","LOX-1","Receptor de varredura-A (SR-A)"],correta:4,just:["Errada — VCAM-1 é a molécula endotelial que faz o monócito aderir, não o receptor de captação do macrófago. [tipo: par confundível]","Errada — E-selectina aumenta a adesão de leucócitos ao endotélio. [tipo: par confundível]","Errada — a aula não citou o receptor hepático; a captação da LDLox pelo macrófago é por varredura. [tipo: verdade no contexto errado]","Errada — LOX-1 é o receptor de LDLox das CÉLULAS ENDOTELIAIS, não do macrófago. [tipo: par confundível]","Correta. O macrófago expressa o receptor de varredura-A, capta LDL oxidada sem conseguir digeri-la e se transforma em célula espumosa, que segue liberando citocinas."],ref:"Aula 07 — Aterosclerose"},
+
+{n:16,aula:1,nivel:"dificil",enun:`<span class="vinheta">Placa aterosclerótica com núcleo lipídico volumoso, capa fibrosa fina, muitos linfócitos T e macrófagos ativos, em segmento de alto cisalhamento.</span><div class="pergunta">Qual elemento químico citado no slide de instabilidade mais diretamente enfraquece a capa?</div>`,alts:["Metaloproteinases liberadas no ambiente inflamatório","Óxido nítrico produzido pelo endotélio da placa","PDGF, fator que mantém o músculo liso da média quiescente","Colágeno sintetizado pelas células musculares lisas","Fibras elásticas depositadas pela adventícia"],correta:0,just:["Correta. A inflamação atrai linfócitos T e produz metaloproteinases e citocinas que enfraquecem a capa fibrosa, aumentando o risco de ruptura e trombose.","Errada — o NO mantém o músculo liso quiescente e vasodilata; não é o agente que enfraquece a capa. [tipo: mecanismo invertido]","Errada — o PDGF estimula PROLIFERAÇÃO do músculo liso; quem mantém a quiescência é o NO. [tipo: par confundível]","Errada — o colágeno das células musculares lisas FORMA e reforça a capa. [tipo: mecanismo invertido]","Errada — a aula não atribuiu a instabilidade a fibras elásticas da adventícia. [tipo: mecanismo inventado]"],ref:"Aula 07 — Instabilidade da placa"},
+
+{n:17,aula:1,nivel:"medio",enun:`<span class="vinheta">Homem de 80 anos, hipertenso e com hipercolesterolemia, ex-tabagista, refere dispneia e angina. Ecocardiograma: estenose aórtica importante com valva calcificada e VE hipertrófico.</span><div class="pergunta">Por que esse paciente tem angina, segundo o raciocínio da aula?</div>`,alts:["A valva calcificada embolizou cálcio para todas as coronárias","Os anticorpos antiestreptolisina lesaram as coronárias","A hipertrofia eleva a demanda e as coronárias recebem pouco fluxo","O VE hipertrófico produz troponina em excesso, que causa dor","A insuficiência tricúspide desvia sangue das coronárias para o átrio"],correta:2,just:["Errada — a aula não descreveu embolização cálcica; o mecanismo é oferta × demanda. [tipo: mecanismo inventado]","Errada — ASLO é marcador de contato estreptocócico (febre reumática), sem relação com este caso calcificado. [tipo: verdade no contexto errado]","Correta. Para vencer a obstrução o VE hipertrofia e passa a precisar de mais O₂, mas só 20–30% do volume passa pela valva e as coronárias nascem logo depois dela: oferta baixa + demanda alta = isquemia, angina e risco de infarto.","Errada — troponina no sangue é sinal de célula rompida, não causa de dor. [tipo: inversão causa-efeito]","Errada — o fluxo coronariano depende da saída da aorta; a tricúspide não explica a angina. [tipo: explicação ad hoc]"],ref:"Aula 07 — Estenose aórtica calcificada"},
+
+{n:18,aula:1,nivel:"facil",enun:`<span class="vinheta">Um paciente pergunta por que, sendo dislipidêmico e hipertenso, também desenvolveu doença na valva aórtica.</span><div class="pergunta">Qual a resposta coerente com a aula?</div>`,alts:["Porque a LDL lesa as valvas, mas poupa as artérias","O folheto também tem endotélio e sofre a mesma agressão","Porque a hipertensão causa febre reumática tardia","Porque toda valvopatia é congênita e só se manifesta no idoso","Porque a estatina usada no tratamento calcifica as cúspides"],correta:1,just:["Errada — a LDL agride vasos E valvas; é a causa mais comum de doença obstrutiva arterial. [tipo: absoluto falso]","Correta. 'Tudo que agride o vaso agride a valva': o endotélio que reveste o folheto expressa moléculas de adesão diante da LDL, atrai macrófagos, inflama, fibrosa e calcifica — mesmos fatores de risco da aterosclerose.","Errada — febre reumática é consequência de infecção estreptocócica, não de hipertensão. [tipo: mecanismo inventado]","Errada — a valvopatia calcificada é adquirida e progressiva. [tipo: generalização indevida]","Errada — a aula não atribuiu calcificação ao tratamento. [tipo: mecanismo inventado]"],ref:"Aula 07 — Valvopatias"},
+
+{n:19,aula:1,nivel:"dificil",enun:`<span class="vinheta">Paciente de 35 anos fez a primeira troca valvar aórtica. Ele pergunta quantas vezes mais vai precisar operar.</span><div class="pergunta">Com base nos números citados em aula, qual orientação é a mais coerente?</div>`,alts:["Nenhuma: a prótese dura a vida inteira se ele usar anticoagulante diariamente","Uma única vez mais, aos 80 anos, por desgaste natural","A cada ano, pois a prótese calcifica rapidamente em jovens","Várias: a prótese dura 5–7 anos e ele suporta cerca de 3 trocas","Apenas se tiver nova faringite estreptocócica"],correta:3,just:["Errada — a aula foi clara: a vida média das valvas trocadas não é longa. [tipo: otimismo falso]","Errada — com média de 5–7 anos por prótese, um paciente de 35 anos não chegará aos 80 com uma única troca adicional. [tipo: erro de cálculo]","Errada — o número dado foi 5–7 anos, não um ano. [tipo: troca de parâmetro]","Correta. A prótese dura em média 5–7 anos e a média de trocas suportadas é ~3 (complicação/óbito costuma vir na terceira) — por isso a professora se preocupa com doença valvar em gente cada vez mais jovem.","Errada — nova faringite não define a necessidade de troca de prótese. [tipo: verdade no contexto errado]"],ref:"Aula 07 — Estenose aórtica calcificada"},
+
+{n:20,aula:1,nivel:"medio",enun:`<span class="vinheta">Menino de 9 anos com dor no punho direito e, dois dias depois, no tornozelo esquerdo; taquicárdico, com sopro novo, febre de 38 °C e PCR elevada. Teve dor de garganta há três semanas.</span><div class="pergunta">Pelos critérios de Jones da aula, como se classifica o quadro?</div>`,alts:["Dois maiores (artrite e cardite) e dois menores: suspeita de FR","Um maior (febre) + dois menores (artrite, sopro): suspeita de febre reumática","Nenhum critério maior: excluída a febre reumática","Três menores apenas: diagnóstico confirmado de febre reumática","Critérios suficientes para dispensar qualquer exame complementar"],correta:0,just:["Correta. Artrite poliarticular migratória e cardite são critérios MAIORES; febre e PCR elevada são MENORES. Basta 2 maiores + 1 menor (ou 1 maior + 2 menores) para abrir a suspeita — que se confirma com ASLO.","Errada — febre é critério MENOR, e artrite e cardite são MAIORES. [tipo: troca de categoria]","Errada — artrite e cardite são critérios maiores presentes no caso. [tipo: contradição com o enunciado]","Errada — o caso tem critérios maiores; e Jones abre suspeita, a confirmação vem da evidência de estreptococo. [tipo: superestimação]","Errada — Jones dá o 'score'; a confirmação exige ASLO (contato com o estreptococo). [tipo: conduta incompleta]"],ref:"Aula 07 — Critérios de Jones"},
+
+{n:21,aula:1,nivel:"medio",enun:`<span class="vinheta">Adolescente com cardite, artrite e VHS elevado. A hemocultura vem negativa e a garganta está normal.</span><div class="pergunta">Qual exame a aula apontou como padrão-ouro para confirmar a febre reumática nesse momento?</div>`,alts:["Cultura de orofaringe, que ainda isolará o estreptococo","Biópsia valvar buscando nódulos de Aschoff","Hemocultura repetida em três amostras","CK-MB seriada para documentar a cardite","ASLO (antiestreptolisina O) positiva no soro"],correta:4,just:["Errada — a cultura é o padrão-ouro da AMIGDALITE ativa; semanas depois não há mais bactéria para cultivar. [tipo: verdade no contexto errado]","Errada — Aschoff é patognomônico, mas só aparece em valva trocada ou necropsia; ninguém biopsia valva para diagnóstico. [tipo: misconception clássica]","Errada — não há infecção ativa no coração; a lesão é imune, e a hemocultura é negativa. [tipo: mecanismo invertido]","Errada — CK-MB indica lesão miocárdica, mas não prova contato com o estreptococo. [tipo: par confundível]","Correta. Quem teve contato com o estreptococo β-hemolítico do grupo A produz anticorpo contra a estreptolisina O (a enzima que lisa hemácias). ASLO positiva + Jones = base para tratar."],ref:"Aula 07 — Febre reumática"},
+
+{n:22,aula:1,nivel:"dificil",enun:`<span class="vinheta">Valva mitral trocada de paciente jovem: infiltrado inflamatório crônico intenso, predominantemente linfocitário, capilares congestos, agregados de macrófagos (alguns multinucleados) e macrófagos isolados com núcleo em "olho de coruja".</span><div class="pergunta">Qual a interpretação correta desses achados?</div>`,alts:["Valvulite infecciosa aguda, por isso o predomínio de neutrófilos na lâmina","Degeneração mixomatosa por mutação de proteína do tecido conjuntivo","Febre reumática: nódulos de Aschoff e células de Anitschkow","Valvopatia calcificada aterosclerótica com células espumosas e cálcio","Granuloma tuberculoso, que exige cultura para micobactéria antes do laudo"],correta:2,just:["Errada — o infiltrado descrito é linfocitário (resposta adaptativa por anticorpos), e não há patógeno na valva. [tipo: contradição com o enunciado]","Errada — a mixomatosa mostra material mucoide segregado e poucos fibroblastos, não agregados de macrófagos. [tipo: par confundível]","Correta. Agregados de macrófagos = nódulos de Aschoff; macrófago isolado hiperativado ('olho de coruja') = Anitschkow. São patognomônicos da febre reumática, mas só aparecem em valva trocada ou necropsia — explicam, não diagnosticam.","Errada — células espumosas e calcificação são da valvopatia aterosclerótica; aqui predominam linfócitos e macrófagos agregados. [tipo: par confundível]","Errada — a própria aula comparou o Aschoff a um granuloma, mas o contexto (valva, jovem, macrófagos tipo Anitschkow) é reumático. [tipo: semelhança superficial]"],ref:"Aula 07 — A lâmina da febre reumática"},
+
+{n:23,aula:1,nivel:"medio",enun:`<span class="vinheta">Jovem de 1,92 m, com hipermobilidade articular, apresenta dispneia sem causa aparente. O ecocardiograma mostra folhetos mitrais frouxos, abaulados e espessados, com prolapso e cordas alongadas.</span><div class="pergunta">Qual a lesão e o mecanismo?</div>`,alts:["Estenose calcificada por LDL depositada no folheto valvar mitral","Valvulite reumática por anticorpos contra a N-acetilglicosamina","Fibrose cicatricial pós-infarto do músculo papilar","Degeneração mixomatosa por defeito do conjuntivo → insuficiência","Endocardite trombótica por hipercoagulabilidade"],correta:3,just:["Errada — a calcificada é rígida e estenótica, típica do idoso com fatores de risco metabólicos. [tipo: par confundível]","Errada — a reumática é súbita, pós-faringite, com folhetos fibróticos e fundidos, não frouxos e redundantes. [tipo: par confundível]","Errada — não há história isquêmica; o fenótipo aponta doença do conjuntivo. [tipo: verdade no contexto errado]","Correta. Mutação de proteína do conjuntivo (ex.: Marfan) → perda de elasticidade e acúmulo de material mucoide: valva frouxa, abaulada, com prolapso e cordas alongadas → insuficiência e dispneia sem causa aparente.","Errada — a aula não descreveu esse mecanismo para o quadro; o fenótipo é de doença do conjuntivo. [tipo: explicação ad hoc]"],ref:"Aula 07 — Doenças do conjuntivo"},
+
+{n:24,aula:1,nivel:"dificil",enun:`<span class="vinheta">Recém-nascido com descontinuidade do septo interventricular identificada no ultrassom; ainda sem cianose.</span><div class="pergunta">Segundo o modelo ensinado na aula, qual a repercussão esperada se não houver correção?</div>`,alts:["Shunt direita→esquerda com cianose desde as primeiras horas","Shunt esquerda→direita com hiperfluxo pulmonar e hipertrofia de VD","Fechamento espontâneo obrigatório, pois o septo ventricular cresce mais rápido","Ausência de fluxo pelo defeito, pois as pressões ventriculares se igualam","Shunt para a aorta com aneurisma de raiz precoce"],correta:1,just:["Errada — no modelo da aula, o shunt D→E com cianose é atribuído ao defeito do septo ATRIAL. [tipo: par confundível]","Correta. O VE, mais musculoso, vence o VD: mais sangue vai ao pulmão, a pressão e a resistência pulmonares sobem e o VD, sob sobrecarga, hipertrofia e pode evoluir para insuficiência.","Errada — o septo ventricular costuma fechar por crescer mais rápido, mas quando o defeito existe não há fechamento 'obrigatório'. [tipo: verdade distorcida]","Errada — a aula descreveu a briga de pressões em que o VE vence. [tipo: mecanismo inventado]","Errada — aneurisma de raiz da aorta é das doenças do conjuntivo, não da CIV. [tipo: verdade no contexto errado]"],ref:"Aula 07 — Cardiopatias congênitas"}
+];
+
+const dissertativas=[
+{n:1,aula:1,caso:`Paciente masculino, 68 anos, aposentado, procura a urgência com "forte dor no peito": dor em aperto precordial iniciada há 10 dias, com piora progressiva, agravada por esforço moderado (dois quarteirões planos, dois lances de escada), curta e com melhora ao repouso; hoje intensidade 9/10, com palpitações, náuseas e tonturas. Hipertenso, diabético, obeso, tabagista; etilista por 20 anos, parou há 3 anos por grave complicação hepática. Exame: REG, cianose de extremidades 1+/4+, taquipneico (26 irpm), taquicárdico (128 bpm), PA 170/130 mmHg, SatO₂ 78%, sudorese, edema de MMII 1+/4+, pulsos irregulares. Marcadores: mioglobina 168 (ref. até 70) · troponina 15,7 (ref. até 1) · CK-MB 3,8 (ref. até 4). Gasometria arterial: pH 7,20 · PaCO₂ 80 mmHg · PaO₂ 36 mmHg · HCO₃⁻ 26 · BE −1,8. (Caso clínico do slide da aula.)`,
+perg:["Com base nos dados, qual o diagnóstico?","Explique os marcadores — por que a troponina está alta e a CK-MB normal?","Quais os fatores de risco deste paciente?","O que a gasometria mostra e como isso conversa com a fisiopatologia da isquemia vista em aula?"],
+resp:[["Infarto agudo do miocárdio sobre angina que se instabilizou","A dor anginosa de esforço com alívio no repouso (padrão de angina ESTÁVEL, ~70% de estenose) piorou ao longo de 10 dias até se tornar intensa e mantida (angina INSTÁVEL, ~90%), e os marcadores documentam necrose: troponina acima do percentil 99. Taquicardia, pulsos irregulares (arritmia — o sistema de condução morre junto com o músculo), edema e cianose falam de falência de bomba em curso."],
+["Cinética: cada marcador conta um tempo","A troponina sobe em 4–6 h, pica em 36–72 h e só normaliza em 5–14 dias — é o marcador de quem tem história de DIAS, como este paciente (10 dias de dor progressiva, provavelmente com necrose já ocorrida dias antes). A CK-MB sobe em 4–6 h, pica em ~18 h e normaliza em 48–72 h: se o evento principal foi há mais de 3 dias, ela já voltou ao normal — o que não exclui infarto. A mioglobina elevada (sobe em 1–2 h, some em 12–24 h) sugere lesão RECENTE, compatível com nova necrose em curso/reinfarto — mas é inespecífica (músculo esquelético). Por isso nunca se usa um marcador só: interpretam-se 'casadinhos' com a clínica."],
+["Fatores de risco cardiovasculares acumulados","Idade (68), sexo masculino, hipertensão (PA 170/130), diabetes, obesidade, tabagismo (inflama o endotélio) e etilismo prolongado com hepatopatia. Todos convergem para doença endotelial e aterosclerose: LDL e inflamação crônica lesam o endotélio, que perde a capacidade de responder com óxido nítrico, forma placa e favorece trombo."],
+["Acidose respiratória com hipoxemia grave","pH 7,20 (acidemia) com PaCO₂ 80 (retenção de CO₂) e bicarbonato normal (26, BE −1,8): acidose RESPIRATÓRIA aguda, ainda sem compensação metabólica; PaO₂ 36 e SatO₂ 72–78% = hipoxemia grave. A aula insistiu que o problema é o OXIGÊNIO: sem O₂ a mitocôndria acumula hidrogênio, o Krebs para, cai o ATP, param as bombas Na⁺/K⁺ e Ca²⁺-ATPase, a célula não responde ao potencial de ação e morre por necrose e apoptose. Um coração já isquêmico recebendo sangue pouco oxigenado tem a lesão agravada — a conduta é devolver perfusão e oxigenação o quanto antes."]],
+ref:"Aula 07 — Cardiopatia isquêmica, marcadores e lesão celular"},
+
+{n:2,aula:1,caso:`Paciente masculino, 80 anos, admitido com dispneia e angina. ECG com sobrecarga de VE; RX de tórax com aspecto de ICC. Ecocardiograma: VE hipertrófico com hipocinesia difusa, predomínio apical inferior e septal; insuficiência mitral, estenose aórtica importante, insuficiência aórtica moderada, insuficiência tricúspide. PA 160×80 mmHg, SatO₂ 91%. Valva aórtica calcificada com restrição à abertura e regurgitação leve. Antecedentes: hipercolesterolemia e hipertensão; ex-fumante. (Caso clínico do slide da aula.)`,
+perg:["Explique a causa da dispneia e da angina.","O que é hipocinesia difusa e por que ela existe aqui?","Explique as causas da hipertrofia.","Cite os fatores de risco cabíveis e por que eles atingem a valva."],
+resp:[["Valva que não abre (nem fecha) + coronárias mal perfundidas","DISPNEIA: a valva aórtica estenosada deixa passar só parte do volume ejetado (com 70–80% de obstrução, 20–30%); o restante fica retido e o sangue volta, há congestão pulmonar e déficit de oxigenação dos tecidos — sintoma típico de valvopatia, para esforços mínimos. ANGINA: o VE hipertrofiado demanda mais O₂, mas as coronárias nascem na base da aorta, logo após a valva doente, e recebem pouco fluxo: oferta baixa × demanda alta = isquemia."],
+["Músculo que contrai pouco por exaustão e isquemia","Hipocinesia = redução da movimentação (contração) das paredes do ventrículo. Difusa porque a sobrecarga crônica levou à fase de exaustão da hiperfunção compensatória (cascata do slide: obstrução → hipertrofia → aumento de pressão → ICC) e porque a isquemia por oferta insuficiente lesa cardiomiócitos espalhados; onde há morte celular o músculo é trocado por fibrose que não contrai nem relaxa."],
+["Adaptação para vencer a resistência","A valva estreitada impõe sobrecarga permanente ao VE; músculo submetido a tensão constante responde com HIPERTROFIA: células maiores, com mais mitocôndrias e retículo, para gerar mais força. É adaptativa no início, mas cobra mais oxigênio e nutrientes — e é por isso que se deve operar antes que a hipertrofia seja expressiva e o paciente infarte."],
+["Os mesmos fatores do vaso agridem a valva","Idade, hipercolesterolemia, hipertensão e tabagismo (ex-fumante). O folheto valvar é conjuntivo elástico revestido por endotélio: a LDL alta em contato com esse endotélio faz expressar ICAM, VCAM e P-selectina, atrai macrófagos que viram espumosos e liberam citocinas; a inflamação crônica ativa fibroblastos (fibrose: colágeno ganha das elásticas) e o pH alterado favorece calcificação distrófica. Resultado: valva espessa e rígida que abre mal e fecha mal (aqui, estenose com regurgitação). Tratamento: troca valvar."]],
+ref:"Aula 07 — Valvopatias e estenose aórtica calcificada"},
+
+{n:3,aula:1,caso:`Criança de 6 anos, previamente hígida, com faringite tratada empiricamente com amoxicilina; melhorou e, 5 dias após o fim do tratamento, os sintomas voltaram. Gram e cultura: amigdalite estreptocócica; nova antibioticoterapia com adesão parcial. Duas semanas depois, reagudização; usou o antibiótico regularmente por 14 dias. Uma semana após o término: poliartralgia migratória assimétrica de grandes articulações, febre e mialgia; nega sintomas neurológicos, nódulos ou eritema. Exame: REG, taquicárdica, febril, artrite com limitação em MMII, sopro em foco mitral 3+/6+. ASLO 437 UI/mL · alfa-1-glicoproteína ácida 195 mg/dL · PCR 44,8 mg/dL · VHS 76. ECG: sobrecarga leve de VE. Eco: dilatação moderada de câmaras esquerdas, insuficiência mitral moderada/grave, disfunção leve de VE. (Caso de estudo do slide — a professora avisou que a prova traz um caso nesse formato.)`,
+perg:["Qual o diagnóstico? Monte os critérios de Jones.","Explique o significado dos exames laboratoriais.","Descreva a fisiopatogenia deste caso.","Liste os fatores que predispuseram o paciente a essa condição."],
+resp:[["Febre reumática com cardite (valvulite mitral)","Critérios MAIORES: artrite (poliarticular migratória de grandes articulações) e cardite (sopro mitral novo, insuficiência mitral, disfunção de VE). Critérios MENORES: febre, VHS e PCR elevados, ECG alterado. Dois maiores + menores preenche com folga o requisito (1M+2m ou 2M+1m) para abrir a suspeita; a ASLO positiva comprova o contato com o estreptococo β-hemolítico do grupo A e sustenta o diagnóstico."],
+["Inflamação ativa + prova de contato com o estreptococo","ASLO 437: anticorpo contra a estreptolisina O (a enzima que lisa hemácias) — padrão-ouro de que houve contato com o estreptococo, já que não há mais bactéria para cultivar. PCR, VHS e alfa-1-glicoproteína ácida elevadas: atividade inflamatória sistêmica (critérios menores). ECG com sobrecarga de VE e eco com dilatação de câmaras esquerdas e insuficiência mitral: a valvulite já compromete a função — o sangue reflui do VE para o átrio esquerdo."],
+["Mimetismo molecular","O macrófago fagocitou o estreptococo e apresentou epítopos ao linfócito T, que ativou o B: anticorpos. Como algumas proteínas da bactéria diferem das humanas por poucos aminoácidos, os anticorpos reconhecem tecidos próprios: proteína M ↔ tropomiosina (miocardite); N-acetilglicosamina ↔ glicoproteínas valvares (valvulite); mucoproteínas ↔ sinóvia (artrite). O anticorpo opsoniza, aumenta VCAM no endotélio valvar, atrai macrófagos e linfócitos e inflama/necrosa — inflamação aguda SEM patógeno local, adaptativa (por isso infiltrado linfocitário). Os anticorpos surgem 7–14 dias após a infecção, o que explica o intervalo. Tratamento: imunossupressão; a valvulite aguda pode romper cordas e matar nas primeiras 48 h."],
+["Exposições repetidas e tratamento inadequado","(1) Infecções estreptocócicas REPETIDAS (três episódios), aumentando o título de anticorpos a cada exposição; (2) antibiótico empírico sem identificação do agente e adesão parcial — mais tempo de exposição aos antígenos; (3) faixa etária de maior incidência de amigdalite; (4) suscetibilidade genética (polimorfismos), que explica por que nem todo exposto desenvolve. O 'mundo ideal' da diretriz: swab, Gram, cultura e antibiograma na primeira faringite, com tratamento completo."]],
+ref:"Aula 07 — Febre reumática e critérios de Jones"},
+
+{n:4,aula:1,caso:`Estudante de 24 anos, 1,93 m, procura atendimento por "falta de ar à toa" há meses, sem gripe nem doença respiratória. Faz fisioterapia há anos por "frouxidão nas juntas" e mostra que consegue dobrar dedos e cotovelos em ângulos incomuns — "meu pai e meu irmão também fazem". O pai teve um aneurisma cerebral aos 40 e poucos anos. Ao exame: sopro sistólico em foco mitral. Ecocardiograma: folhetos mitrais espessos, redundantes, com prolapso e insuficiência; raiz da aorta dilatada. É sedentário, tem sobrepeso e PA 150/95 mmHg.`,
+perg:["Qual a hipótese diagnóstica e qual o defeito de base?","Explique a lesão valvar (macro e microscopia esperadas).","Por que a raiz da aorta está dilatada e qual o risco?","Que orientações a aula considera essenciais para esse paciente e sua família?"],
+resp:[["Doença hereditária do tecido conjuntivo (ex.: Marfan)","Estatura elevada, hipermobilidade articular familiar, aneurisma precoce no pai e valvopatia + dilatação aórtica num jovem sem causa metabólica sugerem mutação em gene de proteína do conjuntivo (Marfan — fibrilina; Ehlers-Danlos e osteogênese imperfeita são do mesmo grupo). A mesma fragilidade está em todo lugar onde há conjuntivo: osso/articulação, média arterial e valvas. Tratar só a ortopedia e ignorar o coração é o erro que a aula condenou. O diagnóstico da mutação é por sequenciamento genético."],
+["Degeneração mixomatosa","Macro: valva frouxa e abaulada, espessa, de tamanho aumentado, com prolapso e cordas tendíneas alongadas e delgadas ('couve-flor') — não sustenta a tração do papilar e reflui (insuficiência): sangue do VE volta ao átrio e gera dispneia sem causa aparente. Micro: perde-se a mistura harmônica (o 'lilás') de material amorfo e fibras; há segregação — acúmulo de material mucoide/proteoglicanos (basofílico) de um lado, fibras do outro — e fibroblastos escassos, comprometendo o remodelamento. Risco de rotura de cordas."],
+["Média arterial fraca deforma: aneurisma","Nas artérias, o conjuntivo da média garante resistência à pressão. Com fibras montadas com sequência atípica, a média deforma antes de romper: aneurisma, mesmo sem hipertensão ou aterosclerose. O risco é a RUPTURA (choque, morte) — e a hipertensão e o sobrepeso do paciente multiplicam esse risco ('uma bomba atômica'). A correção com prótese é possível, mas tem mortalidade relevante."],
+["Afastar o que soma risco + aconselhamento genético","Não se muda a genética (edição gênica ainda experimental), mas se afasta o risco: controlar a PA, perder peso, evitar dislipidemia e tabagismo; vigilância cardiológica da valva e da aorta. Encaminhar ao geneticista para aconselhamento: definir o padrão de herança e a chance de transmissão para os filhos, e investigar o irmão (que também tem hipermobilidade). Mulheres da família devem saber que essas doenças se associam a perdas gestacionais após o primeiro trimestre."]],
+ref:"Aula 07 — Valvopatias das doenças do conjuntivo"}
+];
+
+
+
+
+
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 07</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 07</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 07 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 07 — Patologias do Sistema Cardiovascular",kicker:"ANATO PATO II",desc:"Isquemia e endotélio, contração e lesão celular, marcadores (CK-MB, mioglobina, troponina), angina, patologia do infarto, aterosclerose, estenose aórtica, febre reumática, valvopatia do conjuntivo e CIA/CIV.",cards:[
+{area:"Isquemia",cat:"conceito",q:"Qual a causa mais comum de cardiopatia isquêmica?",a:"Redução da perfusão coronariana por DOENÇA ATEROSCLERÓTICA (frequentemente com trombo agudo sobre a placa)."},
+{area:"Isquemia",cat:"prof",q:"Por que o déficit de oxigênio aparece antes do déficit de nutriente?",a:"Uma glicose oferta 12 hidrogênios e exige no mínimo 6 O2. A falta de O2 se expressa muito antes da de substrato: o problema central é sempre O2 → ATP."},
+{area:"Isquemia",cat:"conceito",q:"Cite causas de cardiopatia isquêmica que NÃO são placa.",a:"Crise hipertensiva (infarto sem obstrução), choque/hipotensão (hemorragia, sepse), doença pulmonar grave, anemias, envenenamento por metais pesados e êmbolos (líquido amniótico, gordura, ar)."},
+{area:"Isquemia",cat:"caso",q:"Como alguém infarta numa crise hipertensiva sem nenhuma obstrução?",a:"A pressão é a velocidade do sangue nos tecidos: muito acima do ótimo, a troca gasosa fica ineficaz e o miocárdio entra em hipóxia. Por isso crise hipertensiva é emergência."},
+{area:"Isquemia",cat:"conceito",q:"Como o endotélio responde ao aumento e à queda da PA?",a:"PA sobe (cisalhamento) → ÓXIDO NÍTRICO → relaxa a média → vasodilata. PA cai → ENDOTELINA → vasoconstrição. Endotélio doente perde esses ajustes."},
+{area:"Isquemia",cat:"conceito",q:"Como se testa a função endotelial na prática citada em aula?",a:"Doppler de vaso de médio calibre antes e depois de vasodilatador sublingual: quem não dilata tem doença endotelial e risco altíssimo."},
+{area:"Contração",cat:"conceito",q:"Quais as características do músculo cardíaco que o tornam vulnerável à isquemia?",a:"Muitas mitocôndrias, contração repetida a vida inteira, incapaz de manter débito de O2, oxidação rápida, cerca de 1 capilar por fibra — e não faz mitose com eficácia (morte = cicatriz)."},
+{area:"Contração",cat:"conceito",q:"O que é o complexo de troponinas e onde se liga o cálcio?",a:"Troponinas I, C e T presas à tropomiosina sobre a actina. O cálcio liga na troponina C; o complexo se desloca e libera o sítio para a cabeça da miosina."},
+{area:"Contração",cat:"prof",q:"O que é o cálcio desencadeador?",a:"O cálcio que entra vindo do TÚBULO T (canais voltagem-dependentes) após o potencial de ação: pouco, mas dispara a liberação maciça do RETÍCULO SARCOPLASMÁTICO (cálcio liberando cálcio)."},
+{area:"Contração",cat:"conceito",q:"Papel do magnésio e da Ca2+-ATPase na contração?",a:"Magnésio = cofator da fosforilação da cabeça da miosina (pelo ATP). Ca2+-ATPase = retira o cálcio ao fim da sístole, permitindo o relaxamento — gasta ATP."},
+{area:"Lesão celular",cat:"prof",q:"Quais os 3 problemas do cardiomiócito sem ATP?",a:"(1) Bomba Na+/K+ para: degeneração hidrópica e célula insensível ao potencial de ação. (2) Sem cálcio desencadeador, sem troponina C: não contrai. (3) Ca2+-ATPase parada: cálcio preso ativa caspases → apoptose."},
+{area:"Lesão celular",cat:"alerta",q:"No infarto, as células morrem só por necrose?",a:"Não. A via clássica é necrose por evolução da degeneração hidrópica, mas há também APOPTOSE indesejada pelo cálcio retido — o que pode ampliar a área além do território do vaso."},
+{area:"Lesão celular",cat:"conceito",q:"Como se forma o lactato na isquemia?",a:"Sem O2 a matriz mitocondrial acidifica e o Krebs desnatura; a célula força a glicólise, piruvato e NADH ficam no citosol e o NADH transfere o hidrogênio ao piruvato → lactato. Significa: anaerobiose/hipóxia."},
+{area:"Lesão celular",cat:"conceito",q:"O que são DAMPs e por que pioram o infarto?",a:"Conteúdos celulares fora da célula (ATP, pedaços de núcleo, mitocôndria, membrana). Macrófagos os reconhecem, liberam citocinas e atraem leucócitos que produzem radicais livres e enzimas, destruindo mais tecido."},
+{area:"Lesão celular",cat:"alerta",q:"Quelante de cálcio, magnésio e anti-inflamatório resolvem o infarto?",a:"Não — são adjuvantes (protocolo). O único resolutivo é REPERFUNDIR: voltando o ATP, voltam as bombas."},
+{area:"Marcadores",cat:"prof",q:"Mioglobina: sobe, pico, normaliza, uso?",a:"Sobe 1–2 h, pico 6–9 h, normaliza 12–24 h, sensibilidade 95%. Diagnóstico PRECOCE e REINFARTO. Inespecífica (músculo esquelético, renal, queimados, trauma)."},
+{area:"Marcadores",cat:"prof",q:"CK-MB: sobe, pico, normaliza, uso?",a:"Sobe 4–6 h, pico 18 h, normaliza 48–72 h, sensibilidade 93%. Ruim para diagnóstico precoce; útil para quem chega HORAS depois."},
+{area:"Marcadores",cat:"prof",q:"Troponina: sobe, pico, normaliza, uso?",a:"Sobe 4–6 h, pico 36–72 h, normaliza 5–14 dias, sensibilidade 95%. Molécula grande: chega devagar e fica — ideal para quem chega DIAS depois."},
+{area:"Marcadores",cat:"conceito",q:"Do que depende o tempo para um marcador aparecer e sumir do sangue?",a:"Aparecer: quantidade dentro do cardiomiócito + tamanho da molécula (cai primeiro nos capilares do interstício). Sumir: degradação no plasma, ambiente hostil a ela."},
+{area:"Marcadores",cat:"alerta",q:"Isoformas da CK?",a:"CK-MB = coração · CK-MM = músculo esquelético · CK-BB = cérebro. A CK total é inespecífica (exercício intenso, queda, trauma confundem)."},
+{area:"Marcadores",cat:"caso",q:"CK-MB negativa 1 hora após a dor: o que fazer?",a:"Não excluir infarto — está fora da janela (sobe em 4–6 h). Repetir em série (triplicata) e combinar com marcador precoce; clínica e ECG juntos."},
+{area:"Marcadores",cat:"caso",q:"Infartado com mioglobina 4 volta a ter dor; nova dosagem 6. Interpretação?",a:"Novo pico sobre o anterior + dor = REINFARTO. Uso clássico da mioglobina na emergência e na UTI."},
+{area:"Marcadores",cat:"conceito",q:"Por que pedir marcadores 'casadinhos'?",a:"Um específico + um inespecífico (ex.: TGO + mioglobina, TGO + CK-MB) clareiam um ao outro. Nunca um marcador só — e a clínica é soberana."},
+{area:"Angina",cat:"prof",q:"Angina estável × instável (estenose média do slide)?",a:"ESTÁVEL: esforço previsível, alivia no repouso, cerca de 70%. INSTÁVEL: pequenos esforços ou repouso, contínua e crescente, cerca de 90%. Abaixo de 70% o coração não dói."},
+{area:"Angina",cat:"conceito",q:"O que provoca a angina por espasmo?",a:"Vasoconstrição somada a obstrução prévia: frio (conserva calor) e catecolaminas de grandes emoções. Infartos por espasmo foram de ~4% a ~12% na pandemia."},
+{area:"Angina",cat:"conceito",q:"Quais as manifestações evolutivas da cardiopatia isquêmica?",a:"IAM (necrose) → cardiopatia isquêmica com ICC (fibrose de um IAM grande ou de pequenos infartos acumulados) → morte súbita (lesão + arritmia fatal)."},
+{area:"Angina",cat:"conceito",q:"O que caracteriza o infarto fulminante?",a:"Artéria de grande calibre e distribuição ampla; causa prevalente = aterosclerose + TROMBO AGUDO (sem o trombo seria angina instável, com tempo para intervir)."},
+{area:"Patologia do infarto",cat:"conceito",q:"Duas formas de laudar infarto na verificação de óbito?",a:"Ver a OBSTRUÇÃO (placa/trombo, achada pelas áreas de rigidez) ou ver a RESPOSTA: hiperemia reativa (demanda inflamatória atraída pelos DAMPs)."},
+{area:"Patologia do infarto",cat:"caso",q:"Sangue coagulado no pericárdio e orifício na parede do VE: o que houve?",a:"Ruptura da parede necrótica (necrose + pressão = buraco) → TAMPONAMENTO cardíaco, que compromete sístole e diástole e mata rápido."},
+{area:"Patologia do infarto",cat:"caso",q:"Placa de 10–20% e coronária 100% ocluída: quem ocluiu?",a:"O TROMBO: endotélio lesado pela LDL expõe o fator de von Willebrand do subendotélio → plaquetas aderem e liberam mais von Willebrand → oclusão."},
+{area:"Patologia do infarto",cat:"conceito",q:"Achados microscópicos da necrose de coagulação no miocárdio?",a:"Citosol mais eosinofílico, núcleo picnótico/cariorrexe/cariólise, edema intersticial e infiltrado — primeiro neutrófilos, depois linfócitos; fibroblastos → fibrose densa."},
+{area:"Patologia do infarto",cat:"alerta",q:"Por que a cicatriz pós-infarto leva à insuficiência cardíaca?",a:"Tecido conjuntivo denso não contrai nem relaxa; cicatriz extensa no VE (ou soma de vários infartos) tira do coração seu papel de bomba."},
+{area:"Aterosclerose",cat:"prof",q:"Sequência da fisiopatologia da aterosclerose (slide)?",a:"LDL acumula/oxida → endotélio expressa VCAM-1 → monócito adere, entra na íntima, vira macrófago → SR-A capta LDLox → célula espumosa → músculo liso da média migra para a íntima e faz colágeno (capa fibrosa) → metaloproteinases enfraquecem a capa → trombose."},
+{area:"Aterosclerose",cat:"alerta",q:"LOX-1 × SR-A: de quem é cada receptor?",a:"LOX-1 = receptor de LDLox das CÉLULAS ENDOTELIAIS. SR-A (varredura-A) = receptor do MACRÓFAGO que o transforma em célula espumosa."},
+{area:"Aterosclerose",cat:"conceito",q:"O que o endotélio lesado sintetiza na aterogênese?",a:"ICAM-1, E-selectina, P-selectina (de plaquetas), VCAM-1 e as interleucinas IL-1, IL-6 e TNF-alfa; reduz NO; vira pró-coagulante."},
+{area:"Aterosclerose",cat:"conceito",q:"Fatores de instabilidade da placa?",a:"Mecânicos: grau de obstrução, turbulência × cisalhamento, remodelamento expansivo. Químicos: muito lipídio × capa fina, metaloproteases, inflamação."},
+{area:"Valvopatias",cat:"conceito",q:"Estenose × insuficiência valvar?",a:"Estenose = não abre completamente (dificuldade de passagem). Insuficiência = não fecha completamente (regurgitação). Pode haver dupla lesão."},
+{area:"Valvopatias",cat:"prof",q:"Por que dislipidêmicos têm valvopatia calcificada?",a:"'Tudo que agride o vaso agride a valva': o folheto é conjuntivo elástico revestido por endotélio; a LDL inflama, fibrosa e calcifica (calcificação distrófica) — mesmos fatores de risco da aterosclerose."},
+{area:"Valvopatias",cat:"prof",q:"Estenose aórtica: números e cascata?",a:"Área normal cerca de 4 cm², doente 0,5 a 0,1 cm². 70–80% de obstrução → hipertrofia de VE → demanda alta com coronárias mal perfundidas → isquemia/angina → ICC."},
+{area:"Valvopatias",cat:"conceito",q:"Tratamento da estenose valvar cicatricial e limites?",a:"Troca valvar (não tem volta). Prótese dura 5–7 anos; o paciente suporta cerca de 3 trocas na vida. A valva só vai à patologia depois de trocada."},
+{area:"Febre reumática",cat:"prof",q:"Mimetismos moleculares da febre reumática?",a:"Proteína M ↔ tropomiosina (miocardite) · N-acetilglicosamina ↔ glicoproteínas valvares (valvulite) · mucoproteínas ↔ sinóvia (artrite) · membrana ↔ sarcolema dos vasos (vasculite) · membrana ↔ núcleo caudado (coreia de Sydenham)."},
+{area:"Febre reumática",cat:"prof",q:"Critérios de Jones modificados?",a:"MAIORES: cardite, artrite, coreia, eritema marginado, nódulos subcutâneos. MENORES: febre, artralgia, VHS/PCR elevados, ECG alterado. 1 maior + 2 menores OU 2 maiores + 1 menor."},
+{area:"Febre reumática",cat:"alerta",q:"Padrão-ouro: ASLO ou cultura de orofaringe?",a:"Cultura de orofaringe (90–95%) = padrão-ouro da AMIGDALITE ativa. ASLO positiva = padrão-ouro do CONTATO com o estreptococo na febre reumática (não há mais bactéria)."},
+{area:"Febre reumática",cat:"conceito",q:"Por que o paciente com febre reumática não chega com a garganta cheia de pus?",a:"Anticorpos surgem 7–14 dias após a infecção: a doença aparece semanas depois. A história de dor de garganta só aparece se o médico perguntar."},
+{area:"Febre reumática",cat:"conceito",q:"Por que o infiltrado da valvulite reumática é linfocitário?",a:"É resposta ADAPTATIVA (anticorpos produzidos por linfócitos), sem patógeno na valva — inflamação aguda, mas sem foco infeccioso; hemocultura negativa."},
+{area:"Febre reumática",cat:"alerta",q:"Nódulos de Aschoff e células de Anitschkow servem para diagnóstico?",a:"Não. São patognomônicos, mas só aparecem em valva trocada ou necropsia. Aschoff = agregado de macrófagos; Anitschkow = macrófago isolado 'olho de coruja'."},
+{area:"Febre reumática",cat:"conceito",q:"Tratamento e prevenção da febre reumática?",a:"Tratamento: IMUNOSSUPRESSÃO + vigilância (memória imune não se apaga). Prevenção: swab → Gram → cultura → antibiograma na amigdalite; penicilina. Amigdalectomia não previne."},
+{area:"Conjuntivo",cat:"conceito",q:"Quais doenças do conjuntivo a aula associou a valvopatia e aneurisma?",a:"Marfan (fibrilina), Ehlers-Danlos e osteogênese imperfeita. Nome de gene NÃO é cobrado — saiba que aneurisma e valvopatia podem ter componente genético."},
+{area:"Conjuntivo",cat:"conceito",q:"Características da valva mixomatosa?",a:"Frouxa e abaulada, espessa, aumentada, com prolapso e cordas alongadas e delgadas ('couve-flor') → insuficiência. Histologia: material mucoide segregado das fibras, poucos fibroblastos."},
+{area:"Conjuntivo",cat:"caso",q:"Pistas de doença do conjuntivo que passam batido?",a:"Hipermobilidade articular, esclera azulada, alta estatura, pele hiperelástica, aneurisma sem fator de risco e perdas gestacionais APÓS o 1º trimestre."},
+{area:"Congênitas",cat:"prof",q:"CIA × CIV no modelo da aula?",a:"CIA (mais comum — septo atrial fecha por último): shunt direita→esquerda, cianose. CIV: shunt esquerda→direita, hiperfluxo e resistência pulmonar, hipertrofia de VD. ⚠ Fora da aula: a CIA isolada também é esquerda→direita e acianótica — só inverte (cianose) com Eisenmenger."},
+{area:"Congênitas",cat:"conceito",q:"Sinais clínicos de cardiopatia congênita no bebê?",a:"Cianose periorbicular e de extremidades (pior ao chorar), respiração rápida e curta, prostração, apatia, palidez, mamada com pausas, aumento da área cardíaca, sinais de IC."}
+]}};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-cardio-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<style id="secrailcss">
+#secrail{position:fixed;left:26px;top:130px;width:172px;z-index:60;font-family:var(--mono,monospace);display:none}
+@media(min-width:1200px){#secrail.show{display:block}}
+#secrail a{display:block;margin:0 0 13px;text-decoration:none;color:var(--muted)}
+#secrail a b{display:block;font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+#secrail a span{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.45;padding-bottom:4px;border-bottom:1px solid var(--line-strong)}
+#secrail a.on{color:var(--ink)}
+#secrail a.on span{border-bottom:2px solid var(--accent)}
+#secrail a:hover{color:var(--ink)}
+</style>
+<script>
+(function(){
+  var panel=document.getElementById('panel-estudo');if(!panel)return;
+  var secs=[].slice.call(panel.querySelectorAll('h2[id]')).filter(function(s){return /^t\d+$/.test(s.id)});
+  if(secs.length<4)secs=[].slice.call(panel.querySelectorAll('section[id] > h2, section[id] h2')).map(function(h){return h.closest('section[id]')}).filter(Boolean);
+  if(secs.length<4)return;
+  var rail=document.createElement('nav');rail.id='secrail';
+  rail.innerHTML=secs.map(function(s,i){
+    var t=(s.tagName==='H2'?s:s.querySelector('h2')).textContent.replace(/^\s*\d+\s*[·.)\u2014-]\s*/,'').trim();
+    var curto=t.split(/ — |: /)[0].trim();if(curto.length>34)curto=curto.slice(0,32)+'…';
+    return '<a href="#'+s.id+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+curto+'</span></a>';
+  }).join('');
+  document.body.appendChild(rail);
+  function vis(){var ativo=panel.classList.contains('active')||getComputedStyle(panel).display!=='none';rail.classList.toggle('show',ativo)}
+  vis();
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tab,.hub-tab'))setTimeout(vis,60)});
+  var links=rail.querySelectorAll('a');
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+x.target.id)})}});
+  },{rootMargin:'0px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+})();
+</script>
+
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
+</html>
