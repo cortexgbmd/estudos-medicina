@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Questões — Dermatopatologia · Anato Pato II · Córtex Estudos</title>
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0a0d1f;--surface:#141833;--surface2:#1b2043;--ink:#f3f4fb;--muted:#9aa1c4;--faint:#6f76a0;
+    --line:rgba(255,255,255,.10);--accent:#818cf8;--gold:#e6b450;--ok:#34d399;--err:#f87171;--radius:12px}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.55;min-height:100vh}
+  a{color:var(--accent);text-decoration:none}
+  .top{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line-strong)}
+  .top .in{max-width:860px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:15px}.brand b{color:var(--gold)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:7px 16px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+  .tab.on{background:var(--accent);color:#0a0d1f;border-color:transparent}
+  .wrap{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+  .kick{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:clamp(24px,4.5vw,34px);line-height:1.1;margin-bottom:10px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:18px;max-width:70ch}
+  .statgrid{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 18px;text-align:center}
+  .stat b{display:block;font-size:22px}.stat span{color:var(--muted);font-size:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+  .chip{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--muted);border-radius:999px;
+    padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .chip.on{background:#e8eaf6;color:#0a0d1f;border-color:transparent}
+  .panel{display:none}.panel.on{display:block}
+  .q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
+  .qhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .qid{font-weight:800;color:var(--gold);font-size:17px}
+  .qorg{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .qsrc{font-size:11.5px;color:var(--faint)}
+  .enun{margin:8px 0 12px;white-space:pre-line}
+  .qimg{margin:10px 0;background:#fff;border-radius:8px;padding:6px;text-align:center}
+  .qimg img{max-width:100%;border-radius:5px}
+  .qimg figcaption{font-size:12px;color:#555;padding:5px 4px 2px;text-align:left}
+  .alts{display:flex;flex-direction:column;gap:8px}
+  .alt{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1.5px solid var(--line);
+    border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14.5px;transition:.12s;text-align:left;color:var(--ink);width:100%}
+  .alt:hover{border-color:var(--accent)}
+  .alt .letra{font-weight:800;color:var(--accent);flex:0 0 auto}
+  .alt.certa{border-color:var(--ok);background:rgba(52,211,153,.10)}
+  .alt.errada{border-color:var(--err);background:rgba(248,113,113,.10)}
+  .alt.marcada{border-color:var(--accent);background:rgba(129,140,248,.12)}
+  .alt:disabled{cursor:default}
+  .exp{display:none;margin-top:12px;border-left:3px solid var(--gold);background:rgba(230,180,80,.07);
+    border-radius:0 9px 9px 0;padding:12px 14px;font-size:14px}
+  .exp .fonte{display:block;margin-top:8px;font-size:11.5px;color:var(--faint)}
+  .exp.show{display:block}
+  .varia{font-size:12px;color:var(--faint);margin-top:8px;font-style:italic}
+  .btn{border:0;border-radius:9px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;background:var(--accent);color:#0a0d1f}
+  .btn.sec{background:rgba(255,255,255,.09);color:var(--ink);border:1px solid var(--line)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .simbar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:12px 18px;
+    display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:40}
+  .resultado{background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius);padding:24px;margin:20px 0}
+  .resultado h2{margin-bottom:6px}
+  .score{font-size:42px;font-weight:800;color:var(--gold)}
+  .porOrgao{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .porOrgao div{background:var(--surface2);border-radius:9px;padding:8px 14px;font-size:13px}
+  .rev{margin-top:8px;font-size:13.5px;color:var(--muted)}
+  .diss .item{margin:12px 0}
+  .diss .perg{font-weight:700;margin-bottom:6px}
+  .diss .resp{display:none;border-left:3px solid var(--ok);background:rgba(52,211,153,.07);border-radius:0 9px 9px 0;padding:11px 13px;font-size:14px}
+  .diss .resp.show{display:block}
+  .mini{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .aviso{background:rgba(129,140,248,.09);border:1px solid rgba(129,140,248,.35);border-radius:var(--radius);padding:14px 16px;font-size:13.5px;color:var(--muted);margin:14px 0}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ok);color:#052;font-weight:800;
+    padding:10px 22px;border-radius:999px;z-index:99;display:none}
+  small{color:var(--faint)}
+  ::selection{background:var(--accent);color:#0a0d1f}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style id="dossie-skin">/* ===== SKIN DOSSIÊ — override de tema (Córtex Estudos) ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --surface:#141311; --surface2:#1d1b18;
+  --ink:#e8e4d7; --ink-soft:#cfcab9; --muted:#8a8573; --faint:#6d6a5e;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --gold:#d4a84b; --caso:#4fb47a; --alerta:#ff5b55; --ok:#4fb47a; --err:#ff5b55;
+  --radius:2px;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --surface:#f6f2e7; --surface2:#ece7d7;
+  --ink:#0a0908; --ink-soft:#1c1a16; --muted:#6a655a; --faint:#8d8778;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --gold:#8a5a00; --caso:#006a3a; --alerta:#c8241e; --ok:#006a3a; --err:#c8241e;
+}
+/* tipografia dossiê */
+.page-h1,.hero h1,h1{font-family:var(--serif)!important;font-weight:600;letter-spacing:-.01em}
+.kick,.aula-tag,.badge,.chip,.lab,.lbl,.qnum,.qhead .aula,.ctl-label,.counter,.prog,.sub,.hubfoot,.stat .lab,.eyebrow{
+  font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.hub-brand,.tab,.hub-tab,.navbtn,.btn,.reveal-btn,.ghost{font-family:var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+/* superfícies quadradas + réguas */
+.card,.box,.panel .wrap section,.q,.fig,.vinheta,.modelo,.toc,.simbar,.stat,.dk,.stage{border-radius:var(--radius)!important}
+.btn,.tab,.hub-tab,.opt,.alt,.chip,.badge,.navbtn,.reveal-btn,.ghost,.seg{border-radius:var(--radius)!important}
+.card,.box,.q,.toc,.vinheta,.modelo{border:1px solid var(--line)!important;box-shadow:none!important}
+/* cabeçalho tipo topbar do dossiê */
+.hubhead{background:var(--bg)!important;border-bottom:1px solid var(--line-strong)!important;box-shadow:none!important}
+.hub-brand{color:var(--muted)!important}
+.hub-tab{border:0!important;background:none!important;border-bottom:2px solid transparent!important;color:var(--muted)!important;padding:10px 2px!important;margin-right:18px}
+.hub-tab.active,.hub-tab.on{color:var(--ink)!important;border-bottom-color:var(--accent)!important;background:none!important}
+/* botões de ação principais mantêm o cobalto */
+.btn{border:1px solid var(--line-strong)!important;background:var(--surface)!important;color:var(--ink)!important}
+.btn:hover{border-color:var(--accent)!important;color:var(--accent)!important}
+/* alternativas de questão */
+.opt,.alt{border:1px solid var(--line)!important;background:var(--surface)!important}
+.opt:hover,.alt:hover{border-color:var(--accent)!important}
+.opt.locked.correct,.alt.certa{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 8%,var(--surface))!important}
+.opt.locked.wrong,.alt.errada{border-color:var(--alerta)!important;background:color-mix(in srgb,var(--alerta) 8%,var(--surface))!important}
+.letra{font-family:var(--mono)!important;color:var(--accent)!important}
+/* selo/watermark ancorado */
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px 0 14px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+/* botão de tema: chip ☀/☾ */
+#themeToggle{border:1px solid var(--line-strong)!important;background:none!important;color:var(--ink)!important;border-radius:var(--radius)!important;min-width:34px;font-size:14px;line-height:1}
+/* hairlines nos títulos de seção */
+.panel .wrap section>h2,.box-h,h2{border-bottom:1px solid var(--line);padding-bottom:.35em;font-family:var(--serif);letter-spacing:0}
+/* stat band */
+.statgrid,.simbar{border-top:1px solid var(--line-strong)!important;border-bottom:1px solid var(--line-strong)!important}
+.stat b,.stat .big{font-family:var(--serif)!important}
+/* riscar mantém o tracejado na cor da linha */
+.risc{border-left:1px dashed var(--line-strong)!important;color:var(--muted)}
+/* refinamentos v2 */
+.page-h1{font-size:clamp(2.4rem,6vw,4.2rem)!important;line-height:.98!important;letter-spacing:-.015em!important;margin:.15em 0 .25em!important}
+#themeToggle{position:fixed;width:34px!important;height:34px!important;border-radius:var(--radius)!important;font-size:15px!important;background:var(--bg)!important}
+.lead{max-width:70ch}
+.hub-tab{font-size:.78rem!important}
+/* v3: emojis fora, segmentos mono */
+.tab .ico,.hub-tab .ico,.title-row .emoji{display:none!important}
+.seg{border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;background:none!important;overflow:hidden;padding:0!important}
+.seg button{font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem!important;background:none!important;color:var(--muted)!important;border:0!important;border-radius:0!important;padding:8px 14px!important}
+.seg button.active{color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.tab{font-family:var(--mono)!important;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem!important;border:0!important;background:none!important;border-bottom:2px solid transparent!important;border-radius:0!important;color:var(--muted)!important}
+.tab.active{color:var(--ink)!important;border-bottom-color:var(--accent)!important}
+nav.top #themeToggle{position:static!important;margin-left:14px;width:32px!important;height:32px!important}
+/* v4: header sem azul — tinta/mono como na referência */
+.hubhead a,.hub-brand,.hub-brand a,.hubhead .title a,.hubhead b{color:var(--ink)!important;text-decoration:none}
+.hubhead a:hover{color:var(--accent)!important}
+nav.top a,nav.top .brand,nav.top .brand a{color:var(--ink)!important;text-decoration:none}
+nav.top a:hover{color:var(--accent)!important}
+.kick{color:var(--muted)!important}
+.kick::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:9px}
+.hubhead .sub{color:var(--ink)!important}
+</style>
+
+<style id="wmdock">#wm-slot{margin-left:auto;display:flex;align-items:center}#wm-slot #wm{position:static!important;transform:none!important;margin:0}@media(max-width:720px){#wm-slot #wm{display:none}}</style><style id="enuncss">.enun figure{margin:12px 0}.enun img{max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--line,rgba(232,228,215,.14))}.enun table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0}.enun th,.enun td{border:1px solid rgba(138,133,115,.35);padding:6px 8px;text-align:left;vertical-align:top}.enun ol{padding-left:22px}</style></head>
+<body>
+<nav class="top"><div class="in">
+  <span class="brand">Córtex<b>.</b> · <a href="../../">Início</a></span>
+  <div class="tabs">
+    <button class="tab on" data-p="estudo">Estudo</button>
+    <button class="tab" data-p="simulado">Simulado</button>
+    <button class="tab" data-p="diss">Dissertativas</button>
+  </div>
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☀</button><script>(function(){var r=document.documentElement;function st(t){r.setAttribute("data-theme",t);try{localStorage.setItem("cortex-theme",t)}catch(e){}var b=document.getElementById("themeToggle");if(b)b.textContent=t==="dark"?"☀":"☾"}document.getElementById("themeToggle").addEventListener("click",function(){st(r.getAttribute("data-theme")==="dark"?"light":"dark")});try{st(localStorage.getItem("cortex-theme")||"dark")}catch(e){st("dark")}})()</script><span id="wm-slot"></span></div></nav>
+
+<div class="wrap">
+  <p class="kick">Córtex Estudos · Anato Pato II · Banco de questões · Dermatopatologia</p>
+  <h1>Banco de Questões — Dermatopatologia</h1>
+  <p class="lead">Questões de dermatopatologia com gabarito comentado: dermatites e doenças bolhosas, lesões melanocíticas (modelo de Clark) e neoplasias epiteliais da pele.</p>
+  <div class="statgrid">
+    <div class="stat"><b>10</b><span>objetivas (a–d)</span></div>
+    <div class="stat"><b>2</b><span>dissertativas</span></div>
+  </div>
+
+  <div id="p-estudo" class="panel on">
+    <div class="aviso">Modo estudo: responda e veja o gabarito comentado na hora. Seu progresso fica salvo neste navegador.</div>
+    <div class="chips" id="filtros"></div>
+    <div id="lista-estudo"></div>
+  </div>
+
+  <div id="p-simulado" class="panel">
+    <div id="sim-intro">
+      <div class="aviso"><b>Simulado:</b> as 10 objetivas em sequência, sem feedback. No final você vê a nota, a revisão comentada e pode <b>copiar um relatório pronto para colar em uma IA</b> e estudar em cima dos seus erros.</div>
+      <button class="btn" id="sim-start">▶ Começar simulado</button>
+      <span id="sim-retomar"></span>
+    </div>
+    <div id="sim-area" style="display:none">
+      <div id="lista-sim"></div>
+      <div class="simbar"><span id="sim-prog" style="color:var(--muted);font-size:13.5px"></span>
+        <button class="btn" id="sim-fim">Finalizar simulado</button></div>
+    </div>
+    <div id="sim-result" style="display:none"></div>
+  </div>
+
+  <div id="p-diss" class="panel">
+    <div class="aviso">Tente responder em voz alta (ou por escrito) antes de revelar a resposta modelo de cada item.</div>
+    <h2 style="margin:18px 0 4px">Dissertativas (D1–D2)</h2>
+    <div id="lista-diss"></div>
+    <div id="lista-lam"></div>
+  </div>
+</div>
+<div class="toast" id="toast">Relatório copiado ✓</div>
+
+<script>
+const QUESTOES=[
+{id:"Q1",org:"Inflamatórias",fontes:'',img:null,
+enun:"<p>Analise as figuras macroscópicas (Eritema Multiforme e Psioríase) e considere as diferenças fisiopatológicas dos fenômenos inflamatórios e morfológicos predominantes nas dermatites agudas e crônicas, apontando a assertiva correta.</p> <figure> <img class=\"main\" src=\"img/pato_p01_fig1.jpg\"> </figure>",
+alts:["Pela duração e tipo de lesão fundamental podemos dizer que nas dermatites agudas predominam os fenômenos vasculares-exsudativos e nas crônicas os alterativos.", "Considerando o tempo de duração, as dermatites agudas são autolimitadas em no máximo 24h, enquanto as crônicas duram algumas semanas até a cura.", "Pelo tipo de lesão fundamental podemos dizer que nas dermatites agudas a resposta inflamatória linfo-plasmocitária é a mais comum, enquanto na crônica é a neutrofílica.", "As alterações no crescimento epidérmico (hiperplasia ou atrofia), também chamados de fenômenos alterativos são predominantes nas dermatites agudas."],
+correta:0,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"nas dermatites agudas predominam os fenômenos vasculares-exsudativos (edema, espongiose, vesículas); nas crônicas, os alterativos (acantose/hiperplasia ou atrofia da epiderme). b erra a duração; c inverte o infiltrado; d atribui as alterações epidérmicas às agudas."},
+{id:"Q2",org:"Inflamatórias",fontes:'',img:null,
+enun:"<p>Durante um dia normal de atendimento clínico na UBS, você recebeu quatro pacientes agendados apresentando as lesões das imagens clínicas abaixo. No fim do dia percebeu que a evolução em prontuários estava incompleta ora faltando a descrição, ora faltando a hipótese. Como você fotografou as lesões, observe as colunas abaixo e elabore a correlação correta entre Imagem (I, II, III, IV); lesão fundamental (A, B, C, D) e a Hipótese Diagnóstica (a, b, c, d):</p> <figure> <img class=\"main\" src=\"img/pato_p01_fig2.jpg\"> </figure> <table> <colgroup> <col style=\"width: 33%\" /> <col style=\"width: 33%\" /> <col style=\"width: 33%\" /> </colgroup> <thead> <tr> <th>Imagem</th> <th>Lesão fundamental</th> <th>Hipótese diagnóstica</th> </tr> </thead> <tbody> <tr> <td>I</td> <td>A- Nódulo sólido, marrom-enegrecido de contornos regulares e base séssil</td> <td>a- HD: Pênfigo Vulgar</td> </tr> <tr> <td>II</td> <td>B- Múltiplas manchas e pápulas eritematosas com contornos mal definidos</td> <td>b- HD: Nevo composto</td> </tr> <tr> <td>III</td> <td>C- Placas prateadas de contornos salmão, bem delimitadas</td> <td>c- HD: Dermatite Eczematosa</td> </tr> <tr> <td>IV</td> <td>D- Múltiplas vesículas e bolhas cutâneas heterorgêneas</td> <td>d- HD: Psioríase</td> </tr> </tbody> </table> <p>Encontramos as correlações corretas em:</p>",
+alts:["I, A, a – II, B, b – III, C, c – IV, D, d.", "I, B, a – II, A, b – III, D, c – IV, C, d.", "I, A, b – II, B, c – III, C, d – IV, D, a.", "I, B, c – II, C, d – III, D, a – IV, A, b."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"I (dorso da mão: manchas e pápulas eritematosas mal definidas) = B, dermatite eczematosa (c); II (nuca: placas prateadas bem delimitadas) = C, psoríase (d); III (múltiplas bolhas) = D, pênfigo vulgar (a); IV (nódulo enegrecido de contornos regulares) = A, nevo composto (b)."},
+{id:"Q3",org:"Inflamatórias",fontes:'',img:null,
+enun:"<figure> <img class=\"main\" src=\"img/comp1_p08_fig1.jpg\"> </figure> <p>Diferente das dermatites agudas que apresentam intensos fenômenos vasculares e poucas alterações epidérmicas, as dermatites crônicas que persistem por meses a anos são geralmente associadas a infiltrados inflamatórios moderados e alterações na arquitetura epidérmica que evidencia fenômenos hiperplásicos ou atrofia, inclusive na derme subjacente. Com auxílio da fotomicrografia, identifique duas alterações morfológicas e a dermatose crônica representada:</p>",
+alts:["Denso infiltrado inflamatório neutrofílico ao longo da junção dermo-epidérmica, presença de Corpos de Civate. HD: Dermatite Eczematosa.", "Alongamento das cristas epidérmicas (acantose) e presença de áreas acantolíticas. HD: Líquen Plano.", "Epiderme adelgaçada alternada com áreas de acantose, queratinócitos basais anucleados e necróticos (Corpos de Civate). HD: Dermatite Seborréica.", "Alongamento “tuboidal” das cristas epidérmicas (hiperplasia e acantose) alternado de áreas de atrofia, com vasos dilatados e congestos e moderado infiltrado dérmico subjacente. HD: Psoríase."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"psoríase: alongamento regular das cristas epidérmicas (acantose “em clava”) alternando com afinamento suprapapilar, vasos dilatados e tortuosos nas papilas e infiltrado dérmico. Corpos de Civatte são do líquen plano."},
+{id:"Q4",org:"Inflamatórias",fontes:'',img:null,
+enun:"<p>Maria dos Anjos, 58 anos, contadora, divorciada, 5 filhos, procura atendimento na UPA com quadro de múltiplas bolhas polimórficas, com conteúdo líquido seroso claro, algumas já em fase de úlcera, envolvendo todo o tronco e extremidades, com 10 dias de evolução, dor moderada. Paciente relata ter tido quadro semelhante há 5 anos atrás, mas não sabe dizer qual a doença. Trouxe na consulta resultado anatomo-patológico de 2017. Considerando que o conhecimento das junções intercelulares que fornecem estabilidade mecânica à pele, e que podem ser alvo da resposta auto-imune de algumas doenças bolhosas, relacione no quadro abaixo, qual associação seria posssível encontrar nesse laudo histopatológico antigo.</p> <table> <thead> <tr> <th>CONCLUSÃO</th> <th>DESCRIÇÃO MICROSCÓPICA</th> </tr> </thead> <tbody> <tr> <td>A- Pênfigo Vulgar</td> <td>a- Vesícula sub-epidérmica</td> </tr> <tr> <td>B- Pênfigo Foliáceo</td> <td>b- Vesícula supra-basal</td> </tr> <tr> <td>C- Penfigóide bolhoso benigno</td> <td>c- Vesícula sub-córnea</td> </tr> </tbody> </table>",
+alts:["A-a; B-b; C-c", "C-b; B-a; A-c", "C-c; A-b; B-a", "A-b; B-c; C-a"],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"pênfigo vulgar = bolha SUPRAbasal (A-b); pênfigo foliáceo = bolha SUBcórnea (B-c); penfigoide bolhoso = bolha SUBepidérmica (C-a)."},
+{id:"Q5",org:"Melanocíticas",fontes:'',img:null,
+enun:"<p>Apesar da benignidade do nevo melanocítico, sabe-se que as mutações gênicas características (BRAF e RAS) podem ser passíveis de progressão displásica em um número pequeno de indivíduos por ação multifatorial. Sendo assim, Clarck e colaboradores em 1979 propuseram as seguintes etapas potenciais de progressão tumoral. Correlacione as cinco fases representadas aos fenômenos morfológicos e assinale a alternativa correta:</p> <figure> <img class=\"main\" src=\"img/pato_p01_fig3.jpg\"> </figure>",
+alts:["Nevo juncional &gt; Nevo composto com morfologia atípica&gt; Hiperplasia melanocítica lentiginosa &gt; Melanoma com crescimento radial&gt; Melanoma avançado (crescimento vertical).", "Hiperplasia melanocítica lentiginosa &gt; Melanoma inicial com crescimento radial&gt; Melanoma avançado &gt; Nevo juncional&gt; Nevo composto com morfologia atípica (displásico).", "Hiperplasia melanocítica &gt; Nevo juncional &gt; Nevo composto com atipias/displasia &gt; Melanoma inicial com crescimento radial&gt; Melanoma avançado com crescimento vertical.", "Melanoma inicial com crescimento radial &gt; Nevo juncional &gt; Hiperplasia melanocítica lentiginosa &gt; Nevo composto displásico &gt; Melanoma avançado com crescimento vertical."],
+correta:2,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"sequência de Clark: hiperplasia melanocítica (lentiginosa) → nevo juncional → nevo composto com atipias (displásico) → melanoma inicial de crescimento radial → melanoma avançado de crescimento vertical."},
+{id:"Q6",org:"Melanocíticas",fontes:'',img:null,
+enun:"<p>Apesar da benignidade do nevo melanocítico, sabe-se que as mutações gênicas características (BRAF e RAS) podem ser passíveis de progressão displásica pelo decorrer do tempo. Sendo assim, Clarck e colaboradores propuseram as seguintes etapas potenciais de progressão tumoral em nevos displásicos ou atípicos. Correlacione as cinco fases representadas aos fenômenos e assinale a alternativa correta.</p> <figure> <img class=\"main\" src=\"img/comp1_p09_fig1.jpg\"> </figure>",
+alts:["Nevo juncional &gt; Nevo composto com morfologia atípica (displásico) &gt; Hiperplasia melanocítica lentiginosa &gt; Melanoma inicial com crescimento radial&gt; Melanoma avançado com crescimento vertical.", "Hiperplasia melanocítica lentiginosa &gt; Melanoma inicial com crescimento radial&gt; Melanoma avançado com crescimento vertical &gt; Nevo juncional &gt; Nevo composto com morfologia atípica (displásico).", "Melanoma inicial com crescimento radial&gt; Nevo juncional &gt; Hiperplasia melanocítica lentiginosa &gt; Nevo composto com morfologia atípica (displásico) &gt;Melanoma avançado com crescimento vertical.", "Hiperplasia melanocítica lentiginosa &gt; Nevo juncional &gt; Nevo composto com morfologia atípica (displásico) &gt; Melanoma inicial com crescimento radial&gt; Melanoma avançado com crescimento vertical."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"sequência de Clark: hiperplasia melanocítica lentiginosa → nevo juncional → nevo composto displásico → melanoma de crescimento radial → melanoma de crescimento vertical."},
+{id:"Q7",org:"Melanocíticas",fontes:'',img:null,
+enun:"<p>Amélia Santos, 64 anos, B.E.G., nega uso de medicamentos contínuos, leucoderma, aposentada, trabalhou a vida toda como camelô. Procurou atendimento no AMA com queixa de piora de manchas acastanhadas (HD1) em toda a região facial (principalmente malar), bilateralmente, além disso percebe que tem uma “pinta” (HD2) na região de fronte direita que está “crescendo” e mudando de cor. A partir desses dados clínicos e macroscópicos, quais as principais hipóteses e condutas (CD) diagnósticas?</p>",
+alts:["HD1= Vitiligo; CD= biópsia excisional. HD2= Melasma; CD= biópsia excisional.", "HD1= Verruga Vulgar; CD=acompanhamento e orientação de proteção solar. HD2: Carcinoma baso celular; CD=acompanhamento.", "HD1= Melasma CD=acompanhamento e orientação de proteção solar. HD2= Nevo Displásico; CD=biópsia incisional .", "HD1= Efélides; CD=biópsia excisional; HD2= Acantose nigricante; CD= biópsia incisional ."],
+correta:2,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"manchas acastanhadas malares bilaterais em mulher com exposição solar crônica = melasma (acompanhamento e fotoproteção); “pinta” que cresce e muda de cor = lesão melanocítica suspeita (nevo displásico/melanoma) → biópsia."},
+{id:"Q8",org:"Epiteliais",fontes:'',img:null,
+enun:"<p>Paciente homem 60 anos, caucasiano, proveniente do Nordeste, mora em São Paulo há 20 anos, trabalha como caminhoneiro, comparece na consulta com relato de “recidiva” de lesão crostificada em região de tuber frontal lado E. Relata que teve tumor semelhante há 2 anos, mas que havia sido removido na biópsia sem nenhuma sequela. No prontuário encontramos laudo arquivado contendo a seguinte descrição: <em>Fragmento de pele com epitélio pavimentoso estratificado hiperqueratinizado, queratinócitos atípicos nas camadas mais internas (basal e parabasal), ausência de disqueratose, derme subjacente com elastose solar, degeneração basofílica do colágeno e moderado infiltrado inflamatório misto. Conclusão: Queratose actínica”</em></p> <figure> <img class=\"main\" src=\"img/pato_p02_fig1.jpg\"> </figure> <p>Diante dessa história pregressa e com auxílio da imagem macroscópica acima, é possível inferir que se trata de:</p>",
+alts:["Trata-se de um Pólipo fibroepitelial, tumor benigno muito comum em idosos na região de exposição solar, pela beningnidade não há necessidade de biópsia só acompanhamento.", "Recidiva de Queratose actínica, que é uma lesão pré-maligna comum em região exposta à Radiação UV, indica-se nova biópsia excisional para verificação de grau de displasia.", "Progressão da Queratose Actínica para um Melanoma, fenômeno comum que necessita nova biópsia incisional confirmatória.", "Trata-se de uma Acantose Nigricans que é uma neoplasia maligna, portanto, necessita de biópsia excisional com maior margem de tecido saudável."],
+correta:1,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"recidiva de queratose actínica (lesão pré-maligna de área foto-exposta em caminhoneiro), com indicação de nova biópsia excisional para graduar a displasia. Pólipo fibroepitelial e acantose nigricans são benignos/não se encaixam; queratose actínica progride para CEC, não para melanoma."},
+{id:"Q9",org:"Epiteliais",fontes:'',img:null,
+enun:"<p>A respeito das <strong>3 principais neoplasias malignas de pele</strong>, que acometem a população brasileira, analise as assertivas abaixo como <strong>verdadeiras (V) ou falsas (F):</strong></p> <p>( ) O carcinoma basocelular é o tipo menos comum de câncer de pele, de crescimento rápido às custas da proliferação de células do estrato espinhoso da epiderme, de regiões não expostas ao sol. ( ) O carcinoma basocelular é o tipo mais comum de CA de pele, tem crescimento lento pela proliferação dos queratinócitos mutados, das camadas basais do epitélio exposto à luz solar. ( ) O carcinoma de células escamosas ou epidermóide é o 2o mais comum, originado a partir da proliferação de células do estrato espinhoso do epitélio com acúmulos de lesões de DNA; em áreas expostas ao sol; ou associado à feridas crônicas de pacientes imunossuprimidos. ( ) O carcinoma de células escamosas é o 3o mais comum sendo originado a partir da proliferação de células do estrato córneo do epitélio que responde exclusivamente a injúria pela radiação UV, tem evolução lenta e rara invasividade. ( ) O melanoma é o 3o câncer de pele mais frequente, contudo é o de maior letalidade, a patogênese é multifatorial e envolve exposição a radiação solar e mutação de genes BRAF, RAS e KIT e outros nos melanócitos da pele.</p> <p>A sequência que relaciona corretamente as assertivas é:</p>",
+alts:["V, V, V, F, F.", "F, F, F, V, V.", "F, V, V, F, V.", "V, F, V, V, F."],
+correta:2,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"CBC é o mais comum, de crescimento lento, a partir da camada basal em pele exposta (1ª F, 2ª V); CEC é o 2º mais comum, do estrato espinhoso, em área exposta ou feridas crônicas/imunossupressão (3ª V, 4ª F — não vem do estrato córneo e é invasivo); melanoma é o 3º e o mais letal, com BRAF/RAS/KIT (5ª V)."},
+{id:"Q10",org:"Epiteliais",fontes:'',img:null,
+enun:"<p>O desenvolvimento da malignidade epidérmica, em resposta a persistência de um agente lesivo celular (Ex: Radiação UV), é tipicamente precedido por uma sequência de falhas no ciclo celular e um período de alterações displásicas com progressiva piora. Considerando essa progressão, temos exemplos de alterações morfológicas <strong>correspondentes</strong> a tumores <strong>pré malignos</strong> e <strong>malignos</strong>, em qual das altenativas.</p>",
+alts:["Elastose solar e exuberante angiogênese na Queratose Actínica &gt; Degeneração basofílica e hiperqueratose no Carcinoma basocelular .", "Hipercromatismo celular e acantose no Queratoacantoma &gt; Hiperplasia linear e angiogênse linfática no Carcinoma de Células Escamosas.", "Espongiose e grande número de mitoses atípicas no Carcinoma basocelular &gt; Acantólise e elastose solar no Carcinoma de Células de Merkel.", "Paraqueratose e elastose solar na Queratose Actínica &gt; Atipias queratinócíticas e pérolas córneas no Carcinoma de Células Escamosas ."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"queratose actínica (pré-maligna): paraqueratose, atipia basal e elastose solar → carcinoma de células escamosas (maligno): atipias queratinocíticas invasivas e pérolas córneas."}
+];
+
+const DISSERTATIVAS=[
+{id:"D1",org:"Epiteliais · Lesão de lábio inferior",fontes:'',img:null,
+enun:"<p>João Silva, 62 anos, ex-trabalhador rural, atualmente motorista de caminhão (15 anos), leucoderma, hipertenso e diabético, em uso contínuo de medicações, REG, tabagista pesado (2maços por dia há 40 anos), ex-etilista. Apresenta lesão em região de de hemi-lábio inferior esquerdo com 6 meses de evolução (<strong>Imagem 1</strong>), indolor a palpação, com 2 episódios de pequena hemorragia local superficial, refere inapetência e emagrecimento (perda ponderal de 10k no último mês). Após exame clínico a conduta tomada pelo clínico da UPA, foi encaminhamento ao dermatologista e solicitação de biópsia incisional (<strong>Imagem 2</strong>).</p> <p><strong>IMAGEM 1</strong></p> <figure> <img class=\"main\" src=\"img/pato_p05_fig1.jpg\"> </figure> <p><strong>IMAGEM 2</strong></p> <figure> <img class=\"main\" src=\"img/pato_p05_fig2.jpg\"> </figure>",
+itens:[{"p": "<strong>a)</strong> Elabore a <strong>descrição macroscópica da lesão</strong> (Imagem 1) que constaria no encaminhamento ao especialista apontando <strong>2 diagnósticos</strong> diferenciais, que justifiquem a solicitação da biópsia.", "r": "Lesão em hemilábio inferior esquerdo, de bordas elevadas e endurecidas, ulcerada/crostosa, de contornos irregulares, indolor, com sangramento superficial e 6 meses de evolução. Diagnósticos diferenciais: carcinoma de células escamosas (epidermoide) do lábio e queilite actínica (lesão pré-maligna); outro aceitável: queratoacantoma. A evolução, o sangramento, a perda de peso e os fatores de risco (sol, tabaco) justificam a biópsia."}, {"p": "<strong>b) Elabore um possível laudo anatomopatológico</strong> para essa amostra (com 2 processos patológicos relevantes e a conclusão anatomopatológica), se apoiando nas alterações histológicas (a,b,c,d,e) apontadas na <strong>Imagem 2.</strong>", "r": "Laudo: epitélio pavimentoso estratificado com queratinócitos atípicos e pleomórficos, perda da polaridade e mitoses atípicas (displasia/neoplasia); ninhos invadindo a lâmina própria/derme com pérolas córneas; elastose solar (degeneração basofílica do colágeno) e infiltrado inflamatório crônico. Conclusão: carcinoma de células escamosas (epidermoide) invasivo do lábio."}]},
+{id:"D2",org:"Epiteliais · Pele (asa do nariz)",fontes:'',img:null,
+enun:"<p>1.Para responder as próximas questões, considere os Dados Clínicos e a descrição do Laudo Anatomopatológico disponíveis.</p> <p><strong>Breve relato clínico:</strong> João Silva, 62 anos, ex trabalhador rural, atualmente motorista de caminhão, leucoderma, hipertenso e diabético, em uso continuo de medicações, REG, relata emagrecimento nas últimas semanas (perdeu 10 kilos), tabagista pesado, ex-etilista. Em região de asa esquerda do nariz, com 3 meses de evolução, apresenta nódulo fibroso de base séssil, consistência fibrosa, contornos difusos, com úlcera central crostificada, aprox. 1,5X1X0,6 cm, indolor a palpação, com 1 episódio de pequena hemorragia local superficial. Foi solicitado e realizado biópsia incisional com resultado abaixo.</p> <p><strong>Descrição microscópica:</strong> Os cortes histológicos revelam fragmento de lesão tegumentar revestido por epitélio pavimentoso estratificado hiperqueratinizado com áreas de erosão, exibindo hipergranulose nas camadas superficiais, e alteração da estratificação das demais camadas epidérmicas com evidente espongiose, disqueratose, hipercromasia e áreas focais queratinócitos polimórficos e atípicos com perda da polaridade na camada basal. Lâmina própria descontínua com invasão dérmica e exuberante infiltrado inflamatório e elastose solar permeando fibras colágenas espessas e hialinizadas de aspecto reparativo. Presença de pérolas córneas e numerosos vasos sanguíneos congestos e edema intersticial.</p> <figure> <img class=\"main\" src=\"img/comp2_p20_fig1.jpg\"> </figure> <p><strong>Questões:</strong> a) Baseado no exame clínico, cite 2 diagnósticos diferenciais iniciais. Após a biópsia, baseado no laudo microscópico qual seria a a conclusão ou hipótese diagnóstica final? b) De acordo essa conclusão, faça uma breve descrição da fisiopatologia da doença (fatores de risco, processos patológicos envolvidos).</p>",
+itens:[{"p": "Resposta esperada", "r": "a) Diferenciais clínicos: carcinoma basocelular (o mais comum na asa do nariz) e carcinoma de células escamosas (também aceitável: queratoacantoma). Pelo laudo — atipias, disqueratose, perda de polaridade, invasão dérmica e pérolas córneas — a conclusão é carcinoma de células escamosas (epidermoide) invasivo, bem diferenciado. b) Fisiopatologia: radiação UV crônica (trabalho rural e como motorista, pele clara) causa dano ao DNA (dímeros de pirimidina, mutação de TP53) nos queratinócitos; somam-se tabagismo e diabetes (resposta imune e reparo prejudicados). Sequência: displasia (queratose actínica) → carcinoma in situ → carcinoma invasivo, com elastose solar, inflamação e angiogênese associadas."}]}
+];
+
+const LAMINAS=[];
+
+const L4='abcd';
+const esc=s=>String(s==null?'':s);
+const SAVE='banco-anatopato2-dermato-estudo-v1';
+let saved={};try{saved=JSON.parse(localStorage.getItem(SAVE)||'{}')}catch(e){}
+function persist(){try{localStorage.setItem(SAVE,JSON.stringify(saved))}catch(e){}}
+
+/* ===== abas ===== */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+t.dataset.p).classList.add('on');
+  window.scrollTo(0,0);
+}));
+
+/* ===== helpers ===== */
+function qHTML(q,modo){
+  const img=q.img?`<figure class="qimg"><img loading="lazy" src="img/${q.img}" alt="Figura da questão ${q.id}">${q.imgcap?`<figcaption>${q.imgcap}</figcaption>`:''}</figure>`:'';
+  const alts=q.alts.map((a,i)=>`<button class="alt" data-q="${q.id}" data-i="${i}"><span class="letra">${L4[i]})</span><span>${a}</span><span class="risc" title="Riscar alternativa">✕</span></button>`).join('');
+  const varia=q.varia?`<p class="varia">↺ ${q.varia}</p>`:'';
+  return `<div class="q" id="${modo}-${q.id}"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span></div>
+  <div class="enun">${q.enun}</div>${img}<div class="alts">${alts}</div>${varia}
+  <div class="exp" id="${modo}-exp-${q.id}"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte da resposta: ${q.fonteResp}.</span></div></div>`;
+}
+
+/* ===== modo estudo ===== */
+const ORGS=['Todos', 'Inflamatórias', 'Melanocíticas', 'Epiteliais'];
+let fOrg='Todos';
+function renderFiltros(){
+  document.getElementById('filtros').innerHTML=ORGS.map(o=>{
+    const n=o==='Todos'?QUESTOES.length:QUESTOES.filter(q=>q.org===o).length;
+    return `<button class="chip ${fOrg===o?'on':''}" data-o="${o}">${o} (${n})</button>`}).join('');
+  document.querySelectorAll('#filtros .chip').forEach(c=>c.addEventListener('click',()=>{fOrg=c.dataset.o;renderEstudo()}));
+}
+function renderEstudo(){
+  renderFiltros();
+  const qs=QUESTOES.filter(q=>fOrg==='Todos'||q.org===fOrg);
+  document.getElementById('lista-estudo').innerHTML=qs.map(q=>qHTML(q,'est')).join('');
+  qs.forEach(q=>{ if(saved[q.id]!=null) pintarEstudo(q,saved[q.id],false); });
+  document.querySelectorAll('#lista-estudo .alt').forEach(b=>b.addEventListener('click',()=>{
+    const q=QUESTOES.find(x=>x.id===b.dataset.q);
+    if(saved[q.id]!=null) return;
+    saved[q.id]=Number(b.dataset.i); persist(); pintarEstudo(q,saved[q.id],true);
+  }));
+}
+function pintarEstudo(q,resp,anim){
+  const card=document.getElementById('est-'+q.id); if(!card) return;
+  card.querySelectorAll('.alt').forEach(b=>{
+    const i=Number(b.dataset.i); b.disabled=true;
+    if(i===q.correta) b.classList.add('certa');
+    else if(i===resp) b.classList.add('errada');
+  });
+  document.getElementById('est-exp-'+q.id).classList.add('show');
+}
+
+/* ===== simulado ===== */
+const SIMKEY='banco-anatopato2-dermato-sim-v1';
+let sim=null;try{sim=JSON.parse(localStorage.getItem(SIMKEY)||'null')}catch(e){}
+function simPersist(){try{localStorage.setItem(SIMKEY,JSON.stringify(sim))}catch(e){}}
+function simStart(fresh){
+  if(fresh||!sim) sim={resp:{},ini:Date.now()};
+  simPersist();
+  document.getElementById('sim-intro').style.display='none';
+  document.getElementById('sim-result').style.display='none';
+  document.getElementById('sim-area').style.display='block';
+  document.getElementById('lista-sim').innerHTML=QUESTOES.map(q=>qHTML(q,'sim')).join('');
+  document.querySelectorAll('#lista-sim .exp').forEach(e=>e.remove());
+  document.querySelectorAll('#lista-sim .alt').forEach(b=>b.addEventListener('click',()=>{
+    const qid=b.dataset.q;
+    sim.resp[qid]=Number(b.dataset.i); simPersist();
+    document.querySelectorAll(`#sim-${qid} .alt`).forEach(x=>x.classList.toggle('marcada',x===b));
+    simProg();
+  }));
+  Object.entries(sim.resp).forEach(([qid,i])=>{
+    const b=document.querySelector(`#sim-${qid} .alt[data-i="${i}"]`); if(b) b.classList.add('marcada');
+  });
+  simProg();
+}
+function simProg(){
+  const n=Object.keys(sim.resp).length;
+  document.getElementById('sim-prog').textContent=`${n}/${QUESTOES.length} respondidas`;
+}
+document.getElementById('sim-start').addEventListener('click',()=>simStart(true));
+if(sim&&Object.keys(sim.resp||{}).length){
+  document.getElementById('sim-retomar').innerHTML=` <button class="btn sec" id="sim-cont">Continuar simulado em andamento (${Object.keys(sim.resp).length}/${QUESTOES.length})</button>`;
+  document.getElementById('sim-cont').addEventListener('click',()=>simStart(false));
+}
+document.getElementById('sim-fim').addEventListener('click',()=>{
+  const faltam=QUESTOES.length-Object.keys(sim.resp).length;
+  if(faltam>0&&!confirm(`Ainda faltam ${faltam} questão(ões) sem resposta — elas contarão como erro. Finalizar mesmo assim?`))return;
+  simFinaliza();
+});
+function simFinaliza(){
+  const min=Math.round((Date.now()-sim.ini)/60000);
+  try{localStorage.removeItem(SIMKEY)}catch(e){}
+  let acertos=0;const porOrg={},erros=[],certos=[];
+  QUESTOES.forEach(q=>{
+    porOrg[q.org]=porOrg[q.org]||{a:0,t:0}; porOrg[q.org].t++;
+    const r=sim.resp[q.id];
+    if(r===q.correta){acertos++;porOrg[q.org].a++;certos.push(q)}else erros.push({q,r});
+  });
+  const pct=Math.round(acertos/QUESTOES.length*100);
+  const orgHTML=Object.entries(porOrg).map(([o,v])=>`<div><b>${o}</b>: ${v.a}/${v.t}</div>`).join('');
+  const revHTML=QUESTOES.map(q=>{
+    const r=sim.resp[q.id];const ok=r===q.correta;
+    return `<div class="q"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span>
+      <span style="font-weight:800;color:${ok?'var(--ok)':'var(--err)'}">${ok?'✓ acertou':'✗ errou'}</span></div>
+      <div class="rev">Sua resposta: <b>${r!=null?L4[r]+')':'em branco'}</b> · Correta: <b>${L4[q.correta]})</b></div>
+      <div class="exp show" style="margin-top:8px"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte: ${q.fonteResp}.</span></div></div>`;
+  }).join('');
+  document.getElementById('sim-area').style.display='none';
+  document.getElementById('sim-result').style.display='block';
+  document.getElementById('sim-result').innerHTML=`<div class="resultado">
+    <h2>Resultado</h2><div class="score">${acertos}/${QUESTOES.length} <small style="font-size:18px">(${pct}%)</small></div>
+    <p style="color:var(--muted);font-size:13.5px">${min} min · ${erros.length} erro(s)</p>
+    <div class="porOrgao">${orgHTML}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="btn-relatorio">📋 Copiar relatório para IA</button>
+      <button class="btn sec" id="btn-refazer">↺ Refazer simulado</button>
+    </div>
+    <p style="color:var(--faint);font-size:12.5px;margin-top:10px">O relatório traz seus erros com enunciado completo, sua resposta, a correta e o comentário do gabarito — é só colar no chat de uma IA e pedir para trabalhar os erros com você.</p>
+  </div><h2 style="margin:18px 0 4px">Revisão comentada</h2>${revHTML}`;
+  document.getElementById('btn-relatorio').addEventListener('click',()=>copiaRelatorio(acertos,pct,min,porOrg,erros,certos));
+  document.getElementById('btn-refazer').addEventListener('click',()=>{sim=null;try{localStorage.removeItem(SIMKEY)}catch(e){};simStart(true)});
+  window.scrollTo(0,0);
+}
+function txt(s){return String(s).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&')}
+function copiaRelatorio(acertos,pct,min,porOrg,erros,certos){
+  const L=['a','b','c','d'];
+  let r=`RELATÓRIO DE SIMULADO — Banco Dermatopatologia (Anatomia Patológica II, 4º semestre de Medicina)\n`;
+  r+=`Tema: dermatopatologia (inflamatórias, melanocíticas, epiteliais).\n`;
+  r+=`Resultado: ${acertos}/${QUESTOES.length} (${pct}%) em ${min} min.\n`;
+  r+=`Por tema: `+Object.entries(porOrg).map(([o,v])=>`${o} ${v.a}/${v.t}`).join(' · ')+`\n\n`;
+  r+=`Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI, com minha resposta, a correta e o comentário do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) me faça perguntas novas de verificação sobre esses temas, uma de cada vez.\n\n`;
+  r+=`==================== ERROS (${erros.length}) ====================\n\n`;
+  erros.forEach(e=>{
+    const q=e.q;
+    r+=`[${q.id}] ${q.org}\n`;
+    r+=`ENUNCIADO: ${txt(q.enun)}\n`;
+    q.alts.forEach((a,i)=>{r+=`  ${L[i]}) ${txt(a)}\n`});
+    r+=`MINHA RESPOSTA: ${e.r!=null?L[e.r]+') '+txt(q.alts[e.r]).slice(0,120):'(em branco)'}\n`;
+    r+=`CORRETA: ${L[q.correta]}) ${txt(q.alts[q.correta]).slice(0,160)}\n`;
+    r+=`COMENTÁRIO DO GABARITO: ${txt(q.exp)}\n\n`;
+  });
+  r+=`==================== ACERTOS (${certos.length}) ====================\n`;
+  r+=certos.map(q=>`${q.id} (${q.org})`).join(' · ')+`\n`;
+  const done=()=>{const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>t.style.display='none',2200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r).then(done).catch(()=>fallbackCopy(r,done))}
+  else fallbackCopy(r,done);
+}
+function fallbackCopy(s,done){const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){alert('Não consegui copiar automaticamente — selecione e copie o texto da caixa.');}document.body.removeChild(ta)}
+
+/* ===== dissertativas e lâminas ===== */
+function dissHTML(d){
+  const img=d.img?`<figure class="qimg"><img loading="lazy" src="img/${d.img}" alt="Figura de ${d.id}">${d.imgcap?`<figcaption>${d.imgcap}</figcaption>`:''}</figure>`:'';
+  const itens=d.itens.map((it,i)=>`<div class="item"><p class="perg">${it.p}</p>
+    <button class="mini" data-t="${d.id}-${i}">👁 Revelar resposta modelo</button>
+    <div class="resp" id="resp-${d.id}-${i}">${it.r}</div></div>`).join('');
+  return `<div class="q diss"><div class="qhead"><span class="qid">${d.id}</span>${d.org?`<span class="qorg">${d.org}</span>`:''}</div>
+    ${d.enun?`<div class="enun">${d.enun}</div>`:''}${img}${itens}</div>`;
+}
+document.getElementById('lista-diss').innerHTML=DISSERTATIVAS.map(dissHTML).join('');
+document.getElementById('lista-lam').innerHTML=LAMINAS.map(dissHTML).join('');
+document.querySelectorAll('.mini').forEach(b=>b.addEventListener('click',()=>{
+  const r=document.getElementById('resp-'+b.dataset.t); r.classList.toggle('show');
+  b.textContent=r.classList.contains('show')?'🙈 Esconder':'👁 Revelar resposta modelo';
+}));
+
+renderEstudo();
+</script>
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
+</html>

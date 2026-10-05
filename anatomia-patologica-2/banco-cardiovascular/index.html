@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Questões — Cardiovascular · Anato Pato II · Córtex Estudos</title>
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#0a0d1f;--surface:#141833;--surface2:#1b2043;--ink:#f3f4fb;--muted:#9aa1c4;--faint:#6f76a0;
+    --line:rgba(255,255,255,.10);--accent:#818cf8;--gold:#e6b450;--ok:#34d399;--err:#f87171;--radius:12px}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.55;min-height:100vh}
+  a{color:var(--accent);text-decoration:none}
+  .top{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line-strong)}
+  .top .in{max-width:860px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:15px}.brand b{color:var(--gold)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:7px 16px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+  .tab.on{background:var(--accent);color:#0a0d1f;border-color:transparent}
+  .wrap{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+  .kick{color:var(--gold);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:clamp(24px,4.5vw,34px);line-height:1.1;margin-bottom:10px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:18px;max-width:70ch}
+  .statgrid{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0 6px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px 18px;text-align:center}
+  .stat b{display:block;font-size:22px}.stat span{color:var(--muted);font-size:12px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+  .chip{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--muted);border-radius:999px;
+    padding:5px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .chip.on{background:#e8eaf6;color:#0a0d1f;border-color:transparent}
+  .panel{display:none}.panel.on{display:block}
+  .q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:16px 0}
+  .qhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .qid{font-weight:800;color:var(--gold);font-size:17px}
+  .qorg{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .qsrc{font-size:11.5px;color:var(--faint)}
+  .enun{margin:8px 0 12px;white-space:pre-line}
+  .qimg{margin:10px 0;background:#fff;border-radius:8px;padding:6px;text-align:center}
+  .qimg img{max-width:100%;border-radius:5px}
+  .qimg figcaption{font-size:12px;color:#555;padding:5px 4px 2px;text-align:left}
+  .alts{display:flex;flex-direction:column;gap:8px}
+  .alt{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1.5px solid var(--line);
+    border-radius:9px;padding:10px 13px;cursor:pointer;font-size:14.5px;transition:.12s;text-align:left;color:var(--ink);width:100%}
+  .alt:hover{border-color:var(--accent)}
+  .alt .letra{font-weight:800;color:var(--accent);flex:0 0 auto}
+  .alt.certa{border-color:var(--ok);background:rgba(52,211,153,.10)}
+  .alt.errada{border-color:var(--err);background:rgba(248,113,113,.10)}
+  .alt.marcada{border-color:var(--accent);background:rgba(129,140,248,.12)}
+  .alt:disabled{cursor:default}
+  .exp{display:none;margin-top:12px;border-left:3px solid var(--gold);background:rgba(230,180,80,.07);
+    border-radius:0 9px 9px 0;padding:12px 14px;font-size:14px}
+  .exp .fonte{display:block;margin-top:8px;font-size:11.5px;color:var(--faint)}
+  .exp.show{display:block}
+  .varia{font-size:12px;color:var(--faint);margin-top:8px;font-style:italic}
+  .btn{border:0;border-radius:9px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;background:var(--accent);color:#0a0d1f}
+  .btn.sec{background:rgba(255,255,255,.09);color:var(--ink);border:1px solid var(--line)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .simbar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:12px 18px;
+    display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:40}
+  .resultado{background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius);padding:24px;margin:20px 0}
+  .resultado h2{margin-bottom:6px}
+  .score{font-size:42px;font-weight:800;color:var(--gold)}
+  .porOrgao{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .porOrgao div{background:var(--surface2);border-radius:9px;padding:8px 14px;font-size:13px}
+  .rev{margin-top:8px;font-size:13.5px;color:var(--muted)}
+  .diss .item{margin:12px 0}
+  .diss .perg{font-weight:700;margin-bottom:6px}
+  .diss .resp{display:none;border-left:3px solid var(--ok);background:rgba(52,211,153,.07);border-radius:0 9px 9px 0;padding:11px 13px;font-size:14px}
+  .diss .resp.show{display:block}
+  .mini{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .aviso{background:rgba(129,140,248,.09);border:1px solid rgba(129,140,248,.35);border-radius:var(--radius);padding:14px 16px;font-size:13.5px;color:var(--muted);margin:14px 0}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ok);color:#052;font-weight:800;
+    padding:10px 22px;border-radius:999px;z-index:99;display:none}
+  small{color:var(--faint)}
+  ::selection{background:var(--accent);color:#0a0d1f}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style id="dossie-skin">/* ===== SKIN DOSSIÊ — override de tema (Córtex Estudos) ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --surface:#141311; --surface2:#1d1b18;
+  --ink:#e8e4d7; --ink-soft:#cfcab9; --muted:#8a8573; --faint:#6d6a5e;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --gold:#d4a84b; --caso:#4fb47a; --alerta:#ff5b55; --ok:#4fb47a; --err:#ff5b55;
+  --radius:2px;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --surface:#f6f2e7; --surface2:#ece7d7;
+  --ink:#0a0908; --ink-soft:#1c1a16; --muted:#6a655a; --faint:#8d8778;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --gold:#8a5a00; --caso:#006a3a; --alerta:#c8241e; --ok:#006a3a; --err:#c8241e;
+}
+/* tipografia dossiê */
+.page-h1,.hero h1,h1{font-family:var(--serif)!important;font-weight:600;letter-spacing:-.01em}
+.kick,.aula-tag,.badge,.chip,.lab,.lbl,.qnum,.qhead .aula,.ctl-label,.counter,.prog,.sub,.hubfoot,.stat .lab,.eyebrow{
+  font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.hub-brand,.tab,.hub-tab,.navbtn,.btn,.reveal-btn,.ghost{font-family:var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+/* superfícies quadradas + réguas */
+.card,.box,.panel .wrap section,.q,.fig,.vinheta,.modelo,.toc,.simbar,.stat,.dk,.stage{border-radius:var(--radius)!important}
+.btn,.tab,.hub-tab,.opt,.alt,.chip,.badge,.navbtn,.reveal-btn,.ghost,.seg{border-radius:var(--radius)!important}
+.card,.box,.q,.toc,.vinheta,.modelo{border:1px solid var(--line)!important;box-shadow:none!important}
+/* cabeçalho tipo topbar do dossiê */
+.hubhead{background:var(--bg)!important;border-bottom:1px solid var(--line-strong)!important;box-shadow:none!important}
+.hub-brand{color:var(--muted)!important}
+.hub-tab{border:0!important;background:none!important;border-bottom:2px solid transparent!important;color:var(--muted)!important;padding:10px 2px!important;margin-right:18px}
+.hub-tab.active,.hub-tab.on{color:var(--ink)!important;border-bottom-color:var(--accent)!important;background:none!important}
+/* botões de ação principais mantêm o cobalto */
+.btn{border:1px solid var(--line-strong)!important;background:var(--surface)!important;color:var(--ink)!important}
+.btn:hover{border-color:var(--accent)!important;color:var(--accent)!important}
+/* alternativas de questão */
+.opt,.alt{border:1px solid var(--line)!important;background:var(--surface)!important}
+.opt:hover,.alt:hover{border-color:var(--accent)!important}
+.opt.locked.correct,.alt.certa{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 8%,var(--surface))!important}
+.opt.locked.wrong,.alt.errada{border-color:var(--alerta)!important;background:color-mix(in srgb,var(--alerta) 8%,var(--surface))!important}
+.letra{font-family:var(--mono)!important;color:var(--accent)!important}
+/* selo/watermark ancorado */
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px 0 14px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+/* botão de tema: chip ☀/☾ */
+#themeToggle{border:1px solid var(--line-strong)!important;background:none!important;color:var(--ink)!important;border-radius:var(--radius)!important;min-width:34px;font-size:14px;line-height:1}
+/* hairlines nos títulos de seção */
+.panel .wrap section>h2,.box-h,h2{border-bottom:1px solid var(--line);padding-bottom:.35em;font-family:var(--serif);letter-spacing:0}
+/* stat band */
+.statgrid,.simbar{border-top:1px solid var(--line-strong)!important;border-bottom:1px solid var(--line-strong)!important}
+.stat b,.stat .big{font-family:var(--serif)!important}
+/* riscar mantém o tracejado na cor da linha */
+.risc{border-left:1px dashed var(--line-strong)!important;color:var(--muted)}
+/* refinamentos v2 */
+.page-h1{font-size:clamp(2.4rem,6vw,4.2rem)!important;line-height:.98!important;letter-spacing:-.015em!important;margin:.15em 0 .25em!important}
+#themeToggle{position:fixed;width:34px!important;height:34px!important;border-radius:var(--radius)!important;font-size:15px!important;background:var(--bg)!important}
+.lead{max-width:70ch}
+.hub-tab{font-size:.78rem!important}
+/* v3: emojis fora, segmentos mono */
+.tab .ico,.hub-tab .ico,.title-row .emoji{display:none!important}
+.seg{border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;background:none!important;overflow:hidden;padding:0!important}
+.seg button{font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem!important;background:none!important;color:var(--muted)!important;border:0!important;border-radius:0!important;padding:8px 14px!important}
+.seg button.active{color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.tab{font-family:var(--mono)!important;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem!important;border:0!important;background:none!important;border-bottom:2px solid transparent!important;border-radius:0!important;color:var(--muted)!important}
+.tab.active{color:var(--ink)!important;border-bottom-color:var(--accent)!important}
+nav.top #themeToggle{position:static!important;margin-left:14px;width:32px!important;height:32px!important}
+/* v4: header sem azul — tinta/mono como na referência */
+.hubhead a,.hub-brand,.hub-brand a,.hubhead .title a,.hubhead b{color:var(--ink)!important;text-decoration:none}
+.hubhead a:hover{color:var(--accent)!important}
+nav.top a,nav.top .brand,nav.top .brand a{color:var(--ink)!important;text-decoration:none}
+nav.top a:hover{color:var(--accent)!important}
+.kick{color:var(--muted)!important}
+.kick::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:9px}
+.hubhead .sub{color:var(--ink)!important}
+</style>
+
+<style id="wmdock">#wm-slot{margin-left:auto;display:flex;align-items:center}#wm-slot #wm{position:static!important;transform:none!important;margin:0}@media(max-width:720px){#wm-slot #wm{display:none}}</style><style id="enuncss">.enun figure{margin:12px 0}.enun img{max-width:100%;height:auto;display:block;margin:0 auto;border:1px solid var(--line,rgba(232,228,215,.14))}.enun table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0}.enun th,.enun td{border:1px solid rgba(138,133,115,.35);padding:6px 8px;text-align:left;vertical-align:top}.enun ol{padding-left:22px}</style></head>
+<body>
+<nav class="top"><div class="in">
+  <span class="brand">Córtex<b>.</b> · <a href="../../">Início</a></span>
+  <div class="tabs">
+    <button class="tab on" data-p="estudo">Estudo</button>
+    <button class="tab" data-p="simulado">Simulado</button>
+    <button class="tab" data-p="diss">Dissertativas</button>
+  </div>
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☀</button><script>(function(){var r=document.documentElement;function st(t){r.setAttribute("data-theme",t);try{localStorage.setItem("cortex-theme",t)}catch(e){}var b=document.getElementById("themeToggle");if(b)b.textContent=t==="dark"?"☀":"☾"}document.getElementById("themeToggle").addEventListener("click",function(){st(r.getAttribute("data-theme")==="dark"?"light":"dark")});try{st(localStorage.getItem("cortex-theme")||"dark")}catch(e){st("dark")}})()</script><span id="wm-slot"></span></div></nav>
+
+<div class="wrap">
+  <p class="kick">Córtex Estudos · Anato Pato II · Banco de questões · Cardiovascular</p>
+  <h1>Banco de Questões — Cardiovascular</h1>
+  <p class="lead">Questões de patologia cardiovascular com gabarito comentado: isquemia e infarto, febre reumática, valvopatias, cardiopatias congênitas e aorta.</p>
+  <div class="statgrid">
+    <div class="stat"><b>10</b><span>objetivas (a–d)</span></div>
+    <div class="stat"><b>5</b><span>dissertativas</span></div>
+  </div>
+
+  <div id="p-estudo" class="panel on">
+    <div class="aviso">Modo estudo: responda e veja o gabarito comentado na hora. Seu progresso fica salvo neste navegador.</div>
+    <div class="chips" id="filtros"></div>
+    <div id="lista-estudo"></div>
+  </div>
+
+  <div id="p-simulado" class="panel">
+    <div id="sim-intro">
+      <div class="aviso"><b>Simulado:</b> as 10 objetivas em sequência, sem feedback. No final você vê a nota, a revisão comentada e pode <b>copiar um relatório pronto para colar em uma IA</b> e estudar em cima dos seus erros.</div>
+      <button class="btn" id="sim-start">▶ Começar simulado</button>
+      <span id="sim-retomar"></span>
+    </div>
+    <div id="sim-area" style="display:none">
+      <div id="lista-sim"></div>
+      <div class="simbar"><span id="sim-prog" style="color:var(--muted);font-size:13.5px"></span>
+        <button class="btn" id="sim-fim">Finalizar simulado</button></div>
+    </div>
+    <div id="sim-result" style="display:none"></div>
+  </div>
+
+  <div id="p-diss" class="panel">
+    <div class="aviso">Tente responder em voz alta (ou por escrito) antes de revelar a resposta modelo de cada item.</div>
+    <h2 style="margin:18px 0 4px">Dissertativas (D1–D5)</h2>
+    <div id="lista-diss"></div>
+    <div id="lista-lam"></div>
+  </div>
+</div>
+<div class="toast" id="toast">Relatório copiado ✓</div>
+
+<script>
+const QUESTOES=[
+{id:"Q1",org:"Isquemia e IAM",fontes:'',img:null,
+enun:"<p>Paciente masculino de 58 anos, com histórico de hipertensão arterial sistêmica (HAS), dislipidemia e tabagismo que já infartou a 1 ano atrás. Apresenta quadro clínico de dor torácica intensa, retroesternal, em aperto, de início súbito, com irradiação para o braço esquerdo, associada a sudorese intensa e náuseas. A dor persiste por aproximadamente 30 minutos, sem alívio com repouso. O paciente também relatou dispneia de esforço nas últimas semanas. Exame Físico na Admissão: Pressão arterial: 170/100 mmHg, Frequência cardíaca: 102 bpm (taquicardia) e Saturação de oxigênio: 95% em ar ambiente.</p> <blockquote> <p>Exames laboratoriais: -Troponina I: 15 ng/mL (valor de referência: &lt;0,04 ng/mL) -CK-MB (Creatina quinase MB): 120 U/L (valor de referência: &lt;25 U/L) -LDH (Lactato desidrogenase): 350 U/L (valor de referência: 120–240 U/L)</p> </blockquote> <blockquote> <p>Angiografia Coronária: O exame revela uma obstrução de 90% na artéria descendente anterior (ADA), com lesão crítica.</p> </blockquote> <p>Com base nos dados escolha dentre as alternativas o resultado de biópsia compatível:</p>",
+alts:["A biópsia miocárdica revela necrose celular, com fibrose, presença de células inflamatórias e notável edema intersticial nas áreas de necrose.", "A biópsia miocárdica apresenta um infiltrado inflamatório misto. O infiltrado é observado tanto nas camadas endocárdicas quanto nas camadas mais profundas do miocárdio. Presença de edema intersticial difuso, sugerindo um processo de inflamação e alteração na permeabilidade vascular.", "A biópsia miocárdica revela extensa área de fibrose no miocárdio, com substituição de fibras musculares cardíacas normais por tecido fibroso denso. Não foram observadas características de necrose aguda ou inflamação.", "A biópsia miocárdica revela fibras musculares cardíacas em organização regular e uniforme. Não há evidências de degeneração, necrose ou hipertrofia das células musculares. Não foram observados infiltrados inflamatórios."],
+correta:0,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"infarto prévio (há 1 ano) + novo IAM agudo (troponina e CK-MB muito elevadas, ADA com 90%): a biópsia mostra necrose recente com células inflamatórias e edema sobre área de fibrose da cicatriz antiga. c seria só a cicatriz antiga; b, miocardite; d, miocárdio normal."},
+{id:"Q2",org:"Isquemia e IAM",fontes:'',img:null,
+enun:"<p>A imagem abaixo é de um corte de miocárdio pós obstrução de 97% do ramo coronariano interventricular anterior, lesão a qual levou o paciente a óbito. É possível concluir a partir da imagem e dos dados que:</p> <figure> <img class=\"main\" src=\"img/comp1_p02_fig1.jpg\"> </figure> <p>I- Há um evidente processo inflamatório. II- Há cariólise nuclear. III- Trata-se de um exemplo de necrose caseosa. IV- A lesão deverá passar por ávida regeneração.</p> <p>Está correto o que se afirma em:</p>",
+alts:["I e IV.", "II e III.", "I, II e IV.", "I e II."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"IAM fatal: necrose de coagulação com cariólise (desaparecimento dos núcleos) e infiltrado inflamatório. III errada (caseosa é da tuberculose); IV errada (o miocárdio não regenera — cicatriza por fibrose)."},
+{id:"Q3",org:"Isquemia e IAM",fontes:'',img:null,
+enun:"<p>Um paciente lê em um laudo médico o termo “Infarto Agudo do Miocárdio” e pergunta ao médico o significado. Este prontamente responde: “Trata-se de morte (I) das células do coração (II) resultante da oferta inadequada de oxigênio (III) ao músculo cardíaco”. Você escuta a conversa e no mesmo momento sabe que os termos I, II e III podem ser corretamente substituídos por:</p>",
+alts:["(I) Apoptose, (II) Miocárdio, (III) Estenose.", "(I) Necrose, (II) Miocárdio, (III) Estenose.", "(I) Apoptose, (II) Endocárdio, (III) Atrofia.", "(I) Necrose, (II) Miocárdio, (III) Hipóxia ou Anóxia."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"infarto = necrose (I) do miocárdio (II) por oferta inadequada de oxigênio — hipóxia ou anóxia (III)."},
+{id:"Q4",org:"Isquemia e IAM",fontes:'',img:null,
+enun:"<p>Um homem de 50 anos de idade sofreu um episódio de dor no tórax 6 horas antes de sua morte. Um corte histológico do miocárdio ventricular esquerdo obtido na necropsia mostrou uma área de coloração eosinofílica intensa com perda de núcleos e fibras miocárdicas rompidas. Não havia hemorragia nem inflamação na lâmina analisada logo após a morte. Qual das seguintes condições provavelmente foi a que produziu essas alterações miocárdicas?</p>",
+alts:["Obstrução de artéria coronária por presença de placa ateromatosa e ou trombo.", "Infecção miocárdica.", "Trauma torácico.", "Dieta deficiente de proteína."],
+correta:0,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"necrose de coagulação inicial (eosinofilia intensa, perda de núcleos, fibras rotas, ainda sem inflamação) 6 h após dor torácica = IAM por obstrução coronariana (placa ateromatosa e/ou trombo)."},
+{id:"Q5",org:"Isquemia e IAM",fontes:'',img:null,
+enun:"<p>Às 08h15min- Paciente C.S.G, sexo feminino, parda, deu entrada no PS do Hospital Municipal Elidia Machietto Santillo, trazida pela SAMU e acompanhada pelo seu esposo, queixando-se de algia no peito e no membro superior esquerdo, sudorese, fadiga e falta de ar. Paciente relatou que estava sentindo algia na região epigástrica, enjoo e algia torácica ao realizar esforço físico há 2 meses, pelo menos uma vez na semana sentia esses sintomas, sendo mais intensos na última semana, principalmente na região torácica, fazendo uso de Ibuprofeno assim que começava o desconforto. É diabética tipo I e hipertensa, há 7 meses atrás, ficou hospitalizada com diagnóstico de hipertensão, atualmente, faz usos dos seguintes medicamentos; Insulina e Losartana, ambos uma vez ao dia. A Pressão arterial no momento da consulta era 170 x 130 mmHg, Frequência cardíaca 128 bpm, saturação de O2 de 88% Peso 87 kg, Altura 1,63m, regular estado geral, lúcida, orientada em tempo e em espaço, afebril, leve cianose em extremidades (1+/4+), anictérica, hidratada, taquipneica (31 irpm), . Os exames laboratoriais revelaram níveis de troponina de 42,9 ng/mL (valor normal &lt; 0,1 ng/mL) , CK-MB = 74,68 U/L (referência= até 25 U/L), glicemia sem jejum 286 mg/dl ( referência inferior a 140 mg/dl). O caso é compatível com:</p>",
+alts:["Infarto agudo do miocárdio.", "Doença ateroesclerótica.", "Doença valvar degenerativa.", "Aneurisma."],
+correta:0,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"dor torácica irradiada para o membro superior esquerdo, sudorese e dispneia, com troponina e CK-MB muito elevadas = infarto agudo do miocárdio (na diabética e hipertensa, já com angina de esforço prévia). Doença aterosclerótica é a base, mas o quadro atual é o IAM."},
+{id:"Q6",org:"Febre reumática",fontes:'',img:null,
+enun:"<p>Paciente do sexo feminino, 32 anos, com histórico de faringite estreptocócica não tratada adequadamente na infância. Refere quadro de dispneia progressiva, especialmente aos esforços, há cerca de 6 meses, associada a edema de membros inferiores e cansaço aos esforços mínimos. A paciente também relata sensação de palpitações, principalmente ao deitar-se. Nega dor torácica. Não apresenta histórico de hipertensão arterial, diabetes mellitus ou outras comorbidades relevantes. Exame físico: Pressão arterial 110/70 mmHg, frequência cardíaca 110 bpm, temperatura 36,8°C, saturação de oxigênio 94% em ar ambiente. Cardíaco: Bulhas cardíacas arrítmicas, com estertores na auscultação do foco mitral e um sopro sistólico de intensidade +/6 em região mitral. Extremidades: Edema bilateral de membros inferiores, sem sinais de linfadenopatia.</p> <p><strong>Hemograma Completo:</strong></p> <table> <thead> <tr> <th></th> <th>Valores obtidos</th> <th>Valores de referência</th> </tr> </thead> <tbody> <tr> <td>Hb</td> <td>13.3 mg/dl</td> <td>12,8-17,6 mg/dl</td> </tr> <tr> <td>Ht</td> <td>39%</td> <td>40-54%</td> </tr> <tr> <td>Eritrócitos globais</td> <td>4.098.000 /mm3</td> <td>4.500.000-6.100.000 mm3</td> </tr> <tr> <td>Leucócitos totais</td> <td>7.800/mm3</td> <td>4.000 a 11.000/mm3</td> </tr> <tr> <td>Segmentados</td> <td>68%</td> <td>45 a 70 %</td> </tr> <tr> <td>Eosinófilos</td> <td>3%</td> <td>0 a 7 %</td> </tr> <tr> <td>Linfócitos</td> <td>23%</td> <td>20 a 50 %</td> </tr> <tr> <td>Monócitos</td> <td>5%</td> <td>2 a 10 %</td> </tr> <tr> <td>Basófilos</td> <td>1%</td> <td>0 a 3 %</td> </tr> <tr> <td>Bastonetes</td> <td>00%</td> <td>0 a 5 %</td> </tr> <tr> <td>Plaquetas</td> <td>185.000/mm3</td> <td>150.000-400.000/mm3</td> </tr> </tbody> </table> <p>Proteína C-reativa (PCR): 30 mg/L (Referência: inferior a 1mg/l) Cultura de garganta: Teste rápido para estreptococos positivo (indicado para infecção por Streptococcus do grupo A). Anti-estreptolisina O (ASLO): 400 UI/mL (Referência: até 200 UI/mL)</p> <p>Com base nos dados escolha dentre as alternativas a biópsia compatível:</p>",
+alts:["A biópsia das válvulas, apresentam infiltrado inflamatório crônico discreto nas camadas mais superficiais da válvula, composto principalmente por linfócitos, macrófagos e células espumosas, além de depósitos de cálcio e fibrose.", "A biópsia revela extensa fibrose no tecido valvar, com substituição do tecido normal por tecido conjuntivo denso. Identificam-se focos de inflamação crônica, com infiltração predominantemente de linfócitos e plasmócitos. A presença de células gigantes multinucleadas (nódulos de Aschoff).", "A biópsia mostra desorganização das fibras elásticas nas camadas mais profundas das cúspides valvares. A estrutura normal das fibras elásticas foi substituída por uma matriz mais frouxa e desorganizada de tecido conjuntivo áreas de hialinização e espessamento.", "Não foi observado infiltrado inflamatório nas camadas valvares. Não há presença de linfócitos, macrófagos ou células inflamatórias. O epitélio endotelial, que reveste a superfície das cúspides valvares, está intacto e sem sinais de dano."],
+correta:1,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"faringite estreptocócica mal tratada + valvopatia mitral + ASLO alta = cardiopatia reumática crônica: fibrose valvar com inflamação crônica linfoplasmocitária e nódulos de Aschoff. a descreve degeneração/calcificação; c, degeneração mixomatosa; d, valva normal."},
+{id:"Q7",org:"Febre reumática",fontes:'',img:null,
+enun:"<p>M.V.S.M., 08 anos, previamente hígido, apresentou quadro de faringite estreptocócica sendo prescrito antibioticoterapia com aminopenicilina com adesão parcial ao tratamento. Em torno de duas semanas manifestou sintomas de reagudização do quadro fazendo uso regular da antibioticoterapia prescrita por 14 dias. Seguido uma semana do término do tratamento, apresentou poliartralgia migratória assimétrica predominantemente em grandes articulações, associado à febre e mialgia negando sintomas neurológicos, nódulos ou eritema cutâneos. Ao exame físico REG, taquicárdico, fáscie de dor, febril, eupneico, normotenso. Ausência de alterações respiratórias ou abdominais. Presença de artrite e limitação de movimentos em articulações de MMII e sopro cardíaco mais intenso em foco mitral .Sem edema em MMII. Avaliação laboratorial evidenciou: ASLO: 437 UI/ml ( Referência: Inferior a 250 U/ml de soro), , PCR: 44,80 mg/dLreferência: entre 0,3 mg/dL e 1,0 mg/dLinflamação mínima; acima de 1,0 mg/dl compatível com inflamação e ou infecção intensa; acima de 4,0 mg/dl infecções bacterianas) e VHS: 76mm ( referência até 15mm). Diante deste caso podemos afirmar :</p> <p>I- Na cardite reumática, anticorpos reativos ao tecido cardíaco, por reação cruzada com antígenos do estreptococo, se fixam à parede do endotélio valvar e determinam a instalação de atividade inflamatório deteriorante . II- Os nódulos de Aschoff considerados patognomônicos da doença são compostos por agregados de células semelhantes a macrófagos que exercem a função de células apresentadoras de antígeno para as células T . III- Há apresentação continuada de antígenos no sítio da lesão, o que amplifica a resposta imune e a ativação de grande número de clones autorreativos de linfócitos T acompanhado de alta síntese de anticorpos. IV- O exame imunológico de anticorpo antiestreptolisina O (ASLO) indica infecção por estreptococos.</p> <p>São corretas as afirmativas vistas em:</p>",
+alts:["I e II", "II, III e IV", "I, II , III e IV", "I, III e IV"],
+correta:2,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"todas corretas: mimetismo molecular com anticorpos e linfócitos T contra antígenos cardíacos (I, III); nódulos de Aschoff com células de Anitschkow, semelhantes a macrófagos e apresentadoras de antígeno (II); ASLO elevada indica infecção estreptocócica recente (IV)."},
+{id:"Q8",org:"Febre reumática",fontes:'',img:null,
+enun:"<p>O diagnóstico da faringo amigdalite estreptocócica permite o adequado tratamento antimicrobiano e, consequentemente, a prevenção primária da Febre reumática. Segundo os critérios de Jones modificados, consideramos critérios maiores para o reconhecimento da doença:</p>",
+alts:["Artralgia monoarticular, febre e pcr elevado.", "Artralgia poliarticular, febre, eritema marginado e cardite.", "Artralgia poliarticular, cardite, eritema marginado e nódulos subcutâneos.", "Artralgia monoarticular, VHS elevado e Corea de Sydenham."],
+correta:2,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"critérios MAIORES de Jones: cardite, poliartrite (migratória), coreia de Sydenham, eritema marginado e nódulos subcutâneos. Febre, artralgia, PCR e VHS são critérios menores."},
+{id:"Q9",org:"Outras",fontes:'',img:null,
+enun:"<p>Paciente do sexo masculino, 62 anos, admitido em pronto socorro, com queixa de “falta de ar”. Ao exame físico encontrava-se com dispneia, taquipneia (FR 30 irpm) apresentou pressão sanguínea de 170/110 mmHg. O paciente refere pressão elevada a aproximadamente 4 anos sem tratamento. Realizada radiografia (raio X) de tórax observa-se aumento de área cardíaca (observe a imagem). Diante do exposto, qual das seguintes alterações celulares apresenta a maior probabilidade de ser encontrada em seu miocárdio?</p> <figure> <img class=\"main\" src=\"img/comp1_p07_fig1.jpg\"> </figure>",
+alts:["Atrofia.", "Hipertrofia.", "Hiperplasia.", "Metaplasia."],
+correta:1,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"hipertensão sem tratamento há 4 anos = sobrecarga de pressão; o cardiomiócito (célula permanente) responde com hipertrofia, daí a cardiomegalia."},
+{id:"Q10",org:"Outras",fontes:'',img:null,
+enun:"<p>No shunt da direita para a esquerda observamos: I- Comunicação interventricular. II- Comunicação interatrial. III- Aumento do fluxo pulmonar e da pressão pulmonar. IV- Cianose por redução da oxigenação sanguínea.</p> <p>São corretas as afirmativas:</p>",
+alts:["I e III.", "II, III e IV.", "I e IV.", "II e IV."],
+correta:3,fonteResp:'resolução comentada (aulas + literatura atual)',
+exp:"pelo modelo ensinado na aula: CIA = shunt direita→esquerda com cianose (II e IV); CIV = esquerda→direita com hiperfluxo pulmonar (I e III ficam de fora). ⚠ Na literatura atual, a CIA isolada também é esquerda→direita e acianótica, só inverte com a síndrome de Eisenmenger; o shunt D→E com cianose é típico de cardiopatias como a tetralogia de Fallot. Para a prova da disciplina, siga o modelo da aula."}
+];
+
+const DISSERTATIVAS=[
+{id:"D1",org:"Isquemia e IAM · Morte súbita em adulto jovem",fontes:'',img:null,
+enun:"<p>Paciente F. J., 30 anos e 6 meses, auxiliar de bombeiro hidráulico, admitido em pronto atendimento. Os colegas que o trouxeram relataram que ele se queixava de dor epigástrica a 3 dias. Porém nesta data referia piora intensa da dor (tipo pontada na região do precórdio) ao esforço físico ao tentar trabalhar. Os colegas prontamente o socorreram levando-o ao pronto atendimento, porém após 2 horas de sua admissão o paciente evoluiu com parada cardíaca e morte. Realizada verificação de óbito, os achados macroscópicos podem ser observados abaixo:</p> <figure> <img class=\"main\" src=\"img/cardio_p2_fig1.jpg\"> </figure>",
+itens:[{"p": "a) Cite 2 exames laboratoriais capazes de auxiliar no diagnóstico deste caso e justifique a sua escolha por estes exames.", "r": "Troponina I/T (marcador mais sensível e específico de necrose miocárdica, sobe em 3–4 h e permanece elevada por 1–2 semanas) e CK-MB (sobe em 4–6 h e normaliza em 48–72 h, útil para datar e detectar reinfarto); a mioglobina é a mais precoce, porém inespecífica."}, {"p": "b) Cite 3 alterações histopatológicas visíveis caso seja realizada biópsia deste miocárdio.", "r": "Necrose de coagulação (hipereosinofilia, perda das estriações, picnose/cariólise), fibras onduladas e bandas de contração, edema intersticial e infiltrado de neutrófilos (a partir de 12–24 h); a dor há 3 dias sugere necrose em evolução, podendo haver hemorragia."}]},
+{id:"D2",org:"Isquemia e IAM · Dor precordial em idoso",fontes:'',img:null,
+enun:"<p>Paciente do sexo masculino, 68 anos, aposentado, procurou o Hospital de urgência de Palmas com queixas de “forte dor no peito”. A dor em aperto em região precordial que iniciou há 10 dias com piora progressiva é agravada após moderado esforço físico como caminhar dois quarteirões planos, ou subir dois lances de escadas e dura pouco tempo, com melhora após repouso. No momento da consulta a intensidade é 9, numa escala de 0 a 10. Refere ainda que sente palpitações, náuseas e tonturas. Em relação aos antecedentes pessoais, paciente é hipertenso, diabético, obeso e tabagista, declara ter sido alcoólatra por 20 anos e que deixou de beber a 3 anos por grave complicação hepática.</p> <p>Ao exame físico, o paciente encontrava-se em regular estado geral, lúcido, orientado em tempo e em espaço, afebril, leve cianose em extremidades (1+/4+), anictérico, hidratado, taquipneico (26 irpm), taquicárdico (128 bpm) e com pressão arterial de 170/130 mmHg e saturação de oxigênio de 78%. Apresentava sudorese, edema em membros inferiores (1+/4+), pulsos irregulares.</p> <p>Na pesquisa de marcadores bioquímicos de lesão miocárdica houve elevação das troponinas acima do percentil 99 do limite máximo de referência, porém a CK-MB massa estava dentro da normalidade.</p> <table> <thead> <tr> <th>Exame</th> <th>Resultado</th> <th>Referência</th> </tr> </thead> <tbody> <tr> <td>Mioglobina</td> <td>168 mg/dL</td> <td>até 70 mg/dL</td> </tr> <tr> <td>Troponina</td> <td>15,7 mg/dL</td> <td>até 1 mg/dL</td> </tr> <tr> <td>CK-MB</td> <td>3,8 ng/dL</td> <td>até 4 ng/dL</td> </tr> </tbody> </table> <p><strong>Gasometria sangue arterial:</strong></p> <table> <thead> <tr> <th>Parâmetro</th> <th>Resultado</th> <th>Referência</th> </tr> </thead> <tbody> <tr> <td>pH</td> <td>7,20</td> <td>7,35 a 7,45</td> </tr> <tr> <td>PaCO2</td> <td>80 mmHg</td> <td>35 a 45 mmHg</td> </tr> <tr> <td>PaO2</td> <td>36 mmHg</td> <td>80 a 100 mmHg</td> </tr> <tr> <td>BR (Bicarbonato real)</td> <td>26 mM/L</td> <td>22 a 28 mM/L</td> </tr> <tr> <td>BE (Excesso de bases)</td> <td>-1,8</td> <td>-2 a +2</td> </tr> <tr> <td>Saturação de O2</td> <td>72%</td> <td>—</td> </tr> </tbody> </table>",
+itens:[{"p": "a) Com base nos dados qual o diagnóstico", "r": "Síndrome coronariana aguda — infarto agudo do miocárdio (troponina acima do percentil 99, angina de piora progressiva), com insuficiência respiratória aguda."}, {"p": "b) Explique os resultados de exames laboratoriais", "r": "Mioglobina elevada: lesão muscular precoce, sensível mas inespecífica. Troponina elevada: necrose de cardiomiócitos (específica). CK-MB ainda normal: sobe mais tarde e é menos sensível. Gasometria: acidose respiratória aguda não compensada (pH 7,20, PaCO₂ 80, bicarbonato normal) com hipoxemia grave (PaO₂ 36, SatO₂ 72%) — hipoventilação/congestão pulmonar."}, {"p": "c) Qual o(s) prováveis fatores de risco neste caso.", "r": "Hipertensão, diabetes, obesidade, tabagismo, etilismo prévio, idade e sexo masculino."}, {"p": "d) Quais exames somados aos já realizados complementariam a suspeita clínica", "r": "ECG (seriado), troponina e CK-MB seriadas, ecocardiograma, cineangiocoronariografia, radiografia de tórax, perfil lipídico, glicemia/HbA1c, função hepática e coagulograma."}, {"p": "e) Explique as complicações do diabetes e a lesão hepática neste caso.", "r": "Diabetes: glicação de proteínas e disfunção endotelial aceleram a aterosclerose (macroangiopatia) e causam microangiopatia e neuropatia autonômica (dor atípica, IAM silencioso). A lesão hepática alcoólica (esteatose/hepatite/cirrose) altera lipídios, albumina e coagulação e interfere no metabolismo dos fármacos."}, {"p": "f) Qual a conduta nesta situação.", "r": "Conduta de emergência: monitorização, oxigênio/suporte ventilatório (VNI ou intubação pela acidose grave), AAS, anticoagulação, nitrato e analgesia se a pressão permitir, controle pressórico e reperfusão (cateterismo)."}]},
+{id:"D3",org:"Febre reumática · Faringite em criança",fontes:'',img:null,
+enun:"<p>T.V.A., 06 anos, previamente hígido, apresentou quadro de faringite sendo prescrito após exame físico amoxicilina de 500 mg a cada 12 horas. Após término do tratamento o paciente permaneceu bem por 5 dias voltando a apresentar os sintomas. Em nova consulta médica coletado exame de Gram e cultura o diagnóstico foi de amidalite estreptocócica sendo prescrito antibioticoterapia com aminopenicilina com adesão parcial ao tratamento. Em torno de duas semanas manifestou sintomas de reagudização do quadro fazendo uso regular da antibioticoterapia prescrita por 14 dias. Seguido uma semana do término do tratamento, apresentou poliartralgia migratória assimétrica predominantemente em grandes articulações, associado à febre e mialgia negando sintomas neurológicos, nódulos ou eritema cutâneos.</p> <p>Ao exame físico REG, taquicárdico, febril, eupneico, normotenso. Ausência de alterações respiratórias ou abdominais. Presença de artrite e limitação de movimentos em articulações de MMII e sopro cardíaco mais intenso em foco mitral 3+/6+. Sem edema em MMII. Avaliação laboratorial evidenciou: ASLO: 437 UI/ml, alfa-1-glicoproteína ácida: 195,0 mg/dL, PCR: 44,80 mg/dL, VHS: 76 e sobrecarga de ventrículo esquerdo leve ao ECG com radiografia torácica normal. Além disso, apresenta ao Ecocardiograma dilatação moderada de câmara esquerda, Insuficiência Mitral Moderada/Grave e disfunção leve de VE.</p>",
+itens:[{"p": "a) Qual o diagnóstico", "r": "Febre reumática aguda com cardite (insuficiência mitral moderada/grave)."}, {"p": "b) Explique o significado dos exames laboratoriais", "r": "ASLO elevada: infecção estreptocócica recente. PCR, VHS e alfa-1-glicoproteína ácida elevadas: provas de atividade inflamatória (fase aguda). ECG com sobrecarga de VE e eco com dilatação das câmaras esquerdas e insuficiência mitral: cardite."}, {"p": "c) Descreva a fisiopatogenia deste caso", "r": "Mimetismo molecular: a proteína M e outros antígenos do estreptococo do grupo A se parecem com proteínas cardíacas (miosina, proteínas valvares); anticorpos e linfócitos T CD4 (Th1) reagem de forma cruzada → pancardite com nódulos de Aschoff e valvulite mitral, que evolui com fibrose e insuficiência (hipersensibilidade tipos II e IV)."}, {"p": "d) Liste os fatores que predispuseram o paciente a esta condição.", "r": "Faringites de repetição, tratamento antibiótico inadequado/adesão parcial, idade de 5–15 anos, predisposição genética e condições socioeconômicas (aglomeração)."}]},
+{id:"D4",org:"Aorta · Aorta / valva aórtica (síndrome de Marfan)",fontes:'',img:null,
+enun:"<p><strong>Breve relato clínico:</strong> Homem de 35 anos diagnosticado com portador de síndrome de Marfan procurou atendimento médico por dispnéia desencadeada por pequenos esforços e edema de membros inferiores. Os sintomas começaram seis meses antes, a dispnéia, que era aos esforços moderados, rapidamente progrediu até estar presente no repouso. Procurou atendimento médico e foi feito o diagnóstico de insuficiência cardíaca de etiologia a ser esclarecida. Nesse período houve necessidade de quatro internações para controle dos sintomas. Há 26 dias foi feito o diagnóstico de insuficiência da valva aórtica, de grau acentuado. Como parte da avaliação, o paciente foi submetido a exame ecocardiográfico que revelou a presença de dissecção na porção ascendente da aorta.</p> <p><strong>Questões:</strong> a) Explique a causa da insuficiência valvar e do aneurisma neste caso. b) A quais riscos está submetido este paciente.</p>",
+itens:[{"p": "Resposta esperada", "r": "a) Mutação no gene FBN1 → fibrilina-1 defeituosa: as fibras elásticas da média aórtica ficam frágeis e há excesso de TGF-β ativo → degeneração cística da média. A aorta ascendente e o anel valvar se dilatam (aneurisma da raiz), as cúspides não coaptam (insuficiência aórtica) e a parede enfraquecida permite a dissecção. b) Ruptura da aorta e extensão da dissecção (hemopericárdio/tamponamento, isquemia de ramos), morte súbita, insuficiência cardíaca progressiva pela regurgitação, prolapso/insuficiência mitral, arritmias e endocardite infecciosa."}]},
+{id:"D5",org:"Valvopatias · Dispneia e angina em idoso",fontes:'',img:null,
+enun:"<p>Paciente masculino, 80, admitido referindo dispneia e angina. ECG e RX-Tórax, apresentando, respectivamente, sobrecarga VE e aspecto radiográfico de ICC. No ecocardiograma o VE apresentou aspecto hipertrófico com hipocinesia difusa e predomínio da região apical inferior e septal. Concluiu comprometimento difuso do VE, insuficiência mitral, estenose aórtica importante, insuficiência valvar aórtica moderada, insuficiência tricúspide. PA: 160 x 80 mmHg, SatO2 91%. Exames revelam valva aórtica calcificada com restrição à abertura e com regurgitação leve associada. Histórico médico: hipercolesterolemia e hipertensão. É ex-fumante:</p>",
+itens:[{"p": "a) Explique a causa da dispneia e da angina.", "r": "Estenose aórtica calcificada importante: sobrecarga de pressão no VE → hipertrofia, aumento do consumo de O₂ e menor perfusão subendocárdica (angina); a insuficiência ventricular e as regurgitações elevam as pressões de enchimento e congestionam o pulmão (dispneia)."}, {"p": "b) Explique o que é hipocinesia difusa e justifique a existência desta.", "r": "Hipocinesia difusa = redução global da contração das paredes do VE ao eco; decorre da hipertrofia que descompensa (isquemia crônica, fibrose intersticial e dilatação) com disfunção sistólica."}, {"p": "c) Explique as causas da hipertrofia.", "r": "Sobrecarga de pressão (estenose aórtica e hipertensão) → hipertrofia concêntrica, sarcômeros em paralelo; as regurgitações somam sobrecarga de volume."}, {"p": "d) Cite os fatores de risco cabíveis neste caso.", "r": "Idade avançada (degeneração e calcificação valvar), hipertensão, hipercolesterolemia, tabagismo prévio e sexo masculino."}]}
+];
+
+const LAMINAS=[];
+
+const L4='abcd';
+const esc=s=>String(s==null?'':s);
+const SAVE='banco-anatopato2-cardio-estudo-v1';
+let saved={};try{saved=JSON.parse(localStorage.getItem(SAVE)||'{}')}catch(e){}
+function persist(){try{localStorage.setItem(SAVE,JSON.stringify(saved))}catch(e){}}
+
+/* ===== abas ===== */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+t.dataset.p).classList.add('on');
+  window.scrollTo(0,0);
+}));
+
+/* ===== helpers ===== */
+function qHTML(q,modo){
+  const img=q.img?`<figure class="qimg"><img loading="lazy" src="img/${q.img}" alt="Figura da questão ${q.id}">${q.imgcap?`<figcaption>${q.imgcap}</figcaption>`:''}</figure>`:'';
+  const alts=q.alts.map((a,i)=>`<button class="alt" data-q="${q.id}" data-i="${i}"><span class="letra">${L4[i]})</span><span>${a}</span><span class="risc" title="Riscar alternativa">✕</span></button>`).join('');
+  const varia=q.varia?`<p class="varia">↺ ${q.varia}</p>`:'';
+  return `<div class="q" id="${modo}-${q.id}"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span></div>
+  <div class="enun">${q.enun}</div>${img}<div class="alts">${alts}</div>${varia}
+  <div class="exp" id="${modo}-exp-${q.id}"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte da resposta: ${q.fonteResp}.</span></div></div>`;
+}
+
+/* ===== modo estudo ===== */
+const ORGS=['Todos', 'Isquemia e IAM', 'Febre reumática', 'Outras'];
+let fOrg='Todos';
+function renderFiltros(){
+  document.getElementById('filtros').innerHTML=ORGS.map(o=>{
+    const n=o==='Todos'?QUESTOES.length:QUESTOES.filter(q=>q.org===o).length;
+    return `<button class="chip ${fOrg===o?'on':''}" data-o="${o}">${o} (${n})</button>`}).join('');
+  document.querySelectorAll('#filtros .chip').forEach(c=>c.addEventListener('click',()=>{fOrg=c.dataset.o;renderEstudo()}));
+}
+function renderEstudo(){
+  renderFiltros();
+  const qs=QUESTOES.filter(q=>fOrg==='Todos'||q.org===fOrg);
+  document.getElementById('lista-estudo').innerHTML=qs.map(q=>qHTML(q,'est')).join('');
+  qs.forEach(q=>{ if(saved[q.id]!=null) pintarEstudo(q,saved[q.id],false); });
+  document.querySelectorAll('#lista-estudo .alt').forEach(b=>b.addEventListener('click',()=>{
+    const q=QUESTOES.find(x=>x.id===b.dataset.q);
+    if(saved[q.id]!=null) return;
+    saved[q.id]=Number(b.dataset.i); persist(); pintarEstudo(q,saved[q.id],true);
+  }));
+}
+function pintarEstudo(q,resp,anim){
+  const card=document.getElementById('est-'+q.id); if(!card) return;
+  card.querySelectorAll('.alt').forEach(b=>{
+    const i=Number(b.dataset.i); b.disabled=true;
+    if(i===q.correta) b.classList.add('certa');
+    else if(i===resp) b.classList.add('errada');
+  });
+  document.getElementById('est-exp-'+q.id).classList.add('show');
+}
+
+/* ===== simulado ===== */
+const SIMKEY='banco-anatopato2-cardio-sim-v1';
+let sim=null;try{sim=JSON.parse(localStorage.getItem(SIMKEY)||'null')}catch(e){}
+function simPersist(){try{localStorage.setItem(SIMKEY,JSON.stringify(sim))}catch(e){}}
+function simStart(fresh){
+  if(fresh||!sim) sim={resp:{},ini:Date.now()};
+  simPersist();
+  document.getElementById('sim-intro').style.display='none';
+  document.getElementById('sim-result').style.display='none';
+  document.getElementById('sim-area').style.display='block';
+  document.getElementById('lista-sim').innerHTML=QUESTOES.map(q=>qHTML(q,'sim')).join('');
+  document.querySelectorAll('#lista-sim .exp').forEach(e=>e.remove());
+  document.querySelectorAll('#lista-sim .alt').forEach(b=>b.addEventListener('click',()=>{
+    const qid=b.dataset.q;
+    sim.resp[qid]=Number(b.dataset.i); simPersist();
+    document.querySelectorAll(`#sim-${qid} .alt`).forEach(x=>x.classList.toggle('marcada',x===b));
+    simProg();
+  }));
+  Object.entries(sim.resp).forEach(([qid,i])=>{
+    const b=document.querySelector(`#sim-${qid} .alt[data-i="${i}"]`); if(b) b.classList.add('marcada');
+  });
+  simProg();
+}
+function simProg(){
+  const n=Object.keys(sim.resp).length;
+  document.getElementById('sim-prog').textContent=`${n}/${QUESTOES.length} respondidas`;
+}
+document.getElementById('sim-start').addEventListener('click',()=>simStart(true));
+if(sim&&Object.keys(sim.resp||{}).length){
+  document.getElementById('sim-retomar').innerHTML=` <button class="btn sec" id="sim-cont">Continuar simulado em andamento (${Object.keys(sim.resp).length}/${QUESTOES.length})</button>`;
+  document.getElementById('sim-cont').addEventListener('click',()=>simStart(false));
+}
+document.getElementById('sim-fim').addEventListener('click',()=>{
+  const faltam=QUESTOES.length-Object.keys(sim.resp).length;
+  if(faltam>0&&!confirm(`Ainda faltam ${faltam} questão(ões) sem resposta — elas contarão como erro. Finalizar mesmo assim?`))return;
+  simFinaliza();
+});
+function simFinaliza(){
+  const min=Math.round((Date.now()-sim.ini)/60000);
+  try{localStorage.removeItem(SIMKEY)}catch(e){}
+  let acertos=0;const porOrg={},erros=[],certos=[];
+  QUESTOES.forEach(q=>{
+    porOrg[q.org]=porOrg[q.org]||{a:0,t:0}; porOrg[q.org].t++;
+    const r=sim.resp[q.id];
+    if(r===q.correta){acertos++;porOrg[q.org].a++;certos.push(q)}else erros.push({q,r});
+  });
+  const pct=Math.round(acertos/QUESTOES.length*100);
+  const orgHTML=Object.entries(porOrg).map(([o,v])=>`<div><b>${o}</b>: ${v.a}/${v.t}</div>`).join('');
+  const revHTML=QUESTOES.map(q=>{
+    const r=sim.resp[q.id];const ok=r===q.correta;
+    return `<div class="q"><div class="qhead"><span class="qid">${q.id}</span><span class="qorg">${q.org}</span>
+      <span style="font-weight:800;color:${ok?'var(--ok)':'var(--err)'}">${ok?'✓ acertou':'✗ errou'}</span></div>
+      <div class="rev">Sua resposta: <b>${r!=null?L4[r]+')':'em branco'}</b> · Correta: <b>${L4[q.correta]})</b></div>
+      <div class="exp show" style="margin-top:8px"><b>Gabarito: ${L4[q.correta]})</b> — ${q.exp}<span class="fonte">Fonte: ${q.fonteResp}.</span></div></div>`;
+  }).join('');
+  document.getElementById('sim-area').style.display='none';
+  document.getElementById('sim-result').style.display='block';
+  document.getElementById('sim-result').innerHTML=`<div class="resultado">
+    <h2>Resultado</h2><div class="score">${acertos}/${QUESTOES.length} <small style="font-size:18px">(${pct}%)</small></div>
+    <p style="color:var(--muted);font-size:13.5px">${min} min · ${erros.length} erro(s)</p>
+    <div class="porOrgao">${orgHTML}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="btn-relatorio">📋 Copiar relatório para IA</button>
+      <button class="btn sec" id="btn-refazer">↺ Refazer simulado</button>
+    </div>
+    <p style="color:var(--faint);font-size:12.5px;margin-top:10px">O relatório traz seus erros com enunciado completo, sua resposta, a correta e o comentário do gabarito — é só colar no chat de uma IA e pedir para trabalhar os erros com você.</p>
+  </div><h2 style="margin:18px 0 4px">Revisão comentada</h2>${revHTML}`;
+  document.getElementById('btn-relatorio').addEventListener('click',()=>copiaRelatorio(acertos,pct,min,porOrg,erros,certos));
+  document.getElementById('btn-refazer').addEventListener('click',()=>{sim=null;try{localStorage.removeItem(SIMKEY)}catch(e){};simStart(true)});
+  window.scrollTo(0,0);
+}
+function txt(s){return String(s).replace(/<br\s*\/?\s*>/gi,'\n').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/&amp;/g,'&')}
+function copiaRelatorio(acertos,pct,min,porOrg,erros,certos){
+  const L=['a','b','c','d'];
+  let r=`RELATÓRIO DE SIMULADO — Banco Cardiovascular (Anatomia Patológica II, 4º semestre de Medicina)\n`;
+  r+=`Tema: cardiovascular (isquemia e iam, febre reumática, outras).\n`;
+  r+=`Resultado: ${acertos}/${QUESTOES.length} (${pct}%) em ${min} min.\n`;
+  r+=`Por tema: `+Object.entries(porOrg).map(([o,v])=>`${o} ${v.a}/${v.t}`).join(' · ')+`\n\n`;
+  r+=`Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI, com minha resposta, a correta e o comentário do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) me faça perguntas novas de verificação sobre esses temas, uma de cada vez.\n\n`;
+  r+=`==================== ERROS (${erros.length}) ====================\n\n`;
+  erros.forEach(e=>{
+    const q=e.q;
+    r+=`[${q.id}] ${q.org}\n`;
+    r+=`ENUNCIADO: ${txt(q.enun)}\n`;
+    q.alts.forEach((a,i)=>{r+=`  ${L[i]}) ${txt(a)}\n`});
+    r+=`MINHA RESPOSTA: ${e.r!=null?L[e.r]+') '+txt(q.alts[e.r]).slice(0,120):'(em branco)'}\n`;
+    r+=`CORRETA: ${L[q.correta]}) ${txt(q.alts[q.correta]).slice(0,160)}\n`;
+    r+=`COMENTÁRIO DO GABARITO: ${txt(q.exp)}\n\n`;
+  });
+  r+=`==================== ACERTOS (${certos.length}) ====================\n`;
+  r+=certos.map(q=>`${q.id} (${q.org})`).join(' · ')+`\n`;
+  const done=()=>{const t=document.getElementById('toast');t.style.display='block';setTimeout(()=>t.style.display='none',2200)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r).then(done).catch(()=>fallbackCopy(r,done))}
+  else fallbackCopy(r,done);
+}
+function fallbackCopy(s,done){const ta=document.createElement('textarea');ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){alert('Não consegui copiar automaticamente — selecione e copie o texto da caixa.');}document.body.removeChild(ta)}
+
+/* ===== dissertativas e lâminas ===== */
+function dissHTML(d){
+  const img=d.img?`<figure class="qimg"><img loading="lazy" src="img/${d.img}" alt="Figura de ${d.id}">${d.imgcap?`<figcaption>${d.imgcap}</figcaption>`:''}</figure>`:'';
+  const itens=d.itens.map((it,i)=>`<div class="item"><p class="perg">${it.p}</p>
+    <button class="mini" data-t="${d.id}-${i}">👁 Revelar resposta modelo</button>
+    <div class="resp" id="resp-${d.id}-${i}">${it.r}</div></div>`).join('');
+  return `<div class="q diss"><div class="qhead"><span class="qid">${d.id}</span>${d.org?`<span class="qorg">${d.org}</span>`:''}</div>
+    ${d.enun?`<div class="enun">${d.enun}</div>`:''}${img}${itens}</div>`;
+}
+document.getElementById('lista-diss').innerHTML=DISSERTATIVAS.map(dissHTML).join('');
+document.getElementById('lista-lam').innerHTML=LAMINAS.map(dissHTML).join('');
+document.querySelectorAll('.mini').forEach(b=>b.addEventListener('click',()=>{
+  const r=document.getElementById('resp-'+b.dataset.t); r.classList.toggle('show');
+  b.textContent=r.classList.contains('show')?'🙈 Esconder':'👁 Revelar resposta modelo';
+}));
+
+renderEstudo();
+</script>
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
+</html>
