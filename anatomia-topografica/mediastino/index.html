@@ -1,0 +1,1572 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Cavidade Torácica e Mediastino (02/10) · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('cortex-theme')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style id="dossie-skin">/* ===== SKIN DOSSIÊ — override de tema (Córtex Estudos) ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --surface:#141311; --surface2:#1d1b18;
+  --ink:#e8e4d7; --ink-soft:#cfcab9; --muted:#8a8573; --faint:#6d6a5e;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --gold:#d4a84b; --caso:#4fb47a; --alerta:#ff5b55; --ok:#4fb47a; --err:#ff5b55;
+  --radius:2px;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --surface:#f6f2e7; --surface2:#ece7d7;
+  --ink:#0a0908; --ink-soft:#1c1a16; --muted:#6a655a; --faint:#8d8778;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --gold:#8a5a00; --caso:#006a3a; --alerta:#c8241e; --ok:#006a3a; --err:#c8241e;
+}
+/* tipografia dossiê */
+.page-h1,.hero h1,h1{font-family:var(--serif)!important;font-weight:600;letter-spacing:-.01em}
+.kick,.aula-tag,.badge,.chip,.lab,.lbl,.qnum,.qhead .aula,.ctl-label,.counter,.prog,.sub,.hubfoot,.stat .lab,.eyebrow{
+  font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.hub-brand,.tab,.hub-tab,.navbtn,.btn,.reveal-btn,.ghost{font-family:var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+/* superfícies quadradas + réguas */
+.card,.box,.panel .wrap section,.q,.fig,.vinheta,.modelo,.toc,.simbar,.stat,.dk,.stage{border-radius:var(--radius)!important}
+.btn,.tab,.hub-tab,.opt,.alt,.chip,.badge,.navbtn,.reveal-btn,.ghost,.seg{border-radius:var(--radius)!important}
+.card,.box,.q,.toc,.vinheta,.modelo{border:1px solid var(--line)!important;box-shadow:none!important}
+/* cabeçalho tipo topbar do dossiê */
+.hubhead{background:var(--bg)!important;border-bottom:1px solid var(--line-strong)!important;box-shadow:none!important}
+.hub-brand{color:var(--muted)!important}
+.hub-tab{border:0!important;background:none!important;border-bottom:2px solid transparent!important;color:var(--muted)!important;padding:10px 2px!important;margin-right:18px}
+.hub-tab.active,.hub-tab.on{color:var(--ink)!important;border-bottom-color:var(--accent)!important;background:none!important}
+/* botões de ação principais mantêm o cobalto */
+.btn{border:1px solid var(--line-strong)!important;background:var(--surface)!important;color:var(--ink)!important}
+.btn:hover{border-color:var(--accent)!important;color:var(--accent)!important}
+/* alternativas de questão */
+.opt,.alt{border:1px solid var(--line)!important;background:var(--surface)!important}
+.opt:hover,.alt:hover{border-color:var(--accent)!important}
+.opt.locked.correct,.alt.certa{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 8%,var(--surface))!important}
+.opt.locked.wrong,.alt.errada{border-color:var(--alerta)!important;background:color-mix(in srgb,var(--alerta) 8%,var(--surface))!important}
+.letra{font-family:var(--mono)!important;color:var(--accent)!important}
+/* selo/watermark ancorado */
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px 0 14px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+/* botão de tema: chip ☀/☾ */
+#themeToggle{border:1px solid var(--line-strong)!important;background:none!important;color:var(--ink)!important;border-radius:var(--radius)!important;min-width:34px;font-size:14px;line-height:1}
+/* hairlines nos títulos de seção */
+.panel .wrap section>h2,.box-h,h2{border-bottom:1px solid var(--line);padding-bottom:.35em;font-family:var(--serif);letter-spacing:0}
+/* stat band */
+.statgrid,.simbar{border-top:1px solid var(--line-strong)!important;border-bottom:1px solid var(--line-strong)!important}
+.stat b,.stat .big{font-family:var(--serif)!important}
+/* riscar mantém o tracejado na cor da linha */
+.risc{border-left:1px dashed var(--line-strong)!important;color:var(--muted)}
+/* refinamentos v2 */
+.page-h1{font-size:clamp(2.4rem,6vw,4.2rem)!important;line-height:.98!important;letter-spacing:-.015em!important;margin:.15em 0 .25em!important}
+#themeToggle{position:fixed;width:34px!important;height:34px!important;border-radius:var(--radius)!important;font-size:15px!important;background:var(--bg)!important}
+.lead{max-width:70ch}
+.hub-tab{font-size:.78rem!important}
+/* v3: emojis fora, segmentos mono */
+.tab .ico,.hub-tab .ico,.title-row .emoji{display:none!important}
+.seg{border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;background:none!important;overflow:hidden;padding:0!important}
+.seg button{font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem!important;background:none!important;color:var(--muted)!important;border:0!important;border-radius:0!important;padding:8px 14px!important}
+.seg button.active{color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.tab{font-family:var(--mono)!important;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem!important;border:0!important;background:none!important;border-bottom:2px solid transparent!important;border-radius:0!important;color:var(--muted)!important}
+.tab.active{color:var(--ink)!important;border-bottom-color:var(--accent)!important}
+nav.top #themeToggle{position:static!important;margin-left:14px;width:32px!important;height:32px!important}
+/* v4: header sem azul — tinta/mono como na referência */
+.hubhead a,.hub-brand,.hub-brand a,.hubhead .title a,.hubhead b{color:var(--ink)!important;text-decoration:none}
+.hubhead a:hover{color:var(--accent)!important}
+nav.top a,nav.top .brand,nav.top .brand a{color:var(--ink)!important;text-decoration:none}
+nav.top a:hover{color:var(--accent)!important}
+.kick{color:var(--muted)!important}
+.kick::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:9px}
+.hubhead .sub{color:var(--ink)!important}
+</style>
+<body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☀</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Cavidade Torácica e Mediastino (02/10)</span><span id="wm-slot"></span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Conteúdo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<style>#panel-estudo .fig img{max-height:760px;width:auto;max-width:100%;margin:0 auto;background:#fff}#panel-estudo .fig .cred{display:block;opacity:.7;font-style:italic;font-size:12px;margin-top:3px}#panel-estudo .figpair{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}#panel-estudo .figpair .fig{margin:14px 0}@media(max-width:720px){#panel-estudo .figpair{grid-template-columns:1fr}}</style>
+
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula de 02/10</p>
+  <h1 class="page-h1">Cavidade Torácica e Mediastino</h1>
+  <p class="lead">Os revestimentos da cavidade torácica e os derrames pleurais, as aberturas do tórax, a divisão do mediastino pelo plano do ângulo esternal — e o conteúdo de cada compartimento: timo e vasos da base, o acesso venoso central pela jugular interna direita, o ligamento arterial, vagos e laríngeos recorrentes, o tronco simpático e a simpatectomia, o esôfago, o ducto torácico e o quilotórax, o sistema ázigo como ponte entre as cavas, o pericárdio e a punção de Marfan.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">Fáscia endotorácica e pleura</a></li>
+      <li><a href="#t2">Os derrames da cavidade pleural</a></li>
+      <li><a href="#t3">Aberturas superior e inferior do tórax</a></li>
+      <li><a href="#t4">Mediastino: limites e divisão</a></li>
+      <li><a href="#t5">Trígonos interpleurais: timo e gordura</a></li>
+      <li><a href="#t6">Mediastino superior: de frente para trás</a></li>
+      <li><a href="#t7">Veias braquiocefálicas e o acesso venoso central</a></li>
+      <li><a href="#t8">Arco da aorta, ligamento arterial e variações</a></li>
+      <li><a href="#t9">Vagos, laríngeos recorrentes e frênicos</a></li>
+      <li><a href="#t10">Tronco simpático torácico e simpatectomia</a></li>
+      <li><a href="#t11">Traqueia, carina e esôfago</a></li>
+      <li><a href="#t12">Ducto torácico e quilotórax</a></li>
+      <li><a href="#t13">Sistema ázigo: a ponte entre as cavas</a></li>
+      <li><a href="#t14">Mediastino inferior médio: pericárdio e coração</a></li>
+      <li><a href="#t15">Hemopericárdio, tamponamento e punção de Marfan</a></li>
+      <li><a href="#t16">Mediastino inferior posterior (e o anterior)</a></li>
+      <li><a href="#t17">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Fáscia endotorácica e pleura</h2>
+  <div class="diagrama"><p class="t">Revestimentos da cavidade torácica — de fora para dentro</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>FÁSCIA ENDOTORÁCICA</b> — <span class="d">o revestimento interno da cavidade torácica. Continua-se para cima como <b>fáscia cervical profunda</b> e para baixo como <b>fáscia transversal</b> do abdome.</span></div></li>
+    <li><span class="n">2</span><div><b>PLEURA PARIETAL</b> — <span class="d">lâmina serosa junto à fáscia endotorácica.</span></div></li>
+    <li><span class="n">3</span><div><b>CAVIDADE PLEURAL</b> — <span class="d">o espaço entre as duas lâminas — onde se acumulam os derrames.</span></div></li>
+    <li><span class="n">4</span><div><b>PLEURA VISCERAL</b> — <span class="d">aderida ao pulmão.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>As partes da pleura recebem o nome de onde estão encostadas: <b>COSTAL</b> (costelas), <b>DIAFRAGMÁTICA</b> (diafragma) e <b>MEDIASTINAL</b> (mediastino) — de cada lado (na aula, o mesmo raciocínio foi estendido à visceral — ver divergência abaixo).</li>
+    <li>A pleura mediastinal se reflete embaixo e vira diafragmática, que se reflete de novo e vira costal — dos dois lados.</li>
+    <li>🎯 <b>CÚPULA PLEURAL</b>: a parte mais alta da pleura, que sobe acima da abertura superior e pode ser alcançada na região <b>supraclavicular</b> (pense na punção de subclávia e no pneumotórax).</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p><b>Nomenclatura:</b> na aula, a visceral teria as mesmas denominações (costal, diafragmática, mediastinal). Na literatura (Terminologia Anatômica), essa divisão é da <b>pleura PARIETAL</b> — que tem ainda a parte <b>cervical (cúpula)</b>; a visceral reveste o pulmão e acompanha suas faces e fissuras. <b>Cúpula:</b> na aula, a esquerda é "normalmente um pouco mais alta"; na literatura, as cúpulas sobem cerca de 2–3 cm acima do terço medial da clavícula dos dois lados, sem predomínio lateral consistente.</p></div>
+
+<figure class="fig"><img src="img/slide007-pleura-mediastino-anterior.jpg" alt="Vista anterior do tórax aberto com pleuras e pulmões" loading="lazy"><figcaption>Tórax aberto pela frente: pleura parietal nas partes costal, diafragmática e mediastinal, pulmões cobertos pela pleura visceral e, no centro, o mediastino com timo, vasos da base e pericárdio fibroso inserido no diafragma. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <h2 class="topic" id="t2">2 · Os derrames da cavidade pleural</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Conteúdo na cavidade pleural</th><th>Nome</th><th>Origem lembrada na aula</th></tr>
+    <tr><td>Pus (secreção purulenta)</td><td><b>EMPIEMA</b> pleural</td><td>processo infeccioso</td></tr>
+    <tr><td>Sangue</td><td><b>HEMOTÓRAX</b></td><td>trauma, lesão vascular</td></tr>
+    <tr><td>Ar</td><td><b>PNEUMOTÓRAX</b></td><td>lesão pleuropulmonar (ex.: punção de subclávia)</td></tr>
+    <tr><td>Linfa</td><td><b>QUILOTÓRAX</b></td><td>lesão linfática — ducto torácico/cisterna do quilo</td></tr>
+    <tr><td>Líquido seroso (citrino)</td><td>derrame seroso</td><td>a pleura é serosa: produz mais líquido na inflamação</td></tr>
+  </table></div>
+
+  <h2 class="topic" id="t3">3 · Aberturas superior e inferior do tórax</h2>
+  <ul>
+    <li>🎯 <b>ABERTURA SUPERIOR:</b> <b>primeira costela</b> de cada lado, <b>manúbrio do esterno</b> anteriormente e <b>primeira vértebra torácica (T1)</b> posteriormente.</li>
+    <li><b>Comunicação pescoço → mediastino:</b> a região <b>ANTERIOR</b> do pescoço comunica-se com o mediastino — um abscesso ou tumor cervical anterior (ex.: tireoidiano) pode infiltrar o mediastino. <b>Lateralmente não</b>: os espaços cervicais laterais são mais fechados em relação à região pleuropulmonar.</li>
+    <li><b>ABERTURA INFERIOR:</b> fechada pelo <b>DIAFRAGMA</b> (o músculo que separa tórax e abdome). Sua inserção é <b>mais ALTA na frente</b> (contando as costelas, já há diafragma por volta da 8ª) e mais baixa atrás — o abdome "entra" no gradeado costal.</li>
+    <li>🎯 A cúpula é <b>mais alta à DIREITA (por causa do fígado)</b> e mais baixa à esquerda (o baço é menor que o fígado).</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 Na prática</p><p>Ferimento penetrante baixo no tórax anterior pode atingir vísceras abdominais — principalmente o fígado, à direita — porque a cúpula diafragmática sobe dentro do gradeado costal.</p></div>
+
+  <h2 class="topic" id="t4">4 · Mediastino: limites e divisão</h2>
+  <ul>
+    <li>O mediastino é o espaço central entre as duas <b>PLEURAS MEDIASTINAIS</b>, que vão do <b>esterno</b> (na frente) até a <b>coluna vertebral</b> (atrás, paravertebral) — elas são os limites laterais.</li>
+    <li>🎯 <b>Linha transversa imaginária</b> que passa pela <b>borda superior do pericárdio</b> — que corresponde ao <b>ÂNGULO ESTERNAL (de Louis)</b>, à <b>CARINA</b> e à <b>4ª vértebra torácica</b> (disco T4–T5). Para cima: <b>MEDIASTINO SUPERIOR</b>. Para baixo: <b>MEDIASTINO INFERIOR</b>.</li>
+    <li>O inferior divide-se em três: <b>ANTERIOR</b> (pré-cardíaco: na frente do pericárdio) · <b>MÉDIO</b> (cardíaco: pericárdio + coração) · <b>POSTERIOR</b> (retrocardíaco: atrás do coração). Nomes antigos: supracardíaco (= superior), pré-cardíaco, cardíaco e retrocardíaco.</li>
+    <li>O <b>superior não tem subdivisão real</b> — só didaticamente se fala em frente (timo), meio (vasos da base) e trás (traqueia, esôfago).</li>
+  </ul>
+  <div class="diagrama"><p class="t">Esquema — divisão do mediastino (vista lateral, frente à esquerda)</p>
+  <svg viewBox="0 0 640 370" role="img" aria-label="Esquema sagital da divisão do mediastino" style="width:100%;height:auto;display:block;color:var(--ink);font-family:var(--sans)">
+    <path d="M82 115 L520 143 L520 330 Q300 300 82 300 Z" style="fill:color-mix(in srgb,var(--accent) 6%,transparent)"/>
+    <path d="M82 40 L520 40 L520 143 L82 115 Z" style="fill:color-mix(in srgb,var(--gold) 12%,transparent)"/>
+    <rect x="60" y="40" width="22" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <rect x="60" y="113" width="22" height="160" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M62 275 L80 275 L71 300 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+    <g fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="525" y="34" width="46" height="24" rx="4"/><rect x="525" y="62" width="46" height="24" rx="4"/>
+      <rect x="525" y="90" width="46" height="24" rx="4"/><rect x="525" y="118" width="46" height="24" rx="4"/>
+      <rect x="525" y="153" width="46" height="24" rx="4"/><rect x="525" y="181" width="46" height="24" rx="4"/>
+      <rect x="525" y="209" width="46" height="24" rx="4"/><rect x="525" y="237" width="46" height="24" rx="4"/>
+      <rect x="525" y="265" width="46" height="24" rx="4"/><rect x="525" y="293" width="46" height="24" rx="4"/>
+    </g>
+    <g font-size="11" fill="currentColor" text-anchor="middle">
+      <text x="548" y="50">T1</text><text x="548" y="134">T4</text><text x="548" y="169">T5</text><text x="548" y="253">T8</text>
+    </g>
+    <line x1="40" y1="112" x2="610" y2="149" stroke="var(--alerta)" stroke-width="2.4" stroke-dasharray="8 6"/>
+    <ellipse cx="290" cy="228" rx="105" ry="72" style="fill:color-mix(in srgb,var(--caso) 16%,transparent)" stroke="var(--caso)" stroke-width="2"/>
+    <path d="M82 300 Q300 290 520 330" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <line x1="185" y1="160" x2="185" y2="296" stroke="currentColor" stroke-width="1" stroke-dasharray="3 4" opacity=".6"/>
+    <line x1="395" y1="160" x2="395" y2="318" stroke="currentColor" stroke-width="1" stroke-dasharray="3 4" opacity=".6"/>
+    <g fill="currentColor">
+      <text x="300" y="78" font-size="16" font-weight="700" text-anchor="middle">MEDIASTINO SUPERIOR</text>
+      <text x="300" y="98" font-size="12" text-anchor="middle" opacity=".8">timo · vasos da base · traqueia · esôfago · ducto torácico</text>
+      <text x="133" y="215" font-size="13" font-weight="700" text-anchor="middle">ANTERIOR</text>
+      <text x="133" y="233" font-size="11" text-anchor="middle" opacity=".8">gordura</text>
+      <text x="290" y="222" font-size="14" font-weight="700" text-anchor="middle">MÉDIO</text>
+      <text x="290" y="240" font-size="11" text-anchor="middle" opacity=".85">pericárdio + coração</text>
+      <text x="458" y="215" font-size="13" font-weight="700" text-anchor="middle">POSTERIOR</text>
+      <text x="458" y="233" font-size="11" text-anchor="middle" opacity=".8">esôfago · aorta</text>
+      <text x="458" y="248" font-size="11" text-anchor="middle" opacity=".8">ázigo · ducto</text>
+      <text x="4" y="80" font-size="11" opacity=".8">manúbrio</text>
+      <text x="14" y="200" font-size="11" opacity=".8">esterno</text>
+      <text x="230" y="345" font-size="11" opacity=".8">diafragma</text>
+      <text x="322" y="121" font-size="11.5" style="fill:var(--alerta)" font-weight="700">ângulo esternal · carina · T4–T5</text>
+      <text x="290" y="362" font-size="11" text-anchor="middle" opacity=".7">MEDIASTINO INFERIOR = anterior · médio · posterior</text>
+    </g>
+  </svg></div>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide005-mediastino-divisao-sagital.jpg" alt="Corte sagital com os compartimentos do mediastino em cores" loading="lazy"><figcaption>Os compartimentos em cor: superior (amarelo), da abertura torácica superior até o plano do ângulo esternal/T4–T5; abaixo, anterior (verde), médio com a cavidade pericárdica (vermelho) e posterior (azul). Repare o esôfago passando do superior para o posterior. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide004-mediastino-divisao-cores.jpg" alt="Esquema sagital da divisão do mediastino" loading="lazy"><figcaption>A mesma divisão em outro atlas: a linha tracejada separa o mediastino superior do inferior, que se divide em anterior, médio (coração) e posterior. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+  <h2 class="topic" id="t5">5 · Trígonos interpleurais: timo e gordura</h2>
+  <ul>
+    <li>Afastando as pleuras mediastinais, aparecem <b>dois espaços triangulares entre elas</b>:</li>
+    <li>🎯 <b>TRÍGONO INTERPLEURAL SUPERIOR</b> — limitado pelas pleuras mediastinais e, em cima, pelo manúbrio: contém o <b>TIMO</b> ("o timo é sempre lá de cima" — a primeira estrutura do mediastino superior).</li>
+    <li>🎯 <b>TRÍGONO INTERPLEURAL INFERIOR</b> — base no processo xifoide: contém a <b>GORDURA PRÉ-PERICÁRDICA</b>, na frente do pericárdio.</li>
+  </ul>
+
+<figure class="fig"><img src="img/slide030-timo-pericardio-jovem.jpg" alt="Timo, pericárdio e pulmões de um jovem" loading="lazy"><figcaption>O TIMO de um jovem ocupando o trígono interpleural superior, à frente dos vasos da base e acima do pericárdio. No adulto/idoso ele é substituído por tecido adiposo. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <h2 class="topic" id="t6">6 · Mediastino superior: de frente para trás</h2>
+  <div class="diagrama"><p class="t">Camadas do mediastino superior (sequência que a aula repete)</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>TIMO</b> — <span class="d">a estrutura mais anterior.</span></div></li>
+    <li><span class="n">2</span><div><b>VASOS DA BASE</b> — <span class="d">veias braquiocefálicas e cava superior; arco da aorta e seus ramos; tronco pulmonar e o ligamento arterial.</span></div></li>
+    <li><span class="n">3</span><div><b>TRAQUEIA</b> — <span class="d">atrás do arco da aorta.</span></div></li>
+    <li><span class="n">4</span><div><b>ESÔFAGO</b> — <span class="d">atrás da traqueia.</span></div></li>
+    <li><span class="n">5</span><div><b>DUCTO TORÁCICO</b> → <b>coluna vertebral</b> — <span class="d">atrás do esôfago.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>Ao lado: <b>vagos</b> (cruzando o arco da aorta à esquerda e a subclávia à direita), <b>frênicos</b> (laterais), <b>troncos simpáticos</b> (junto à coluna), <b>sistema ázigo</b> (ladeando o esôfago) e os <b>linfonodos</b> paratraqueais e para-aórticos.</li>
+    <li>Também no mediastino superior: a <b>desembocadura da veia ázigo</b> na cava superior.</li>
+  </ul>
+
+  <h2 class="topic" id="t7">7 · Veias braquiocefálicas e o acesso venoso central</h2>
+  <ul>
+    <li>A <b>VEIA CAVA SUPERIOR</b> é formada pelas <b>braquiocefálicas direita e esquerda</b>.</li>
+    <li>🎯 <b>À DIREITA, tudo é praticamente RETILÍNEO</b>: jugular interna → braquiocefálica direita (curtinha) → cava superior.</li>
+    <li>🎯 <b>À ESQUERDA</b>, a <b>braquiocefálica esquerda CRUZA o mediastino</b> da esquerda para a direita: é <b>mais comprida</b> e o trajeto tem <b>DUAS CURVATURAS</b> (jugular → braquiocefálica e braquiocefálica → cava).</li>
+  </ul>
+<figure class="fig"><img src="img/slide012-vasos-base-braquiocefalicas.jpg" alt="Mediastino superior com veias braquiocefálicas e cava superior" loading="lazy"><figcaption>Vasos da base: a braquiocefálica DIREITA desce curta e quase reta para a cava superior; a ESQUERDA atravessa o mediastino por cima do arco da aorta — o trajeto longo e curvo que a aula usa para justificar a jugular interna direita no acesso central. Note também o ligamento arterial e os nervos vago e frênico. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <div class="box prof"><p class="h">🎯 "Levem isso para o resto da vida"</p><p>Ordem de escolha para acesso venoso central ensinada na aula: <b>1º JUGULAR INTERNA DIREITA</b> (curta e reta — a ponta do cateter cai na cava superior/átrio direito) → 2º jugular interna esquerda → 3º femoral → por último, subclávias (trombosam mais, risco de pneumotórax). À esquerda, o cateter mais longo e com duas curvas pode <b>dobrar ("quincar") e fraturar</b> e tem <b>mais risco de trombose</b>.</p></div>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p>Na aula, a subclávia fica por último por "trombosar mais". Na literatura (ex.: ensaio 3SITES, NEJM 2015; diretrizes de prevenção de infecção de cateter), a <b>subclávia tem as MENORES taxas de infecção e de trombose</b> em adultos, ao custo de mais pneumotórax; a jugular interna direita guiada por ultrassom é a escolha mais usada na prática e a preferida em hemodiálise (a subclávia é evitada nesses pacientes por estenose venosa).</p></div>
+
+  <h2 class="topic" id="t8">8 · Arco da aorta, ligamento arterial e variações</h2>
+  <ul>
+    <li><b>Ramos do arco da aorta</b>: <b>tronco braquiocefálico</b>, <b>carótida comum esquerda</b> e <b>subclávia esquerda</b>. A origem dos vasos supra-aórticos ainda é <b>mediastino superior</b>.</li>
+    <li>Entre aorta e artéria pulmonar: o <b>LIGAMENTO ARTERIAL (de Botallo)</b> — o canal arterial obliterado após o nascimento.</li>
+    <li>🎯 O pericárdio recobre só os <b>~2 cm iniciais</b> da cava superior, da aorta e da artéria pulmonar. O <b>ligamento arterial fica ACIMA do pericárdio — EXTRAPERICÁRDICO, no mediastino superior</b>.</li>
+  </ul>
+  <div class="box caso"><p class="h">🩺 Persistência do canal arterial</p><p>Se o canal não fecha, hoje se faz <b>videotoracoscopia com um clipe</b> no canal — sem abrir o tórax e <b>sem abrir o pericárdio</b>, justamente porque ele está acima do pericárdio.</p></div>
+<figure class="fig"><img src="img/slide016-mediastino-lado-esquerdo.jpg" alt="Vista lateral esquerda do mediastino" loading="lazy"><figcaption>Mediastino pelo lado esquerdo (pleura removida): arco da aorta com o vago esquerdo e o laríngeo recorrente passando por baixo dele junto ao ligamento arterial, a aorta torácica descendente, o frênico com os vasos pericardicofrênicos sobre o pericárdio e a hemiázigo acessória. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <ul>
+    <li><b>Variações lembradas:</b> <b>DEXTROCARDIA</b> (coração voltado para a direita — o ictus fica no 5º espaço intercostal direito); <b>situs inversus totalis</b> (tudo invertido); e a <b>aorta saindo para a direita</b> (inversão só dos vasos da base), inclusive com dobra da subclávia que dá sintomas tipo desfiladeiro ao elevar o braço.</li>
+    <li>No fim da aula foi citada a <b>artéria subclávia direita aberrante (lusória)</b> — a subclávia direita saindo como último ramo do arco e cruzando o mediastino por trás — como assunto da próxima aula.</li>
+  </ul>
+
+  <h2 class="topic" id="t9">9 · Vagos, laríngeos recorrentes e frênicos</h2>
+  <ul>
+    <li>O <b>vago esquerdo cruza o arco da aorta</b>; o <b>vago direito cruza a subclávia direita</b>. Os dois estão no mediastino superior.</li>
+    <li>🎯 <b>LARÍNGEO RECORRENTE DIREITO</b>: sai ainda na <b>região cervical</b> (contorna a subclávia) — <b>não está no mediastino</b>. <b>LARÍNGEO RECORRENTE ESQUERDO</b>: contorna <b>por baixo do arco da aorta</b> — <b>está no mediastino</b>.</li>
+    <li>🎯 Junto ao esôfago: o <b>vago ESQUERDO forma o TRONCO VAGAL ANTERIOR</b>; o <b>vago DIREITO desce por trás do esôfago e forma o TRONCO VAGAL POSTERIOR</b>. Eles levam a inervação para as vísceras abdominais (depois, plexo celíaco e mesentéricos — já no abdome).</li>
+    <li>O vago no estômago <b>aumenta a secreção ácida</b> → a <b>vagotomia</b> (troncular ou seletiva) já foi usada para úlcera; hoje os inibidores de bomba de prótons (omeprazol, esomeprazol…) resolvem a maioria.</li>
+    <li><b>NERVOS FRÊNICOS</b>: laterais, descem do mediastino superior para o inferior, ao lado do pericárdio, até o diafragma.</li>
+  </ul>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide010-nervos-mediastino-superior.jpg" alt="Nervos do mediastino superior" loading="lazy"><figcaption>Nervos do mediastino superior: vago direito cruzando a subclávia direita (o recorrente direito volta no pescoço), vago esquerdo sobre o arco da aorta com o recorrente esquerdo sob o arco, e os frênicos descendo lateralmente sobre o pericárdio. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide022-vagos-simpatico-plexos.jpg" alt="Vagos, troncos vagais e tronco simpático" loading="lazy"><figcaption>Vagos em vista anterior e posterior do esôfago: formam o plexo esofágico e depois o TRONCO VAGAL ANTERIOR (vago esquerdo) e o POSTERIOR (vago direito); lateralmente, o tronco simpático com o gânglio cervicotorácico (estrelado). <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+  <h2 class="topic" id="t10">10 · Tronco simpático torácico e simpatectomia</h2>
+  <ul>
+    <li>O <b>TRONCO SIMPÁTICO</b> vai "de cima até lá embaixo", junto à coluna, nos <b>dois lados</b> — mediastino superior e inferior posterior.</li>
+    <li>🎯 <b>GÂNGLIO ESTRELADO (cervicotorácico)</b> = <b>gânglio cervical inferior + 1º gânglio torácico</b>, na transição pescoço–tórax.</li>
+  </ul>
+<figure class="fig"><img src="img/slide014-tronco-simpatico-toracico.jpg" alt="Tronco simpático torácico e gânglio estrelado" loading="lazy"><figcaption>Tronco simpático torácico de cada lado da coluna, com o gânglio cervicotorácico (estrelado) no alto, os ramos comunicantes para os nervos intercostais e os esplâncnicos torácicos descendo para o abdome. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <div class="tablewrap"><table>
+    <tr><th></th><th>Ação SIMPÁTICA ("alerta")</th><th>SEM o simpático (simpatectomia / lesão)</th></tr>
+    <tr><td>Pupila</td><td>midríase</td><td><b>MIOSE</b></td></tr>
+    <tr><td>Pálpebra / olho</td><td>olho "arregalado"</td><td><b>PTOSE</b> + <b>enoftalmia</b> (olho "para dentro")</td></tr>
+    <tr><td>Suor (mãos, axila, face)</td><td>aumenta → <b>hiperidrose</b></td><td><b>ANIDROSE</b> (mão seca)</td></tr>
+    <tr><td>Circulação</td><td>vasoconstrição, ↑ resistência periférica</td><td><b>VASODILATAÇÃO</b> — melhora a circulação colateral</td></tr>
+  </table></div>
+  <ul>
+    <li>🎯 <b>SIMPATECTOMIA</b> — duas indicações da aula: <b>HIPERIDROSE</b> (o paciente que não cumprimenta, que molha e borra a prova; hoje há medicamentos) e <b>ISQUEMIA da mão</b> (oclusão arterial distal: vasodilatar a colateral). Na versão da aula, retiram-se <b>dois terços do gânglio estrelado</b>, deixando um terço.</li>
+    <li>Se a ressecção do estrelado é grande → <b>SÍNDROME DE (CLAUDE BERNARD-)HORNER</b>: <b>ptose + miose + enoftalmia + anidrose</b>. Tumores da região cervicotorácica também podem comprometer o estrelado.</li>
+    <li>Hiperidrose que persiste/compensa em tórax, dorso e abdome: a aula atribui a uma via simpática acessória — o <b>NERVO DE KUNTZ</b> (por volta de T3–T4).</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p><b>Técnica:</b> na aula, "secção de dois terços do gânglio estrelado". Na literatura atual, a simpatectomia para hiperidrose é <b>torácica videotoracoscópica, nos níveis T2–T4</b>, <b>preservando o gânglio estrelado</b> justamente para evitar Horner. <b>Kuntz:</b> na literatura, o nervo de Kuntz é um ramo comunicante intratorácico entre o 2º nervo intercostal e o 1º nervo torácico (nível T1–T2), que explica falha/recidiva da simpatectomia; a <b>hiperidrose compensatória</b> é considerada um fenômeno reflexo, não atribuído ao Kuntz. Também: no homem a ação simpática não produz exoftalmia verdadeira, e a enoftalmia do Horner é sobretudo aparente (fenda palpebral estreitada).</p></div>
+
+  <h2 class="topic" id="t11">11 · Traqueia, carina e esôfago</h2>
+  <ul>
+    <li>🎯 A <b>traqueia é do mediastino SUPERIOR</b>: na altura de <b>T4–T5</b> ela se bifurca (carina) nos brônquios principais. <b>NÃO HÁ TRAQUEIA NO MEDIASTINO INFERIOR</b> — "todo mundo erra isso". Lesão no mediastino inferior não é lesão de traqueia; ali estão os <b>brônquios</b>.</li>
+    <li>O <b>ESÔFAGO</b> está nos mediastinos <b>superior E inferior</b> (atrás da traqueia; depois atrás do coração), <b>à direita da aorta descendente</b> — desce como o tronco simpático, a ázigo e o ducto torácico.</li>
+    <li>🎯 <b>Constrições fisiológicas</b> no tórax: pelo <b>ARCO DA AORTA</b> e pelo <b>BRÔNQUIO PRINCIPAL ESQUERDO</b> (a chamada constrição aórtica; o brônquio também comprime).</li>
+    <li><b>Irrigação do esôfago torácico</b>: <b>ramos esofágicos (e brônquicos) diretos da aorta</b>; embaixo, a parte abdominal recebe a <b>gástrica esquerda</b>.</li>
+    <li><b>Divertículos esofágicos</b>: protrusão da mucosa por fragilidade da muscular — de pulsão (fraqueza) ou de tração (aderências). A gênese vem na clínica cirúrgica.</li>
+    <li><b>Varizes esofágicas</b>: dilatação das veias do <b>plexo submucoso</b> do esôfago quando a pressão sobe (hipertensão portal) — a fisiopatologia vem nas próximas aulas.</li>
+  </ul>
+<div class="figpair">
+<figure class="fig"><img src="img/slide017-esofago-in-situ.jpg" alt="Esôfago no mediastino posterior" loading="lazy"><figcaption>Esôfago no mediastino posterior (coração retirado): atrás da traqueia e da bifurcação, com a aorta descendente à esquerda e os troncos vagais sobre ele até o hiato esofágico. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide018-esofago-relacoes.jpg" alt="Esôfago e suas constrições" loading="lazy"><figcaption>O esôfago com a régua de distância a partir dos incisivos: constrição CRICOFARÍNGEA (~16 cm), constrição AÓRTICA (~23 cm, com o brônquio principal esquerdo logo abaixo) e esfíncter inferior no diafragma (~38–40 cm). À direita, a relação em perfil com aorta, coração e coluna. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+<div class="figpair">
+<figure class="fig"><img src="img/slide024-esofago-perfil.jpg" alt="Esôfago em perfil" loading="lazy"><figcaption>Esôfago em perfil, da parte cervical até a junção com o estômago, com as impressões das estruturas vizinhas. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide013-aorta-bronquicas-esofagicas.jpg" alt="Aorta torácica com artérias brônquicas e esofágicas" loading="lazy"><figcaption>Irrigação do esôfago torácico: a aorta descendente (tracionada) dá as ARTÉRIAS ESOFÁGICAS e BRÔNQUICAS diretamente; a 1ª intercostal posterior direita também aparece. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+  <div class="box conexao"><p class="h">🔗 Complemento da literatura</p><p>Classicamente descrevem-se 4 estreitamentos do esôfago: cricofaríngeo (início), arco da aorta, brônquio principal esquerdo e hiato diafragmático. A aula destacou os dois torácicos.</p></div>
+
+  <h2 class="topic" id="t12">12 · Ducto torácico e quilotórax</h2>
+  <ul>
+    <li>Começa no abdome, na <b>CISTERNA DO QUILO</b> (à frente de <b>L1–L2</b>) — que recebe a linfa do <b>intestino</b>, da <b>parede abdominal</b> e dos <b>membros inferiores</b>. O slide descreve a cisterna como a dilatação formada pela junção dos <b>troncos intestinal, lombar e intercostal descendente</b>; o ducto é o <b>principal coletor linfático</b> do corpo.</li>
+    <li>🎯 Sobe pelo <b>HIATO AÓRTICO</b> (não pelo esofágico), passa <b>à frente da coluna e ATRÁS DO ESÔFAGO</b>, entre a <b>ázigo (à direita)</b> e a <b>aorta/hemiázigo (à esquerda)</b> — no mediastino inferior posterior e no superior.</li>
+    <li>Na altura de <b>T4–T5</b> desvia para a <b>esquerda</b>, sobe ao pescoço, faz um <b>arco</b> e desemboca no <b>ÂNGULO JUGULOSSUBCLÁVIO ESQUERDO</b> (entre jugular interna e subclávia esquerdas). A desembocadura <b>varia</b> (pode ser na jugular ou na subclávia). Os slides dão outras versões — ver a divergência abaixo.</li>
+    <li>🎯 <b>Drena 3/4 do corpo</b>: metade esquerda da cabeça e do pescoço, membro superior esquerdo, metade (esquerda) da parede torácica, a parede abdominal e os membros inferiores. O <b>1/4 restante</b> (lado direito da cabeça/pescoço, membro superior direito, hemitórax direito) vai para o <b>DUCTO LINFÁTICO DIREITO</b>.</li>
+    <li>Lesão do ducto → a linfa cai na cavidade pleural = <b>QUILOTÓRAX</b>. "Imagine quanto de linfa vai cair."</li>
+  </ul>
+<div class="figpair">
+<figure class="fig"><img src="img/slide026-ducto-toracico-trajeto.jpg" alt="Trajeto do ducto torácico sobre a coluna" loading="lazy"><figcaption>Ducto torácico subindo sobre a coluna a partir da cisterna do quilo, desviando à esquerda no tórax superior; à direita, o curto ducto linfático direito. Os linfonodos intercostais (grupo parietal posterior) drenam para ele. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide028-ducto-toracico-dissecacao.jpg" alt="Dissecação do ducto torácico" loading="lazy"><figcaption>Dissecação: a cisterna do quilo junto à primeira vértebra lombar e o ducto torácico entrando no tórax pelo hiato aórtico, ao lado da aorta. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+<figure class="fig"><img src="img/slide027-ducto-toracico-terminacao.jpg" alt="Terminação do ducto torácico e do ducto linfático direito" loading="lazy"><figcaption>Terminações: o ducto torácico chega à junção da jugular interna com a subclávia ESQUERDAS; o ducto linfático direito, à junção das veias do lado direito. No detalhe, os territórios de cada um. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide029-territorios-linfaticos.jpg" alt="Territórios de drenagem do ducto torácico e do ducto linfático direito" loading="lazy"><figcaption>Territórios: ducto torácico (azul) = 3/4 do corpo; ducto linfático direito (laranja) = lado direito da cabeça, pescoço, tórax e membro superior direito. O texto do slide fala em "junção venosa subclávio-axilar" — ver a divergência abaixo. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p><b>Volume:</b> na aula, "3 a 4 litros de linfa por dia" passam pelo ducto. Na literatura, o fluxo habitual é de cerca de <b>1,5–2,5 L/dia</b>, podendo subir bastante após refeição gordurosa. <b>Nome:</b> na fala, o quarto restante iria para o "ducto subclávio" direito — o nome correto é <b>ducto linfático direito</b> (o tronco subclávio é um de seus afluentes).</p></div>
+  <div class="box alerta"><p class="h">⚠️ Divergência — onde termina o ducto torácico</p><p><b>Na fala:</b> no ângulo jugulossubclávio esquerdo (entre jugular interna e subclávia esquerdas), com variações. <b>No slide de texto:</b> "término: V. jugular interna esquerda". <b>No slide dos territórios:</b> ducto torácico na "junção venosa subclávio-axilar esquerda" e ducto linfático direito na "junção subclávio-axilar direita". <b>Na literatura:</b> o ducto termina no <b>ângulo venoso jugulossubclávio esquerdo</b> (a junção da jugular interna com a subclávia, origem da braquiocefálica esquerda); terminar só na jugular interna, só na subclávia ou na braquiocefálica são variações. Não existe junção "subclávio-axilar" como local de desembocadura: a axilar vira subclávia na 1ª costela, longe dali. Para a prova, fique com o ângulo jugulossubclávio esquerdo (que é o que o professor disse) e saiba que a desembocadura varia.</p></div>
+  <div class="diagrama"><p class="t">Esquema — mediastino inferior posterior em corte (convenção da TC: esquerda do paciente à direita da figura)</p>
+  <svg viewBox="0 0 560 320" role="img" aria-label="Corte esquemático do mediastino posterior" style="width:100%;height:auto;display:block;color:var(--ink);font-family:var(--sans)">
+    <ellipse cx="280" cy="62" rx="135" ry="44" style="fill:color-mix(in srgb,var(--caso) 16%,transparent)" stroke="var(--caso)" stroke-width="2"/>
+    <path d="M150 40 Q110 160 170 300" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" opacity=".7"/>
+    <path d="M410 40 Q450 160 390 300" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" opacity=".7"/>
+    <circle cx="272" cy="160" r="26" style="fill:color-mix(in srgb,var(--gold) 22%,transparent)" stroke="var(--gold)" stroke-width="2"/>
+    <circle cx="272" cy="131" r="5" fill="currentColor"/><circle cx="272" cy="189" r="5" fill="currentColor"/>
+    <circle cx="340" cy="186" r="28" style="fill:color-mix(in srgb,var(--alerta) 18%,transparent)" stroke="var(--alerta)" stroke-width="2"/>
+    <circle cx="220" cy="214" r="11" style="fill:color-mix(in srgb,var(--accent) 25%,transparent)" stroke="var(--accent)" stroke-width="2"/>
+    <circle cx="330" cy="232" r="9" style="fill:color-mix(in srgb,var(--accent) 25%,transparent)" stroke="var(--accent)" stroke-width="2"/>
+    <circle cx="268" cy="218" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/>
+    <rect x="215" y="240" width="120" height="56" rx="16" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="198" cy="270" r="5" style="fill:var(--ok)"/><circle cx="352" cy="270" r="5" style="fill:var(--ok)"/>
+    <g fill="currentColor" font-size="12">
+      <text x="280" y="58" text-anchor="middle" font-weight="700">pericárdio + coração</text>
+      <text x="280" y="74" text-anchor="middle" font-size="11" opacity=".8">(mediastino médio)</text>
+      <text x="275" y="270" text-anchor="middle" font-size="11" opacity=".85">corpo vertebral</text>
+      <text x="40" y="150">esôfago →</text>
+      <line x1="100" y1="146" x2="244" y2="158" stroke="currentColor" stroke-width=".8" opacity=".6"/>
+      <text x="300" y="122" font-size="11">tronco vagal anterior (vago E)</text>
+      <text x="40" y="196" font-size="11">tronco vagal posterior (vago D)</text>
+      <line x1="200" y1="192" x2="266" y2="190" stroke="currentColor" stroke-width=".8" opacity=".6"/>
+      <text x="380" y="180">aorta descendente</text>
+      <text x="40" y="228">veia ázigo (D)</text>
+      <line x1="122" y1="224" x2="208" y2="216" stroke="currentColor" stroke-width=".8" opacity=".6"/>
+      <text x="400" y="236">hemiázigo (E)</text>
+      <line x1="398" y1="232" x2="340" y2="232" stroke="currentColor" stroke-width=".8" opacity=".6"/>
+      <text x="40" y="308" font-weight="700">ducto torácico: atrás do esôfago, entre ázigo e aorta</text>
+      <line x1="250" y1="298" x2="266" y2="226" stroke="currentColor" stroke-width=".8" opacity=".6"/>
+      <text x="400" y="290" font-size="11" style="fill:var(--ok)">tronco simpático</text>
+      <text x="80" y="268" font-size="11" style="fill:var(--ok)">tronco simpático</text>
+      <text x="425" y="60" font-size="10.5" opacity=".7">pleura mediastinal</text>
+    </g>
+  </svg></div>
+
+  <h2 class="topic" id="t13">13 · Sistema ázigo: a ponte entre as cavas</h2>
+  <ul>
+    <li>🎯 <b>VEIA ÁZIGO</b> (à direita): formada pela <b>veia lombar ascendente</b> + <b>veia subcostal</b> direitas. Sobe à direita do esôfago (mediastino inferior posterior — a maior parte dela), recebe as <b>intercostais posteriores direitas</b>, faz um <b>ARCO (cajado)</b> e <b>desemboca na VEIA CAVA SUPERIOR, acima do pericárdio</b> — essa desembocadura já é mediastino superior.</li>
+    <li><b>VEIA HEMIÁZIGO</b> (à esquerda, embaixo): <b>lombar ascendente + subcostal esquerdas</b>; recebe as intercostais inferiores esquerdas e <b>desemboca na ázigo</b>.</li>
+    <li><b>HEMIÁZIGO ACESSÓRIA</b> (à esquerda, em cima): recebe as intercostais superiores esquerdas e, na versão da aula, desemboca na hemiázigo. Fluxo final: hemiázigo → ázigo → cava superior.</li>
+    <li>As primeiras intercostais (1ª, 2ª, às vezes 3ª) drenam pela <b>veia intercostal superior</b>.</li>
+  </ul>
+<div class="figpair">
+<figure class="fig"><img src="img/slide031-sistema-azigo.jpg" alt="Sistema ázigo em vista anterior" loading="lazy"><figcaption>Sistema ázigo: a ázigo à direita recebendo as intercostais posteriores e arqueando para a cava superior; à esquerda, hemiázigo e hemiázigo acessória cruzando para ela. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide015-mediastino-lado-direito.jpg" alt="Vista lateral direita do mediastino" loading="lazy"><figcaption>Mediastino pelo lado direito: a ÁZIGO sobe ao lado da coluna e faz o arco (cajado) sobre o pedículo pulmonar direito para desembocar na cava superior, acima do pericárdio. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+<div class="figpair">
+<figure class="fig"><img src="img/slide032-azigo-hemiazigo-posterior.jpg" alt="Ázigo e hemiázigo sobre a coluna" loading="lazy"><figcaption>Ázigo e hemiázigo sobre a coluna, formadas embaixo pela lombar ascendente e pela subcostal de cada lado — a ligação com a cava inferior que permite a anastomose intercavas. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide033-azigo-arco-perfil.jpg" alt="Arco da ázigo em perfil" loading="lazy"><figcaption>Em perfil: o arco da ázigo passando por cima do pedículo pulmonar até a cava superior. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+<figure class="fig"><img src="img/slide020-veias-esofago-plexo-submucoso.jpg" alt="Veias do esôfago, sistema ázigo e sistema porta" loading="lazy"><figcaption>Veias do esôfago: o plexo venoso submucoso drena para a ázigo/hemiázigo no tórax e para a gástrica esquerda (sistema porta) no abdome — a comunicação que dilata nas varizes esofágicas da hipertensão portal. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+  <div class="box prof"><p class="h">🎯 Anastomose intercavas</p><p>Pelas lombares ascendentes, o sistema ázigo <b>comunica a cava superior com a cava inferior</b>. <b>Obstrução da cava SUPERIOR</b> (ex.: paciente em <b>diálise</b> com cateteres trocados várias vezes, entupidos, infectados) → o sangue <b>DESCE</b> pela ázigo até a cava inferior. <b>Obstrução da cava INFERIOR</b> → o sangue <b>SOBE</b> pela ázigo até a cava superior. Por isso se encontram <b>ázigo e hemiázigo calibrosas</b> quando uma cava está ocluída — e é preciso lembrar dessas comunicações ao estudar hipertensão portal e trombose de veia porta (cirrose, esquistossomose).</p></div>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p>Na aula, a hemiázigo acessória "desemboca na hemiázigo". Na literatura, ela geralmente cruza a linha média por trás da aorta (~T7–T8) e desemboca <b>diretamente na ázigo</b>; a união com a hemiázigo é uma das variações. Pela literatura, as intercostais superiores esquerdas (2ª–3ª) costumam drenar pela intercostal superior esquerda para a <b>braquiocefálica esquerda</b>.</p></div>
+
+  <h2 class="topic" id="t14">14 · Mediastino inferior médio: pericárdio e coração</h2>
+  <ul>
+    <li>🎯 Conteúdo do <b>MÉDIO</b>: <b>saco pericárdico + coração</b>, os <b>vasos PERICARDICOFRÊNICOS</b> (irrigam e drenam pericárdio e diafragma) e os <b>NERVOS FRÊNICOS</b> de cada lado (que precisam chegar ao diafragma). O vago também chega ao coração.</li>
+    <li><b>PERICÁRDIO FIBROSO</b> = <b>pericárdio de TANDLER</b> (o mais externo). Por dentro, o <b>pericárdio SEROSO</b>: <b>lâmina PARIETAL</b> e <b>lâmina VISCERAL</b> (sobre o coração). 🎯 A verdadeira <b>CAVIDADE PERICÁRDICA</b> é entre as <b>duas lâminas serosas</b>.</li>
+    <li>O pericárdio se <b>insere no CENTRO TENDÍNEO do diafragma</b>.</li>
+    <li><b>SEIOS do pericárdio</b> (reflexões, onde também acumula líquido): <b>SEIO TRANSVERSO</b> — atrás da aorta e da artéria pulmonar (cabe um dedo); <b>SEIO OBLÍQUO</b> — entre as veias pulmonares, atrás do coração.</li>
+    <li><b>Posição do coração:</b> o eixo base→ápice vai da <b>direita para a esquerda, de trás para frente e de cima para baixo</b> (obliquidade cardíaca). O <b>ápice/ictus</b> fica no <b>5º espaço intercostal</b> esquerdo — visível pulsando nos magros.</li>
+    <li>🎯 <b>VÉRTEBRAS CARDÍACAS (de Giacomini)</b>: <b>T5 a T8</b> (às vezes T9) — o coração "assenta" sobre elas. Carlo Giacomini, anatomista de Turim.</li>
+  </ul>
+<div class="figpair">
+<figure class="fig"><img src="img/slide008-pericardio-aberto.jpg" alt="Pericárdio aberto" loading="lazy"><figcaption>Pericárdio fibroso aberto: por dentro, a lâmina parietal do pericárdio seroso; sobre o coração, a lâmina visceral. A cavidade pericárdica fica entre elas. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide009-seios-pericardio.jpg" alt="Seios do pericárdio com o coração retirado" loading="lazy"><figcaption>Coração retirado do saco pericárdico: o SEIO TRANSVERSO atrás da aorta e do tronco pulmonar e o SEIO OBLÍQUO entre as veias pulmonares; embaixo, a fusão do pericárdio fibroso com o centro tendíneo do diafragma. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p>Na aula, os pericardicofrênicos "vêm da subclávia". Na literatura, a <b>artéria pericardicofrênica é ramo da TORÁCICA INTERNA</b> (que, por sua vez, sai da subclávia); a veia drena para a torácica interna ou a braquiocefálica.</p></div>
+
+  <h2 class="topic" id="t15">15 · Hemopericárdio, tamponamento e punção de Marfan</h2>
+  <ul>
+    <li>Sangue na cavidade pericárdica = <b>HEMOPERICÁRDIO</b> — ex. da aula: <b>cateter que perfurou o átrio</b>. O coração não consegue se expandir: <b>TAMPONAMENTO CARDÍACO</b> → parada cardíaca. É <b>emergência</b>.</li>
+    <li>🎯 <b>PUNÇÃO DE MARFAN</b> (pericardiocentese): agulha calibrosa entrando <b>por baixo do processo XIFOIDE (subxifoide)</b>, em direção ao <b>lado esquerdo</b>/cavidade pericárdica, <b>já aspirando</b> enquanto avança. Idealmente guiada por ultrassom (para não furar o coração) — na emergência, muitas vezes não há.</li>
+    <li>Alternativa: <b>drenagem</b> da cavidade pericárdica por via subxifoide, deixando um dreno.</li>
+    <li>Derrame seroso volumoso (pericardite, processo reumático) também pode exigir punção — depende da quantidade de líquido.</li>
+  </ul>
+
+  <h2 class="topic" id="t16">16 · Mediastino inferior posterior (e o anterior)</h2>
+  <ul>
+    <li>🎯 <b>ANTERIOR (pré-cardíaco)</b>: na aula, <b>só gordura</b> (pré-pericárdica). "Todos os órgãos estão no médio e no posterior."</li>
+    <li>🎯 <b>POSTERIOR (retrocardíaco)</b> — onde está a maior parte das estruturas: <b>esôfago</b> com os <b>troncos vagais</b>, <b>aorta torácica descendente</b> (à esquerda do esôfago), <b>ázigo</b> (à direita), <b>hemiázigo</b> (à esquerda), <b>ducto torácico</b> (atrás do esôfago), <b>troncos simpáticos</b>, <b>vasos e nervos intercostais posteriores</b> e <b>linfonodos</b> (para-aórticos, paraesofágicos).</li>
+    <li>Linfonodos mediastinais: <b>paratraqueais e para-aórticos</b> em cima, junto à aorta e ao esôfago embaixo.</li>
+  </ul>
+<div class="figpair">
+<figure class="fig"><img src="img/slide034-mediastino-posterior.jpg" alt="Mediastino posterior com esôfago, aorta e ázigo" loading="lazy"><figcaption>Mediastino posterior: esôfago entre a aorta (à esquerda) e a ázigo (à direita), que desemboca na cava superior acima do brônquio principal direito. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide021-linfonodos-mediastino.jpg" alt="Linfonodos do mediastino" loading="lazy"><figcaption>Linfonodos do mediastino: traqueobrônquicos e paratraqueais, mediastinais posteriores junto ao esôfago e à aorta, e o ducto torácico subindo até o pescoço. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p>Na literatura, o mediastino anterior contém, além da gordura, os <b>ligamentos esternopericárdicos</b>, <b>linfonodos</b>, ramos dos <b>vasos torácicos internos</b> e, em crianças, a porção inferior do timo.</p></div>
+
+  <h2 class="topic" id="t17">17 · Resumo rápido</h2>
+  <ul>
+    <li><b>Revestimentos:</b> fáscia endotorácica (↑ cervical profunda, ↓ transversal) → pleura parietal (costal/diafragmática/mediastinal) → cavidade pleural → visceral. Derrames: empiema (pus), hemotórax (sangue), pneumotórax (ar), QUILOTÓRAX (linfa), seroso.</li>
+    <li><b>Aberturas:</b> superior = 1ª costela + manúbrio + T1; pescoço ANTERIOR comunica com o mediastino. Inferior = diafragma, mais alto na frente e à DIREITA (fígado).</li>
+    <li><b>Divisão:</b> plano do ângulo esternal · carina · T4–T5 · borda superior do pericárdio → SUPERIOR × INFERIOR (anterior = gordura · médio = pericárdio/coração · posterior). Trígonos: superior = TIMO · inferior = gordura pré-pericárdica.</li>
+    <li><b>Superior, de frente para trás:</b> timo → vasos da base → traqueia → esôfago → ducto torácico → coluna. Braquiocefálica E cruza o mediastino (longa, 2 curvas) → acesso venoso: JUGULAR INTERNA DIREITA primeiro.</li>
+    <li><b>Arco:</b> tronco braquiocefálico, carótida comum E, subclávia E · ligamento arterial EXTRAPERICÁRDICO (clipe por videotoracoscopia). Recorrente E no mediastino (arco); D no pescoço (subclávia). Vago E → tronco ANTERIOR; D → POSTERIOR.</li>
+    <li><b>Simpático:</b> estrelado = cervical inferior + T1 · simpatectomia (hiperidrose, isquemia) → anidrose + vasodilatação; ressecção ampla → HORNER (ptose, miose, enoftalmia, anidrose).</li>
+    <li><b>Traqueia</b> só no superior (bifurca em T4–T5). Esôfago: constrições pelo arco da aorta e brônquio principal E; irrigação por ramos diretos da aorta.</li>
+    <li><b>Ducto torácico:</b> cisterna do quilo (L1–L2) → hiato AÓRTICO → atrás do esôfago → à esquerda em T4–T5 → ângulo jugulossubclávio E; drena 3/4 do corpo; lesão = quilotórax.</li>
+    <li><b>Ázigo:</b> lombar ascendente + subcostal D → arco → cava superior; hemiázigo → ázigo · anastomose INTERCAVAS (diálise com cava superior ocluída).</li>
+    <li><b>Médio:</b> pericárdio fibroso (Tandler) + seroso (cavidade entre parietal e visceral) · seios transverso e oblíquo · frênicos e pericardicofrênicos · vértebras de Giacomini T5–T8 · hemopericárdio → tamponamento → PUNÇÃO DE MARFAN subxifoide.</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Cavidade Torácica e Mediastino</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · aula de 02/10 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-cavidade">Cavidade & pleura</a>
+    <a class="a1" href="#p-divisao">Divisão</a>
+    <a class="a1" href="#p-superior">Mediastino superior</a>
+    <a class="a1" href="#p-posterior">Posterior · ducto · ázigo</a>
+    <a class="a1" href="#p-medio">Médio · pericárdio</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-cavidade">
+  <span class="aula-tag t1">Cavidade torácica e pleura</span>
+  <ul>
+    <li><b class="k">Fáscia endotorácica</b> = revestimento interno · sobe como <b>cervical profunda</b>, desce como <b>transversal</b>.</li>
+    <li>Pleura parietal (costal · diafragmática · mediastinal) × visceral; <b>cavidade pleural entre elas</b> · cúpula alcançável na fossa supraclavicular.</li>
+    <li>Derrames: <b class="k">EMPIEMA (pus) · HEMOTÓRAX (sangue) · PNEUMOTÓRAX (ar) · QUILOTÓRAX (linfa)</b> · seroso (inflamação).</li>
+    <li>Abertura superior: <b class="k">1ª costela + manúbrio + T1</b> · <b>pescoço ANTERIOR comunica com o mediastino</b> (abscesso/tumor cervical anterior → mediastino); lateral não.</li>
+    <li>Abertura inferior = <b>diafragma</b>: <b class="k">mais alto na FRENTE e à DIREITA (fígado)</b>.</li>
+  </ul>
+</section>
+
+<section id="p-divisao">
+  <span class="aula-tag t1">Divisão do mediastino</span>
+  <ul>
+    <li>Limites laterais: <b>pleuras mediastinais</b> (esterno → coluna).</li>
+    <li>Plano transverso: <b class="k">borda superior do pericárdio = ângulo esternal (Louis) = CARINA = T4–T5</b>.</li>
+    <li><b>SUPERIOR</b> (sem subdivisão real) × <b>INFERIOR</b>: <b class="k">ANTERIOR (pré-cardíaco, gordura) · MÉDIO (pericárdio + coração) · POSTERIOR (retrocardíaco)</b>.</li>
+    <li>Trígono interpleural <b class="k">SUPERIOR = TIMO</b> · <b class="k">INFERIOR = GORDURA PRÉ-PERICÁRDICA</b>.</li>
+  </ul>
+</section>
+
+<section id="p-superior">
+  <span class="aula-tag t1">Mediastino superior</span>
+  <ul>
+    <li>Frente → trás: <b class="k">TIMO → VASOS DA BASE → TRAQUEIA → ESÔFAGO → DUCTO TORÁCICO → coluna</b>.</li>
+    <li>Cava superior = braquiocefálicas D + E · <b class="k">D curta e reta · E cruza o mediastino, longa, 2 curvas</b> → acesso venoso: <b class="k">1º JUGULAR INTERNA DIREITA</b> → jugular E → femoral → subclávias (na aula).</li>
+    <li>Arco: <b>tronco braquiocefálico · carótida comum E · subclávia E</b> · <b class="k">LIGAMENTO ARTERIAL (Botallo) EXTRAPERICÁRDICO</b> → PCA fechada com clipe por videotoracoscopia, sem abrir o pericárdio. Pericárdio cobre só ~2 cm dos vasos da base.</li>
+    <li><b class="k">Recorrente E contorna o ARCO (está no mediastino) · recorrente D contorna a SUBCLÁVIA (no pescoço)</b>.</li>
+    <li><b class="k">Vago E → tronco vagal ANTERIOR · vago D (por trás do esôfago) → POSTERIOR</b> · vago ↑ secreção ácida (vagotomia).</li>
+    <li><b>Estrelado = cervical inferior + 1º torácico</b> · simpatectomia (hiperidrose, isquemia) → <b class="k">anidrose + vasodilatação</b>; ressecção ampla → <b class="k">HORNER: ptose, miose, enoftalmia, anidrose</b> · nervo de Kuntz (via acessória).</li>
+    <li><b class="k">Traqueia SÓ no mediastino superior</b> (carina em T4–T5) — no inferior há brônquios.</li>
+  </ul>
+</section>
+
+<section id="p-posterior">
+  <span class="aula-tag t1">Posterior · ducto torácico · ázigo</span>
+  <ul>
+    <li>Posterior: <b>esôfago + troncos vagais · aorta descendente (à E do esôfago) · ázigo (D) · hemiázigo (E) · ducto torácico · simpáticos · intercostais · linfonodos</b>.</li>
+    <li>Esôfago: <b class="k">constrições pelo ARCO DA AORTA e BRÔNQUIO PRINCIPAL E</b> · irrigação: ramos esofágicos/brônquicos diretos da aorta (embaixo, gástrica E) · divertículos (pulsão/tração) · varizes = plexo submucoso.</li>
+    <li>Ducto torácico: <b class="k">CISTERNA DO QUILO (L1–L2) → HIATO AÓRTICO → ATRÁS DO ESÔFAGO</b> (entre ázigo e aorta) → à E em T4–T5 → <b class="k">ângulo jugulossubclávio ESQUERDO</b> (desembocadura varia; os slides dizem "jugular interna E" e "junção subclávio-axilar" — fique com o ângulo jugulossubclávio).</li>
+    <li>Drena <b class="k">3/4 do corpo</b> (só NÃO drena: lado D da cabeça/pescoço, MS direito, hemitórax D → ducto linfático direito) · lesão = <b class="k">QUILOTÓRAX</b>.</li>
+    <li>Ázigo = <b class="k">lombar ascendente + subcostal D</b> → arco (cajado) → <b>cava superior acima do pericárdio</b> · hemiázigo → ázigo.</li>
+    <li><b class="k">ANASTOMOSE INTERCAVAS</b>: cava superior ocluída (diálise, muitos cateteres) → sangue DESCE pela ázigo → cava inferior; cava inferior ocluída → SOBE.</li>
+  </ul>
+</section>
+
+<section id="p-medio">
+  <span class="aula-tag t1">Médio · pericárdio</span>
+  <ul>
+    <li>Médio = <b class="k">pericárdio + coração + vasos PERICARDICOFRÊNICOS + nervos FRÊNICOS</b>.</li>
+    <li><b class="k">Pericárdio fibroso = de TANDLER</b> · seroso: parietal + visceral · <b class="k">CAVIDADE PERICÁRDICA entre as lâminas serosas</b> · inserção no <b>centro tendíneo</b>.</li>
+    <li>Seios: <b>TRANSVERSO</b> (atrás da aorta e pulmonar) · <b>OBLÍQUO</b> (entre as veias pulmonares).</li>
+    <li>Ictus no <b>5º EIC</b> (dextrocardia: 5º EIC direito) · <b class="k">vértebras de Giacomini T5–T8</b>.</li>
+    <li><b class="k">HEMOPERICÁRDIO → TAMPONAMENTO → PUNÇÃO DE MARFAN: subxifoide, rumo à esquerda, aspirando</b> (ou drenagem subxifoide).</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>Trígono interpleural superior × inferior</td><td>TIMO × gordura pré-pericárdica</td></tr>
+    <tr><td>Braquiocefálica D × E</td><td>curta e reta × cruza o mediastino, longa, 2 curvas</td></tr>
+    <tr><td>Recorrente D × E</td><td>subclávia, no pescoço × arco da aorta, no mediastino</td></tr>
+    <tr><td>Tronco vagal anterior × posterior</td><td>vago ESQUERDO × vago DIREITO</td></tr>
+    <tr><td>Hiato do ducto torácico</td><td>AÓRTICO (não o esofágico)</td></tr>
+    <tr><td>Ducto torácico × ducto linfático direito</td><td>3/4 do corpo × lado D da cabeça/pescoço, MS D, hemitórax D</td></tr>
+    <tr><td>Ázigo × hemiázigo</td><td>direita, → cava superior × esquerda, → ázigo</td></tr>
+    <tr><td>Traqueia × brônquios</td><td>mediastino superior × inferior (abaixo da carina)</td></tr>
+    <tr><td>Pericárdio fibroso × seroso</td><td>Tandler (externo) × parietal + visceral (a cavidade fica entre elas)</td></tr>
+    <tr><td>Seio transverso × oblíquo</td><td>atrás de aorta/pulmonar × entre as veias pulmonares</td></tr>
+    <tr><td>Simpático ativo × simpatectomia</td><td>midríase, hiperidrose, vasoconstrição × miose, ptose, anidrose, vasodilatação</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Cavidade Torácica e Mediastino</h2>
+    <p>Anatomia Topográfica · aula de 02/10 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">Modo Estudo</button>
+        <button data-modo="simulado">Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Cavidade Torácica e Mediastino (02/10)</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☾':'☀';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('cortex-theme',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">A fáscia que reveste internamente a cavidade torácica, por fora da pleura parietal, continua-se para cima e para baixo, respectivamente, com:</div>`,alts:[`a fáscia cervical superficial no pescoço e a fáscia de Scarpa no abdome`,`a fáscia pré-traqueal no pescoço e o peritônio parietal no abdome`,`a fáscia cervical profunda no pescoço e a fáscia transversal no abdome`,`a fáscia clavipeitoral no pescoço e a aponeurose do oblíquo externo`,`a pleura cervical no pescoço e a fáscia renal de Gerota no abdome`],correta:2,just:[`A camada superficial (e a de Scarpa no abdome) é tela subcutânea — fica por fora dos músculos, não por dentro da cavidade. [tipo: par confundível]`,`A pré-traqueal é só uma lâmina da cervical profunda, e o peritônio é serosa (equivale à pleura, não à fáscia). [tipo: verdade no contexto errado]`,`Correta. A FÁSCIA ENDOTORÁCICA continua-se para cima com a FÁSCIA CERVICAL PROFUNDA e para baixo com a FÁSCIA TRANSVERSAL do abdome.`,`A clavipeitoral é da parede anterior (envolve o peitoral menor); o oblíquo externo é a camada mais superficial do abdome. [tipo: par confundível]`,`A pleura cervical é a cúpula (serosa, por dentro da fáscia) e a fáscia de Gerota é retroperitoneal. [tipo: par confundível]`],ref:'Fáscia endotorácica'},
+{n:2,aula:1,nivel:'medio',enun:`<span class="vinheta">Dois dias após esofagectomia, o dreno torácico de um paciente passa a drenar grande volume de líquido branco-leitoso, que aumenta quando a dieta é reintroduzida.</span><div class="pergunta">O acúmulo na cavidade pleural é denominado — e se origina de:</div>`,alts:[`quilotórax — linfa extravasada de lesão do ducto torácico no mediastino`,`empiema — secreção purulenta de infecção da cavidade pleural pós-cirurgia`,`hemotórax — sangue de lesão das veias intercostais posteriores na cirurgia`,`derrame seroso — transudato da pleura inflamada após a manipulação local`,`quilotórax — linfa vinda do ducto linfático direito, lesado no pescoço`],correta:0,just:[`Correta. Líquido leitoso que piora com a dieta = QUILO. O DUCTO TORÁCICO sobe ATRÁS DO ESÔFAGO — vulnerável na esofagectomia; a linfa cai na cavidade pleural = QUILOTÓRAX.`,`Empiema é pus (turvo, com febre/infecção) — não aumenta com a alimentação. [tipo: diagnóstico diferencial]`,`Hemotórax é sangue; o aspecto leitoso e a relação com a dieta apontam para linfa. [tipo: diagnóstico diferencial]`,`O derrame seroso é citrino; a pleura inflamada produz mais líquido, mas não leitoso. [tipo: diagnóstico diferencial]`,`O ducto linfático direito drena só 1/4 do corpo e não acompanha o esôfago torácico; o intestinal (o quilo) vai pelo ducto torácico. [tipo: par confundível]`],ref:'Quilotórax'},
+{n:3,aula:1,nivel:'facil',enun:`<div class="pergunta">A abertura superior da cavidade torácica é delimitada por:</div>`,alts:[`incisura jugular, clavículas e sétima vértebra cervical, atrás`,`ângulo esternal, segundas costelas e segunda vértebra torácica`,`manúbrio, clavículas e sétima vértebra cervical, posteriormente`,`incisura jugular, primeiras costelas e sétima vértebra cervical`,`manúbrio, primeiras costelas e primeira vértebra torácica`],correta:4,just:[`A incisura jugular é só a borda do manúbrio; clavícula e C7 ficam fora do anel ósseo da abertura. [tipo: par confundível]`,`Ângulo esternal, 2ª costela e T4–T5 estão no plano da divisão do mediastino — abaixo da abertura. [tipo: verdade no contexto errado]`,`A clavícula não delimita a abertura (a cúpula pleural sobe acima dela), e C7 é cervical. [tipo: par confundível]`,`A 1ª costela está certa, mas o marco posterior é T1, não C7. [tipo: erro numérico plausível]`,`Correta. 1ª COSTELA de cada lado, MANÚBRIO na frente e T1 atrás.`],ref:'Abertura superior'},
+{n:4,aula:1,nivel:'medio',enun:`<span class="vinheta">Homem com ferimento por arma branca no 6º espaço intercostal, na linha hemiclavicular direita, estável.</span><div class="pergunta">Pela anatomia do limite inferior do tórax discutida na aula, deve-se considerar que:</div>`,alts:[`a lesão fica restrita ao tórax: na frente, o diafragma se insere abaixo da 10ª costela`,`o fígado pode ter sido atingido: o diafragma é mais alto à frente e à direita`,`o baço é o órgão sob maior risco, porque a cúpula esquerda é a mais alta delas`,`o risco abdominal estaria atrás, onde a inserção do diafragma fica mais alta`,`a lesão se limita à pleura costal, pois o recesso pleural termina no 4º espaço`],correta:1,just:[`Na frente o diafragma é ALTO — por volta da 8ª costela já há diafragma; abaixo da 10ª é atrás. [tipo: mecanismo invertido]`,`Correta. O diafragma tem inserção mais ALTA ANTERIORMENTE e a cúpula DIREITA sobe mais (fígado) — o abdome "entra" no gradeado costal: ferimento torácico baixo pode ser toracoabdominal.`,`A cúpula mais alta é a DIREITA (fígado); o baço, menor, fica à esquerda e mais baixo. [tipo: mecanismo invertido]`,`Atrás a inserção é mais BAIXA, não mais alta. [tipo: mecanismo invertido]`,`O recesso costodiafragmático desce bem abaixo do 4º espaço — e o diafragma está logo ali. [tipo: erro numérico plausível]`],ref:'Diafragma'},
+{n:5,aula:1,nivel:'facil',enun:`<div class="pergunta">O plano transverso que separa o mediastino superior do inferior é traçado:</div>`,alts:[`do processo xifoide até o disco T8–T9, na altura da veia cava inferior`,`da incisura jugular até o disco T2–T3, na altura do arco da veia ázigo`,`da incisura jugular até a vértebra T6, pela bifurcação do tronco pulmonar`,`do ângulo esternal até o disco T4–T5, pela carina e borda do pericárdio`,`da junção esternoclavicular até T1, pela abertura superior do tórax`],correta:3,just:[`T8–T9/xifoide é a região do diafragma e do forame da cava — limite inferior, não a divisão. [tipo: par confundível]`,`A incisura jugular marca a abertura superior; o arco da ázigo fica perto de T4, não de T2. [tipo: erro numérico plausível]`,`A incisura jugular não é o marco anterior, e T6 já é mediastino inferior. [tipo: erro numérico plausível]`,`Correta. ÂNGULO ESTERNAL (de Louis) → disco T4–T5, passando pela CARINA e pela borda superior do PERICÁRDIO.`,`Essa é a abertura superior do tórax — o "teto" do mediastino, não sua divisão. [tipo: verdade no contexto errado]`],ref:'Divisão do mediastino'},
+{n:6,aula:1,nivel:'facil',enun:`<div class="pergunta">Afastadas as pleuras mediastinais, formam-se dois trígonos interpleurais. Seus conteúdos são:</div>`,alts:[`superior: o timo (ou seus restos); inferior: a gordura pré-pericárdica`,`superior: os vasos da base; inferior: o pericárdio fibroso e o coração`,`superior: a gordura pré-pericárdica; inferior: o timo e seus restos`,`superior: a traqueia e o esôfago; inferior: o ligamento arterial`,`superior: os linfonodos paratraqueais; inferior: os nervos frênicos`],correta:0,just:[`Correta. Trígono interpleural SUPERIOR (sob o manúbrio) = TIMO ("o timo é sempre lá de cima"); INFERIOR (base no xifoide) = GORDURA PRÉ-PERICÁRDICA.`,`Os vasos da base estão atrás do timo; o pericárdio/coração são o mediastino médio, atrás da gordura. [tipo: verdade no contexto errado]`,`Inverte os dois trígonos. [tipo: mecanismo invertido]`,`Traqueia e esôfago são posteriores no superior; o ligamento arterial é extrapericárdico, mas no mediastino superior. [tipo: verdade no contexto errado]`,`Linfonodos paratraqueais e frênicos existem no mediastino, mas não são o conteúdo dos trígonos. [tipo: verdadeiro mas não responde]`],ref:'Trígonos interpleurais'},
+{n:7,aula:1,nivel:'medio',enun:`<div class="pergunta">No mediastino superior, a sequência das estruturas da frente para trás, como ensinada na aula, é:</div>`,alts:[`vasos da base, timo, traqueia, ducto torácico e esôfago, junto à coluna`,`timo, traqueia, vasos da base, ducto torácico e esôfago, junto à coluna`,`timo, vasos da base, traqueia, esôfago e ducto torácico, junto à coluna`,`timo, vasos da base, esôfago, traqueia e ducto torácico, junto à coluna`,`vasos da base, traqueia, timo, esôfago e ducto torácico, junto à coluna`],correta:2,just:[`O timo é a estrutura MAIS anterior; e o ducto fica atrás do esôfago. [tipo: par confundível]`,`A traqueia está ATRÁS do arco da aorta, não na frente dos vasos. [tipo: mecanismo invertido]`,`Correta. TIMO → VASOS DA BASE → TRAQUEIA → ESÔFAGO → DUCTO TORÁCICO → coluna.`,`O esôfago está ATRÁS da traqueia. [tipo: misconception clássica]`,`O timo é anterior aos vasos da base. [tipo: par confundível]`],ref:'Mediastino superior'},
+{n:8,aula:1,nivel:'facil',enun:`<div class="pergunta">Segundo a aula, a primeira veia a ser puncionada para um acesso venoso central — e o motivo — é:</div>`,alts:[`a subclávia esquerda, pois segue em linha reta até a veia cava superior`,`a jugular interna esquerda, pela braquiocefálica longa que guia o cateter`,`a femoral direita, por ficar longe do tórax e evitar o risco de pneumotórax`,`a jugular externa direita, superficial e de punção fácil sob visão direta`,`a jugular interna direita: trajeto curto e retilíneo até a cava superior`],correta:4,just:[`À esquerda há DUAS curvaturas — a braquiocefálica esquerda cruza o mediastino. [tipo: mecanismo invertido]`,`A braquiocefálica esquerda longa e curva é justamente a DESVANTAGEM (dobra, trombose). [tipo: mecanismo invertido]`,`A femoral não tem pneumotórax, mas na sequência da aula vem depois das jugulares. [tipo: verdadeiro mas não responde]`,`A jugular externa é veia periférica superficial — não é a via de acesso central ensinada. [tipo: par confundível]`,`Correta. JUGULAR INTERNA DIREITA → braquiocefálica direita curtinha → cava superior: tudo RETILÍNEO, a ponta cai na cava/átrio direito.`],ref:'Acesso venoso central'},
+{n:9,aula:1,nivel:'medio',enun:`<span class="vinheta">Um cateter implantado pela jugular interna esquerda apresentou dobra no trajeto e, semanas depois, trombose.</span><div class="pergunta">A anatomia que explica essa maior propensão do lado esquerdo é:</div>`,alts:[`a braquiocefálica esquerda é curta e vertical, e o cateter entra em ângulo agudo`,`a braquiocefálica esquerda cruza o mediastino: trajeto longo e com duas curvas`,`a jugular interna esquerda desemboca direto na cava, sem braquiocefálica`,`a braquiocefálica esquerda passa atrás do esôfago, que comprime o cateter`,`a braquiocefálica direita cruza o mediastino, e o cateter precisa mudar de lado`],correta:1,just:[`Curta e vertical é a DIREITA. [tipo: par confundível]`,`Correta. A BRAQUIOCEFÁLICA ESQUERDA atravessa o mediastino superior da esquerda para a direita: MAIS LONGA e com DUAS CURVATURAS → o cateter pode dobrar/fraturar e trombosa mais.`,`Os dois lados têm braquiocefálica; a cava é formada pela junção delas. [tipo: misconception clássica]`,`A braquiocefálica esquerda passa à FRENTE dos ramos do arco — longe do esôfago. [tipo: mecanismo invertido]`,`Quem cruza é a ESQUERDA. [tipo: par confundível]`],ref:'Braquiocefálicas'},
+{n:10,aula:1,nivel:'medio',enun:`<span class="vinheta">Recém-nascido com persistência do canal arterial é encaminhado para fechamento por videotoracoscopia, com clipe, sem abertura do pericárdio.</span><div class="pergunta">Isso é possível porque o canal (futuro ligamento arterial):</div>`,alts:[`fica dentro do saco pericárdico, mas no seio transverso, acessível por trás`,`liga a aorta à veia cava superior, por fora do pericárdio fibroso de Tandler`,`situa-se no mediastino inferior posterior, atrás do esôfago e da aorta`,`liga aorta e artéria pulmonar acima do pericárdio, no mediastino superior`,`é recoberto pelos 2 cm iniciais de pericárdio que envolvem os vasos da base`],correta:3,just:[`O seio transverso é intrapericárdico — se o canal estivesse ali, seria preciso abrir o pericárdio. [tipo: verdade no contexto errado]`,`O canal liga a aorta à ARTÉRIA PULMONAR, não à cava. [tipo: par confundível]`,`Está entre a aorta e o tronco pulmonar, no mediastino superior — não retroesofágico. [tipo: verdade no contexto errado]`,`Correta. O LIGAMENTO ARTERIAL (de Botallo) une aorta e artéria pulmonar ACIMA do pericárdio — EXTRAPERICÁRDICO, mediastino superior: clipa-se sem abrir o pericárdio.`,`O pericárdio cobre ~2 cm iniciais dos vasos, mas o ligamento fica ACIMA desse ponto. [tipo: verdade no contexto errado]`],ref:'Ligamento arterial'},
+{n:11,aula:1,nivel:'facil',enun:`<div class="pergunta">Sobre os nervos laríngeos recorrentes e o mediastino superior, é correto afirmar:</div>`,alts:[`o direito contorna o arco da aorta e por isso percorre o mediastino superior`,`ambos nascem no pescoço, acima da abertura superior do tórax, e sobem`,`o esquerdo contorna o arco da aorta; o direito, a subclávia, no pescoço`,`o esquerdo contorna a subclávia esquerda; o direito, o tronco braquiocefálico`,`ambos contornam o arco da aorta, pela origem comum dos dois vagos`],correta:2,just:[`Inverte os lados: o arco é contornado pelo ESQUERDO. [tipo: mecanismo invertido]`,`Vale só para o direito; o esquerdo nasce no tórax, sob o arco. [tipo: generalização indevida]`,`Correta. RECORRENTE ESQUERDO contorna o ARCO DA AORTA — está no mediastino; o DIREITO contorna a SUBCLÁVIA, ainda na região cervical — não está no mediastino.`,`A subclávia é contornada pelo DIREITO; o esquerdo vai sob o arco. [tipo: par confundível]`,`Os vagos não têm origem comum, e só o esquerdo passa sob o arco. [tipo: generalização indevida]`],ref:'Laríngeos recorrentes'},
+{n:12,aula:1,nivel:'medio',enun:`<div class="pergunta">Ao descer junto ao esôfago, os nervos vagos formam os troncos vagais. A relação correta é:</div>`,alts:[`vago esquerdo → tronco anterior; vago direito, por trás → tronco posterior`,`vago direito → tronco anterior; vago esquerdo, por trás → tronco posterior`,`os dois vagos fundem-se num tronco comum, posterior, que cruza o hiato aórtico`,`vago esquerdo → tronco posterior, junto à aorta; vago direito → anterior`,`cada vago forma o próprio plexo celíaco ainda dentro do mediastino posterior`],correta:0,just:[`Correta. O VAGO ESQUERDO forma o TRONCO VAGAL ANTERIOR; o DIREITO desce POR TRÁS do esôfago e forma o POSTERIOR.`,`Inverte os lados. [tipo: mecanismo invertido]`,`São dois troncos, e passam pelo hiato ESOFÁGICO com o esôfago. [tipo: par confundível]`,`O esquerdo é o ANTERIOR (a aorta à esquerda não muda isso). [tipo: mecanismo invertido]`,`O plexo celíaco é abdominal, junto ao tronco celíaco — no mediastino ainda são troncos vagais. [tipo: momento errado]`],ref:'Troncos vagais'},
+{n:13,aula:1,nivel:'dificil',enun:`<span class="vinheta">Jovem com hiperidrose palmar intensa — evita cumprimentar e molha as folhas de prova — é submetido a simpatectomia. No pós-operatório, mãos secas, mas também pálpebra caída, pupila menor e olho que parece "afundado", do mesmo lado.</span><div class="pergunta">A explicação anatômica mais adequada é:</div>`,alts:[`lesão do vago no mediastino superior, que leva fibras parassimpáticas à face`,`lesão do nervo de Kuntz em T3–T4, a via que inerva a pupila e a pálpebra`,`lesão do frênico na abertura superior, por sua sintopia com o gânglio`,`ressecção ampla do estrelado (cervical inferior + 1º torácico): Horner`,`secção do laríngeo recorrente, que acompanha o tronco simpático ali`],correta:3,just:[`Ptose e miose são falta de SIMPÁTICO; o vago não leva parassimpático para pupila/pálpebra (isso é do oculomotor). [tipo: mecanismo invertido]`,`Kuntz foi citado como via acessória ligada à persistência da hiperidrose — não à pupila. [tipo: verdade no contexto errado]`,`O frênico inerva o diafragma; sua lesão daria paralisia diafragmática. [tipo: par confundível]`,`Correta. Retirar muito do GÂNGLIO ESTRELADO (cervical inferior + 1º torácico) tira o simpático da cabeça: PTOSE + MIOSE + ENOFTALMIA + ANIDROSE = SÍNDROME DE HORNER. (Na técnica atual, preserva-se o estrelado justamente por isso.)`,`O recorrente dá rouquidão; não acompanha a cadeia simpática. [tipo: par confundível]`],ref:'Simpatectomia e Horner'},
+{n:14,aula:1,nivel:'medio',enun:`<span class="vinheta">Paciente com isquemia crônica da mão por oclusão arterial distal, sem opção de revascularização direta.</span><div class="pergunta">A simpatectomia cervicotorácica é proposta porque, ao retirar o tônus simpático, espera-se:</div>`,alts:[`vasoconstrição periférica, que concentra o fluxo nos vasos colaterais`,`vasodilatação da circulação colateral, com a mão mais quente e seca`,`hiperidrose palmar transitória, sinal da reinervação dos vasos locais`,`midríase e exoftalmia, sinais de que o gânglio foi retirado por inteiro`,`aumento da pressão arterial periférica, que empurra o sangue à mão`],correta:1,just:[`Vasoconstrição é o efeito DO simpático — retirá-lo faz o oposto. [tipo: mecanismo invertido]`,`Correta. Sem simpático: VASODILATAÇÃO (melhora a colateral) e ANIDROSE (mão seca) — a mesma cirurgia serve à hiperidrose e à isquemia.`,`Sem simpático a mão fica SECA (anidrose). [tipo: mecanismo invertido]`,`Retirar o simpático dá MIOSE e enoftalmia (Horner), não midríase/exoftalmia. [tipo: mecanismo invertido]`,`O simpático AUMENTA a resistência periférica; a simpatectomia a reduz. [tipo: mecanismo invertido]`],ref:'Simpatectomia'},
+{n:15,aula:1,nivel:'dificil',enun:`<span class="vinheta">Projétil atravessa transversalmente o mediastino inferior posterior, bem abaixo do nível da carina.</span><div class="pergunta">Das estruturas abaixo, a que NÃO pode ter sido lesada nesse trajeto é:</div>`,alts:[`o esôfago, que desce logo atrás do pericárdio e do átrio esquerdo`,`a parte descendente da aorta torácica, à esquerda do esôfago`,`a veia ázigo, à direita do esôfago e da coluna vertebral`,`o ducto torácico, que sobe atrás do esôfago, sobre a coluna`,`a traqueia, à frente do esôfago e atrás dos grandes vasos`],correta:4,just:[`O esôfago está nos mediastinos superior E inferior (posterior). [tipo: verdadeiro mas não responde]`,`A aorta descendente está no mediastino inferior posterior. [tipo: verdadeiro mas não responde]`,`A ázigo tem a maior parte no mediastino inferior posterior. [tipo: verdadeiro mas não responde]`,`O ducto torácico sobe pelo mediastino inferior posterior, atrás do esôfago. [tipo: verdadeiro mas não responde]`,`Correta. "NÃO HÁ TRAQUEIA NO MEDIASTINO INFERIOR — todo mundo erra isso": ela se bifurca na CARINA (T4–T5); abaixo, só brônquios.`],ref:'Traqueia × mediastino inferior'},
+{n:16,aula:1,nivel:'medio',enun:`<div class="pergunta">No esôfago torácico, as constrições fisiológicas destacadas na aula são causadas por:</div>`,alts:[`arco da aorta e brônquio principal esquerdo, que cruzam o esôfago`,`arco da veia ázigo e brônquio principal direito, que cruzam o esôfago`,`tronco braquiocefálico e traqueia, que comprimem o esôfago por trás`,`átrio esquerdo e artéria pulmonar direita, que cruzam o esôfago`,`ducto torácico e veia hemiázigo, que comprimem o esôfago pela frente`],correta:0,just:[`Correta. Constrição AÓRTICA (arco da aorta) e pelo BRÔNQUIO PRINCIPAL ESQUERDO. (Na literatura, somam-se a cricofaríngea e a diafragmática.)`,`São as estruturas do lado DIREITO — os estreitamentos são à esquerda. [tipo: par confundível]`,`A traqueia está À FRENTE do esôfago; e o tronco braquiocefálico não o comprime. [tipo: mecanismo invertido]`,`O átrio esquerdo imprime o esôfago, mas não é uma das constrições destacadas; a pulmonar direita passa sob o arco. [tipo: verdade no contexto errado]`,`Ducto e hemiázigo ficam ATRÁS do esôfago e não o estreitam. [tipo: mecanismo invertido]`],ref:'Constrições do esôfago'},
+{n:17,aula:1,nivel:'medio',enun:`<div class="pergunta">A irrigação arterial do esôfago torácico, como descrita na aula, provém de:</div>`,alts:[`artéria gástrica esquerda, que sobe pelo hiato até o nível do arco aórtico`,`artérias subclávias, por ramos esofágicos que descem pelo mediastino`,`ramos diretos da aorta torácica; na porção abdominal, a gástrica esquerda`,`artérias pericardicofrênicas, que acompanham o esôfago até o diafragma`,`artérias torácicas internas, por ramos que contornam o saco pericárdico`],correta:2,just:[`A gástrica esquerda irriga a parte ABDOMINAL (e o terço distal) — não sobe até o arco. [tipo: generalização indevida]`,`As subclávias (via tireóidea inferior) irrigam o esôfago CERVICAL. [tipo: verdade no contexto errado]`,`Correta. No tórax: RAMOS ESOFÁGICOS (e brônquicos) DIRETOS DA AORTA; a parte abdominal recebe a GÁSTRICA ESQUERDA.`,`Os pericardicofrênicos irrigam pericárdio e diafragma, junto aos frênicos. [tipo: par confundível]`,`As torácicas internas correm na parede anterior, longe do esôfago. [tipo: par confundível]`],ref:'Irrigação do esôfago'},
+{n:18,aula:1,nivel:'dificil',enun:`<div class="pergunta">O trajeto do ducto torácico, como descrito na aula, é:</div>`,alts:[`nasce na cisterna do quilo, sobe pelo hiato esofágico e termina na cava superior`,`nasce em L4, sobe à frente do esôfago e termina no ângulo venoso direito`,`nasce no ângulo venoso esquerdo e desce até a cisterna, ao lado da ázigo`,`nasce na cisterna do quilo, cruza o hiato da cava e termina na ázigo`,`sai da cisterna do quilo, passa no hiato aórtico e vai ao ângulo venoso esquerdo`],correta:4,just:[`Sobe pelo hiato AÓRTICO (a pergunta que a aula fez de propósito) e termina no ângulo venoso, não na cava. [tipo: par confundível]`,`A cisterna fica em L1–L2; o ducto é ATRÁS do esôfago; e o ângulo direito recebe o ducto linfático direito. [tipo: par confundível]`,`O fluxo é ASCENDENTE: da cisterna ao pescoço. [tipo: mecanismo invertido]`,`O hiato da cava é do diafragma central; e o ducto termina no sistema jugulossubclávio. [tipo: par confundível]`,`Correta. CISTERNA DO QUILO (L1–L2) → HIATO AÓRTICO → atrás do esôfago, entre ázigo e aorta → à esquerda em T4–T5 → ÂNGULO JUGULOSSUBCLÁVIO ESQUERDO (com variações). Os slides falam em "jugular interna esquerda" e em "junção subclávio-axilar esquerda" — o local clássico, e o dito em aula, é o ângulo jugulossubclávio; terminar só na jugular é variação.`],ref:'Ducto torácico'},
+{n:19,aula:1,nivel:'medio',enun:`<div class="pergunta">Qual território NÃO tem a linfa drenada pelo ducto torácico?</div>`,alts:[`o membro inferior direito e a metade direita da parede abdominal`,`o membro superior direito e a metade direita da cabeça e do pescoço`,`o membro superior esquerdo e a metade esquerda da cabeça e pescoço`,`o intestino delgado, cuja linfa (quilo) chega pela cisterna do quilo`,`os membros inferiores, cuja linfa ascende até a cisterna do quilo`],correta:1,just:[`Tudo abaixo do diafragma, dos dois lados, vai para a cisterna → ducto torácico. [tipo: generalização indevida]`,`Correta. O DUCTO TORÁCICO drena 3/4 do corpo; o 1/4 restante — lado DIREITO da cabeça e pescoço, MEMBRO SUPERIOR DIREITO e hemitórax direito — vai ao DUCTO LINFÁTICO DIREITO.`,`O lado esquerdo superior é do ducto torácico. [tipo: par confundível]`,`O quilo intestinal é a origem do nome "cisterna do quilo" — é do ducto torácico. [tipo: verdadeiro mas não responde]`,`Membros inferiores drenam pela cisterna → ducto torácico. [tipo: verdadeiro mas não responde]`],ref:'Território do ducto torácico'},
+{n:20,aula:1,nivel:'dificil',enun:`<span class="vinheta">Paciente em hemodiálise há anos, com vários cateteres centrais trocados por obstrução e infecção, evolui com edema de face e membros superiores. A tomografia mostra veias ázigo e hemiázigo muito calibrosas.</span><div class="pergunta">A dilatação dessas veias se explica porque:</div>`,alts:[`o sangue sobe pela ázigo desde a cava superior até as veias jugulares`,`a ázigo dilata porque drena direto no átrio direito, contornando a cava`,`a ázigo dilata por hipertensão portal, levando sangue do baço ao coração`,`o sangue desce pela ázigo até as lombares ascendentes e a cava inferior`,`o sangue passa da cava inferior para a superior, que está desobstruída`],correta:3,just:[`Com a cava superior ocluída, o retorno não sobe ao pescoço — busca a cava INFERIOR. [tipo: mecanismo invertido]`,`A ázigo desemboca na CAVA SUPERIOR (acima do pericárdio), não no átrio. [tipo: par confundível]`,`Hipertensão portal usa as anastomoses portossistêmicas (ex.: varizes esofágicas); aqui o quadro é de cava superior. [tipo: diagnóstico diferencial]`,`Correta. ANASTOMOSE INTERCAVAS: o sistema ázigo liga-se à cava inferior pelas LOMBARES ASCENDENTES (e subcostais). Com a CAVA SUPERIOR ocluída pelos cateteres, o sangue DESCE pela ázigo/hemiázigo e volta pela cava inferior.`,`É o caminho da oclusão da cava INFERIOR; o edema de face e braços indica cava superior obstruída. [tipo: mecanismo invertido]`],ref:'Anastomose intercavas'},
+{n:21,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a formação e a desembocadura da veia ázigo, é correto afirmar:</div>`,alts:[`lombar ascendente e subcostal direitas; arqueia e desemboca na cava superior`,`lombar ascendente e subcostal esquerdas; termina na braquiocefálica esquerda`,`ilíacas comuns direitas; sobe pelo hiato esofágico e chega ao átrio direito`,`intercostais anteriores; arqueia sobre o brônquio esquerdo e vai à cava`,`lombar ascendente direita; desemboca na cava inferior, abaixo do diafragma`],correta:0,just:[`Correta. ÁZIGO = LOMBAR ASCENDENTE + SUBCOSTAL DIREITAS; sobe à direita, faz o ARCO (cajado) e desemboca na CAVA SUPERIOR acima do pericárdio (mediastino superior).`,`Essa é a formação da HEMIÁZIGO, que desemboca na ázigo. [tipo: par confundível]`,`As ilíacas formam a cava inferior; e a ázigo termina na cava superior. [tipo: par confundível]`,`Recebe as intercostais POSTERIORES; o arco passa sobre o pedículo DIREITO. [tipo: par confundível]`,`A comunicação com a cava inferior existe, mas a desembocadura é na cava SUPERIOR. [tipo: mecanismo invertido]`],ref:'Veia ázigo'},
+{n:22,aula:1,nivel:'facil',enun:`<div class="pergunta">A cavidade pericárdica, onde se acumula o sangue no hemopericárdio, fica entre:</div>`,alts:[`o pericárdio fibroso e a pleura mediastinal de cada um dos lados`,`o pericárdio fibroso e a lâmina parietal do pericárdio seroso`,`a lâmina visceral do pericárdio seroso e o miocárdio do coração`,`a lâmina parietal e a lâmina visceral do pericárdio seroso`,`o pericárdio fibroso e o centro tendíneo do diafragma, embaixo`],correta:3,just:[`Pleura e pericárdio fibroso são coladas — não há cavidade ali. [tipo: par confundível]`,`O fibroso (de Tandler) e a lâmina parietal são aderidos. [tipo: par confundível]`,`A visceral (epicárdio) adere ao miocárdio. [tipo: par confundível]`,`Correta. A verdadeira CAVIDADE PERICÁRDICA fica entre as lâminas PARIETAL e VISCERAL do pericárdio SEROSO.`,`O pericárdio se INSERE no centro tendíneo — não há espaço entre eles. [tipo: verdade no contexto errado]`],ref:'Pericárdio'},
+{n:23,aula:1,nivel:'dificil',enun:`<span class="vinheta">Após passagem de cateter central, paciente evolui com hipotensão súbita e abafamento das bulhas; suspeita-se de perfuração do átrio com sangue no pericárdio. Não há ultrassom disponível no momento.</span><div class="pergunta">A conduta de urgência e a via descritas na aula são:</div>`,alts:[`drenagem torácica no 5º EIC na linha axilar média, para esvaziar o hemotórax`,`punção de Marfan: agulha subxifoide rumo à esquerda, aspirando ao avançar`,`punção no 2º EIC na hemiclavicular, a mesma da descompressão do pneumotórax`,`punção de Marfan: agulha no 5º EIC esquerdo, sobre o ictus, sem aspirar`,`toracotomia lateral direita, para abordar o átrio pelo seio oblíquo do pericárdio`],correta:1,just:[`Drenagem pleural trata hemotórax — o sangue aqui está no PERICÁRDIO. [tipo: diagnóstico diferencial]`,`Correta. HEMOPERICÁRDIO → TAMPONAMENTO: PUNÇÃO DE MARFAN, agulha calibrosa por baixo do PROCESSO XIFOIDE em direção à esquerda, JÁ ASPIRANDO ao avançar (idealmente com ultrassom).`,`2º EIC hemiclavicular é a descompressão do pneumotórax hipertensivo. [tipo: diagnóstico diferencial]`,`A via é SUBXIFOIDE, aspirando — puncionar sobre o ictus arrisca o ventrículo. [tipo: par confundível]`,`O seio oblíquo é reflexão posterior; toracotomia não é a medida imediata da aula. [tipo: momento errado]`],ref:'Punção de Marfan'},
+{n:24,aula:1,nivel:'medio',enun:`<div class="pergunta">Considerando a divisão ensinada na aula, pertencem ao mediastino inferior MÉDIO:</div>`,alts:[`o pericárdio, o coração, o esôfago e a parte descendente da aorta torácica`,`a gordura pré-pericárdica, o timo e os linfonodos paraesternais anteriores`,`o coração, os troncos vagais, a veia ázigo e o ducto torácico ascendente`,`o pericárdio, o coração, a traqueia e os linfonodos paratraqueais direitos`,`o pericárdio, o coração, os vasos pericardicofrênicos e os nervos frênicos`],correta:4,just:[`Esôfago e aorta descendente são do mediastino POSTERIOR. [tipo: par confundível]`,`Gordura pré-pericárdica = anterior; timo = superior. [tipo: par confundível]`,`Troncos vagais, ázigo e ducto torácico são do POSTERIOR. [tipo: par confundível]`,`A traqueia é só do mediastino SUPERIOR. [tipo: misconception clássica]`,`Correta. MÉDIO = SACO PERICÁRDICO + CORAÇÃO + VASOS PERICARDICOFRÊNICOS + NERVOS FRÊNICOS de cada lado.`],ref:'Mediastino médio'}
+];
+
+const dissertativas=[
+{n:1,aula:1,caso:`Homem de 30 anos, vítima de facada na região paraesternal esquerda, chega hipotenso, com turgência jugular e bulhas abafadas. Não há ultrassom imediatamente disponível.`,perg:[`a) Qual a hipótese diagnóstica e qual o mecanismo do choque? Descreva as camadas do pericárdio e onde fica a cavidade que se encheu de sangue.`,`b) Descreva a conduta de urgência ensinada na aula: nome, via de entrada, direção da agulha e cuidados.`,`c) Em que compartimento do mediastino está o coração? Cite as outras estruturas desse compartimento e os seios do pericárdio onde também se acumula líquido.`],resp:[["a) Hemopericárdio e tamponamento","HEMOPERICÁRDIO com TAMPONAMENTO CARDÍACO: o sangue na cavidade pericárdica impede o coração de se expandir na diástole → débito cai → choque e, sem tratamento, parada. Camadas: PERICÁRDIO FIBROSO (de TANDLER, externo, inserido no centro tendíneo do diafragma) e PERICÁRDIO SEROSO, com lâmina PARIETAL (colada ao fibroso) e lâmina VISCERAL (sobre o coração). A CAVIDADE PERICÁRDICA é o espaço ENTRE AS DUAS LÂMINAS SEROSAS."],["b) Punção de Marfan","PUNÇÃO (pericardiocentese) DE MARFAN: agulha calibrosa introduzida POR BAIXO DO PROCESSO XIFOIDE (subxifoide), dirigida para a ESQUERDA, rumo à cavidade pericárdica, ASPIRANDO enquanto avança (seringa com vácuo). Ideal com ULTRASSOM, para não perfurar o coração — na emergência, muitas vezes não há. Alternativa/complemento: DRENAGEM da cavidade pericárdica por via subxifoide com dreno."],["c) Mediastino médio e seios","MEDIASTINO INFERIOR MÉDIO: SACO PERICÁRDICO + CORAÇÃO, VASOS PERICARDICOFRÊNICOS (irrigam/drenam pericárdio e diafragma) e NERVOS FRÊNICOS de cada lado. Seios (reflexões onde também acumula líquido): SEIO TRANSVERSO — atrás da aorta ascendente e do tronco pulmonar; SEIO OBLÍQUO — entre as veias pulmonares, atrás do coração."]],ref:'Hemopericárdio e Marfan'},
+{n:2,aula:1,caso:`Mulher operada de câncer de esôfago por via torácica evolui, no 3º dia, com dispneia e derrame pleural; o dreno sai com líquido branco-leitoso, cujo débito aumenta muito quando a dieta enteral é iniciada.`,perg:[`a) Dê o diagnóstico e a estrutura lesada. Por que essa estrutura corre risco nessa cirurgia?`,`b) Descreva o trajeto completo dessa estrutura, da origem à desembocadura.`,`c) Que territórios ela drena — e quais NÃO? Por que o débito sobe com a alimentação?`],resp:[["a) Quilotórax","QUILOTÓRAX por lesão do DUCTO TORÁCICO: a linfa extravasa e cai na cavidade pleural (entre pleura parietal e visceral). Risco: o ducto sobe no mediastino POSTERIOR exatamente ATRÁS DO ESÔFAGO, à frente da coluna — na dissecção do esôfago ele está no campo."],["b) Trajeto","Nasce na CISTERNA DO QUILO, à frente de L1–L2 (recebe linfa do intestino, da parede abdominal e dos membros inferiores) → entra no tórax pelo HIATO AÓRTICO → sobe à frente da coluna, ATRÁS DO ESÔFAGO, entre a ÁZIGO (direita) e a AORTA/hemiázigo (esquerda), no mediastino inferior posterior e depois no superior → por volta de T4–T5 desvia para a ESQUERDA → sobe ao pescoço, faz um ARCO e desemboca no ÂNGULO JUGULOSSUBCLÁVIO ESQUERDO (junção jugular interna × subclávia esquerdas). A desembocadura varia (jugular ou subclávia)."],["c) Território e alimentação","Drena 3/4 DO CORPO: membros inferiores, abdome (inclusive o INTESTINO), parede abdominal, metade esquerda do tórax, MEMBRO SUPERIOR ESQUERDO e metade esquerda da cabeça e pescoço. NÃO drena o lado DIREITO da cabeça/pescoço, o MEMBRO SUPERIOR DIREITO e o hemitórax direito (ducto linfático direito). O débito sobe com a dieta porque a linfa intestinal absorve gordura (o QUILO, leitoso) e chega pela cisterna. Na aula: 3–4 L/dia. ⚠️ Divergência: na literatura, ~1,5–2,5 L/dia, aumentando após refeição gordurosa."]],ref:'Ducto torácico e quilotórax'},
+{n:3,aula:1,caso:`Homem de 58 anos, em hemodiálise há 8 anos, já teve vários cateteres de jugular e subclávia trocados por obstrução e infecção. Agora tem edema de face, pescoço e membros superiores, com veias dilatadas no tórax. A angiotomografia mostra oclusão da veia cava superior e veias ázigo e hemiázigo muito calibrosas.`,perg:[`a) Explique por que ázigo e hemiázigo estão dilatadas: descreva a formação e a desembocadura do sistema ázigo e o nome dessa comunicação.`,`b) O que aconteceria com o fluxo nessa mesma via se a oclusão fosse da cava inferior?`,`c) Por que, segundo a aula, a jugular interna direita é a primeira escolha para acesso venoso central, e o que torna o lado esquerdo mais problemático?`],resp:[["a) Anastomose intercavas","ÁZIGO: formada pela LOMBAR ASCENDENTE + SUBCOSTAL DIREITAS, sobe à direita do esôfago (mediastino inferior posterior), recebe as intercostais posteriores direitas, faz um ARCO (cajado) e desemboca na CAVA SUPERIOR acima do pericárdio (mediastino superior). HEMIÁZIGO (lombar ascendente + subcostal esquerdas) e HEMIÁZIGO ACESSÓRIA drenam o lado esquerdo e chegam à ázigo. Pelas lombares ascendentes, o sistema liga a cava superior à inferior = ANASTOMOSE INTERCAVAS. Com a CAVA SUPERIOR ocluída, o sangue da metade superior DESCE pela ázigo/hemiázigo e retorna pela CAVA INFERIOR — por isso as veias ficam calibrosas."],["b) Cava inferior ocluída","Fluxo INVERSO: o sangue da metade inferior SOBE pelas lombares ascendentes → hemiázigo/ázigo → desemboca na CAVA SUPERIOR. Essas comunicações também precisam ser lembradas na hipertensão portal e na trombose de veia porta (cirrose, esquistossomose)."],["c) Acesso venoso","À DIREITA tudo é RETILÍNEO e CURTO: jugular interna → braquiocefálica direita (curtinha) → cava superior; a ponta do cateter cai na cava/átrio direito. À ESQUERDA a BRAQUIOCEFÁLICA ESQUERDA CRUZA O MEDIASTINO: trajeto MAIS LONGO com DUAS CURVATURAS → o cateter pode dobrar e fraturar e trombosa mais. Ordem da aula: jugular interna D → jugular interna E → femoral → subclávias. ⚠️ Divergência: na literatura, a subclávia tem as menores taxas de infecção e trombose (mais pneumotórax) e é evitada em renais crônicos pela estenose venosa — o que reforça poupar as veias desse paciente."]],ref:'Ázigo e acesso venoso'},
+{n:4,aula:1,caso:`Estudante de 22 anos com hiperidrose palmar e axilar intensa: evita cumprimentar e molha as folhas de prova. Após falha do tratamento clínico, é submetido a simpatectomia. Evolui com mãos secas — mas, do lado direito, pálpebra caída, pupila menor e olho que parece afundado. Meses depois, nota suor aumentado no dorso e no abdome.`,perg:[`a) Descreva o tronco simpático torácico e o gânglio estrelado (composição e localização).`,`b) Explique cada achado do lado direito e dê o nome da síndrome. Que outra indicação da mesma cirurgia foi citada na aula, e por qual efeito?`,`c) Como a aula explica o suor que surgiu no tronco? O que diz a literatura?`],resp:[["a) Tronco simpático e estrelado","O TRONCO SIMPÁTICO desce dos dois lados da coluna, do pescoço ao abdome — no tórax, no mediastino superior e inferior posterior. Na transição cervicotorácica, o GÂNGLIO CERVICAL INFERIOR une-se ao 1º GÂNGLIO TORÁCICO formando o GÂNGLIO ESTRELADO (cervicotorácico). Ação simpática: midríase, olho 'arregalado', HIPERIDROSE, VASOCONSTRIÇÃO."],["b) Horner e isquemia","Ressecção ampla do ESTRELADO tira o simpático da cabeça → PTOSE (pálpebra), MIOSE (pupila), ENOFTALMIA (olho 'para dentro') e ANIDROSE = SÍNDROME DE (CLAUDE BERNARD-)HORNER. As mãos secas (anidrose) eram o objetivo. Outra indicação: ISQUEMIA DA MÃO por oclusão arterial distal — sem simpático há VASODILATAÇÃO e melhora da circulação colateral. Na aula, a técnica é retirar 2/3 do estrelado. ⚠️ Divergência: hoje a simpatectomia para hiperidrose é torácica videotoracoscópica (T2–T4), PRESERVANDO o estrelado justamente para evitar Horner."],["c) Suor no tronco","Na aula: hiperidrose em tórax, dorso e abdome após a cirurgia é atribuída ao NERVO DE KUNTZ (via simpática acessória, ~T3–T4) que mantém a inervação simpática. ⚠️ Divergência: na literatura, o nervo de Kuntz é um ramo comunicante intratorácico entre o 2º nervo intercostal e o 1º torácico, ligado a FALHA/RECIDIVA da simpatectomia; o suor novo no tronco é a HIPERIDROSE COMPENSATÓRIA, um fenômeno reflexo — o efeito adverso mais comum da cirurgia."]],ref:'Simpatectomia e Horner'}
+];
+
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">02/10</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">02/10</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas desta aula (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Cavidade Torácica e Mediastino (02/10)",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Fáscia endotorácica, pleura e derrames, aberturas do tórax, divisão do mediastino e o conteúdo de cada compartimento — braquiocefálicas e acesso venoso, ligamento arterial, vagos, simpático, esôfago, ducto torácico, ázigo e pericárdio.",cards:[
+{area:"Cavidade",cat:"conceito",q:"Fáscia endotorácica: o que é e com o que se continua?",a:"O REVESTIMENTO INTERNO da cavidade torácica (por fora da pleura parietal). Sobe como FÁSCIA CERVICAL PROFUNDA e desce como FÁSCIA TRANSVERSAL do abdome."},
+{area:"Cavidade",cat:"prof",q:"Pleura: lâminas, cavidade e partes?",a:"PARIETAL (junto à fáscia endotorácica) e VISCERAL (no pulmão); entre elas, a CAVIDADE PLEURAL. Partes pelo lugar onde encostam: COSTAL, DIAFRAGMÁTICA, MEDIASTINAL (e a cúpula).",obs:"Na literatura, essa divisão é da pleura parietal (que inclui a parte cervical/cúpula)."},
+{area:"Cavidade",cat:"prof",q:"Os nomes dos derrames da cavidade pleural?",a:"PUS = EMPIEMA · SANGUE = HEMOTÓRAX · AR = PNEUMOTÓRAX · LINFA = QUILOTÓRAX · líquido citrino = derrame seroso (a pleura inflamada produz mais)."},
+{area:"Cavidade",cat:"conceito",q:"O que é a cúpula pleural e por que importa?",a:"A parte mais alta da pleura, que passa da abertura superior e pode ser alcançada na região SUPRACLAVICULAR — risco de pneumotórax em punções da região."},
+{area:"Cavidade",cat:"prof",q:"Limites da abertura superior do tórax?",a:"1ª COSTELA de cada lado · MANÚBRIO do esterno (frente) · 1ª VÉRTEBRA TORÁCICA (T1) atrás."},
+{area:"Cavidade",cat:"alerta",q:"Infecção do pescoço que desce ao mediastino: anterior ou lateral?",a:"ANTERIOR. A região anterior do pescoço comunica-se com o mediastino (abscesso, tumor tireoidiano podem infiltrá-lo). Os espaços cervicais LATERAIS são mais fechados."},
+{area:"Cavidade",cat:"caso",q:"Por que facada baixa no tórax anterior direito pode lesar o fígado?",a:"O DIAFRAGMA fecha a abertura inferior com inserção mais ALTA NA FRENTE (por volta da 8ª costela) e cúpula mais alta à DIREITA (fígado) — o abdome entra no gradeado costal."},
+{area:"Divisão",cat:"prof",q:"O plano que divide mediastino superior e inferior?",a:"Linha transversa pela BORDA SUPERIOR DO PERICÁRDIO = ÂNGULO ESTERNAL (de Louis) = CARINA = T4 (disco T4–T5)."},
+{area:"Divisão",cat:"prof",q:"Subdivisões do mediastino inferior (e os nomes antigos)?",a:"ANTERIOR (pré-cardíaco) · MÉDIO (cardíaco: pericárdio + coração) · POSTERIOR (retrocardíaco). O superior era o 'supracardíaco'."},
+{area:"Divisão",cat:"alerta",q:"O mediastino superior tem divisão em anterior/médio/posterior?",a:"NÃO. Só didaticamente se fala em frente (timo), meio (vasos da base) e trás (traqueia, esôfago) — não há limite real."},
+{area:"Divisão",cat:"conceito",q:"Quem limita lateralmente o mediastino?",a:"As PLEURAS MEDIASTINAIS direita e esquerda, que vão do esterno até a coluna (paravertebral)."},
+{area:"Divisão",cat:"prof",q:"Conteúdo dos trígonos interpleurais superior e inferior?",a:"SUPERIOR (sob o manúbrio) = TIMO — 'o timo é sempre lá de cima'. INFERIOR (base no xifoide) = GORDURA PRÉ-PERICÁRDICA."},
+{area:"Superior",cat:"prof",q:"Mediastino superior, da frente para trás?",a:"TIMO → VASOS DA BASE → TRAQUEIA → ESÔFAGO → DUCTO TORÁCICO → coluna. Ao lado: vagos, frênicos, troncos simpáticos, ázigo, linfonodos."},
+{area:"Superior",cat:"prof",q:"Braquiocefálica direita × esquerda?",a:"DIREITA: curtinha, tudo praticamente RETILÍNEO até a cava. ESQUERDA: CRUZA O MEDIASTINO da esquerda para a direita — mais LONGA, com DUAS CURVATURAS."},
+{area:"Superior",cat:"alerta",q:"A ordem de escolha do acesso venoso central na aula — e o porquê?",a:"1º JUGULAR INTERNA DIREITA (curta e reta) → 2º jugular interna esquerda → 3º femoral → por último subclávias (trombose, pneumotórax). À esquerda o cateter pode dobrar/fraturar e trombosa mais.",obs:"⚠️ Literatura: a subclávia tem as MENORES taxas de infecção e trombose (mais pneumotórax)."},
+{area:"Superior",cat:"prof",q:"Ramos do arco da aorta?",a:"TRONCO BRAQUIOCEFÁLICO · CARÓTIDA COMUM ESQUERDA · SUBCLÁVIA ESQUERDA. A origem dos vasos supra-aórticos ainda é mediastino superior."},
+{area:"Superior",cat:"prof",q:"Ligamento arterial: o que é e onde fica em relação ao pericárdio?",a:"O CANAL ARTERIAL obliterado (ligamento de BOTALLO), entre aorta e artéria pulmonar. É EXTRAPERICÁRDICO — fica ACIMA do pericárdio, no mediastino superior."},
+{area:"Superior",cat:"caso",q:"Persistência do canal arterial: como se fecha hoje e por que não se abre o pericárdio?",a:"VIDEOTORACOSCOPIA com CLIPE no canal — sem abrir o tórax e sem abrir o pericárdio, porque o canal está acima dele (o pericárdio cobre só ~2 cm iniciais dos vasos da base)."},
+{area:"Superior",cat:"conceito",q:"Quanto dos vasos da base o pericárdio recobre?",a:"Cerca dos 2 CM INICIAIS da cava superior, da aorta e da artéria pulmonar. Daí para cima, não há pericárdio."},
+{area:"Nervos",cat:"prof",q:"Laríngeo recorrente direito × esquerdo?",a:"ESQUERDO: contorna o ARCO DA AORTA — está no MEDIASTINO. DIREITO: contorna a SUBCLÁVIA ainda na região CERVICAL — não está no mediastino."},
+{area:"Nervos",cat:"prof",q:"Que vago forma cada tronco vagal?",a:"Vago ESQUERDO → TRONCO VAGAL ANTERIOR. Vago DIREITO desce por trás do esôfago → TRONCO VAGAL POSTERIOR."},
+{area:"Nervos",cat:"conceito",q:"Vago no estômago e a vagotomia?",a:"O vago AUMENTA a secreção ácida → a vagotomia (troncular ou seletiva) já tratou úlcera refratária; hoje os inibidores de bomba de prótons resolvem a maioria."},
+{area:"Nervos",cat:"conceito",q:"Por onde descem os nervos frênicos?",a:"Lateralmente, do mediastino superior para o inferior, ao lado do pericárdio (com os vasos pericardicofrênicos), até o diafragma."},
+{area:"Simpático",cat:"prof",q:"Gânglio estrelado: composição?",a:"GÂNGLIO CERVICAL INFERIOR + 1º GÂNGLIO TORÁCICO — na transição pescoço–tórax (cervicotorácico)."},
+{area:"Simpático",cat:"conceito",q:"Efeitos da ação simpática no olho, no suor e nos vasos?",a:"MIDRÍASE, olho 'arregalado' (posição de alerta), HIPERIDROSE (mãos, axila, face), VASOCONSTRIÇÃO (↑ resistência periférica)."},
+{area:"Simpático",cat:"prof",q:"Duas indicações da simpatectomia na aula?",a:"HIPERIDROSE (anidrose resultante = mão seca) e ISQUEMIA DA MÃO por oclusão arterial distal (VASODILATAÇÃO da colateral)."},
+{area:"Simpático",cat:"alerta",q:"Síndrome de Horner: componentes e causa na simpatectomia?",a:"PTOSE + MIOSE + ENOFTALMIA + ANIDROSE. Surge quando se retira muito do GÂNGLIO ESTRELADO (ou tumor cervicotorácico o compromete).",obs:"Técnica atual: simpatectomia torácica (T2–T4) preservando o estrelado."},
+{area:"Simpático",cat:"caso",q:"Nervo de Kuntz: o que a aula disse e o que diz a literatura?",a:"AULA: via simpática acessória (~T3–T4) que mantém suor em tórax/dorso/abdome após a cirurgia. LITERATURA: ramo comunicante intratorácico 2º intercostal → 1º torácico, ligado a falha/recidiva; a hiperidrose compensatória é reflexa."},
+{area:"Vísceras",cat:"alerta",q:"Existe traqueia no mediastino inferior?",a:"NÃO — 'todo mundo erra isso'. Ela bifurca na CARINA (T4–T5); abaixo há só BRÔNQUIOS. Lesão do mediastino inferior não é lesão de traqueia."},
+{area:"Vísceras",cat:"prof",q:"Constrições fisiológicas do esôfago torácico?",a:"Pelo ARCO DA AORTA (constrição aórtica) e pelo BRÔNQUIO PRINCIPAL ESQUERDO.",obs:"Literatura: somam-se a cricofaríngea e a diafragmática (4 no total)."},
+{area:"Vísceras",cat:"conceito",q:"Irrigação do esôfago torácico?",a:"RAMOS ESOFÁGICOS (e brônquicos) DIRETOS DA AORTA; a parte abdominal recebe a GÁSTRICA ESQUERDA."},
+{area:"Vísceras",cat:"conceito",q:"Esôfago: em que compartimentos e de que lado da aorta?",a:"Mediastino SUPERIOR (atrás da traqueia) e INFERIOR POSTERIOR (atrás do coração), À DIREITA da aorta descendente."},
+{area:"Vísceras",cat:"caso",q:"Varizes esofágicas e divertículos: o que são?",a:"VARIZES: dilatação das veias do PLEXO SUBMUCOSO quando a pressão sobe (hipertensão portal). DIVERTÍCULOS: protrusão da mucosa por fragilidade da muscular — de pulsão ou de tração (aderências)."},
+{area:"Ducto",cat:"prof",q:"Onde começa o ducto torácico e o que chega lá?",a:"Na CISTERNA DO QUILO, à frente de L1–L2 — recebe linfa do INTESTINO, da PAREDE ABDOMINAL e dos MEMBROS INFERIORES."},
+{area:"Ducto",cat:"alerta",q:"Por qual hiato o ducto torácico sobe?",a:"HIATO AÓRTICO (não o esofágico). Depois sobe à frente da coluna, ATRÁS DO ESÔFAGO, entre a ázigo e a aorta."},
+{area:"Ducto",cat:"prof",q:"Onde desemboca o ducto torácico?",a:"No ÂNGULO JUGULOSSUBCLÁVIO ESQUERDO (jugular interna × subclávia esquerdas), após desviar à esquerda em T4–T5 e fazer um arco no pescoço. A desembocadura VARIA.",obs:"⚠️ Os slides dizem 'V. jugular interna esquerda' e 'junção subclávio-axilar esquerda'; literatura e aula: ângulo jugulossubclávio esquerdo."},
+{area:"Ducto",cat:"prof",q:"Território do ducto torácico × ducto linfático direito?",a:"DUCTO TORÁCICO: 3/4 do corpo. DUCTO LINFÁTICO DIREITO: lado direito da cabeça e pescoço, MEMBRO SUPERIOR DIREITO e hemitórax direito."},
+{area:"Ducto",cat:"caso",q:"Quilotórax: o que é e por que o volume assusta?",a:"LINFA na cavidade pleural por lesão do ducto torácico (ou cisterna). Na aula, passam 3–4 L/dia pelo ducto.",obs:"⚠️ Literatura: ~1,5–2,5 L/dia, mais após refeição gordurosa."},
+{area:"Ázigo",cat:"prof",q:"Formação e desembocadura da ázigo?",a:"LOMBAR ASCENDENTE + SUBCOSTAL DIREITAS → sobe à direita do esôfago, recebe intercostais posteriores → ARCO (cajado) → CAVA SUPERIOR acima do pericárdio (mediastino superior)."},
+{area:"Ázigo",cat:"conceito",q:"Hemiázigo e hemiázigo acessória?",a:"HEMIÁZIGO: lombar ascendente + subcostal ESQUERDAS, intercostais inferiores esquerdas → desemboca na ÁZIGO. ACESSÓRIA: intercostais superiores esquerdas → (na aula) na hemiázigo.",obs:"Literatura: a acessória costuma cruzar direto para a ázigo (~T7–T8)."},
+{area:"Ázigo",cat:"caso",q:"Anastomose intercavas: o caso do paciente dialítico?",a:"Cateteres repetidos ocluem a CAVA SUPERIOR → o sangue DESCE pela ázigo/hemiázigo → lombares ascendentes → CAVA INFERIOR. Cava inferior ocluída → o sangue SOBE. Ázigo e hemiázigo ficam calibrosas."},
+{area:"Médio",cat:"prof",q:"Conteúdo do mediastino inferior médio?",a:"SACO PERICÁRDICO + CORAÇÃO + VASOS PERICARDICOFRÊNICOS + NERVOS FRÊNICOS de cada lado.",obs:"Literatura: a pericardicofrênica é ramo da torácica interna."},
+{area:"Médio",cat:"prof",q:"Pericárdio: camadas e onde fica a cavidade?",a:"FIBROSO (de TANDLER, externo) + SEROSO (lâmina PARIETAL e VISCERAL). A CAVIDADE PERICÁRDICA fica ENTRE AS LÂMINAS SEROSAS. Insere-se no CENTRO TENDÍNEO do diafragma."},
+{area:"Médio",cat:"conceito",q:"Seio transverso × seio oblíquo do pericárdio?",a:"TRANSVERSO: atrás da aorta e da artéria pulmonar (cabe um dedo). OBLÍQUO: entre as veias pulmonares, atrás do coração. Ambos acumulam líquido."},
+{area:"Médio",cat:"conceito",q:"Vértebras cardíacas de Giacomini e posição do ictus?",a:"T5 a T8 (às vezes T9). Ictus no 5º ESPAÇO INTERCOSTAL esquerdo — na DEXTROCARDIA, no 5º EIC direito. Eixo base→ápice: direita→esquerda, trás→frente, cima→baixo."},
+{area:"Médio",cat:"alerta",q:"Hemopericárdio: risco e conduta?",a:"TAMPONAMENTO CARDÍACO (o coração não expande) → parada. PUNÇÃO DE MARFAN: agulha SUBXIFOIDE rumo à ESQUERDA, ASPIRANDO ao avançar (ideal com ultrassom) — ou drenagem subxifoide."},
+{area:"Posterior",cat:"prof",q:"Conteúdo do mediastino inferior posterior?",a:"ESÔFAGO + troncos vagais · AORTA descendente (à esquerda) · ÁZIGO (direita) e HEMIÁZIGO (esquerda) · DUCTO TORÁCICO · troncos SIMPÁTICOS · vasos/nervos intercostais posteriores · linfonodos."},
+{area:"Divisão",cat:"alerta",q:"O que há no mediastino inferior anterior, segundo a aula?",a:"Só GORDURA (pré-pericárdica) — 'todos os órgãos estão no médio e no posterior'.",obs:"Literatura: também ligamentos esternopericárdicos, linfonodos, ramos torácicos internos e, na criança, timo."},
+{area:"Superior",cat:"caso",q:"Variações dos vasos da base citadas?",a:"Aorta saindo para a DIREITA (com ou sem situs inversus), dobra da subclávia com sintomas tipo desfiladeiro, e a subclávia direita ABERRANTE (lusória) como último ramo do arco — tema da aula seguinte."}
+]}
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-mediastino-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<style id="secrailcss">
+#secrail{position:fixed;left:26px;top:130px;width:172px;z-index:60;font-family:var(--mono,monospace);display:none}
+@media(min-width:1200px){#secrail.show{display:block}}
+#secrail a{display:block;margin:0 0 13px;text-decoration:none;color:var(--muted)}
+#secrail a b{display:block;font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+#secrail a span{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.45;padding-bottom:4px;border-bottom:1px solid var(--line-strong)}
+#secrail a.on{color:var(--ink)}
+#secrail a.on span{border-bottom:2px solid var(--accent)}
+#secrail a:hover{color:var(--ink)}
+</style>
+<script>
+(function(){
+  var panel=document.getElementById('panel-estudo');if(!panel)return;
+  var secs=[].slice.call(panel.querySelectorAll('h2[id]')).filter(function(s){return /^t\d+$/.test(s.id)});
+  if(secs.length<4)secs=[].slice.call(panel.querySelectorAll('section[id] > h2, section[id] h2')).map(function(h){return h.closest('section[id]')}).filter(Boolean);
+  if(secs.length<4)return;
+  var rail=document.createElement('nav');rail.id='secrail';
+  rail.innerHTML=secs.map(function(s,i){
+    var t=(s.tagName==='H2'?s:s.querySelector('h2')).textContent.replace(/^\s*\d+\s*[·.)\u2014-]\s*/,'').trim();
+    var curto=t.split(/ — |: /)[0].trim();if(curto.length>34)curto=curto.slice(0,32)+'…';
+    return '<a href="#'+s.id+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+curto+'</span></a>';
+  }).join('');
+  document.body.appendChild(rail);
+  function vis(){var ativo=panel.classList.contains('active')||getComputedStyle(panel).display!=='none';rail.classList.toggle('show',ativo)}
+  vis();
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tab,.hub-tab'))setTimeout(vis,60)});
+  var links=rail.querySelectorAll('a');
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+x.target.id)})}});
+  },{rootMargin:'0px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+})();
+</script>
+
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
+</html>
