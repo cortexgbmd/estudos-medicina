@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Patológica II · Aula 10 — Patologias da Tireoide · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('cortex-theme')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style id="dossie-skin">/* ===== SKIN DOSSIÊ — override de tema (Córtex Estudos) ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --surface:#141311; --surface2:#1d1b18;
+  --ink:#e8e4d7; --ink-soft:#cfcab9; --muted:#8a8573; --faint:#6d6a5e;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --gold:#d4a84b; --caso:#4fb47a; --alerta:#ff5b55; --ok:#4fb47a; --err:#ff5b55;
+  --radius:2px;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --surface:#f6f2e7; --surface2:#ece7d7;
+  --ink:#0a0908; --ink-soft:#1c1a16; --muted:#6a655a; --faint:#8d8778;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --gold:#8a5a00; --caso:#006a3a; --alerta:#c8241e; --ok:#006a3a; --err:#c8241e;
+}
+/* tipografia dossiê */
+.page-h1,.hero h1,h1{font-family:var(--serif)!important;font-weight:600;letter-spacing:-.01em}
+.kick,.aula-tag,.badge,.chip,.lab,.lbl,.qnum,.qhead .aula,.ctl-label,.counter,.prog,.sub,.hubfoot,.stat .lab,.eyebrow{
+  font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.hub-brand,.tab,.hub-tab,.navbtn,.btn,.reveal-btn,.ghost{font-family:var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+/* superfícies quadradas + réguas */
+.card,.box,.panel .wrap section,.q,.fig,.vinheta,.modelo,.toc,.simbar,.stat,.dk,.stage{border-radius:var(--radius)!important}
+.btn,.tab,.hub-tab,.opt,.alt,.chip,.badge,.navbtn,.reveal-btn,.ghost,.seg{border-radius:var(--radius)!important}
+.card,.box,.q,.toc,.vinheta,.modelo{border:1px solid var(--line)!important;box-shadow:none!important}
+/* cabeçalho tipo topbar do dossiê */
+.hubhead{background:var(--bg)!important;border-bottom:1px solid var(--line-strong)!important;box-shadow:none!important}
+.hub-brand{color:var(--muted)!important}
+.hub-tab{border:0!important;background:none!important;border-bottom:2px solid transparent!important;color:var(--muted)!important;padding:10px 2px!important;margin-right:18px}
+.hub-tab.active,.hub-tab.on{color:var(--ink)!important;border-bottom-color:var(--accent)!important;background:none!important}
+/* botões de ação principais mantêm o cobalto */
+.btn{border:1px solid var(--line-strong)!important;background:var(--surface)!important;color:var(--ink)!important}
+.btn:hover{border-color:var(--accent)!important;color:var(--accent)!important}
+/* alternativas de questão */
+.opt,.alt{border:1px solid var(--line)!important;background:var(--surface)!important}
+.opt:hover,.alt:hover{border-color:var(--accent)!important}
+.opt.locked.correct,.alt.certa{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 8%,var(--surface))!important}
+.opt.locked.wrong,.alt.errada{border-color:var(--alerta)!important;background:color-mix(in srgb,var(--alerta) 8%,var(--surface))!important}
+.letra{font-family:var(--mono)!important;color:var(--accent)!important}
+/* selo/watermark ancorado */
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px 0 14px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+/* botão de tema: chip ☀/☾ */
+#themeToggle{border:1px solid var(--line-strong)!important;background:none!important;color:var(--ink)!important;border-radius:var(--radius)!important;min-width:34px;font-size:14px;line-height:1}
+/* hairlines nos títulos de seção */
+.panel .wrap section>h2,.box-h,h2{border-bottom:1px solid var(--line);padding-bottom:.35em;font-family:var(--serif);letter-spacing:0}
+/* stat band */
+.statgrid,.simbar{border-top:1px solid var(--line-strong)!important;border-bottom:1px solid var(--line-strong)!important}
+.stat b,.stat .big{font-family:var(--serif)!important}
+/* riscar mantém o tracejado na cor da linha */
+.risc{border-left:1px dashed var(--line-strong)!important;color:var(--muted)}
+/* refinamentos v2 */
+.page-h1{font-size:clamp(2.4rem,6vw,4.2rem)!important;line-height:.98!important;letter-spacing:-.015em!important;margin:.15em 0 .25em!important}
+#themeToggle{position:fixed;width:34px!important;height:34px!important;border-radius:var(--radius)!important;font-size:15px!important;background:var(--bg)!important}
+.lead{max-width:70ch}
+.hub-tab{font-size:.78rem!important}
+/* v3: emojis fora, segmentos mono */
+.tab .ico,.hub-tab .ico,.title-row .emoji{display:none!important}
+.seg{border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;background:none!important;overflow:hidden;padding:0!important}
+.seg button{font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem!important;background:none!important;color:var(--muted)!important;border:0!important;border-radius:0!important;padding:8px 14px!important}
+.seg button.active{color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.tab{font-family:var(--mono)!important;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem!important;border:0!important;background:none!important;border-bottom:2px solid transparent!important;border-radius:0!important;color:var(--muted)!important}
+.tab.active{color:var(--ink)!important;border-bottom-color:var(--accent)!important}
+nav.top #themeToggle{position:static!important;margin-left:14px;width:32px!important;height:32px!important}
+/* v4: header sem azul — tinta/mono como na referência */
+.hubhead a,.hub-brand,.hub-brand a,.hubhead .title a,.hubhead b{color:var(--ink)!important;text-decoration:none}
+.hubhead a:hover{color:var(--accent)!important}
+nav.top a,nav.top .brand,nav.top .brand a{color:var(--ink)!important;text-decoration:none}
+nav.top a:hover{color:var(--accent)!important}
+.kick{color:var(--muted)!important}
+.kick::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:9px}
+.hubhead .sub{color:var(--ink)!important}
+</style>
+<body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☀</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🧫</span> Anatomia Patológica II <span class="sep">·</span> <span class="sub">Aula 10 — Patologias da Tireoide</span><span id="wm-slot"></span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Conteúdo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anato Pato II · Aula 10 (07/10)</p>
+  <h1 class="page-h1">Patologias da Tireoide</h1>
+  <p class="lead">Aula de base para o simpósio de tireoide: histologia do folículo, como o T3 e o T4 são fabricados e por que o eixo hipotálamo–hipófise–tireoide manda em tudo. Depois, os dois lados da balança. <b>Tirotoxicose</b>: excesso de hormônio circulante, cuja causa mais comum é o hipertireoidismo. <b>Hipotireoidismo</b>: falta de hormônio, que no adulto vira <b>mixedema</b> e no começo da vida vira <b>cretinismo</b>. A regra que guia a aula toda: <b>"é tudo ao contrário"</b>. O que o excesso de hormônio acelera, a falta freia.</p>
+
+  <div class="box conexao"><p class="h">🔗 O que ficou para o simpósio</p>
+  <p>As doenças específicas (doença de Graves, bócio multinodular hiperfuncionante, adenoma hiperfuncionante, tireoidite de Hashimoto, tireoidite de De Quervain etc.) foram distribuídas entre os grupos do simpósio, com roteiro de etiologia, patogênese, clínica, exames e macro/micro. Este hub cobre <b>só a aula introdutória</b>: histologia, fisiologia, tirotoxicose, hipotireoidismo, cretinismo e mixedema.</p></div>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">Anatomia e histologia: folículo, coloide e células C</a></li>
+      <li><a href="#t2">Eixo hipotálamo–hipófise–tireoide e ação dos hormônios</a></li>
+      <li><a href="#t3">Síntese e liberação de T3 e T4</a></li>
+      <li><a href="#t4">Tirotoxicose × hipertireoidismo: definições e causas</a></li>
+      <li><a href="#t5">Curso clínico da tirotoxicose, sistema por sistema</a></li>
+      <li><a href="#t6">Tempestade tireoidiana e diagnóstico laboratorial</a></li>
+      <li><a href="#t7">Hipotireoidismo: definição e classificação</a></li>
+      <li><a href="#t8">Hipotireoidismo primário: congênito, adquirido e autoimune</a></li>
+      <li><a href="#t9">Curso clínico do hipotireoidismo</a></li>
+      <li><a href="#t10">Cretinismo</a></li>
+      <li><a href="#t11">Mixedema e diagnóstico do hipotireoidismo</a></li>
+      <li><a href="#t12">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Anatomia e histologia: folículo, coloide e células C</h2>
+  <ul>
+    <li><b>Glândula endócrina</b> responsável pela produção de <b>T3 e T4</b>. Pesa <b>~10–20 g</b>; mede cerca de 2 cm de largura × 4 cm de comprimento × 1,5–2 cm de espessura.</li>
+    <li><b>Localização:</b> porção anterior do pescoço, <b>abaixo e anteriormente à laringe</b>. <b>Dois lobos laterais</b> volumosos ligados por um <b>istmo</b>.</li>
+    <li><b>Cápsula</b> de conjuntivo, rica rede de <b>capilares fenestrados</b>, e septos que dividem a glândula em <b>lóbulos</b>. Cada lóbulo tem cerca de <b>20 a 40 folículos</b>, separados por septo fibroso estreito.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide004-anatomia-macro-esquema.jpg" alt="Peça de tireoide e esquema da posição da glândula no pescoço">
+  <figcaption><b>Tireoide no pescoço</b>: à esquerda, a peça com os dois lobos e o istmo sobre a traqueia; à direita, o esquema da posição, logo abaixo da cartilagem tireoide (laringe).</figcaption></figure>
+  <h3>O folículo</h3>
+  <ul>
+    <li><b>Células foliculares = tireócitos</b> (mesma coisa): revestem o folículo e produzem os hormônios.</li>
+    <li>A luz do folículo armazena o <b>coloide</b>, rico em <b>tireoglobulina</b>, a proteína que serve de base para o T3 e o T4. No coloide ficam os <b>hormônios prontos e os precursores</b> (MIT e DIT).</li>
+    <li>O epitélio varia de <b>pavimentoso/cuboide a colunar</b>, e <b>a altura da célula reflete a atividade</b>:
+      <ul>
+        <li><b>Células achatadas</b> → <b>menor</b> atividade secretora;</li>
+        <li><b>Células colunares</b>, com núcleo grande e evidente → <b>maior</b> atividade, "a célula está trabalhando bastante".</li>
+      </ul></li>
+  </ul>
+  <figure class="fig"><img src="img/slide007-esquema-foliculos-celula-c.jpg" alt="Esquema de folículos tireoidianos com coloide, células foliculares, célula C e capilares">
+  <figcaption><b>Esquema do folículo</b>: coloide no centro, anel de células foliculares, <b>célula C</b> encostada por fora do folículo, capilares entre os folículos e cápsula de conjuntivo.</figcaption></figure>
+  <figure class="fig"><img src="img/slide008-histologia-panoramica.jpg" alt="Histologia panorâmica da tireoide com folículos de tamanhos variados">
+  <figcaption><b>Lâmina panorâmica</b>: folículos de tamanhos variados, cheios de coloide róseo e separados por pouco estroma.</figcaption></figure>
+  <figure class="fig"><img src="img/slide009-histologia-rotulada.jpg" alt="Histologia da tireoide com coloide, células foliculares e parafoliculares identificados">
+  <figcaption><b>O que identificar</b>: coloide, células foliculares revestindo o folículo e células parafoliculares (núcleo mais claro) entre os folículos.</figcaption></figure>
+  <figure class="fig"><img src="img/slide011-achatadas-vs-colunares.jpg" alt="Folículos com células achatadas e com células mais altas">
+  <figcaption><b>Atividade pela forma</b>: folículos grandes, cheios de coloide e com epitélio baixo (menos ativos), ao lado de epitélio mais alto (mais ativo).</figcaption></figure>
+  <figure class="fig"><img src="img/slide012-colunar-ativa-vs-achatada.jpg" alt="Folículo com células colunares ativas e folículos com células achatadas">
+  <figcaption><b>Colunar × achatada</b>: à esquerda, células colunares com núcleo grande, em alta atividade. O aglomerado na luz é <b>artefato de técnica</b>: com a célula tão ativa, o folículo deveria estar quase sem coloide. À direita, células achatadas ao redor de muito coloide.</figcaption></figure>
+  <h3>Células C (parafoliculares)</h3>
+  <ul>
+    <li>Ficam <b>entre os folículos</b>; o nome "C" vem de <b>calcitonina</b>, o hormônio que produzem.</li>
+    <li>A calcitonina <b>inibe os osteoclastos</b> → reduz a reabsorção óssea → favorece a deposição de cálcio no esqueleto e <b>baixa o cálcio no sangue</b>. É um hormônio <b>hipocalcemiante</b>.</li>
+    <li>A aula só citou a célula C; ela não foi aprofundada.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide013-celulas-c.jpg" alt="Células parafoliculares entre os folículos tireoidianos">
+  <figcaption><b>Células C</b>: células de citoplasma claro entre os folículos (seta), fora do epitélio folicular.</figcaption></figure>
+  <div class="box alerta"><p class="h">⚠️ Nota sobre a calcitonina (aula × literatura)</p>
+  <p>Na fala, a calcitonina "aumenta os níveis de cálcio no sistema esquelético" e "diminui o cálcio na circulação". As duas frases estão certas e dizem a mesma coisa: ao inibir o osteoclasto, mais cálcio fica no osso e menos vai para o sangue. Na literatura, o efeito hipocalcemiante é real, mas <b>pequeno no adulto humano</b>: quem regula o cálcio no dia a dia é o paratormônio. Não confunda os dois: o <b>PTH estimula</b> a reabsorção óssea e a calcitonina a inibe.</p></div>
+
+  <h2 class="topic" id="t2">2 · Eixo hipotálamo–hipófise–tireoide e ação dos hormônios</h2>
+  <ul>
+    <li><b>Hipotálamo</b> produz <b>TRH</b> (hormônio liberador de tireotrofina) → age na <b>adeno-hipófise</b>.</li>
+    <li><b>Hipófise</b> (tireotrofos) libera <b>TSH</b> (tireotrofina, hormônio estimulante da tireoide) → liga-se ao <b>receptor de TSH</b> da célula folicular → síntese e liberação de T3 e T4.</li>
+    <li><b>Feedback negativo:</b> T3/T4 altos inibem <b>tanto a hipófise quanto o hipotálamo</b>; T3/T4 baixos estimulam o eixo.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide017-eixo-hht.jpg" alt="Eixo hipotálamo-hipófise-tireoide com TRH, TSH, receptor de TSH e receptor nuclear">
+  <figcaption><b>O eixo</b>: TRH → TSH → receptor de TSH (proteína G, AMPc) → T3/T4 → receptor nuclear na célula-alvo → expressão gênica. As setas vermelhas mostram o feedback negativo de T3/T4 sobre hipófise e hipotálamo.</figcaption></figure>
+  <h3>Transporte e conversão</h3>
+  <ul>
+    <li>No sangue, a maior parte do T3 e do T4 circula <b>ligada de forma reversível</b> a proteínas plasmáticas: <b>globulina ligadora de tiroxina (TBG)</b> e <b>transtiretina</b>.</li>
+    <li>A tireoide produz <b>muito mais T4 que T3</b>, na proporção de <b>20:1</b>. O T4 é <b>convertido em T3 na periferia</b>: <b>~80% do T3</b> vem dessa conversão, principalmente no <b>fígado e no rim</b>. Também ocorre no cérebro, na hipófise e no tecido adiposo. Só ~20% do T3 sai direto da tireoide.</li>
+    <li>O slide detalha as enzimas: parte do T4 vira T3 pelas <b>desiodases tipo 1</b> (maioria dos tecidos) e <b>tipo 2</b> (cérebro, hipófise, tecido adiposo); cerca de 40% vira <b>T3 reverso (inativo)</b> pela desiodase tipo 3.</li>
+    <li><b>T3 é ~4× mais ativo que o T4</b>. Os receptores nucleares têm afinidade <b>10 a 15× maior</b> pelo T3, e as proteínas do sangue seguram o T4 com mais força. Por isso a conversão importa.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide021-conversao-t4-t3.jpg" alt="Slide com proporção T4:T3, conversão periférica e desiodases">
+  <figcaption><b>Os números do slide</b>: T4:T3 = 20:1; 80% do T3 vem da conversão (fígado e rim); desiodases 1, 2 e 3; T3 é 4× mais ativo.</figcaption></figure>
+  <h3>O que os hormônios fazem</h3>
+  <ul>
+    <li>Ligam-se a <b>receptores nucleares</b> em praticamente todas as células e estimulam a <b>transcrição de proteínas</b>.</li>
+    <li>Efeitos: <b>↑ catabolismo de carboidratos e lipídios</b>, <b>↑ síntese proteica</b> → resultado final: <b>↑ taxa metabólica basal</b>. Também agem no crescimento, no sistema cardiovascular e no metabolismo.</li>
+    <li>Uma das funções mais importantes: o <b>desenvolvimento cerebral do feto e do recém-nascido</b> (tópico 10). A gestante precisa de níveis adequados de hormônio.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide022-receptor-nuclear-efeitos.jpg" alt="Receptor nuclear do hormônio tireoidiano e efeitos em crescimento, SNC, cardiovascular e metabolismo">
+  <figcaption><b>Receptor nuclear</b>: o T4 vira T3 na célula, o T3 liga-se ao receptor (com o receptor de retinoide X) e ativa a transcrição. Saem daí os efeitos em crescimento, SNC, coração (↑ débito, ↑ FC, ↑ força) e metabolismo (↑ mitocôndrias, ↑ Na⁺/K⁺-ATPase, ↑ consumo de O₂, ↑ TMB).</figcaption></figure>
+
+  <h2 class="topic" id="t3">3 · Síntese e liberação de T3 e T4</h2>
+  <p>A professora destacou a sequência abaixo, que reaparece nas doenças congênitas (tópico 8). <b>"Precisa saber essa fisiologia."</b></p>
+  <ol class="steps">
+    <li><b>Síntese da tireoglobulina</b> no retículo endoplasmático granuloso e no Golgi (onde recebe carboidratos). Vesículas levam a tireoglobulina até o ápice da célula e a liberam no <b>lúmen do folículo</b>.</li>
+    <li><b>Captação do iodeto</b> circulante pela membrana basal, através do <b>cotransportador sódio/iodo (NIS)</b>.</li>
+    <li><b>Oxidação do iodeto</b> pela <b>peroxidase tireoidiana (TPO)</b>, na presença de H₂O₂, na membrana apical.</li>
+    <li><b>Passagem do iodo para a luz</b> do folículo pela <b>pendrina</b>, o transportador cujo nome a aula pediu para guardar.</li>
+    <li><b>Iodação ("organificação")</b>: no coloide, junto à membrana apical, o iodo liga-se aos resíduos de tirosina da tireoglobulina (catalisado pela TPO) → <b>MIT</b> (monoiodotirosina) e <b>DIT</b> (di-iodotirosina).</li>
+    <li><b>Acoplamento</b>, ainda na luz: <b>MIT + DIT = T3</b>; <b>DIT + DIT = T4</b>. Os hormônios ficam <b>armazenados no coloide</b>, presos à tireoglobulina, à espera de estímulo.</li>
+    <li><b>Liberação</b>: sob estímulo, a célula <b>endocita o coloide</b>. Enzimas lisossômicas digerem a vesícula. <b>T3 e T4</b> saem para os <b>capilares</b> ("por isso tem um monte de capilar ao redor"). <b>MIT e DIT</b> sofrem ação da <b>desiodase</b>, que cliva o iodo e <b>recicla</b> o íon e a tirosina para nova síntese.</li>
+  </ol>
+  <figure class="fig"><img src="img/slide020-sintese-hormonios.jpg" alt="Esquema da célula folicular: síntese de tireoglobulina, NIS, pendrina, iodação e digestão">
+  <figcaption><b>A célula folicular trabalhando</b>: aminoácidos e iodeto entram pela base (NIS); a tireoglobulina é sintetizada e glicosilada; a pendrina e a oxidação do iodeto ficam no ápice; a iodação ocorre na luz; o coloide é endocitado e digerido por lisossomos, e T3/T4 saem para o capilar.</figcaption></figure>
+  <div class="box alerta"><p class="h">⚠️ Divergência: o que a pendrina transporta</p>
+  <p><b>Na aula (e no slide):</b> o iodeto é oxidado dentro da célula, e a pendrina joga o "iodo oxidado" para a luz. <b>Na literatura</b> (Robbins, Guyton, fisiologia atual): a pendrina transporta o <b>iodeto (I⁻)</b> pela membrana apical, e a oxidação pela TPO acontece <b>na superfície apical/coloide</b>, logo antes da iodação. Para a prova, guarde a função cobrada: <b>a pendrina leva o iodo da célula para a luz do folículo</b>. Se ela falha, o iodo não chega à tireoglobulina (síndrome de Pendred).</p></div>
+  <div class="box prof"><p class="h">🎯 O que está no coloide?</p>
+  <p>Na dúvida levantada em aula, a resposta foi: o coloide contém <b>T3 e T4 prontos</b> e também <b>MIT e DIT</b>. Quando a célula endocita, ela pega tudo. Os hormônios vão para a circulação, e MIT/DIT são desiodados para reaproveitar o iodo. MIT e DIT são produtos da <b>iodação</b> (não da oxidação).</p></div>
+
+  <h2 class="topic" id="t4">4 · Tirotoxicose × hipertireoidismo: definições e causas</h2>
+  <div class="box prof"><p class="h">🎯 "Um conceito que vocês não podem esquecer"</p>
+  <p><b>Tirotoxicose</b> = estado hipermetabólico por <b>T3 e T4 livres elevados na circulação</b>, seja qual for a origem. <b>Hipertireoidismo</b> = <b>hiperfuncionamento da glândula</b>. O hipertireoidismo é <b>uma das causas</b> (a mais comum) de tirotoxicose, mas não a única.</p></div>
+  <p>T3 e T4 podem subir por três caminhos:</p>
+  <ol>
+    <li><b>Hiperfunção da glândula</b> = hipertireoidismo;</li>
+    <li><b>Liberação excessiva de hormônio pré-formado</b>: inflamação que rompe folículos e "faz a glândula liberar o hormônio sem ela querer";</li>
+    <li><b>Fonte extratireoidiana</b>: por exemplo, <b>struma ovarii</b>, um teratoma ovariano com tecido tireoidiano funcionante. Teratoma é um tumor de células totipotentes que pode conter dente, pelo e até tecido glandular. Outro exemplo é a tirotoxicose factícia (ingestão de tiroxina).</li>
+  </ol>
+  <h3>As três causas mais comuns (todas com hiperfunção)</h3>
+  <ol>
+    <li><b>Hiperplasia difusa associada à doença de Graves</b>: <b>~85% dos casos</b>;</li>
+    <li><b>Bócio multinodular hiperfuncionante</b>;</li>
+    <li><b>Adenoma hiperfuncionante</b>: neoplasia benigna cujas células produzem T3 e T4.</li>
+  </ol>
+  <ul>
+    <li><b>Bócio = aumento da glândula</b>, com ou sem nódulos. "Estou na clínica, palpo a tireoide, percebo que está aumentada: escrevo bócio." Depois se classifica em <b>difuso</b> ou <b>nodular</b>.</li>
+    <li><b>Hipertireoidismo secundário</b>: <b>adenoma hipofisário secretor de TSH</b> (raro). A glândula trabalha demais porque é estimulada de cima.</li>
+    <li><b>Tirotoxicose sem hipertireoidismo</b>: tireoidite granulomatosa (de De Quervain), tireoidite linfocítica subaguda, struma ovarii, tirotoxicose factícia.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide027-tabela-tirotoxicose.jpg" alt="Tabela de distúrbios associados à tirotoxicose">
+  <figcaption><b>Tabela de distúrbios associados à tirotoxicose</b>: com hipertireoidismo primário (Graves, bócio multinodular tóxico, adenoma tóxico, induzido por iodeto, neonatal por Graves materna), secundário (adenoma hipofisário secretor de TSH) e sem hipertireoidismo (tireoidites, struma ovarii, factícia). Nota do slide: só o secundário cursa com <b>TSH aumentado</b>; todas as outras causas têm <b>TSH diminuído</b>.</figcaption></figure>
+
+  <h2 class="topic" id="t5">5 · Curso clínico da tirotoxicose, sistema por sistema</h2>
+  <p>Estado <b>hipermetabólico</b> com <b>simpático estimulado</b>: o hormônio <b>aumenta o número e a sensibilidade dos receptores β-adrenérgicos</b>. Guarde a imagem do paciente com <b>fome</b> que <b>perde peso</b>: o metabolismo "está a mil".</p>
+  <div class="tablewrap"><table>
+    <tr><th>Sistema</th><th>O que acontece</th><th>Por quê</th></tr>
+    <tr><td><b>Metabolismo</b></td><td>perda de peso apesar do apetite aumentado; produção de calor</td><td>↑ número e atividade das mitocôndrias; ↑ transporte ativo de íons; estímulo ao metabolismo de carboidratos e gorduras</td></tr>
+    <tr><td><b>Lipídios</b></td><td><b>colesterol baixo</b></td><td>↑ receptores de LDL nos hepatócitos → captam LDL do plasma → eliminam pela bile</td></tr>
+    <tr><td><b>Crescimento</b></td><td>criança cresce rápido, acima da curva, mas a <b>altura final pode ficar reduzida</b></td><td>maturação óssea acelerada → <b>epífises fecham precocemente</b></td></tr>
+    <tr><td><b>Pele</b></td><td>macia, quente, ruborizada; sudorese; <b>intolerância ao calor</b></td><td>vasodilatação para perder calor</td></tr>
+    <tr><td><b>Coração</b></td><td>taquicardia, palpitações, ↑ débito, <b>arritmias (fibrilação atrial)</b>, cardiomegalia, ↑ pressão sistólica</td><td>efeito direto na excitabilidade + tônus β-adrenérgico</td></tr>
+    <tr><td><b>Neuromuscular</b></td><td>ansiedade, insônia, hiperatividade, instabilidade emocional; <b>tremor fino</b>; fraqueza se o excesso for grande</td><td>superatividade simpática; catabolismo proteico do músculo</td></tr>
+    <tr><td><b>Olhos</b></td><td><b>olhar fixo e arregalado</b>, movimento lento da pálpebra superior</td><td>superestímulo simpático do levantador da pálpebra superior</td></tr>
+    <tr><td><b>Digestório</b></td><td>apetite e ingestão maiores; <b>diarreia</b></td><td>↑ secreções digestivas, ↑ motilidade, esvaziamento gástrico e trânsito mais rápidos</td></tr>
+    <tr><td><b>Ossos</b></td><td>rarefação óssea, <b>osteoporose</b>, fraturas no hipertireoidismo crônico; cálcio sai do osso e é perdido na urina</td><td>T3/T4 <b>estimulam os osteoclastos</b> (que têm receptores para eles), "ao contrário da calcitonina"</td></tr>
+    <tr><td><b>Respiratório</b></td><td>↑ frequência e profundidade da respiração; <b>broncodilatação</b></td><td>↑ consumo de O₂ e produção de CO₂; ↑ receptores β₂ no músculo liso brônquico</td></tr>
+    <tr><td><b>Unhas</b></td><td><b>onicólise ("unha de Plummer")</b></td><td>a unha se descola do leito ungueal, na ponta ou em toda a extensão</td></tr>
+  </table></div>
+  <h3>Coração: a miocardiopatia tirotóxica</h3>
+  <ul>
+    <li>Com o débito e a frequência muito altos, o coração pode desenvolver <b>arritmia</b> (fibrilação atrial) e <b>hipertrofia</b>.</li>
+    <li>Com hormônio muito alto por muito tempo, o <b>catabolismo proteico excessivo deprime a força do músculo cardíaco</b> → disfunção ventricular esquerda (reversível) e <b>insuficiência cardíaca</b>. É a <b>miocardiopatia tirotóxica</b>.</li>
+    <li>Pacientes gravemente tireotóxicos podem morrer de <b>descompensação cardíaca</b>.</li>
+  </ul>
+  <h3>Tremor</h3>
+  <p>O tremor é <b>leve e fino</b>, de frequência alta (<b>10 a 15 vezes por segundo</b>). É diferente do tremor <b>brusco</b> e mais grosseiro da doença de Parkinson e dos calafrios. Vem da atividade aumentada das sinapses medulares que controlam o tônus muscular.</p>
+  <figure class="fig"><img src="img/slide032-olhar-fixo-retracao-palpebral.jpg" alt="Olho com retração da pálpebra superior e esclera visível acima da íris">
+  <figcaption><b>Olhar fixo</b>: retração da pálpebra superior, com esclera visível acima da íris. O mecanismo da aula é o superestímulo simpático do levantador. (A oftalmopatia própria da doença de Graves fica para o grupo do simpósio.)</figcaption></figure>
+  <figure class="fig"><img src="img/slide036-onicolise.jpg" alt="Onicólise: unhas descoladas do leito ungueal">
+  <figcaption><b>Onicólise (unha de Plummer)</b>: a lâmina ungueal se separa do leito a partir da borda livre. Achado muito sugestivo de hipertireoidismo.</figcaption></figure>
+
+  <h2 class="topic" id="t6">6 · Tempestade tireoidiana e diagnóstico laboratorial</h2>
+  <h3>Tempestade tireoidiana</h3>
+  <ul>
+    <li><b>Início abrupto de hipertireoidismo grave</b>, mais comum sobre <b>doença de Graves</b> <b>não tratada ou mal tratada</b>.</li>
+    <li>O gatilho é uma <b>elevação aguda das catecolaminas</b> num paciente que já tem muito T3/T4: <b>cirurgia, infecção, qualquer estresse</b> ou <b>interrupção do antitireoidiano</b>.</li>
+    <li>Paciente <b>febril e taquicárdico</b>. É <b>emergência médica</b>: sem tratamento, morre de <b>arritmia cardíaca</b>.</li>
+  </ul>
+  <h3>Diagnóstico laboratorial</h3>
+  <ul>
+    <li>O exame inicial é o <b>TSH</b>, que está <b>diminuído</b> já nas fases iniciais (mesmo subclínicas) de hipertireoidismo primário.</li>
+    <li>TSH baixo → confirmar com <b>T4 livre</b> (esperado alto). Às vezes só o T3 sobe (<b>"toxicose de T3"</b>), com T4 livre normal ou baixo. Aí a dosagem do T3 ajuda.</li>
+    <li><b>Hipertireoidismo secundário</b> (hipófise): T3/T4 altos com <b>TSH normal ou aumentado</b>, porque o adenoma produz TSH por conta própria.</li>
+    <li>TSH alto com T3/T4 altos <b>não é exclusivo</b> do adenoma hipofisário: é preciso descartar <b>resistência aos hormônios tireoidianos</b> e <b>erro laboratorial</b>.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência: o teste do TRH</p>
+  <p><b>Na aula:</b> para provar o adenoma hipofisário, administra-se TRH. O TSH, que já está alto, "aumenta ainda mais", podendo passar de <b>30 µUI/mL</b>, o que confirmaria a origem hipofisária. O slide também traz: "aumento normal do TSH após TRH → exclui o hipertireoidismo secundário".</p>
+  <p><b>Na literatura</b> (diretrizes de tireotropinoma, Endotext/ETA): o adenoma secretor de TSH costuma ter <b>resposta ausente ou achatada</b> ao TRH. Uma resposta <b>normal ou exagerada</b> favorece <b>resistência ao hormônio tireoidiano</b>. Hoje o teste de TRH é pouco usado (o TRH sintético nem está disponível em vários países). Para a prova da disciplina, siga a aula e lembre a regra que vale nos dois mundos: <b>TSH normal/alto com T3/T4 altos = pensar em causa central</b>.</p></div>
+
+  <h2 class="topic" id="t7">7 · Hipotireoidismo: definição e classificação</h2>
+  <ul>
+    <li><b>Produção insuficiente</b> de hormônio tireoidiano, por qualquer desarranjo estrutural ou funcional do eixo hipotálamo–hipófise–tireoide.</li>
+    <li>Distúrbio razoavelmente comum; a prevalência <b>aumenta com a idade</b>; <b>~10× mais comum em mulheres</b>.</li>
+    <li><b>Primário</b>: anormalidade na <b>própria tireoide</b>. É a <b>grande maioria</b> dos casos e pode vir com bócio. Pode ser <b>congênito, adquirido ou autoimune</b>.</li>
+    <li><b>Secundário (central)</b>: doença <b>hipofisária</b> ou <b>hipotalâmica</b>. É mais raro.</li>
+  </ul>
+  <figure class="fig"><img src="img/slide042-tabela-hipotireoidismo.jpg" alt="Tabela de causas do hipotireoidismo primárias e secundárias">
+  <figcaption><b>Causas do hipotireoidismo</b>: primárias (disgenesia, resistência ao hormônio, pós-ablativas, Hashimoto, deficiência de iodo, drogas, bócio desormonogenético) e secundárias (falência hipofisária; hipotalâmica, rara). Asterisco = associadas a bócio. Nos países desenvolvidos, <b>Hashimoto e pós-ablativo</b> respondem pela maioria dos casos.</figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Hipotireoidismo primário: congênito, adquirido e autoimune</h2>
+  <h3>Congênito</h3>
+  <ol>
+    <li><b>Bócio desormonogenético</b>: erros inatos em qualquer etapa da síntese. Pode falhar (1) o <b>transporte de iodo</b> para dentro do tireócito, (2) a <b>organificação</b> ou (3) o <b>acoplamento</b> de MIT/DIT em T3/T4. Nesse último caso, a célula "fica só com os precursores". A causa mais comum são mutações no gene da <b>TPO</b>.
+      <ul><li><b>Síndrome de Pendred</b>: <b>hipotireoidismo + surdez</b>, por mutação no gene <i>SLC26A4</i>, que codifica a <b>pendrina</b>. A pendrina existe no ápice do tireócito e na <b>orelha interna</b>. Sem ela, o iodo não chega à luz do folículo.</li></ul></li>
+    <li><b>Deficiência endêmica de iodo</b> na dieta. Em algumas regiões a dieta é <b>bociogênica</b>: pobre em iodo ou com alimentos que dificultam o uso do iodo (a aula citou a <b>raiz da mandioca</b>). A mãe mal nutrida em iodo gera bebê já com problema de tireoide.</li>
+    <li><b>Agenesia</b>: a tireoide não se forma.</li>
+    <li><b>Hipoplasia</b>: forma-se, mas menor que o normal.</li>
+    <li><b>Síndrome da resistência ao hormônio tireoidiano</b> (curiosidade, rara): autossômica dominante, com mutação no <b>receptor</b>. As células não respondem → clínica de hipotireoidismo com <b>T3/T4 altos</b>. A hipófise também é resistente, então o <b>TSH tende a ser alto</b>. A comparação da aula foi com o diabetes tipo 2, em que há hormônio, mas as células resistem a ele.</li>
+  </ol>
+  <div class="box prof"><p class="h">🎯 Teste do pezinho</p>
+  <p>É como se diagnostica o hipotireoidismo congênito: "super importante, para já saber se o bebezinho tem problema de tireoide". Sem triagem, a agenesia pode passar despercebida nas primeiras semanas (tópico 10).</p></div>
+  <h3>Adquirido</h3>
+  <ul>
+    <li><b>Deficiência de iodo</b> na dieta.</li>
+    <li><b>Ablação cirúrgica</b> (tireoidectomia por tumor, por exemplo) e <b>radiação</b> do parênquima. O paciente tireoidectomizado precisa de reposição.</li>
+    <li><b>Drogas</b>:
+      <ul>
+        <li>dadas <b>de propósito</b> para reduzir a função (<b>propiltiouracil, metimazol</b>, no hipertireoidismo): em dose excessiva, o paciente vai para o hipotireoidismo;</li>
+        <li>usadas para <b>outras condições</b>, com hipotireoidismo como <b>efeito colateral</b>: <b>lítio</b>, ácido p-aminossalicílico.</li>
+      </ul></li>
+    <li><b>Iodeto em altas concentrações: efeito Wolff-Chaikoff</b>. O excesso de iodeto inibe de forma <b>aguda e transitória</b> a síntese hormonal e, o efeito clínico mais importante, a <b>liberação</b> de hormônio. A ação é rápida e serve como estratégia na <b>tirotoxicose grave/tempestade</b> (há protocolo próprio).</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergência: o mecanismo do Wolff-Chaikoff</p>
+  <p><b>Na aula:</b> o excesso de iodo "bloqueia o transportador de iodo para o interior da célula", e sem iodo dentro da célula não há T3/T4. <b>Na literatura:</b> o efeito Wolff-Chaikoff é a <b>inibição aguda da organificação</b> (iodação da tireoglobulina) pelo excesso de iodeto. A redução do NIS vem depois e é o mecanismo do <b>"escape"</b> do efeito, em alguns dias. Na tirotoxicose grave, o benefício rápido vem sobretudo da <b>inibição da liberação</b> hormonal, e o iodo é dado <b>depois</b> da tionamida. O slide da aula já menciona o "transporte limitado", a "inibição da síntese" e a "inibição da liberação". Na prova, a ideia central é: <b>excesso de iodeto inibe aguda e transitoriamente a tireoide</b>.</p></div>
+  <h3>Autoimune</h3>
+  <ul>
+    <li><b>Causa mais comum de hipotireoidismo em regiões com iodo suficiente.</b> A maioria dos casos é <b>tireoidite de Hashimoto</b> (tema do simpósio).</li>
+    <li>Pode ser isolado ou parte da <b>síndrome poliendócrina autoimune</b>.</li>
+  </ul>
+  <h3>Hipotireoidismo secundário</h3>
+  <ul>
+    <li>Por <b>deficiência de TSH</b> e, muito mais raramente, de <b>TRH</b>.</li>
+    <li>Causas hipofisárias (qualquer causa de hipopituitarismo): trauma, tumor hipofisário ou não hipofisário, <b>necrose hipofisária pós-parto</b>. Causas hipotalâmicas: trauma, tumores, radioterapia, doenças infiltrativas.</li>
+  </ul>
+
+  <h2 class="topic" id="t9">9 · Curso clínico do hipotireoidismo</h2>
+  <p>Estado <b>hipometabólico</b>, menor taxa metabólica basal. "É tudo ao contrário" da tirotoxicose.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Sistema</th><th>Tirotoxicose</th><th>Hipotireoidismo</th></tr>
+    <tr><td><b>Pele e temperatura</b></td><td>quente, úmida; intolerância ao calor</td><td><b>fria e ressecada</b>; <b>sensibilidade ao frio</b>; sudorese diminuída</td></tr>
+    <tr><td><b>Coração</b></td><td>taquicardia, ↑ débito, arritmia</td><td><b>bradicardia</b>, ↓ débito, dispneia</td></tr>
+    <tr><td><b>Pressão</b></td><td>↑ <b>sistólica</b></td><td>↑ <b>diastólica</b></td></tr>
+    <tr><td><b>Sistema nervoso</b></td><td>ansiedade, agitação, insônia</td><td>cansaço, <b>depressão</b>, sono, raciocínio lento, memória ruim</td></tr>
+    <tr><td><b>Peso e apetite</b></td><td>perde peso com fome</td><td><b>ganha peso</b> com apetite reduzido</td></tr>
+    <tr><td><b>Colesterol</b></td><td>baixo (↑ receptor de LDL)</td><td><b>alto</b> (perfil aterogênico)</td></tr>
+    <tr><td><b>Intestino</b></td><td>diarreia</td><td><b>constipação</b> (↓ peristaltismo)</td></tr>
+    <tr><td><b>Cabelo e unhas</b></td><td>onicólise</td><td>ásperos, secos, quebradiços; <b>queda de cabelo</b> (↓ síntese proteica)</td></tr>
+    <tr><td><b>Ciclo menstrual</b></td><td>—</td><td>menorragia e polimenorreia; ou ciclos irregulares/amenorreia</td></tr>
+    <tr><td><b>Voz</b></td><td>—</td><td><b>rouquidão</b></td></tr>
+  </table></div>
+  <h3>Os mecanismos que a aula explicou</h3>
+  <ul>
+    <li><b>Pressão diastólica alta:</b> menos hormônio → menos metabolismo → menos calor → <b>menos vasodilatação</b>. O tônus periférico fica relativamente alto (vasoconstrição) → <b>↑ resistência vascular periférica</b> → como a diastólica reflete essa resistência, <b>ela sobe</b>.</li>
+    <li><b>Sistema nervoso:</b> os hormônios agem nos sistemas <b>noradrenérgico e serotoninérgico</b> (libido, humor, memória, raciocínio, sono-vigília). Por isso o quadro pode <b>mimetizar depressão</b>.</li>
+    <li><b>Infertilidade:</b> ↓ T3/T4 → <b>↑ prolactina</b> → <b>não há ovulação</b>. Também pode haver defeito de fase lútea (progesterona baixa). "Resolvendo o hipotireoidismo, pode resolver" a dificuldade de engravidar.</li>
+    <li><b>Colesterol alto:</b> o oposto da tirotoxicose. Sem o aumento de receptores de LDL, o LDL fica no sangue. Esse <b>perfil aterogênico</b> provavelmente contribui para a mortalidade cardiovascular.</li>
+    <li><b>Rouquidão:</b> pelo mixedema das pregas vocais (o slide também cita paralisia de pregas vocais). O acúmulo de matriz engrossa a voz (tópico 11).</li>
+    <li>Também: <b>tornozelos e rosto inchados</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t10">10 · Cretinismo</h2>
+  <p>As duas manifestações clássicas do hipotireoidismo são <b>cretinismo</b> e <b>mixedema</b>. O que separa uma da outra é <b>a idade de início</b>.</p>
+  <ul>
+    <li><b>Cretinismo</b>: hipotireoidismo no <b>período fetal ou na lactância (primeiros 2 anos de vida)</b>.</li>
+    <li><b>Causas</b>: <b>deficiência de iodo</b> (cretinismo endêmico), <b>erros inatos</b> da biossíntese (bócio desormonogenético, como na síndrome de Pendred) e <b>ausência congênita da tireoide</b> (cretinismo congênito).</li>
+  </ul>
+  <h3>A linha do tempo da tireoide fetal</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Momento</th><th>O que acontece</th></tr>
+    <tr><td>~24 dias após a fecundação</td><td>a tireoide começa a se formar (primeira glândula endócrina do embrião)</td></tr>
+    <tr><td>7ª semana</td><td>assume a forma definitiva e chega à posição no pescoço</td></tr>
+    <tr><td>~10ª semana</td><td>já há receptores de T3 no cérebro fetal</td></tr>
+    <tr><td>11ª semana</td><td>aparece coloide: surgem os folículos</td></tr>
+    <tr><td>~20ª semana</td><td>TSH e tiroxina fetais começam a subir: o feto passa a produzir hormônio</td></tr>
+    <tr><td>~35ª semana</td><td>níveis fetais chegam aos de adulto</td></tr>
+  </table></div>
+  <ul>
+    <li>Até o <b>2º trimestre</b>, período de <b>rápido desenvolvimento cerebral</b>, o feto depende <b>sobretudo do T4 materno</b>. Hipotiroxinemia materna nessa fase pode deixar <b>déficit neurológico irreversível</b>. Daí a importância do iodo na dieta da gestante.</li>
+    <li><b>A gravidade do déficit mental depende de quando falta o hormônio.</b> Se a deficiência materna ocorre <b>antes</b> de a tireoide fetal funcionar → retardo <b>grave</b>. Se a queda materna é <b>tardia</b>, com a tireoide fetal já funcionando → o cérebro pode se desenvolver <b>normalmente</b>.</li>
+  </ul>
+  <h3>O neonato sem tireoide</h3>
+  <ul>
+    <li>Pode nascer com <b>aparência e função normais</b>, porque recebeu algum hormônio materno no útero (geralmente insuficiente).</li>
+    <li><b>Algumas semanas depois</b>: movimentos lentos, desenvolvimento físico e mental muito atrasado.</li>
+    <li>Com tiroxina em qualquer momento, o <b>crescimento físico</b> geralmente se normaliza. O <b>desenvolvimento mental</b>, porém, só é preservado se o tratamento começar cedo. A suplementação nas <b>primeiras 2 semanas</b> de vida pode impedir as alterações morfológicas.</li>
+    <li>Por que o cérebro sofre: sem hormônio na fase de neurogênese ativa (até ~6 meses após o parto), há <b>distúrbio da migração neuronal</b>, <b>desorganização das projeções axônicas</b> e <b>redução da sinaptogênese</b>, com retardo de crescimento, ramificação e <b>mielinização</b>.</li>
+  </ul>
+  <h3>Características clínicas</h3>
+  <ul>
+    <li>Prejuízo do <b>sistema esquelético</b> e do <b>SNC</b>: <b>baixa estatura</b>, <b>língua projetada</b>, <b>retardo mental grave</b>, <b>características faciais grosseiras</b>.</li>
+    <li>O esqueleto cresce <b>menos que os tecidos moles</b>: aparência obesa, estrutura brevilínea, baixa estatura. A <b>língua</b> fica tão grande em relação ao esqueleto que pode <b>obstruir a deglutição e a respiração</b>.</li>
+  </ul>
+
+  <h2 class="topic" id="t11">11 · Mixedema e diagnóstico do hipotireoidismo</h2>
+  <ul>
+    <li><b>Mixedema</b> (doença de Gull): hipotireoidismo que surge em <b>crianças mais velhas (após os 2 anos) ou adultos</b>. Na criança mais velha, os sinais são intermediários entre os do cretino e os do adulto.</li>
+    <li>No adulto, começa de forma <b>insidiosa</b> e pode levar anos até a suspeita. Os sintomas iniciais são <b>fadiga, apatia e preguiça mental</b>, que <b>mimetizam depressão</b>.</li>
+    <li>Quadro: <b>lentidão física e mental</b>, linguagem e funções intelectuais lentas, <b>intolerância ao frio</b>, excesso de peso, <b>constipação</b>, sudorese diminuída, <b>pele fria e pálida</b> (↓ fluxo), <b>débito cardíaco reduzido</b> (o hormônio regula genes do sarcolema, como as ATPases de cálcio) com dispneia e menor capacidade de exercício, e <b>perfil aterogênico</b> (↑ colesterol total e LDL).</li>
+  </ul>
+  <h3>O edema do mixedema</h3>
+  <ul>
+    <li><b>Flacidez sob os olhos e inchaço da face.</b></li>
+    <li>Por motivo não explicado, acumula-se muito <b>ácido hialurônico e sulfato de condroitina</b> (glicosaminoglicanos) ligados a proteínas no interstício. Forma-se um <b>gel</b> praticamente imóvel, e por isso o edema é <b>pouco depressível</b>.</li>
+    <li>Esse acúmulo de matriz na pele, no subcutâneo e em vísceras resulta em <b>alargamento e engrossamento das feições</b>, <b>aumento da língua</b>, <b>edema pouco depressível</b> e <b>aprofundamento da voz</b>.</li>
+  </ul>
+  <h3>Diagnóstico laboratorial</h3>
+  <ul>
+    <li>Os sintomas são inespecíficos, então o laboratório é vital. <b>Ganho de peso inexplicado ou hipercolesterolemia</b> → investigar hipotireoidismo.</li>
+    <li><b>TSH = teste de rastreamento mais sensível.</b> Está <b>aumentado no hipotireoidismo primário</b> (perda da inibição retroativa). <b>Não está aumentado</b> no hipotireoidismo por doença hipotalâmica ou hipofisária.</li>
+    <li><b>T4 diminuído</b> no hipotireoidismo de <b>qualquer origem</b>.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Situação</th><th>T3/T4</th><th>TSH</th></tr>
+    <tr><td>Tirotoxicose primária (Graves, nódulos, tireoidite, factícia)</td><td>↑</td><td>↓</td></tr>
+    <tr><td>Hipertireoidismo secundário (adenoma secretor de TSH)</td><td>↑</td><td><b>normal ou ↑</b></td></tr>
+    <tr><td>Hipotireoidismo primário</td><td>↓</td><td><b>↑</b></td></tr>
+    <tr><td>Hipotireoidismo secundário (hipófise/hipotálamo)</td><td>↓</td><td>normal ou ↓ (não sobe)</td></tr>
+    <tr><td>Resistência ao hormônio tireoidiano</td><td>↑</td><td>tende a ↑ (com clínica de hipo)</td></tr>
+  </table></div>
+
+  <div class="resumo" id="t12"><h3>✅ Resumo rápido da aula</h3>
+  <ul>
+    <li><b>Histologia:</b> 10–20 g, dois lobos + istmo, abaixo e à frente da laringe · lóbulos com 20–40 folículos · tireócitos achatados = pouca atividade; colunares = muita · coloide = tireoglobulina + T3/T4 prontos + MIT/DIT · <b>célula C → calcitonina → inibe osteoclasto → hipocalcemiante</b>.</li>
+    <li><b>Eixo:</b> TRH (hipotálamo) → TSH (adeno-hipófise) → T3/T4; feedback negativo nos dois níveis · transporte por TBG e transtiretina · T4:T3 = 20:1 · 80% do T3 vem de conversão periférica (fígado e rim) · T3 ~4× mais ativo · receptor nuclear → ↑ TMB, catabolismo, síntese proteica, cérebro fetal.</li>
+    <li><b>Síntese:</b> tireoglobulina → captação de iodeto (NIS) → oxidação (TPO) → <b>pendrina</b> leva o iodo à luz → iodação: MIT/DIT → <b>MIT+DIT = T3; DIT+DIT = T4</b> no coloide → endocitose → T3/T4 aos capilares; MIT/DIT desiodados e reciclados.</li>
+    <li><b>Tirotoxicose ≠ hipertireoidismo:</b> excesso circulante × hiperfunção · causas: hiperfunção, liberação de pré-formado (tireoidites), fonte extratireoidiana (struma ovarii) · Graves 85% · bócio multinodular · adenoma tóxico · secundário (adenoma hipofisário de TSH) = único com TSH normal/alto.</li>
+    <li><b>Clínica da tirotoxicose:</b> ↑ β-receptores · emagrece com fome · calor · colesterol baixo (↑ receptor LDL) · epífises fecham cedo · taquicardia, FA, miocardiopatia tirotóxica · tremor fino 10–15/s · olhar fixo · diarreia · osteoporose (estimula osteoclasto) · broncodilatação · onicólise (Plummer) · <b>tempestade</b>: Graves não tratado + estresse/catecolaminas → febre, taquicardia, morte por arritmia.</li>
+    <li><b>Hipotireoidismo:</b> 10× em mulheres · primário (congênito, adquirido, autoimune) é a maioria · secundário = hipófise/hipotálamo · congênito: bócio desormonogenético (TPO; Pendred = surdez + hipo), deficiência de iodo, agenesia, hipoplasia, resistência ao hormônio · adquirido: iodo, cirurgia, radiação, PTU/metimazol, lítio, Wolff-Chaikoff · <b>Hashimoto</b> = mais comum com iodo suficiente · teste do pezinho.</li>
+    <li><b>Clínica do hipo:</b> frio, pele seca, bradicardia, <b>↑ diastólica</b> (↑ RVP), depressão/sono, ganho de peso, colesterol alto, constipação, cabelo e unhas ásperos, ↑ prolactina → anovulação, rouquidão.</li>
+    <li><b>Cretinismo</b> (até 2 anos): baixa estatura, língua projetada, face grosseira, retardo mental · até o 2º trimestre o feto depende do T4 materno · déficit precoce = grave · tratar nas primeiras 2 semanas · <b>Mixedema</b> (após 2 anos/adulto): lentidão, GAG no interstício → edema pouco depressível, voz grossa · <b>TSH ↑ no primário</b>, não sobe no central; T4 ↓ em qualquer origem.</li>
+  </ul></div>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🧫 Resumão Pré-Prova · Patologias da Tireoide</h1>
+  <p class="sub">Revisão da véspera · Anato Pato II · Aula 10 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-histo">Histologia</a>
+    <a class="a1" href="#p-eixo">Eixo/transporte</a>
+    <a class="a1" href="#p-sintese">Síntese</a>
+    <a class="a1" href="#p-tirotox">Tirotoxicose</a>
+    <a class="a1" href="#p-clinhiper">Clínica do hiper</a>
+    <a class="a1" href="#p-hipo">Hipotireoidismo</a>
+    <a class="a1" href="#p-clinhipo">Clínica do hipo</a>
+    <a class="a1" href="#p-cret">Cretinismo/mixedema</a>
+    <a class="a1" href="#p-lab">Laboratório</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-histo">
+  <span class="aula-tag t1">Anatomia e histologia</span>
+  <ul>
+    <li><b class="k">10–20 g</b> · dois lobos + istmo · abaixo e à frente da laringe · cápsula, capilares fenestrados, lóbulos com 20–40 folículos.</li>
+    <li>Folículo = tireócitos (células foliculares) + <b class="k">coloide</b> (tireoglobulina, T3/T4 prontos, MIT e DIT).</li>
+    <li><b class="k">Achatada = pouca atividade</b> · <b class="k">colunar (núcleo grande) = muita atividade</b>.</li>
+    <li><b class="k">Célula C</b> (parafolicular, entre os folículos) → <b>calcitonina</b> → inibe osteoclasto → ↓ reabsorção óssea → <b>hipocalcemiante</b>.</li>
+  </ul>
+</section>
+
+<section id="p-eixo">
+  <span class="aula-tag t1">Eixo, transporte e ação</span>
+  <ul>
+    <li><b class="k">TRH</b> (hipotálamo) → <b class="k">TSH</b> (adeno-hipófise) → receptor de TSH no tireócito → T3/T4 · feedback negativo em hipófise <b>e</b> hipotálamo.</li>
+    <li>Transporte: <b class="k">TBG</b> (globulina ligadora de tiroxina) e <b class="k">transtiretina</b>, ligação reversível.</li>
+    <li><b class="k">T4:T3 = 20:1</b> · <b>80% do T3</b> = conversão periférica (fígado e rim; também cérebro, hipófise, adiposo) · T3r = inativo (desiodase 3).</li>
+    <li><b class="k">T3 ~4× mais ativo</b>; receptor nuclear com afinidade 10–15× maior pelo T3.</li>
+    <li>Efeitos: ↑ catabolismo de carboidratos e lipídios, ↑ síntese proteica → <b>↑ TMB</b> · papel fundamental no <b>cérebro fetal e do recém-nascido</b>.</li>
+  </ul>
+</section>
+
+<section id="p-sintese">
+  <span class="aula-tag t1">Síntese e liberação</span>
+  <ul>
+    <li>1) Tireoglobulina (RE + Golgi) → luz · 2) iodeto entra pelo <b>NIS</b> · 3) oxidação pela <b>TPO</b> + H₂O₂ · 4) <b class="k">pendrina</b> leva o iodo à luz · 5) iodação ("organificação") → <b>MIT e DIT</b>.</li>
+    <li><b class="k">MIT + DIT = T3</b> · <b class="k">DIT + DIT = T4</b> · acoplamento e estoque <b>no coloide</b>.</li>
+    <li>Estímulo → <b>endocitose do coloide</b> → lisossomos → T3/T4 aos capilares · MIT/DIT → <b class="k">desiodase</b> → iodo reciclado.</li>
+    <li>⚠️ Divergência: o slide diz que a pendrina transporta "iodo oxidado"; a literatura diz iodeto, oxidado na superfície apical.</li>
+  </ul>
+</section>
+
+<section id="p-tirotox">
+  <span class="aula-tag t1">Tirotoxicose × hipertireoidismo</span>
+  <ul>
+    <li><b class="k">Tirotoxicose</b> = T3/T4 livres altos no sangue (estado hipermetabólico) · <b class="k">hipertireoidismo</b> = glândula hiperfuncionante (a causa mais comum, não a única).</li>
+    <li>3 caminhos: <b>hiperfunção</b> · <b>liberação de hormônio pré-formado</b> (tireoidite rompe folículos) · <b>fonte extratireoidiana</b> (struma ovarii, factícia).</li>
+    <li>Mais comuns (com hiperfunção): <b class="k">Graves (~85%)</b> · bócio multinodular hiperfuncionante · adenoma hiperfuncionante.</li>
+    <li><b>Bócio = aumento da glândula</b> (difuso ou nodular), não sinônimo de nódulo.</li>
+    <li>Secundário: <b>adenoma hipofisário secretor de TSH</b> (raro) → único com <b class="k">TSH normal/alto</b>; todos os outros têm TSH ↓.</li>
+  </ul>
+</section>
+
+<section id="p-clinhiper">
+  <span class="aula-tag t1">Clínica da tirotoxicose</span>
+  <ul>
+    <li>↑ número e sensibilidade dos <b class="k">receptores β</b> · perde peso com <b>apetite aumentado</b> · ↑ mitocôndrias, ↑ transporte ativo → calor, sudorese, intolerância ao calor.</li>
+    <li><b>Colesterol baixo</b>: ↑ receptor de LDL no hepatócito → bile · criança: cresce rápido, mas <b class="k">epífises fecham cedo</b> → altura final menor.</li>
+    <li>Coração: taquicardia, ↑ débito, <b>FA</b>, cardiomegalia, ↑ sistólica · <b class="k">miocardiopatia tirotóxica</b> (catabolismo proteico deprime o miocárdio → IC).</li>
+    <li>Tremor <b>fino, 10–15/s</b> (≠ Parkinson) · ansiedade, insônia · olhar fixo/arregalado, pálpebra lenta.</li>
+    <li>Diarreia (hipermotilidade) · <b>osteoporose</b> (T3/T4 estimulam osteoclastos) · broncodilatação (β₂), ↑ FR · <b class="k">onicólise = unha de Plummer</b>.</li>
+    <li><b class="k">Tempestade tireoidiana</b>: Graves não tratado/mal tratado + cirurgia, infecção, estresse ou suspensão do antitireoidiano → catecolaminas → febre, taquicardia → morte por arritmia · emergência.</li>
+  </ul>
+</section>
+
+<section id="p-hipo">
+  <span class="aula-tag t1">Hipotireoidismo: causas</span>
+  <ul>
+    <li>↑ com a idade · <b>10× mais em mulheres</b> · <b class="k">primário</b> (na glândula) = maioria · <b class="k">secundário</b> = hipófise (inclui necrose pós-parto) ou hipotálamo, mais raro.</li>
+    <li><b>Congênito</b>: bócio desormonogenético (transporte de iodo, organificação, acoplamento; <b>TPO</b> = mais comum) · <b class="k">Pendred = surdez + hipotireoidismo</b> (pendrina, <i>SLC26A4</i>) · deficiência de iodo (dieta bociogênica, mandioca) · agenesia · hipoplasia · resistência ao hormônio (rara; T3/T4 e TSH altos).</li>
+    <li><b>Adquirido</b>: deficiência de iodo · cirurgia · radiação · PTU/metimazol (dose demais) · <b>lítio</b>, ácido p-aminossalicílico (efeito colateral) · <b class="k">Wolff-Chaikoff</b>: excesso de iodeto inibe a tireoide de forma aguda e transitória → usado na tirotoxicose grave.</li>
+    <li><b>Autoimune</b>: <b class="k">Hashimoto</b> = causa mais comum onde o iodo é suficiente · Hashimoto + pós-ablativo = maioria nos países desenvolvidos.</li>
+    <li>Diagnóstico do congênito: <b class="k">teste do pezinho</b>.</li>
+  </ul>
+</section>
+
+<section id="p-clinhipo">
+  <span class="aula-tag t1">Clínica do hipotireoidismo ("tudo ao contrário")</span>
+  <ul>
+    <li>Pele fria e seca, sensibilidade ao frio · <b>bradicardia</b>, dispneia · <b class="k">↑ pressão diastólica</b>: menos calor → menos vasodilatação → ↑ RVP.</li>
+    <li>Cansaço, depressão, sono, memória e raciocínio lentos (sistemas noradrenérgico e serotoninérgico).</li>
+    <li>Apetite ↓ com <b>ganho de peso</b> · <b>colesterol alto</b> · constipação · cabelo e unhas ásperos, queda de cabelo · tornozelos e rosto inchados · rouquidão.</li>
+    <li>Ciclo: menorragia/polimenorreia, ou irregular/amenorreia · <b class="k">↑ prolactina → anovulação</b> → infertilidade que pode melhorar ao tratar a tireoide.</li>
+  </ul>
+</section>
+
+<section id="p-cret">
+  <span class="aula-tag t1">Cretinismo e mixedema</span>
+  <ul>
+    <li><b class="k">Cretinismo</b> = início fetal ou até os <b>2 anos</b> · causas: deficiência de iodo (endêmico), erro inato (desormonogenético), ausência da tireoide (congênito).</li>
+    <li>Tireoide fetal: forma-se ~24 dias · forma definitiva na 7ª sem · folículos na 11ª · produz hormônio a partir da ~20ª · nível de adulto na ~35ª.</li>
+    <li>Até o <b>2º trimestre</b> o cérebro fetal depende do <b>T4 materno</b> · falta precoce → retardo <b>grave</b>; falta tardia (com a tireoide fetal funcionando) → cérebro pode ser normal.</li>
+    <li>Neonato sem tireoide: <b>normal ao nascer</b> (T4 materno) → semanas depois, lentidão e atraso · tiroxina normaliza o crescimento, mas a <b class="k">mente só se preserva com tratamento precoce (primeiras 2 semanas)</b> · migração neuronal, axônios, sinapses, mielinização.</li>
+    <li>Clínica: baixa estatura, <b>língua projetada</b> (pode obstruir deglutição e respiração), face grosseira, retardo mental · esqueleto cresce menos que os tecidos moles.</li>
+    <li><b class="k">Mixedema</b> (doença de Gull) = após os 2 anos/adulto · insidioso, mimetiza depressão · lentidão, frio, constipação, pele fria e pálida, ↓ débito, perfil aterogênico.</li>
+    <li>Edema <b class="k">pouco depressível</b>: ácido hialurônico + sulfato de condroitina formam gel no interstício → face larga e grosseira, língua grande, voz grave.</li>
+  </ul>
+</section>
+
+<section id="p-lab">
+  <span class="aula-tag t1">Laboratório</span>
+  <ul>
+    <li>Hiper primário: <b>TSH ↓</b> (mesmo no subclínico) → confirmar com T4 livre ↑ · "toxicose de T3": só o T3 sobe.</li>
+    <li>Hiper secundário: T3/T4 ↑ com <b>TSH normal ou ↑</b> · descartar resistência ao hormônio e erro laboratorial.</li>
+    <li>⚠️ Teste do TRH: na aula, o TSH sobe ainda mais (acima de 30 µUI/mL) no adenoma; na literatura, o adenoma costuma ter resposta <b>achatada</b> e a resposta exagerada sugere resistência ao hormônio.</li>
+    <li>Hipo: <b class="k">TSH = teste mais sensível</b>, ↑ no primário, não sobe no central · <b>T4 ↓ em qualquer origem</b> · ganho de peso inexplicado ou colesterol alto → investigar.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <ul>
+    <li><b class="k">Tirotoxicose</b> (excesso circulante) ≠ <b>hipertireoidismo</b> (hiperfunção da glândula).</li>
+    <li><b class="k">Calcitonina</b> inibe osteoclasto ≠ <b>T3/T4 em excesso</b> estimulam osteoclasto (osteoporose).</li>
+    <li><b class="k">MIT + DIT = T3</b> ≠ <b>DIT + DIT = T4</b>.</li>
+    <li><b class="k">NIS</b> (iodeto entra pela base) ≠ <b>pendrina</b> (iodo vai para a luz pelo ápice) ≠ <b>TPO</b> (oxida e iodiniza) ≠ <b>desiodase</b> (recicla iodo de MIT/DIT; converte T4 em T3 na periferia).</li>
+    <li><b class="k">Hiper → ↑ sistólica</b> ≠ <b>hipo → ↑ diastólica</b>.</li>
+    <li><b class="k">Hiper → colesterol ↓</b> (↑ receptor LDL) ≠ <b>hipo → colesterol ↑</b>.</li>
+    <li><b class="k">Cretinismo</b> (até 2 anos) ≠ <b>mixedema</b> (após 2 anos/adulto).</li>
+    <li><b class="k">Hipo primário: TSH ↑</b> ≠ <b>secundário: TSH não sobe</b> · <b>hiper secundário: TSH normal/↑</b>.</li>
+    <li><b class="k">Tremor da tirotoxicose</b> (fino, 10–15/s) ≠ <b>tremor do Parkinson</b> (brusco, grosseiro).</li>
+  </ul>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Patologias da Tireoide</h2>
+    <p>Anato Pato II · Aula 10 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">Modo Estudo</button>
+        <button data-modo="simulado">Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Aula 10 — Patologias da Tireoide</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Patológica II — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☾':'☀';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('cortex-theme',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Duas lâminas de tireoide sem doença são projetadas. Na lâmina 1, os folículos são revestidos por células altas, colunares, de núcleo grande e evidente, com pouco coloide na luz. Na lâmina 2, os folículos são grandes, repletos de coloide e revestidos por células achatadas.</span><div class=\"pergunta\">Qual interpretação funcional foi ensinada para essa diferença?</div>",alts:["Lâmina 1 mostra folículos em repouso, que armazenam hormônio, e a lâmina 2 folículos em síntese ativa", "Lâmina 1 mostra folículos em alta atividade secretora; a lâmina 2, folículos que produzem menos", "As duas lâminas têm a mesma atividade; a altura celular varia conforme o plano de corte do folículo", "Lâmina 1 mostra células parafoliculares produzindo calcitonina, e a lâmina 2 células foliculares", "Lâmina 1 mostra um artefato de retração da técnica, e a lâmina 2 o aspecto habitual da glândula"],correta:1,just:["Errada [tipo: mecanismo invertido] — é o contrário: célula achatada com muito coloide é a menos ativa; a colunar é a mais ativa.", "Correta. A altura do tireócito reflete a atividade: colunar com núcleo grande = célula 'trabalhando bastante', sintetizando T3/T4 (e consumindo coloide); achatada = menor atividade secretora, folículo cheio de coloide armazenado.", "Errada [tipo: misconception clássica] — a aula enfatizou que a variação de altura do epitélio tem significado funcional, não é efeito de corte.", "Errada [tipo: par confundível] — as células C ficam ENTRE os folículos, isoladas, com núcleo claro; não revestem o folículo.", "Errada [tipo: verdade no contexto errado] — houve um artefato de técnica numa foto da aula (aglomerado na luz), mas ele não explica a altura das células que revestem o folículo."],ref:"Aula 10 — Histologia do folículo"},
+
+{n:2,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Em uma aula prática, aponta-se uma célula de núcleo mais claro situada entre os folículos tireoidianos, fora do epitélio que reveste o coloide.</span><div class=\"pergunta\">Qual hormônio essa célula secreta e qual o seu efeito principal?</div>",alts:["Tiroxina, que aumenta a taxa metabólica basal e estimula a atividade dos osteoclastos", "Calcitonina, que estimula os osteoclastos e eleva o cálcio liberado do osso para o sangue", "Paratormônio, que estimula os osteoclastos e eleva o cálcio liberado do osso para o sangue", "Calcitonina, que inibe os osteoclastos e reduz a reabsorção óssea, sendo hipocalcemiante", "Tireoglobulina, secretada no coloide para armazenar os precursores MIT e DIT na luz"],correta:3,just:["Errada [tipo: par confundível] — a tiroxina é produzida pelas células FOLICULARES, que revestem o folículo, não pela célula entre os folículos.", "Errada [tipo: mecanismo invertido] — a calcitonina INIBE o osteoclasto; quem estimula a reabsorção óssea é o PTH (e o excesso de T3/T4).", "Errada [tipo: verdade no contexto errado] — o PTH de fato estimula a reabsorção óssea, mas vem das paratireoides, não da célula situada entre os folículos tireoidianos.", "Correta. Célula C (parafolicular) → calcitonina → inibe osteoclastos → menos reabsorção óssea → menos cálcio no sangue: hormônio hipocalcemiante.", "Errada [tipo: verdade no contexto errado] — a tireoglobulina é real e fica no coloide, mas é produzida pelos tireócitos, não pela célula C."],ref:"Aula 10 — Células C e calcitonina"},
+
+{n:3,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Menino de 6 anos com surdez neurossensorial congênita e bócio. A investigação mostra hipotireoidismo. O defeito genético afeta um transportador de ânions expresso na superfície apical dos tireócitos e na orelha interna.</span><div class=\"pergunta\">Qual etapa da síntese hormonal está comprometida?</div>",alts:["Passagem do iodo de dentro do tireócito para a luz do folículo, feita pela pendrina", "Captação do iodeto do sangue pela membrana basal, feita pelo cotransportador sódio/iodo", "Acoplamento de MIT e DIT dentro do coloide, catalisado pela peroxidase tireoidiana", "Ligação do TSH ao seu receptor na célula folicular, que deixa de estimular a síntese", "Clivagem de MIT e DIT pela desiodase, que impede a reciclagem do iodo intracelular"],correta:0,just:["Correta. Síndrome de Pendred: surdez + hipotireoidismo por mutação no gene SLC26A4, que codifica a pendrina, transportador apical do tireócito e da orelha interna. Sem ela, o iodo não chega à luz para iodar a tireoglobulina. ⚠️ Divergência: na aula, a pendrina transporta 'iodo oxidado'. Na literatura, transporta iodeto (I⁻), oxidado pela TPO na superfície apical. Fonte: Robbins; fisiologia de Guyton.", "Errada [tipo: par confundível] — o NIS fica na membrana BASAL e não é expresso na orelha interna; o enunciado aponta um transportador APICAL.", "Errada [tipo: verdade no contexto errado] — mutações da TPO são a causa mais comum de bócio desormonogenético, mas não explicam surdez nem envolvem transportador apical.", "Errada [tipo: diagnóstico diferencial] — defeito no receptor de TSH é causa de disgenesia/hipotireoidismo, mas não cursa com surdez.", "Errada [tipo: par confundível] — a desiodase recicla iodo de MIT/DIT após a endocitose; não é um transportador de ânions da membrana apical."],ref:"Aula 10 — Síntese hormonal e síndrome de Pendred"},
+
+{n:4,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Na luz do folículo, resíduos de tirosina da tireoglobulina já foram iodados, formando monoiodotirosina (MIT) e di-iodotirosina (DIT).</span><div class=\"pergunta\">Qual combinação gera cada hormônio e onde esse acoplamento ocorre?</div>",alts:["MIT + MIT formam T3 e DIT + DIT formam T4, no coloide, ainda presos à tireoglobulina", "MIT + DIT formam T4 e DIT + DIT formam T3, no citoplasma, após a endocitose do coloide", "MIT + DIT formam T3 e DIT + DIT formam T4, no coloide, ainda presos à tireoglobulina", "MIT + DIT formam T3 e DIT + DIT formam T4, no citoplasma, após a endocitose do coloide", "DIT + DIT formam T3 e MIT + MIT formam T4, no retículo, antes de a tireoglobulina sair"],correta:2,just:["Errada [tipo: erro numérico plausível] — MIT + MIT somaria só 2 iodos; T3 tem 3 iodos (1 + 2).", "Errada [tipo: mecanismo invertido] — trocou os produtos (e o local): MIT + DIT = T3, DIT + DIT = T4, no coloide.", "Correta. Na própria luz: 1 MIT (1 iodo) + 1 DIT (2 iodos) = T3 (3 iodos); 2 DIT = T4 (4 iodos). Os hormônios ficam armazenados no coloide, como parte da tireoglobulina, até a endocitose.", "Errada [tipo: momento errado] — a fórmula está certa, mas o acoplamento ocorre no coloide; após a endocitose os hormônios já estão prontos e são liberados.", "Errada [tipo: erro numérico plausível] — DIT + DIT soma 4 iodos (T4), não 3; e o acoplamento não acontece no retículo, e sim no coloide, após a iodação."],ref:"Aula 10 — Síntese: iodação e acoplamento"},
+
+{n:5,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Sob estímulo do TSH, a célula folicular endocita o coloide, e as vesículas são digeridas por enzimas lisossômicas. No citoplasma ficam T3, T4, MIT e DIT.</span><div class=\"pergunta\">Qual o destino de cada grupo de moléculas, conforme a aula?</div>",alts:["T3 e T4 voltam ao coloide para estoque; MIT e DIT saem para os capilares como hormônios ativos", "T3 e T4 saem para os capilares; MIT e DIT também são secretados e convertidos em T3 no fígado", "T3 e T4 são desiodados no citoplasma; MIT e DIT saem para os capilares ligados à transtiretina", "T3 e T4 saem para os capilares; MIT e DIT são oxidados pela peroxidase e reiodados ali mesmo", "T3 e T4 saem para os capilares; MIT e DIT são desiodados e o iodo é reaproveitado na síntese"],correta:4,just:["Errada [tipo: mecanismo invertido] — T3/T4 é que vão para o sangue; MIT/DIT não são hormônios ativos.", "Errada [tipo: verdade no contexto errado] — a conversão periférica no fígado e no rim é do T4 em T3, não de MIT/DIT.", "Errada [tipo: par confundível] — a desiodase intracelular age sobre MIT/DIT; T3/T4 é que circulam ligados a TBG e transtiretina.", "Errada [tipo: par confundível] — a peroxidase oxida iodeto e catalisa a iodação na luz; a reciclagem de MIT/DIT é feita pela desiodase.", "Correta. T3/T4 seguem para os capilares que cercam o folículo. MIT e DIT sofrem ação da desiodase, que cliva o iodo e recicla o íon e a tirosina para nova síntese."],ref:"Aula 10 — Liberação e reciclagem do iodo"},
+
+{n:6,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Ao revisar fisiologia, um estudante afirma que, como o T3 é o hormônio mais ativo, ele deve ser o principal produto secretado pela tireoide.</span><div class=\"pergunta\">Qual correção está de acordo com a aula?</div>",alts:["A tireoide secreta sobretudo T3 (cerca de 20:1), e o T4 circulante vem da conversão no fígado e no rim", "A tireoide secreta sobretudo T4 (cerca de 20:1); a maior parte do T3 vem da conversão no fígado e no rim", "A tireoide secreta T3 e T4 em proporção parecida, e a conversão periférica é pequena no adulto saudável", "A tireoide secreta sobretudo T4, que é o mais ativo, e o T3 é um metabólito inativo formado no fígado", "A tireoide secreta T4 e T3 na proporção de 4:1, e o T3 que falta vem da conversão nas células C da glândula"],correta:1,just:["Errada [tipo: mecanismo invertido] — inverteu a proporção e a direção da conversão (é T4 → T3).", "Correta. Proporção de 20 T4 para 1 T3; ~80% do T3 vem da conversão periférica, principalmente no fígado e no rim. Como o T3 é ~4× mais ativo, a conversão é essencial.", "Errada [tipo: misconception clássica] — a secreção é muito desigual (20:1), e a conversão periférica gera a maior parte do T3.", "Errada [tipo: par confundível] — o T3 é o mais ativo; o metabólito inativo é o T3 reverso (desiodase tipo 3).", "Errada [tipo: erro numérico plausível] — '4×' é a diferença de ATIVIDADE (T3 mais ativo), não a proporção secretada (20:1); e a conversão é periférica, não na célula C, que produz calcitonina."],ref:"Aula 10 — T4, T3 e conversão periférica"},
+
+{n:7,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">T4 e T3 recém-liberados pelos tireócitos chegam ao sangue e precisam alcançar os tecidos periféricos.</span><div class=\"pergunta\">Como a maior parte desses hormônios circula, segundo a aula?</div>",alts:["Ligada de modo reversível a proteínas do plasma: globulina ligadora de tiroxina e transtiretina", "Livre no plasma, porque hormônios derivados da tirosina são hidrossolúveis e dispensam transportadores", "Ligada de forma irreversível à tireoglobulina, que é secretada junto com os hormônios para o sangue", "Ligada ao receptor de TSH solúvel, que leva os hormônios até os receptores nucleares das células-alvo", "Ligada à globulina ligadora de tiroxina, mas depois de o T4 ser convertido em T3 no próprio fígado"],correta:0,just:["Correta. A maior parte do T3/T4 circula ligada de forma reversível à globulina ligadora de tiroxina (TBG) e à transtiretina, que os levam aos tecidos.", "Errada [tipo: misconception clássica] — ser derivado da tirosina não torna o hormônio livre no plasma; T3/T4 circulam majoritariamente ligados a proteínas.", "Errada [tipo: par confundível] — a tireoglobulina é a proteína de armazenamento do coloide; não é a transportadora plasmática.", "Errada [tipo: par confundível] — o receptor de TSH fica na membrana do tireócito e recebe o TSH; não transporta T3/T4.", "Errada [tipo: momento errado] — a ligação às proteínas ocorre logo na liberação; a conversão em T3 acontece depois, nos tecidos."],ref:"Aula 10 — Transporte dos hormônios"},
+
+{n:8,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Mulher de 34 anos com perda de peso, palpitações e intolerância ao calor tem T3 e T4 livres elevados e TSH suprimido. A tireoide é pequena e sem nódulos; a investigação encontra um teratoma ovariano com tecido tireoidiano funcionante (struma ovarii).</span><div class=\"pergunta\">Como classificar corretamente esse quadro?</div>",alts:["Hipertireoidismo primário, porque há T3 e T4 elevados e o TSH está suprimido no exame", "Hipertireoidismo secundário, porque o hormônio é produzido fora da glândula tireoide", "Tirotoxicose com hipertireoidismo, porque tecido ectópico conta como hiperfunção glandular", "Tirotoxicose sem hipertireoidismo, porque o excesso hormonal vem de fonte extratireoidiana", "Tirotoxicose por liberação de hormônio pré-formado, por ruptura inflamatória de folículos"],correta:3,just:["Errada [tipo: generalização indevida] — T3/T4 altos com TSH baixo definem tirotoxicose, não provam hiperfunção da glândula.", "Errada [tipo: par confundível] — 'secundário' na aula é o hipertireoidismo por adenoma hipofisário secretor de TSH, não a produção ectópica.", "Errada [tipo: misconception clássica] — a tabela da aula coloca o struma ovarii em 'não associado ao hipertireoidismo'.", "Correta. Tirotoxicose = excesso circulante; hipertireoidismo = hiperfunção da TIREOIDE. Aqui a fonte é o teratoma (struma ovarii): há tirotoxicose sem hipertireoidismo, como na tabela da aula.", "Errada [tipo: diagnóstico diferencial] — liberação de pré-formado é o mecanismo das tireoidites; aqui há produção ativa por tecido ectópico."],ref:"Aula 10 — Tirotoxicose × hipertireoidismo"},
+
+{n:9,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Mulher de 41 anos com dor cervical anterior, febre baixa e palpitações há duas semanas, após um quadro gripal. T3 e T4 elevados, TSH suprimido. A biópsia mostra inflamação destruindo folículos, sem hiperplasia do epitélio.</span><div class=\"pergunta\">Qual o mecanismo do excesso de hormônio, segundo a classificação da aula?</div>",alts:["Hiperfunção difusa da glândula, como na hiperplasia tóxica difusa da doença de Graves", "Excesso de TSH produzido por adenoma hipofisário, que estimula as células foliculares", "Liberação de hormônio pré-formado por ruptura dos folículos, sem hiperfunção glandular", "Produção de hormônio por nódulos autônomos, como no bócio multinodular hiperfuncionante", "Produção de hormônio por fonte extratireoidiana, como no teratoma com tecido tireoidiano"],correta:2,just:["Errada [tipo: diagnóstico diferencial] — Graves é hiperfunção com hiperplasia difusa; a biópsia mostra destruição, não hiperplasia.", "Errada [tipo: verdade no contexto errado] — o adenoma de TSH causa hipertireoidismo secundário, com TSH normal ou alto; aqui o TSH está suprimido.", "Correta. A inflamação rompe folículos e 'faz a glândula liberar o hormônio sem ela querer'. É tirotoxicose NÃO associada ao hipertireoidismo (tireoidite subaguda/De Quervain na tabela da aula).", "Errada [tipo: diagnóstico diferencial] — bócio multinodular tóxico é hiperfunção nodular, sem dor cervical nem destruição inflamatória.", "Errada [tipo: par confundível] — fonte extratireoidiana (struma ovarii) não explica inflamação destruindo folículos da tireoide."],ref:"Aula 10 — Causas de tirotoxicose"},
+
+{n:10,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Homem de 50 anos com tremor fino, taquicardia e perda de peso. T4 livre elevado. A ressonância de sela túrcica mostra macroadenoma hipofisário.</span><div class=\"pergunta\">Qual perfil de TSH é esperado e por quê?</div>",alts:["TSH suprimido, porque o T4 elevado exerce feedback negativo sobre a hipófise e o hipotálamo", "TSH suprimido, porque o adenoma comprime os tireotrofos e reduz a liberação normal de TSH", "TSH normal ou alto, porque o hipotálamo aumenta o TRH em resposta ao excesso de T3 e T4", "TSH baixo com TRH alto, porque o adenoma hipofisário produz TRH no lugar do TSH habitual", "TSH normal ou alto, porque o adenoma secreta TSH e escapa do feedback negativo de T3 e T4"],correta:4,just:["Errada [tipo: verdade no contexto errado] — é o que acontece nas causas primárias; o adenoma produz TSH de forma autônoma.", "Errada [tipo: misconception clássica] — compressão hipofisária explicaria HIPOtireoidismo central, não T4 alto com tremor e perda de peso.", "Errada [tipo: mecanismo invertido] — T3/T4 altos INIBEM o hipotálamo (feedback negativo); não aumentam o TRH.", "Errada [tipo: par confundível] — TRH é hipotalâmico; o adenoma hipofisário da aula secreta TSH.", "Correta. No hipertireoidismo secundário (adenoma secretor de TSH, raro), o TSH fica normal ou alto apesar de T3/T4 altos: é a exceção da tabela, a única causa de tirotoxicose com TSH aumentado."],ref:"Aula 10 — Hipertireoidismo secundário"},
+
+{n:11,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Em um ambulatório de endocrinologia, a maioria dos pacientes com tirotoxicose tem a glândula tireoide hiperfuncionante.</span><div class=\"pergunta\">Qual a causa responsável pela maior parte (cerca de 85%) desses casos, segundo a aula?</div>",alts:["Hiperplasia difusa da tireoide associada à doença de Graves", "Bócio multinodular hiperfuncionante, com vários nódulos ativos", "Adenoma hiperfuncionante, neoplasia benigna produtora de T3 e T4", "Adenoma hipofisário secretor de TSH, que estimula a tireoide", "Hipertireoidismo induzido por iodeto em portador de bócio prévio"],correta:0,just:["Correta. Das três causas mais comuns de tirotoxicose com hiperfunção, a hiperplasia difusa da doença de Graves responde por ~85%.", "Errada [tipo: par confundível] — está entre as três mais comuns, mas bem atrás de Graves.", "Errada [tipo: par confundível] — também é causa comum de hiperfunção, porém minoritária.", "Errada [tipo: verdade no contexto errado] — é causa de hipertireoidismo secundário, rara.", "Errada [tipo: verdade no contexto errado] — consta da tabela, mas é causa pouco frequente."],ref:"Aula 10 — Causas de tirotoxicose"},
+
+{n:12,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Mulher de 29 anos com tirotoxicose não tratada tem colesterol total e LDL abaixo do esperado para a idade, apesar de dieta rica em gordura.</span><div class=\"pergunta\">Qual mecanismo foi apresentado em aula para esse achado?</div>",alts:["Menor expressão de receptores de LDL nos hepatócitos, com acúmulo de colesterol no próprio fígado", "Menor absorção intestinal de gordura pela diarreia, que reduz a chegada de colesterol ao fígado", "Maior expressão de receptores de LDL nos hepatócitos, que captam o colesterol e o eliminam pela bile", "Maior consumo de colesterol pelas mitocôndrias musculares, usado como combustível no hipermetabolismo", "Maior uso de colesterol na síntese de hormônios tireoidianos, que dele derivam o seu esqueleto"],correta:2,just:["Errada [tipo: mecanismo invertido] — menos receptor de LDL é o que acontece no HIPOtireoidismo (colesterol alto).", "Errada [tipo: verdade no contexto errado] — a diarreia existe na tirotoxicose, mas não foi o mecanismo do colesterol baixo.", "Correta. O hormônio aumenta a expressão de receptores de LDL no hepatócito, que capta o LDL do plasma e o elimina pela bile. No hipotireoidismo ocorre o oposto, e o colesterol sobe.", "Errada [tipo: misconception clássica] — colesterol não é combustível mitocondrial; o aumento das mitocôndrias explica calor e gasto energético.", "Errada [tipo: par confundível] — T3/T4 derivam da tirosina (aminoácido) iodada; quem deriva do colesterol são os esteroides."],ref:"Aula 10 — Clínica da tirotoxicose: lipídios"},
+
+{n:13,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Menino de 9 anos está bem acima da curva de estatura para a idade nos últimos 18 meses. Os pais estão satisfeitos, mas o exame revela taquicardia, tremor fino e T4 livre elevado.</span><div class=\"pergunta\">Sem tratamento, o que se espera da estatura final, segundo a aula?</div>",alts:["Aumentada, porque o hormônio estimula o crescimento esquelético ao longo da infância", "Reduzida, porque a maturação óssea acelerada leva ao fechamento precoce das epífises", "Reduzida, porque o hormônio inibe a síntese proteica e o crescimento do tecido ósseo", "Normal, porque o hormônio acelera o crescimento, mas não altera a maturação das epífises", "Reduzida, porque a calcitonina em excesso bloqueia a mineralização das placas de crescimento"],correta:1,just:["Errada [tipo: misconception clássica] — é a impressão dos pais; o crescimento rápido é transitório e cobra o preço no fechamento precoce.", "Correta. O excesso de hormônio acelera o crescimento, mas os ossos maturam mais rápido e as epífises fecham precocemente: a duração do crescimento e a altura final podem ficar reduzidas.", "Errada [tipo: mecanismo invertido] — o hormônio ESTIMULA a síntese proteica e o crescimento; a altura cai por maturação acelerada.", "Errada [tipo: verdadeiro mas não responde] — acelera o crescimento, sim, mas também acelera a maturação e o fechamento das epífises.", "Errada [tipo: par confundível] — calcitonina não foi relacionada à estatura; o mecanismo é o próprio T3/T4 sobre a maturação óssea."],ref:"Aula 10 — Clínica da tirotoxicose: crescimento"},
+
+{n:14,aula:1,nivel:"dificil",enun:"<span class=\"vinheta\">Mulher de 58 anos com tirotoxicose de longa data, sem tratamento, apresenta palpitações irregulares, dispneia aos esforços e edema de membros inferiores. ECG com fibrilação atrial; ecocardiograma com disfunção do ventrículo esquerdo.</span><div class=\"pergunta\">Qual sequência fisiopatológica explica o quadro, conforme a aula?</div>",alts:["↓ hormônio na fibra cardíaca → bradicardia; vasoconstrição ↑ a pós-carga → IC diastólica", "↑ excitabilidade e débito → arritmia; glicosaminoglicanos depositados no miocárdio → IC restritiva", "↑ vasoconstrição e pressão diastólica → hipertrofia concêntrica do VE → IC por sobrecarga", "↑ excitabilidade e débito → arritmia; aterosclerose pelo LDL elevado → IC de causa isquêmica", "↑ excitabilidade e débito → arritmia; catabolismo proteico prolongado deprime o miocárdio → IC"],correta:4,just:["Errada [tipo: verdade no contexto errado] — bradicardia e vasoconstrição com ↑ diastólica descrevem o HIPOtireoidismo.", "Errada [tipo: par confundível] — depósito de glicosaminoglicanos é o mecanismo do mixedema (hipotireoidismo), não da tirotoxicose.", "Errada [tipo: mecanismo invertido] — na tirotoxicose há vasodilatação e ↑ da SISTÓLICA; ↑ diastólica por vasoconstrição é do hipotireoidismo.", "Errada [tipo: verdade no contexto errado] — LDL elevado/perfil aterogênico é do hipotireoidismo; na tirotoxicose o colesterol cai.", "Correta. O hormônio aumenta a excitabilidade e o débito (FA, taquicardia, cardiomegalia). Com níveis muito altos por muito tempo, o catabolismo proteico excessivo deprime a força do miocárdio → disfunção do VE e insuficiência cardíaca: miocardiopatia tirotóxica."],ref:"Aula 10 — Miocardiopatia tirotóxica"},
+
+{n:15,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Mulher de 62 anos, com hipertireoidismo crônico mal controlado, sofre fratura de punho após queda da própria altura. A densitometria mostra osteoporose.</span><div class=\"pergunta\">Qual mecanismo liga as duas condições?</div>",alts:["T3 e T4 inibem os osteoclastos, como a calcitonina, e o osso enfraquece por falta de remodelação", "T3 e T4 suprimem a calcitonina das células C, e a falta dela é a causa principal da perda óssea", "T3 e T4 aumentam a absorção intestinal de cálcio, que se deposita nos tecidos moles e não no osso", "T3 e T4 estimulam os osteoclastos, que têm receptores para eles, e aumentam a reabsorção", "T3 e T4 reduzem a síntese de colágeno pelos osteoblastos, sem mudar a atividade dos osteoclastos"],correta:3,just:["Errada [tipo: mecanismo invertido] — o excesso de T3/T4 ESTIMULA o osteoclasto; quem inibe é a calcitonina.", "Errada [tipo: misconception clássica] — a aula não ligou a osteoporose à calcitonina; o mecanismo é o efeito direto do hormônio sobre o osteoclasto.", "Errada [tipo: misconception clássica] — o cálcio sai do osso para o sangue e é eliminado na urina; não há calcificação de tecidos moles.", "Correta. Osteoclastos têm receptores para hormônio tireoidiano; o excesso estimula a reabsorção ('ao contrário da calcitonina'), aumenta a porosidade cortical e reduz o osso trabecular. O cálcio sai do osso e é perdido na urina.", "Errada [tipo: par confundível] — o alvo ensinado é o osteoclasto (reabsorção), não a síntese de colágeno pelo osteoblasto."],ref:"Aula 10 — Clínica da tirotoxicose: osso"},
+
+{n:16,aula:1,nivel:"dificil",enun:"<span class=\"vinheta\">Mulher de 33 anos com doença de Graves suspendeu por conta própria o antitireoidiano há um mês. Há dois dias iniciou pneumonia e agora está febril (39,6 °C), agitada, com frequência cardíaca de 160 bpm e ritmo irregular.</span><div class=\"pergunta\">Qual a interpretação correta, segundo a aula?</div>",alts:["Tempestade tireoidiana: o estresse soma catecolaminas a um hipertireoidismo não tratado; risco de arritmia", "Sepse pela pneumonia; a doença de Graves suspensa há um mês já não influencia a resposta cardiovascular", "Tempestade tireoidiana: o estresse inibe a tireoide, e a queda brusca de T3 e T4 causa taquiarritmia de rebote", "Crise mixedematosa: a infecção esgota a reserva hormonal, e o déficit de T3 e T4 dispara a arritmia cardíaca", "Tirotoxicose factícia: a paciente passou a ingerir tiroxina ao suspender o antitireoidiano por conta própria"],correta:0,just:["Correta. Graves não tratado/mal tratado (suspensão do antitireoidiano) + estresse agudo (infecção) → ↑ catecolaminas sobre T3/T4 já altos → início abrupto de hipertireoidismo grave, febre e taquicardia. Emergência: sem tratamento, morte por arritmia.", "Errada [tipo: diagnóstico diferencial] — a infecção é o gatilho, mas a suspensão do antitireoidiano é justamente um dos precipitantes da tempestade.", "Errada [tipo: mecanismo invertido] — o estresse soma catecolaminas a um excesso hormonal; não derruba T3/T4.", "Errada [tipo: par confundível] — déficit de hormônio cursa com bradicardia e hipometabolismo, o oposto do quadro.", "Errada [tipo: diagnóstico diferencial] — não há dado de ingestão de tiroxina; a história de Graves sem tratamento explica o excesso."],ref:"Aula 10 — Tempestade tireoidiana"},
+
+{n:17,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Mulher de 55 anos com hipotireoidismo primário não tratado tem bradicardia, pele fria e seca e intolerância ao frio. A pressão arterial é 138/96 mmHg.</span><div class=\"pergunta\">Como a aula explica o padrão pressórico?</div>",alts:["Mais calor produzido → mais vasodilatação → ↓ resistência vascular periférica → ↑ pressão sistólica", "Menos calor produzido → vasodilatação compensatória → ↓ resistência periférica → ↑ pressão de pulso", "Menos calor → menos vasodilatação → ↑ resistência vascular periférica → ↑ pressão diastólica", "Mais receptores β-adrenérgicos → taquicardia → ↑ débito cardíaco → ↑ pressão arterial sistólica", "Retenção de sódio pelo mixedema renal → ↑ volume circulante → ↑ débito → ↑ pressão diastólica"],correta:2,just:["Errada [tipo: verdade no contexto errado] — é a cadeia da tirotoxicose (vasodilatação e ↑ sistólica).", "Errada [tipo: mecanismo invertido] — com menos calor há MENOS vasodilatação, não vasodilatação compensatória.", "Correta. ↓ hormônio → ↓ metabolismo e calor → menos vasodilatação; o tônus periférico fica relativamente alto (vasoconstrição) → ↑ resistência vascular periférica, que a diastólica reflete diretamente.", "Errada [tipo: verdade no contexto errado] — é a cadeia do EXCESSO de hormônio (↑ receptores β, ↑ sistólica); a paciente tem bradicardia e ↑ diastólica.", "Errada [tipo: misconception clássica] — a aula explicou a diastólica pela resistência vascular periférica, não por retenção de volume."],ref:"Aula 10 — Clínica do hipotireoidismo: pressão"},
+
+{n:18,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Mulher de 31 anos tenta engravidar há 14 meses, com ciclos irregulares. Relata cansaço, ganho de peso, constipação e queda de cabelo. TSH elevado e T4 livre baixo.</span><div class=\"pergunta\">Qual o elo entre a alteração hormonal e a dificuldade de engravidar, segundo a aula?</div>",alts:["O hipotireoidismo reduz a prolactina, necessária à ovulação; repor prolactina restaura a fertilidade", "O hipotireoidismo eleva a prolactina, que impede a ovulação; tratar a tireoide pode restaurá-la", "O hipertireoidismo subclínico eleva a prolactina e bloqueia a ovulação; tratá-lo restaura a fertilidade", "O hipotireoidismo eleva o estrógeno pela aromatização no tecido adiposo, o que bloqueia a ovulação", "O hipotireoidismo eleva a calcitonina, que inibe o hormônio luteinizante e bloqueia a ovulação"],correta:1,just:["Errada [tipo: mecanismo invertido] — a prolactina SOBE no hipotireoidismo, e prolactina alta inibe a ovulação.", "Correta. TSH alto com T4 baixo = hipotireoidismo primário. ↓ T3/T4 → ↑ prolactina → não há ovulação (também pode haver defeito de fase lútea). 'Resolvendo o hipotireoidismo, pode resolver' a dificuldade de engravidar.", "Errada [tipo: par confundível] — TSH alto com T4 baixo é hipotireoidismo, não hipertireoidismo.", "Errada [tipo: verdade no contexto errado] — a aromatização periférica de andrógenos em estrógeno no tecido adiposo existe, mas não foi o elo entre tireoide e ovulação apresentado nesta aula.", "Errada [tipo: par confundível] — calcitonina é da célula C e age no osso; não foi relacionada ao ciclo menstrual."],ref:"Aula 10 — Clínica do hipotireoidismo: ciclo e fertilidade"},
+
+{n:19,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Mulher de 64 anos com hipotireoidismo de longa data tem face inchada, flacidez sob os olhos e voz grossa. Ao pressionar a região pré-tibial, a pele quase não marca.</span><div class=\"pergunta\">O que explica esse edema, segundo a aula?</div>",alts:["Acúmulo de líquido pobre em proteína por aumento da pressão hidrostática, como na insuficiência cardíaca", "Acúmulo de líquido por hipoalbuminemia, causada pela menor síntese proteica do hipotireoidismo", "Acúmulo de linfa por obstrução linfática causada pelo aumento de volume da glândula tireoide", "Acúmulo de colesterol LDL na derme e no subcutâneo, que retém água e endurece o tecido", "Acúmulo de ácido hialurônico e sulfato de condroitina no interstício, formando um gel pouco móvel"],correta:4,just:["Errada [tipo: diagnóstico diferencial] — o edema hidrostático é mole e depressível (cacifo), o oposto do achado.", "Errada [tipo: verdade no contexto errado] — a síntese proteica cai no hipotireoidismo, mas não foi essa a explicação do edema; edema de hipoalbuminemia é depressível.", "Errada [tipo: misconception clássica] — bócio não causa edema generalizado de face e membros por obstrução linfática.", "Errada [tipo: par confundível] — o LDL sobe no hipotireoidismo, mas fica no sangue (perfil aterogênico); não forma o gel intersticial.", "Correta. Por motivo não explicado, acumulam-se glicosaminoglicanos (ácido hialurônico, sulfato de condroitina) ligados a proteínas; formam um gel essencialmente imóvel → edema pouco depressível (mixedema), face grosseira e voz grave."],ref:"Aula 10 — Mixedema"},
+
+{n:20,aula:1,nivel:"facil",enun:"<span class=\"vinheta\">Dois pacientes com hipotireoidismo: (I) lactente de 10 meses com hipotireoidismo desde o nascimento; (II) menino de 8 anos com hipotireoidismo iniciado aos 6 anos.</span><div class=\"pergunta\">Como cada quadro se classifica, segundo a aula?</div>",alts:["I = mixedema, pois começou nos dois primeiros anos; II = cretinismo, de início após os dois anos", "I e II = cretinismo, porque o termo vale para o hipotireoidismo iniciado antes da puberdade", "I e II = mixedema, porque cretinismo é reservado ao hipotireoidismo por deficiência de iodo", "I = cretinismo, pois começou antes dos dois anos; II = mixedema, de início após os dois anos", "I = cretinismo, por ter começado no útero; II = cretinismo tardio, aceito até os dez anos"],correta:3,just:["Errada [tipo: mecanismo invertido] — trocou os nomes; o corte de idade está certo, mas aplicado ao contrário.", "Errada [tipo: erro numérico plausível] — o corte da aula é 2 anos, não a puberdade.", "Errada [tipo: generalização indevida] — a deficiência de iodo é uma das causas de cretinismo (endêmico), mas não a única; há também erros inatos e ausência da tireoide.", "Correta. Cretinismo = hipotireoidismo no período fetal ou nos primeiros 2 anos (lactância). Mixedema = início em crianças mais velhas ou adultos.", "Errada [tipo: erro numérico plausível] — não existe 'cretinismo tardio' até os dez anos na aula; após os 2 anos o quadro é mixedema."],ref:"Aula 10 — Cretinismo × mixedema"},
+
+{n:21,aula:1,nivel:"dificil",enun:"<span class=\"vinheta\">Duas gestantes de região com deficiência de iodo. A gestante A teve hipotiroxinemia importante desde o início da gestação. A gestante B só desenvolveu déficit hormonal por volta da 30ª semana, quando a tireoide fetal já estava formada e funcionante.</span><div class=\"pergunta\">Qual previsão para o desenvolvimento neurológico dos bebês está de acordo com a aula?</div>",alts:["Maior risco de déficit grave no bebê B, pois o cérebro fetal depende do T4 materno sobretudo no 3º trimestre", "Maior risco de déficit grave no bebê A, pois até o 2º trimestre o cérebro fetal depende do T4 materno", "Risco semelhante nos dois bebês, pois o T4 materno praticamente não atravessa a placenta humana", "Risco baixo para os dois, pois a tireoide fetal já funciona desde a 7ª semana e supre o próprio cérebro", "Maior risco no bebê A, mas o dano é revertido com tiroxina iniciada ao longo do primeiro ano de vida"],correta:1,just:["Errada [tipo: momento errado] — no 3º trimestre a tireoide fetal já produz (a partir da ~20ª semana, nível de adulto na ~35ª); a fase crítica de dependência materna é anterior.", "Correta. A primeira fase de rápido desenvolvimento cerebral ocorre no 2º trimestre, quando o hormônio vem sobretudo da mãe. Deficiência materna antes de a tireoide fetal funcionar → retardo grave; redução tardia, com a tireoide fetal ativa, permite desenvolvimento normal.", "Errada [tipo: misconception clássica] — a aula enfatiza justamente a passagem materna de T4 como fonte principal até o 2º trimestre.", "Errada [tipo: erro numérico plausível] — na 7ª semana a glândula assume a forma; a produção hormonal começa por volta da 20ª semana.", "Errada [tipo: momento errado] — o dano neurológico de origem pré-natal (e o que não for tratado nas primeiras semanas de vida) é irreversível."],ref:"Aula 10 — Cretinismo: tireoide fetal e T4 materno"},
+
+{n:22,aula:1,nivel:"dificil",enun:"<span class=\"vinheta\">Recém-nascido a termo, sem triagem neonatal registrada, tem aparência normal ao nascer. Com 5 semanas está hipoativo, com movimentos lentos, língua grande e choro rouco. A ultrassonografia não identifica tecido tireoidiano.</span><div class=\"pergunta\">Qual análise está de acordo com a aula?</div>",alts:["Agenesia tireoidiana; parecia normal porque a agenesia se manifesta após o desmame, sem o T4 do leite", "Hipoplasia tireoidiana; parecia normal pelo hormônio materno, e a tiroxina tardia normaliza a mente", "Agenesia tireoidiana; parecia normal pelo hormônio materno, e o tratamento tardio ameaça a mente", "Síndrome de Pendred; parecia normal porque a surdez e o bócio surgem na idade escolar, junto ao hipo", "Agenesia tireoidiana; parecia normal porque o T4 fetal acumulado até a 35ª semana dura meses após o parto"],correta:2,just:["Errada [tipo: misconception clássica] — a aula atribui a aparência normal ao hormônio materno recebido no útero, não ao leite.", "Errada [tipo: mecanismo invertido] — a tiroxina tardia normaliza o crescimento FÍSICO; o retardo mental fica permanente. E não há tecido tireoidiano para falar em hipoplasia.", "Correta. Ausência de tecido = agenesia. O neonato sem tireoide pode nascer com aparência normal porque recebeu algum hormônio materno; semanas depois surgem lentidão e atraso. A tiroxina normaliza o crescimento físico, mas o desenvolvimento mental só se preserva com tratamento precoce (primeiras 2 semanas). Por isso o teste do pezinho.", "Errada [tipo: diagnóstico diferencial] — na Pendred a glândula existe (com bócio) e a surdez é congênita; aqui não há tireoide.", "Errada [tipo: misconception clássica] — sem tireoide, o feto não produz T4; o hormônio que recebeu veio da mãe e não dura meses."],ref:"Aula 10 — Cretinismo: neonato sem tireoide"},
+
+{n:23,aula:1,nivel:"medio",enun:"<span class=\"vinheta\">Três pacientes com sintomas de hipotireoidismo e T4 livre baixo. Paciente X: TSH muito elevado. Paciente Y: TSH baixo, com história de necrose hipofisária pós-parto. Paciente Z: TSH baixo após radioterapia para tumor hipotalâmico.</span><div class=\"pergunta\">Qual classificação está correta?</div>",alts:["X tem hipotireoidismo primário; Y e Z têm hipotireoidismo secundário (central)", "X tem hipotireoidismo secundário; Y e Z têm hipotireoidismo primário (glandular)", "X, Y e Z têm hipotireoidismo primário, já que o T4 livre está baixo nos três casos", "X tem hipotireoidismo primário; Y tem o secundário e Z tem resistência hormonal", "X tem resistência ao hormônio; Y tem o primário e Z tem o secundário (central)"],correta:0,just:["Correta. Primário: TSH ↑ (perda da inibição retroativa). Secundário: doença hipofisária (necrose pós-parto) ou hipotalâmica (tumor, radiação), com TSH que não sobe. O T4 está baixo em qualquer origem.", "Errada [tipo: mecanismo invertido] — inverteu: TSH alto aponta para a glândula; TSH baixo com T4 baixo aponta para hipófise/hipotálamo.", "Errada [tipo: generalização indevida] — T4 baixo ocorre no hipotireoidismo de qualquer origem; quem separa é o TSH.", "Errada [tipo: par confundível] — na resistência ao hormônio, T3/T4 estão ALTOS; Z tem lesão hipotalâmica (secundário).", "Errada [tipo: par confundível] — resistência hormonal cursa com T3/T4 ALTOS (X tem T4 baixo e TSH alto = primário); e Y, com necrose hipofisária, tem causa central."],ref:"Aula 10 — Diagnóstico do hipotireoidismo"},
+
+{n:24,aula:1,nivel:"dificil",enun:"<span class=\"vinheta\">Paciente em tirotoxicose grave recebe, como parte do protocolo, solução com altas doses de iodeto. Outro paciente, em uso crônico de lítio para transtorno bipolar, desenvolve hipotireoidismo.</span><div class=\"pergunta\">Qual análise dos dois casos está de acordo com a aula?</div>",alts:["O iodeto em excesso fornece substrato e acelera a síntese hormonal; o lítio é usado de propósito para bloqueá-la", "O iodeto em excesso inibe aguda e transitoriamente a tireoide; o lítio é usado de propósito para bloqueá-la", "O iodeto em excesso destrói os folículos de modo permanente, como a radiação; o lítio estimula a tireoide", "O iodeto em excesso inibe aguda e transitoriamente a tireoide; o lítio reduz a função como efeito colateral", "O iodeto em excesso bloqueia a conversão de T4 em T3 no fígado e no rim; o lítio age por autoimunidade"],correta:3,just:["Errada [tipo: mecanismo invertido] — em excesso, o iodeto INIBE a tireoide; não acelera a síntese. E o lítio reduz a função como efeito colateral, não de propósito.", "Errada [tipo: par confundível] — usados de propósito para reduzir a função são PTU e metimazol; o lítio causa hipotireoidismo como efeito colateral.", "Errada [tipo: verdade no contexto errado] — ablação permanente é efeito de radiação/radioiodo; o efeito do iodeto é transitório. E o lítio reduz, não estimula, a função.", "Correta. Efeito Wolff-Chaikoff: iodeto em altas concentrações inibe de forma aguda e transitória a síntese e, sobretudo, a liberação de hormônio; ação rápida, útil na tirotoxicose grave. O lítio é droga de outra condição que reduz a função tireoidiana como efeito colateral. ⚠️ Divergência: na aula, o mecanismo foi 'bloqueio do transportador de iodo'. Na literatura, o Wolff-Chaikoff é a inibição aguda da organificação; a queda do NIS é o mecanismo de escape, e na prática o iodo é dado após a tionamida. Fonte: Robbins; Endotext.", "Errada [tipo: par confundível] — conversão periférica é tarefa das desiodases; a autoimunidade é o mecanismo de Hashimoto, não do lítio."],ref:"Aula 10 — Hipotireoidismo adquirido: drogas e Wolff-Chaikoff"}
+];
+
+const dissertativas=[
+{n:1,aula:1,caso:"Menina de 7 anos é trazida por baixo rendimento escolar e aumento de volume na região anterior do pescoço. Tem surdez neurossensorial desde o nascimento; a triagem neonatal não foi registrada. Exame: bócio difuso, pele seca, bradicardia leve, constipação. TSH elevado e T4 livre baixo. O teste genético mostra mutação em SLC26A4.",
+perg:["Descreva, em ordem, as etapas de síntese e liberação de T3 e T4 na célula folicular.", "Em que etapa está o defeito desta paciente e por que ela tem surdez e bócio?", "Classifique o hipotireoidismo dela (primário/secundário; congênito/adquirido/autoimune) e cite as outras causas congênitas ensinadas.", "Que exame teria antecipado o diagnóstico e o que ele mudaria no prognóstico?"],
+resp:[["Da tireoglobulina à reciclagem do iodo", "(1) Síntese da TIREOGLOBULINA no RE granuloso e no Golgi, secretada para a luz do folículo; (2) CAPTAÇÃO do iodeto circulante pela membrana basal (cotransportador sódio/iodo, NIS); (3) OXIDAÇÃO do iodeto pela peroxidase tireoidiana (TPO) com H₂O₂; (4) passagem do iodo para a LUZ pela PENDRINA; (5) IODAÇÃO/'organificação' dos resíduos de tirosina da tireoglobulina → MIT e DIT; (6) ACOPLAMENTO no coloide: MIT + DIT = T3, DIT + DIT = T4, que ficam armazenados; (7) sob estímulo do TSH, ENDOCITOSE do coloide, digestão lisossômica, saída de T3/T4 para os capilares e DESIODAÇÃO de MIT/DIT, com reciclagem do iodo."], ["Pendrina: tireoide e orelha interna", "SLC26A4 codifica a PENDRINA, transportador de ânions presente na superfície apical do tireócito e na orelha interna. Sem ela, o iodo não chega à luz do folículo e a tireoglobulina não é iodada (síndrome de Pendred) → pouco T3/T4. A surdez vem do defeito da pendrina na orelha interna. O bócio vem da queda do hormônio: o feedback negativo some, o TSH sobe e estimula a glândula a crescer. ⚠️ Na aula, a pendrina transporta 'iodo oxidado'; na literatura, transporta iodeto, oxidado depois na superfície apical."], ["Primário congênito (bócio desormonogenético)", "Primário (o defeito está na glândula, por isso o TSH está alto) e CONGÊNITO, do tipo bócio desormonogenético: erro inato em uma etapa da síntese. As falhas possíveis são transporte do iodo, organificação ou acoplamento; mutações da TPO são as mais comuns. Outras causas congênitas ensinadas: deficiência endêmica de iodo (dieta bociogênica), agenesia, hipoplasia e síndrome da resistência ao hormônio tireoidiano (rara, com T3/T4 e TSH altos)."], ["Teste do pezinho", "A triagem neonatal (teste do pezinho) identifica o hipotireoidismo congênito logo após o nascimento. O tratamento com tiroxina iniciado nas primeiras semanas (idealmente nas 2 primeiras) previne as alterações de migração neuronal, projeções axônicas, sinaptogênese e mielinização. Iniciado tarde, normaliza o crescimento físico, mas o déficit intelectual tende a ficar permanente."]],
+ref:"Aula 10 — Síntese hormonal e hipotireoidismo congênito"},
+
+{n:2,aula:1,caso:"Mulher de 30 anos com perda de 8 kg em 3 meses apesar de comer mais, palpitações, intolerância ao calor, sudorese, insônia, diarreia e tremor fino das mãos. Exame: pele quente e úmida, FC 118 bpm, PA 150/70 mmHg, olhar fixo com retração palpebral, unhas descoladas do leito na borda livre. Tireoide aumentada de forma difusa. TSH suprimido e T4 livre elevado. Colesterol total baixo.",
+perg:["Diferencie tirotoxicose de hipertireoidismo e classifique este caso, indicando a causa mais provável.", "Explique os mecanismos de: perda de peso com fome, colesterol baixo, pressão sistólica alta e alteração ungueal.", "Se o TSH estivesse normal ou alto com T4 livre elevado, que hipótese surgiria e o que mais precisaria ser descartado?", "Semanas depois, ela abandona o tratamento e é operada de urgência por apendicite. Evolui com febre alta e FC de 170 bpm, irregular. O que aconteceu e por que é grave?"],
+resp:[["Tirotoxicose por hipertireoidismo primário", "Tirotoxicose = estado hipermetabólico por T3/T4 livres elevados na circulação, qualquer que seja a fonte. Hipertireoidismo = hiperfuncionamento da própria glândula, a causa mais comum, mas não a única (há também liberação de hormônio pré-formado nas tireoidites e fonte extratireoidiana, como o struma ovarii). Aqui há tirotoxicose por hipertireoidismo primário (TSH suprimido), com glândula difusamente aumentada (bócio difuso). A causa mais provável é a hiperplasia difusa da doença de Graves (~85% dos casos com hiperfunção)."], ["Hipermetabolismo e receptores β", "Perda de peso com fome: ↑ TMB (mais mitocôndrias e mais transporte ativo de íons, ↑ catabolismo), gasto maior que a ingestão. Colesterol baixo: ↑ receptores de LDL nos hepatócitos, que captam o LDL e o eliminam pela bile. PA sistólica alta: ↑ número e sensibilidade dos receptores β-adrenérgicos, efeito direto na excitabilidade cardíaca, ↑ FC, contratilidade e débito; a vasodilatação periférica mantém a diastólica baixa. Unhas: onicólise ('unha de Plummer'), descolamento da lâmina do leito ungueal, muito sugestiva de hipertireoidismo."], ["Hipertireoidismo secundário", "T4 alto com TSH normal/alto sugere hipertireoidismo SECUNDÁRIO: adenoma hipofisário secretor de TSH (raro), que estimula a tireoide e escapa do feedback. É a única causa da tabela com TSH aumentado. Antes de concluir, é preciso descartar resistência aos hormônios tireoidianos e erro laboratorial. ⚠️ Na aula, o teste do TRH com TSH subindo acima de 30 µUI/mL apoiaria o adenoma; na literatura, o adenoma costuma ter resposta achatada ao TRH, e a resposta exagerada favorece resistência hormonal."], ["Tempestade tireoidiana", "Tempestade tireoidiana: início abrupto de hipertireoidismo grave, mais comum sobre doença de Graves não tratada ou mal tratada. Gatilhos: elevação aguda das catecolaminas por cirurgia, infecção, qualquer estresse ou interrupção do antitireoidiano (aqui, dois deles). Os pacientes ficam febris e taquicárdicos. É emergência médica: sem tratamento, morrem de arritmia cardíaca (como a fibrilação atrial deste caso)."]],
+ref:"Aula 10 — Tirotoxicose"},
+
+{n:3,aula:1,caso:"Mulher de 52 anos com cansaço progressivo há 2 anos, sonolência, esquecimento e desânimo, já tratada como depressão sem melhora. Ganhou 9 kg com apetite reduzido, tem constipação, queda de cabelo, intolerância ao frio e voz rouca. Exame: face edemaciada com flacidez periorbitária, edema pré-tibial que não deixa cacifo, pele fria e seca, FC 54 bpm, PA 132/94 mmHg. Colesterol total e LDL elevados. Mora em região com iodo suficiente e nunca operou a tireoide.",
+perg:["Qual a síndrome clínica e como ela se diferencia do cretinismo?", "Explique por que o edema não deixa cacifo e por que a voz engrossou.", "Explique a pressão diastólica elevada e o colesterol alto.", "Qual o exame mais sensível, o resultado esperado se o problema for glandular e a causa mais provável neste contexto?"],
+resp:[["Mixedema (hipotireoidismo do adulto)", "Mixedema (doença de Gull): hipotireoidismo que surge em crianças mais velhas ou adultos, de início insidioso, que pode levar anos até a suspeita. Os sintomas iniciais (fadiga, apatia, preguiça mental) mimetizam depressão. O cretinismo é o hipotireoidismo do período fetal ou dos primeiros 2 anos, com baixa estatura, língua projetada, face grosseira e retardo mental."], ["Gel de glicosaminoglicanos", "Por motivo não explicado, acumulam-se ácido hialurônico e sulfato de condroitina ligados a proteínas no interstício. Formam um gel essencialmente imóvel, e o edema fica pouco depressível. O mesmo depósito alarga e engrossa as feições, aumenta a língua e aprofunda a voz (rouquidão; o slide também cita paralisia de pregas vocais)."], ["Resistência periférica e receptor de LDL", "Diastólica alta: menos hormônio → menos metabolismo e menos calor → menos vasodilatação → tônus periférico relativamente alto → ↑ resistência vascular periférica, que a diastólica reflete diretamente. Colesterol alto: o oposto da tirotoxicose. Sem o aumento de receptores de LDL no hepatócito, o LDL fica no plasma. Esse perfil aterogênico provavelmente contribui para a mortalidade cardiovascular."], ["TSH alto e Hashimoto", "O TSH é o teste de rastreamento mais sensível. No hipotireoidismo primário está AUMENTADO (perda da inibição retroativa), com T4 baixo; no secundário (hipófise/hipotálamo) o TSH não sobe. Em região com iodo suficiente, sem cirurgia ou radiação, a causa mais comum é autoimune: tireoidite de Hashimoto."]],
+ref:"Aula 10 — Hipotireoidismo e mixedema"},
+
+{n:4,aula:1,caso:"Gestante de 19 anos, de área rural com dieta pobre em iodo e rica em mandioca, faz o primeiro pré-natal com 26 semanas. Tem bócio e T4 livre baixo desde exames trazidos do início da gestação. O bebê nasce a termo; o teste do pezinho não é colhido por falha do serviço. Aos 4 meses, o lactente é hipoativo, com hipotonia, língua projetada, face grosseira e atraso motor.",
+perg:["Monte a linha do tempo do desenvolvimento da tireoide fetal ensinada em aula.", "Por que o momento da deficiência materna importa para o cérebro do bebê?", "Quais alterações cerebrais explicam o déficit e o que se espera se a tiroxina começar agora?", "Explique a língua projetada e a baixa estatura do cretinismo."],
+resp:[["24 dias, 7ª, 11ª, 20ª e 35ª semanas", "A tireoide começa a se formar ~24 dias após a fecundação (primeira glândula endócrina do embrião). Assume a forma definitiva e a posição no pescoço na 7ª semana; receptores de T3 aparecem no cérebro fetal por volta da 10ª semana; o coloide surge na 11ª (folículos). Por volta da 20ª semana, TSH e tiroxina fetais começam a subir, e chegam a níveis de adulto em torno da 35ª."], ["Dependência do T4 materno até o 2º trimestre", "A primeira fase de rápido desenvolvimento cerebral ocorre no 2º trimestre, quando o hormônio vem sobretudo da mãe. Deficiência materna ANTES de a tireoide fetal funcionar → retardo mental GRAVE. Queda materna tardia, com a tireoide fetal já ativa, permite desenvolvimento cerebral normal. Esta mãe tem hipotiroxinemia desde o início e região iodo-deficiente (cretinismo endêmico): pior cenário."], ["Migração, axônios, sinapses e mielina", "Sem hormônio na fase de neurogênese ativa (até ~6 meses após o parto), há distúrbio da migração neuronal, desorganização das projeções axônicas, redução da sinaptogênese e retardo de crescimento, ramificação e mielinização. A suplementação iniciada nas primeiras 2 semanas pode impedir essas alterações. Começando aos 4 meses, a tiroxina tende a normalizar o crescimento físico, mas o déficit intelectual tende a permanecer. Daí a importância do teste do pezinho."], ["Esqueleto cresce menos que o tecido mole", "No cretinismo, o crescimento esquelético é mais inibido que o dos tecidos moles. Resultado: aparência obesa, estrutura brevilínea e baixa estatura. A língua cresce tanto em relação ao esqueleto que se projeta e pode obstruir a deglutição e a respiração (respiração gutural)."]],
+ref:"Aula 10 — Cretinismo"}
+];
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">Aula 10</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">Aula 10</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas da Aula 10 (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Aula 10 — Patologias da Tireoide",kicker:"ANATO PATO II",desc:"Histologia do folículo, eixo e síntese de T3/T4, tirotoxicose × hipertireoidismo, clínica do excesso e da falta de hormônio, hipotireoidismo congênito/adquirido/autoimune, cretinismo, mixedema e laboratório.",cards:[
+{area:"Histologia",cat:"conceito",q:"Peso, localização e composição da tireoide?",a:"~10–20 g · porção anterior do pescoço, ABAIXO e ANTERIORMENTE à laringe · dois lobos laterais unidos por um ISTMO · cápsula, capilares fenestrados, lóbulos com 20–40 folículos."},
+{area:"Histologia",cat:"conceito",q:"O que é o coloide e o que ele contém?",a:"Conteúdo da luz do folículo, rico em TIREOGLOBULINA. Armazena T3 e T4 prontos e os precursores MIT e DIT."},
+{area:"Histologia",cat:"prof",q:"Célula folicular achatada × colunar: o que a forma indica?",a:"ACHATADA = menor atividade secretora (folículo cheio de coloide). COLUNAR com núcleo grande = maior atividade ('a célula está trabalhando bastante')."},
+{area:"Histologia",cat:"prof",q:"Célula C: onde fica, o que produz e qual o efeito?",a:"Entre os folículos (parafolicular), núcleo mais claro. Produz CALCITONINA, que INIBE os osteoclastos → ↓ reabsorção óssea → hormônio HIPOCALCEMIANTE.",obs:"Na fala: 'aumenta o cálcio no esqueleto' e 'diminui o cálcio na circulação' — é a mesma ideia. No adulto humano o efeito é modesto."},
+{area:"Fisiologia",cat:"conceito",q:"Eixo da tireoide: quem produz o quê?",a:"HIPOTÁLAMO → TRH → ADENO-HIPÓFISE (tireotrofos) → TSH → receptor de TSH na célula folicular → T3/T4."},
+{area:"Fisiologia",cat:"conceito",q:"Como funciona o feedback do eixo?",a:"T3/T4 ALTOS inibem hipófise E hipotálamo (feedback negativo). T3/T4 BAIXOS estimulam o eixo."},
+{area:"Fisiologia",cat:"conceito",q:"Proteínas transportadoras de T3/T4?",a:"GLOBULINA LIGADORA DE TIROXINA (TBG) e TRANSTIRETINA. A maior parte do hormônio circula ligada de forma reversível."},
+{area:"Fisiologia",cat:"prof",q:"Proporção T4:T3 secretada e de onde vem a maior parte do T3?",a:"T4:T3 = 20:1. ~80% do T3 vem da CONVERSÃO PERIFÉRICA do T4, principalmente no FÍGADO e no RIM (também cérebro, hipófise, adiposo)."},
+{area:"Fisiologia",cat:"conceito",q:"T3 × T4: qual é mais ativo?",a:"T3, ~4× mais ativo. Os receptores nucleares têm afinidade 10–15× maior pelo T3. As proteínas do sangue ligam o T4 com mais força.",obs:"T3 reverso (desiodase tipo 3) é inativo."},
+{area:"Síntese",cat:"prof",q:"Etapas da síntese de T3/T4, em ordem?",a:"1) Tireoglobulina (RE/Golgi) → luz · 2) captação de iodeto (NIS, basal) · 3) oxidação (TPO + H₂O₂) · 4) PENDRINA leva o iodo à luz · 5) iodação → MIT/DIT · 6) acoplamento no coloide → T3/T4."},
+{area:"Síntese",cat:"prof",q:"Qual o papel da pendrina?",a:"Transportador apical que leva o iodo da célula folicular para a LUZ do folículo. Defeito → síndrome de PENDRED.",obs:"⚠️ Slide: 'iodo oxidado'. Literatura: transporta iodeto, oxidado depois pela TPO na superfície apical."},
+{area:"Síntese",cat:"alerta",q:"MIT + DIT = ? · DIT + DIT = ?",a:"MIT + DIT = T3 · DIT + DIT = T4. O acoplamento ocorre no COLOIDE, com os hormônios presos à tireoglobulina."},
+{area:"Síntese",cat:"conceito",q:"Como os hormônios são liberados?",a:"A célula ENDOCITA o coloide → lisossomos digerem → T3/T4 saem para os CAPILARES ao redor do folículo."},
+{area:"Síntese",cat:"conceito",q:"O que acontece com MIT e DIT após a endocitose?",a:"A DESIODASE cliva o iodo, que é RECICLADO (com a tirosina) para nova síntese."},
+{area:"Tirotoxicose",cat:"prof",q:"Tirotoxicose × hipertireoidismo?",a:"TIROTOXICOSE = T3/T4 livres altos na circulação (estado hipermetabólico), qualquer que seja a fonte. HIPERTIREOIDISMO = hiperfunção da GLÂNDULA, a causa mais comum, mas não a única."},
+{area:"Tirotoxicose",cat:"conceito",q:"Três mecanismos que elevam T3/T4 circulantes?",a:"1) Hiperfunção da glândula (hipertireoidismo) · 2) LIBERAÇÃO de hormônio PRÉ-FORMADO (inflamação rompe folículos) · 3) FONTE EXTRATIREOIDIANA (struma ovarii, factícia)."},
+{area:"Tirotoxicose",cat:"prof",q:"As três causas mais comuns de tirotoxicose com hiperfunção?",a:"1) Hiperplasia difusa da DOENÇA DE GRAVES (~85%) · 2) BÓCIO MULTINODULAR hiperfuncionante · 3) ADENOMA hiperfuncionante."},
+{area:"Tirotoxicose",cat:"alerta",q:"Bócio é sinônimo de nódulo?",a:"NÃO. Bócio = AUMENTO DA GLÂNDULA, com ou sem nódulos. Depois se classifica em difuso ou nodular."},
+{area:"Tirotoxicose",cat:"caso",q:"T3/T4 altos, TSH suprimido, tireoide pequena e teratoma ovariano com tecido tireoidiano. Classificação?",a:"TIROTOXICOSE SEM HIPERTIREOIDISMO, por fonte extratireoidiana (STRUMA OVARII)."},
+{area:"Tirotoxicose",cat:"alerta",q:"Qual causa de tirotoxicose cursa com TSH aumentado?",a:"Só o HIPERTIREOIDISMO SECUNDÁRIO: adenoma hipofisário secretor de TSH (raro). Todas as outras causas têm TSH diminuído."},
+{area:"Clínica do hiper",cat:"conceito",q:"Por que o paciente com tirotoxicose emagrece com fome?",a:"↑ TMB: mais mitocôndrias, mais transporte ativo de íons, catabolismo aumentado. O gasto supera a ingestão."},
+{area:"Clínica do hiper",cat:"prof",q:"Por que o colesterol cai na tirotoxicose?",a:"↑ RECEPTORES DE LDL nos hepatócitos → captam o LDL do plasma → eliminam pela BILE."},
+{area:"Clínica do hiper",cat:"caso",q:"Criança com tirotoxicose cresce acima da curva. E a altura final?",a:"Pode ficar REDUZIDA: a maturação óssea acelera e as EPÍFISES FECHAM PRECOCEMENTE."},
+{area:"Clínica do hiper",cat:"conceito",q:"Papel dos receptores β-adrenérgicos na tirotoxicose?",a:"O hormônio AUMENTA O NÚMERO E A SENSIBILIDADE dos receptores β → superatividade simpática: taquicardia, ↑ sistólica, tremor, ansiedade, broncodilatação (β₂)."},
+{area:"Clínica do hiper",cat:"prof",q:"O que é miocardiopatia tirotóxica?",a:"Disfunção do VE (reversível) e insuficiência cardíaca: com hormônio muito alto por longos períodos, o CATABOLISMO PROTEICO deprime a força do miocárdio, somado ao trabalho cardíaco aumentado. Também há arritmias (FA) e cardiomegalia."},
+{area:"Clínica do hiper",cat:"alerta",q:"Tremor da tirotoxicose × tremor do Parkinson?",a:"Tirotoxicose: tremor LEVE e FINO, frequência alta (10–15/s). Parkinson: tremor BRUSCO, mais grosseiro."},
+{area:"Clínica do hiper",cat:"conceito",q:"Alteração ocular ensinada na tirotoxicose e seu mecanismo?",a:"Olhar FIXO e ARREGALADO, movimento lento da pálpebra superior: superestímulo simpático do levantador da pálpebra superior."},
+{area:"Clínica do hiper",cat:"conceito",q:"Osso na tirotoxicose crônica?",a:"OSTEOPOROSE e fraturas: T3/T4 estimulam os OSTEOCLASTOS (que têm receptores para eles), 'ao contrário da calcitonina'. O cálcio sai do osso e é perdido na urina."},
+{area:"Clínica do hiper",cat:"conceito",q:"O que é a unha de Plummer?",a:"ONICÓLISE: a unha se separa do leito ungueal, na ponta ou em toda a extensão. Muito sugestiva de hipertireoidismo."},
+{area:"Clínica do hiper",cat:"caso",q:"Graves sem tratamento + infecção ou cirurgia → febre e FC 170 irregular. Diagnóstico e risco?",a:"TEMPESTADE TIREOIDIANA: catecolaminas agudas sobre T3/T4 já altos. Gatilhos: cirurgia, infecção, estresse, suspensão do antitireoidiano. Emergência; sem tratamento, morte por ARRITMIA."},
+{area:"Diagnóstico",cat:"prof",q:"Primeiro exame no hipertireoidismo e como confirmar?",a:"TSH: diminuído mesmo nas fases iniciais/subclínicas. Confirmar com T4 LIVRE (↑). Se só o T3 sobe: 'toxicose de T3'."},
+{area:"Diagnóstico",cat:"alerta",q:"T3/T4 altos com TSH normal/alto: o que pensar e o que descartar?",a:"Hipertireoidismo SECUNDÁRIO (adenoma de TSH). Descartar RESISTÊNCIA aos hormônios tireoidianos e ERRO laboratorial.",obs:"⚠️ Teste do TRH: na aula, o TSH sobe acima de 30 µUI/mL no adenoma; na literatura, o adenoma costuma ter resposta achatada."},
+{area:"Hipotireoidismo",cat:"conceito",q:"Primário × secundário?",a:"PRIMÁRIO: defeito na própria tireoide (a grande maioria; congênito, adquirido ou autoimune). SECUNDÁRIO: doença hipofisária ou hipotalâmica (mais raro)."},
+{area:"Hipotireoidismo",cat:"prof",q:"Síndrome de Pendred?",a:"HIPOTIREOIDISMO + SURDEZ, por mutação em SLC26A4 (pendrina): o iodo não chega à luz do folículo. Exemplo de bócio desormonogenético."},
+{area:"Hipotireoidismo",cat:"conceito",q:"Causas de hipotireoidismo congênito?",a:"Bócio desormonogenético (falha de transporte de iodo, organificação ou acoplamento; TPO = mais comum) · deficiência endêmica de iodo · AGENESIA · HIPOPLASIA · resistência ao hormônio tireoidiano."},
+{area:"Hipotireoidismo",cat:"conceito",q:"Síndrome da resistência ao hormônio tireoidiano?",a:"Rara, autossômica dominante, mutação no RECEPTOR: clínica de hipotireoidismo com T3/T4 ALTOS e TSH que tende a ser ALTO (a hipófise também resiste).",obs:"Comparação da aula: como no diabetes tipo 2, há hormônio, mas a célula resiste."},
+{area:"Hipotireoidismo",cat:"conceito",q:"Causas de hipotireoidismo adquirido?",a:"Deficiência de iodo · cirurgia (ablação) · radiação · drogas: PTU e metimazol (de propósito, em excesso) e LÍTIO, ácido p-aminossalicílico (efeito colateral) · iodeto em excesso."},
+{area:"Hipotireoidismo",cat:"prof",q:"Efeito Wolff-Chaikoff?",a:"Iodeto em ALTAS concentrações inibe de forma AGUDA e TRANSITÓRIA a síntese e a liberação de hormônio. Ação rápida, usada na tirotoxicose grave.",obs:"⚠️ Aula: bloqueia o transportador de iodo. Literatura: inibe a organificação; a queda do NIS é o 'escape'."},
+{area:"Hipotireoidismo",cat:"prof",q:"Causa mais comum de hipotireoidismo em região com iodo suficiente?",a:"AUTOIMUNE: tireoidite de HASHIMOTO. Nos países desenvolvidos, Hashimoto + pós-ablativo = maioria."},
+{area:"Clínica do hipo",cat:"prof",q:"Por que a pressão DIASTÓLICA sobe no hipotireoidismo?",a:"↓ hormônio → ↓ calor → MENOS VASODILATAÇÃO → tônus periférico alto → ↑ RESISTÊNCIA VASCULAR PERIFÉRICA → ↑ diastólica."},
+{area:"Clínica do hipo",cat:"caso",q:"Mulher que não consegue engravidar, com TSH alto e T4 baixo. Mecanismo?",a:"↓ T3/T4 → ↑ PROLACTINA → ANOVULAÇÃO (também defeito de fase lútea). Tratar o hipotireoidismo pode resolver."},
+{area:"Cretinismo/Mixedema",cat:"prof",q:"Cretinismo × mixedema: qual o corte?",a:"CRETINISMO: período fetal ou primeiros 2 ANOS. MIXEDEMA: crianças mais velhas ou adultos."},
+{area:"Cretinismo/Mixedema",cat:"conceito",q:"Linha do tempo da tireoide fetal?",a:"~24 dias: começa a se formar · 7ª sem: forma definitiva no pescoço · 11ª: coloide/folículos · ~20ª: começa a produzir hormônio · ~35ª: nível de adulto."},
+{area:"Cretinismo/Mixedema",cat:"alerta",q:"Por que o momento da deficiência materna importa?",a:"Até o 2º TRIMESTRE o cérebro fetal depende do T4 MATERNO. Deficiência antes de a tireoide fetal funcionar → retardo GRAVE; queda tardia → cérebro pode ser normal."},
+{area:"Cretinismo/Mixedema",cat:"caso",q:"Neonato sem tireoide nasce normal. Por quê, e qual a janela de tratamento?",a:"Recebeu hormônio MATERNO no útero. Semanas depois surgem lentidão e atraso. Tiroxina nas PRIMEIRAS 2 SEMANAS preserva o desenvolvimento mental; tarde, só o crescimento físico se normaliza."},
+{area:"Cretinismo/Mixedema",cat:"conceito",q:"Clínica do cretinismo?",a:"Baixa estatura, LÍNGUA PROJETADA (pode obstruir deglutição e respiração), face grosseira, retardo mental grave. O esqueleto cresce menos que os tecidos moles."},
+{area:"Cretinismo/Mixedema",cat:"prof",q:"Por que o edema do mixedema é pouco depressível?",a:"Acúmulo de ÁCIDO HIALURÔNICO e SULFATO DE CONDROITINA no interstício → GEL imóvel. O mesmo depósito engrossa a face, aumenta a língua e aprofunda a voz."},
+{area:"Diagnóstico",cat:"prof",q:"Melhor exame de rastreamento do hipotireoidismo e interpretação?",a:"TSH: ↑ no PRIMÁRIO (perda da inibição retroativa); não sobe no secundário. T4 ↓ em qualquer origem."}
+]}};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-anatopato2-tireoide-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<style id="secrailcss">
+#secrail{position:fixed;left:26px;top:130px;width:172px;z-index:60;font-family:var(--mono,monospace);display:none}
+@media(min-width:1200px){#secrail.show{display:block}}
+#secrail a{display:block;margin:0 0 13px;text-decoration:none;color:var(--muted)}
+#secrail a b{display:block;font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+#secrail a span{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.45;padding-bottom:4px;border-bottom:1px solid var(--line-strong)}
+#secrail a.on{color:var(--ink)}
+#secrail a.on span{border-bottom:2px solid var(--accent)}
+#secrail a:hover{color:var(--ink)}
+</style>
+<script>
+(function(){
+  var panel=document.getElementById('panel-estudo');if(!panel)return;
+  var secs=[].slice.call(panel.querySelectorAll('h2[id]')).filter(function(s){return /^t\d+$/.test(s.id)});
+  if(secs.length<4)secs=[].slice.call(panel.querySelectorAll('section[id] > h2, section[id] h2')).map(function(h){return h.closest('section[id]')}).filter(Boolean);
+  if(secs.length<4)return;
+  var rail=document.createElement('nav');rail.id='secrail';
+  rail.innerHTML=secs.map(function(s,i){
+    var t=(s.tagName==='H2'?s:s.querySelector('h2')).textContent.replace(/^\s*\d+\s*[·.)\u2014-]\s*/,'').trim();
+    var curto=t.split(/ — |: /)[0].trim();if(curto.length>34)curto=curto.slice(0,32)+'…';
+    return '<a href="#'+s.id+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+curto+'</span></a>';
+  }).join('');
+  document.body.appendChild(rail);
+  function vis(){var ativo=panel.classList.contains('active')||getComputedStyle(panel).display!=='none';rail.classList.toggle('show',ativo)}
+  vis();
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tab,.hub-tab'))setTimeout(vis,60)});
+  var links=rail.querySelectorAll('a');
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+x.target.id)})}});
+  },{rootMargin:'0px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+})();
+</script>
+
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
+</html>
