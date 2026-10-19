@@ -1,0 +1,1469 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anatomia Topográfica · Peritônio (16/10) · Córtex Estudos</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('cortex-theme')||'dark'}catch(e){}</script>
+<style>
+/* ============================================================= */
+/* TOKENS (compartilhados) */
+/* ============================================================= */
+:root{ /* escuro (padrão) */
+  --bg:#0a0d1f; --surface:#141833; --surface2:#1b2043;
+  --ink:#f3f4fb; --ink-soft:#cdd2e6; --muted:#9aa1c4; --faint:#7a81a8;
+  --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+  --accent:#818cf8; --gold:#e6b450; --caso:#5eead4; --alerta:#f87171; --ok:#34d399;
+  --radius:14px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Cambria,serif;
+}
+:root[data-theme="light"]{
+  --bg:#f6f5fa; --surface:#ffffff; --surface2:#f0eef8;
+  --ink:#191c2b; --ink-soft:#33384f; --muted:#5b627c; --faint:#8a90a8;
+  --line:rgba(20,24,45,.10); --line-strong:rgba(20,24,45,.16);
+  --accent:#4f46e5; --gold:#b7852a; --caso:#0d9488; --alerta:#dc2626; --ok:#059669;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-webkit-text-size-adjust:100%}
+
+/* ============================================================= */
+/* HUB — cabeçalho, abas, botões globais */
+/* ============================================================= */
+#themeToggle{position:fixed;top:12px;right:14px;z-index:80;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+#themeToggle:hover{background:var(--surface2)}
+.hubhead{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hubhead-inner{max-width:960px;margin:0 auto;padding:12px 20px 0}
+.hub-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:16px;letter-spacing:.2px;padding-right:48px;flex-wrap:wrap}
+.hub-brand .em{font-size:20px}
+.hub-brand .sep{color:var(--faint);font-weight:400}
+.hub-brand .sub{color:var(--accent)}
+.tabbar{display:flex;gap:3px;margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab{appearance:none;background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--muted);font-family:inherit;font-size:14.5px;font-weight:700;padding:10px 13px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;border-radius:8px 8px 0 0}
+.tab:hover{color:var(--ink);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .ico{font-size:16px}
+.panel{display:none}
+.panel.active{display:block}
+.hubfoot{max-width:760px;margin:34px auto 0;padding:22px 20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px;text-align:center}
+#toTop{position:fixed;right:18px;bottom:22px;z-index:50;padding:10px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft);font-size:13px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--ink);border-color:var(--accent)}
+
+/* ============================================================= */
+/* PAINEL: ESTUDO COMPLETO */
+/* ============================================================= */
+#panel-estudo .wrap{max-width:720px;margin:0 auto;padding:0 20px 40px}
+#panel-estudo .kick{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;margin:30px 0 12px}
+#panel-estudo .page-h1{font-size:30px;line-height:1.2;margin:0 0 10px;letter-spacing:-.4px}
+#panel-estudo .lead{font-size:18px;color:var(--ink-soft);margin:12px 0}
+#panel-estudo .toc{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:26px 0 10px}
+#panel-estudo .toc h2{font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 12px}
+#panel-estudo .toc ol{margin:0;padding-left:18px}
+#panel-estudo .toc li{margin:5px 0;font-size:14px}
+#panel-estudo .toc a{color:var(--ink-soft);text-decoration:none}
+#panel-estudo .toc a:hover{color:var(--accent);text-decoration:underline}
+#panel-estudo h2.topic{font-size:22px;margin:48px 0 6px;padding-top:10px;letter-spacing:-.2px;border-top:1px solid var(--line);scroll-margin-top:96px}
+#panel-estudo h3{font-size:18px;margin:30px 0 4px;color:var(--ink)}
+#panel-estudo h4{font-size:15.5px;margin:22px 0 2px;color:var(--accent);letter-spacing:.2px}
+#panel-estudo p{margin:12px 0}
+#panel-estudo strong{color:var(--ink);font-weight:700}
+#panel-estudo em{color:var(--ink-soft)}
+#panel-estudo ul,#panel-estudo ol{padding-left:22px}
+#panel-estudo li{margin:7px 0}
+#panel-estudo .term{color:var(--accent);font-weight:700}
+#panel-estudo .small{font-size:14px;color:var(--muted)}
+#panel-estudo .box{padding:14px 16px 14px 18px;border-radius:8px;margin:20px 0}
+#panel-estudo .box .h{font-weight:700;display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:15px}
+#panel-estudo .box p:first-of-type{margin-top:6px}
+#panel-estudo .box p:last-child{margin-bottom:0}
+#panel-estudo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent)}
+#panel-estudo .prof .h{color:var(--gold)}
+#panel-estudo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-estudo .caso .h{color:var(--caso)}
+#panel-estudo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-estudo .alerta .h{color:var(--alerta)}
+#panel-estudo .conexao{border:1px dashed var(--line-strong);background:color-mix(in srgb,var(--accent) 5%,transparent)}
+#panel-estudo .conexao .h{color:var(--accent)}
+#panel-estudo .def{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:16px 0}
+#panel-estudo .def b{color:var(--accent)}
+#panel-estudo .diagrama{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0;font-family:var(--sans)}
+#panel-estudo .diagrama .t{font-size:12.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin:0 0 10px}
+#panel-estudo .layers{list-style:none;padding:0;margin:0}
+#panel-estudo .layers li{margin:0 0 6px;padding:9px 12px;border-radius:7px;background:var(--surface);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+#panel-estudo .layers li .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent) 22%,var(--surface));color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+#panel-estudo .layers li b{color:var(--ink)}
+#panel-estudo .layers li span.d{color:var(--muted);font-size:14px}
+#panel-estudo .tablewrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:10px}
+#panel-estudo table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+#panel-estudo thead th{background:var(--surface2);color:var(--ink);text-align:left;padding:10px 13px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+#panel-estudo tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+#panel-estudo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface) 55%,transparent)}
+#panel-estudo tbody tr:last-child td{border-bottom:none}
+#panel-estudo td b,#panel-estudo th b{color:var(--ink)}
+#panel-estudo .resumo{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:22px 24px;margin:44px 0 10px;scroll-margin-top:96px}
+#panel-estudo .resumo h3{margin:0 0 12px;color:var(--ok);font-size:19px}
+#panel-estudo .resumo ul{margin:0;padding-left:20px}
+#panel-estudo .resumo li{margin:9px 0;color:var(--ink-soft)}
+#panel-estudo .resumo li b{color:var(--ink)}
+#panel-estudo .chip{display:inline-block;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:6px;padding:1px 7px;font-weight:700;font-size:14px}
+
+/* ============================================================= */
+/* PAINEL: RESUMO */
+/* ============================================================= */
+#panel-resumo .wrap{max-width:1000px;margin:0 auto;padding:0 16px 40px;font-size:14.5px;line-height:1.5}
+#panel-resumo h1{font-size:1.5rem;margin:22px 0 .1em;letter-spacing:-.01em}
+#panel-resumo h2{font-size:1.18rem;margin:0;color:var(--accent);letter-spacing:-.01em}
+#panel-resumo h3{font-size:1rem;margin:1.1em 0 .35em;color:var(--ink)}
+#panel-resumo .sub{color:var(--muted);font-size:.82rem;margin:.1em 0 0}
+#panel-resumo a{color:var(--accent);text-decoration:none}
+#panel-resumo a:hover{text-decoration:underline}
+#panel-resumo p{margin:.3em 0}
+#panel-resumo ul{margin:.35em 0;padding-left:1.15em}
+#panel-resumo li{margin:.2em 0}
+#panel-resumo strong{color:var(--ink)}
+#panel-resumo b.k{color:var(--gold)}
+#panel-resumo code{background:var(--surface2);padding:.05em .35em;border-radius:5px;font-size:.9em;font-family:var(--serif)}
+#panel-resumo nav.toc{background:var(--bg);border-bottom:1px solid var(--line-strong);padding:8px 0 10px;margin-bottom:14px}
+#panel-resumo nav.toc .row{display:flex;flex-wrap:wrap;gap:5px 6px;align-items:center}
+#panel-resumo nav.toc .lbl{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+#panel-resumo nav.toc a{font-size:.75rem;background:var(--surface);border:1px solid var(--line);padding:2px 8px;border-radius:20px;color:var(--ink-soft);white-space:nowrap}
+#panel-resumo nav.toc a:hover{background:var(--surface2);text-decoration:none;color:var(--ink)}
+#panel-resumo nav.toc a.a1{border-color:color-mix(in srgb,var(--accent) 40%,transparent)}
+#panel-resumo section{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:12px 0;scroll-margin-top:96px}
+#panel-resumo .aula-tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:1px 7px;border-radius:20px;margin-bottom:6px}
+#panel-resumo .t1{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+#panel-resumo .prof{border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .alerta{border-left:4px solid var(--alerta);background:color-mix(in srgb,var(--alerta) 9%,transparent);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .conexao{border:1px dashed var(--line-strong);padding:10px 13px;border-radius:8px;margin:9px 0}
+#panel-resumo .box-h{font-weight:700;font-size:.82rem;display:block;margin-bottom:3px}
+#panel-resumo .tw{overflow-x:auto;margin:9px 0;-webkit-overflow-scrolling:touch}
+#panel-resumo table{border-collapse:collapse;width:100%;font-size:.83rem;min-width:520px}
+#panel-resumo th,#panel-resumo td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+#panel-resumo thead th{background:var(--surface2);color:var(--ink);font-size:.78rem;letter-spacing:.01em}
+#panel-resumo tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 45%,transparent)}
+#panel-resumo td .lead{color:var(--gold);font-weight:700}
+#panel-resumo .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#panel-resumo .mini{font-size:.78rem;color:var(--muted)}
+@media(max-width:640px){#panel-resumo .grid2{grid-template-columns:1fr}}
+
+/* ============================================================= */
+/* PAINEL: QUESTÕES */
+/* ============================================================= */
+#panel-questoes .wrap{max-width:860px;margin:0 auto;padding:0 18px 120px}
+#panel-questoes a{color:var(--accent)}
+#panel-questoes .hero{padding:24px 0 6px}
+#panel-questoes .hero h2{font-size:1.5rem;margin:0 0 6px}
+#panel-questoes .hero p{color:var(--muted);margin:0}
+#panel-questoes .statgrid{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#panel-questoes .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:96px}
+#panel-questoes .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+#panel-questoes .stat span{color:var(--muted);font-size:.78rem}
+#panel-questoes .controls{background:var(--bg);padding:12px 0;margin:14px 0 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .ctl-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+#panel-questoes .ctl-row:last-child{margin-bottom:0}
+#panel-questoes .ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--faint);width:100%;margin-bottom:-2px;font-weight:700}
+#panel-questoes .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+#panel-questoes .seg button{background:transparent;border:0;color:var(--muted);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;font-family:inherit}
+#panel-questoes .seg button.active{background:var(--accent);color:#fff}
+#panel-questoes .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);padding:6px 12px;border-radius:20px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:inherit}
+#panel-questoes .chip.active{background:var(--accent);color:#fff;border-color:transparent}
+#panel-questoes .chip.nf.active{background:var(--ok)} #panel-questoes .chip.nm.active{background:var(--gold);color:#241a02} #panel-questoes .chip.nd.active{background:var(--alerta)}
+#panel-questoes .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 16px;margin:16px 0}
+#panel-questoes .qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#panel-questoes .qnum{font-weight:800;color:var(--accent);font-size:.95rem}
+#panel-questoes .badge{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line-strong);color:var(--muted)}
+#panel-questoes .badge.aula{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border-color:transparent}
+#panel-questoes .badge.nf{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);border-color:transparent}
+#panel-questoes .badge.nm{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold);border-color:transparent}
+#panel-questoes .badge.nd{background:color-mix(in srgb,var(--alerta) 16%,transparent);color:var(--alerta);border-color:transparent}
+#panel-questoes .enun{font-size:1.02rem;color:var(--ink);margin:0 0 14px}
+#panel-questoes .vinheta{color:var(--ink-soft)}
+#panel-questoes .pergunta{margin-top:10px;font-weight:600}
+#panel-questoes .opts{display:flex;flex-direction:column;gap:8px}
+#panel-questoes .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 13px;cursor:pointer;font-family:inherit;font-size:.96rem;line-height:1.45;transition:border-color .12s,background .12s}
+#panel-questoes .opt:hover:not(.locked){border-color:var(--accent)}
+#panel-questoes .opt .letra{font-weight:800;color:var(--muted);flex:0 0 auto;min-width:16px}
+#panel-questoes .opt.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface2))}
+#panel-questoes .opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surface2))}
+#panel-questoes .opt.correct .letra{color:var(--ok)}
+#panel-questoes .opt.wrong{border-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 14%,var(--surface2))}
+#panel-questoes .opt.wrong .letra{color:var(--alerta)}
+#panel-questoes .opt.locked{cursor:default}
+#panel-questoes .opt .mark{margin-left:auto;font-weight:800}
+#panel-questoes .fb{margin-top:12px;font-weight:700;font-size:.95rem}
+#panel-questoes .fb.ok{color:var(--ok)} #panel-questoes .fb.no{color:var(--alerta)}
+#panel-questoes .reveal-btn{margin-top:10px;background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);border-radius:9px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600}
+#panel-questoes .reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+#panel-questoes .gab{margin-top:12px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent);border-radius:8px;padding:13px 15px;font-size:.92rem}
+#panel-questoes .gab h4{margin:0 0 6px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+#panel-questoes .gab .certa{border-left:3px solid var(--ok);padding:2px 0 2px 10px;margin:0 0 12px;color:var(--ink-soft)}
+#panel-questoes .gab .certa b{color:var(--ok)}
+#panel-questoes .gab ul{margin:6px 0 0;padding-left:2px;list-style:none}
+#panel-questoes .gab li{margin-bottom:7px;color:var(--muted);padding-left:22px;position:relative}
+#panel-questoes .gab li b{color:var(--alerta)}
+#panel-questoes .gab li::before{content:"✗";position:absolute;left:2px;top:0;color:var(--alerta);font-weight:800}
+#panel-questoes .ref{display:inline-block;margin-top:10px;font-size:.76rem;color:var(--faint);background:var(--surface2);border:1px solid var(--line);padding:3px 10px;border-radius:20px}
+#panel-questoes .caso{border-left:4px solid var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent);padding:12px 15px;border-radius:8px;color:var(--ink-soft);margin-bottom:12px}
+#panel-questoes .caso .lab{font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;color:var(--caso);font-weight:700;display:block;margin-bottom:5px}
+#panel-questoes .perg{margin:0;padding-left:20px}
+#panel-questoes .perg li{margin-bottom:6px}
+#panel-questoes .modelo{margin-top:12px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);padding:13px 15px;border-radius:8px;font-size:.93rem}
+#panel-questoes .modelo h4{margin:0 0 8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;color:var(--gold)}
+#panel-questoes .modelo p{margin:0 0 9px;color:var(--ink-soft)}
+#panel-questoes .modelo p:last-of-type{margin-bottom:0}
+#panel-questoes .modelo b.q{color:var(--accent)}
+#panel-questoes .simbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);padding:11px 18px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#panel-questoes .simbar .prog{color:var(--muted);font-size:.88rem}
+#panel-questoes .btn{background:var(--accent);border:0;color:#fff;border-radius:10px;padding:10px 20px;cursor:pointer;font-family:inherit;font-weight:700;font-size:.92rem}
+#panel-questoes .btn.ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+#panel-questoes .btn:disabled{opacity:.45;cursor:not-allowed}
+#panel-questoes .score{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius);padding:20px;margin:16px 0}
+#panel-questoes .score h3{margin:0 0 4px}
+#panel-questoes .score .big{font-size:2.2rem;font-weight:800;color:var(--accent)}
+#panel-questoes .score .sub{color:var(--muted);margin-bottom:14px}
+#panel-questoes .score table{width:100%;border-collapse:collapse;font-size:.9rem}
+#panel-questoes .score th,#panel-questoes .score td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+#panel-questoes .score th{color:var(--faint);font-size:.74rem;text-transform:uppercase;letter-spacing:.5px}
+#panel-questoes .score tr:last-child td{border-bottom:0}
+#panel-questoes .bar{height:8px;border-radius:6px;background:var(--surface2);overflow:hidden;min-width:80px}
+#panel-questoes .bar span{display:block;height:100%;background:var(--accent)}
+#panel-questoes .empty{text-align:center;color:var(--muted);padding:40px 0}
+@media(max-width:560px){ #panel-questoes .hero h2{font-size:1.28rem} #panel-questoes .opt{font-size:.92rem} }
+
+/* ============================================================= */
+/* PAINEL: FLASHCARDS */
+/* ============================================================= */
+#panel-flashcards.active{display:flex;flex-direction:column;align-items:center}
+#panel-flashcards{padding:18px 16px 40px;line-height:1.5}
+#panel-flashcards a{color:inherit}
+#panel-flashcards .head{width:100%;max-width:760px}
+#panel-flashcards .title-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#panel-flashcards .title-row h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px}
+#panel-flashcards .title-row .sub{font-size:12.5px;color:var(--muted)}
+#panel-flashcards .emoji{font-size:20px}
+#panel-flashcards .decks{display:flex;gap:8px;margin:14px 0 6px;flex-wrap:wrap}
+#panel-flashcards .deckbtn{flex:1;min-width:220px;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--faint);border-radius:12px;padding:12px 14px;color:var(--ink);cursor:pointer;transition:border-color .15s,transform .12s,box-shadow .15s}
+#panel-flashcards .deckbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.22)}
+#panel-flashcards .deckbtn .k{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+#panel-flashcards .deckbtn .nm{font-size:16px;font-weight:700;margin:3px 0 2px}
+#panel-flashcards .deckbtn .ct{font-size:12px;color:var(--muted)}
+#panel-flashcards .deckbtn.on{border-left-color:var(--accent);border-color:var(--line-strong);background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+#panel-flashcards .deckbtn.d1 .k{color:var(--accent)}
+#panel-flashcards .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+#panel-flashcards .controls button,#panel-flashcards .seg{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:13.5px;cursor:pointer}
+#panel-flashcards .controls button:hover{border-color:var(--accent)}
+#panel-flashcards .controls button.act{background:color-mix(in srgb,var(--accent) 18%,var(--surface2));border-color:var(--accent)}
+#panel-flashcards .counter{margin-left:auto;font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#panel-flashcards .eyebtn{display:inline-flex;align-items:center;gap:6px}
+#panel-flashcards .eyebtn .lbl{font-size:12.5px}
+#panel-flashcards .progress{width:100%;max-width:760px;display:flex;align-items:center;gap:12px;margin:8px 0 2px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+#panel-flashcards .bar{flex:1;min-width:160px;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;display:flex}
+#panel-flashcards .bar i{display:block;height:100%}
+#panel-flashcards .bar .kn{background:var(--ok)} #panel-flashcards .bar .dk{background:var(--alerta)}
+#panel-flashcards .dot{display:inline-flex;align-items:center;gap:5px}
+#panel-flashcards .dot::before{content:"";width:9px;height:9px;border-radius:99px}
+#panel-flashcards .dot.kn::before{background:var(--ok)} #panel-flashcards .dot.dk::before{background:var(--alerta)} #panel-flashcards .dot.rem::before{background:var(--faint)}
+#panel-flashcards .stage{width:100%;max-width:760px;margin-top:10px}
+#panel-flashcards #card{perspective:2000px;height:60vh;min-height:340px;cursor:pointer}
+#panel-flashcards #inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.15,.2,1);transform-style:preserve-3d}
+#panel-flashcards #card.flip #inner{transform:rotateY(180deg)}
+#panel-flashcards .face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:26px 28px;display:flex;flex-direction:column;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+#panel-flashcards .back{transform:rotateY(180deg)}
+#panel-flashcards .badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line-strong)}
+#panel-flashcards .badge.conceito{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+#panel-flashcards .badge.prof{color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+#panel-flashcards .badge.caso{color:var(--caso);background:color-mix(in srgb,var(--caso) 14%,transparent)}
+#panel-flashcards .badge.alerta{color:var(--alerta);background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .badge.hide{visibility:hidden}
+#panel-flashcards .qfront{font-size:clamp(20px,3.6vw,26px);font-weight:700;margin:auto 0;line-height:1.38}
+#panel-flashcards .hint{text-align:center;color:var(--faint);font-size:12.5px;margin-top:auto}
+#panel-flashcards .hint kbd{background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11.5px}
+#panel-flashcards .backq{font-size:15px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:10px;line-height:1.35}
+#panel-flashcards .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);margin:14px 0 5px}
+#panel-flashcards .answer{font-size:clamp(15.5px,2.4vw,17.5px);line-height:1.6;color:var(--ink-soft)}
+#panel-flashcards .answer b{color:var(--ok);font-weight:700}
+#panel-flashcards .answer .al{color:var(--alerta);font-weight:700}
+#panel-flashcards .answer ul{margin:6px 0 0;padding-left:20px}
+#panel-flashcards .answer li{margin:3px 0}
+#panel-flashcards .obs{margin-top:16px;padding:11px 13px;border-radius:10px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,transparent);font-size:14px;color:var(--ink-soft);line-height:1.5}
+#panel-flashcards .obs.tip-caso{border-left-color:var(--caso);background:color-mix(in srgb,var(--caso) 8%,transparent)}
+#panel-flashcards .obs.tip-alerta{border-left-color:var(--alerta);background:color-mix(in srgb,var(--alerta) 8%,transparent)}
+#panel-flashcards .obs b{color:var(--ink)}
+#panel-flashcards .nav{display:flex;align-items:center;gap:10px;margin-top:14px;width:100%;max-width:760px}
+#panel-flashcards .nav .navbtn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 16px;font-size:15px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:7px}
+#panel-flashcards .nav .navbtn:hover{border-color:var(--accent)}
+#panel-flashcards .nav .navbtn:disabled{opacity:.35;cursor:not-allowed}
+#panel-flashcards .nav .mid{flex:1;display:flex;gap:8px;justify-content:center}
+#panel-flashcards .mark{flex:1;max-width:210px;border-radius:12px;padding:12px 8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:1px}
+#panel-flashcards .mark small{font-weight:400;font-size:11px;color:var(--muted)}
+#panel-flashcards .mark.know{border-color:var(--ok);color:var(--ok)}
+#panel-flashcards .mark.know:hover{background:color-mix(in srgb,var(--ok) 12%,transparent)}
+#panel-flashcards .mark.dont{border-color:var(--alerta);color:var(--alerta)}
+#panel-flashcards .mark.dont:hover{background:color-mix(in srgb,var(--alerta) 12%,transparent)}
+#panel-flashcards .mark.sel{outline:2px solid currentColor;outline-offset:1px}
+#panel-flashcards .mark:disabled{opacity:.4;cursor:not-allowed}
+#panel-flashcards .flipnote{text-align:center;font-size:12px;color:var(--faint);margin-top:8px}
+#panel-flashcards #empty{display:none;text-align:center;color:var(--muted);padding:60px 20px;font-size:16px}
+@media(max-width:560px){
+  #panel-flashcards .deckbtn{min-width:100%}
+  #panel-flashcards .counter{margin-left:0;flex-basis:100%;text-align:right}
+  #panel-flashcards #card{height:66vh}
+  #panel-flashcards .nav .navbtn{padding:12px}
+  #panel-flashcards .mark{font-size:13.5px}
+}
+
+/* ============================================================= */
+/* IMPRESSÃO (otimizada para o Resumo) */
+/* ============================================================= */
+@media print{
+  #themeToggle,#toTop,.hubhead{display:none!important}
+  :root{--bg:#fff;--surface:#fff;--surface2:#f0f0f0;--ink:#000;--ink-soft:#111;--muted:#333;--line:#bbb;--line-strong:#888}
+  body{font-size:10px}
+  .panel{display:none!important}
+  .panel.active{display:block!important}
+  #panel-resumo nav.toc{display:none!important}
+  #panel-resumo section{break-inside:avoid;box-shadow:none}
+  #panel-resumo .tw{overflow:visible}
+  @page{margin:10mm}
+}
+
+/* figuras (slides da aula) */
+#panel-estudo .fig{margin:22px 0}
+#panel-estudo .fig img{max-width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+#panel-estudo .fig figcaption{font-size:13px;color:var(--muted);margin-top:7px;line-height:1.5}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style id="dossie-skin">/* ===== SKIN DOSSIÊ — override de tema (Córtex Estudos) ===== */
+:root,:root[data-theme="dark"]{
+  --bg:#0a0908; --surface:#141311; --surface2:#1d1b18;
+  --ink:#e8e4d7; --ink-soft:#cfcab9; --muted:#8a8573; --faint:#6d6a5e;
+  --line:rgba(232,228,215,.14); --line-strong:rgba(232,228,215,.28);
+  --accent:#4d7cff; --gold:#d4a84b; --caso:#4fb47a; --alerta:#ff5b55; --ok:#4fb47a; --err:#ff5b55;
+  --radius:2px;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --serif:"Fraunces",ui-serif,"Iowan Old Style",Georgia,serif;
+  --mono:"JetBrains Mono","IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#f6f2e7; --surface:#f6f2e7; --surface2:#ece7d7;
+  --ink:#0a0908; --ink-soft:#1c1a16; --muted:#6a655a; --faint:#8d8778;
+  --line:rgba(10,9,8,.18); --line-strong:rgba(10,9,8,.42);
+  --accent:#0033ff; --gold:#8a5a00; --caso:#006a3a; --alerta:#c8241e; --ok:#006a3a; --err:#c8241e;
+}
+/* tipografia dossiê */
+.page-h1,.hero h1,h1{font-family:var(--serif)!important;font-weight:600;letter-spacing:-.01em}
+.kick,.aula-tag,.badge,.chip,.lab,.lbl,.qnum,.qhead .aula,.ctl-label,.counter,.prog,.sub,.hubfoot,.stat .lab,.eyebrow{
+  font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.hub-brand,.tab,.hub-tab,.navbtn,.btn,.reveal-btn,.ghost{font-family:var(--mono)!important;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem}
+/* superfícies quadradas + réguas */
+.card,.box,.panel .wrap section,.q,.fig,.vinheta,.modelo,.toc,.simbar,.stat,.dk,.stage{border-radius:var(--radius)!important}
+.btn,.tab,.hub-tab,.opt,.alt,.chip,.badge,.navbtn,.reveal-btn,.ghost,.seg{border-radius:var(--radius)!important}
+.card,.box,.q,.toc,.vinheta,.modelo{border:1px solid var(--line)!important;box-shadow:none!important}
+/* cabeçalho tipo topbar do dossiê */
+.hubhead{background:var(--bg)!important;border-bottom:1px solid var(--line-strong)!important;box-shadow:none!important}
+.hub-brand{color:var(--muted)!important}
+.hub-tab{border:0!important;background:none!important;border-bottom:2px solid transparent!important;color:var(--muted)!important;padding:10px 2px!important;margin-right:18px}
+.hub-tab.active,.hub-tab.on{color:var(--ink)!important;border-bottom-color:var(--accent)!important;background:none!important}
+/* botões de ação principais mantêm o cobalto */
+.btn{border:1px solid var(--line-strong)!important;background:var(--surface)!important;color:var(--ink)!important}
+.btn:hover{border-color:var(--accent)!important;color:var(--accent)!important}
+/* alternativas de questão */
+.opt,.alt{border:1px solid var(--line)!important;background:var(--surface)!important}
+.opt:hover,.alt:hover{border-color:var(--accent)!important}
+.opt.locked.correct,.alt.certa{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 8%,var(--surface))!important}
+.opt.locked.wrong,.alt.errada{border-color:var(--alerta)!important;background:color-mix(in srgb,var(--alerta) 8%,var(--surface))!important}
+.letra{font-family:var(--mono)!important;color:var(--accent)!important}
+/* selo/watermark ancorado */
+#wm-slot{margin-left:auto;display:flex;align-items:center}
+#wm-slot #wm{position:static!important;transform:none!important;margin:0 10px 0 14px;background:none!important;border:1px solid var(--line-strong)!important;color:var(--muted)!important;backdrop-filter:none!important;font-family:var(--mono)!important;letter-spacing:.08em}
+@media(max-width:720px){#wm-slot #wm{display:none}}
+/* botão de tema: chip ☀/☾ */
+#themeToggle{border:1px solid var(--line-strong)!important;background:none!important;color:var(--ink)!important;border-radius:var(--radius)!important;min-width:34px;font-size:14px;line-height:1}
+/* hairlines nos títulos de seção */
+.panel .wrap section>h2,.box-h,h2{border-bottom:1px solid var(--line);padding-bottom:.35em;font-family:var(--serif);letter-spacing:0}
+/* stat band */
+.statgrid,.simbar{border-top:1px solid var(--line-strong)!important;border-bottom:1px solid var(--line-strong)!important}
+.stat b,.stat .big{font-family:var(--serif)!important}
+/* riscar mantém o tracejado na cor da linha */
+.risc{border-left:1px dashed var(--line-strong)!important;color:var(--muted)}
+/* refinamentos v2 */
+.page-h1{font-size:clamp(2.4rem,6vw,4.2rem)!important;line-height:.98!important;letter-spacing:-.015em!important;margin:.15em 0 .25em!important}
+#themeToggle{position:fixed;width:34px!important;height:34px!important;border-radius:var(--radius)!important;font-size:15px!important;background:var(--bg)!important}
+.lead{max-width:70ch}
+.hub-tab{font-size:.78rem!important}
+/* v3: emojis fora, segmentos mono */
+.tab .ico,.hub-tab .ico,.title-row .emoji{display:none!important}
+.seg{border:1px solid var(--line-strong)!important;border-radius:var(--radius)!important;background:none!important;overflow:hidden;padding:0!important}
+.seg button{font-family:var(--mono)!important;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem!important;background:none!important;color:var(--muted)!important;border:0!important;border-radius:0!important;padding:8px 14px!important}
+.seg button.active{color:var(--accent)!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important}
+.tab{font-family:var(--mono)!important;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem!important;border:0!important;background:none!important;border-bottom:2px solid transparent!important;border-radius:0!important;color:var(--muted)!important}
+.tab.active{color:var(--ink)!important;border-bottom-color:var(--accent)!important}
+nav.top #themeToggle{position:static!important;margin-left:14px;width:32px!important;height:32px!important}
+/* v4: header sem azul — tinta/mono como na referência */
+.hubhead a,.hub-brand,.hub-brand a,.hubhead .title a,.hubhead b{color:var(--ink)!important;text-decoration:none}
+.hubhead a:hover{color:var(--accent)!important}
+nav.top a,nav.top .brand,nav.top .brand a{color:var(--ink)!important;text-decoration:none}
+nav.top a:hover{color:var(--accent)!important}
+.kick{color:var(--muted)!important}
+.kick::before{content:"";display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:9px}
+.hubhead .sub{color:var(--ink)!important}
+</style>
+<body>
+
+<button id="themeToggle" title="Alternar tema" aria-label="Alternar tema">☀</button>
+
+<header class="hubhead">
+  <div class="hubhead-inner">
+    <div class="hub-brand"><span class="em">🗺️</span> Anatomia Topográfica <span class="sep">·</span> <span class="sub">Peritônio (16/10)</span><span id="wm-slot"></span></div>
+    <nav class="tabbar" role="tablist">
+      <button class="tab" id="tab-estudo" data-tab="estudo"><span class="ico">📖</span> Conteúdo</button>
+      <button class="tab" id="tab-resumo" data-tab="resumo"><span class="ico">📝</span> Resumo</button>
+      <button class="tab" id="tab-questoes" data-tab="questoes"><span class="ico">❓</span> Questões</button>
+      <button class="tab" id="tab-flashcards" data-tab="flashcards"><span class="ico">🎴</span> Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: ESTUDO COMPLETO -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-estudo">
+<style>#panel-estudo .fig img{max-height:760px;width:auto;max-width:100%;margin:0 auto;background:#fff}#panel-estudo .fig .cred{display:block;opacity:.7;font-style:italic;font-size:12px;margin-top:3px}#panel-estudo .figpair{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}#panel-estudo .figpair .fig{margin:14px 0}@media(max-width:720px){#panel-estudo .figpair{grid-template-columns:1fr}}</style>
+
+<div class="wrap">
+  <p class="kick">Córtex Estudos · 4º Semestre · Anatomia Topográfica · Aula de 16/10</p>
+  <h1 class="page-h1">Peritônio</h1>
+  <p class="lead">A serosa do abdome e a "verdadeira" cavidade: lâminas parietal e visceral, o grande saco fechado no homem e aberto na mulher, quem é peritonizado e quem fica fora, mesos, omentos e ligamentos, as funções (do atrito à diálise peritoneal), a bolsa omental atrás do estômago, o forame de Winslow e a manobra de Pringle — e, só nos slides, os recessos peritoneais.</p>
+
+  <nav class="toc">
+    <h2>Nesta aula</h2>
+    <ol>
+      <li><a href="#t1">Peritônio: uma serosa como a pleura e o pericárdio</a></li>
+      <li><a href="#t2">O grande saco: fechado no homem, aberto na mulher</a></li>
+      <li><a href="#t3">Peritonizados, parcialmente peritonizados e extraperitoneais</a></li>
+      <li><a href="#t4">Mesos: a prega que prende a víscera à parede</a></li>
+      <li><a href="#t5">Líquido peritoneal e as funções do peritônio</a></li>
+      <li><a href="#t6">Omentos menor e maior</a></li>
+      <li><a href="#t7">Ligamentos e pregas peritoneais</a></li>
+      <li><a href="#t8">Bolsa omental: o pequeno saco</a></li>
+      <li><a href="#t9">Forame omental e a manobra de Pringle</a></li>
+      <li><a href="#t10">Partes da bolsa omental</a></li>
+      <li><a href="#t11">Escavações do fundo da pelve</a></li>
+      <li><a href="#t12">Só nos slides: recessos peritoneais</a></li>
+      <li><a href="#t13">Resumo rápido</a></li>
+    </ol>
+  </nav>
+
+  <h2 class="topic" id="t1">1 · Peritônio: uma serosa como a pleura e o pericárdio</h2>
+  <ul>
+    <li>O peritônio é uma <b>MEMBRANA SEROSA, lisa e brilhante</b> — a mesma natureza da <b>pleura</b> e do <b>pericárdio seroso</b>. Como toda serosa, tem <b>duas lâminas</b>:</li>
+  </ul>
+  <div class="diagrama"><p class="t">As duas lâminas e o espaço entre elas</p>
+  <ol class="layers">
+    <li><span class="n">1</span><div><b>PERITÔNIO PARIETAL</b> — <span class="d">reveste a parede do abdome, desde o <b>diafragma</b> (em cima) até o <b>assoalho pélvico / diafragma pélvico</b> (embaixo).</span></div></li>
+    <li><span class="n">2</span><div><b>CAVIDADE PERITONEAL</b> — <span class="d">o espaço ENTRE as duas lâminas, com uma fina película de <b>líquido seroso</b>. É a <b>verdadeira cavidade</b> do abdome.</span></div></li>
+    <li><span class="n">3</span><div><b>PERITÔNIO VISCERAL</b> — <span class="d">o parietal se <b>reflete</b> em direção ao órgão e o reveste, formando a sua <b>túnica externa (serosa)</b>.</span></div></li>
+  </ol></div>
+  <ul>
+    <li>🎯 "Não existe, na realidade, cavidade abdominal": a cavidade abdominal só apareceria se tirássemos todos os órgãos. A cavidade <b>de verdade</b> é a <b>PERITONEAL</b>, delimitada pelas lâminas parietal e visceral.</li>
+    <li>O visceral reveste <b>alguns</b> órgãos — não todos. Daí a classificação em peritonizados, parcialmente peritonizados e extraperitoneais (tópico 3).</li>
+  </ul>
+  <div class="box conexao"><p class="h">🔗 Conexão</p><p>É o mesmo desenho da <a href="../mediastino/">pleura e do pericárdio seroso</a>: lâmina parietal + lâmina visceral, e a cavidade (onde se acumulam os derrames) <b>entre</b> elas.</p></div>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide03-peritonio-corte-sagital.jpg" alt="Corte sagital do abdome masculino com o peritônio em vermelho" loading="lazy"><figcaption>Corte sagital (homem): o peritônio (em vermelho) desce do diafragma ao fundo da pelve. Note o mesocolo transverso, o mesentério, a bolsa omental atrás do estômago, a escavação retovesical — e pâncreas, duodeno, aorta e bexiga POR TRÁS/ABAIXO do peritônio. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide05-orgao-intraperitoneal-mesenterio.jpg" alt="Esquema de órgão intraperitoneal com lâminas parietal e visceral e mesentério" loading="lazy"><figcaption>O esquema da reflexão: o peritônio parietal (na parede) se dobra em direção ao órgão, forma o meso (por onde chegam os vasos) e vira peritônio visceral sobre a víscera. Entre as lâminas, a cavidade peritoneal. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t2">2 · O grande saco: fechado no homem, aberto na mulher</h2>
+  <ul>
+    <li>A cavidade peritoneal é um <b>GRANDE SACO</b>.</li>
+    <li>🎯 <b>HOMEM: saco completamente FECHADO.</b></li>
+    <li>🎯 <b>MULHER: saco ABERTO</b> — as <b>tubas uterinas</b> abrem-se (pelas <b>fímbrias</b>, no óstio abdominal) para dentro da cavidade peritoneal. O trajeto <b>cavidade peritoneal → tuba → útero (corpo, istmo, colo) → vagina → meio exterior</b> comunica o interior do abdome com o exterior: "pode sair coisa, pode entrar coisa".</li>
+    <li>Consequência clínica dita na aula: <b>o risco de infecção da cavidade peritoneal é maior na mulher</b>, justamente por essa comunicação.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Não é "furo no peritônio"</p><p>Na dúvida levantada em aula: a tuba é revestida pelo peritônio; a comunicação existe porque o <b>óstio da tuba é aberto</b> dentro da cavidade (é por onde o óvulo cai na tuba) — o meio externo chega pelo canal genital.</p></div>
+
+  <h2 class="topic" id="t3">3 · Peritonizados, parcialmente peritonizados e extraperitoneais</h2>
+  <ul>
+    <li><b>ÓRGÃO PERITONIZADO</b>: <b>totalmente</b> revestido pelo peritônio visceral.</li>
+    <li><b>PARCIALMENTE PERITONIZADO</b>: revestido só em algumas faces. Exemplo-modelo da aula: <b>COLO ASCENDENTE e COLO DESCENDENTE</b> — peritônio na face <b>medial, anterior e lateral</b>; <b>não há peritônio POSTERIOR</b>.</li>
+    <li><b>EXTRAPERITONEAL</b>: não revestido; está <b>fora da cavidade peritoneal</b>. Quando fica atrás dela (delimitado pelo peritônio parietal posterior), é <b>RETROPERITONEAL</b>.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Revestimento</th><th>Órgãos citados na aula</th></tr>
+    <tr><td><b>PERITONIZADOS</b> (totalmente)</td><td><b>jejuno e íleo</b> · <b>ceco</b> · <b>colo sigmoide</b> · <b>baço</b> · <b>cauda do pâncreas</b> · <b>vesícula biliar</b> · <b>tuba uterina</b> e <b>ovário</b> (na aula) · colo transverso (com seu mesocolo)</td></tr>
+    <tr><td><b>PARCIALMENTE</b></td><td><b>colo ascendente</b> e <b>colo descendente</b> (sem face posterior) · <b>1ª parte do duodeno</b> (só na frente) · <b>fígado</b> (tem a <b>área nua</b>, em cima, sem peritônio) · <b>terço superior do reto</b> (o peritônio passa na frente)</td></tr>
+    <tr><td><b>EXTRAPERITONEAIS</b> (retroperitoneais / pélvicos)</td><td><b>2ª, 3ª e 4ª partes do duodeno</b> · <b>cabeça e corpo do pâncreas</b> · <b>reto do terço médio para baixo</b> · <b>bexiga</b> · <b>útero</b> (o peritônio passa por cima) · <b>ureteres</b> · <b>aorta</b> e <b>veia cava inferior</b> · <b>artérias e veias renais</b> · <b>vasos ilíacos</b> · vasos gonadais (ovarianos/testiculares)</td></tr>
+  </table></div>
+  <div class="box prof"><p class="h">🎯 Duodeno e pâncreas — o raciocínio da aula</p><p>A 1ª parte do duodeno ainda é revestida (na frente); depois o duodeno "mergulha" para trás e fica <b>extraperitoneal</b> — e a <b>cabeça do pâncreas</b>, encaixada na curva do duodeno, também. A <b>cauda</b>, mais anteriorizada e junto ao <b>baço</b>, é peritonizada.</p></div>
+  <div class="box alerta"><p class="h">⚠️ Divergências na classificação</p>
+  <p><b>Ovário:</b> na aula, "totalmente revestido pelo peritônio". Na literatura, o ovário é intraperitoneal e suspenso pelo <b>mesovário</b>, mas sua superfície é coberta por um epitélio próprio (epitélio superficial), não pelo peritônio visceral.</p>
+  <p><b>Útero:</b> na aula, "o peritônio passa em cima, mas não reveste". Na literatura, fundo e corpo são cobertos por peritônio (o <b>perimétrio</b>, sua serosa); o colo não. O útero costuma ser descrito como subperitoneal, mas com revestimento parcial.</p>
+  <p><b>Vesícula biliar:</b> na aula, peritonizada. Na literatura, o peritônio cobre o fundo e a face inferior; a face superior adere ao leito hepático sem peritônio.</p>
+  <p><b>Reto:</b> na aula, só o terço superior tem peritônio (na frente) e "do terço médio para baixo é extraperitoneal". Na literatura: terço superior coberto na frente <b>e nos lados</b>, terço médio <b>só na frente</b>, terço inferior sem peritônio.</p>
+  <p><b>Duodeno:</b> na literatura, só os ~2 cm iniciais da 1ª parte (a ampola) são intraperitoneais e móveis; o restante da 1ª parte já é retroperitoneal.</p></div>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide40-colos-parcialmente-peritonizados.jpg" alt="Corte transversal mostrando colo ascendente e descendente parcialmente peritonizados e o mesentério" loading="lazy"><figcaption>Corte transversal: colos ascendente e descendente encostados na parede posterior, cobertos só na frente e nos lados (parcialmente peritonizados); entre eles, o mesentério suspendendo jejuno e íleo. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide17-visceras-andar-superior.jpg" alt="Abdome aberto com colo transverso rebatido mostrando mesentério, duodeno e pâncreas" loading="lazy"><figcaption>Abdome aberto, colo transverso rebatido: a raiz do mesocolo transverso sobre o pâncreas, o mesentério seccionado, o duodeno atrás do peritônio, o omento menor/ligamento hepatoduodenal e o forame omental. Embaixo, as pregas umbilicais. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t4">4 · Mesos: a prega que prende a víscera à parede</h2>
+  <ul>
+    <li>Quando o peritônio parietal se <b>reflete</b> em direção a uma víscera para formar o visceral, essa reflexão é o <b>MESO</b>: uma <b>prega de peritônio que sustenta, que PRENDE A VÍSCERA À PAREDE</b>.</li>
+    <li>🎯 Nomes que a aula cobrou:
+      <ul>
+        <li><b>MESENTÉRIO</b> ("entérico" = intestino): sustenta o <b>intestino delgado — jejuno e íleo</b>. Tem uma <b>raiz</b> na parede posterior e pode ser mais longo ou mais curto.</li>
+        <li><b>MESOCOLO TRANSVERSO</b>: prende o colo transverso à parede.</li>
+        <li><b>MESOCOLO SIGMOIDE</b> (mesossigmoide): sustenta o colo sigmoide.</li>
+        <li><b>MESOAPÊNDICE</b>: sustenta o apêndice cecal (vermiforme).</li>
+      </ul></li>
+    <li>Os <b>vasos chegam pelo meso</b>: a <b>artéria mesentérica superior</b> e seus ramos (jejunais, ileais, cólicas) correm entre as lâminas do mesentério; na dissecção, é preciso <b>abrir o meso</b> para encontrá-los. O mesmo vale para os ramos da mesentérica inferior no mesocolo sigmoide.</li>
+  </ul>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide13-ligamento-hepatoduodenal-raizes.jpg" alt="Esquema das raízes do mesocolo transverso e do mesentério e do ligamento hepatoduodenal" loading="lazy"><figcaption>As "linhas de fixação" na parede posterior: raiz do mesocolo transverso cruzando o pâncreas, raiz do mesentério descendo da flexura duodenojejunal (com artéria e veia mesentéricas superiores) e, em cima, o ligamento hepatoduodenal com veia porta, artéria hepática própria e colédoco. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide10-mesocolo-sigmoide-recesso.jpg" alt="Mesocolo sigmoide e recesso intersigmoide" loading="lazy"><figcaption>Mesocolo sigmoide: o meso que prende o colo sigmoide; à direita, levantado, aparece o recesso sigmóideo (intersigmoide) na sua base — recesso citado só nos slides. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t5">5 · Líquido peritoneal e as funções do peritônio</h2>
+  <ul>
+    <li>Entre as lâminas há uma <b>serosidade</b> (líquido seroso). Quando esse líquido <b>aumenta</b> — por <b>transudação dos vasos</b> — temos a <b>ASCITE</b>, a "barriga d'água" (ex.: <b>cirrose</b>, <b>esquistossomose</b>).</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Função (slide + fala)</th><th>Como a aula explicou</th></tr>
+    <tr><td><b>Diminui o atrito</b></td><td>as alças se movem (<b>peristaltismo</b>) e roçam umas nas outras; a serosa lisa permite o <b>deslizamento</b> sem atrito.</td></tr>
+    <tr><td><b>Resistência às infecções</b></td><td>o líquido peritoneal contém <b>células de defesa</b>.</td></tr>
+    <tr><td><b>Reserva de gordura</b></td><td>principalmente no <b>OMENTO MAIOR</b>: espesso no obeso, fininho no sarcopênico — reflete a gordura visceral.</td></tr>
+    <tr><td><b>Bloqueia processos infecciosos</b></td><td>o <b>omento maior</b> (parte livre, "avental") se dirige ao foco e o <b>envolve</b> — na <b>apendicite</b>, ao abrir, encontra-se o omento "bloqueando" o apêndice e evitando que o pus se espalhe.</td></tr>
+    <tr><td><b>Bloqueia perfurações</b></td><td>o omento "tampona" a <b>úlcera gástrica perfurada</b> ou o <b>divertículo perfurado</b>, evitando que o conteúdo caia na cavidade e cause <b>PERITONITE</b>.</td></tr>
+    <tr><td><b>Via de troca: introduzir drogas e retirar substâncias tóxicas</b></td><td>"talvez o mais importante": a <b>DIÁLISE PERITONEAL</b> — e também a infusão de <b>antibióticos</b> na cavidade.</td></tr>
+  </table></div>
+  <div class="box caso"><p class="h">🩺 Diálise peritoneal</p><p>No <b>doente renal crônico</b> (o rim não filtra), acumulam-se íons e escórias (<b>potássio, ureia, creatinina</b>). Coloca-se um <b>cateter</b> com uma ponta dentro da cavidade peritoneal e outra fora; <b>injeta-se solução (soro)</b>, que entra em contato com o peritônio e "puxa" esses solutos, e depois <b>aspira-se/drena-se</b> o líquido — uma "lavagem" da cavidade. Pode ser feita <b>em casa</b>, desde que haja um ambiente asséptico, isolado — o que a maioria da população não tem; por isso a maior parte faz <b>hemodiálise</b> (por fístula arteriovenosa ou cateter).</p></div>
+  <div class="box alerta"><p class="h">⚠️ Divergências</p>
+  <p><b>Movimento do omento:</b> na aula, o omento "se movimenta" até o foco por ter inervação simpática e parassimpática. Na literatura, o omento <b>não tem motilidade própria</b>: chega ao foco levado pelo peristaltismo e pelos movimentos do corpo e <b>adere</b> por causa do exsudato fibrinoso da inflamação — o efeito "policial do abdome" é real, o mecanismo é passivo.</p>
+  <p><b>Gravidade da peritonite:</b> na aula, "leva a óbito na maioria das vezes". Na literatura, a peritonite secundária é grave e tem mortalidade relevante, sobretudo com sepse, mas com cirurgia e antibiótico a maioria sobrevive.</p></div>
+
+  <h2 class="topic" id="t6">6 · Omentos menor e maior</h2>
+  <ul>
+    <li><b>MESO</b> = parede → víscera. <b>OMENTO</b> = prega peritoneal que liga <b>VÍSCERA → VÍSCERA</b>. Nome antigo: <b>epíploo</b> (epíploo menor, epíploo maior).</li>
+    <li>🎯 <b>OMENTO MENOR</b>: duas lâminas de peritônio do <b>FÍGADO → PEQUENA CURVATURA DO ESTÔMAGO</b> (e, mais lateral, até o duodeno — o ligamento hepatoduodenal).</li>
+    <li>🎯 <b>OMENTO MAIOR</b>: duas lâminas que passam <b>à frente</b> do estômago e duas <b>atrás</b> dele <b>descem em direção ao colo transverso</b>; unem-se e continuam para baixo como a <b>PARTE LIVRE</b> — o "avental" que se move na cavidade. Parte <b>fixa</b>: estômago → colo transverso. Parte <b>livre</b>: a que desce e cobre as alças.</li>
+    <li>Ao abrir a cavidade (<b>laparotomia</b> — mediana, paramediana, pararretal…), o omento maior é o que primeiro aparece, cobrindo as alças.</li>
+  </ul>
+  <div class="box prof"><p class="h">🎯 Laparotomia ou celiotomia?</p><p>"Tomia" = cortar; "laparo" = flanco. O termo mais preciso para abrir a cavidade peritoneal seria <b>CELIOTOMIA</b> — abertura da <b>cavidade celômica</b>, que é a cavidade peritoneal.</p></div>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide09-omento-maior-in-situ.jpg" alt="Abdome aberto com o omento maior cobrindo as alças" loading="lazy"><figcaption>O omento maior in situ: pende do estômago e do colo transverso como um avental gorduroso sobre as alças. Acima, o ligamento falciforme com o ligamento redondo na margem livre. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide11-omentos-bolsa-omental-sagital.jpg" alt="Esquema sagital dos omentos e da bolsa omental" loading="lazy"><figcaption>Esquema sagital: omento menor (fígado → estômago), bolsa omental atrás do estômago, ligamento gastrocólico e omento maior descendo além do colo transverso; atrás, pâncreas, mesocolo transverso, duodeno e mesentério. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t7">7 · Ligamentos e pregas peritoneais</h2>
+  <ul>
+    <li><b>LIGAMENTO</b> (no slide): <b>condensação de peritônio de um órgão a outro</b>.</li>
+    <li>🎯 <b>LIGAMENTO HEPATODUODENAL</b>: do <b>fígado</b> à <b>1ª parte do duodeno</b>; é a <b>parte densa/lateral do omento menor</b>. O mais importante é o <b>conteúdo</b>: o <b>PEDÍCULO HEPÁTICO</b> = <b>veia porta</b> + <b>artéria hepática própria</b> + <b>vias biliares</b> (colédoco).</li>
+    <li><b>LIGAMENTO GASTROCÓLICO</b>: do <b>estômago</b> ao colo — no slide, "à flexura esquerda do colo".</li>
+    <li><b>LIGAMENTO FRENOCÓLICO</b>: do <b>diafragma</b> à <b>flexura cólica esquerda</b>. Na aula, "importante porque divide o andar superior do andar inferior da cavidade peritoneal" (tema da aula seguinte).</li>
+    <li>🎯 <b>LIGAMENTO FALCIFORME</b>: da <b>parede anterior SUPRAUMBILICAL</b> à <b>face diafragmática do fígado</b>; <b>divide o fígado em lobos direito e esquerdo</b> e desce até a cicatriz umbilical. É a <b>única prega supraumbilical</b>. Na sua <b>margem livre</b>: o <b>LIGAMENTO REDONDO DO FÍGADO</b> = <b>VEIA UMBILICAL OBLITERADA</b>.</li>
+    <li><b>PREGAS PERITONEAIS</b>: o peritônio pode ser <b>levantado por estruturas</b> subjacentes — abaixo do umbigo, as <b>pregas umbilicais MEDIANA, MEDIAIS e LATERAIS</b>.</li>
+  </ul>
+  <div class="box alerta"><p class="h">⚠️ Divergências</p>
+  <p><b>Gastrocólico:</b> no slide, "do estômago à flexura esquerda do colo". Na literatura, é a porção do omento maior entre a <b>curvatura maior</b> do estômago e o <b>colo transverso</b> (em toda a extensão, não só a flexura).</p>
+  <p><b>Frenocólico:</b> na aula, divide o andar superior do inferior. Na literatura, quem separa os compartimentos <b>supramesocólico e inframesocólico</b> é o <b>MESOCOLO TRANSVERSO</b>; o frenocólico sustenta a flexura esquerda e funciona como barreira parcial entre a goteira paracólica esquerda e o espaço subfrênico esquerdo.</p></div>
+  <div class="box conexao"><p class="h">🔗 Conexão</p><p>O conteúdo de cada prega umbilical (úraco, artérias umbilicais obliteradas, vasos epigástricos inferiores) e as fossas entre elas foram vistos na aula de <a href="../parede-abdominal/">parede abdominal</a>.</p></div>
+<figure class="fig"><img src="img/slide16-pregas-umbilicais-falciforme.jpg" alt="Parede anterior do abdome vista por dentro com ligamento falciforme e pregas umbilicais" loading="lazy"><figcaption>A parede anterior vista por dentro: acima do umbigo, só o ligamento falciforme, com o ligamento redondo do fígado na margem livre; abaixo, a prega umbilical mediana (úraco), as mediais (artérias umbilicais obliteradas) e as laterais (vasos epigástricos inferiores). <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+
+  <h2 class="topic" id="t8">8 · Bolsa omental: o pequeno saco</h2>
+  <ul>
+    <li>Atrás do estômago forma-se outro espaço: a <b>BOLSA OMENTAL</b> — o <b>PEQUENO SACO dentro do GRANDE SACO</b> (a cavidade peritoneal). Nome antigo: <b>RETROCAVIDADE DOS EPÍPLOOS</b> ("atrás dos omentos menor e maior").</li>
+    <li>Slide: <b>espaço irregular posterior ao estômago e ao omento menor</b>.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <tr><th>Parede</th><th>Na fala</th><th>No slide</th></tr>
+    <tr><td><b>ANTERIOR</b></td><td><b>omento menor</b>, <b>estômago</b> (sua parede posterior) e <b>omento maior</b></td><td>lâmina posterior do omento menor · peritônio da parede posterior do estômago · lâmina posterior do lig. hepatoduodenal que recobre o 1º–2º cm do duodeno</td></tr>
+    <tr><td><b>POSTERIOR</b></td><td><b>pâncreas</b>, <b>veia cava inferior</b>, <b>aorta</b>, <b>pilares do diafragma</b> (não revestidos — o peritônio passa na frente deles)</td><td>peritônio parietal sobre pilares do diafragma, pâncreas, grandes vasos, lâmina superior do mesocolo transverso e colo transverso</td></tr>
+    <tr><td><b>INFERIOR</b></td><td>o <b>colo transverso</b> "acaba sendo um limite mais inferior, não tanto posterior"</td><td>(colo transverso listado na parede posterior)</td></tr>
+  </table></div>
+  <div class="box caso"><p class="h">🩺 Por que importa</p><p>A bolsa omental pode <b>acumular líquido, sangue ou pus</b>. Aparece no <b>ultrassom</b> e na <b>tomografia</b> (cortes sagitais e coronais "atrás do estômago"), e pode ser <b>puncionada</b> de forma <b>guiada</b> (US ou TC) — com cuidado com alças e baço no trajeto.</p></div>
+
+<div class="figpair">
+<figure class="fig"><img src="img/slide45-bolsa-omental-corte-transversal.jpg" alt="Corte transversal mostrando a bolsa omental atrás do estômago" loading="lazy"><figcaption>Corte transversal: a bolsa omental (cinza escuro) fica entre o estômago (na frente) e o pâncreas (atrás), estendendo-se até o baço no recesso esplênico; atrás de tudo, aorta, cava inferior e rim esquerdo. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide23-bolsa-omental-aberta.jpg" alt="Bolsa omental aberta pela secção do ligamento gastrocólico" loading="lazy"><figcaption>A bolsa omental aberta (estômago levantado, ligamento gastrocólico seccionado): no fundo, o corpo do pâncreas e o mesocolo transverso — a parede posterior. À esquerda, o ligamento hepatoduodenal e o lobo caudado. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t9">9 · Forame omental e a manobra de Pringle</h2>
+  <ul>
+    <li>🎯 A <b>entrada</b> da bolsa omental fica <b>ATRÁS do LIGAMENTO HEPATODUODENAL</b>: é o <b>FORAME OMENTAL</b> (epiploico) = <b>FORAME (ou hiato) DE WINSLOW</b>. (O slide escreve "Wislow"; a grafia correta é <b>Winslow</b>.)</li>
+  </ul>
+  <div class="diagrama"><p class="t">Limites do forame omental (slide)</p>
+  <ol class="layers">
+    <li><span class="n">A</span><div><b>ANTERIOR</b> — <span class="d"><b>ligamento hepatoduodenal</b> (com o pedículo hepático).</span></div></li>
+    <li><span class="n">P</span><div><b>POSTERIOR</b> — <span class="d"><b>peritônio recobrindo a veia cava inferior</b>.</span></div></li>
+    <li><span class="n">S</span><div><b>SUPERIOR</b> — <span class="d"><b>lobo caudado do fígado</b>.</span></div></li>
+    <li><span class="n">I</span><div><b>INFERIOR</b> — <span class="d"><b>1ª porção do duodeno</b>.</span></div></li>
+  </ol></div>
+  <p class="small">Na fala, o forame foi descrito com o ligamento hepatoduodenal e a 1ª parte do duodeno "na frente" e o fígado ao redor; fique com os limites do slide, que são os da literatura.</p>
+  <div class="box caso"><p class="h">🩺 Manobra de Pringle ("a manobra da batata")</p><p>Paciente com <b>facada no fígado</b> — ferimento <b>estrelado</b>, sangrando muito. Faz-se o <b>PINÇAMENTO DO PEDÍCULO HEPÁTICO</b>: como <b>atrás do pedículo está o forame omental (aberto)</b> e na frente também é livre, passa-se uma pá do clamp atrás e outra na frente do <b>ligamento hepatoduodenal</b> e fecha-se. <b>Para de entrar sangue no fígado</b> → dá para suturar adequadamente.</p>
+  <p>⏱️ Não pode demorar: na aula, <b>no máximo 10–15 minutos</b>, senão há <b>ISQUEMIA HEPÁTICA</b>. Quem traz mais sangue ao fígado é a <b>VEIA PORTA (70–80% do fluxo)</b>; a <b>artéria hepática própria</b> traz <b>20–30%</b>.</p></div>
+  <div class="box alerta"><p class="h">⚠️ Divergência</p><p>Tempo de Pringle: na aula, 10–15 minutos. Na literatura cirúrgica, o fígado normal tolera clampeamento contínuo por até cerca de <b>60 minutos</b> (menos no fígado cirrótico/doente), e muitos serviços usam <b>clampeamento intermitente</b> (ex.: 15 min fechado / 5 min aberto). O princípio — tempo limitado pela isquemia — é o mesmo.</p></div>
+
+  <h2 class="topic" id="t10">10 · Partes da bolsa omental</h2>
+  <ul>
+    <li>Entrando pelo <b>forame omental</b>:
+      <ul>
+        <li><b>VESTÍBULO</b> — "vestíbulo é sempre a entrada": a parte logo após o forame.</li>
+        <li><b>RECESSO SUPERIOR</b> — sobe atrás do fígado (junto ao lobo caudado).</li>
+        <li><b>RECESSO ESPLÊNICO</b> (no slide, "gastroesplênico") — vai para a esquerda, até o baço.</li>
+        <li><b>RECESSO INFERIOR (omental)</b> — desce <b>entre as lâminas do omento maior</b>.</li>
+      </ul></li>
+  </ul>
+<figure class="fig"><img src="img/slide24-partes-bolsa-omental.jpg" alt="Partes da bolsa omental com estômago removido" loading="lazy"><figcaption>Estômago retirado para ver a parede posterior da bolsa: vestíbulo (logo após o forame, junto à veia cava inferior), recesso superior, recesso esplênico (até o baço) e recesso inferior; embaixo, colo transverso, duodeno, pâncreas e o ligamento hepatoduodenal seccionado. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+
+  <h2 class="topic" id="t11">11 · Escavações do fundo da pelve</h2>
+  <ul>
+    <li>No fundo da bacia o peritônio se <b>reflete</b> sobre os órgãos pélvicos (extraperitoneais) e forma <b>escavações (recessos)</b>:
+      <ul>
+        <li><b>HOMEM</b>: <b>ESCAVAÇÃO RETOVESICAL</b> — entre <b>bexiga e reto</b>.</li>
+        <li><b>MULHER</b>: <b>ESCAVAÇÃO VESICOUTERINA</b> — entre <b>bexiga e útero</b>; e <b>ESCAVAÇÃO RETOUTERINA</b> — entre útero e reto (o fundo de saco de Douglas, como aparece no atlas).</li>
+      </ul></li>
+    <li>Elas se formam porque o peritônio <b>passa à frente do terço superior do reto</b> e <b>por cima</b> da bexiga e do útero — sem revesti-los por completo.</li>
+  </ul>
+<div class="figpair">
+<figure class="fig"><img src="img/slide34-pelve-masculina-escavacao.jpg" alt="Pelve masculina com escavação retovesical" loading="lazy"><figcaption>Pelve masculina: o peritônio cobre a face superior da bexiga e a frente do reto, formando entre eles a escavação retovesical. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide35-pelve-feminina-escavacoes.jpg" alt="Pelve feminina com escavações vesicouterina e retouterina" loading="lazy"><figcaption>Pelve feminina: o útero entre bexiga e reto cria duas escavações — vesicouterina (na frente) e retouterina (atrás, a mais funda). Note a tuba uterina e o ovário. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t12">12 · Só nos slides: recessos peritoneais</h2>
+  <p class="small"><span class="chip">só no slide</span> A aula terminou na bolsa omental; os recessos foram anunciados como "a próxima parte" e não foram explicados. O que segue é o que os slides listam — na fala, apenas: "toda a parte intraperitoneal forma recessos nessas dobras, e todas essas regiões são passíveis de punção guiada".</p>
+  <div class="tablewrap"><table>
+    <tr><th>Recesso (slide)</th><th>Onde fica</th></tr>
+    <tr><td><b>Duodenais</b>: supra, infra e retroduodenal</td><td>na altura da <b>flexura duodenojejunal</b></td></tr>
+    <tr><td><b>Ileocecal superior</b></td><td>entre <b>íleo e ceco</b></td></tr>
+    <tr><td><b>Ileocecal inferior</b></td><td>entre <b>íleo, ceco e apêndice</b> · limitado pela <b>prega apendicular (cecal) anterior</b>, avascular · a <b>prega cecal posterior</b> forma o mesentério do apêndice (vascular, contém a <b>artéria apendicular</b>)</td></tr>
+    <tr><td><b>Retrocecais</b></td><td>entre o <b>ceco e a parede</b> abdominal, no sulco paracólico</td></tr>
+    <tr><td><b>Intersigmoide</b></td><td>depressão profunda no <b>mesossigmoide</b></td></tr>
+    <tr><td><b>Retrocólicos / paracólicos</b></td><td>no sulco paracólico <b>esquerdo</b> (entre colo descendente e parede)</td></tr>
+    <tr><td><b>Pélvicos</b></td><td><b>vesicouterino</b> (bexiga–útero) · <b>vesicorretal</b> (bexiga–reto)</td></tr>
+  </table></div>
+<div class="figpair">
+<figure class="fig"><img src="img/slide31-parede-posterior-recessos.jpg" alt="Parede posterior do abdome com linhas de reflexão peritoneal e recessos" loading="lazy"><figcaption>Parede posterior sem as vísceras: as linhas de reflexão (raízes do mesocolo transverso, do mesentério e do mesossigmoide; locais de fixação dos colos) e os recessos duodenais, ileocecais, retrocecal, sigmóideo e os sulcos paracólicos. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+<figure class="fig"><img src="img/slide44-recessos-fluxo-liquido.jpg" alt="Esquema dos recessos supramesocólicos e inframesocólicos com setas de fluxo" loading="lazy"><figcaption>Só no slide, sem comentário na fala: recessos subfrênicos, sub-hepático, hepatorrenal, parietocólicos e mesentericocólicos; as setas indicam por onde o líquido livre corre entre eles. <small class="cred">Fonte: atlas, slide da aula.</small></figcaption></figure>
+</div>
+
+  <h2 class="topic" id="t13">13 · Resumo rápido</h2>
+  <ul>
+    <li><b>Peritônio</b> = serosa (como pleura e pericárdio): <b>parietal</b> (diafragma → assoalho pélvico) + <b>visceral</b> (túnica externa dos órgãos); entre eles, a <b>CAVIDADE PERITONEAL</b>, a verdadeira cavidade do abdome.</li>
+    <li><b>Grande saco</b>: FECHADO no homem · ABERTO na mulher (tubas → útero → vagina) → mais risco de infecção.</li>
+    <li><b>Peritonizados</b>: jejuno/íleo, ceco, sigmoide, baço, cauda do pâncreas, vesícula, tuba/ovário (aula). <b>Parciais</b>: colos ascendente e descendente (sem face posterior), 1ª parte do duodeno, fígado (área nua), terço superior do reto. <b>Extra</b>: duodeno 2ª–4ª, cabeça/corpo do pâncreas, bexiga, útero, reto médio/inferior, ureteres, aorta, cava, vasos renais e ilíacos.</li>
+    <li><b>Meso</b> = parede → víscera (mesentério, mesocolo transverso, mesossigmoide, mesoapêndice; vasos entre as lâminas). <b>Omento</b> = víscera → víscera (menor: fígado → pequena curvatura; maior: estômago → colo transverso + parte livre).</li>
+    <li><b>Ligamentos</b>: hepatoduodenal (pedículo hepático: porta + hepática própria + colédoco) · gastrocólico · frenocólico · FALCIFORME (única prega supraumbilical; lig. redondo = veia umbilical obliterada) · pregas umbilicais mediana, mediais, laterais.</li>
+    <li><b>Funções</b>: atrito ↓ · defesa · gordura (omento maior) · bloqueio de infecção e perfuração (omento) · via de troca (<b>DIÁLISE PERITONEAL</b>, antibiótico) · excesso de líquido = <b>ASCITE</b>.</li>
+    <li><b>Bolsa omental</b> (pequeno saco, retrocavidade dos epíploos): frente = omento menor + estômago + omento maior; trás = pâncreas, cava, aorta, pilares; embaixo = colo transverso. Partes: vestíbulo, recesso superior, esplênico, inferior.</li>
+    <li><b>Forame de Winslow</b>: frente = lig. hepatoduodenal · trás = VCI · cima = lobo caudado · baixo = 1ª parte do duodeno → <b>PRINGLE</b>: pinçar o pedículo hepático pelo forame (aula: 10–15 min; porta = 70–80% do fluxo).</li>
+    <li><b>Pelve</b>: retovesical (homem) · vesicouterina e retouterina (mulher). Recessos duodenais, ileocecais, retrocecais, intersigmoide e paracólicos: só nos slides.</li>
+  </ul>
+
+</div>
+</div>
+
+<div class="panel" id="panel-resumo">
+<div class="wrap">
+<header>
+  <h1>🗺️ Resumão Pré-Prova — Peritônio</h1>
+  <p class="sub">Revisão da véspera · Anatomia Topográfica · aula de 16/10 · só o que foi enfatizado</p>
+</header>
+
+<nav class="toc">
+  <div class="row">
+    <span class="lbl">Ir para</span>
+    <a class="a1" href="#p-conceito">Conceito & saco</a>
+    <a class="a1" href="#p-orgaos">Órgãos</a>
+    <a class="a1" href="#p-pregas">Mesos · omentos · ligamentos</a>
+    <a class="a1" href="#p-funcoes">Funções</a>
+    <a class="a1" href="#p-bolsa">Bolsa · Winslow · Pringle</a>
+    <a class="a1" href="#p-nc">Não confundir</a>
+  </div>
+</nav>
+
+<section id="p-conceito">
+  <span class="aula-tag t1">Conceito e grande saco</span>
+  <ul>
+    <li><b class="k">Serosa lisa e brilhante</b> (como pleura e pericárdio) · <b>parietal</b> do diafragma ao assoalho pélvico · <b>visceral</b> = túnica externa dos órgãos.</li>
+    <li><b class="k">CAVIDADE PERITONEAL = entre parietal e visceral</b> = a verdadeira cavidade do abdome ("não existe cavidade abdominal").</li>
+    <li>Grande saco: <b class="k">FECHADO no homem · ABERTO na mulher</b> (tubas abrem na cavidade → útero → vagina) → mais risco de infecção peritoneal.</li>
+    <li>Abrir a cavidade: laparotomia — termo mais preciso: <b class="k">CELIOTOMIA</b> (cavidade celômica).</li>
+  </ul>
+</section>
+
+<section id="p-orgaos">
+  <span class="aula-tag t1">Relação com os órgãos</span>
+  <ul>
+    <li><b class="k">Peritonizados</b>: jejuno e íleo · ceco · sigmoide · baço · <b>cauda</b> do pâncreas · vesícula · tuba e ovário (aula).</li>
+    <li><b class="k">Parciais</b>: <b>colos ascendente e descendente</b> (medial + anterior + lateral, SEM posterior) · 1ª parte do duodeno (frente) · fígado (área nua) · terço superior do reto (peritônio na frente).</li>
+    <li><b class="k">Extraperitoneais</b>: duodeno <b>2ª–4ª</b> · <b>cabeça e corpo</b> do pâncreas · reto médio/inferior · bexiga · útero (peritônio passa por cima) · ureteres · aorta · VCI · vasos renais e ilíacos · vasos gonadais.</li>
+    <li>⚠️ Literatura: ovário coberto por epitélio próprio; útero tem perimétrio no fundo/corpo; reto médio coberto na frente; vesícula com face hepática sem peritônio.</li>
+  </ul>
+</section>
+
+<section id="p-pregas">
+  <span class="aula-tag t1">Mesos · omentos · ligamentos</span>
+  <ul>
+    <li><b class="k">MESO = parede → víscera</b>: <b>mesentério (jejuno/íleo)</b> · mesocolo transverso · mesossigmoide · mesoapêndice · vasos correm entre as lâminas (AMS no mesentério).</li>
+    <li><b class="k">OMENTO = víscera → víscera</b> (epíploo): <b>menor = fígado → pequena curvatura</b> · <b>maior = estômago → colo transverso + PARTE LIVRE</b> (avental).</li>
+    <li><b class="k">Hepatoduodenal = parte densa do omento menor; contém o PEDÍCULO HEPÁTICO</b>: veia porta + artéria hepática própria + vias biliares.</li>
+    <li>Gastrocólico (estômago → colo; slide: flexura E) · frenocólico (diafragma → flexura E; aula: divide andar superior/inferior — ⚠️ literatura: o divisor é o mesocolo transverso).</li>
+    <li><b class="k">FALCIFORME = única prega supraumbilical</b>, divide o fígado em lobos D/E · margem livre: <b class="k">LIGAMENTO REDONDO = veia umbilical obliterada</b> · infraumbilicais: pregas mediana, mediais, laterais.</li>
+  </ul>
+</section>
+
+<section id="p-funcoes">
+  <span class="aula-tag t1">Funções</span>
+  <ul>
+    <li>Diminui o <b>atrito</b> (peristaltismo) · <b>defesa</b> (células no líquido) · <b>gordura</b> (omento maior).</li>
+    <li><b class="k">Omento maior bloqueia infecção (apendicite) e perfuração (úlcera, divertículo)</b> → evita peritonite.</li>
+    <li><b class="k">DIÁLISE PERITONEAL</b>: cateter, infunde solução, retira com K⁺/ureia/creatinina · também antibiótico intraperitoneal.</li>
+    <li>Transudação → <b class="k">ASCITE</b> (cirrose, esquistossomose).</li>
+  </ul>
+</section>
+
+<section id="p-bolsa">
+  <span class="aula-tag t1">Bolsa omental · Winslow · Pringle</span>
+  <ul>
+    <li><b class="k">Bolsa omental = pequeno saco dentro do grande saco = retrocavidade dos epíploos</b>, atrás do estômago.</li>
+    <li>Frente: <b>omento menor + estômago + omento maior</b> · trás: <b>pâncreas, VCI, aorta, pilares do diafragma</b> · baixo: <b>colo transverso</b> · acumula líquido/sangue/pus · US/TC · punção guiada.</li>
+    <li><b class="k">Forame omental (epiploico) = de WINSLOW</b>, atrás do lig. hepatoduodenal · limites: <b>A</b> lig. hepatoduodenal · <b>P</b> VCI · <b>S</b> lobo caudado · <b>I</b> 1ª parte do duodeno.</li>
+    <li>Partes: <b>vestíbulo · recesso superior · recesso esplênico · recesso inferior (omento maior)</b>.</li>
+    <li><b class="k">PRINGLE = pinçar o pedículo hepático pelo forame omental</b> (ferimento hepático) · aula: <b>10–15 min</b> (⚠️ literatura tolera até ~60 min) · <b>porta 70–80%</b>, artéria 20–30% do fluxo.</li>
+  </ul>
+</section>
+
+<section id="p-nc">
+  <span class="aula-tag t1">Não confundir</span>
+  <div class="tw"><table>
+    <tr><th>Par</th><th>A diferença-chave</th></tr>
+    <tr><td>Meso × omento</td><td>parede → víscera × víscera → víscera</td></tr>
+    <tr><td>Omento menor × maior</td><td>fígado → pequena curvatura × estômago → colo transverso + parte livre</td></tr>
+    <tr><td>Grande saco × pequeno saco</td><td>cavidade peritoneal × bolsa omental</td></tr>
+    <tr><td>Homem × mulher</td><td>saco fechado × aberto pelas tubas</td></tr>
+    <tr><td>Colo ascendente/descendente × sigmoide/transverso</td><td>parcialmente (sem face posterior) × peritonizados com meso</td></tr>
+    <tr><td>Cabeça/corpo × cauda do pâncreas</td><td>extraperitoneais × peritonizada (junto ao baço)</td></tr>
+    <tr><td>1ª × 2ª–4ª partes do duodeno</td><td>parcialmente revestida × extraperitoneais</td></tr>
+    <tr><td>Ligamento falciforme × redondo</td><td>a prega supraumbilical × a veia umbilical obliterada na margem livre dela</td></tr>
+    <tr><td>Forame omental: frente × trás</td><td>lig. hepatoduodenal (pedículo) × veia cava inferior</td></tr>
+    <tr><td>Fluxo hepático</td><td>veia porta 70–80% × artéria hepática própria 20–30%</td></tr>
+    <tr><td>Escavação retovesical × vesicouterina/retouterina</td><td>homem × mulher</td></tr>
+  </table></div>
+</section>
+
+</div>
+</div>
+
+<div class="panel" id="panel-questoes">
+<div class="wrap">
+  <section class="hero">
+    <h2>Banco de Questões — Peritônio</h2>
+    <p>Anatomia Topográfica · aula de 16/10 · estilo ENADE/residência.</p>
+    <div class="statgrid">
+      <div class="stat"><b>24</b><span>objetivas (A–E)</span></div>
+      <div class="stat"><b>4</b><span>dissertativas</span></div>
+      <div class="stat"><b>3</b><span>níveis</span></div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">Modo</span>
+      <div class="seg" id="segModo">
+        <button data-modo="estudo" class="active">Modo Estudo</button>
+        <button data-modo="simulado">Modo Simulado</button>
+      </div>
+    </div>
+    <div class="ctl-row">
+      <span class="ctl-label">Seção</span>
+      <div class="seg" id="segSecao">
+        <button data-secao="objetivas" class="active">Objetivas</button>
+        <button data-secao="dissertativas">Dissertativas</button>
+      </div>
+    </div>
+    <div class="ctl-row" id="filtros">
+      <span class="ctl-label">Dificuldade</span>
+      <button class="chip nf" data-nivel="facil">Fácil</button>
+      <button class="chip nm" data-nivel="medio">Médio</button>
+      <button class="chip nd" data-nivel="dificil">Difícil</button>
+    </div>
+  </section>
+
+  <div id="lista"></div>
+  <div class="simbar" id="simbar" style="display:none"></div>
+</div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PAINEL: FLASHCARDS -->
+<!-- ===================================================================== -->
+<div class="panel" id="panel-flashcards">
+  <div class="head">
+    <div class="title-row">
+      <span class="emoji">🎴</span>
+      <h1>Flashcards · Peritônio (16/10)</h1>
+      <span class="sub">vira o cartão no clique</span>
+    </div>
+
+    <div class="decks" id="decks"></div>
+
+    <div class="controls">
+      <button id="shufBtn" onclick="shuffleDeck()" title="Embaralhar">🔀 Embaralhar</button>
+      <button id="onlyBtn" onclick="toggleOnlyWrong()" title="Revisar só as marcadas como &ldquo;Não sabia&rdquo;">🎯 Só as que errei</button>
+      <button id="resetBtn" onclick="resetDeck()" title="Voltar à ordem original e limpar marcações">↺ Reiniciar</button>
+      <button id="eyeBtn" class="eyebtn" onclick="toggleHideArea()"><span id="eyeIco">👁</span><span class="lbl" id="eyeLbl">esconder tema</span></button>
+      <span class="counter" id="counter"></span>
+    </div>
+  </div>
+
+  <div class="progress">
+    <div class="bar"><i class="kn" id="barKn"></i><i class="dk" id="barDk"></i></div>
+    <span class="dot kn" id="statKn">0 sabia</span>
+    <span class="dot dk" id="statDk">0 não sabia</span>
+    <span class="dot rem" id="statRem">0 sem marcar</span>
+  </div>
+
+  <div class="stage">
+    <div id="card" onclick="flip()">
+      <div id="inner">
+        <div class="face front">
+          <span class="badge" id="fBadge"></span>
+          <div class="qfront" id="fQ"></div>
+          <div class="hint">tente responder em voz alta · clique no cartão ou <kbd>espaço</kbd> para virar</div>
+        </div>
+        <div class="face back">
+          <div class="backq" id="bQ"></div>
+          <div class="lbl">Resposta</div>
+          <div class="answer" id="bA"></div>
+          <div class="obs" id="bObs" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="navbtn" id="prevBtn" onclick="go(-1)" title="Anterior (←)">◀ Anterior</button>
+      <div class="mid">
+        <button class="mark dont" id="markDont" onclick="mark('dont')" disabled>Não sabia<small>tecla N</small></button>
+        <button class="mark know" id="markKnow" onclick="mark('know')" disabled>Sabia<small>tecla S</small></button>
+      </div>
+      <button class="navbtn" id="nextBtn" onclick="go(1)" title="Próximo (→)">Próximo ▶</button>
+    </div>
+    <div class="flipnote">← / → navega · <kbd style="font-size:11px">espaço</kbd> vira · S = sabia · N = não sabia (marcar é opcional)</div>
+
+    <div id="empty"></div>
+  </div>
+</div>
+
+</main>
+
+<div class="hubfoot">Córtex Estudos · Anatomia Topográfica — Gabriel Medeiros</div>
+
+<button id="toTop" title="Voltar ao topo">↑ topo</button>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: HUB (abas + tema + voltar ao topo) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+  var TABS=['estudo','resumo','questoes','flashcards'];
+  var current='estudo';
+  function show(name,scrollTop){
+    if(TABS.indexOf(name)<0)return;
+    current=name;
+    TABS.forEach(function(t){
+      var p=document.getElementById('panel-'+t), b=document.getElementById('tab-'+t);
+      if(p)p.classList.toggle('active',t===name);
+      if(b){b.classList.toggle('active',t===name);b.setAttribute('aria-selected',t===name?'true':'false');}
+    });
+    if(scrollTop)window.scrollTo(0,0);
+  }
+  window.__hubTab=function(){return current;};
+
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      var name=b.dataset.tab;
+      if(('#'+name)===location.hash){show(name,true);}   // já está no hash: força troca
+      else{location.hash=name;}                           // dispara hashchange
+    });
+  });
+  window.addEventListener('hashchange',function(){
+    var h=(location.hash||'').slice(1);
+    if(TABS.indexOf(h)>=0)show(h,true);   // só troca de aba p/ hashes de aba (ignora âncoras internas)
+  });
+
+  /* tema */
+  var tt=document.getElementById('themeToggle');
+  function syncTheme(){tt.textContent=document.documentElement.dataset.theme==='light'?'☾':'☀';}
+  syncTheme();
+  tt.addEventListener('click',function(){
+    var nv=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=nv;
+    try{localStorage.setItem('cortex-theme',nv);}catch(e){}
+    syncTheme();
+  });
+
+  /* voltar ao topo */
+  var top=document.getElementById('toTop');
+  window.addEventListener('scroll',function(){top.classList.toggle('show',window.scrollY>500);});
+  top.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* init: abre na aba do hash (se for de aba) ou em Estudo */
+  var init=(location.hash||'').slice(1);
+  show(TABS.indexOf(init)>=0?init:'estudo',false);
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: QUESTÕES (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const objetivas=[
+{n:1,aula:1,nivel:'facil',enun:`<div class="pergunta">O peritônio, como a pleura e o pericárdio seroso, é uma membrana serosa. Segundo a aula, a cavidade peritoneal corresponde:</div>`,alts:[`ao espaço entre o peritônio parietal e a fáscia transversal da parede`,`ao conjunto de órgãos do abdome, que formam a própria cavidade abdominal`,`ao espaço entre as lâminas parietal e visceral, com película de líquido`,`ao espaço entre o peritônio visceral e a túnica muscular de cada víscera`,`ao espaço retroperitoneal, onde ficam aorta, cava inferior e os ureteres`],correta:2,just:[`Entre o parietal e a fáscia transversal fica o espaço extraperitoneal (tecido adiposo), fora da cavidade. [tipo: par confundível]`,`A aula frisou o contrário: "não existe cavidade abdominal" no sentido real; a verdadeira cavidade é a peritoneal. [tipo: misconception clássica]`,`Correta. A CAVIDADE PERITONEAL é o espaço ENTRE as lâminas PARIETAL e VISCERAL, com líquido seroso — a verdadeira cavidade do abdome.`,`O visceral é a própria túnica externa (serosa) do órgão; não há "cavidade" entre ele e a muscular. [tipo: par confundível]`,`O retroperitônio fica ATRÁS do peritônio parietal posterior — fora da cavidade. [tipo: verdade no contexto errado]`],ref:'Conceito'},
+{n:2,aula:1,nivel:'medio',enun:`<span class="vinheta">Mulher de 24 anos com doença inflamatória pélvica evolui com dor abdominal difusa e sinais de peritonite. Em homens, uma infecção genital não chega à cavidade peritoneal por esse caminho.</span><div class="pergunta">A base anatômica dessa diferença, segundo a aula, é que:</div>`,alts:[`as tubas uterinas se abrem na cavidade, ligada ao exterior pelo útero e vagina`,`o ovário fica fora do peritônio e drena sua secreção pela tuba direto para a cavidade`,`a escavação retouterina se abre na vagina pelo fórnice posterior, aberta na mulher`,`o úraco permanece pérvio na mulher e liga a bexiga à cavidade peritoneal pelo umbigo`,`o canal inguinal feminino leva um divertículo de peritônio até os grandes lábios`],correta:0,just:[`Correta. O GRANDE SACO é FECHADO no homem e ABERTO na mulher: as TUBAS abrem-se (fímbrias) na cavidade peritoneal → útero → vagina → meio exterior; daí o maior risco de infecção.`,`Na aula, ovário e tuba são revestidos pelo peritônio; a comunicação é pelo óstio aberto da tuba, não por "drenagem" do ovário. [tipo: mecanismo invertido]`,`A escavação retouterina fica atrás do fórnice posterior, mas separada dele pela parede vaginal — não há abertura. [tipo: verdade no contexto errado]`,`A persistência do úraco é anomalia rara e não é diferença entre os sexos. [tipo: par confundível]`,`O processo vaginal (canal de Nuck) costuma se fechar e não explica a comunicação da cavidade com o exterior. [tipo: verdade no contexto errado]`],ref:'Grande saco'},
+{n:3,aula:1,nivel:'facil',enun:`<div class="pergunta">A prega de peritônio que prende o jejuno e o íleo à parede posterior do abdome denomina-se:</div>`,alts:[`omento maior, que desce do estômago e cobre as alças delgadas`,`mesocolo transverso, que prende o colo à parede posterior`,`ligamento gastrocólico, que liga o estômago ao colo transverso`,`omento menor, que vai do fígado à pequena curvatura gástrica`,`mesentério, que parte de uma raiz fixa na parede posterior`],correta:4,just:[`O omento maior liga víscera a víscera (estômago → colo) e só cobre as alças; não as prende à parede. [tipo: par confundível]`,`O mesocolo transverso sustenta o colo transverso, não o delgado. [tipo: par confundível]`,`O gastrocólico une duas vísceras; não sustenta o jejuno e o íleo. [tipo: par confundível]`,`O omento menor é do andar superior (fígado → estômago). [tipo: par confundível]`,`Correta. MESO que sustenta o intestino delgado (JEJUNO e ÍLEO) = MESENTÉRIO ("entérico" = intestino), com sua RAIZ na parede posterior.`],ref:'Mesos'},
+{n:4,aula:1,nivel:'medio',enun:`<div class="pergunta">Pela terminologia da aula, qual par está corretamente classificado?</div>`,alts:[`mesocolo sigmoide e omento menor: ambos prendem a víscera à parede`,`mesoapêndice prende víscera à parede; omento menor liga duas vísceras`,`omento maior prende o estômago à parede; mesentério liga duas alças`,`mesocolo transverso liga estômago e colo; omento maior prende o colo`,`ligamento falciforme liga duas vísceras; mesentério liga víscera ao fígado`],correta:1,just:[`O omento menor liga víscera a víscera (fígado → estômago), não víscera à parede. [tipo: generalização indevida]`,`Correta. MESO = parede → víscera (mesoapêndice, mesentério, mesocolos). OMENTO = víscera → víscera (omento menor: fígado → pequena curvatura).`,`Inverte os conceitos: o omento maior liga estômago e colo; o mesentério prende alças à parede. [tipo: mecanismo invertido]`,`Troca as funções: o mesocolo prende o colo à parede; o omento maior liga estômago e colo. [tipo: mecanismo invertido]`,`O falciforme liga a parede anterior ao fígado, e o mesentério prende o delgado à parede posterior. [tipo: par confundível]`],ref:'Meso × omento'},
+{n:5,aula:1,nivel:'facil',enun:`<div class="pergunta">O ligamento hepatoduodenal, porção densa do omento menor, contém o pedículo hepático, formado por:</div>`,alts:[`artéria hepática comum, veia cava inferior e ducto pancreático principal`,`artéria gástrica esquerda, veia porta e ducto hepático esquerdo isolado`,`veia porta, veias hepáticas e o ducto cístico junto com a vesícula`,`veia porta, artéria hepática própria e as vias biliares, com o colédoco`,`artéria esplênica, veia mesentérica superior e o ducto colédoco`],correta:3,just:[`A cava inferior fica ATRÁS do forame omental, não dentro do ligamento; o ducto pancreático é intrapancreático. [tipo: par confundível]`,`A gástrica esquerda corre na pequena curvatura, no omento menor, mas não forma o pedículo. [tipo: verdade no contexto errado]`,`As veias hepáticas saem do fígado direto para a cava, sem passar pelo ligamento. [tipo: par confundível]`,`Correta. PEDÍCULO HEPÁTICO = VEIA PORTA + ARTÉRIA HEPÁTICA PRÓPRIA + VIAS BILIARES (colédoco), na margem livre do omento menor.`,`Esplênica e mesentérica superior formam a porta atrás do pâncreas — não estão no ligamento. [tipo: verdade no contexto errado]`],ref:'Ligamento hepatoduodenal'},
+{n:6,aula:1,nivel:'medio',enun:`<span class="vinheta">Ao inspecionar a face interna da parede anterior do abdome, identifica-se a única prega peritoneal situada acima da cicatriz umbilical, que divide o fígado em lobos direito e esquerdo.</span><div class="pergunta">A margem livre dessa prega contém:</div>`,alts:[`o ligamento redondo do fígado, a veia umbilical já obliterada`,`o úraco obliterado, resquício do canal entre a bexiga e o umbigo`,`as artérias umbilicais obliteradas, restos da circulação fetal`,`os vasos epigástricos inferiores, que seguem pérvios no adulto`,`o ligamento venoso, resquício do ducto venoso do feto obliterado`],correta:0,just:[`Correta. A prega é o LIGAMENTO FALCIFORME (única supraumbilical); na margem livre, o LIGAMENTO REDONDO DO FÍGADO = VEIA UMBILICAL OBLITERADA.`,`O úraco forma a prega umbilical MEDIANA, abaixo do umbigo. [tipo: par confundível]`,`As artérias umbilicais formam as pregas umbilicais MEDIAIS, infraumbilicais. [tipo: par confundível]`,`Os epigástricos inferiores formam as pregas LATERAIS, abaixo do umbigo. [tipo: par confundível]`,`O ligamento venoso fica na fissura da face visceral do fígado, não na margem do falciforme. [tipo: par confundível]`],ref:'Ligamento falciforme'},
+{n:7,aula:1,nivel:'medio',enun:`<span class="vinheta">Homem de 35 anos operado com apendicite de 4 dias de evolução. Ao abrir a cavidade, o apêndice está envolto por tecido gorduroso aderido, e o pus está contido na fossa ilíaca direita.</span><div class="pergunta">A estrutura e a função do peritônio ilustradas são:</div>`,alts:[`o mesocolo transverso, ao se deslocar para a fossa ilíaca e conter o pus`,`o mesoapêndice, cuja artéria apendicular aumenta a defesa no local`,`o omento maior, que bloqueia o foco infeccioso e evita a disseminação`,`o omento menor, que desce pela bolsa omental até envolver o apêndice`,`o peritônio parietal, que produz o líquido seroso com células de defesa`],correta:2,just:[`O mesocolo transverso é fixo na parede posterior; não se desloca até a fossa ilíaca. [tipo: par confundível]`,`O mesoapêndice sustenta o apêndice e leva a artéria, mas não "envolve" o foco. [tipo: verdade no contexto errado]`,`Correta. A PARTE LIVRE do OMENTO MAIOR chega ao foco e o ENVOLVE (bloqueio), evitando que o pus se espalhe — função citada com o exemplo da apendicite.`,`O omento menor fica no andar superior, entre fígado e estômago. [tipo: par confundível]`,`O líquido com células de defesa é outra função (resistência a infecções), não o bloqueio visto. [tipo: verdadeiro mas não responde]`],ref:'Funções · omento maior'},
+{n:8,aula:1,nivel:'facil',enun:`<div class="pergunta">Na insuficiência renal crônica, a diálise peritoneal descrita na aula consiste em:</div>`,alts:[`instilar antibiótico na cavidade para tratar a infecção urinária associada`,`filtrar o sangue num circuito externo ligado a uma fístula arteriovenosa`,`drenar a urina da pelve renal para a cavidade peritoneal por um cateter`,`infundir solução no espaço retroperitoneal, em contato direto com os rins`,`infundir solução na cavidade peritoneal e retirá-la com solutos retidos`],correta:4,just:[`Antibiótico pode ser dado por via intraperitoneal, mas isso não é a diálise. [tipo: verdadeiro mas não responde]`,`Esta é a HEMODIÁLISE (fístula ou cateter), a que a maioria faz. [tipo: par confundível]`,`O cateter da diálise peritoneal não tem relação com a via urinária. [tipo: verdade no contexto errado]`,`A troca ocorre na cavidade PERITONEAL, não no retroperitônio. [tipo: par confundível]`,`Correta. Cateter na CAVIDADE PERITONEAL: injeta-se solução, que interage com íons e escórias (K⁺, ureia, creatinina) através do peritônio, e depois é retirada.`],ref:'Diálise peritoneal'},
+{n:9,aula:1,nivel:'medio',enun:`<div class="pergunta">Segundo a aula, quanto ao revestimento peritoneal do duodeno e do pâncreas:</div>`,alts:[`todo o duodeno é peritonizado, e só a cabeça do pâncreas é extraperitoneal`,`só a 1ª parte do duodeno é revestida; a cauda do pâncreas é peritonizada`,`da 2ª à 4ª parte o duodeno é peritonizado, e o pâncreas é extraperitoneal`,`o duodeno é todo extraperitoneal, e a cabeça e o corpo são peritonizados`,`a 1ª parte do duodeno é extraperitoneal, e a cauda do pâncreas também`],correta:1,just:[`Só a 1ª parte do duodeno tem revestimento (parcial); e o CORPO do pâncreas também é extraperitoneal. [tipo: generalização indevida]`,`Correta. 1ª parte do DUODENO: parcialmente revestida (na frente); 2ª–4ª extraperitoneais. PÂNCREAS: cabeça e corpo extraperitoneais; CAUDA peritonizada (junto ao baço).`,`É o contrário: a 2ª–4ª são extraperitoneais, e a cauda do pâncreas é revestida. [tipo: mecanismo invertido]`,`Inverte o pâncreas: cabeça e corpo é que são extraperitoneais. [tipo: mecanismo invertido]`,`A 1ª parte é a única revestida, e a cauda é peritonizada. [tipo: mecanismo invertido]`],ref:'Duodeno e pâncreas'},
+{n:10,aula:1,nivel:'dificil',enun:`<span class="vinheta">Ferimento por arma branca na região lombar atinge só a face POSTERIOR de uma víscera do abdome, sem abrir a cavidade peritoneal.</span><div class="pergunta">Pela classificação da aula, qual víscera permite essa situação?</div>`,alts:[`o jejuno, sustentado pelo mesentério junto à parede posterior`,`o colo sigmoide, preso à parede pelo seu mesocolo sigmoide`,`o ceco, que repousa sobre a fossa ilíaca direita da parede`,`o colo ascendente, que não tem peritônio em sua face posterior`,`o baço, alojado junto à cauda do pâncreas no hipocôndrio`],correta:3,just:[`O jejuno é peritonizado: qualquer face está dentro da cavidade, e o mesentério tem duas lâminas. [tipo: generalização indevida]`,`O sigmoide é TOTALMENTE revestido, com meso próprio. [tipo: par confundível]`,`Na aula, o ceco é peritonizado; estar na fossa ilíaca não lhe tira o revestimento posterior. [tipo: verdade no contexto errado]`,`Correta. COLO ASCENDENTE (e descendente) = PARCIALMENTE peritonizado: peritônio medial, anterior e lateral, SEM face posterior — a lesão posterior não abre a cavidade.`,`O baço é peritonizado, como a cauda do pâncreas ao lado dele. [tipo: par confundível]`],ref:'Parcialmente peritonizados'},
+{n:11,aula:1,nivel:'medio',enun:`<div class="pergunta">Sobre a relação do peritônio com a bexiga e o reto no homem, como descrito na aula:</div>`,alts:[`a bexiga é peritonizada, e o reto é revestido em toda a sua extensão`,`bexiga e reto são totalmente revestidos e separados pela escavação entre eles`,`o peritônio passa à frente do terço superior do reto; a bexiga é extra`,`o peritônio reveste o terço inferior do reto e forma a escavação retouterina`,`a escavação vesicouterina separa a bexiga do reto no homem adulto`],correta:2,just:[`A bexiga é EXTRAperitoneal, e o reto do terço médio para baixo também. [tipo: mecanismo invertido]`,`Nenhum dos dois é totalmente revestido; o peritônio só passa por cima/na frente. [tipo: generalização indevida]`,`Correta. O peritônio passa À FRENTE do TERÇO SUPERIOR do reto e sobre a bexiga (EXTRAPERITONEAL), formando a ESCAVAÇÃO RETOVESICAL.`,`É o terço SUPERIOR; e a escavação retouterina é da mulher. [tipo: erro numérico plausível]`,`A vesicouterina é da mulher (bexiga–útero). [tipo: par confundível]`],ref:'Pelve · escavações'},
+{n:12,aula:1,nivel:'facil',enun:`<div class="pergunta">Qual grupo contém apenas estruturas extraperitoneais, segundo a aula?</div>`,alts:[`aorta, veia cava inferior, ureteres e vasos renais`,`aorta, baço, ureteres e a veia cava inferior`,`ureteres, jejuno, vasos ilíacos e a bexiga urinária`,`veia cava inferior, ceco, vasos renais e ureteres`,`ureteres, colo sigmoide, aorta e vasos ilíacos`],correta:0,just:[`Correta. AORTA, VEIA CAVA INFERIOR, URETERES e VASOS RENAIS são extraperitoneais (retroperitoneais), assim como vasos ilíacos e bexiga.`,`O baço é peritonizado. [tipo: par confundível]`,`O jejuno é peritonizado (tem mesentério). [tipo: par confundível]`,`O ceco, na aula, é peritonizado. [tipo: par confundível]`,`O colo sigmoide é totalmente peritonizado, com mesocolo. [tipo: par confundível]`],ref:'Extraperitoneais'},
+{n:13,aula:1,nivel:'medio',enun:`<span class="vinheta">Tomografia de paciente com pancreatite mostra coleção líquida "atrás do estômago", num espaço cuja parede anterior inclui o omento menor e o estômago, e a posterior, o pâncreas, a aorta e a cava inferior.</span><div class="pergunta">Esse espaço é:</div>`,alts:[`o recesso hepatorrenal, entre a face visceral do fígado e o rim direito`,`a escavação retovesical, o ponto mais baixo da cavidade no homem`,`o espaço retroperitoneal, situado por trás do peritônio parietal`,`o recesso subfrênico, entre a cúpula diafragmática e o fígado`,`a bolsa omental, o pequeno saco situado dentro do grande saco`],correta:4,just:[`O hepatorrenal fica à direita, abaixo do fígado — não entre estômago e pâncreas. [tipo: par confundível]`,`A escavação retovesical está no fundo da pelve. [tipo: verdade no contexto errado]`,`O pâncreas está no retroperitônio, mas a coleção está NA FRENTE dele, dentro de um espaço peritoneal. [tipo: par confundível]`,`O subfrênico fica entre diafragma e fígado, acima do estômago. [tipo: par confundível]`,`Correta. BOLSA OMENTAL (retrocavidade dos epíploos): frente = omento menor + estômago + omento maior; trás = pâncreas, cava, aorta, pilares.`],ref:'Bolsa omental'},
+{n:14,aula:1,nivel:'dificil',enun:`<span class="vinheta">Vítima de facada no fígado chega com ferimento estrelado sangrando muito. O cirurgião passa o dedo por uma abertura natural do peritônio e pinça com um clamp a estrutura situada à frente dela.</span><div class="pergunta">Abertura, estrutura pinçada e efeito esperado:</div>`,alts:[`forame omental; ligamento hepatogástrico; interromper o fluxo da veia cava inferior`,`forame omental; ligamento hepatoduodenal; interromper a veia porta e a artéria hepática`,`forame omental; ligamento falciforme; interromper o fluxo das veias hepáticas`,`hiato esofágico; ligamento hepatoduodenal; interromper a aorta acima do tronco celíaco`,`forame omental; ligamento hepatoduodenal; interromper a veia cava inferior retro-hepática`],correta:1,just:[`O hepatogástrico (omento menor) não contém o pedículo, e a cava fica atrás do forame. [tipo: par confundível]`,`Correta. MANOBRA DE PRINGLE: pelo FORAME OMENTAL (Winslow), clampeia-se o LIGAMENTO HEPATODUODENAL, interrompendo a entrada de sangue (VEIA PORTA + ARTÉRIA HEPÁTICA PRÓPRIA) no fígado.`,`O falciforme está na parede anterior e não contém vasos de entrada do fígado. [tipo: par confundível]`,`O hiato esofágico é diafragmático; clampear a aorta é outra manobra. [tipo: diagnóstico diferencial]`,`A cava é o limite POSTERIOR do forame; o clamp fica à frente, no ligamento. [tipo: mecanismo invertido]`],ref:'Manobra de Pringle'},
+{n:15,aula:1,nivel:'medio',enun:`<div class="pergunta">Na manobra de Pringle, o tempo de pinçamento é limitado. Segundo a aula, o principal vaso aferente do fígado e o risco do pinçamento prolongado são:</div>`,alts:[`artéria hepática própria (cerca de 70–80% do fluxo); isquemia do fígado`,`veia cava inferior (cerca de 70–80% do fluxo); congestão hepática retrógrada`,`veia porta (cerca de 20–30% do fluxo); hipertensão portal pré-hepática`,`veia porta (cerca de 70–80% do fluxo); isquemia hepática pela interrupção`,`artéria hepática própria (cerca de 20–30% do fluxo); necrose das vias biliares`],correta:3,just:[`A artéria hepática própria traz só 20–30%. [tipo: par confundível]`,`A cava é via de SAÍDA (veias hepáticas), não de entrada. [tipo: mecanismo invertido]`,`A porção da porta é 70–80%, não 20–30%. [tipo: erro numérico plausível]`,`Correta. A VEIA PORTA leva 70–80% do fluxo (artéria hepática própria, 20–30%); pinçamento prolongado → ISQUEMIA HEPÁTICA (aula: até 10–15 min). ⚠️ Divergência: na literatura, o fígado normal tolera até ~60 min contínuos.`,`Os números da artéria estão certos, mas ela não é o principal aferente. [tipo: verdadeiro mas não responde]`],ref:'Fluxo hepático'},
+{n:16,aula:1,nivel:'facil',enun:`<div class="pergunta">A entrada da bolsa omental, situada atrás do ligamento hepatoduodenal, denomina-se:</div>`,alts:[`forame omental, epiploico ou forame de Winslow`,`ângulo de Treitz, na flexura duodenojejunal`,`escavação retouterina, ou fundo de saco de Douglas`,`recesso hepatorrenal, ou bolsa de Morison`,`trígono hepatocístico, ou trígono de Calot`],correta:0,just:[`Correta. FORAME OMENTAL (epiploico) = FORAME/HIATO DE WINSLOW, atrás do ligamento hepatoduodenal.`,`Treitz é o ligamento suspensor da flexura duodenojejunal. [tipo: par confundível]`,`Douglas é a escavação retouterina, na pelve. [tipo: par confundível]`,`Morison é o recesso hepatorrenal, no andar supramesocólico direito. [tipo: par confundível]`,`O trígono de Calot fica junto à vesícula (ducto cístico, ducto hepático e fígado). [tipo: par confundível]`],ref:'Forame omental'},
+{n:17,aula:1,nivel:'medio',enun:`<div class="pergunta">Os limites do forame omental, apresentados nos slides da aula, são:</div>`,alts:[`anterior: pâncreas; posterior: aorta; superior: estômago; inferior: colo transverso`,`anterior: lig. falciforme; posterior: VCI; superior: lobo quadrado; inferior: piloro`,`anterior: lig. hepatoduodenal; posterior: VCI; superior: lobo caudado; inferior: duodeno 1ª parte`,`anterior: VCI; posterior: lig. hepatoduodenal; superior: lobo caudado; inferior: duodeno 1ª parte`,`anterior: lig. hepatoduodenal; posterior: aorta; superior: lobo quadrado; inferior: duodeno 2ª parte`],correta:2,just:[`Pâncreas, aorta e colo transverso são limites da BOLSA omental, não do forame. [tipo: verdade no contexto errado]`,`O falciforme é da parede anterior e o lobo quadrado está à frente do hilo. [tipo: par confundível]`,`Correta. ANTERIOR: ligamento HEPATODUODENAL · POSTERIOR: peritônio sobre a VCI · SUPERIOR: LOBO CAUDADO · INFERIOR: 1ª PORÇÃO DO DUODENO.`,`Inverte frente e trás: o pedículo está na frente, a cava atrás. [tipo: mecanismo invertido]`,`Atrás é a cava (não a aorta), em cima o caudado, embaixo a 1ª parte do duodeno. [tipo: par confundível]`],ref:'Limites do forame omental'},
+{n:18,aula:1,nivel:'dificil',enun:`<div class="pergunta">Sobre a constituição do omento maior e sua relação com a bolsa omental, conforme a aula:</div>`,alts:[`é formado por duas lâminas que vão do fígado ao colo, sem relação com a bolsa omental`,`suas lâminas partem da pequena curvatura e se fixam direto sobre o corpo do pâncreas`,`é uma única lâmina que pende do colo transverso e se fixa na parede da pelve`,`suas lâminas anteriores sobem do colo ao fígado e assim formam o omento menor`,`lâminas da frente e de trás do estômago descem além do colo; entre elas, a bolsa`],correta:4,just:[`Quem vai do fígado é o omento MENOR (até a pequena curvatura). [tipo: par confundível]`,`O omento maior parte da CURVATURA MAIOR e desce até o colo transverso. [tipo: par confundível]`,`São duas lâminas na frente e duas atrás do estômago, e a parte livre fica solta. [tipo: misconception clássica]`,`O omento menor é outra prega (fígado → pequena curvatura). [tipo: mecanismo invertido]`,`Correta. Duas lâminas à FRENTE e duas ATRÁS do estômago descem rumo ao colo transverso e formam a PARTE LIVRE; entre elas desce o RECESSO INFERIOR (omental) da bolsa.`],ref:'Omento maior'},
+{n:19,aula:1,nivel:'facil',enun:`<div class="pergunta">O acúmulo patológico de líquido seroso na cavidade peritoneal, como na cirrose e na esquistossomose, chama-se:</div>`,alts:[`hemoperitônio, acúmulo de sangue na cavidade`,`ascite, transudação de líquido na cavidade`,`pneumoperitônio, presença de ar na cavidade`,`peritonite, inflamação infecciosa do peritônio`,`hidrocele, líquido no processo vaginal do testículo`],correta:1,just:[`Hemoperitônio é sangue, não transudato. [tipo: par confundível]`,`Correta. A transudação dos vasos causa derrame cavitário peritoneal = ASCITE ("barriga d'água").`,`Ar livre na cavidade indica perfuração. [tipo: par confundível]`,`Peritonite é inflamação; o aumento de transudato não é infeccioso. [tipo: diagnóstico diferencial]`,`Hidrocele é líquido na túnica vaginal do testículo. [tipo: verdade no contexto errado]`],ref:'Ascite'},
+{n:20,aula:1,nivel:'medio',enun:`<div class="pergunta">Entre as funções do peritônio apresentadas na aula, NÃO se inclui:</div>`,alts:[`reduzir o atrito entre as alças durante o peristaltismo intestinal`,`armazenar gordura, sobretudo no omento maior do indivíduo obeso`,`bloquear perfurações, como a de uma úlcera gástrica perfurada`,`inibir a resposta inflamatória, isolando as vísceras das defesas`,`permitir troca de solutos e drogas, base da diálise peritoneal`],correta:3,just:[`Função citada: a serosa lisa permite o deslizamento das alças. [tipo: verdadeiro mas não responde]`,`Função citada: reserva de gordura no omento maior. [tipo: verdadeiro mas não responde]`,`Função citada: o omento tampona perfurações. [tipo: verdadeiro mas não responde]`,`Correta (é a que NÃO é função). O peritônio OFERECE RESISTÊNCIA às infecções — o líquido tem células de defesa e o omento bloqueia focos.`,`Função citada: via de troca (introduzir drogas, retirar substâncias tóxicas). [tipo: verdadeiro mas não responde]`],ref:'Funções'},
+{n:21,aula:1,nivel:'medio',enun:`<div class="pergunta">Na aula, comentou-se que "laparotomia" não é o termo mais preciso para a abertura da cavidade peritoneal. O termo mais correto e a justificativa são:</div>`,alts:[`celiotomia, pois abre a cavidade celômica, ou seja, a peritoneal`,`toracotomia, porque a cavidade peritoneal sobe por baixo das costelas`,`laparoscopia, porque "tomia" se refere a cortes apenas da pele`,`peritoniotomia, porque a cavidade abdominal não inclui o peritônio`,`celiotomia, porque abre o espaço retroperitoneal, onde estão os rins`],correta:0,just:[`Correta. "Tomia" = cortar; "laparo" = flanco. Abrir a cavidade peritoneal é abrir a CAVIDADE CELÔMICA = CELIOTOMIA.`,`A toracotomia abre o tórax, mesmo que o abdome suba sob as costelas. [tipo: verdade no contexto errado]`,`Laparoscopia é o acesso por vídeo; "tomia" é cortar qualquer camada. [tipo: par confundível]`,`O nome não foi citado e a justificativa inverte o conceito de cavidade. [tipo: misconception clássica]`,`O nome está certo, mas a cavidade celômica é a peritoneal, não o retroperitônio. [tipo: par confundível]`],ref:'Celiotomia'},
+{n:22,aula:1,nivel:'dificil',enun:`<span class="vinheta">Homem de 50 anos com úlcera na parede POSTERIOR do estômago apresenta perfuração bloqueada; a TC mostra líquido e gás confinados atrás do estômago, sem líquido livre na pelve.</span><div class="pergunta">Onde está o conteúdo e por qual via ele alcançaria o restante do grande saco?</div>`,alts:[`na escavação retovesical; pela goteira paracólica direita até o abdome`,`no espaço retroperitoneal; pelo hiato esofágico até o mediastino`,`na bolsa omental; pelo forame omental, atrás do ligamento hepatoduodenal`,`no recesso subfrênico esquerdo; pela margem do ligamento falciforme`,`na bolsa omental; por uma abertura no centro do ligamento falciforme`],correta:2,just:[`A escavação é o fundo da pelve, e não há líquido pélvico. [tipo: diagnóstico diferencial]`,`O estômago tem peritônio posterior; a perfuração cai num espaço peritoneal, não no retroperitônio. [tipo: par confundível]`,`Correta. A parede POSTERIOR do estômago é a parede ANTERIOR da BOLSA OMENTAL; a comunicação com o grande saco é o FORAME OMENTAL (Winslow), atrás do ligamento hepatoduodenal.`,`O subfrênico fica acima do estômago e não comunica pela margem do falciforme. [tipo: par confundível]`,`O espaço está certo, mas a saída é o forame omental, não o falciforme. [tipo: par confundível]`],ref:'Bolsa omental · clínica'},
+{n:23,aula:1,nivel:'medio',enun:`<div class="pergunta">Para expor os ramos jejunais e ileais da artéria mesentérica superior, o cirurgião precisa abrir:</div>`,alts:[`o omento maior, onde correm os vasos gastromentais`,`o mesocolo transverso, onde corre a artéria cólica média`,`o ligamento hepatoduodenal, junto ao pedículo hepático`,`o peritônio parietal posterior, pois são retroperitoneais`,`as lâminas do mesentério, entre as quais correm os vasos`],correta:4,just:[`O omento maior leva os gastromentais, não ramos jejunais/ileais. [tipo: par confundível]`,`A cólica média é ramo da mesentérica superior, mas vai ao colo transverso, não ao delgado. [tipo: verdade no contexto errado]`,`O hepatoduodenal leva o pedículo hepático. [tipo: par confundível]`,`Os ramos para o delgado correm no meso, não no retroperitônio. [tipo: mecanismo invertido]`,`Correta. A mesentérica superior e seus ramos (jejunais, ileais) correm ENTRE AS LÂMINAS DO MESENTÉRIO — é preciso abrir o meso para vê-los.`],ref:'Mesentério · vasos'},
+{n:24,aula:1,nivel:'dificil',enun:`<div class="pergunta">Qual par associa corretamente um segmento do colo totalmente peritonizado, com meso próprio, e um segmento parcialmente peritonizado, sem meso?</div>`,alts:[`colo ascendente, com seu mesocolo × colo sigmoide, coberto só na frente`,`colo sigmoide, com mesocolo × colo descendente, sem face posterior`,`colo transverso, com o mesentério × ceco, sem nenhum revestimento seroso`,`colo descendente, com seu mesocolo × colo transverso, coberto só na frente`,`apêndice, preso pelo omento menor × colo ascendente, todo revestido`],correta:1,just:[`Inverte: o ascendente é o parcialmente revestido; o sigmoide tem meso. [tipo: mecanismo invertido]`,`Correta. COLO SIGMOIDE: totalmente revestido, com MESOCOLO SIGMOIDE. COLO DESCENDENTE: peritônio medial, anterior e lateral — SEM FACE POSTERIOR, sem meso.`,`O meso do transverso é o mesocolo transverso, e o ceco é peritonizado na aula. [tipo: par confundível]`,`O descendente é o parcialmente revestido; o transverso tem mesocolo. [tipo: mecanismo invertido]`,`O apêndice tem mesoapêndice; o ascendente é parcial. [tipo: par confundível]`],ref:'Colos · classificação'}
+];
+
+const dissertativas=[
+{n:1,aula:1,caso:`Homem de 28 anos, vítima de facada no hipocôndrio direito, chega hipotenso. Na laparotomia, há sangramento intenso de um ferimento estrelado no fígado.`,perg:[`a) Qual manobra pode ser feita para conter temporariamente o sangramento? Descreva o que é pinçado e por onde se passa a pinça.`,`b) Quais estruturas formam o pedículo hepático, em que prega peritoneal ele corre e quanto do fluxo hepático cada vaso aferente leva?`,`c) Por que o tempo de pinçamento é limitado? Cite o tempo dado na aula e o que diz a literatura.`],resp:[["a) Manobra de Pringle","MANOBRA DE PRINGLE: PINÇAMENTO DO PEDÍCULO HEPÁTICO. Atrás do pedículo está o FORAME OMENTAL (de WINSLOW), a entrada da bolsa omental — aberto; na frente, o pedículo também está livre. Passa-se uma pá do clamp pelo forame (atrás) e outra na frente do LIGAMENTO HEPATODUODENAL e fecha-se: para de entrar sangue no fígado e dá para suturar o ferimento."],["b) Pedículo hepático","VEIA PORTA + ARTÉRIA HEPÁTICA PRÓPRIA + VIAS BILIARES (colédoco), no LIGAMENTO HEPATODUODENAL — a parte densa (margem livre) do OMENTO MENOR, que vai do fígado à 1ª parte do duodeno. Limites do forame: anterior = ligamento hepatoduodenal; posterior = veia cava inferior; superior = lobo caudado; inferior = 1ª parte do duodeno. Fluxo: VEIA PORTA 70–80%; ARTÉRIA HEPÁTICA PRÓPRIA 20–30%."],["c) Tempo","Interrompido o fluxo aferente, o fígado entra em ISQUEMIA. Na aula: não pode passar de 10–15 MINUTOS. ⚠️ Divergência: na literatura, o fígado normal tolera clampeamento contínuo por até cerca de 60 minutos (menos se cirrótico), e usa-se também o clampeamento intermitente (ex.: 15 min fechado / 5 min aberto)."]]},
+{n:2,aula:1,caso:`Mulher de 40 anos com dor abdominal há 5 dias é operada por suspeita de apendicite. Ao abrir a cavidade, encontra-se um bloco de tecido gorduroso aderido envolvendo o apêndice perfurado, com pus localizado na fossa ilíaca direita e sem pus no restante da cavidade.`,perg:[`a) Que estrutura formou o bloco? Descreva sua constituição e suas inserções.`,`b) Liste as funções do peritônio apresentadas na aula, destacando as que este caso ilustra.`,`c) Que outra situação clínica a aula citou para a mesma função, e qual a consequência se ela falhar? Comente o que a aula disse sobre o mecanismo do movimento dessa estrutura e o que diz a literatura.`],resp:[["a) Omento maior","O OMENTO MAIOR. Omento = prega peritoneal que liga VÍSCERA a VÍSCERA (epíploo). Duas lâminas passam À FRENTE do estômago e duas ATRÁS; descem em direção ao COLO TRANSVERSO (parte fixa: estômago → colo transverso) e continuam como a PARTE LIVRE, o 'avental' que se move na cavidade e cobre as alças. É também o principal depósito de gordura do peritônio."],["b) Funções","Diminuir o ATRITO entre as alças (peristaltismo) · RESISTÊNCIA ÀS INFECÇÕES (líquido com células de defesa) · RESERVA DE GORDURA (omento maior) · BLOQUEIO DE PROCESSOS INFECCIOSOS · BLOQUEIO DE PERFURAÇÕES · VIA DE TROCA (introduzir drogas, retirar substâncias tóxicas — diálise peritoneal). Excesso de transudato = ASCITE. O caso ilustra o BLOQUEIO do processo infeccioso (e da perfuração), além da defesa local."],["c) Perfurações e mecanismo","O omento também 'tampona' ÚLCERA GÁSTRICA PERFURADA e DIVERTÍCULO PERFURADO, impedindo que o conteúdo caia na cavidade. Se falha: PERITONITE generalizada (na aula, 'leva a óbito na maioria das vezes' — ⚠️ na literatura é grave, com mortalidade relevante sobretudo com sepse, mas a maioria sobrevive com cirurgia e antibiótico). Mecanismo: na aula, o omento 'se movimenta' por ter inervação simpática e parassimpática. ⚠️ Divergência: na literatura, o omento não tem motilidade própria; é levado pelo peristaltismo e pelos movimentos e ADERE ao foco pelo exsudato fibrinoso."]]},
+{n:3,aula:1,caso:`Homem de 62 anos com doença renal crônica terminal mora em zona rural, longe de um centro de hemodiálise. A equipe propõe diálise peritoneal domiciliar. Meses depois, ele chega com febre, dor abdominal e líquido de diálise turvo.`,perg:[`a) Defina o peritônio e a cavidade peritoneal. Por que, segundo a aula, "não existe" cavidade abdominal propriamente dita?`,`b) Explique como funciona a diálise peritoneal e por que a maioria dos pacientes faz hemodiálise.`,`c) Qual complicação é provável e que uso terapêutico da mesma via a aula citou? Em quem, pela anatomia, a cavidade peritoneal é naturalmente aberta ao exterior, e qual a consequência?`],resp:[["a) Peritônio","MEMBRANA SEROSA, lisa e brilhante (como pleura e pericárdio seroso). PERITÔNIO PARIETAL reveste a parede do DIAFRAGMA ao ASSOALHO PÉLVICO; reflete-se sobre os órgãos como PERITÔNIO VISCERAL (túnica externa). A CAVIDADE PERITONEAL é o espaço ENTRE as lâminas, com líquido seroso. É a verdadeira cavidade: a 'cavidade abdominal' só existiria se retirássemos todos os órgãos."],["b) Diálise","No renal crônico acumulam-se íons e escórias (potássio, ureia, creatinina). Um CATETER fica com uma ponta na cavidade peritoneal e outra fora; INFUNDE-SE solução, que troca solutos com o sangue através do peritônio, e depois ela é RETIRADA — uma 'lavagem' da cavidade. Pode ser feita EM CASA, mas exige ambiente ASSÉPTICO e isolado, que a maioria não tem; por isso a maior parte faz HEMODIÁLISE por FÍSTULA arteriovenosa ou CATETER."],["c) Peritonite e diferença entre os sexos","Provável PERITONITE (infecção da cavidade pelo cateter). A aula citou que pela mesma via se pode INFUNDIR ANTIBIÓTICOS na cavidade. A cavidade é um GRANDE SACO FECHADO no HOMEM e ABERTO na MULHER: as TUBAS UTERINAS abrem-se na cavidade (fímbrias) e o trajeto tuba → útero → vagina comunica o peritônio com o exterior — por isso a mulher tem MAIS RISCO de infecção peritoneal."]]},
+{n:4,aula:1,caso:`Em aula prática, um estudante recebe a lista: jejuno, colo ascendente, colo sigmoide, 2ª parte do duodeno, cabeça do pâncreas, cauda do pâncreas, baço, fígado, bexiga, aorta e ureter.`,perg:[`a) Defina órgão peritonizado, parcialmente peritonizado e extraperitoneal, e classifique cada item da lista segundo a aula.`,`b) Diferencie meso, omento e ligamento, com dois exemplos de cada.`,`c) Descreva o ligamento falciforme (localização, função e conteúdo da margem livre) e a bolsa omental (nomes, limites anterior e posterior, entrada).`],resp:[["a) Classificação","PERITONIZADO: totalmente revestido — JEJUNO, COLO SIGMOIDE, CAUDA DO PÂNCREAS, BAÇO. PARCIALMENTE: revestido em algumas faces — COLO ASCENDENTE (medial, anterior, lateral; sem posterior) e FÍGADO (área nua). EXTRAPERITONEAL (fora da cavidade; retroperitoneal se atrás dela): 2ª PARTE DO DUODENO, CABEÇA DO PÂNCREAS, BEXIGA, AORTA, URETER."],["b) Meso × omento × ligamento","MESO: prega que prende VÍSCERA À PAREDE — mesentério (jejuno/íleo), mesocolo transverso, mesossigmoide, mesoapêndice; leva os vasos entre as lâminas. OMENTO: prega VÍSCERA–VÍSCERA — omento menor (fígado → pequena curvatura), omento maior (estômago → colo transverso + parte livre). LIGAMENTO: condensação de peritônio de um órgão a outro — hepatoduodenal (fígado → duodeno; pedículo hepático), gastrocólico, frenocólico (diafragma → flexura cólica esquerda), falciforme."],["c) Falciforme e bolsa omental","FALCIFORME: da parede anterior SUPRAUMBILICAL à face diafragmática do fígado; divide o fígado em lobos DIREITO e ESQUERDO; única prega supraumbilical; na MARGEM LIVRE, o LIGAMENTO REDONDO DO FÍGADO (VEIA UMBILICAL OBLITERADA). BOLSA OMENTAL: 'pequeno saco' dentro do grande saco, RETROCAVIDADE DOS EPÍPLOOS, atrás do estômago. ANTERIOR: omento menor, estômago, omento maior. POSTERIOR: pâncreas, cava inferior, aorta, pilares do diafragma (cobertos por peritônio parietal); o colo transverso é limite inferior. ENTRADA: FORAME OMENTAL (de WINSLOW), atrás do ligamento hepatoduodenal. Partes: vestíbulo, recesso superior, recesso esplênico, recesso inferior."]]}
+];
+
+/* ============================ ESTADO ============================ */
+const LET=["A","B","C","D","E"];
+const NIVEL_LABEL={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const NIVEL_CLS={facil:"nf",medio:"nm",dificil:"nd"};
+const state={modo:"estudo",aula:"todas",nivel:"todas",secao:"objetivas",respostas:{},expl:{},finalizado:false};
+
+const root=document.getElementById("panel-questoes");
+const lista=document.getElementById("lista");
+const simbar=document.getElementById("simbar");
+
+function objsFiltradas(){
+  return objetivas.filter(q=>
+    (state.aula==="todas"||String(q.aula)===state.aula) &&
+    (state.nivel==="todas"||q.nivel===state.nivel));
+}
+function dissFiltradas(){
+  return dissertativas.filter(q=> state.aula==="todas"||String(q.aula)===state.aula);
+}
+
+function render(){
+  if(state.secao==="objetivas") renderObjetivas();
+  else renderDissertativas();
+  renderSimbar();
+}
+
+function renderObjetivas(){
+  const arr=objsFiltradas();
+  let html="";
+  if(state.modo==="simulado"&&state.finalizado) html+=painelScore();
+  if(arr.length===0){ lista.innerHTML=html+`<div class="empty">Nenhuma questão para este filtro.</div>`; return; }
+  arr.forEach(q=>{ html+=cardObjetiva(q); });
+  lista.innerHTML=html;
+}
+
+function cardObjetiva(q){
+  const respondida = state.respostas[q.n]!==undefined;
+  const sel = state.respostas[q.n];
+  const revelar = state.modo==="estudo" ? respondida : state.finalizado;
+  const nivelBadge = revelar ? `<span class="badge ${NIVEL_CLS[q.nivel]}">${NIVEL_LABEL[q.nivel]}</span>` : "";
+  let opts="";
+  q.alts.forEach((t,i)=>{
+    let cls="opt";
+    if(revelar){
+      cls+=" locked";
+      if(i===q.correta) cls+=" correct";
+      else if(i===sel) cls+=" wrong";
+    } else if(state.modo==="simulado" && i===sel){ cls+=" selected"; }
+    let mark="";
+    if(revelar){ if(i===q.correta) mark='<span class="mark" style="color:var(--ok)">✓</span>'; else if(i===sel) mark='<span class="mark" style="color:var(--alerta)">✗</span>'; }
+    opts+=`<button class="${cls}" onclick="selecionar(${q.n},${i})"><span class="letra">${LET[i]}</span><span>${t}</span>${mark}<span class="risc" title="Riscar alternativa">✕</span></button>`;
+  });
+  let feedback="", gabarito="";
+  if(state.modo==="estudo" && respondida){
+    const acertou = sel===q.correta;
+    feedback = acertou
+      ? `<div class="fb ok">✅ Correta! Você marcou ${LET[sel]}.</div>`
+      : `<div class="fb no">❌ Incorreta. Você marcou ${LET[sel]} — gabarito: ${LET[q.correta]}.</div>`;
+    const aberta = state.expl[q.n];
+    feedback += `<button class="reveal-btn" onclick="toggleExpl(${q.n})">${aberta?"Esconder explicação":"Mostrar explicação"}</button>`;
+    if(aberta) gabarito=blocoGabarito(q);
+  } else if(state.modo==="simulado" && state.finalizado){
+    gabarito=blocoGabarito(q);
+  }
+  return `<div class="card" id="q${q.n}">
+    <div class="qhead"><span class="qnum">Questão ${q.n}</span>
+      <span class="badge aula">16/10</span>${nivelBadge}</div>
+    <div class="enun">${q.enun}</div>
+    <div class="opts">${opts}</div>
+    ${feedback}${gabarito}</div>`;
+}
+
+function blocoGabarito(q){
+  let li="";
+  q.alts.forEach((t,i)=>{
+    if(i===q.correta) return;
+    li+=`<li><b>${LET[i]}.</b> ${q.just[i]}</li>`;
+  });
+  return `<div class="gab">
+    <h4>Gabarito comentado — resposta ${LET[q.correta]}</h4>
+    <p class="certa"><b>Por que a ${LET[q.correta]} está certa:</b> ${q.just[q.correta].replace(/^Correta\.\s*/,"")}</p>
+    <div><strong style="color:var(--ink-soft);font-size:.82rem">Por que as demais estão erradas:</strong>
+    <ul>${li}</ul></div>
+    <span class="ref">📚 ${q.ref}</span></div>`;
+}
+
+function renderDissertativas(){
+  const arr=dissFiltradas();
+  let html="";
+  if(arr.length===0){ lista.innerHTML=`<div class="empty">Nenhuma dissertativa para este filtro.</div>`; return; }
+  arr.forEach(q=>{
+    const aberta=state.expl["d"+q.n];
+    let perg=""; q.perg.forEach(p=>perg+=`<li>${p}</li>`);
+    let modelo="";
+    if(aberta){
+      let corpo="";
+      q.resp.forEach(par=>corpo+=`<p><b class="q">${par[0]}.</b> ${par[1]}</p>`);
+      modelo=`<div class="modelo"><h4>Resposta-modelo</h4>${corpo}<span class="ref">📚 ${q.ref}</span></div>`;
+    }
+    html+=`<div class="card" id="d${q.n}">
+      <div class="qhead"><span class="qnum">Dissertativa ${q.n}</span>
+        <span class="badge aula">16/10</span></div>
+      <div class="caso"><span class="lab">🩺 Caso clínico</span>${q.caso}</div>
+      <ol class="perg">${perg}</ol>
+      <button class="reveal-btn" onclick="toggleExpl('d${q.n}')">${aberta?"Esconder resposta-modelo":"Mostrar resposta-modelo"}</button>
+      ${modelo}</div>`;
+  });
+  lista.innerHTML=html;
+}
+
+function renderSimbar(){
+  if(state.secao==="objetivas" && state.modo==="simulado"){
+    simbar.style.display="flex";
+    const total=objetivas.length;
+    const respondidas=Object.keys(state.respostas).length;
+    if(state.finalizado){
+      simbar.innerHTML=`<span class="prog">Simulado finalizado.</span>
+        <button class="btn ghost" onclick="refazer()">🔄 Refazer</button>`;
+    } else {
+      simbar.innerHTML=`<span class="prog">Respondidas <b>${respondidas}</b> de <b>${total}</b></span>
+        <button class="btn" onclick="finalizar()" ${respondidas===0?"disabled":""}>Finalizar simulado</button>`;
+    }
+  } else { simbar.style.display="none"; }
+}
+
+function painelScore(){
+  const arr=objetivas;
+  let tot=0, ok=0;
+  const byNiv={facil:{t:0,o:0},medio:{t:0,o:0},dificil:{t:0,o:0}};
+  arr.forEach(q=>{
+    tot++; byNiv[q.nivel].t++;
+    const acertou=state.respostas[q.n]===q.correta;
+    if(acertou){ ok++; byNiv[q.nivel].o++; }
+  });
+  const pct=Math.round(ok/tot*100);
+  const linha=(nome,o,t)=>{
+    const p=t?Math.round(o/t*100):0;
+    return `<tr><td>${nome}</td><td>${o}/${t}</td><td><div class="bar"><span style="width:${p}%"></span></div></td><td>${p}%</td></tr>`;
+  };
+  return `<div class="score">
+    <h3>Resultado do simulado</h3>
+    <div class="big">${ok}/${tot} <span style="font-size:1rem;color:var(--muted)">(${pct}%)</span></div>
+    <div class="sub">Considera todas as ${tot} questões objetivas desta aula (não respondidas contam como erro).</div>
+    <table>
+      <tr><th>Categoria</th><th>Acertos</th><th>Desempenho</th><th></th></tr>
+      ${linha("Fácil",byNiv.facil.o,byNiv.facil.t)}
+      ${linha("Médio",byNiv.medio.o,byNiv.medio.t)}
+      ${linha("Difícil",byNiv.dificil.o,byNiv.dificil.t)}
+    </table>
+    <div style="margin-top:14px"><button class="btn" onclick="relatorioIA(this)">📋 Copiar relatório para IA</button></div>
+    <div class="sub" style="margin-top:6px">Cole em uma IA (Claude, ChatGPT…) para ela explicar seus erros e treinar você em cima deles.</div>
+  </div>`;
+}
+
+/* ============================ AÇÕES ============================ */
+function selecionar(n,i){
+  if(state.modo==="estudo"){
+    if(state.respostas[n]!==undefined) return;
+    state.respostas[n]=i;
+    state.expl[n]=true;
+  } else {
+    if(state.finalizado) return;
+    state.respostas[n]=i;
+  }
+  render();
+}
+function toggleExpl(id){ state.expl[id]=!state.expl[id]; render(); }
+
+function __iaStrip(s){return String(s==null?"":s).replace(/<br\s*\/?\s*>/gi,"\n").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&gt;/g,">").replace(/&lt;/g,"<").replace(/&amp;/g,"&").replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();}
+function __iaCopy(s,btn){
+  var done=function(){ if(btn){var t=btn.textContent; btn.textContent="✓ Copiado! Cole na IA"; setTimeout(function(){btn.textContent=t;},2600);} };
+  var fb=function(){ var ta=document.createElement("textarea"); ta.value=s; document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");done();}catch(e){alert("Não consegui copiar automaticamente. Selecione o texto no console.");}
+    document.body.removeChild(ta); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(done).catch(fb);}else fb();
+}
+
+window.relatorioIA=function(btn){
+  var L="ABCDE", ok=0, erros=[], certos=[];
+  objetivas.forEach(function(q){
+    var r=state.respostas[q.n];
+    if(r===q.correta){ok++;certos.push(q);}else erros.push({q:q,r:r});
+  });
+  var pct=Math.round(ok/objetivas.length*100);
+  var s="RELATÓRIO DE SIMULADO — "+document.title.replace(" · Córtex Estudos","")+"\n";
+  s+="Resultado: "+ok+"/"+objetivas.length+" ("+pct+"%). Erros: "+erros.length+".\n\n";
+  s+="Sou estudante de medicina me preparando para a prova desta matéria. Abaixo estão as questões que ERREI neste simulado, com minha resposta, a correta e as explicações do gabarito. Por favor: (1) explique o conceito central que confundi em cada erro, (2) aponte padrões nos meus erros, e (3) depois me faça novas perguntas de verificação sobre esses temas, uma de cada vez."+"\n\n";
+  s+="==================== ERROS ("+erros.length+") ====================\n\n";
+  erros.forEach(function(e){
+    var q=e.q;
+    s+="[Questão "+q.n+"] nível "+q.nivel+(q.ref?" — "+q.ref:"")+"\n";
+    s+="ENUNCIADO: "+__iaStrip(q.enun)+"\n";
+    q.alts.forEach(function(a,i){ s+="  "+L[i]+") "+__iaStrip(a)+"\n"; });
+    s+="MINHA RESPOSTA: "+(e.r!=null?L[e.r]+")":"(em branco)")+"\n";
+    s+="CORRETA: "+L[q.correta]+")\n";
+    if(q.just&&q.just[q.correta]) s+="POR QUE A CORRETA ESTÁ CERTA: "+__iaStrip(q.just[q.correta])+"\n";
+    if(e.r!=null&&q.just&&q.just[e.r]) s+="POR QUE A MINHA ESTÁ ERRADA: "+__iaStrip(q.just[e.r])+"\n";
+    s+="\n";
+  });
+  s+="==================== ACERTOS ("+certos.length+") ====================\n";
+  s+=certos.map(function(q){return "Q"+q.n+" ("+q.nivel+")";}).join(" · ")+"\n";
+  __iaCopy(s,btn);
+};
+
+function finalizar(){ state.finalizado=true; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function refazer(){ state.respostas={}; state.expl={}; state.finalizado=false; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* Segmented + chips */
+root.querySelector("#segModo").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.modo=b.dataset.modo;
+  state.respostas={}; state.expl={}; state.finalizado=false;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  render();
+});
+root.querySelector("#segSecao").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  state.secao=b.dataset.secao;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle("active",x===b));
+  root.querySelector("#filtros").style.opacity = state.secao==="dissertativas" ? ".55" : "1";
+  root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.style.display = state.secao==="dissertativas"?"none":"");
+  render();
+});
+root.querySelector("#filtros").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.nivel){
+    state.nivel = state.nivel===b.dataset.nivel ? "todas" : b.dataset.nivel;
+    root.querySelectorAll('#filtros [data-nivel]').forEach(x=>x.classList.toggle("active",x.dataset.nivel===state.nivel));
+  }
+  render();
+});
+
+/* expõe handlers usados nos onclick inline */
+window.selecionar=selecionar;
+window.toggleExpl=toggleExpl;
+window.finalizar=finalizar;
+window.refazer=refazer;
+
+render();
+})();
+</script>
+
+<!-- ===================================================================== -->
+<!-- SCRIPT: FLASHCARDS (motor isolado em IIFE) -->
+<!-- ===================================================================== -->
+<script>
+(function(){
+const DECKS={
+a1:{name:"Peritônio (16/10)",kicker:"ANATOMIA TOPOGRÁFICA",desc:"Lâminas e cavidade peritoneal, grande saco, órgãos peritonizados e extraperitoneais, mesos, omentos e ligamentos, funções e diálise peritoneal, bolsa omental, forame de Winslow e manobra de Pringle — e os recessos dos slides.",cards:[
+{area:"Conceito",cat:"conceito",q:"Que tipo de membrana é o peritônio e a que se assemelha?",a:"MEMBRANA SEROSA, lisa e brilhante — como a PLEURA e o PERICÁRDIO seroso. Tem lâmina PARIETAL e VISCERAL."},
+{area:"Conceito",cat:"prof",q:"Onde fica a cavidade peritoneal?",a:"ENTRE a lâmina PARIETAL e a VISCERAL do peritônio, com fina película de líquido seroso. É a VERDADEIRA cavidade do abdome."},
+{area:"Conceito",cat:"alerta",q:"Por que a aula diz que 'não existe cavidade abdominal'?",a:"Porque ela só apareceria se tirássemos todos os órgãos. A cavidade real, delimitada por lâminas, é a CAVIDADE PERITONEAL."},
+{area:"Conceito",cat:"conceito",q:"Até onde vai o peritônio parietal?",a:"Do DIAFRAGMA (em cima) até o ASSOALHO PÉLVICO / diafragma pélvico (embaixo)."},
+{area:"Conceito",cat:"conceito",q:"O que é o peritônio visceral?",a:"A reflexão do parietal em direção ao órgão, revestindo-o e formando sua TÚNICA EXTERNA (serosa)."},
+{area:"Conceito",cat:"prof",q:"Grande saco no homem × na mulher?",a:"HOMEM: completamente FECHADO. MULHER: ABERTO — as TUBAS UTERINAS abrem-se na cavidade (fímbrias) → útero → vagina → exterior."},
+{area:"Conceito",cat:"caso",q:"Consequência clínica do saco aberto na mulher?",a:"MAIOR RISCO DE INFECÇÃO da cavidade peritoneal (ex.: doença inflamatória pélvica → peritonite)."},
+{area:"Conceito",cat:"conceito",q:"Laparotomia × celiotomia?",a:"Laparotomia ('laparo' = flanco, 'tomia' = cortar) é o termo usual; o mais preciso seria CELIOTOMIA — abertura da cavidade CELÔMICA (= peritoneal)."},
+{area:"Órgãos",cat:"prof",q:"Peritonizado × parcialmente peritonizado × extraperitoneal?",a:"PERITONIZADO: totalmente revestido. PARCIAL: revestido só em algumas faces. EXTRAPERITONEAL: não revestido, fora da cavidade (retroperitoneal se atrás dela)."},
+{area:"Órgãos",cat:"prof",q:"Por que colo ascendente e descendente são 'parcialmente peritonizados'?",a:"Têm peritônio na face MEDIAL, ANTERIOR e LATERAL — NÃO têm peritônio POSTERIOR."},
+{area:"Órgãos",cat:"prof",q:"Duodeno: que parte tem peritônio?",a:"Só a 1ª PARTE (parcialmente, na frente). 2ª, 3ª e 4ª partes são EXTRAPERITONEAIS.",obs:"Literatura: só os ~2 cm iniciais (ampola) são intraperitoneais e móveis."},
+{area:"Órgãos",cat:"alerta",q:"Pâncreas: cabeça, corpo e cauda em relação ao peritônio?",a:"CABEÇA e CORPO: EXTRAPERITONEAIS. CAUDA: PERITONIZADA (mais anteriorizada, junto ao baço)."},
+{area:"Órgãos",cat:"conceito",q:"Por que o fígado é só parcialmente revestido?",a:"Tem a ÁREA NUA, lá em cima (face diafragmática posterior), sem peritônio; o restante é revestido."},
+{area:"Órgãos",cat:"prof",q:"Cite órgãos peritonizados da aula.",a:"JEJUNO e ÍLEO · CECO · COLO SIGMOIDE · BAÇO · CAUDA do pâncreas · VESÍCULA BILIAR · TUBA e OVÁRIO (aula).",obs:"Literatura: ovário coberto por epitélio próprio (não peritônio); vesícula sem peritônio na face aderida ao fígado."},
+{area:"Órgãos",cat:"prof",q:"Cite estruturas extraperitoneais da aula.",a:"BEXIGA · ÚTERO · RETO médio/inferior · URETERES · AORTA · VEIA CAVA INFERIOR · VASOS RENAIS · VASOS ILÍACOS · vasos gonadais · duodeno 2ª–4ª · cabeça e corpo do pâncreas."},
+{area:"Órgãos",cat:"alerta",q:"Reto e peritônio, segundo a aula?",a:"O peritônio passa À FRENTE do TERÇO SUPERIOR do reto; do terço médio para baixo, EXTRAPERITONEAL.",obs:"Literatura: superior coberto na frente e lados; médio só na frente; inferior sem peritônio."},
+{area:"Órgãos",cat:"alerta",q:"Útero e bexiga: revestidos?",a:"Na aula, NÃO: são extraperitoneais — o peritônio passa POR CIMA deles, formando as escavações.",obs:"Literatura: fundo e corpo do útero têm perimétrio (serosa)."},
+{area:"Mesos",cat:"prof",q:"O que é um meso?",a:"A reflexão do parietal em direção à víscera: PREGA DE PERITÔNIO QUE PRENDE A VÍSCERA À PAREDE."},
+{area:"Mesos",cat:"prof",q:"Que meso sustenta jejuno e íleo?",a:"O MESENTÉRIO ('entérico' = intestino), com sua RAIZ na parede posterior; pode ser mais longo ou mais curto."},
+{area:"Mesos",cat:"conceito",q:"Exemplos de mesos citados?",a:"MESENTÉRIO · MESOCOLO TRANSVERSO · MESOCOLO SIGMOIDE · MESOAPÊNDICE."},
+{area:"Mesos",cat:"conceito",q:"Onde correm os ramos jejunais e ileais da mesentérica superior?",a:"ENTRE AS LÂMINAS DO MESENTÉRIO — é preciso abrir o meso para encontrá-los."},
+{area:"Omentos",cat:"prof",q:"Meso × omento?",a:"MESO: PAREDE → VÍSCERA. OMENTO: VÍSCERA → VÍSCERA."},
+{area:"Omentos",cat:"prof",q:"Omento menor: de onde para onde?",a:"Duas lâminas do FÍGADO → PEQUENA CURVATURA do estômago (e, mais lateral, ao duodeno = ligamento hepatoduodenal)."},
+{area:"Omentos",cat:"prof",q:"Omento maior: constituição?",a:"Duas lâminas À FRENTE e duas ATRÁS do estômago descem rumo ao COLO TRANSVERSO (parte fixa) e continuam como a PARTE LIVRE — o 'avental'."},
+{area:"Omentos",cat:"conceito",q:"O que é 'epíploo'?",a:"Nome antigo do OMENTO (epíploo menor, epíploo maior) — daí 'retrocavidade dos epíploos'."},
+{area:"Ligamentos",cat:"prof",q:"Ligamento hepatoduodenal: o que é e o que contém?",a:"Parte densa do OMENTO MENOR, do fígado à 1ª parte do duodeno. Contém o PEDÍCULO HEPÁTICO: VEIA PORTA + ARTÉRIA HEPÁTICA PRÓPRIA + VIAS BILIARES (colédoco)."},
+{area:"Ligamentos",cat:"conceito",q:"Ligamento gastrocólico (slide)?",a:"Do ESTÔMAGO ao colo — no slide, 'à flexura esquerda do colo'.",obs:"Literatura: porção do omento maior entre a curvatura maior e o colo transverso."},
+{area:"Ligamentos",cat:"alerta",q:"Ligamento frenocólico: trajeto e importância na aula?",a:"Do DIAFRAGMA à FLEXURA CÓLICA ESQUERDA; na aula, 'divide o andar superior do inferior' da cavidade.",obs:"⚠️ Literatura: o divisor supra/inframesocólico é o MESOCOLO TRANSVERSO; o frenocólico é barreira parcial à esquerda."},
+{area:"Ligamentos",cat:"prof",q:"Ligamento falciforme: localização e função?",a:"Da parede anterior SUPRAUMBILICAL à face diafragmática do fígado; DIVIDE o fígado em lobos DIREITO e ESQUERDO. É a ÚNICA prega supraumbilical."},
+{area:"Ligamentos",cat:"prof",q:"O que há na margem livre do falciforme?",a:"O LIGAMENTO REDONDO DO FÍGADO = VEIA UMBILICAL OBLITERADA."},
+{area:"Ligamentos",cat:"conceito",q:"Pregas peritoneais infraumbilicais?",a:"O peritônio levantado por estruturas: prega umbilical MEDIANA (úraco), MEDIAIS (artérias umbilicais) e LATERAIS (vasos epigástricos inferiores)."},
+{area:"Funções",cat:"prof",q:"Funções do peritônio (slide)?",a:"Diminui o ATRITO · RESISTÊNCIA às infecções · RESERVA DE GORDURA · BLOQUEIA processos infecciosos · BLOQUEIA perfurações · VIA para introduzir drogas e retirar substâncias tóxicas."},
+{area:"Funções",cat:"caso",q:"Apendicite: o que o omento maior faz?",a:"A parte livre chega ao foco e ENVOLVE o apêndice, BLOQUEANDO o processo e evitando que o pus se espalhe pela cavidade.",obs:"Literatura: o omento não tem motilidade própria; é levado e adere pelo exsudato fibrinoso."},
+{area:"Funções",cat:"caso",q:"Úlcera gástrica perfurada: papel do omento?",a:"TAMPONA a perfuração (também divertículo perfurado), evitando que o conteúdo caia na cavidade e cause PERITONITE."},
+{area:"Funções",cat:"conceito",q:"Onde o peritônio guarda gordura?",a:"Principalmente no OMENTO MAIOR — espesso no obeso, fininho no sarcopênico (reflete a gordura visceral)."},
+{area:"Funções",cat:"prof",q:"O que é ascite?",a:"Aumento do líquido na cavidade peritoneal por TRANSUDAÇÃO dos vasos — a 'barriga d'água' (cirrose, esquistossomose)."},
+{area:"Funções",cat:"caso",q:"Como funciona a diálise peritoneal?",a:"Cateter com uma ponta na CAVIDADE PERITONEAL: infunde-se solução, que troca solutos (K⁺, ureia, creatinina) com o sangue através do peritônio, e depois é RETIRADA. Pode ser feita em casa com ambiente asséptico."},
+{area:"Bolsa",cat:"prof",q:"O que é a bolsa omental?",a:"O 'PEQUENO SACO' dentro do GRANDE SACO (cavidade peritoneal), atrás do estômago e do omento menor = RETROCAVIDADE DOS EPÍPLOOS."},
+{area:"Bolsa",cat:"prof",q:"Parede anterior × posterior da bolsa omental?",a:"ANTERIOR: omento menor + estômago (parede posterior) + omento maior. POSTERIOR: pâncreas, VCI, aorta, pilares do diafragma (cobertos por peritônio parietal). Colo transverso: limite INFERIOR."},
+{area:"Bolsa",cat:"caso",q:"Por que conhecer a bolsa omental na prática?",a:"Acumula LÍQUIDO, SANGUE ou PUS; aparece no US e na TC 'atrás do estômago'; pode ser PUNCIONADA de forma guiada."},
+{area:"Bolsa",cat:"prof",q:"Partes da bolsa omental?",a:"VESTÍBULO (a entrada) · RECESSO SUPERIOR · RECESSO ESPLÊNICO ('gastroesplênico' no slide) · RECESSO INFERIOR (entre as lâminas do omento maior)."},
+{area:"Winslow",cat:"prof",q:"Qual é a entrada da bolsa omental?",a:"O FORAME OMENTAL (epiploico) = FORAME/HIATO DE WINSLOW, atrás do ligamento hepatoduodenal."},
+{area:"Winslow",cat:"alerta",q:"Limites do forame omental?",a:"ANTERIOR: lig. HEPATODUODENAL · POSTERIOR: peritônio sobre a VCI · SUPERIOR: LOBO CAUDADO · INFERIOR: 1ª PARTE DO DUODENO."},
+{area:"Winslow",cat:"caso",q:"Manobra de Pringle: o que é e por onde?",a:"PINÇAMENTO DO PEDÍCULO HEPÁTICO (lig. hepatoduodenal), passando a pinça pelo FORAME OMENTAL — para de entrar sangue no fígado e dá para suturar o ferimento."},
+{area:"Winslow",cat:"alerta",q:"Pringle: tempo e fluxo hepático (aula)?",a:"Até 10–15 MINUTOS, senão ISQUEMIA HEPÁTICA. VEIA PORTA: 70–80% do fluxo; ARTÉRIA HEPÁTICA PRÓPRIA: 20–30%.",obs:"⚠️ Literatura: fígado normal tolera ~60 min contínuos; usa-se também clampeamento intermitente."},
+{area:"Pelve",cat:"prof",q:"Escavações peritoneais da pelve?",a:"HOMEM: RETOVESICAL (bexiga–reto). MULHER: VESICOUTERINA (bexiga–útero) e RETOUTERINA (útero–reto, o fundo de saco de Douglas)."},
+{area:"Slides",cat:"conceito",q:"Recessos listados só nos slides?",a:"DUODENAIS (supra, infra, retro — flexura duodenojejunal) · ILEOCECAIS superior e inferior · RETROCECAIS · INTERSIGMOIDE (mesossigmoide) · PARACÓLICOS (sulco paracólico esquerdo).",obs:"Não explicados na fala (anunciados como 'a próxima parte')."},
+{area:"Slides",cat:"conceito",q:"Pregas cecais anterior × posterior (slide)?",a:"ANTERIOR (apendicular): AVASCULAR, limita o recesso ileocecal inferior. POSTERIOR: forma o mesentério do apêndice, VASCULAR, contém a ARTÉRIA APENDICULAR."}
+]}
+};
+
+DECKS.a1.cards.forEach((c,i)=>c.id='a1-'+i);
+
+/* ============================ ESTADO ============================ */
+const SAVE='flashcards-topo-hub-peritonio-v1';
+const CAT_LABEL={conceito:'Conceito',prof:'🎯 Alto rendimento',caso:'🩺 Caso clínico',alerta:'⚠️ Não confundir'};
+let cur='a1', order=[], pos=0, flipped=false, hideArea=false, onlyWrong=false;
+let status={};
+
+function load(){
+  try{const d=JSON.parse(localStorage.getItem(SAVE)||'null');
+    if(d){cur=DECKS[d.cur]?d.cur:'a1';status=d.status||{};hideArea=!!d.hideArea;}
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(SAVE,JSON.stringify({cur,status,hideArea}));}catch(e){}
+}
+
+function baseOrder(){return DECKS[cur].cards.map((_,i)=>i);}
+function applyOnly(idxs){
+  if(!onlyWrong)return idxs;
+  return idxs.filter(i=>status[DECKS[cur].cards[i].id]==='dont');
+}
+
+function renderDecks(){
+  const wrap=document.getElementById('decks');wrap.innerHTML='';
+  ['a1'].forEach((k)=>{
+    const d=DECKS[k];
+    const b=document.createElement('button');
+    b.className='deckbtn d1 on';
+    b.onclick=()=>selectDeck(k);
+    b.innerHTML='<div class="k">'+d.kicker+'</div><div class="nm">'+d.name+'</div><div class="ct">'+d.cards.length+' cartões · '+d.desc+'</div>';
+    wrap.appendChild(b);
+  });
+}
+
+function render(){
+  const cards=DECKS[cur].cards;
+  const empty=document.getElementById('empty');
+  const stage=document.getElementById('card');
+  const panel=document.getElementById('panel-flashcards');
+  if(order.length===0){
+    stage.style.display='none';
+    panel.querySelector('.nav').style.display='none';
+    panel.querySelector('.flipnote').style.display='none';
+    empty.style.display='block';
+    empty.innerHTML=onlyWrong?'Nenhum cartão marcado como “Não sabia” neste deck. 🎉<br><br><button class="navbtn" style="margin-top:6px" onclick="toggleOnlyWrong()">Ver todos os cartões</button>':'Sem cartões.';
+    updateProgress();document.getElementById('counter').textContent='';return;
+  }
+  empty.style.display='none';
+  stage.style.display='block';
+  panel.querySelector('.nav').style.display='flex';
+  panel.querySelector('.flipnote').style.display='block';
+
+  if(pos>=order.length)pos=order.length-1;
+  if(pos<0)pos=0;
+  const c=cards[order[pos]];
+
+  const badge=document.getElementById('fBadge');
+  badge.className='badge '+c.cat+(hideArea?' hide':'');
+  badge.textContent=(CAT_LABEL[c.cat]||'')+' · '+c.area;
+  document.getElementById('fQ').innerHTML=c.q;
+  document.getElementById('bQ').innerHTML=c.q;
+  document.getElementById('bA').innerHTML=c.a;
+  const ob=document.getElementById('bObs');
+  if(c.obs){ob.style.display='block';ob.innerHTML=c.obs;ob.className='obs'+(c.cat==='caso'?' tip-caso':c.cat==='alerta'?' tip-alerta':'');}
+  else ob.style.display='none';
+
+  stage.classList.toggle('flip',flipped);
+
+  const s=status[c.id];
+  document.getElementById('markKnow').classList.toggle('sel',s==='know');
+  document.getElementById('markDont').classList.toggle('sel',s==='dont');
+  document.getElementById('markKnow').disabled=!flipped;
+  document.getElementById('markDont').disabled=!flipped;
+
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===order.length-1);
+
+  document.getElementById('counter').textContent='Cartão '+(pos+1)+' / '+order.length;
+
+  document.getElementById('onlyBtn').classList.toggle('act',onlyWrong);
+  document.getElementById('eyeLbl').textContent=hideArea?'mostrar tema':'esconder tema';
+  document.getElementById('eyeIco').textContent=hideArea?'🙈':'👁';
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const cards=DECKS[cur].cards;
+  let kn=0,dk=0;
+  cards.forEach(c=>{if(status[c.id]==='know')kn++;else if(status[c.id]==='dont')dk++;});
+  const tot=cards.length,rem=tot-kn-dk;
+  document.getElementById('barKn').style.width=(kn/tot*100)+'%';
+  document.getElementById('barDk').style.width=(dk/tot*100)+'%';
+  document.getElementById('statKn').textContent=kn+' sabia';
+  document.getElementById('statDk').textContent=dk+' não sabia';
+  document.getElementById('statRem').textContent=rem+' sem marcar';
+}
+
+/* ============================ AÇÕES ============================ */
+function selectDeck(k){
+  if(k===cur)return;
+  cur=k;onlyWrong=false;flipped=false;pos=0;
+  order=applyOnly(baseOrder());
+  renderDecks();render();persist();
+}
+function flip(){flipped=!flipped;render();}
+function go(d){
+  const np=pos+d;
+  if(np<0||np>=order.length)return;
+  pos=np;flipped=false;render();
+}
+function mark(kind){
+  if(!flipped)return;
+  const c=DECKS[cur].cards[order[pos]];
+  const val=kind==='know'?'know':'dont';
+  status[c.id]=(status[c.id]===val)?undefined:val;
+  if(status[c.id]===undefined)delete status[c.id];
+  persist();
+  render();
+  if(status[c.id]&&pos<order.length-1){setTimeout(()=>go(1),180);}
+}
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function shuffleDeck(){
+  order=shuffleArr(applyOnly(baseOrder()));
+  pos=0;flipped=false;render();
+}
+function toggleOnlyWrong(){
+  onlyWrong=!onlyWrong;
+  order=applyOnly(baseOrder());
+  pos=0;flipped=false;render();
+}
+function resetDeck(){
+  if(!confirm('Reiniciar o deck “'+DECKS[cur].name+'”? Isso volta à ordem original e apaga as marcações (sabia / não sabia) deste deck.'))return;
+  DECKS[cur].cards.forEach(c=>{delete status[c.id];});
+  onlyWrong=false;order=baseOrder();pos=0;flipped=false;
+  persist();render();
+}
+function toggleHideArea(){hideArea=!hideArea;persist();render();}
+
+/* teclado — só age quando a aba Flashcards está ativa */
+document.addEventListener('keydown',e=>{
+  if(window.__hubTab && window.__hubTab()!=='flashcards')return;
+  if(e.target.tagName==='BUTTON'&&['Enter',' '].includes(e.key))return;
+  if(e.code==='Space'||e.key==='Enter'){e.preventDefault();flip();return;}
+  if(e.key==='ArrowRight'){e.preventDefault();go(1);return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);return;}
+  if(flipped&&(e.key==='s'||e.key==='S'))mark('know');
+  if(flipped&&(e.key==='n'||e.key==='N'))mark('dont');
+});
+
+/* expõe handlers usados nos onclick inline */
+window.flip=flip;
+window.go=go;
+window.mark=mark;
+window.shuffleDeck=shuffleDeck;
+window.toggleOnlyWrong=toggleOnlyWrong;
+window.resetDeck=resetDeck;
+window.toggleHideArea=toggleHideArea;
+
+/* init */
+load();
+order=baseOrder();
+renderDecks();
+render();
+})();
+</script>
+
+<style id="risccss">.alt,.opt,label.opt{position:relative;padding-right:56px}.risc{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(139,151,167,.4);opacity:.5;font-size:16px;line-height:1;cursor:pointer}.risc:hover{opacity:1;background:rgba(255,90,90,.18)}.riscada>span:not(.risc),label.riscada>span:not(.risc){opacity:.38;text-decoration:line-through}.locked .risc,[disabled] .risc,.correct .risc,.wrong .risc,.certa .risc,.errada .risc{display:none}label.opt:has(input:disabled) .risc{display:none}</style><script>document.addEventListener("click",function(e){var t=e.target;var r=t&&t.closest&&t.closest(".risc");if(r){e.preventDefault();e.stopPropagation();var b=r.closest(".alt,.opt,label");if(b)b.classList.toggle("riscada")}},true);</script>
+<style id="secrailcss">
+#secrail{position:fixed;left:26px;top:130px;width:172px;z-index:60;font-family:var(--mono,monospace);display:none}
+@media(min-width:1200px){#secrail.show{display:block}}
+#secrail a{display:block;margin:0 0 13px;text-decoration:none;color:var(--muted)}
+#secrail a b{display:block;font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--accent);margin-bottom:2px}
+#secrail a span{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.45;padding-bottom:4px;border-bottom:1px solid var(--line-strong)}
+#secrail a.on{color:var(--ink)}
+#secrail a.on span{border-bottom:2px solid var(--accent)}
+#secrail a:hover{color:var(--ink)}
+</style>
+<script>
+(function(){
+  var panel=document.getElementById('panel-estudo');if(!panel)return;
+  var secs=[].slice.call(panel.querySelectorAll('h2[id]')).filter(function(s){return /^t\d+$/.test(s.id)});
+  if(secs.length<4)secs=[].slice.call(panel.querySelectorAll('section[id] > h2, section[id] h2')).map(function(h){return h.closest('section[id]')}).filter(Boolean);
+  if(secs.length<4)return;
+  var rail=document.createElement('nav');rail.id='secrail';
+  rail.innerHTML=secs.map(function(s,i){
+    var t=(s.tagName==='H2'?s:s.querySelector('h2')).textContent.replace(/^\s*\d+\s*[·.)\u2014-]\s*/,'').trim();
+    var curto=t.split(/ — |: /)[0].trim();if(curto.length>34)curto=curto.slice(0,32)+'…';
+    return '<a href="#'+s.id+'"><b>'+String(i+1).padStart(2,'0')+'</b><span>'+curto+'</span></a>';
+  }).join('');
+  document.body.appendChild(rail);
+  function vis(){var ativo=panel.classList.contains('active')||getComputedStyle(panel).display!=='none';rail.classList.toggle('show',ativo)}
+  vis();
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('.tab,.hub-tab'))setTimeout(vis,60)});
+  var links=rail.querySelectorAll('a');
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+x.target.id)})}});
+  },{rootMargin:'0px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+})();
+</script>
+
+<!-- marca-dagua --><style id="wmcss">#wm{position:fixed;top:12px;right:64px;z-index:99999;pointer-events:none;user-select:none;white-space:nowrap;font:600 10.5px/1 -apple-system,system-ui;letter-spacing:.05em;color:rgba(170,180,195,.85);background:rgba(120,130,150,.16);border:1px solid rgba(140,150,165,.3);padding:5px 11px;border-radius:999px;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}</style><div id="wm">Gabriel Medeiros | TXXVI | FASM</div><script>(function(){var C=[{top:"12px",right:"64px"},{top:"12px",left:"50%",center:1},{top:"12px",right:"240px"},{bottom:"74px",right:"14px"},{bottom:"10px",left:"14px"}];function bad(w){var r=w.getBoundingClientRect();var xs=[r.left+6,r.left+r.width/2,r.right-6];for(var i=0;i<xs.length;i++){var els=document.elementsFromPoint(xs[i],r.top+r.height/2);for(var j=0;j<els.length;j++){var e=els[j];if(e===w||e===document.body||e===document.documentElement)continue;if(e.closest&&e.closest("a,button,input,select,label")||/sidebar|menu|toc|aside/i.test(e.className+" "+e.id))return true}}return false}function c(){var w=document.getElementById("wm");if(!w)return;if(window.innerWidth<720){w.style.top="auto";w.style.right="auto";w.style.bottom="10px";w.style.left="10px";w.style.transform="none";w.style.fontSize="9.5px";w.style.padding="4px 9px";return}for(var k=0;k<C.length;k++){w.style.top=C[k].top||"auto";w.style.bottom=C[k].bottom||"auto";w.style.left=C[k].left||"auto";w.style.transform=C[k].center?"translateX(-50%)":"none";w.style.right=C[k].right||"auto";if(!bad(w))return}}window.addEventListener("load",c);window.addEventListener("resize",c);setTimeout(c,400)})()</script>
+<script>window.addEventListener("load",function(){setTimeout(function(){var w=document.getElementById("wm"),sl=document.getElementById("wm-slot");if(w&&sl&&!sl.contains(w)){["top","right","bottom","left","fontSize","padding","transform"].forEach(function(k){w.style[k]=""});sl.appendChild(w)}},700)})</script></body>
+</html>
